@@ -1,0 +1,125 @@
+[
+    {
+        "title": "Home",
+        "location": "top_menu",
+        "type": "nav_link",
+        "path": "/",
+        "element": "HomePage",
+        "hard_prefix": false,
+        "reload": true
+    },
+    {
+        "title": "Admin",
+        "location": "top_menu",
+        "type": "nav_dropdown",
+        "sec_group": "admin",
+        "sub_menu_options": [
+            {
+                "type": "editor",
+                "sec_group": "admin",
+                "title": "Users",
+                "element": "Users_EditorData"
+            },
+            {
+                "type": "editor",
+                "sec_group": "admin",
+                "title": "Meal Types",
+                "element": "FoodMoments_EditorData"
+            },
+            {
+                "type": "editor",
+                "sec_group": "admin",
+                "title": "General Ingredients",
+                "element": "GeneralIngredients_EditorData"
+            },
+            {
+                "type": "editor",
+                "sec_group": "admin",
+                "title": "General Config",
+                "element": "GeneralConfig_EditorData"
+            },
+            {
+                "type": "editor",
+                "sec_group": "admin",
+                "title": "Clarifai Models",
+                "element": "ClarifaiModels_EditorData"
+            }
+        ]
+    },
+    {
+        "title": "Foods",
+        "location": "top_menu",
+        "type": "nav_dropdown",
+        "sec_group": "users",
+        "sub_menu_options": [
+            {
+                "type": "editor",
+                "sec_group": "users",
+                "title": "Ingredients",
+                "element": "UserIngredients_EditorData"
+            },
+            {
+                "type": "editor",
+                "sec_group": "users",
+                "title": "Dishes",
+                "element": "Dishes_EditorData"
+            },
+            {
+                "type": "editor",
+                "sec_group": "users",
+                "title": "Daily Meals",
+                "element": "DailyMeals_EditorData"
+            }
+        ]
+    },
+    {
+        "title": "FynBOT",
+        "location": "top_menu",
+        "type": "nav_link",
+        "sec_group": "users",
+        "path": "/chatbot",
+        "element": "Chatbot"
+    },
+    {
+        "title": "User Menu",
+        "location": "hamburger",
+        "sub_menu_options": [
+            {
+                "title": "Profile",
+                "path": "/profile",
+                "element": "UserProfileEditor"
+            },
+            {
+                "title": "Preferences",
+                "path": "#preferences",
+                "element": "PreferencesEditor"
+            },
+            {
+                "title": "About",
+                "on_click": "|js|window.open(window.location.origin + '/#/about_body?menu=0', 'AppAboutPopUp','height=600,width=400')"
+            },
+            {
+                "title": "Logout",
+                "path": "/login",
+                "on_click": "logout"
+            }
+        ]
+    },
+    {
+        "title": "Other Routes",
+        "sub_menu_options": [
+            {
+                "title": "Absolut Home",
+                "path": "/",
+                "element": "HomePage",
+                "get_prefix": false
+            },
+            {
+                "title": "About body",
+                "path": "/about_body",
+                "element": "AboutBody",
+                "get_prefix": false
+            }
+        ]
+    }
+]

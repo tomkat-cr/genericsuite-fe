@@ -1,0 +1,52 @@
+{
+    "baseUrl": "general_config",
+    "title": "Configuration Parameters",
+    "name": "Configuration Parameter",
+    "component": "GeneralConfig",
+    "dbApiUrl": "general_config",
+    "defaultOrder": "config_name|asc",
+    "fieldElements": [
+        {
+            "name": "id",
+            "required": true,
+            "label": "ID",
+            "type": "_id",
+            "readonly": true
+        },
+        {
+            "name": "config_name",
+            "required": true,
+            "label": "Name",
+            "type": "text",
+            "readonly": false,
+            "listing": true
+        },
+        {
+            "name": "active",
+            "required": true,
+            "label": "Active",
+            "type": "select",
+            "select_elements": "TRUE_FALSE",
+            "readonly": false,
+            "hidden": false,
+            "default_value": "1",
+            "listing": true
+        },
+        {
+            "name": "config_value",
+            "required": true,
+            "label": "Value",
+            "type": "text",
+            "readonly": false,
+            "listing": true
+        },
+        {
+            "name": "notes",
+            "required": true,
+            "label": "Notes",
+            "type": "text",
+            "readonly": false,
+            "listing": true
+        }
+    ]
+}

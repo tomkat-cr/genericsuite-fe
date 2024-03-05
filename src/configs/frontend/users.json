@@ -1,0 +1,155 @@
+{
+    "baseUrl": "users",
+    "title": "Users",
+    "name": "User",
+    "component": "Users",
+    "dbApiUrl": "users",
+    "fieldElements": [
+        {
+            "name": "id",
+            "required": true,
+            "label": "ID",
+            "type": "_id",
+            "readonly": true
+        },
+        {
+            "name": "firstname",
+            "required": true,
+            "label": "First Name",
+            "type": "text",
+            "readonly": false,
+            "listing": true
+        },
+        {
+            "name": "lastname",
+            "required": true,
+            "label": "Last Name",
+            "type": "text",
+            "readonly": false,
+            "listing": true
+        },
+        {
+            "name": "email",
+            "required": true,
+            "label": "Email",
+            "type": "email",
+            "readonly": false,
+            "listing": true
+        },
+        {
+            "name": "status",
+            "required": true,
+            "label": "Active",
+            "type": "select",
+            "select_elements": "TRUE_FALSE",
+            "default_value": "1",
+            "listing": true
+        },
+        {
+            "name": "plan",
+            "required": true,
+            "label": "Billing Plan",
+            "type": "select",
+            "select_elements": "BILLING_PLANS",
+            "default_value": "1",
+            "listing": true
+        }, 
+        {
+            "name": "superuser",
+            "required": true,
+            "label": "Superuser",
+            "type": "select",
+            "select_elements": "TRUE_FALSE",
+            "readonly": false,
+            "hidden": false,
+            "default_value": "0",
+            "listing": true
+        },
+        {
+            "name": "birthday",
+            "required": true,
+            "label": "Birthday",
+            "type": "date",
+            "readonly": false
+        },
+        {
+            "name": "gender",
+            "required": true,
+            "label": "Gender",
+            "type": "select",
+            "select_elements": "GENDERS",
+            "readonly": false,
+            "listing": false
+        },
+        {
+            "name": "language",
+            "required": true,
+            "label": "Preferred Language",
+            "type": "select",
+            "select_elements": "LANGUAGES",
+            "readonly": false,
+            "listing": false
+        }, 
+        {
+            "name": "creation_date",
+            "required": true,
+            "label": "Created",
+            "type": "datetime-local",
+            "readonly": true,
+            "hidden": false,
+            "default_value": "current_timestamp",
+            "listing": true
+        },
+        {
+            "name": "update_date",
+            "required": true,
+            "label": "Last update",
+            "type": "datetime-local",
+            "readonly": true,
+            "hidden": false,
+            "default_value": "current_timestamp",
+            "listing": false
+        },
+        {
+            "name": "label0",
+            "type": "hr"
+        },
+        {
+            "name": "label1",
+            "label": "PASWORD CHANGE",
+            "type": "label"
+        },
+        {
+            "name": "passcode",
+            "required": false,
+            "label": "New password",
+            "type": "password",
+            "force_value": ""
+        },
+        {
+            "name": "passcode_repeat",
+            "required": false,
+            "label": "Repeat new password",
+            "type": "password",
+            "force_value": ""
+        }
+    ],
+    "childComponents": [
+        "UsersConfig"
+    ],
+    "dbListPreRead": [
+        "UsersDbListPreRead"
+    ],
+    "dbPreWrite": [
+        "UsersDbPreWrite"
+    ],
+    "dbPostWrite": [
+        "UsersDbPostWrite"
+    ],
+    "dbPreValidations": [
+        "UsersValidations"
+    ],
+    "validations": [
+        "UsersPasswordValidations"
+    ]
+}

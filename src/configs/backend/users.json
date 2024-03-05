@@ -1,0 +1,30 @@
+{
+    "table_name": "users",
+    "creation_pk_name": "email",
+    "projection_exclusion": [
+        "passcode"
+    ],
+    "email_verification": [
+        "email"
+    ],
+    "passwords": [
+        "passcode"
+    ],
+    "mandatory_fields": [
+        "firstname",
+        "lastname",
+        "creation_date",
+        "gender",
+        "birthday",
+        "email",
+        "height",
+        "height_unit",
+        "weight",
+        "weight_unit",
+        "training_days",
+        "training_hour"
+    ],
+    "additional_query_params": [
+        "email"
+    ]
+}

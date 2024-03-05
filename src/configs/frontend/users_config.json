@@ -1,0 +1,47 @@
+{
+  "baseUrl": "users_config",
+  "title": "User Configurations",
+  "name": "User's Configuration",
+  "dbApiUrl": "users_config",
+  "component": "UsersConfig",
+  "type": "child_listing",
+  "subType": "array",
+  "array_name": "users_config",
+  "parentKeyNames": [
+    {
+      "parameterName": "user_id",
+      "parentUrl": "users",
+      "parentElementName": "id"
+    }
+  ],
+  "primaryKeyName": "id",
+  "defaultOrder": "config_name",
+  "fieldElements": [
+    {
+      "name": "id",
+      "required": false,
+      "label": "ID",
+      "type": "text",
+      "readonly": true,
+      "hidden": true,
+      "listing": false,
+      "uuid_generator": true
+    },
+    {
+      "name": "config_name",
+      "required": true,
+      "label": "Name",
+      "type": "text",
+      "readonly": false,
+      "listing": true
+    },
+    {
+        "name": "config_value",
+        "required": true,
+        "label": "Value",
+        "type": "text",
+        "readonly": false,
+        "listing": true
+    }
+  ]
+}

@@ -128,3 +128,21 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Editor
+.vscode
+.idea
+  
+# GenericSuite
+dist
+build
+.env
+.env.local
+.env.*.bak
+.jfrog/*
+venv/*
+
+# SSL Certificates used by webpack
+*.pem
+*.crt
+*.key

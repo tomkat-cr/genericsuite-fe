@@ -1,0 +1,18 @@
+{
+    "BILLING_PLANS": {
+        "free": "Free",
+        "basic": "Basic",
+        "premium": "Premium"
+    },
+    "ERROR_MESSAGES": {
+        "ACCOUNT_INACTIVE": "User account inactive [L5]. To activate your account, please contact <a href=\"mailto:support@exampleapp.com\">support@exampleapp.com</a></div>"
+    },
+    "APP_EMAILS": {
+        "SUPPORT_EMAIL": "support@exampleapp.com",
+        "INFO_EMAIL": "info@exampleapp.com"
+    },
+    "APP_VALID_URLS": {
+        "APP_DOMAIN": "exampleapp.com",
+        "APP_WEBSITE": "https://www.exampleapp.com"
+    }
+}

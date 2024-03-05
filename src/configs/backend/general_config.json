@@ -1,0 +1,7 @@
+{
+    "table_name": "general_config",
+    "creation_pk_name": "config_name",
+    "additional_query_params": [
+        "config_name"
+    ]
+}
