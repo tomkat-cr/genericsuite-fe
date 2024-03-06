@@ -16,6 +16,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.2 (2024-03-06)
+---
+
+### Fixes
+Fix include the "/src" and "/scripts" directories in the npm module.
+
+
 ## 1.0.1 (2024-03-06)
 ---
 
