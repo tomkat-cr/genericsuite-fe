@@ -16,13 +16,7 @@
         "creation_date",
         "gender",
         "birthday",
-        "email",
-        "height",
-        "height_unit",
-        "weight",
-        "weight_unit",
-        "training_days",
-        "training_hour"
+        "email"
     ],
     "additional_query_params": [
         "email"

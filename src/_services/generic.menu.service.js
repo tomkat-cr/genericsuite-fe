@@ -133,7 +133,13 @@ export const GenericMenuBuilder = (
                                 console_debug_log(itemDefs);
                             }    
                             if (subItem.type === 'editor') {
-                                return editorRoute(componentMapping[subItem.element]());
+                                try {
+                                    return editorRoute(componentMapping[subItem.element]());
+                                } catch (error) {
+                                    console_debug_log(`[GMB-GR-ERROR-010] subItem.element: ${subItem.element}`);
+                                    console_debug_log(error);
+                                    return null;
+                                }
                             }
                             return (
                                 <Route
@@ -205,10 +211,16 @@ export const GenericMenuBuilder = (
                                 console_debug_log(itemDefs);
                             }
                             if (subItem.type === 'editor') {
-                                return editorMenuOption(
-                                    componentMapping[subItem.element](),
-                                    setExpanded,
-                                );
+                                try {
+                                    return editorMenuOption(
+                                        componentMapping[subItem.element](),
+                                        setExpanded,
+                                    );
+                                } catch (error) {
+                                    console_debug_log(`[GMB-GR-ERROR-020] subItem.element: ${subItem.element}`);
+                                    console_debug_log(error);
+                                    return null;
+                                }
                             }
                             return (
                                 <NavDropdown.Item

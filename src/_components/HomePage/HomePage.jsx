@@ -18,7 +18,7 @@ export const HomePage = ({children}) => {
             {!currentUser &&
                 <LoginPage/>
             }
-            {currentUser &&
+            {currentUser && children && 
                 {children}
             }
         </div>

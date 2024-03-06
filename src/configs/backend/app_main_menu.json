@@ -23,62 +23,10 @@
             {
                 "type": "editor",
                 "sec_group": "admin",
-                "title": "Meal Types",
-                "element": "FoodMoments_EditorData"
-            },
-            {
-                "type": "editor",
-                "sec_group": "admin",
-                "title": "General Ingredients",
-                "element": "GeneralIngredients_EditorData"
-            },
-            {
-                "type": "editor",
-                "sec_group": "admin",
                 "title": "General Config",
                 "element": "GeneralConfig_EditorData"
-            },
-            {
-                "type": "editor",
-                "sec_group": "admin",
-                "title": "Clarifai Models",
-                "element": "ClarifaiModels_EditorData"
             }
         ]
-    },
-    {
-        "title": "Foods",
-        "location": "top_menu",
-        "type": "nav_dropdown",
-        "sec_group": "users",
-        "sub_menu_options": [
-            {
-                "type": "editor",
-                "sec_group": "users",
-                "title": "Ingredients",
-                "element": "UserIngredients_EditorData"
-            },
-            {
-                "type": "editor",
-                "sec_group": "users",
-                "title": "Dishes",
-                "element": "Dishes_EditorData"
-            },
-            {
-                "type": "editor",
-                "sec_group": "users",
-                "title": "Daily Meals",
-                "element": "DailyMeals_EditorData"
-            }
-        ]
-    },
-    {
-        "title": "FynBOT",
-        "location": "top_menu",
-        "type": "nav_link",
-        "sec_group": "users",
-        "path": "/chatbot",
-        "element": "Chatbot"
     },
     {
         "title": "User Menu",

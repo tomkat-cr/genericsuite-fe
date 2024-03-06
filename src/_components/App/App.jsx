@@ -22,18 +22,12 @@ import { WaitAnimation } from '../../_services/wait.animation.utility';
 // Specific imports
 
 import { Users_EditorData } from '../SuperAdminOptions/Users';
-// import { FoodMoments_EditorData } from '../SuperAdminOptions/FoodMoments';
-// import { GeneralIngredients_EditorData } from '../SuperAdminOptions/GeneralIngredients';
-// import { UserIngredients_EditorData } from '../UsersMenu/UserIngredients';
-// import { Dishes_EditorData } from '../UsersMenu/Dishes';
-// import { DailyMeals_EditorData } from '../UsersMenu/DailyMeals';
 import { UserProfileEditor } from '../UsersMenu/UserProfile';
 // import { ChatBot } from '../ChatBot/ChatBot';
 import { HomePage } from '../HomePage/HomePage';
 import { LoginPage } from '../LoginPage/LoginPage';
 import { About, AboutBody } from '../About/About';
 import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig';
-// import { ClarifaiModels_EditorData } from '../SuperAdminOptions/ClarifaiModels';
 
 import './App.css';
 
@@ -41,12 +35,6 @@ const debug = false;
 
 const componentMap = {
     "Users_EditorData": Users_EditorData,
-    // "FoodMoments_EditorData": FoodMoments_EditorData,
-    // "GeneralIngredients_EditorData": GeneralIngredients_EditorData,
-    // "ClarifaiModels_EditorData": ClarifaiModels_EditorData,
-    // "UserIngredients_EditorData": UserIngredients_EditorData,
-    // "Dishes_EditorData": Dishes_EditorData,
-    // "DailyMeals_EditorData": DailyMeals_EditorData,
     "GeneralConfig_EditorData": GeneralConfig_EditorData,
     "UserProfileEditor": UserProfileEditor,
     // "Chatbot": ChatBot,

@@ -6,16 +6,16 @@ const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.jsx', 
+    entry: './src/index.tsx', 
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx|tsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
                         plugins: ['@babel/plugin-proposal-class-properties']
                     }
                 }
@@ -34,7 +34,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx'],
+        extensions: ['*', '.js', '.jsx', '.tsx'],
         alias: {
             '@': path.resolve(__dirname, 'src/'),
         },
@@ -65,6 +65,8 @@ module.exports = {
                 REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || '0'),
                 REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
                 REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || ''),
+                REACT_APP_APP_NAME: JSON.stringify(process.env.REACT_APP_APP_NAME || 'exampleapp'),
+                REACT_APP_GENERIC_SUITE_AI_PATH: JSON.stringify(process.env.REACT_APP_GENERIC_SUITE_AI_PATH || ''),
             }
         }),
         new webpack.ProvidePlugin({

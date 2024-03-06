@@ -16,11 +16,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.1 (2024-03-06)
+---
+
+### Fixes
+Fix .babel, rollup.config.js, tsconfig.json, package.json, and index.tsx to generate the npm module and include the "/dist" files.
+
+
 ## 1.0.0 (2024-03-05)
 ---
 
 ### New
-Separate FE Generic Suite to publish on PyPi [FA-83].
+Separate FE Generic Suite to publish on NPM [FA-83].
 Initial commit as an independent repository.
 
 

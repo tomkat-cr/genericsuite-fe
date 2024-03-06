@@ -1,5 +1,7 @@
 #!/bin/sh
-# FILE: scripts/add_github_submodules.sh
+# File: scripts/add_github_submodules.sh
+# 2023-07-21 | CR
+#
 ERROR_MSG=""
 
 REPO_BASEDIR="`pwd`"
