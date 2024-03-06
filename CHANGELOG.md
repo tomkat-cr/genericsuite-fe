@@ -16,6 +16,22 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.3 (2024-03-06)
+---
+
+### New
+Add "constants-browserify" webpack resolve fallback.
+
+### Changes
+Upgraded "fs": "0.0.1-security" to "^0.0.2".
+"webpack.config.js" handles "http" conections when REACT_APP_API_URL has "http://".
+
+### Fixes
+Fix "webpack reactjs Uncaught ReferenceError: require is not defined" by changing the extension ".js" to ".jsx" in the code files that use require() when the target project use "json-utilities.js" directly or indirectly.
+Fix "The request '../_constants/general_constants' failed to resolve only because it was resolved as fully specified" in the target project.
+Fix "You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file." in "return <componentObj/>;".
+
+
 ## 1.0.2 (2024-03-06)
 ---
 

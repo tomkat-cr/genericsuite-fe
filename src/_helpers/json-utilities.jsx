@@ -1,6 +1,6 @@
 export function getConfigsJsonFile(jsonFileName) {
     const rawJson = require(`../configs/frontend/${jsonFileName}.json`);
-    return JSON.parse(JSON.stringify(rawJson));
+    return rawJson;
 }
 
 export const buildConstant = (constants) => {

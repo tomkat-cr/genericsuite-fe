@@ -4,14 +4,41 @@ const fs = require('fs');
 const webpack = require('webpack');
 const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
 
+let devServerConfig = {
+    historyApiFallback: true,
+    hot: true,
+    compress: true,
+    port: 3000,
+    allowedHosts: [appLocalDomainName], // To avoid "Invalid Host header" error
+};
+
+if (process.env.REACT_APP_API_URL.includes("https://")) {
+    devServerConfig.server = {
+        // Enable HTTPS
+        type: 'https',
+        options: {
+            key: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.key`)),
+            cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.chain.crt`)),
+            // ca_cert: fs.readFileSync(path.resolve(__dirname, 'ca.crt')),
+            // passphrase: 'password',
+        },
+    };
+}
+
+console.log('devServerConfig:', devServerConfig);
+
 module.exports = {
     mode: 'development',
     entry: './src/index.tsx', 
+    target: 'web',
     module: {
         rules: [
             {
                 test: /\.(js|jsx|tsx)$/,
-                exclude: /node_modules/,
+                // exclude: /node_modules/,
+                resolve: {
+                    fullySpecified: false,
+                },
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -34,7 +61,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.tsx'],
+        extensions: ['.*', '.js', '.jsx', '.tsx'],
         alias: {
             '@': path.resolve(__dirname, 'src/'),
         },
@@ -46,6 +73,7 @@ module.exports = {
             "assert": require.resolve("assert"),
             "vm": require.resolve("vm-browserify"),
             "tty": require.resolve("tty-browserify"),
+            "constants": require.resolve("constants-browserify"),
         }
     },
     plugins: [
@@ -73,35 +101,7 @@ module.exports = {
             process: 'process/browser',
         }), 
     ],
-    devServer: {
-        historyApiFallback: true,
-        hot: true,
-        // Run with SSL, to unblock browser's resources like the Camera and Mic
-        // SSL certificates for your local development server are required:
-        //    $ openssl req -x509 -newkey rsa:4096 -keyout app.exampleapp.local.key -out app.exampleapp.local.crt -days 365
-        //         or
-        //    $ make create_ssl_certs
-        compress: true,
-        port: 3000,
-        // Enable HTTPS
-        server: {
-            type: 'https',
-            options: {
-                key: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.key`)),
-                // cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.crt`)),
-                cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.chain.crt`)),
-                // ca_cert: fs.readFileSync(path.resolve(__dirname, 'ca.crt')),
-                // passphrase: 'password',
-            },
-        },
-        allowedHosts: [appLocalDomainName], // To avoid "Invalid Host header" error
-    },
-    externals: {
-        // global app config object
-        // config: JSON.stringify({
-        //     apiUrl: `http://${appLocalDomainName}:5000`,
-        // })
-    },
+    devServer: devServerConfig,
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js',

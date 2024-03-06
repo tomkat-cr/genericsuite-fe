@@ -57,9 +57,21 @@ function setExpanded(componentObj) {
     if (componentObj) {
         if (debug) console_debug_log(`>> setExpanded [1] | isComponent: ${isComponent(componentObj)} | componentObj:`, componentObj);
         if (isComponent(componentObj)){
-            return <componentObj/>;
+            try {
+                return <componentObj/>;
+            } catch (error) {
+                console_debug_log('[ASE-E010] componentObj:', componentObj);
+                console_debug_log(error);
+                return null;
+            }
         } else {
-            return componentObj();
+            try {
+                return componentObj();
+            } catch (error) {
+                console_debug_log('[ASE-E020] componentObj:', componentObj);
+                console_debug_log(error);
+                return null;
+            }
         }
     }
     if (debug) console_debug_log(">> setExpanded [2]");

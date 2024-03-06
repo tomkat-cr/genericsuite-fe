@@ -136,7 +136,7 @@ export const GenericMenuBuilder = (
                                 try {
                                     return editorRoute(componentMapping[subItem.element]());
                                 } catch (error) {
-                                    console_debug_log(`[GMB-GR-ERROR-010] subItem.element: ${subItem.element}`);
+                                    console_debug_log(`[GMB-GR-E010] subItem.element: ${subItem.element}`);
                                     console_debug_log(error);
                                     return null;
                                 }
@@ -217,7 +217,7 @@ export const GenericMenuBuilder = (
                                         setExpanded,
                                     );
                                 } catch (error) {
-                                    console_debug_log(`[GMB-GR-ERROR-020] subItem.element: ${subItem.element}`);
+                                    console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
                                     console_debug_log(error);
                                     return null;
                                 }
