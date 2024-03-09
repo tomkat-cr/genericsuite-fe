@@ -2,25 +2,45 @@
   "compilerOptions": {
     "outDir": "./dist",
     "module": "es6",
+    "moduleResolution": "node",
     "target": "es5",
     "lib": [
       "es6",
       "dom"
     ],
     "sourceMap": true,
-    "allowJs": false,
+    "allowJs": true,
+    "checkJs": false,
     "jsx": "react",
-    "moduleResolution": "node",
+    "baseUrl": "./src",
     "rootDirs": [
       "src"
     ],
-    "baseUrl": ".",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "src/*": ["./src/*"],
+      // "src/configs/*": ["src/configs/*"],
+      // "components/*": ["src/_components/*"],
+      // "constants/*": ["src/_constants/*"],
+      // "helpers/*": ["src/_helpers/*"],
+      // "services/*": ["src/_services/*"],
+      // "images/*": ["src/_images/*"]
+    }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    // "src/configs",
+    // "src/_components",
+    // "src/_constants",
+    // "src/_helpers",
+    // "src/_services",
+    // "src/_images",
+],
+  "files": [
+    "index.d.ts"
   ]
 }

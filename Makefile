@@ -9,11 +9,16 @@ help:
 install:
 	npm install
 
+lock:
+	npm install --package-lock-only
+
 build-dev:
 	npm run build
 
 build-prod:
 	npm run build-prod
+
+build: build-dev
 
 dev:
 	npm install --dev

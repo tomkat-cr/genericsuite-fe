@@ -30,6 +30,7 @@ console.log('devServerConfig:', devServerConfig);
 module.exports = {
     mode: 'development',
     entry: './src/index.tsx', 
+    // entry: './src/index.jsx', 
     target: 'web',
     module: {
         rules: [

@@ -28,7 +28,8 @@ export default {
         typescript(),
         babel({
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
-            exclude: 'node_modules/**'
+            exclude: 'node_modules/**',
+            babelHelpers: 'bundled',
         }),
         resolve(),
         commonjs()

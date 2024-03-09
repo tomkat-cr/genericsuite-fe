@@ -1,6 +1,6 @@
 {
   "name": "genericsuite",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "The GenericSuite for ReactJS (frontend version)",
   "author": "Carlos J. Ramirez",
   "license": "MIT",
@@ -11,7 +11,9 @@
   "files": [
     "dist",
     "scripts",
-    "src"
+    "Makefile",
+    "webpack.config.js",
+    "config-overrides.js"
   ],
   "repository": {
     "type": "git",
@@ -127,6 +129,9 @@
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
   },
   "peerDependenciesMeta": {
     "react": {
