@@ -20,6 +20,9 @@ build-prod:
 
 build: build-dev
 
+publish:
+	npm publish --access=public
+
 dev:
 	npm install --dev
 

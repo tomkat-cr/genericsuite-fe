@@ -10,20 +10,20 @@ import { Link as RouterLink } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-import { history, getPrefix } from '../helpers/history';
-import { formatCaughtError } from '../helpers/error-and-reenter';
+import { history, getPrefix } from '../helpers/history.jsx';
+import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
 import {
     dbApiService,
-} from './db.service';
+} from './db.service.jsx';
 import {
     defaultValue,
-} from './generic.editor.utilities';
+} from './generic.editor.utilities.jsx';
 import {
     console_debug_log,
-} from './logging.service';
+} from './logging.service.jsx';
 
-import { LoginPage } from '../components/LoginPage/LoginPage';
-import { HomePage } from '../components/HomePage/HomePage';
+import { LoginPage } from '../components/LoginPage/LoginPage.jsx';
+import { HomePage } from '../components/HomePage/HomePage.jsx';
 
 const debug = false;
 

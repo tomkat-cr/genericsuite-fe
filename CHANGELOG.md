@@ -16,6 +16,41 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.5 (2024-03-09)
+---
+
+### New
+Include all "src/*" in the package.json.
+Add "publish" option to Makefile.
+Add Babel build as default build method.
+Add "appLogoPar" parameter to LoginPage component to allow the App (project that include genericsuite) to have its own logo to the login page.
+
+### Changes
+Rollup build as "build-rollup" in package.json scripts.
+Change `input: "./src/index.tsx"` replaced by `input: "./src/lib/index.js"` in rollup.config.js file.
+
+### Fixes
+Fix components, images and generic code exports errors during the rollup buid in the "src/lib/index.js" file.
+Fix Rollup build errors by adding @rollup/plugin-json, @rollup/plugin-typescript and rollup-plugin-svg-import to devDependencies.
+Fix: webpack rutime errors including the file extension .jsx to all code imports.
+
+
+## 1.0.4 (2024-03-08)
+---
+
+### New
+Add "build" option to Makefile.
+
+### Changes
+Extension changed to .jsx for all .js files.
+Change module restructure: add "src/lib" directory, remove "_" prefix to "_components", "_constants", "_helpers", "_images", and "_services", move these directories to "src/lib".
+All components and generic code exports included in the "src/lib/index.js" file.
+Use a direct import from the .json config files instead of require() in getConfigsJsonFile() to allow the App (project that include genericsuite) to handle its own configuration files.
+
+### Breaks
+getConfigsJsonFile() removed because require() doesn't allow expresions. E.g. require(jsonFilePath).
+
+
 ## 1.0.3 (2024-03-06)
 ---
 

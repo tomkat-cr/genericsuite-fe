@@ -4,7 +4,7 @@ import React from 'react';
 
 import { 
     console_debug_log,
-} from "./logging.service";
+} from "./logging.service.jsx";
 
 import GoogleIcon from "../images/google_logo.svg";
 

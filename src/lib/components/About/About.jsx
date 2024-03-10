@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalPopUp } from '../../helpers/ModalPopUp'
+import { ModalPopUp } from '../../helpers/ModalPopUp.jsx'
 
 export const About = () => {
     return (

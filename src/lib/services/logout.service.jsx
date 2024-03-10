@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
-import { setLastUrl } from '../helpers/history';
+
+import { setLastUrl } from '../helpers/history.jsx';
 
 export const currentUserSubject = new BehaviorSubject(
     JSON.parse(localStorage.getItem('currentUser'))

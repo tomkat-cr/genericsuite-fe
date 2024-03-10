@@ -8,23 +8,23 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Formik, Field, Form, ErrorMessage, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
-import { processGenericFuncArray } from './generic.editor.rfc.specific.func';
-import { getEditorFlags } from './generic.editor.rfc.common';
-import { putSelectOptionsFromArray } from './generic.editor.rfc.selector';
-import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown';
-import { MainSectionContext } from './generic.editor.rfc.provider';
-import { SearchEngineButton } from './generic.editor.rfc.search.engine.button';
-import { ChatBotButton } from './generic.editor.rfc.ai.button';
-import { defaultValue } from './generic.editor.utilities';
-import { console_debug_log } from './logging.service';
-import { dbApiService } from "./db.service";
-import { WaitAnimation } from "./wait.animation.utility";
+import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
+import { getEditorFlags } from './generic.editor.rfc.common.jsx';
+import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
+import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
+import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
+import { SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
+import { ChatBotButton } from './generic.editor.rfc.ai.button.jsx';
+import { defaultValue } from './generic.editor.utilities.jsx';
+import { console_debug_log } from './logging.service.jsx';
+import { dbApiService } from "./db.service.jsx";
+import { WaitAnimation } from "./wait.animation.utility.jsx";
 
 import {
     nowToTimestap,
     timestampToDate,
-} from '../helpers/date-timestamp';
-import { errorAndReEnter } from "../helpers/error-and-reenter";
+} from '../helpers/date-timestamp.jsx';
+import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
 
 import {
     ACTION_CREATE,
@@ -46,13 +46,13 @@ import {
     MSG_VALID_NUMBER,
     MSG_VALID_DATE,
     MSG_VALID_EMAIL,
-} from "../constants/general_constants";
+} from "../constants/general_constants.jsx";
 import {
     BUTTON_PRIMARY_CLASS,
     BUTTON_SECONDARY_CLASS,
     ERROR_MSG_CLASS,
     INFO_MSG_CLASS,
-} from "../constants/class_name_constants";
+} from "../constants/class_name_constants.jsx";
 
 let calcFields = {};
 

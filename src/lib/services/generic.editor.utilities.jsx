@@ -1,6 +1,6 @@
 // GenericCrudEditor general utilities
 
-import { authenticationService } from "./authentication.service";
+import { authenticationService } from "./authentication.service.jsx";
 
 export const defaultValue = (dictObj, elementName, defaultValue = '') => {
     if (typeof dictObj[elementName] !== 'undefined') {

@@ -1,7 +1,7 @@
 // GenericCrudEditor Specific Functions handling
 
-import { replaceSpecialVars } from "./generic.editor.utilities";
-import { console_debug_log } from "./logging.service";
+import { replaceSpecialVars } from "./generic.editor.utilities.jsx";
+import { console_debug_log } from "./logging.service.jsx";
 
 const debug = false;
 

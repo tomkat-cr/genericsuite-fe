@@ -4,16 +4,16 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import {
   MainSectionContext,
-} from './generic.editor.rfc.provider';
+} from './generic.editor.rfc.provider.jsx';
 import {
   getEditorData,
-} from './generic.editor.rfc.common';
+} from './generic.editor.rfc.common.jsx';
 import {
   console_debug_log,
-} from './logging.service';
-import { dbApiService } from "./db.service";
+} from './logging.service.jsx';
+import { dbApiService } from "./db.service.jsx";
 
-import { MSG_SELECT_AN_OPTION } from "../constants/general_constants";
+import { MSG_SELECT_AN_OPTION } from "../constants/general_constants.jsx";
 
 const debug = false;
 

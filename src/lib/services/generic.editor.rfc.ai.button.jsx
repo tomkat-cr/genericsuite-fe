@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { 
     console_debug_log,
-} from "./logging.service";
+} from "./logging.service.jsx";
 import SparkIcon from "../images/spark.svg";
 
 // import { ChatBot } from '../components/ChatBot/ChatBot';

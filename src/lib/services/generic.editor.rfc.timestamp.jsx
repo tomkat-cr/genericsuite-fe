@@ -4,9 +4,9 @@ import {
   nowToTimestap,
   processDateToTimestamp,
   processTimestampToDate,
-} from "../helpers/date-timestamp";
+} from "../helpers/date-timestamp.jsx";
 
-import { genericFuncArrayDefaultValue } from "./generic.editor.rfc.specific.func";
+import { genericFuncArrayDefaultValue } from "./generic.editor.rfc.specific.func.jsx";
 
 export const timestampDbListPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during Listing Database Post Read

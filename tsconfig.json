@@ -12,9 +12,9 @@
     "allowJs": true,
     "checkJs": false,
     "jsx": "react",
-    "baseUrl": "./src",
+    "baseUrl": "./src/lib",
     "rootDirs": [
-      "src"
+      "src/lib"
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -23,22 +23,10 @@
     "declaration": true,
     "paths": {
       "src/*": ["./src/*"],
-      // "src/configs/*": ["src/configs/*"],
-      // "components/*": ["src/_components/*"],
-      // "constants/*": ["src/_constants/*"],
-      // "helpers/*": ["src/_helpers/*"],
-      // "services/*": ["src/_services/*"],
-      // "images/*": ["src/_images/*"]
     }
   },
   "include": [
     "src/**/*",
-    // "src/configs",
-    // "src/_components",
-    // "src/_constants",
-    // "src/_helpers",
-    // "src/_services",
-    // "src/_images",
 ],
   "files": [
     "index.d.ts"

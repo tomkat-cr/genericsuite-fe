@@ -15,42 +15,42 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
-import { errorAndReEnter } from "../helpers/error-and-reenter";
+import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
 
 import {
   MainSectionContext,
   MainSectionProvider,
-} from './generic.editor.rfc.provider';
+} from './generic.editor.rfc.provider.jsx';
 import {
   FormPage,
-} from './generic.editor.rfc.formpage';
+} from './generic.editor.rfc.formpage.jsx';
 import {
   getSelectDescription,
-} from './generic.editor.rfc.selector';
+} from './generic.editor.rfc.selector.jsx';
 import {
   processGenericFuncArray,
-} from './generic.editor.rfc.specific.func';
+} from './generic.editor.rfc.specific.func.jsx';
 import {
   setEditorParameters,
   getEditoObj,
-} from './generic.editor.rfc.common';
+} from './generic.editor.rfc.common.jsx';
 import {
   CrudEditorSearch,
-} from './generic.editor.rfc.search';
+} from './generic.editor.rfc.search.jsx';
 import {
   console_debug_log,
-} from './logging.service';
+} from './logging.service.jsx';
 
 import {
   ShowHidePageAnimation,
   WaitAnimation
-} from "./wait.animation.utility";
+} from "./wait.animation.utility.jsx";
 
 import {
   BUTTON_LISTING_CLASS,
   ERROR_MSG_CLASS,
   INFO_MSG_CLASS,
-} from "../constants/class_name_constants";
+} from "../constants/class_name_constants.jsx";
 import {
   ACTION_CREATE,
   ACTION_READ,
@@ -66,7 +66,7 @@ import {
   ROWS_PER_PAGE,
   MSG_ACTIONS,
   MSG_ROWS_PER_PAGE,
-} from "../constants/general_constants";
+} from "../constants/general_constants.jsx";
 
 fontawesome.library.add(
   faPlus,

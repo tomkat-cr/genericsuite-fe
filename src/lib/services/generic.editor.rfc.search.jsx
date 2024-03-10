@@ -2,15 +2,15 @@
 
 import React, { useState } from "react"
 
-import { console_debug_log } from "./logging.service";
-import { processDateToTimestamp } from "../helpers/date-timestamp";
+import { console_debug_log } from "./logging.service.jsx";
+import { processDateToTimestamp } from "../helpers/date-timestamp.jsx";
     
 import {
     MSG_SEARCH,
-} from "../constants/general_constants";
+} from "../constants/general_constants.jsx";
 import {
     BUTTON_LISTING_CLASS,
-} from "../constants/class_name_constants";
+} from "../constants/class_name_constants.jsx";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import fontawesome from "@fortawesome/fontawesome";

@@ -5,9 +5,11 @@ import commonjs from '@rollup/plugin-commonjs';
 import postcss from "rollup-plugin-postcss";
 // import { uglify } from "rollup-plugin-uglify";
 import { babel } from '@rollup/plugin-babel';
+import svg from 'rollup-plugin-svg-import';
+import json from '@rollup/plugin-json';
 
 export default {
-    input: "./src/index.tsx",
+    input: "./src/lib/index.js",
     output: [
         {
             file: 'dist/index.js',
@@ -32,6 +34,15 @@ export default {
             babelHelpers: 'bundled',
         }),
         resolve(),
-        commonjs()
+        commonjs(),
+        svg({
+            /**
+             * If `true`, instructs the plugin to import an SVG as string.
+             * For example, for Server Side Rendering.
+             * Otherwise, the plugin imports SVG as DOM node.
+             */
+            stringify: true
+        }),
+        json(),
     ],
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { console_debug_log } from '../services/logging.service';
-import { randomKey } from '../services/ramdomize';
+
+import { console_debug_log } from '../services/logging.service.jsx';
+import { randomKey } from '../services/ramdomize.jsx';
 
 const debug = false;
 

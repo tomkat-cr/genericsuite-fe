@@ -1,21 +1,22 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link as RouterLink } from 'react-router-dom';
+
 import { 
     MSG_ERROR_INVALID_TOKEN,
     MSG_ERROR_CLICK_TO_RELOGIN,
     MSG_ERROR_CLICK_TO_RETRY,
     MSG_ERROR_SESSION_EXPIRED,
-} from '../constants/general_constants';
-import { APP_EMAILS, APP_VALID_URLS } from '../constants/app_constants';
+} from '../constants/general_constants.jsx';
+import { APP_EMAILS, APP_VALID_URLS } from '../constants/app_constants.jsx';
 import {
     authenticationService,
-} from '../services/authentication.service';
+} from '../services/authentication.service.jsx';
 import {
     console_debug_log,
-} from '../services/logging.service';
-import { history, getPrefix, setLastUrl } from './history';
-import { ModalPopUp } from './ModalPopUp'
+} from '../services/logging.service.jsx';
+import { history, getPrefix, setLastUrl } from './history.jsx';
+import { ModalPopUp } from './ModalPopUp.jsx'
 
 const debug = false;
 

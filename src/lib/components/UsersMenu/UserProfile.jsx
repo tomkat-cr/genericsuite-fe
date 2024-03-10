@@ -2,28 +2,29 @@ import React from 'react';
 
 import {
     GetFormData,
-} from '../../services/generic.editor.rfc.service';
-import { GenericSinglePageEditor } from '../../services/generic.editor.singlepage';
+} from '../../services/generic.editor.rfc.service.jsx';
+import { GenericSinglePageEditor } from '../../services/generic.editor.singlepage.jsx';
 import {
     authenticationService,
-} from '../../services/authentication.service';
+} from '../../services/authentication.service.jsx';
 
 import {
     BILLING_PLANS,
-} from '../../constants/app_constants';
+} from '../../constants/app_constants.jsx';
 import {
     TRUE_FALSE,
     LANGUAGES,
-} from '../../constants/general_constants';
+} from '../../constants/general_constants.jsx';
 
-import { UsersConfig } from './UsersConfig';
+import { UsersConfig } from './UsersConfig.jsx';
 import {
     UsersDbPostWrite,
     UsersDbListPreRead,
     UsersDbPreWrite,
     UsersValidations,
     UsersPasswordValidations,
-} from '../SuperAdminOptions/Users';
+} from '../SuperAdminOptions/Users.jsx';
+
 import users_profile from "../../../configs/frontend/users_profile.json";
 
 export function UsersProfile_EditorData() {

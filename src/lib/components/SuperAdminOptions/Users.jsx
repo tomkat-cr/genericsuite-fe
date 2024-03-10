@@ -3,28 +3,29 @@ import React from 'react';
 import {
     GenericCrudEditor,
     GetFormData,
-} from '../../services/generic.editor.rfc.service';
-import { genericFuncArrayDefaultValue } from '../../services/generic.editor.rfc.specific.func';
+} from '../../services/generic.editor.rfc.service.jsx';
+import { genericFuncArrayDefaultValue } from '../../services/generic.editor.rfc.specific.func.jsx';
 import {
     authenticationService,
     getUserData,
-} from '../../services/authentication.service';
-import { dbApiService } from '../../services/db.service';
-import { console_debug_log } from '../../services/logging.service';
-import { processDateToTimestamp } from '../../helpers/date-timestamp';
+} from '../../services/authentication.service.jsx';
+import { dbApiService } from '../../services/db.service.jsx';
+import { console_debug_log } from '../../services/logging.service.jsx';
+import { processDateToTimestamp } from '../../helpers/date-timestamp.jsx';
 
 import {
     BILLING_PLANS,
-} from '../../constants/app_constants';
+} from '../../constants/app_constants.jsx';
 import {
     ACTION_CREATE,
     ACTION_DELETE,
     ACTION_UPDATE,
     TRUE_FALSE,
     LANGUAGES,
-} from '../../constants/general_constants';
+} from '../../constants/general_constants.jsx';
 
-import { UsersConfig } from '../UsersMenu/UsersConfig';
+import { UsersConfig } from '../UsersMenu/UsersConfig.jsx';
+
 import users from "../../../configs/frontend/users.json";
 
 const debug = false;

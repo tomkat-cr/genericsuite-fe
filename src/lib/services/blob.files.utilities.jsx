@@ -1,6 +1,6 @@
 // Blob files utilities
 
-import { console_debug_log } from './logging.service';
+import { console_debug_log } from './logging.service.jsx';
 
 const debug = false;
 

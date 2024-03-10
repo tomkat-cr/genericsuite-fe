@@ -3,7 +3,7 @@ import React from 'react';
 import {
     WAIT_ANIMATION_IMG,
     MSG_ALT_WAIT_ANIMATION,
-} from '../constants/general_constants';
+} from '../constants/general_constants.jsx';
 
 export const WaitAnimation = () => {
     return (

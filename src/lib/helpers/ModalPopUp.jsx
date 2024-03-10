@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
 // import { getPrefix } from '../../helpers';
-import { console_debug_log } from '../services/logging.service';
+import { console_debug_log } from '../services/logging.service.jsx';
 
-import { BUTTON_PRIMARY_CLASS } from '../constants/class_name_constants';
+import { BUTTON_PRIMARY_CLASS } from '../constants/class_name_constants.jsx';
 
 const debug = false;
 

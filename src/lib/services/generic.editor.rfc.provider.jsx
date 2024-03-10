@@ -2,7 +2,7 @@
 
 import React, { createContext, useState } from 'react';
 
-import { console_debug_log } from './logging.service';
+import { console_debug_log } from './logging.service.jsx';
 
 // Create a context to hold the function
 export const MainSectionContext = createContext();

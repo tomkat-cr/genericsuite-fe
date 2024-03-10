@@ -3,7 +3,8 @@ import React from 'react';
 import {
     GenericCrudEditor,
     GetFormData,
-} from '../../services/generic.editor.rfc.service';
+} from '../../services/generic.editor.rfc.service.jsx';
+
 import users_config from "../../../configs/frontend/users_config.json";
 
 export function UsersConfig_EditorData() {

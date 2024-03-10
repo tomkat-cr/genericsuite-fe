@@ -2,10 +2,10 @@
 
 import { Buffer } from 'buffer'
 
-import { logout, currentUserSubject } from './logout.service';
-import { dbApiService } from './db.service';
-import { handleResponse, handleFetchError } from './response.handlers.service';
-import { console_debug_log } from './logging.service';
+import { logout, currentUserSubject } from './logout.service.jsx';
+import { dbApiService } from './db.service.jsx';
+import { handleResponse, handleFetchError } from './response.handlers.service.jsx';
+import { console_debug_log } from './logging.service.jsx';
 
 export const authenticationService = {
     login,

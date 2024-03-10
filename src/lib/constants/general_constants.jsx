@@ -1,7 +1,8 @@
 import {
     // getConfigsJsonFile,
     buildConstant,
-} from "../helpers/json-utilities";
+} from "../helpers/json-utilities.jsx";
+
 import constants from "../../configs/frontend/general_constants.json";
 
 // Security

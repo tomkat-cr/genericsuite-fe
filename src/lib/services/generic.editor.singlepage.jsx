@@ -5,28 +5,28 @@ import React, { useEffect, useState, useContext } from 'react';
 import { 
     MainSectionContext,
     MainSectionProvider,
-} from './generic.editor.rfc.provider';
+} from './generic.editor.rfc.provider.jsx';
 import { 
     FormPage,
-} from './generic.editor.rfc.formpage';
+} from './generic.editor.rfc.formpage.jsx';
 import { 
     setEditorParameters,
     getEditoObj,
-} from './generic.editor.rfc.common';
+} from './generic.editor.rfc.common.jsx';
 import { 
     console_debug_log,
-} from './logging.service';
-import { getPrefix } from '../helpers/history';
-import { errorAndReEnter } from '../helpers/error-and-reenter';
+} from './logging.service.jsx';
+import { getPrefix } from '../helpers/history.jsx';
+import { errorAndReEnter } from '../helpers/error-and-reenter.jsx';
 
 import {
     ACTION_UPDATE,
-} from "../constants/general_constants";
+} from "../constants/general_constants.jsx";
 import {
     ERROR_MSG_CLASS,
-} from "../constants/class_name_constants";
+} from "../constants/class_name_constants.jsx";
 
-import { WaitAnimation } from "./wait.animation.utility";
+import { WaitAnimation } from "./wait.animation.utility.jsx";
 
 export const GenericSinglePageEditor = ({ editorConfig, id, parentData }) => {
     return (

@@ -4,16 +4,16 @@ import {
     timestampDbListPostRead,
     timestampDbPostRead,
     timestampDbPreWrite,
-} from './generic.editor.rfc.timestamp';
+} from './generic.editor.rfc.timestamp.jsx';
 import {
     mandatoryFiltersDbListPreRead,
     mandatoryFiltersDbPreRead,
-} from './generic.editor.rfc.specific.func';
-import { getSelectFieldsOptions } from './generic.editor.rfc.formpage';
-import { console_debug_log } from './logging.service';
-import { getUrlParams } from "../helpers/url-params";
-import { formatCaughtError } from "../helpers/error-and-reenter";
-import { dbApiService } from "./db.service";
+} from './generic.editor.rfc.specific.func.jsx';
+import { getSelectFieldsOptions } from './generic.editor.rfc.formpage.jsx';
+import { console_debug_log } from './logging.service.jsx';
+import { getUrlParams } from "../helpers/url-params.jsx";
+import { formatCaughtError } from "../helpers/error-and-reenter.jsx";
+import { dbApiService } from "./db.service.jsx";
 
 import {
     ACTION_CREATE,
@@ -21,7 +21,7 @@ import {
     ACTION_UPDATE,
     ACTION_DELETE,
     MSG_ERROR_MISSING_ARRAY_NAME_PARAM,
-} from "../constants/general_constants";
+} from "../constants/general_constants.jsx";
 
 export const getEditorData = (props) => (
     props.editorConfig

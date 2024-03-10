@@ -1,9 +1,11 @@
 import React from 'react';
+
 import {
     GenericCrudEditor,
     GetFormData,
-} from '../../services/generic.editor.rfc.service';
-import { TRUE_FALSE } from '../../constants/general_constants';
+} from '../../services/generic.editor.rfc.service.jsx';
+import { TRUE_FALSE } from '../../constants/general_constants.jsx';
+
 import general_config from "../../../configs/frontend/general_config.json";
 
 

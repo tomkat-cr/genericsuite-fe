@@ -1,9 +1,10 @@
 import {
     // getConfigsJsonFile,
     buildConstant,
-} from "../helpers/json-utilities";
-import constants from '../../configs/frontend/app_constants.json';
+} from "../helpers/json-utilities.jsx";
 // const constants = getConfigsJsonFile('app_constants');
+
+import constants from '../../configs/frontend/app_constants.json';
 
 export const BILLING_PLANS = buildConstant(constants.BILLING_PLANS);
 export const ERROR_MESSAGES = constants.ERROR_MESSAGES;

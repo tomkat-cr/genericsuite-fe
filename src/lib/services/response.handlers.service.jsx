@@ -3,8 +3,8 @@ import {
     MSG_ERROR_INVALID_CREDS,
     MSG_ERROR_POSSIBLE_CORS,
     MSG_ERROR_SESSION_EXPIRED,
-} from '../constants/general_constants';
-import { console_debug_log } from './logging.service';
+} from '../constants/general_constants.jsx';
+import { console_debug_log } from './logging.service.jsx';
 
 const debug = false;
 

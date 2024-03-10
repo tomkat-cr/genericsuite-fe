@@ -9,32 +9,32 @@ import {
     GenericMenuBuilder,
     getMenuFromApi,
     DefaultRoutes,
-} from '../../services/generic.menu.service';
+} from '../../services/generic.menu.service.jsx';
 import {
     authenticationService,
-} from '../../services/authentication.service';
+} from '../../services/authentication.service.jsx';
 import {
     console_debug_log,
-} from '../../services/logging.service';
+} from '../../services/logging.service.jsx';
 import {
     errorAndReEnter,
     logoutHander,
-} from '../../helpers/error-and-reenter';
+} from '../../helpers/error-and-reenter.jsx';
 import {
     getUrlParams,
-} from '../../helpers/url-params';
+} from '../../helpers/url-params.jsx';
 
-import { WaitAnimation } from '../../services/wait.animation.utility';
+import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 
 // Specific imports
 
-import { Users_EditorData } from '../SuperAdminOptions/Users';
-import { UserProfileEditor } from '../UsersMenu/UserProfile';
-// import { ChatBot } from '../ChatBot/ChatBot';
-import { HomePage } from '../HomePage/HomePage';
-import { LoginPage } from '../LoginPage/LoginPage';
-import { About, AboutBody } from '../About/About';
-import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig';
+import { Users_EditorData } from '../SuperAdminOptions/Users.jsx';
+import { UserProfileEditor } from '../UsersMenu/UserProfile.jsx';
+// import { ChatBot } from '../ChatBot/ChatBot.jsx';
+import { HomePage } from '../HomePage/HomePage.jsx';
+import { LoginPage } from '../LoginPage/LoginPage.jsx';
+import { About, AboutBody } from '../About/About.jsx';
+import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx';
 
 import './App.css';
 

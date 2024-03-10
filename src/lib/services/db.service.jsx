@@ -1,14 +1,14 @@
 // API/Database services
 
-import { authHeader } from '../helpers/auth-header';
+import { authHeader } from '../helpers/auth-header.jsx';
 import {
     ACTION_CREATE, 
     ACTION_UPDATE, 
     ACTION_DELETE, 
-} from '../constants/general_constants';
-import { handleResponse, handleFetchError, usePlainFetch } from './response.handlers.service';
-import { fixBlob, getFilenameFromContentDisposition, responseHasFile } from './blob.files.utilities';
-import { console_debug_log } from './logging.service';
+} from '../constants/general_constants.jsx';
+import { handleResponse, handleFetchError, usePlainFetch } from './response.handlers.service.jsx';
+import { fixBlob, getFilenameFromContentDisposition, responseHasFile } from './blob.files.utilities.jsx';
+import { console_debug_log } from './logging.service.jsx';
 
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
 export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data'};

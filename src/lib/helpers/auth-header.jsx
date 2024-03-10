@@ -1,5 +1,5 @@
-import { console_debug_log } from '../services/logging.service';
-import { authenticationService } from '../services/authentication.service';
+import { console_debug_log } from '../services/logging.service.jsx';
+import { authenticationService } from '../services/authentication.service.jsx';
 
 export function authHeader() {
     // Returns authorization header with jwt token

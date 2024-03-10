@@ -1,4 +1,4 @@
-import { console_debug_log } from "../services/logging.service";
+import { console_debug_log } from "../services/logging.service.jsx";
 
 const debug = false;
 
