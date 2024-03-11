@@ -19,6 +19,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## 1.0.6 (2024-03-11)
 ---
 
+### Fixes
+Fix "export default {" to be "export {" in index.cjs.
+
+
+## 1.0.6 (2024-03-11)
+---
+
 ### New
 Add ".env.example" and "CHANGELOG.md" to package.json included files.
 Add jest and <App /> test.

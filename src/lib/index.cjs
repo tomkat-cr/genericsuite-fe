@@ -59,7 +59,7 @@ import * as MadebyLogoEmblem from './images/madeby_logo_emblem.svg';
 import * as MadebyLogoSquare from './images/madeby_logo_square.svg';
 import * as Spark from './images/spark.svg';
 
-export default {
+export {
     // Components
     About, AboutBody,
     App,
