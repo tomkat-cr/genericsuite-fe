@@ -86,7 +86,8 @@ export default [
         output: [
             {
                 file: "dist/index.d.ts",
-                format: "esm"
+                format: "esm",
+                name: "genericsuite"
             }
         ],
         plugins: [

@@ -1,6 +1,6 @@
 {
   "name": "genericsuite",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "The GenericSuite for ReactJS (frontend version)",
   "author": "Carlos J. Ramirez",
   "license": "MIT",
@@ -10,7 +10,6 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src",
     "scripts",
     "Makefile",
     "webpack.config.js",

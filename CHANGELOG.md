@@ -16,11 +16,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.7 (2024-03-11)
+---
+
+### Fixes
+Fix remove "index" as namespace adding the "output.name" parameter in "rollup.config.mjs".
+
+
 ## 1.0.6 (2024-03-11)
 ---
 
 ### Fixes
-Fix "export default {" to be "export {" in index.cjs.
+Fix "export default {" to be "export {" in "index.cjs".
 
 
 ## 1.0.6 (2024-03-11)
