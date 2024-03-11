@@ -85,7 +85,7 @@ function setExpanded(componentObj) {
     return '';
 }
 
-export const App = ({componentMap = defaultComponentMap}) => {
+export const App = ({componentMap = defaultComponentMap, appLogo = null}) => {
     
     const [currentUser, setCurrentUser] = useState(null);
     const [state, setState] = useState("");
@@ -193,6 +193,7 @@ export const App = ({componentMap = defaultComponentMap}) => {
                         componentMap={componentMap}
                         setExpanded={setExpanded}
                         showContentOnly={showContentOnly}
+                        appLogo={appLogo}
                     />
                 </div>
             </div>
@@ -230,6 +231,7 @@ const AppMainComponent = ({
     componentMap,
     showContentOnly,
     setExpanded,
+    appLogo = null,
 }) => {
     if (login || window.location.href.includes("/login")) {
         if (debug) console_debug_log("AppMainComponent | login");
@@ -240,7 +242,7 @@ const AppMainComponent = ({
                 </CloseButton>
             );
         }
-        return (<LoginPage/>);
+        return (<LoginPage appLogo={appLogo}/>);
     }
     if (state !== "") {
         if (debug) console_debug_log("AppMainComponent | errorAndReEnter");
@@ -265,6 +267,7 @@ const AppMainComponent = ({
             menuOptions={menuOptions}
             status={state}
             setExpanded={setExpanded}
+            appLogo={appLogo}
         />
     )
 }

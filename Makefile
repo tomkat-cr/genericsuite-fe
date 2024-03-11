@@ -32,13 +32,11 @@ clean:
 fresh: clean install
 
 # Development Commands
-tests-dev:
+test-dev:
 	npm run test-dev
 
-tests:
-	npm test
-
-test: tests
+test:
+	npm run test
 
 eject-dev:
 	npm run eject-dev

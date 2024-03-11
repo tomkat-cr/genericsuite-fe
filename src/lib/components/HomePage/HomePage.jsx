@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { authenticationService } from '../../services/authentication.service.jsx';
 import { LoginPage } from '../LoginPage/LoginPage.jsx';
 
-export const HomePage = ({children}) => {
+export const HomePage = ({children, appLogo = null}) => {
     const [currentUser, setCurrentUser] = useState(authenticationService.currentUserValue);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export const HomePage = ({children}) => {
     return (
         <div>
             {!currentUser &&
-                <LoginPage/>
+                <LoginPage appLogo={appLogo}/>
             }
             {currentUser && children && 
                 {children}

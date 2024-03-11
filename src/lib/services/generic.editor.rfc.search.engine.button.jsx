@@ -38,7 +38,7 @@ export const SearchEngineButton = ({
                 <button
                     onClick={handleGoogleClick}
                 >
-                    <img src={GoogleIcon} alt="Open Google Search" />
+                    <GoogleIcon alt="Open Google Search" />
                 </button>
             </div>
         </>

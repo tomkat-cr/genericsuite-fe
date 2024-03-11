@@ -64,6 +64,7 @@ export const GenericMenuBuilder = (
         status,
         login,
         setExpanded,
+        appLogo = null,
     }
 ) => {
     const getElementObj = (item) => {
@@ -110,7 +111,7 @@ export const GenericMenuBuilder = (
         if (login) {
             return '';
         }
-        const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw()];
+        const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo)];
         if (debug) {
             console_debug_log("GenericMenuBuilder: getRoutes | menuOptionsFinal", menuOptionsFinal);
         }
@@ -266,12 +267,12 @@ export const GenericMenuBuilder = (
         // if (login) {
         //     return '';
         // }
-        return <DefaultRoutes/>;
+        return <DefaultRoutes appLogo={appLogo} />;
     }
 
     if (status !== "") {
         // return '';
-        return <DefaultRoutes/>;
+        return <DefaultRoutes appLogo={appLogo} />;
     }
 
     return menuItems(itemType, title);
@@ -299,43 +300,43 @@ export const editorMenuOption = (editor, setExpanded) => {
     );
 }
 
-export const getDefaultRoutesRaw = () => {
+export const getDefaultRoutesRaw = ( appLogo = null ) => {
     if (debug) console_debug_log('getDefaultRoutesRaw');
     return [
         {
             title: 'homepage1',
             path: "/",
-            element_obj: <HomePage/>,
+            element_obj: <HomePage appLogo={appLogo}/>,
             type: "nav_link",
         },
         {
             title: 'homepage2',
             path: getPrefix(true)+"/",
-            element_obj: <HomePage/>,
+            element_obj: <HomePage appLogo={appLogo}/>,
             type: "nav_link",
         },
         {
             title: 'homepage3',
             path: getPrefix(true).replace('/#', '/')+"/",
-            element_obj: <HomePage/>,
+            element_obj: <HomePage appLogo={appLogo}/>,
             type: "nav_link",
         },
         {
             title: 'loginpage1',
             path: "/login",
-            element_obj: <LoginPage/>,
+            element_obj: <LoginPage appLogo={appLogo}/>,
             type: "nav_link",
         },
         {
             title: 'loginpage2',
             path: getPrefix(true)+"/login",
-            element_obj: <LoginPage/>,
+            element_obj: <LoginPage appLogo={appLogo}/>,
             type: "nav_link",
         },
         {
             title: 'loginpage3',
             path: getPrefix(true).replace('/#', '/')+"/login",
-            element_obj: <LoginPage/>,
+            element_obj: <LoginPage appLogo={appLogo}/>,
             type: "nav_link",
         },
     ];
@@ -351,7 +352,7 @@ const InvalidRouteRedirect = () => {
     );
 }
 
-export const DefaultRoutes = () => {
+export const DefaultRoutes = ( { appLogo = null} ) => {
     const homePagePath3 = getPrefix(true).replace('/#', '/')+"/";
     if (debug) {
         console_debug_log(`DefaultRoutes | homePagePath3: ${homePagePath3}`)
@@ -359,7 +360,7 @@ export const DefaultRoutes = () => {
     return (
         <Routes history={history}>
             {
-                getDefaultRoutesRaw().map(item => {
+                getDefaultRoutesRaw(appLogo).map(item => {
                     if (debug) {
                         console_debug_log("DefaultRoutes: item:", item);
                     }

@@ -9,9 +9,14 @@ import SparkIcon from "../images/spark.svg";
 
 // import { ChatBot } from '../components/ChatBot/ChatBot';
 let ChatBot;
-if (process.env.REACT_APP_GENERIC_SUITE_AI_PATH !== '') {
-    ChatBot = require(`${process.env.REACT_APP_GENERIC_SUITE_AI_PATH}/components/ChatBot`).ChatBot;
-};
+if (process.env.REACT_APP_GENERIC_SUITE_AI === '1') {
+    try {
+        ChatBot = require('genericsuite_ai').ChatBot;
+    } catch (err) {
+        console_debug_log(`ChatBotButton | ChatBot component not found | err:`, err);
+        ChatBot = null;
+    } 
+}
 
 const debug = true;
 
@@ -47,6 +52,10 @@ export const ChatBotButton = ({
         }
     };
 
+    if (!ChatBot) {
+        return "Please run 'npm i genericsuite-ai'";
+    }
+
     return (
         <>
             <div
@@ -56,7 +65,7 @@ export const ChatBotButton = ({
                     <button
                         onClick={handleSparkClick}
                     >
-                        <img src={SparkIcon} alt="Open AI Chat" />
+                        <SparkIcon alt="Open AI Chat" />
                     </button>
                 </div>
             </div>

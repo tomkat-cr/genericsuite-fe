@@ -16,6 +16,29 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.6 (2024-03-11)
+---
+
+### New
+Add ".env.example" and "CHANGELOG.md" to package.json included files.
+Add jest and <App /> test.
+New GenericSuite cirle logo "gs_logo_circle.svg"
+Add GenericSuite logo to index.tsx to customize Login.
+
+### Changes
+"appLogoPar" parameter renamed to "appLogo" in the LoginPage component.
+"appLogo" parameter added to App.jsx, HomePage.jsx and generic.menu.service.jsx.
+REACT_APP_GENERIC_SUITE_AI_PATH removed from env.example, webpack.config.js and generic.editor.rfc.ai.button.jsx, and replaced by REACT_APP_GENERIC_SUITE_AI.
+"console.error" replaced by "console_debug_log" in db.service.jsx and generic.editor.rfc.ai.button.jsx to avoid test errors.
+"<img src="...">" in .svg images changed to "<SVGimage />".
+All dependencies moved to devDependencies and peerDependencies to effectively build the library in npmjs.
+Module in "tsconfig.json" changed to "ESNext"
+"/index.d.ts" removed.
+"src/lib/index.js" renamed to "src/lib/index.cjs"
+"babel.config.json" renamed to "babel.config.cjs".
+"rollup.config.js" renamed to "rollup.config.mjs"
+
+
 ## 1.0.5 (2024-03-09)
 ---
 
@@ -55,7 +78,8 @@ getConfigsJsonFile() removed because require() doesn't allow expresions. E.g. re
 ---
 
 ### New
-Add "constants-browserify" webpack resolve fallback.
+Add "constants-browserify" to webpack resolve fallback.
+Add "lock" option to Makefile.
 
 ### Changes
 Upgraded "fs": "0.0.1-security" to "^0.0.2".

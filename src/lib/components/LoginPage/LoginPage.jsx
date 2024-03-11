@@ -8,24 +8,23 @@ import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
 import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 
-import defaultAppLogo from '../../images/app_logo_square.svg';
+import DefaultAppLogo from '../../images/app_logo_square.svg';
 // import MadeByLogoSquare from '../../images/madeby_logo_square.svg';
 // import MadeByLogoCircle from '../../images/madeby_logo_emblem.svg';
 
 export const LoginPage = (props) => {
     const [redirectUrl, setRedirectUrl] = useState(null);
-    let appLogo = defaultAppLogo;
 
     useEffect(() => {
         const urlParams = getUrlParams(props)
         let redirect;
-        if (typeof props.appLogoPar === 'undefined') {
-            appLogo = props.appLogoPar;
-        }
         if (typeof urlParams.redirect === 'undefined') {
             redirect = getLastUrl();
         } else {
             redirect = urlParams.redirect;
+        }
+        if (typeof props.appLogo === 'undefined') {
+            props.appLogo = null;
         }
         // Redirect to home OR redirect URL if already logged in
         if (authenticationService.currentUserValue) {
@@ -76,8 +75,24 @@ export const LoginPage = (props) => {
                 <div className="flex justify-center items-center min-h-screen mt-1 mb-1">
                     <div className="bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4" style={{ width: '400px', margin: 'auto' }}>
                         <Form>
-                        <img src={appLogo} alt="App Logo" width="150" height="150" className="mx-auto my-0" />
-                        {/* <img src={MadeByLogoCircle} alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
+                            {props.appLogo !== null &&
+                                <props.appLogo
+                                    width="150"
+                                    height="150"
+                                    className="mx-auto my-0"
+                                    alt="App Logo"
+                                />
+                            }
+                            {props.appLogo === null &&
+                                <DefaultAppLogo
+                                    width="150"
+                                    height="150"
+                                    className="mx-auto my-0"
+                                    alt="App Logo"
+                                />
+                            }
+                            {/* <MadeByLogoSquare alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
+                            {/* <MadeByLogoCircle alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
                             <div className="form-group">
                                 <label htmlFor="username">Username</label>
                                 <Field
