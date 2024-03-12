@@ -16,14 +16,27 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.7 (2024-03-11)
+## 1.0.9 (2024-03-11)
+---
+
+### New
+Add mergeDicts() (helpers/dict-utilities.jsx).
+
+### Changes
+Parameter "componentMap" of <App /> addsmerges the element list supplied with defaultComponentMap. Previously it replaced defaultComponentMap.
+
+### Fixes
+Version sequence in CHANGELOG.
+
+
+## 1.0.8 (2024-03-11)
 ---
 
 ### Fixes
 Fix remove "index" as namespace adding the "output.name" parameter in "rollup.config.mjs".
 
 
-## 1.0.6 (2024-03-11)
+## 1.0.7 (2024-03-11)
 ---
 
 ### Fixes
@@ -51,6 +64,12 @@ Module in "tsconfig.json" changed to "ESNext"
 "src/lib/index.js" renamed to "src/lib/index.cjs"
 "babel.config.json" renamed to "babel.config.cjs".
 "rollup.config.js" renamed to "rollup.config.mjs"
+
+### Fixes
+Fix the "RollupError: Could not resolve entry module "dist/esm/index.js"." error changing the following values in "package.json":
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
 
 
 ## 1.0.5 (2024-03-09)
@@ -80,7 +99,7 @@ Add "build" option to Makefile.
 
 ### Changes
 Extension changed to .jsx for all .js files.
-Change module restructure: add "src/lib" directory, remove "_" prefix to "_components", "_constants", "_helpers", "_images", and "_services", move these directories to "src/lib".
+Change module structure: add "src/lib" directory, remove "_" prefix to "_components", "_constants", "_helpers", "_images", and "_services", move these directories to "src/lib".
 All components and generic code exports included in the "src/lib/index.js" file.
 Use a direct import from the .json config files instead of require() in getConfigsJsonFile() to allow the App (project that include genericsuite) to handle its own configuration files.
 

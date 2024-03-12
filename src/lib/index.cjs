@@ -15,6 +15,7 @@ import * as generalConstants from './constants/general_constants.jsx';
 import * as authHeader from './helpers/auth-header.jsx';
 import * as conversions from './helpers/conversions.jsx';
 import * as dateTimestamp from './helpers/date-timestamp.jsx';
+import * as dictUtilities from './helpers/dict-utilities.jsx';
 import * as errorAndReenter from './helpers/error-and-reenter.jsx';
 import * as history from './helpers/history.jsx';
 import * as jsonUtilities from './helpers/json-utilities.jsx';
@@ -76,6 +77,7 @@ export {
     authHeader,
     conversions,
     dateTimestamp,
+    dictUtilities,
     errorAndReenter,
     history,
     jsonUtilities,

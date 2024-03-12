@@ -23,6 +23,9 @@ import {
 import {
     getUrlParams,
 } from '../../helpers/url-params.jsx';
+import {
+    mergeDicts,
+} from '../../helpers/dict-utilities.jsx';
 
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 
@@ -38,7 +41,7 @@ import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx
 
 import './App.css';
 
-const debug = false;
+const debug = true;
 
 const defaultComponentMap = {
     "Users_EditorData": Users_EditorData,
@@ -85,7 +88,7 @@ function setExpanded(componentObj) {
     return '';
 }
 
-export const App = ({componentMap = defaultComponentMap, appLogo = null}) => {
+export const App = ({componentMap = {}, appLogo = null}) => {
     
     const [currentUser, setCurrentUser] = useState(null);
     const [state, setState] = useState("");
@@ -96,6 +99,7 @@ export const App = ({componentMap = defaultComponentMap, appLogo = null}) => {
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
     const version = process.env.REACT_APP_VERSION;
     const appName = process.env.REACT_APP_APP_NAME;
+    const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
 
     if (debug) {
         console_debug_log("App enters... | window:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly);
@@ -151,7 +155,7 @@ export const App = ({componentMap = defaultComponentMap, appLogo = null}) => {
                                         className="me-auto"
                                     >
                                         <GenericMenuBuilder
-                                            componentMapping={componentMap}
+                                            componentMapping={componentMapFinal}
                                             itemType="top_menu"
                                             menuOptions={menuOptions}
                                             status={state}
@@ -168,7 +172,7 @@ export const App = ({componentMap = defaultComponentMap, appLogo = null}) => {
                                     </Navbar.Text>
                                     <GenericMenuBuilder
                                         title={currentUser.firstName}
-                                        componentMapping={componentMap}
+                                        componentMapping={componentMapFinal}
                                         itemType="hamburger"
                                         menuOptions={menuOptions}
                                         status={state}
@@ -190,7 +194,7 @@ export const App = ({componentMap = defaultComponentMap, appLogo = null}) => {
                         state={state}
                         stateHandler={stateHandler}
                         menuOptions={menuOptions}
-                        componentMap={componentMap}
+                        componentMap={componentMapFinal}
                         setExpanded={setExpanded}
                         showContentOnly={showContentOnly}
                         appLogo={appLogo}
