@@ -16,6 +16,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.11 (2024-03-12)
+---
+
+### New
+Add: start documentation in README.
+Add: GenericSuite logo to index.jsx
+
+### Changes
+Turn off debug on dict-utilities.
+
+
 ## 1.0.10 (2024-03-11)
 ---
 
