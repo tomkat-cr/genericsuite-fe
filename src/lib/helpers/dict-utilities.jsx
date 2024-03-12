@@ -1,4 +1,9 @@
+import { console_debug_log } from '../services/logging.service.jsx';
+
+const debug = true;
+
 export const mergeDicts = (dictToAdd, originDict) => {
+    if (debug) console_debug_log(">>> 1) mergeDicts | dictToAdd:", dictToAdd, 'originDict:', originDict);
     if (!(typeof dictToAdd === 'object' && dictToAdd !== null)) {
         dictToAdd = {};
     }
@@ -6,5 +11,6 @@ export const mergeDicts = (dictToAdd, originDict) => {
         acc[key] = value;
         return acc;
     }, {...dictToAdd});
+    if (debug) console_debug_log(">>> 2) mergeDicts | dictToAddFinal:", dictToAddFinal);
     return dictToAddFinal;
 }

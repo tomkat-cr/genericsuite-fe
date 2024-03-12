@@ -16,6 +16,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.10 (2024-03-11)
+---
+
+### New
+Add: debug log for mergeDicts().
+
+### Fixes
+"package-lock.json" rebuilt.
+
+
 ## 1.0.9 (2024-03-11)
 ---
 
