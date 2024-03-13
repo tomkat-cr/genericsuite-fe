@@ -1,7 +1,7 @@
 # GenericSuite (frontend version)
 The GenericSuite for ReactJS (frontend version).
 
-<center>![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.svg)</center>
+![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.svg)
 
 Welcome to GenericSuite, a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the front-end component of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
 

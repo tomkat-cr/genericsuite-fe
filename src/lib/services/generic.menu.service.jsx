@@ -23,10 +23,14 @@ import { LoginPage } from '../components/LoginPage/LoginPage.jsx';
 import { HomePage } from '../components/HomePage/HomePage.jsx';
 
 // Not accepted this way:
-// import Nav from 'react-bootstrap/esm/Nav.js';
-// import NavDropdown from 'react-bootstrap/esm/NavDropdown.js';
-const Nav = require('react-bootstrap').Nav;
-const NavDropdown = require('react-bootstrap').NavDropdown;
+// import Nav from 'react-bootstrap/Nav';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
+
+// const Nav = require('react-bootstrap').Nav;
+// const NavDropdown = require('react-bootstrap').NavDropdown;
+
+import Nav from 'react-bootstrap/cjs/Nav.js';
+import NavDropdown from 'react-bootstrap/cjs/NavDropdown.js';
 
 const debug = false;
 

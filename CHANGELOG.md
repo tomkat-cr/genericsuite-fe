@@ -19,6 +19,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## 1.0.12 (2024-03-13)
 ---
 
+### Fixes
+Fix "Uncaught ReferenceError: require is not defined in ./node_modules/genericsuite/dist/esm/index.js" replacing "require('react-bootstrap')" by import ... from 'react-bootstrap/cjs/...".
+
+
+## 1.0.11 (2024-03-13)
+---
+
 ### New
 Add: library documentation in README.
 Add: GenericSuite logo to src/index.jsx

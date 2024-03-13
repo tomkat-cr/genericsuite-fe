@@ -42,16 +42,16 @@ import './App.css';
 // import Container from 'react-bootstrap/Container';
 // import Nav from 'react-bootstrap/Nav';
 // import Navbar from 'react-bootstrap/Navbar';
-// Nor this way:
-// import Container from 'react-bootstrap/esm/Container.js';
-// import Nav from 'react-bootstrap/esm/Nav.js';
-// import Navbar from 'react-bootstrap/esm/Navbar.js';
 
-const Container = require('react-bootstrap').Container;
-const Nav = require('react-bootstrap').Nav;
-const Navbar = require('react-bootstrap').Navbar;
+import Container from 'react-bootstrap/cjs/Container.js';
+import Nav from 'react-bootstrap/cjs/Nav.js';
+import Navbar from 'react-bootstrap/cjs/Navbar.js';
 
-const debug = true;
+// const Container = require('react-bootstrap').Container;
+// const Nav = require('react-bootstrap').Nav;
+// const Navbar = require('react-bootstrap').Navbar;
+
+const debug = false;
 
 const defaultComponentMap = {
     "Users_EditorData": Users_EditorData,
