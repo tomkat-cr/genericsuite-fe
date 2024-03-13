@@ -1,7 +1,7 @@
 # GenericSuite (frontend version)
 The GenericSuite for ReactJS (frontend version).
 
-![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.svg)
+<center>![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.svg)</center>
 
 Welcome to GenericSuite, a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the front-end component of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
 
@@ -14,6 +14,13 @@ Welcome to GenericSuite, a comprehensive software solution designed to enhance y
 - **Testing with Jest:** Comes pre-configured with Jest for running tests, including an initial test for the `<App />` component.
 - **Inclusion of Essential Files:** `.env.example` for environment variables setup, `Makefile` to short-cut frecuent operations, `webpack.config.js` and `config-overrides.js` to run the App locally with `Webpack` or `react-app-rewired`, `scripts` with development and production scripts, 
  and `CHANGELOG.md` for tracking changes across versions.
+
+The perfect companion for this frontend solution is the backend version of Genericsuite:<br/>
+[https://github.com/tomkat-cr/genericsuite-be](https://github.com/tomkat-cr/genericsuite-be)
+
+There's a version of this library with AI features. The Genericsuite AI:<br/>
+[https://github.com/tomkat-cr/genericsuite-fe-ai](https://github.com/tomkat-cr/genericsuite-fe-ai)
+
 
 ## Pre-requisites
 
@@ -52,6 +59,7 @@ To get started with GenericSuite, follow these simple steps:
    ```bash
    npm install
    ```
+
 4. **Prepare the Configuration File**:
 
    Copy the template from `node_modules/genericsuite`:

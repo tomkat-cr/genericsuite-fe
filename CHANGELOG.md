@@ -16,15 +16,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.11 (2024-03-12)
+## 1.0.12 (2024-03-13)
 ---
 
 ### New
-Add: start documentation in README.
-Add: GenericSuite logo to index.jsx
+Add: library documentation in README.
+Add: GenericSuite logo to src/index.jsx
 
 ### Changes
 Turn off debug on dict-utilities.
+
+### Fixes
+Fix error "Can't resolve 'react-bootstrap/NavDropdown' in './genericsuite/dist/esm' Did you mean 'NavDropdown.js'?", as well as the same errors with "Nav" and 'Contyainer.
 
 
 ## 1.0.10 (2024-03-11)

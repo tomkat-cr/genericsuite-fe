@@ -7,9 +7,6 @@ import { Link as RouterLink } from 'react-router-dom';
 // For navigation components, consider using a different library such as 'react-bootstrap'.
 // import { NavDropdown, Nav } from 'tailwindcss';
 
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-
 import { history, getPrefix } from '../helpers/history.jsx';
 import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
 import {
@@ -24,6 +21,12 @@ import {
 
 import { LoginPage } from '../components/LoginPage/LoginPage.jsx';
 import { HomePage } from '../components/HomePage/HomePage.jsx';
+
+// Not accepted this way:
+// import Nav from 'react-bootstrap/esm/Nav.js';
+// import NavDropdown from 'react-bootstrap/esm/NavDropdown.js';
+const Nav = require('react-bootstrap').Nav;
+const NavDropdown = require('react-bootstrap').NavDropdown;
 
 const debug = false;
 

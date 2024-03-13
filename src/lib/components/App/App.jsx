@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { Link as RouterLink } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 
 import {
     GenericMenuBuilder,
@@ -40,6 +37,19 @@ import { About, AboutBody } from '../About/About.jsx';
 import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx';
 
 import './App.css';
+
+// Not accepted this way:
+// import Container from 'react-bootstrap/Container';
+// import Nav from 'react-bootstrap/Nav';
+// import Navbar from 'react-bootstrap/Navbar';
+// Nor this way:
+// import Container from 'react-bootstrap/esm/Container.js';
+// import Nav from 'react-bootstrap/esm/Nav.js';
+// import Navbar from 'react-bootstrap/esm/Navbar.js';
+
+const Container = require('react-bootstrap').Container;
+const Nav = require('react-bootstrap').Nav;
+const Navbar = require('react-bootstrap').Navbar;
 
 const debug = true;
 
