@@ -10,5 +10,9 @@
     "LANGUAGES": {
         "en": "English",
         "es": "Español"
+    },
+    "GENDERS": {
+        "m": "Male",
+        "f": "Female"
     }
 }

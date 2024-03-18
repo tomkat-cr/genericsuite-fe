@@ -28,7 +28,7 @@ import * as urlParams from './helpers/url-params.jsx';
 import * as authenticationService from './services/authentication.service.jsx';
 import * as blobFilesUtilities from './services/blob.files.utilities.jsx';
 import * as dbService from './services/db.service.jsx';
-import * as genericEditorRfcAiButton from './services/generic.editor.rfc.ai.button.jsx';
+// import * as genericEditorRfcAiButton from './services/generic.editor.rfc.ai.button.jsx';
 import * as genericEditorRfcCommon from './services/generic.editor.rfc.common.jsx';
 import * as genericEditorRfcFormpage from './services/generic.editor.rfc.formpage.jsx';
 import * as genericEditorRfcProvider from './services/generic.editor.rfc.provider.jsx';
@@ -49,16 +49,16 @@ import * as ramdomize from './services/ramdomize.jsx';
 import * as responseHandlersService from './services/response.handlers.service.jsx';
 import * as waitAnimationUtility from './services/wait.animation.utility.jsx';
 // Images
-import * as AppLogoEmblem from './images/app_log_emblem.svg';
-import * as AppLogoCircle from './images/app_logo_circle.svg';
-import * as AppLogoHorizontal from './images/app_logo_horizontal.svg';
-import * as AppLogoSquare from './images/app_logo_square.svg';
-import * as ArrowsRotateSolid from './images/arrows_rotate_solid.svg';
-import * as Clip from './images/clip.svg';
-import * as GoogleLogo from './images/google_logo.svg';
-import * as MadebyLogoEmblem from './images/madeby_logo_emblem.svg';
-import * as MadebyLogoSquare from './images/madeby_logo_square.svg';
-import * as Spark from './images/spark.svg';
+const appLogoEmblem = 'app_log_emblem.svg';
+const appLogoCircle = 'app_logo_circle.svg';
+const appLogoHorizontal = 'app_logo_horizontal.svg';
+const appLogoSquare = 'app_logo_square.svg';
+const arrowsRotateSolid = 'arrows_rotate_solid.svg';
+const clip = 'clip.svg';
+const googleLogo = 'google_logo.svg';
+const madebyLogoEmblem = 'madeby_logo_emblem.svg';
+const madebyLogoSquare = 'madeby_logo_square.svg';
+const spark = 'spark.svg';
 
 export {
     // Components
@@ -90,7 +90,7 @@ export {
     authenticationService,
     blobFilesUtilities,
     dbService,
-    genericEditorRfcAiButton,
+    // genericEditorRfcAiButton,
     genericEditorRfcCommon,
     genericEditorRfcFormpage,
     genericEditorRfcProvider,
@@ -111,14 +111,14 @@ export {
     responseHandlersService,
     waitAnimationUtility,
     // Images
-    AppLogoEmblem,
-    AppLogoCircle,
-    AppLogoHorizontal,
-    AppLogoSquare,
-    ArrowsRotateSolid,
-    Clip,
-    GoogleLogo,
-    MadebyLogoEmblem,
-    MadebyLogoSquare,
-    Spark,
+    appLogoEmblem,
+    appLogoCircle,
+    appLogoHorizontal,
+    appLogoSquare,
+    arrowsRotateSolid,
+    clip,
+    googleLogo,
+    madebyLogoEmblem,
+    madebyLogoSquare,
+    spark,
 }

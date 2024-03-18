@@ -43,13 +43,14 @@ import './App.css';
 // import Nav from 'react-bootstrap/Nav';
 // import Navbar from 'react-bootstrap/Navbar';
 
-import Container from 'react-bootstrap/cjs/Container.js';
-import Nav from 'react-bootstrap/cjs/Nav.js';
-import Navbar from 'react-bootstrap/cjs/Navbar.js';
-
+// Not accepted this way neither:
 // const Container = require('react-bootstrap').Container;
 // const Nav = require('react-bootstrap').Nav;
 // const Navbar = require('react-bootstrap').Navbar;
+
+import Container from 'react-bootstrap/cjs/Container.js';
+import Nav from 'react-bootstrap/cjs/Nav.js';
+import Navbar from 'react-bootstrap/cjs/Navbar.js';
 
 const debug = false;
 
@@ -112,7 +113,7 @@ export const App = ({componentMap = {}, appLogo = null}) => {
     const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
 
     if (debug) {
-        console_debug_log("App enters... | window:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly);
+        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMapFinal:', componentMapFinal, 'appLogo:', appLogo);
     }
 
     useEffect(() => {

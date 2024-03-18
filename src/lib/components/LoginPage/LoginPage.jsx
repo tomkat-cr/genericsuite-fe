@@ -7,10 +7,14 @@ import { getUrlParams } from '../../helpers/url-params.jsx';
 import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
 import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
+import { imageDirectory } from '../../constants/general_constants.jsx';
 
-import DefaultAppLogo from '../../images/app_logo_square.svg';
+// This way to import the .svg files doesn't work on prod environents...
+// import DefaultAppLogo from '../../images/app_logo_square.svg';
 // import MadeByLogoSquare from '../../images/madeby_logo_square.svg';
 // import MadeByLogoCircle from '../../images/madeby_logo_emblem.svg';
+
+const defaultAppLogo = "app_logo_square.svg";
 
 export const LoginPage = (props) => {
     const [redirectUrl, setRedirectUrl] = useState(null);
@@ -75,22 +79,12 @@ export const LoginPage = (props) => {
                 <div className="flex justify-center items-center min-h-screen mt-1 mb-1">
                     <div className="bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4" style={{ width: '400px', margin: 'auto' }}>
                         <Form>
-                            {props.appLogo !== null &&
-                                <props.appLogo
-                                    width="150"
-                                    height="150"
-                                    className="mx-auto my-0"
-                                    alt="App Logo"
-                                />
-                            }
-                            {props.appLogo === null &&
-                                <DefaultAppLogo
-                                    width="150"
-                                    height="150"
-                                    className="mx-auto my-0"
-                                    alt="App Logo"
-                                />
-                            }
+                            <img src={imageDirectory + (props.appLogo !== null ? props.appLogo : defaultAppLogo)}
+                                width="150"
+                                height="150"
+                                className="mx-auto my-0"
+                                alt="App Logo"
+                            />
                             {/* <MadeByLogoSquare alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
                             {/* <MadeByLogoCircle alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
                             <div className="form-group">

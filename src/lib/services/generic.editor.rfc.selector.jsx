@@ -228,6 +228,9 @@ export const putSelectOptionsFromArray = (
   let emptyElement = {};
   emptyElement[title_field_name] = MSG_SELECT_AN_OPTION;
   emptyElement[value_field_name] = null;
+  if (debug) {
+    console_debug_log(`putSelectOptionsFromArray | title_field_name: ${title_field_name} | value_field_name: ${value_field_name} | select_array_elements:`, select_array_elements);
+  }
   const selectOptions = [...[emptyElement], ...select_array_elements];
   return selectOptions.map((option) => (
     <option key={option[value_field_name]} value={option[value_field_name]}>

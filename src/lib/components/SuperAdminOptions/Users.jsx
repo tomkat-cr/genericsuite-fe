@@ -22,6 +22,7 @@ import {
     ACTION_UPDATE,
     TRUE_FALSE,
     LANGUAGES,
+    GENDERS,
 } from '../../constants/general_constants.jsx';
 
 import { UsersConfig } from '../UsersMenu/UsersConfig.jsx';
@@ -35,6 +36,7 @@ export function Users_EditorData(calleeName='Users_EditorData') {
         "LANGUAGES": LANGUAGES, 
         "TRUE_FALSE": TRUE_FALSE,
         "BILLING_PLANS": BILLING_PLANS,
+        "GENDERS": GENDERS,
         "UsersDbPostWrite": UsersDbPostWrite,
         "UsersConfig": UsersConfig,
         "Users": Users,

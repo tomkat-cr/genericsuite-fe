@@ -2,17 +2,25 @@
 # run_app_frontend.sh
 # 2023-11-28 | CR
 
+REPO_BASEDIR="`pwd`"
+cd "`dirname "$0"`" ;
+SCRIPTS_DIR="`pwd`" ;
+cd "${REPO_BASEDIR}"
+
+# Defaults
 RUN_METHOD="react-scripts"
 # RUN_METHOD="webpack"
 
 set -o allexport; source ".env" ; set +o allexport ;
 
+STAGE="$1"
+
 echo ""
-echo "Stage = $1"
+echo "Stage = ${STAGE}"
 echo "REACT_APP_API_URL_DEV = ${REACT_APP_API_URL_DEV}"
 echo "RUN_METHOD = ${RUN_METHOD}"
 echo ""
-if [ "$1" = "dev" ]; then
+if [ "${STAGE}" = "dev" ]; then
     echo "Do you want to run: 1) http, 2) https ?"
     read choice
     while [[ ! $choice =~ ^[12]$ ]]; do
@@ -22,7 +30,8 @@ if [ "$1" = "dev" ]; then
     if [ "$choice" = "1" ]; then
         echo "Run by: http"
         if [ "${BACKEND_LOCAL_PORT_HTTP}" = "" ]; then
-            BACKEND_LOCAL_PORT_HTTP="5002"
+            # BACKEND_LOCAL_PORT_HTTP="5002"
+            BACKEND_LOCAL_PORT_HTTP="5001"
         fi
         if [ "${APP_LOCAL_DOMAIN_NAME}" = "" ]; then
             if [ "${REACT_APP_APP_NAME}" = "" ]; then
@@ -40,7 +49,30 @@ if [ "$1" = "dev" ]; then
         echo "Run by: https"
     fi
 fi
-if [ "$1" = "dev" ]; then
+
+# Copy images to build/static/media
+if ! source ${SCRIPTS_DIR}/build_copy_images.sh
+then
+    echo ""
+    echo "ERROR running: source ${SCRIPTS_DIR}/build_copy_images.sh"
+    exit 1
+fi
+
+# Create Symlink to build/static/media for the local runtime
+if [ ! -L "./public/static" ]; then
+    echo ""
+    echo "Creating symlink: ./public/static/media"
+    echo ""
+    if ! ln -s "$(pwd)/build/static" "$(pwd)/public/static"
+    then
+        echo ""
+        echo "ERROR running: ln -s \"$(pwd)/build/static\" \"$(pwd)/public/static\""
+        exit 1
+    fi
+fi
+
+
+if [ "${STAGE}" = "dev" ]; then
     if [ "${RUN_METHOD}" = "webpack" ]; then
         perl -i -pe"s|\"type\": \"module\"|\"type1\": \"module\"|g" package.json
         perl -i -pe"s|\%PUBLIC_URL\%||g" public/index.html
@@ -54,10 +86,22 @@ if [ "$1" = "dev" ]; then
     fi
 fi
 
-if [ "$1" = "qa" ]; then
+if [ "${STAGE}" = "qa" ]; then
     npm run start-dev
 fi
 
-if [ "$1" = "prod" ]; then
+if [ "${STAGE}" = "prod" ]; then
 	npm start
+fi
+
+if [ -L "$(pwd)/public/static" ]; then
+    echo ""
+    echo "Removing symlink: $(pwd)/public/static"
+    echo ""
+    if ! rm "$(pwd)/public/static"
+    then
+        echo ""
+        echo "ERROR removing symlink: ./public/static"
+        exit 1
+    fi
 fi

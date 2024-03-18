@@ -3,6 +3,10 @@
 # 2023-07-17 | CR
 
 REPO_BASEDIR="`pwd`"
+cd "`dirname "$0"`" ;
+SCRIPTS_DIR="`pwd`" ;
+cd "${REPO_BASEDIR}"
+
 UPDATE_BUILD="1"
 
 ENV_FILESPEC=""
@@ -253,6 +257,13 @@ if [ "${ERROR_MSG}" = "" ]; then
             if ! npm run build
             then
                 ERROR_MSG="ERROR running npm run build"
+            fi
+        fi
+        if [ "${ERROR_MSG}" = "" ]; then
+            # Copy images to build/static/media directory
+            if ! source ${SCRIPTS_DIR}/build_copy_images.sh
+            then
+                ERROR_MSG="ERROR running: source ${SCRIPTS_DIR}/build_copy_images.sh"
             fi
         fi
     fi

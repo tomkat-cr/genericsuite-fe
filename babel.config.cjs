@@ -8,6 +8,5 @@ module.exports = {
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-syntax-jsx",
     "css-modules-transform",
-    "inline-react-svg",
   ],
 };

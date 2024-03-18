@@ -14,7 +14,7 @@ import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
 import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
 import { SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
-import { ChatBotButton } from './generic.editor.rfc.ai.button.jsx';
+// import { ChatBotButton } from './generic.editor.rfc.ai.button.jsx';
 import { defaultValue } from './generic.editor.utilities.jsx';
 import { console_debug_log } from './logging.service.jsx';
 import { dbApiService } from "./db.service.jsx";
@@ -428,12 +428,11 @@ const PutOneFormfield = ({
                 className="align-middle flex"
             >
                 {elementInput}
-                {chatbot_popup && (
-                    <ChatBotButton
+                {chatbot_popup && currentObj.aux_component !== null && (
+                    <currentObj.aux_component
                         valueElement={idName}
                         chatbot_prompt={chatbot_prompt}
                     />
-    
                 )}
                 {google_popup && (
                     <SearchEngineButton

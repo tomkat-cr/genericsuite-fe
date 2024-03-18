@@ -14,6 +14,7 @@ import {
 import {
     TRUE_FALSE,
     LANGUAGES,
+    GENDERS,
 } from '../../constants/general_constants.jsx';
 
 import { UsersConfig } from './UsersConfig.jsx';
@@ -32,6 +33,7 @@ export function UsersProfile_EditorData() {
         "LANGUAGES": LANGUAGES, 
         "TRUE_FALSE": TRUE_FALSE,
         "BILLING_PLANS": BILLING_PLANS,
+        "GENDERS": GENDERS,
         "UsersDbPostWrite": UsersDbPostWrite,
         "UsersConfig": UsersConfig,
         "UserProfileEditor": UserProfileEditor,

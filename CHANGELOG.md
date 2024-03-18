@@ -16,6 +16,26 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.14 (2024-03-18)
+---
+
+### New
+Add the `scripts/build_prod_test.sh` bash script to preview the QA/Staging/Prod live environments behavior.
+Add the `scripts/npm_publish.sh` bash script, `make pre-publish` and `make publish` to publish library to NPMJS.
+Add the `src/configs/README.md` documentation as a complete GenericSuite App creation and configuration guide for all versions.
+
+### Changes
+Add the `src/lib/images` directory to the library distribution.
+Deployment and local run bash scripts changed to copy all images to the `build/static/media` directory.
+Local run bash script creartes a symlink in the `dist` directory to the `build/static/media` directory.
+"server.js" uses prot 3000 instead of 3001.
+Use "arrows_rotate_solid.svg" as the Refresh icon in the Generic CRUD editor.
+"generic.editor.rfc.ai.button.jsx" moved to genericSuite-fe-ai.
+
+### Fixes
+Fix the images load error in QA/Staging/Prod live environments: "DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/static/media/app_logo_square.cd60e8686a973f7c77e9d25313787676.svg') is not a valid name."
+
+
 ## 1.0.12 (2024-03-13)
 ---
 

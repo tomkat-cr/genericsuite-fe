@@ -20,8 +20,11 @@ build-prod:
 
 build: build-dev
 
+pre-publish:
+	sh scripts/npm_publish.sh pre-publish
+
 publish:
-	npm publish --access=public
+	sh scripts/npm_publish.sh publish
 
 dev:
 	npm install --dev
@@ -37,6 +40,13 @@ test-dev:
 
 test:
 	npm run test
+
+test-run-build:
+	. scripts/build_prod_test.sh
+	. scripts/build_prod_test.sh restore
+ 
+ test-run-build-restore:
+	. scripts/build_prod_test.sh restore
 
 eject-dev:
 	npm run eject-dev

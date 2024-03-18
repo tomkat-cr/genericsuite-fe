@@ -5,8 +5,10 @@ import React from 'react';
 import { 
     console_debug_log,
 } from "./logging.service.jsx";
+import { imageDirectory } from '../constants/general_constants.jsx';
 
-import GoogleIcon from "../images/google_logo.svg";
+// import GoogleIcon from "../images/google_logo.svg";
+const googleIcon = "google_logo.svg";
 
 const debug = true;
 
@@ -38,7 +40,8 @@ export const SearchEngineButton = ({
                 <button
                     onClick={handleGoogleClick}
                 >
-                    <GoogleIcon alt="Open Google Search" />
+                    {/* <GoogleIcon alt="Open Google Search" /> */}
+                    <img src={imageDirectory + googleIcon} alt="Open Google Search" />
                 </button>
             </div>
         </>

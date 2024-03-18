@@ -1,7 +1,6 @@
-# GenericSuite (frontend version)
-The GenericSuite for ReactJS (frontend version).
+# GenericSuite for ReactJS (frontend version)
 
-![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.svg)
+![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.png)
 
 Welcome to GenericSuite, a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the front-end component of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
 
@@ -12,57 +11,95 @@ Welcome to GenericSuite, a comprehensive software solution designed to enhance y
 - **Customizable Login Interface:** Easily adapt the login page to match your brand identity with the App logo.
 - **Development and Production Scripts:** Quick commands to start development or build your application for QA, staging production environments on AWS.
 - **Testing with Jest:** Comes pre-configured with Jest for running tests, including an initial test for the `<App />` component.
-- **Inclusion of Essential Files:** `.env.example` for environment variables setup, `Makefile` to short-cut frecuent operations, `webpack.config.js` and `config-overrides.js` to run the App locally with `Webpack` or `react-app-rewired`, `scripts` with development and production scripts, 
+- **Inclusion of Essential Files:** `.env.example` for environment variables setup, `Makefile` to short-cut frequent operations, `webpack.config.js` and `config-overrides.js` to run the App locally with `Webpack` or `react-app-rewired`, `scripts` with development and production scripts, 
  and `CHANGELOG.md` for tracking changes across versions.
 
-The perfect companion for this frontend solution is the backend version of Genericsuite:<br/>
-[https://github.com/tomkat-cr/genericsuite-be](https://github.com/tomkat-cr/genericsuite-be)
+The perfect companion for this frontend solution is the [backend version of The GenericSuite](https://github.com/tomkat-cr/genericsuite-be).
 
-There's a version of this library with AI features. The Genericsuite AI:<br/>
-[https://github.com/tomkat-cr/genericsuite-fe-ai](https://github.com/tomkat-cr/genericsuite-fe-ai)
-
+There's a version of this library with AI features: [The GenericSuite AI](https://github.com/tomkat-cr/genericsuite-fe-ai).
 
 ## Pre-requisites
 
 You need to install these tools:
 
-- Node 18+
-- Git
-- Make
+- [Node](https://nodejs.org/en/download/package-manager) 18+
+- [Git](https://www.atlassian.com/git/tutorials/install-git)
+- Make: [Mac](https://formulae.brew.sh/formula/make) | [Windows](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows)
 
 ## Getting Started
 
-To get started with GenericSuite, follow these simple steps:
+To get started with GenericSuite, follow these steps:
 
 1. **Initiate your project**
 
-   Change to your frontend local development directory and run:
+   Create the ReactJs App. E.g. `exampleapp_frontend`:
 
    ```bash
-   npm init
+   npx create-react-app exampleapp_frontend
+   ```
+   NOTE: Check the documentation [here](https://react.dev/learn/start-a-new-react-project) for alternatives.
+
+   Change to your frontend local development directory.<br/>
+   ```bash
+   cd exampleapp_frontend
    ```
 
-   And:
+   CRA (`create-react-app`) is outdated, so we use [react-app-rewired](https://www.npmjs.com/package/react-app-rewired) to to customize CRA configuration without the need to eject:
+
+   ```bash
+   npm install --save-dev react-app-rewired
+   ```
+
+   Initialize the git respository:
 
    ```bash
    git init
    ```
 
-2. **Install Library**
+2. **Install the GenericSuite Library**
 
    ```bash
    npm install genericsuite
    ```
 
-3. **Install Dependencies**
+3. **Install additional development dependencies**:
+```bash
+npm install --save-dev \
+   @babel/cli \
+   @babel/core \
+   @babel/plugin-proposal-class-properties \
+   @babel/plugin-proposal-private-property-in-object \
+   @babel/plugin-syntax-jsx \
+   @babel/preset-env \
+   @babel/preset-react \
+   @babel/preset-stage-0 \
+   @babel/preset-typescript \
+   @testing-library/jest-dom \
+   @testing-library/react \
+   @testing-library/user-event \
+   @types/jest \
+   @types/react \
+   babel-jest \
+   babel-loader \
+   babel-plugin-css-modules-transform \
+   file-loader \
+   html-webpack-plugin \
+   jest \
+   jest-environment-jsdom \
+   path \
+   postcss \
+   postcss-loader \
+   style-loader \
+   tailwindcss \
+   url-loader \
+   webpack \
+   webpack-cli \
+   webpack-dev-server
+```
 
-   ```bash
-   npm install
-   ```
+4. **Prepare the Configuration Files**:
 
-4. **Prepare the Configuration File**:
-
-   Copy the template from `node_modules/genericsuite`:
+   Copy the `.env` file template from `node_modules/genericsuite`:
 
    ```bash
    cp node_modules/genericsuite/.env.example ./.env
@@ -78,15 +115,17 @@ To get started with GenericSuite, follow these simple steps:
 
    4. Configure `BACKEND_PATH` with the path for your backend API local development repo.
 
-   5. Configure `GITHUB_USERNAME` and `GITHUB_REPONAME`. It will be used by `scripts/aws_deploy_to_s3.sh` to change the `homepage` in `package.json` with the proper public domain during the AWS S3 deploytment and restores to GITHUB_USERNAME.github.io/GITHUB_REPONAME after that.
+   5. Configure `GITHUB_USERNAME` and `GITHUB_REPONAME`. It will be used by `scripts/aws_deploy_to_s3.sh` to change the `homepage` in `package.json` with the proper public domain during the AWS S3 deployment and restores to GITHUB_USERNAME.github.io/GITHUB_REPONAME after that.
 
-   6. Configure `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` with the JSON files submodule parameters to stablish a common configuraton place for both frontend and backend (used by add_github_submodules.sh).<BR/>For example files, visit: [https://github.com/tomkat-cr/genericsuite-fe/tree/main/src/configs](https://github.com/tomkat-cr/genericsuite-fe/tree/main/src/configs)
+   6. Configure `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` with the JSON files submodule parameters to stablish a common configuration place for both frontend and backend (used by add_github_submodules.sh).<BR/>For example files, visit: [Generic Suite Configuration Guide](https://github.com/tomkat-cr/genericsuite-fe/tree/main/src/configs)
 
    7. Configure the `AWS_*` parameters with your AWS data (used by aws_deploy_to_s3.sh and change_env_be_endpoint.sh). You'll need an AWS account.
 
+For more information, check the [.env.example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.env.example).
+
 5. **Prepare the Makefile**
 
-   Copy the template from `node_modules/genericsuite`:
+   Copy the `Makefile` template from `node_modules/genericsuite`:
 
    ```bash
    cp node_modules/genericsuite/Makefile ./Makefile
@@ -139,7 +178,135 @@ To get started with GenericSuite, follow these simple steps:
       },
    ```
 
-7. **Start Development Server**
+## App structure
+
+This is a suggested App development repository structure:
+
+```
+.
+├── .babelrc
+├── .env
+├── .env.example
+├── .gitignore
+├── CHANGELOG.md
+├── LICENSE
+├── Makefile
+├── README.md
+├── babel.config.js
+├── config-overrides.js
+├── jest.config.cjs
+├── package-lock.json
+├── package.json
+├── public
+├── server.js
+├── src
+│   ├── components
+│   │   ├── About
+│   │   │   └── About.jsx
+│   │   ├── App
+│   │   │   ├── App.jsx
+│   │   │   └── App.test.tsx
+│   │   ├── HomePage
+│   │   │   ├── HomePage.jsx
+│   │   ├── ExampleMenu
+│   │   │   ├── ExampleMainElement.jsx
+│   │   │   └── ExampleChildElement.jsx
+│   ├── constants
+│   │   └── app_constants.jsx
+│   ├── images
+│   │   ├── app_logo_circle.svg
+│   │   └── madeby_logo_square.svg
+│   ├── configs
+│   │   ├── CHANGELOG.md
+│   │   ├── README.md
+│   │   ├── backend
+│   │   │   ├── app_main_menu.json
+│   │   │   ├── endpoints.json
+│   │   │   ├── general_config.json
+│   │   │   ├── example_main_element.json
+│   │   │   └── example_child_element.json
+│   │   └── frontend
+│   │       ├── app_constants.json
+│   │       ├── general_constants.json
+│   │       ├── users_profile.json
+│   │       ├── example_main_element.json
+│   │       └── example_child_element.json
+│   ├── d.ts
+│   ├── index.jsx
+│   ├── input.css
+│   └── setupTests.js
+├── tailwind.config.js
+├── tsconfig.json
+├── version.txt
+└── webpack.config.js
+```
+
+## Configure the project
+
+In the project's directory:
+
+- `.babelrc` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.babelrc))<br/>
+- `babel.config.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/babel.config.cjs))<br/>
+Babel transpiler configuration. Check the [documentation here](https://babeljs.io/docs/configuration).<br/><br/>
+- `CHANGELOG` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/CHANGELOG))<br/>
+Changes documentation to this project.<br/><br/>
+- `config-overrides.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/config-overrides.js))<br/>
+react-app-rewired configuration. Check [react-app-rewired documentation](https://github.com/timarney/react-app-rewired) for more information.<br/><br/>
+- `jest.config.cjs` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/jest.config.cjs))<br/>
+JEST test configuration.<br/><br/>
+- `server.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/server.js))<br/>
+Node server, to test and debug your App in a production-like environment.<br/><br/>
+- `tailwind.config.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/tailwind.config.js))<br/>
+Tailwind configuration. Check the [documentation here](https://tailwindcss.com/docs/configuration).<br/><br/>
+- `webpack.config.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/webpack.config.js))<br/>
+To configure Webpack as an alternative to CRA / `react-app-rewired`. Check the [documentation here](https://webpack.js.org/configuration).<br/><br/>
+- `tsconfig.json`<br/>
+To configure TypeScript. e.g.
+```json
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "sourceMap": true,
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "react",
+    "baseUrl": "./src/lib",
+    "rootDirs": [
+      "src/lib"
+    ],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "paths": {
+      "src/*": ["./src/*"],
+    }
+  },
+  "include": [
+    "src/**/*",
+  ]
+}
+```
+
+## Code examples and JSON configuration files
+
+The main menu, API endpoints and CRUD editor configurations are defined in the JSON configuration files.
+
+You can find examples about configurations and how to code an App [here](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/README.md) and the different JSON files in the [src/configs/frontend](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/frontend) and [src/configs/backend](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/backend) directories.
+
+## Start Development Server
 
 To start the development server:
 
@@ -147,7 +314,7 @@ To start the development server:
    make run
    ```
 
-8. **Deploy QA**
+13. **Deploy QA**
 
 To perform a QA deployment over AWS S3:
 

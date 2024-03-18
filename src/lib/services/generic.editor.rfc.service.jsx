@@ -11,7 +11,7 @@ import {
   faTrashAlt,
   faCheck,
   faList,
-  faRecycle,
+  // faRecycle,
 } from "@fortawesome/fontawesome-free-solid";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
@@ -40,6 +40,7 @@ import {
 import {
   console_debug_log,
 } from './logging.service.jsx';
+import { imageDirectory } from "../constants/general_constants.jsx";
 
 import {
   ShowHidePageAnimation,
@@ -75,7 +76,7 @@ fontawesome.library.add(
   faTrashAlt,
   faCheck,
   faList,
-  faRecycle,
+  // faRecycle,
 );
 
 const debug = false;
@@ -328,7 +329,11 @@ const GenericCrudEditorMain = (props) => {
                 onClick={handleRefresh}
                 className={`${BUTTON_LISTING_CLASS} text-xs` /* mb-4 */}
               >
-                <FontAwesomeIcon icon="recycle" />
+                {/* <FontAwesomeIcon icon="recycle" /> */}
+                <img src={imageDirectory + "arrows_rotate_solid.svg"}
+                  width="14" height="14" alt="Reload"
+                  className={"text-white fill-white"}
+                />
               </button>
             </span>
           </h1>
@@ -525,6 +530,7 @@ export const ConvertToComponents = (editorDataObj, registry) => {
   // Do the same for the rest of elements in fieldElements array
   const fieldElementsArray = [
     'component',
+    'aux_component',
     'select_elements',
     'dataPopulator',
   ];
