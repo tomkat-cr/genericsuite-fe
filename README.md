@@ -314,7 +314,7 @@ To start the development server:
    make run
    ```
 
-13. **Deploy QA**
+## Deploy QA
 
 To perform a QA deployment over AWS S3:
 

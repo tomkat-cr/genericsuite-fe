@@ -27,8 +27,8 @@ Add the `src/configs/README.md` documentation as a complete GenericSuite App cre
 ### Changes
 Add the `src/lib/images` directory to the library distribution.
 Deployment and local run bash scripts changed to copy all images to the `build/static/media` directory.
-Local run bash script creartes a symlink in the `dist` directory to the `build/static/media` directory.
-"server.js" uses prot 3000 instead of 3001.
+Local run bash script creates a symlink in the `dist` directory to the `build/static/media` directory.
+"server.js" uses port 3000 instead of 3001.
 Use "arrows_rotate_solid.svg" as the Refresh icon in the Generic CRUD editor.
 "generic.editor.rfc.ai.button.jsx" moved to genericSuite-fe-ai.
 

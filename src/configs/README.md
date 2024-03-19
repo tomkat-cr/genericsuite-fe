@@ -1,4 +1,6 @@
-# GenericSuite App Creation and Configuration
+# GenericSuite App Creation and Configuration guide
+
+![GenericSuite AI Logo](https://github.com/tomkat-cr/genericsuite-fe-ai/blob/main/src/lib/images/gs_ai_logo_circle.png)
 
 In this documentation we'll show how to create the App frontend/backend configurations and data structures.
 
