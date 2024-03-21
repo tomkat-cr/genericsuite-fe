@@ -919,7 +919,7 @@ from genericsuite_ai.lib.ai_chatbot_endpoint import (
 )
 
 from lib.models.ai_chatbot.ai_gpt_fn_index import (
-    assign_fynapp_gpt_functions
+    assign_example_app_gpt_functions
 )
 
 DEBUG = False
@@ -949,7 +949,7 @@ def ai_chatbot_endpoint(
     return ai_chatbot_endpoint_model(
         request=request,
         other_params=other_params,
-        additional_callable=assign_fynapp_gpt_functions,
+        additional_callable=assign_example_app_gpt_functions,
     )
 
 
@@ -974,7 +974,7 @@ def vision_image_analyzer_endpoint(
     return vision_image_analyzer_endpoint_model(
         request=request,
         other_params=other_params,
-        additional_callable=assign_fynapp_gpt_functions,
+        additional_callable=assign_example_app_gpt_functions,
     )
 
 
@@ -999,11 +999,11 @@ def transcribe_audio_endpoint(
     return transcribe_audio_endpoint_model(
         request=request,
         other_params=other_params,
-        additional_callable=assign_fynapp_gpt_functions,
+        additional_callable=assign_example_app_gpt_functions,
     )
 ```
 
-5. API ChatBot specific GPT functions/tools `lib/models/ai_chatbot/ai_gpt_fn_fynapp.py`<br/>(only if the App has specific GPT functions)
+5. API ChatBot specific GPT functions/tools `lib/models/ai_chatbot/ai_gpt_fn_example_app.py`<br/>(only if the App has specific GPT functions)
 ```python
 """
 GPT functions: App specific
@@ -1132,8 +1132,8 @@ from lib.models.ai_chatbot.ai_gpt_fn_fda import (
     get_fda_food_query_func,
 )
 
-from lib.models.ai_chatbot.ai_gpt_fn_fynapp import (
-    cac as cac_fynapp,
+from lib.models.ai_chatbot.ai_gpt_fn_example_app import (
+    cac as cac_example_app,
     create_example_element,
     create_example_element_func,
 )
@@ -1142,13 +1142,13 @@ DEBUG = False
 EXTRA_DEBUG = False
 
 
-def assign_fynapp_gpt_functions(
+def assign_example_app_gpt_functions(
     app_context: AppContext,
 ) -> None:
     """
-    Assign specific Fynapp GPT functions
+    Assign specific example_app GPT functions
     """
-    _ = DEBUG and log_debug('ASSIGN_FYNAPP_GPT_FUNCTIONS | Assigning Fynapp GPT functions')
+    _ = DEBUG and log_debug('ASSIGN_EXAMPLE_APP_GPT_FUNCTIONS | Assigning example_app GPT functions')
     app_context.set_other_data('additional_function_dict', get_additional_functions_dict)
     app_context.set_other_data('additional_func_context', additional_gpt_func_appcontexts)
     app_context.set_other_data('additional_run_one_function', additional_run_one_function)
@@ -1165,7 +1165,7 @@ def get_additional_functions_dict(
         dict: A dictionary containing the available ChatGPT functions
         and its callable.
     """
-    _ = DEBUG and log_debug('GET_ADDITIONAL_FUNCTIONS_DICT | Assigning Fynapp GPT functions dict')
+    _ = DEBUG and log_debug('GET_ADDITIONAL_FUNCTIONS_DICT | Assigning example_app GPT functions dict')
     settings = Config(app_context)
     is_lc = settings.AI_TECHNOLOGY == 'langchain'
     if is_lc:
@@ -1179,7 +1179,7 @@ def get_additional_functions_dict(
             "create_example_element": create_example_element_func,
         }
     if DEBUG and EXTRA_DEBUG:
-        log_debug(f"FYNAPP GET_FUNCTIONS_DICT | is_lc: {is_lc} result: {result}")
+        log_debug(f"example_app GET_FUNCTIONS_DICT | is_lc: {is_lc} result: {result}")
     return result
 
 
@@ -1194,9 +1194,9 @@ def additional_gpt_func_appcontexts(
     """
     _ = DEBUG and \
         log_debug('ADDITIONAL_GPT_FUNC_APPCONTEXTS | Assigning' + \
-        ' Fynapp additional GPT function AppContexts')
+        ' example_app additional GPT function AppContexts')
     available_func_context = [
-        cac_fynapp,
+        cac_example_app,
     ]
     return available_func_context
 
@@ -1218,7 +1218,7 @@ def additional_run_one_function(
     Returns:
         The result of the function execution.
     """
-    _ = DEBUG and log_debug('ADDITIONAL_RUN_ONE_FUNCTION | Fynapp-specific run_one_function')
+    _ = DEBUG and log_debug('ADDITIONAL_RUN_ONE_FUNCTION | example_app-specific run_one_function')
     user_lang = app_context.get_user_data().get('language', 'auto')
     # question = app_context.get_other_data("question")["content"]
     available_functions = get_functions_dict(app_context)
@@ -1266,7 +1266,7 @@ def get_additional_function_specs(
         list[dict]: A list of dictionaries containing the available
         ChatGPT functions.
     """
-    _ = DEBUG and log_debug('GET_ADDITIONAL_FUNCTION_SPECS | Fynapp additional GPT function specs')
+    _ = DEBUG and log_debug('GET_ADDITIONAL_FUNCTION_SPECS | example_app additional GPT function specs')
     _ = DEBUG and \
         log_debug("AI_FA_GFS-1) get_function_specs")
     result = [{
