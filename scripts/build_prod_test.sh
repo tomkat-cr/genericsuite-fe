@@ -81,25 +81,10 @@ if [ "${RUN_MODE}" != "restore" ]; then
     perl -pi -e 's|^(REACT_APP_API_URL=).*|$1$ENV{REACT_APP_API_URL}|' .env
 
     if [ "${COPY_IMAGES}" = "1" ]; then
-        echo "Copying images to build/static/media directory..."
-        mkdir -p ./build/static/media
-        if [ -d ./src/lib/images ]; then
-            cp ./src/lib/images/* ./build/static/media
-        fi
-        if [ -d ./src/lib/_images ]; then
-            cp ./src/lib/_images/* ./build/static/media
-        fi
-        if [ -d ./node_modules/genericsuite/src/lib/images ]; then
-            cp ./node_modules/genericsuite/src/lib/images/* ./build/static/media
-        fi
-        if [ -d ./node_modules/genericsuite-ai/src/lib/images ]; then
-            cp ./node_modules/genericsuite-ai/src/lib/images/* ./build/static/media
-        fi
-        if [ -d ./src/images ]; then
-            cp ./src/images/* ./build/static/media
-        fi
-        if [ -d ./src/_images ]; then
-            cp ./src/_images/* ./build/static/media
+        if ! source ${SCRIPTS_DIR}/build_copy_images.sh
+        then
+            echo "ERROR running: source ${SCRIPTS_DIR}/build_copy_images.sh"
+            exit 1
         fi
     fi
 fi

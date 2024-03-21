@@ -45,7 +45,7 @@ test-run-build:
 	. scripts/build_prod_test.sh
 	. scripts/build_prod_test.sh restore
  
- test-run-build-restore:
+test-run-build-restore:
 	. scripts/build_prod_test.sh restore
 
 eject-dev:

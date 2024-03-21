@@ -16,6 +16,7 @@ import {
 import {
     errorAndReEnter,
     logoutHander,
+    getErrorMessage,
 } from '../../helpers/error-and-reenter.jsx';
 import {
     getUrlParams,
@@ -52,7 +53,7 @@ import Container from 'react-bootstrap/cjs/Container.js';
 import Nav from 'react-bootstrap/cjs/Nav.js';
 import Navbar from 'react-bootstrap/cjs/Navbar.js';
 
-const debug = false;
+const debug = true;
 
 const defaultComponentMap = {
     "Users_EditorData": Users_EditorData,
@@ -260,11 +261,11 @@ const AppMainComponent = ({
         return (<LoginPage appLogo={appLogo}/>);
     }
     if (state !== "") {
-        if (debug) console_debug_log("AppMainComponent | errorAndReEnter");
+        if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
         if (showContentOnly) {
             return (
                 <CloseButton>
-                    {state}
+                    {getErrorMessage(state)}
                 </CloseButton>
             );
         }
@@ -286,7 +287,3 @@ const AppMainComponent = ({
         />
     )
 }
-
-// module.exports = {
-//     App,
-// };

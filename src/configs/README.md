@@ -127,7 +127,6 @@ To share the JSON files between the frontend and backend development repositorie
 make add_submodules
 ```
 
-
 ## App frontend
 
 Follow the instructions to create the App's frontend in ReactJS [here](https://github.com/tomkat-cr/genericsuite-fe/blob/main/README.md).<br/>
@@ -782,7 +781,7 @@ from genericsuite.chalicelib.util.create_app import create_app
 
 from lib.config.config import Config
 
-# exampleapp specific endpoint deifnition
+# exampleapp specific endpoint definition
 # from chalicelib.endpoints import exampleapp_specific_endpoint
 
 # Only for API Apps using GenericSuite AI backend version
@@ -828,6 +827,570 @@ class Config(ConfigSuperClass):
         # Specific API credentials and other parameters
         # self.OTHER_API_KEY = self.get_env('OTHER_API_KEY', '')
 ```
+
+## AI elements
+
+The AI elements are available in [GenericSuite AI frontend version](https://github.com/tomkat-cr/genericsuite-fe-ai) and [GenericSuite AI backend version](https://github.com/tomkat-cr/genericsuite-be-ai).
+
+### AI elements: the ChatBot menu option
+
+To implement a ChaBot Assistant like ChatGPT in your App:
+
+1. ChatBot menu option `src/configs/backend/app_main_menu.json`
+
+```json
+    {
+        "title": "ChatBot",
+        "location": "top_menu",
+        "type": "nav_link",
+        "sec_group": "users",
+        "path": "/chatbot",
+        "element": "Chatbot"
+    },
+```
+
+2. Frontend code `App.jsx`
+
+```js
+import React from 'react';
+
+import * as gsAi from "genericsuite-ai";
+
+import { HomePage } from '../HomePage/HomePage.jsx';
+import { AboutBody } from '../About/About.jsx';
+
+const AppLogo = 'app_logo_square.svg';
+
+const componentMap = {
+    "AboutBody": AboutBody,
+    "HomePage": HomePage,
+};
+
+const GsAiApp = gsAi.App;
+
+export const App = () => {
+    return (
+        <GsAiApp
+            appLogo={AppLogo}
+            componentMap={componentMap}
+        />
+    );
+}
+```
+
+3. Backend code `app.py`
+
+```python
+"""
+ExampleApp main
+"""
+from genericsuite.chalicelib.util.create_app import create_app
+
+from lib.config.config import Config
+
+from chalicelib.endpoints import ai_chatbot as ai_chatbot_endpoint
+
+settings = Config()
+app = create_app(app_name=f'{settings.APP_NAME.lower()}-backend',
+    settings=settings)
+
+# Register AI endpoints
+app.register_blueprint(ai_chatbot_endpoint.bp, url_prefix='/ai')
+```
+
+4. API ChatBot endpoint `chalicelib/endpoints/ai_chatbot.py`
+```python
+"""
+AI Endpoints
+"""
+from typing import Optional
+
+from genericsuite.util.framework_abs_layer import Response
+
+from genericsuite.util.blueprint_one import BlueprintOne
+from genericsuite.util.jwt import (
+    request_authentication,
+    AuthorizedRequest
+)
+from genericsuite_ai.lib.ai_chatbot_endpoint import (
+    ai_chatbot_endpoint as ai_chatbot_endpoint_model,
+    vision_image_analyzer_endpoint as vision_image_analyzer_endpoint_model,
+    transcribe_audio_endpoint as transcribe_audio_endpoint_model,
+)
+
+from lib.models.ai_chatbot.ai_gpt_fn_index import (
+    assign_fynapp_gpt_functions
+)
+
+DEBUG = False
+bp = BlueprintOne(__name__)
+
+
+@bp.route(
+    '/chatbot',
+    methods=['POST'],
+    authorizor=request_authentication(),
+)
+def ai_chatbot_endpoint(
+    request: AuthorizedRequest,
+    other_params: Optional[dict] = None
+) -> Response:
+    """
+    This function is the endpoint for the AI chatbot.
+    It takes in a request and other parameters,
+    logs the request, retrieves the user data, and runs the
+    conversation with the AI chatbot.
+    It then returns the AI chatbot's response.
+
+    :param request: The request from the user.
+    :param other_params: Other parameters that may be needed.
+    :return: The response from the AI chatbot.
+    """
+    return ai_chatbot_endpoint_model(
+        request=request,
+        other_params=other_params,
+        additional_callable=assign_fynapp_gpt_functions,
+    )
+
+
+@bp.route(
+    '/image_to_text',
+    methods=['POST'],
+    authorizor=request_authentication(),
+    content_types=['multipart/form-data']
+)
+def vision_image_analyzer_endpoint(
+    request: AuthorizedRequest,
+    other_params: Optional[dict] = None
+) -> Response:
+    """
+    This endpoint receives an image file, saves it to a temporary directory
+    with a uuid4 .jpg | .png filename, calls @vision_image_analyzer with
+    the file path, and returns the result.
+
+    :param request: The request containing the image file.
+    :return: The text with the image analysis.
+    """
+    return vision_image_analyzer_endpoint_model(
+        request=request,
+        other_params=other_params,
+        additional_callable=assign_fynapp_gpt_functions,
+    )
+
+
+@bp.route(
+    '/voice_to_text',
+    methods=['POST'],
+    authorizor=request_authentication(),
+    content_types=['multipart/form-data']
+)
+def transcribe_audio_endpoint(
+    request: AuthorizedRequest,
+    other_params: Optional[dict] = None
+) -> Response:
+    """
+    This endpoint receives an audio file, saves it to a temporary directory
+    with a uuid4 .mp3 filename, calls @audio_to_text_transcript with
+    the file path, and returns the result.
+
+    :param request: The request containing the audio file.
+    :return: The transcription result.
+    """
+    return transcribe_audio_endpoint_model(
+        request=request,
+        other_params=other_params,
+        additional_callable=assign_fynapp_gpt_functions,
+    )
+```
+
+5. API ChatBot specific GPT functions/tools `lib/models/ai_chatbot/ai_gpt_fn_fynapp.py`<br/>(only if the App has specific GPT functions)
+```python
+"""
+GPT functions: App specific
+"""
+# C0301: | Disable "line-too-long"
+# pylint: disable=C0301
+# W0718 | broad-exception-caught Catching too general exception Exception
+# pylint: disable=W0718
+
+from typing import Union, Any, List, Optional
+import json
+import re
+from datetime import datetime
+from uuid import uuid4
+
+from langchain.agents import tool
+from langchain.pydantic_v1 import BaseModel, Field
+from langchain.schema import Document
+
+from genericsuite.util.app_context import CommonAppContext
+from genericsuite.util.app_logger import log_debug
+from genericsuite.util.config_dbdef_helpers import get_json_def_both
+from genericsuite.util.datetime_utilities import interpret_any_date
+from genericsuite.util.utilities import (
+    get_default_resultset,
+    is_under_test,
+)
+from genericsuite.util.generic_db_middleware import (
+    fetch_all_from_db,
+    add_item_to_db,
+    get_item_from_db,
+    modify_item_in_db,
+)
+from genericsuite.constants.const_tables import get_constant
+
+from genericsuite_ai.lib.ai_utilities import (
+    standard_gpt_func_response,
+    get_assistant_you_are,
+)
+from genericsuite_ai.lib.ai_sub_bots import ask_ai
+from genericsuite_ai.lib.ai_langchain_tools import (
+    interpret_tool_params,
+)
+from genericsuite_ai.lib.json_reader import (
+    prepare_metadata,
+    index_dict,
+)
+
+DEBUG = False
+cac = CommonAppContext()
+
+# Structures
+
+
+class ExampleFuncElement(BaseModel):
+    """
+    example_element parameter structure class
+    """
+    name: str = Field(
+        description="example_element name")
+    #      .
+    #      .
+    observations: Optional[str] = Field(default="",
+        description="example_element observations if any. Defaults to None")
+
+# Funcions called by ChatGPT
+
+
+@tool
+def create_example_element(params: Any) -> str:
+    """
+Useful when you need to add a new example_element to the database.
+Args: params (dict): Tool parameters. It must contain:
+"name" (str): ingredient name.
+    .
+    .
+"observations" (str): additional observations about the ingredient if any.
+    """
+    return create_example_element_func(params)
+
+
+def create_example_element_func(params: Any) -> str:
+    """
+    Add a example_element to the database.
+    """
+    params = interpret_tool_params(tool_params=params, schema=ExampleFuncElement)
+
+    name = params.name
+    observations = params.observations
+
+    new_item = {
+        "user_id": cac.app_context.get_user_id(),
+        "name": name,
+        #      .
+        #      .
+        "observations": observations,
+    }
+    result = add_item_to_db(
+        app_context=cac.app_context,
+        json_file='example_element',
+        data=new_item,
+    )
+    return standard_gpt_func_response(result, "example_element creation")
+#      .
+#      .
+#      .
+```
+
+6. API ChatBot specific GPT function management `lib/models/ai_chatbot/ai_gpt_fn_index.py`<br/>(only if the App has specific GPT functions)
+
+```python
+"""
+ChatGPT functions management
+"""
+from genericsuite.util.app_logger import log_debug
+from genericsuite.util.app_context import AppContext
+
+from genericsuite_ai.lib.ai_gpt_functions import (
+    get_functions_dict,
+)
+
+from lib.config.config import Config
+from lib.models.ai_chatbot.ai_gpt_fn_fda import (
+    cac as cac_fda,
+    get_fda_food_query,
+    get_fda_food_query_func,
+)
+
+from lib.models.ai_chatbot.ai_gpt_fn_fynapp import (
+    cac as cac_fynapp,
+    create_example_element,
+    create_example_element_func,
+)
+
+DEBUG = False
+EXTRA_DEBUG = False
+
+
+def assign_fynapp_gpt_functions(
+    app_context: AppContext,
+) -> None:
+    """
+    Assign specific Fynapp GPT functions
+    """
+    _ = DEBUG and log_debug('ASSIGN_FYNAPP_GPT_FUNCTIONS | Assigning Fynapp GPT functions')
+    app_context.set_other_data('additional_function_dict', get_additional_functions_dict)
+    app_context.set_other_data('additional_func_context', additional_gpt_func_appcontexts)
+    app_context.set_other_data('additional_run_one_function', additional_run_one_function)
+    app_context.set_other_data('additional_function_specs', get_additional_function_specs)
+
+
+def get_additional_functions_dict(
+    app_context: AppContext,
+) -> dict:
+    """
+    Get the available ChatGPT functions and its callables (app-specific).
+
+    Returns:
+        dict: A dictionary containing the available ChatGPT functions
+        and its callable.
+    """
+    _ = DEBUG and log_debug('GET_ADDITIONAL_FUNCTIONS_DICT | Assigning Fynapp GPT functions dict')
+    settings = Config(app_context)
+    is_lc = settings.AI_TECHNOLOGY == 'langchain'
+    if is_lc:
+        # Langchain Tools
+        result = {
+            "create_example_element": create_example_element,
+        }
+    else:
+        # GPT Functions
+        result = {
+            "create_example_element": create_example_element_func,
+        }
+    if DEBUG and EXTRA_DEBUG:
+        log_debug(f"FYNAPP GET_FUNCTIONS_DICT | is_lc: {is_lc} result: {result}")
+    return result
+
+
+def additional_gpt_func_appcontexts(
+    app_context: AppContext,
+) -> list:
+    """
+    Assign the app_context to the ChatGPT functions.
+
+    Args:
+        app_context (AppContext): GPT Context
+    """
+    _ = DEBUG and \
+        log_debug('ADDITIONAL_GPT_FUNC_APPCONTEXTS | Assigning' + \
+        ' Fynapp additional GPT function AppContexts')
+    available_func_context = [
+        cac_fynapp,
+    ]
+    return available_func_context
+
+
+def additional_run_one_function(
+    app_context: AppContext,
+    function_name: str,
+    function_args: dict,
+) -> dict:
+    """
+    Execute a function based on the given function_name
+    and function_args.
+
+    Args:
+        app_context (AppContext): GPT Context
+        function_name (str): function name
+        function_args (dict): function args
+
+    Returns:
+        The result of the function execution.
+    """
+    _ = DEBUG and log_debug('ADDITIONAL_RUN_ONE_FUNCTION | Fynapp-specific run_one_function')
+    user_lang = app_context.get_user_data().get('language', 'auto')
+    # question = app_context.get_other_data("question")["content"]
+    available_functions = get_functions_dict(app_context)
+    fuction_to_call = available_functions[function_name]
+    function_response = None
+    _ = DEBUG and \
+        log_debug("AI_FA_ROF-1) run_one_function_from_chatgpt" +
+                  f" | function_name: {function_name}" +
+                  f" | function_args: {function_args}")
+
+    if function_name == "create_example_element":
+        function_response = fuction_to_call(
+            params={
+                "name": function_args.get("name"),
+                #     .
+                #     .
+                "observations": function_args.get("observations"),
+            }
+        )
+    elif function_name == "...":
+        function_response = fuction_to_call(
+            params={
+                "...": function_args.get("..."),
+            }
+        )
+
+    result = {
+        "function_response": function_response,
+        "function_name": function_name,
+        "function_args": function_args,
+    }
+    _ = DEBUG and \
+        log_debug('AI_FA_ROF-2) run_one_function_from_chatgpt' +
+                  f' | result: {result}')
+    return result
+
+
+def get_additional_function_specs(
+    app_context: AppContext,
+) -> list:
+    """
+    Get the ChatGPT function specifications (parameters, documentation).
+
+    Returns:
+        list[dict]: A list of dictionaries containing the available
+        ChatGPT functions.
+    """
+    _ = DEBUG and log_debug('GET_ADDITIONAL_FUNCTION_SPECS | Fynapp additional GPT function specs')
+    _ = DEBUG and \
+        log_debug("AI_FA_GFS-1) get_function_specs")
+    result = [{
+        "name": "create_example_element",
+        "description": "Add a example_element",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the" +
+                    " example_element",
+                },
+                "observations": {
+                    "type": "string",
+                    "description": "Any observations about" +
+                    " the example_element (value can be blank)",
+                },
+            },
+            "required": [
+                "name",
+                "observations",
+            ],
+        },
+    }, {
+        "name": "...",
+        "description": "...",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "...": {
+                    "description": "...",
+                    "type": "string",
+                }
+            }
+        },
+        "required": ["..."],
+    }]
+
+    return result
+
+```
+
+### AI elements: the ChatBot button
+
+To implement a Button that opens a ChaBot pop-up:
+
+1. CRUD editor configuration `src/configs/frontend/example_element.json`
+
+```json
+{
+    "baseUrl": "example_element",
+    "title": "Example Elements",
+    "name": "Example element",
+    "component": "ExampleElement",
+    "dbApiUrl": "example_element",
+    "mandatoryFilters": {
+        "user_id": "{CurrentUserId}",
+        "type": "I"
+    },
+    "defaultOrder": "name",
+    "fieldElements": [
+        {
+            "name": "id",
+            "required": true,
+            "label": "ID",
+            "type": "_id",
+            "readonly": true,
+            "hidden": true
+        },
+        {
+            "name": "user_id",
+            "required": true,
+            "label": "User ID",
+            "type": "text",
+            "readonly": true,
+            "hidden": true
+        },
+        {
+            "name": "name",
+            "required": true,
+            "label": "Name",
+            "type": "text",
+            "readonly": false,
+            "listing": true,
+            "chatbot_popup": true,
+            "aux_component": "ChatBotButton",
+            "chatbot_prompt": "Give me all the information you have about %s. If you don't have it in your model, look for it with the web_search Tool.",
+            "google_popup": true,
+            "google_prompt": "information about %s"
+        }
+    ]
+}
+```
+
+2. Frontend CRUD editor component `src/_components/UsersMenu/ExampleElement.jsx`
+
+```js
+import React from 'react';
+
+import * as gs from "genericsuite";
+import * as gsAi from "genericsuite-ai";
+
+const GenericCrudEditor = gs.genericEditorRfcService.GenericCrudEditor;
+const GetFormData = gs.genericEditorRfcService.GetFormData;
+
+const ChatBotButton = gsAi.ChatBotButton;
+
+export function ExampleElement_EditorData() {
+    const registry = {
+        "ExampleElement": ExampleElement, 
+        "ChatBotButton": ChatBotButton,
+    }
+    return GetFormData(user_ingredients, registry, 'ExampleElement_EditorData');
+}
+
+export const ExampleElement = () => (
+    <GenericCrudEditor editorConfig={ExampleElement_EditorData()} />
+)
+```
+
+## AWS App backend
+
+This addendum is for App Backend using AWS Lambda Function, API Gateway, S3 buckets, DynamoDB and Chalice.
 
 ### Define Chalice config template
 
@@ -2283,5 +2846,4 @@ warm_containers = "EAGER"
 
 [default.local_start_lambda.parameters]
 warm_containers = "EAGER"
-
 ```

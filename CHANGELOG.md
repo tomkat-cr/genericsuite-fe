@@ -16,11 +16,26 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.15 (2024-03-20)
+---
+
+### New
+Add "react-test-renderer" and test for About and HomePage components.
+
+## Changes
+"npm_publish.sh" includes "npm install --package-lock-only"
+Add "AI elements" documentation to "src/configs/README.md", to define a ChatBot and ChatBotButton.
+
+## Fixes
+Fix error in "AppMainComponent" when About pop-up is open and there's a JWT timeout.
+Fix "HomePage" component error when a children code is specified.
+
+
 ## 1.0.14 (2024-03-18)
 ---
 
 ### New
-Add the `scripts/build_prod_test.sh` bash script to preview the QA/Staging/Prod live environments behavior.
+Add `make test-run-build` and `make test-run-build-restore` and the `scripts/build_prod_test.sh` bash script to preview the QA/Staging/Prod live environments behavior.
 Add the `scripts/npm_publish.sh` bash script, `make pre-publish` and `make publish` to publish library to NPMJS.
 Add the `src/configs/README.md` documentation as a complete GenericSuite App creation and configuration guide for all versions.
 
@@ -31,6 +46,8 @@ Local run bash script creates a symlink in the `dist` directory to the `build/st
 "server.js" uses port 3000 instead of 3001.
 Use "arrows_rotate_solid.svg" as the Refresh icon in the Generic CRUD editor.
 "generic.editor.rfc.ai.button.jsx" moved to genericSuite-fe-ai.
+Images exported as image names, not objects.
+
 
 ### Fixes
 Fix the images load error in QA/Staging/Prod live environments: "DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/static/media/app_logo_square.cd60e8686a973f7c77e9d25313787676.svg') is not a valid name."

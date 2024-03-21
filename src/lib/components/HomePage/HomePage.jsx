@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { authenticationService } from '../../services/authentication.service.jsx';
 import { LoginPage } from '../LoginPage/LoginPage.jsx';
 
-export const HomePage = ({children, appLogo = null}) => {
+export const HomePage = ({children, appLogo}) => {
     const [currentUser, setCurrentUser] = useState(authenticationService.currentUserValue);
 
     useEffect(() => {
@@ -13,14 +13,14 @@ export const HomePage = ({children, appLogo = null}) => {
         return () => subscription.unsubscribe();
     }, []);
 
+    if (!currentUser) {
+        return (
+            <LoginPage appLogo={appLogo || null}/>
+        );
+    }
     return (
-        <div>
-            {!currentUser &&
-                <LoginPage appLogo={appLogo}/>
-            }
-            {currentUser && children && 
-                {children}
-            }
-        </div>
+        <>
+            {children}
+        </>
     );
 }

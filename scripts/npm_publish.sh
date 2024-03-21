@@ -49,6 +49,13 @@ then
     exit 1
 fi
 
+echo "Package Lock (to update App version)..."
+if ! npm install --package-lock-only
+then
+    echo "ERROR running: npm install --package-lock-only"
+    exit 1
+fi
+
 echo "Building React app..."
 if ! npm run build
 then

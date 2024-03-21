@@ -89,6 +89,7 @@ npm install --save-dev \
    path \
    postcss \
    postcss-loader \
+   react-test-renderer \
    style-loader \
    tailwindcss \
    url-loader \

@@ -145,3 +145,6 @@ venv/*
 *.pem
 *.crt
 *.key
+
+# Test
+__snapshots__
