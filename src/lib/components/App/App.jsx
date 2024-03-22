@@ -53,7 +53,7 @@ import Container from 'react-bootstrap/cjs/Container.js';
 import Nav from 'react-bootstrap/cjs/Nav.js';
 import Navbar from 'react-bootstrap/cjs/Navbar.js';
 
-const debug = true;
+const debug = false;
 
 const defaultComponentMap = {
     "Users_EditorData": Users_EditorData,

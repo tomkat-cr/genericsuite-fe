@@ -16,6 +16,26 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.16 (2024-03-21)
+---
+
+### New
+Add AboutBodyGsFe and HomePageGsFe components to customize genericsuite-fe test run with "index.tsx".
+Add test for LoginPage, GeneralConfig, Users, UserProfile, UsersConfig, AboutBodyGsFe and HomePageGsFe components.
+
+### Changes
+REACT_APP_GENERIC_SUITE_AI environment variable removed from webpack.config.js and .env.example.
+"generic.editor.rfc.ai.button.jsx" removed. Its code was moved to genericSuite-fe-ai.
+Debug turned off on <App/>, <SearchEngineButton/> and handleFetchError().
+
+## Fixes
+**Fix "dictToAdd" precedence over "originDict" in mergeDicts()** to allow the referring App to overwrite "componentMap" on the <App/> component call.
+Fix User's config files description in "src/configs/README.md".
+Fix broken links in "/README.md".
+Fix the "ReferenceError: Response is not defined" message during the tests by adding the "whatwg-fetch" devDependency.
+Fix the test error "Property 'props' is not extensible" by removing "props.appLogo = null" from <LoginPage/>
+
+
 ## 1.0.15 (2024-03-20)
 ---
 
@@ -25,6 +45,8 @@ Add "react-test-renderer" and test for About and HomePage components.
 ## Changes
 "npm_publish.sh" includes "npm install --package-lock-only"
 Add "AI elements" documentation to "src/configs/README.md", to define a ChatBot and ChatBotButton.
+"__snapshots__" included in ".gitignore" and ".npmignore".
+
 
 ## Fixes
 Fix error in "AppMainComponent" when About pop-up is open and there's a JWT timeout.

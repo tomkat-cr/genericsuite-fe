@@ -63,12 +63,12 @@ This is used for the frontend `Admin > Configuration Parameters` menu option.
 
 ### users.json
 
-Users' specific configuration parameters editor definitions.
+Users' CRUD editor and table definitions.
 This is used for the frontend `Admin > Users` menu option.
 
 ### users_config.json
 
-Users' specific configuration parameters editor definitions.
+Users' specific configuration parameters CRUD editor and table definitions.
 This is used for the `Configuration parameters` in frontend's `Admin > Users` menu option.
 
 ### users_profile.json

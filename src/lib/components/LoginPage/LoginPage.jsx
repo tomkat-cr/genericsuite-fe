@@ -18,6 +18,7 @@ const defaultAppLogo = "app_logo_square.svg";
 
 export const LoginPage = (props) => {
     const [redirectUrl, setRedirectUrl] = useState(null);
+    let appLogo = props.appLogo;
 
     useEffect(() => {
         const urlParams = getUrlParams(props)
@@ -26,9 +27,6 @@ export const LoginPage = (props) => {
             redirect = getLastUrl();
         } else {
             redirect = urlParams.redirect;
-        }
-        if (typeof props.appLogo === 'undefined') {
-            props.appLogo = null;
         }
         // Redirect to home OR redirect URL if already logged in
         if (authenticationService.currentUserValue) {
@@ -79,7 +77,7 @@ export const LoginPage = (props) => {
                 <div className="flex justify-center items-center min-h-screen mt-1 mb-1">
                     <div className="bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4" style={{ width: '400px', margin: 'auto' }}>
                         <Form>
-                            <img src={imageDirectory + (props.appLogo !== null ? props.appLogo : defaultAppLogo)}
+                            <img src={imageDirectory + (appLogo || defaultAppLogo)}
                                 width="150"
                                 height="150"
                                 className="mx-auto my-0"

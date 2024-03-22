@@ -86,7 +86,6 @@ export function handleResponseText(response, text, headers) {
 }
 
 export async function handleFetchError(error) {
-    const debug = true;
     let possibleCORS;
     let errorMsg;
     let reasonDetail;

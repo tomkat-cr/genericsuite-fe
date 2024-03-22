@@ -2,7 +2,7 @@
 
 ![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.png)
 
-Welcome to GenericSuite, a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the front-end component of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
+Welcome to GenericSuite, a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the frontend part of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
 
 ## Features
 
@@ -95,7 +95,8 @@ npm install --save-dev \
    url-loader \
    webpack \
    webpack-cli \
-   webpack-dev-server
+   webpack-dev-server \
+   whatwg-fetch
 ```
 
 4. **Prepare the Configuration Files**:
@@ -249,7 +250,7 @@ In the project's directory:
 - `.babelrc` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.babelrc))<br/>
 - `babel.config.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/babel.config.cjs))<br/>
 Babel transpiler configuration. Check the [documentation here](https://babeljs.io/docs/configuration).<br/><br/>
-- `CHANGELOG` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/CHANGELOG))<br/>
+- `CHANGELOG` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/CHANGELOG.md))<br/>
 Changes documentation to this project.<br/><br/>
 - `config-overrides.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/config-overrides.js))<br/>
 react-app-rewired configuration. Check [react-app-rewired documentation](https://github.com/timarney/react-app-rewired) for more information.<br/><br/>
@@ -305,7 +306,7 @@ To configure TypeScript. e.g.
 
 The main menu, API endpoints and CRUD editor configurations are defined in the JSON configuration files.
 
-You can find examples about configurations and how to code an App [here](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/README.md) and the different JSON files in the [src/configs/frontend](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/frontend) and [src/configs/backend](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/backend) directories.
+You can find examples about configurations and how to code an App in the [GenericSuite App Creation and Configuration guide](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/README.md).
 
 ## Start Development Server
 

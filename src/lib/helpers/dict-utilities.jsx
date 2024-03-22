@@ -7,10 +7,10 @@ export const mergeDicts = (dictToAdd, originDict) => {
     if (!(typeof dictToAdd === 'object' && dictToAdd !== null)) {
         dictToAdd = {};
     }
-    const dictToAddFinal = Object.entries(originDict).reduce((acc, [key, value]) => {
+    const dictToAddFinal = Object.entries(dictToAdd).reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
-    }, {...dictToAdd});
+    }, {...originDict});
     if (debug) console_debug_log(">>> 2) mergeDicts | dictToAddFinal:", dictToAddFinal);
     return dictToAddFinal;
 }

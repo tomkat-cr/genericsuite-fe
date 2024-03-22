@@ -10,7 +10,7 @@ import { imageDirectory } from '../constants/general_constants.jsx';
 // import GoogleIcon from "../images/google_logo.svg";
 const googleIcon = "google_logo.svg";
 
-const debug = true;
+const debug = false;
 
 export const SearchEngineButton = ({
     valueElement,
