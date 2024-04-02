@@ -30,39 +30,37 @@ You need to install these tools:
 
 To get started with GenericSuite, follow these steps:
 
-1. **Initiate your project**
+### Initiate your project
 
-   Create the ReactJs App. E.g. `exampleapp_frontend`:
+Create the ReactJs App. E.g. `exampleapp_frontend`:
 
-   ```bash
-   npx create-react-app exampleapp_frontend
-   ```
-   NOTE: Check the documentation [here](https://react.dev/learn/start-a-new-react-project) for alternatives.
+```bash
+npx create-react-app exampleapp_frontend
+```
 
-   Change to your frontend local development directory.<br/>
-   ```bash
-   cd exampleapp_frontend
-   ```
+It automatically performs the `npm init` and `git init`, adds the ReactJS dependencies, and creates a default ReactJS project structure.
 
-   CRA (`create-react-app`) is outdated, so we use [react-app-rewired](https://www.npmjs.com/package/react-app-rewired) to to customize CRA configuration without the need to eject:
+NOTE: Check the documentation [here](https://react.dev/learn/start-a-new-react-project) for CRA (`create-react-app`) alternatives.
 
-   ```bash
-   npm install --save-dev react-app-rewired
-   ```
+Change to your frontend local development directory.<br/>
+```bash
+cd exampleapp_frontend
+```
 
-   Initialize the git respository:
+CRA (`create-react-app`) is outdated, so we use [react-app-rewired](https://www.npmjs.com/package/react-app-rewired) to customize CRA configuration with no need to eject:
 
-   ```bash
-   git init
-   ```
+```bash
+npm install --save-dev react-app-rewired
+```
 
-2. **Install the GenericSuite Library**
+### Install the GenericSuite Library
 
-   ```bash
-   npm install genericsuite
-   ```
+```bash
+npm install genericsuite
+```
 
-3. **Install additional development dependencies**:
+### Install additional development dependencies
+
 ```bash
 npm install --save-dev \
    @babel/cli \
@@ -99,87 +97,87 @@ npm install --save-dev \
    whatwg-fetch
 ```
 
-4. **Prepare the Configuration Files**:
+### Prepare the Configuration Files
 
-   Copy the `.env` file template from `node_modules/genericsuite`:
+Copy the `.env` file template from `node_modules/genericsuite`:
 
-   ```bash
-   cp node_modules/genericsuite/.env.example ./.env
-   ```
-   
-   And configure the variables according your needs:
+```bash
+cp node_modules/genericsuite/.env.example ./.env
+```
 
-   1. Assign `REACT_APP_APP_NAME` with your App's name.
-   
-   2. Assign `APP_LOCAL_DOMAIN_NAME` with the local development environment backend API domain name. E.g. app.exampleapp.local or localhost.<BR/>
-   Defaults to app.${REACT_APP_APP_NAME}.local (the REACT_APP_APP_NAME will be converted to all lowercase).
+And configure the variables according your needs:
 
-   2. Assign `FRONTEND_LOCAL_PORT` with the port number for the local development environment backend API. Defaults to 3000.
+1. Assign `REACT_APP_APP_NAME` with your App's name.
 
-   3. Assign `BACKEND_LOCAL_PORT` with the port number for the local development environment backend API. Defaults to 5000.
+2. Assign `APP_LOCAL_DOMAIN_NAME` with the local development environment backend API domain name. E.g. app.exampleapp.local or localhost.<BR/>
+Defaults to app.${REACT_APP_APP_NAME}.local (the REACT_APP_APP_NAME will be converted to all lowercase).
 
-   4. Assign `APP_API_URL_QA`, `APP_API_URL_STAGING`, `APP_API_URL_PROD`, and `APP_API_URL_DEMO` with the corresponding public backend API domain names for your App environments.
+2. Assign `FRONTEND_LOCAL_PORT` with the port number for the local development environment backend API. Defaults to 3000.
 
-   5. Assign `APP_FE_URL_QA`, `APP_FE_URL_STAGING`, `APP_FE_URL_PROD`, and `APP_FE_URL_DEMO` with the corresponding public frontend domain names for your App environments.
+3. Assign `BACKEND_LOCAL_PORT` with the port number for the local development environment backend API. Defaults to 5000.
 
-   6. Assign `REACT_APP_URI_PREFIX` with the App URI prefix. This will be used in all environments after the domain name. E.g. https://app.exampleapp.com/exampleapp_frontend
+4. Assign `APP_API_URL_QA`, `APP_API_URL_STAGING`, `APP_API_URL_PROD`, and `APP_API_URL_DEMO` with the corresponding public backend API domain names for your App environments.
 
-   7. Configure your desired `RUN_METHOD`. Available options are "webpack" and "react-scripts". Defaults to "webpack".
+5. Assign `APP_FE_URL_QA`, `APP_FE_URL_STAGING`, `APP_FE_URL_PROD`, and `APP_FE_URL_DEMO` with the corresponding public frontend domain names for your App environments.
 
-   8. Configure `BACKEND_PATH` with the path for your backend API local development repo.
+6. Assign `REACT_APP_URI_PREFIX` with the App URI prefix. This will be used in all environments after the domain name. E.g. https://app.exampleapp.com/exampleapp_frontend
 
-   9. Configure `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` with the JSON files submodule parameters to stablish a common configuration place for both frontend and backend (used by add_github_submodules.sh).<BR/>For example files, visit: [Generic Suite Configuration Guide](https://github.com/tomkat-cr/genericsuite-fe/tree/main/src/configs)
+7. Configure your desired `RUN_METHOD`. Available options are "webpack" and "react-scripts". Defaults to "webpack".
 
-   10. Configure the `AWS_*` parameters with your AWS data (used by aws_deploy_to_s3.sh and change_env_be_endpoint.sh). You'll need an AWS account.
+8. Configure `BACKEND_PATH` with the path for your backend API local development repo.
+
+9. Configure `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` with the JSON files submodule parameters to stablish a common configuration place for both frontend and backend (used by add_github_submodules.sh).<BR/>For example files, visit: [Generic Suite Configuration Guide](https://github.com/tomkat-cr/genericsuite-fe/tree/main/src/configs)
+
+10. Configure the `AWS_*` parameters with your AWS data (used by aws_deploy_to_s3.sh and change_env_be_endpoint.sh). You'll need an AWS account.
 
 For more information, check the comments for each variable in the [.env.example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.env.example) file.
 
-5. **Prepare the Makefile**
+### Prepare the Makefile
 
-   Copy the `Makefile` template from `node_modules/genericsuite`:
+Copy the `Makefile` template from `node_modules/genericsuite`:
 
-   ```bash
-   cp node_modules/genericsuite/Makefile ./Makefile
-   ```
+```bash
+cp node_modules/genericsuite/Makefile ./Makefile
+```
 
-6. **Change Scripts in Package.json**
+### Change Scripts in Package.json
 
-   Open the `package.json`:
+Open the `package.json`:
 
-   ```bash
-   vi ./package.json
-   # or
-   # code ./package.json
-   ```
+```bash
+vi ./package.json
+# or
+# code ./package.json
+```
 
-   If you want to host your frontend on **github.io**, add the homepage parameter:
+If you want to host your frontend on **github.io**, add the homepage parameter:
 
-   ```package.json
-   "homepage": "https://your-github-username.github.io/your-github-repository/",
-   ```
-   ```
-   NOTE: replace `your-github-username` and `your-github-repository` with your owns.
-   ```
-   
-   Add the following scripts:
+```package.json
+"homepage": "https://your-github-username.github.io/your-github-repository/",
+```
+```
+NOTE: replace `your-github-username` and `your-github-repository` with your owns.
+```
 
-   ```package.json
-     "scripts": {
-         "start": "node server.js",
-         "start-build": "./node_modules/react-app-rewired/bin/react-app-rewired.js build && node server.js",
-         "start-debug": "ls -lah && node server.js",
-         "start-dev": "react-app-rewired start",
-         "start-dev-webpack": "npx webpack-dev-server --config webpack.config.js",
-         "build-prod": "webpack --mode production",
-         "build-dev": "react-app-rewired build",
-         "build": "react-app-rewired build",
-         "eject-dev": "react-scripts eject",
-         "test-dev": "react-app-rewired test",
-         "test": "jest",
-         "predeploy": "npm run build",
-         "deploy": "gh-pages -d build"
-      },
-   ```
+Add the following scripts:
+
+```package.json
+   "scripts": {
+      "start": "node server.js",
+      "start-build": "./node_modules/react-app-rewired/bin/react-app-rewired.js build && node server.js",
+      "start-debug": "ls -lah && node server.js",
+      "start-dev": "react-app-rewired start",
+      "start-dev-webpack": "npx webpack-dev-server --config webpack.config.js",
+      "build-prod": "webpack --mode production",
+      "build-dev": "react-app-rewired build",
+      "build": "react-app-rewired build",
+      "eject-dev": "react-scripts eject",
+      "test-dev": "react-app-rewired test",
+      "test": "jest",
+      "predeploy": "npm run build",
+      "deploy": "gh-pages -d build"
+   },
+```
 
 ## App structure
 
@@ -313,17 +311,17 @@ You can find examples about configurations and how to code an App in the [Generi
 
 To start the development server:
 
-   ```bash
-   make run
-   ```
+```bash
+make run
+```
 
 ## Deploy QA
 
 To perform a QA deployment over AWS S3:
 
-   ```bash
-   make deploy_qa
-   ```
+```bash
+make deploy_qa
+```
 
 ## License
 
