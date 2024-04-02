@@ -17,7 +17,7 @@ STAGE="$1"
 
 echo ""
 echo "Stage = ${STAGE}"
-echo "REACT_APP_API_URL_DEV = ${REACT_APP_API_URL_DEV}"
+echo "APP_API_URL_DEV = ${APP_API_URL_DEV}"
 echo "RUN_METHOD = ${RUN_METHOD}"
 echo ""
 if [ "${STAGE}" = "dev" ]; then
@@ -27,27 +27,27 @@ if [ "${STAGE}" = "dev" ]; then
         echo "Please enter 1 or 2"
         read choice
     done
-    if [ "$choice" = "1" ]; then
-        echo "Run by: http"
-        if [ "${BACKEND_LOCAL_PORT_HTTP}" = "" ]; then
-            # BACKEND_LOCAL_PORT_HTTP="5002"
-            BACKEND_LOCAL_PORT_HTTP="5001"
-        fi
-        if [ "${APP_LOCAL_DOMAIN_NAME}" = "" ]; then
-            if [ "${REACT_APP_APP_NAME}" = "" ]; then
-                echo "ERROR: REACT_APP_APP_NAME environment variable not defined"
-                exit 1
-            fi
-            APP_NAME_LOWERCASE=$(echo ${REACT_APP_APP_NAME} | tr '[:upper:]' '[:lower:]')
-            APP_LOCAL_DOMAIN_NAME="app.${APP_NAME_LOWERCASE}.local"
-        fi
-        export REACT_APP_API_URL_DEV="http://${APP_LOCAL_DOMAIN_NAME}:${BACKEND_LOCAL_PORT_HTTP}"
-        export REACT_APP_API_URL="${REACT_APP_API_URL_DEV}"
-        echo ">>--> New REACT_APP_API_URL_DEV = ${REACT_APP_API_URL_DEV}"
-        echo ">>--> New REACT_APP_API_URL = ${REACT_APP_API_URL}"
-    else
-        echo "Run by: https"
+    if [ "${BACKEND_LOCAL_PORT}" = "" ]; then
+        BACKEND_LOCAL_PORT="5000"
     fi
+    if [ "${APP_LOCAL_DOMAIN_NAME}" = "" ]; then
+        if [ "${REACT_APP_APP_NAME}" = "" ]; then
+            echo "ERROR: REACT_APP_APP_NAME environment variable not defined"
+            exit 1
+        fi
+        APP_NAME_LOWERCASE=$(echo ${REACT_APP_APP_NAME} | tr '[:upper:]' '[:lower:]')
+        APP_LOCAL_DOMAIN_NAME="app.${APP_NAME_LOWERCASE}.local"
+    fi
+    if [ "$choice" = "1" ]; then
+        http_method="http"
+    else
+        http_method="https"
+    fi
+    echo "Run by: ${http_method}"
+    export APP_API_URL_DEV="${http_method}://${APP_LOCAL_DOMAIN_NAME}:${BACKEND_LOCAL_PORT}"
+    export REACT_APP_API_URL="${APP_API_URL_DEV}"
+    echo ">>--> New APP_API_URL_DEV = ${APP_API_URL_DEV}"
+    echo ">>--> New REACT_APP_API_URL = ${REACT_APP_API_URL}"
 fi
 
 # Copy images to build/static/media
@@ -71,6 +71,8 @@ if [ ! -L "./public/static" ]; then
     fi
 fi
 
+export REACT_APP_VERSION=$(cat version.txt)
+echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
 
 if [ "${STAGE}" = "dev" ]; then
     if [ "${RUN_METHOD}" = "webpack" ]; then
@@ -80,8 +82,6 @@ if [ "${STAGE}" = "dev" ]; then
         cp public/index-template.html public/index.html
         perl -i -pe"s|\"type1\": \"module\"|\"type\": \"module\"|g" package.json
     else
-        export REACT_APP_VERSION=$(cat version.txt)
-        echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
         npm run start-dev
     fi
 fi

@@ -8,7 +8,7 @@ let devServerConfig = {
     historyApiFallback: true,
     hot: true,
     compress: true,
-    port: 3000,
+    port: process.env.FRONTEND_LOCAL_PORT || 3000,
     allowedHosts: [appLocalDomainName], // To avoid "Invalid Host header" error
 };
 

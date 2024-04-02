@@ -2,6 +2,26 @@
 # File: scripts/aws_deploy_to_s3.sh
 # 2023-07-17 | CR
 
+get_ssl_cert_arn() {
+    echo ""
+    echo "NOTE: These 3 warnings '-i used with no filenames on the command line, reading from STDIN.' are normal..."
+    domain_cleaned=$(echo $domain | perl -i -pe 's|https:\/\/||' | perl -i -pe 's|http:\/\/||' | perl -i -pe 's|:.*||')
+
+    echo ""
+    echo "Fetching ACM Certificate ARN for '${domain_cleaned}'..."
+    echo "(Originally: '${domain})"
+    # ACM_CERTIFICATE_ARN=$(aws acm list-certificates --region ${AWS_REGION} --output text --query "CertificateSummaryList[?DomainName=='${APP_FE_URL}'].CertificateArn | [0]")
+    ACM_CERTIFICATE_ARN=$(aws acm list-certificates --output text --query "CertificateSummaryList[?DomainName=='${domain_cleaned}'].CertificateArn | [0]")
+
+    echo ""
+    echo "[${domain_cleaned}] ACM Certificate ARN: ${ACM_CERTIFICATE_ARN}"
+
+    if [[ "${ACM_CERTIFICATE_ARN}" = "" || "${ACM_CERTIFICATE_ARN}" = "None" || "${ACM_CERTIFICATE_ARN}" = "null" || "${ACM_CERTIFICATE_ARN}" = "NULL" || "${ACM_CERTIFICATE_ARN}" = "Null" ]]; then
+        ACM_CERTIFICATE_ARN=""
+        echo "ERROR: ACM Certificate ARN not found for '${domain_cleaned}'"
+    fi
+}
+
 REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`" ;
 SCRIPTS_DIR="`pwd`" ;
@@ -12,39 +32,14 @@ UPDATE_BUILD="1"
 ENV_FILESPEC=""
 if [ -f "${REPO_BASEDIR}/.env" ]; then
     ENV_FILESPEC="${REPO_BASEDIR}/.env"
+else
+    ERROR_MSG="ERROR .env file doesn't exist"
 fi
-if [ "${ENV_FILESPEC}" != "" ]; then
-    set -o allexport; source ${ENV_FILESPEC}; set +o allexport ;
+if [ "${ERROR_MSG}" = "" ]; then
+    if [ "${ENV_FILESPEC}" != "" ]; then
+        set -o allexport; source ${ENV_FILESPEC}; set +o allexport ;
+    fi
 fi
-
-if [ "${AWS_REGION}" = "" ]; then
-    echo "ERROR: AWS_REGION environment variable not defined"
-    exit 1
-fi
-
-if [ "${AWS_S3_BUCKET_NAME}" = "" ]; then
-    echo "ERROR: AWS_S3_BUCKET_NAME environment variable not defined"
-    exit 1
-fi
-
-if [ "${GITHUB_USERNAME}" = "" ]; then
-    echo "ERROR: GITHUB_USERNAME environment variable not defined"
-    exit 1
-fi
-
-if [ "${GITHUB_REPONAME}" = "" ]; then
-    echo "ERROR: GITHUB_REPONAME environment variable not defined"
-    exit 1
-fi
-
-# if [ "${REACT_APP_APP_NAME}" = "" ]; then
-#     echo "ERROR: REACT_APP_APP_NAME environment variable not defined"
-#     exit 1
-# fi
-# export APP_NAME_LOWERCASE=$(echo ${REACT_APP_APP_NAME} | tr '[:upper:]' '[:lower:]')
-# if [ "${APP_LOCAL_DOMAIN_NAME}" = "" ]; then
-#     export APP_LOCAL_DOMAIN_NAME="app.${APP_NAME_LOWERCASE}.local"
-# fi
 
 export REACT_APP_VERSION=`cat "version.txt"`
 
@@ -58,6 +53,12 @@ fi
 if [ "${ERROR_MSG}" = "" ]; then
     if [ "${AWS_REGION}" = "" ];then
         ERROR_MSG="AWS_REGION is not set"
+    fi
+fi
+# Frontend domain name
+if [ "${ERROR_MSG}" = "" ]; then
+    if [ "${APP_FE_URL}" = "" ];then
+        ERROR_MSG="APP_FE_URL is not set"
     fi
 fi
 
@@ -121,26 +122,105 @@ if [ "${ERROR_MSG}" = "" ]; then
 
     # Creating CloudFront distribution
     if [ "${DIST_ID}" = "" ]; then
-        echo "Creating CloudFront distribution..."
-        DIST_ID=$(aws cloudfront create-distribution \
-        --origin-domain-name ${BUCKET_NAME}.s3.amazonaws.com \
-        --default-root-object index.html \
-        --output text \
-        --query 'Distribution.Id')
+        echo ""
+        echo "Fetching ACM Certificate ARN for ${APP_FE_URL} to create the CloudFront distribution..."
+        domain="${APP_FE_URL}"
+        get_ssl_cert_arn
+   
+        if [ "${ACM_CERTIFICATE_ARN}" = "" ]; then
+            echo ""
+            echo "The ACM (SSL) Certificate ARN not found for ${domain}"
+            echo "Do you want to proceed with no domain association? (y/N)"
+            read -p "Type 'y' and press Enter to confirm, any other value to cancel..." var
+            echo ""
+            if [[ "$var" = "Y" || "$var" = "y" ]]; then
+                echo "Proceeding with no domain association..."
+                DIST_ID=$(aws cloudfront create-distribution \
+                --origin-domain-name ${BUCKET_NAME}.s3.amazonaws.com \
+                --default-root-object index.html \
+                --output text \
+                --query 'Distribution.Id')
+            else
+                ERROR_MSG="ERROR: ACM Certificate ARN not found for ${domain}"
+            fi
+        else
+            # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/example_cloudfront_CreateDistribution_section.html
+
+            echo "Creating CloudFront distribution..."
+            DIST_ID=$(aws cloudfront create-distribution \
+            --distribution-config "{
+                \"Comment\": \"CloudFront Distribution for '${BUCKET_NAME}'\",
+                \"Enabled\": true,
+                \"Aliases\": {
+                    \"Quantity\": 1,
+                    \"Items\": [\"${APP_FE_URL}\"]
+                },
+                \"DefaultRootObject\": \"index.html\",
+                \"Origins\": {
+                    \"Quantity\": 1,
+                    \"Items\": [
+                        {
+                            \"Id\": \"${BUCKET_NAME}.s3.amazonaws.com\",
+                            \"DomainName\": \"${BUCKET_NAME}.s3.amazonaws.com\",
+                            \"OriginPath\": \"\",
+                            \"CustomHeaders\": {
+                                \"Quantity\": 0
+                            },
+                            \"S3OriginConfig\": {
+                                \"OriginAccessIdentity\": \"\"
+                            }
+                        }
+                    ]
+                },
+                \"CallerReference\": \"${BUCKET_NAME}-distribution\",
+                \"ViewerCertificate\": {
+                    \"CertificateSource\": \"acm\",
+                    \"SSLSupportMethod\": \"sni-only\",
+                    \"ACMCertificateArn\": \"${ACM_CERTIFICATE_ARN}\",
+                    \"MinimumProtocolVersion\": \"TLSv1.2_2019\"
+                },
+                \"DefaultCacheBehavior\": {
+                    \"TargetOriginId\": \"${BUCKET_NAME}.s3.amazonaws.com\",
+                    \"ForwardedValues\": {
+                        \"QueryString\": false,
+                        \"Cookies\": {
+                            \"Forward\": \"none\"
+                        },
+                        \"Headers\": {
+                            \"Quantity\": 0
+                        },
+                        \"QueryStringCacheKeys\": {
+                            \"Quantity\": 0
+                        }
+                    },
+                    \"MinTTL\": 0,
+                    \"ViewerProtocolPolicy\": \"allow-all\"
+                }
+            }" \
+            --output text \
+            --query 'Distribution.Id')
+
+            if [ "${DIST_ID}" = "" ]; then
+                ERROR_MSG="ERROR: the cloudfront create-distribution for S3 bucket '${BUCKET_NAME}' and Domain '${APP_FE_URL}' failed..."
+            fi
+        fi
     fi
-    echo "CloudFront distribution ID: $DIST_ID"
 
-    # Get the OAI associated with the distribution:
-    echo "Getting the OAI associated with the distribution..."
-    OAI_ID=$(aws cloudfront get-distribution --id ${DIST_ID} --query 'Distribution.ActiveTrustedSigners.Enabled' --output text)
-    echo "OAI ID: $OAI_ID"
-
-    if [ "${OAI_ID}" = "False" ]; then
-        echo "OAI is not enabled. Enabling OAI..."
-        OAI_ID=$(aws cloudfront create-cloud-front-origin-access-identity --cloud-front-origin-access-identity-config CallerReference=caller-ref-${BUCKET_NAME},Comment=comment-${BUCKET_NAME} --query 'CloudFrontOriginAccessIdentity.Id' --output text)
+    if [ "${ERROR_MSG}" = "" ]; then
+        echo ""
+        echo "CloudFront distribution ID: $DIST_ID"
+        echo ""
+        echo "Getting the OAI associated with the distribution..."
+        OAI_ID=$(aws cloudfront get-distribution --id ${DIST_ID} --query 'Distribution.ActiveTrustedSigners.Enabled' --output text)
         echo "OAI ID: $OAI_ID"
-        if [ "${OAI_ID}" = "" ]; then
-            ERROR_MSG="ERROR creating OAI"
+
+        if [ "${OAI_ID}" = "False" ]; then
+            echo "OAI is not enabled. Enabling OAI..."
+            OAI_ID=$(aws cloudfront create-cloud-front-origin-access-identity --cloud-front-origin-access-identity-config CallerReference=caller-ref-${BUCKET_NAME},Comment=comment-${BUCKET_NAME} --query 'CloudFrontOriginAccessIdentity.Id' --output text)
+            echo "OAI ID: $OAI_ID"
+            if [ "${OAI_ID}" = "" ]; then
+                ERROR_MSG="ERROR creating OAI"
+            fi
         fi
     fi
 fi
@@ -178,6 +258,8 @@ if [ "${ERROR_MSG}" = "" ]; then
     echo "ACL enabled Object Ownership Permissions set successfully!"
 fi
 
+# \"Principal\":{\"CanonicalUser\":\"${OAI_ID}\"},
+
 if [ "${ERROR_MSG}" = "" ]; then
     # Add permissions to the S3 bucket policy to allow access from the OAI:
     echo "Adding permissions to the S3 bucket policy to allow access from the OAI..."
@@ -212,8 +294,27 @@ if [ "${ERROR_MSG}" = "" ]; then
         echo $(aws cloudfront get-distribution-config --id ${DIST_ID} --output text)
     else
         ERROR_MSG="ERROR running aws s3api put-bucket-policy --bucket ${BUCKET_NAME} --policy ${S3_BUCKET_POLICY}"
+        echo ""
         echo "${ERROR_MSG}"
-        read -p "Type 'Y' and press Enter to continue, other value to cancel..." var
+        echo ""
+        echo "Probably this script was unable to deactivate the 'Block all public access' option on the S3 bucket..."
+        echo ""
+        echo "To solve this:"
+        echo ""
+        echo "1) Go to the AWS Console"
+        echo "2) Go to S3"
+        echo "3) Search for bucket: ${BUCKET_NAME}"
+        echo "4) Click on the bucket name"
+        echo "5) Click on the 'Permissions' tab"
+        echo "6) Click on 'Edit' in the 'Block public access (bucket settings)' section"
+        echo "7) Uncheck 'Block all public access'"
+        echo "8) Click on 'Save changes'"
+        echo "9) Confirm the operation"
+        echo ""
+        echo "Then retry the script..."
+        echo ""
+        read -p "Type 'y' and press Enter to continue, any other value to cancel..." var
+        echo ""
         if [[ "$var" = "Y" || "$var" = "y" ]]; then
             echo "Continuing..."
             ERROR_MSG=""
@@ -233,13 +334,40 @@ fi
 
 if [ "${ERROR_MSG}" = "" ]; then
 
+    export REACT_APP_REWIRED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
+    echo "package.json REACT_APP_REWIRED is: ${REACT_APP_REWIRED}"
+
+    export TSCONFIG_BASE_URL=$(perl -ne 'print $1 if /"baseUrl":\s*"([^"]*)"/' tsconfig.json)
+    echo "tsconfig.json TSCONFIG_BASE_URL was: ${TSCONFIG_BASE_URL}"
+
+    if [ "${REACT_APP_REWIRED}" = "" ]; then
+        echo "Installing react-app-rewired ..."
+        npm install --save-dev --force react-app-rewired
+    fi
+
+    if [ "${TSCONFIG_BASE_URL}" = "./src/lib" ]; then
+        echo "Preparing tsconfig.json for local build test..."
+        perl -i -pe"s|\"baseUrl\": \"./src/lib\"|\"baseUrl\": \"./src\"|g" tsconfig.json
+    fi
+
+    export PREV_HOME_PAGE=$(perl -ne 'print $1 if /"homepage":\s*"([^"]*)"/' package.json)
+    export DEPLOYMENT_HOME_PAGE="https:\/\/${DOMAIN_NAME}"
+
+    echo ""
     echo "Updating package.json homepage with cloudfront domain..."
-    if ! perl -i -pe"s|\"homepage\": \"https:\/\/${GITHUB_USERNAME}.github.io\/${GITHUB_REPONAME}\/\"|\"homepage\": \"https:\/\/$DOMAIN_NAME\"|g" package.json
+    echo ""
+    echo "Previous homepage: ${PREV_HOME_PAGE}"
+    echo "Assigned homepage during deployment: ${DEPLOYMENT_HOME_PAGE}"
+    echo ""
+    if ! perl -i -pe"s|\"homepage\":.*|\"homepage\": \"${DEPLOYMENT_HOME_PAGE}\",|g" package.json
     then
         ERROR_MSG='ERROR updating package.json homepage with cloudfront domain $DOMAIN_NAME'
     else
         echo "package.json homepage updated"
     fi
+
+    # Prevent ERR_REQUIRE_ESM on libraries
+    perl -i -pe"s|\"type\": \"module\"|\"type1\": \"module\"|g" package.json
 fi
 
 # Build the ReactJS project
@@ -254,7 +382,7 @@ if [ "${ERROR_MSG}" = "" ]; then
             fi
         else
             echo "Building for development..."
-            if ! npm run build
+            if ! npm run build-dev
             then
                 ERROR_MSG="ERROR running npm run build"
             fi
@@ -282,9 +410,20 @@ fi
 if [ "${ERROR_MSG}" = "" ]; then
 
     echo "Updating package.json homepage (Restore)..."
-    if ! perl -i -pe"s|\"homepage\": \"https:\/\/$DOMAIN_NAME\"|\"homepage\": \"https:\/\/${GITHUB_USERNAME}.github.io\/${GITHUB_REPONAME}\/\"|g" package.json
+    # if ! perl -i -pe"s|\"homepage\": \"https:\/\/$DOMAIN_NAME\"|\"homepage\": \"https:\/\/${GITHUB_USERNAME}.github.io\/${GITHUB_REPONAME}\/\"|g" package.json
+    if ! perl -i -pe"s|\"homepage\":.*|\"homepage\": \"${PREV_HOME_PAGE}\",|g" package.json
     then
-        ERROR_MSG="ERROR running perl -i -pe's|\"homepage\": \"https:\/\/$DOMAIN_NAME\/\"|\"homepage\": \"https:\/\/${GITHUB_USERNAME}.github.io\/${GITHUB_REPONAME}\/\"|g' package.json"
+        # ERROR_MSG="ERROR running perl -i -pe's|\"homepage\": \"https:\/\/$DOMAIN_NAME\/\"|\"homepage\": \"https:\/\/${GITHUB_USERNAME}.github.io\/${GITHUB_REPONAME}\/\"|g' package.json"
+        ERROR_MSG="ERROR running perl -i -pe\"s|\"homepage\":.*|\"homepage\": \"${PREV_HOME_PAGE}\",|g\" package.json"
+    fi
+
+    # Revert prevent ERR_REQUIRE_ESM on libraries
+    perl -i -pe"s|\"type1\": \"module\"|\"type\": \"module\"|g" package.json
+
+    if [ "${TSCONFIG_BASE_URL}" = "./src/lib" ]; then
+        echo ""
+        echo "tsconfig.json TSCONFIG_BASE_URL will be restored to: ${TSCONFIG_BASE_URL}"
+        perl -i -pe"s|\"baseUrl\": \"./src\"|\"baseUrl\": \"./src/lib\"|g" tsconfig.json
     fi
 fi
 

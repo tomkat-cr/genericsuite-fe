@@ -20,6 +20,15 @@ if [ -z "${ACTION}" ]; then
   ACTION="pre-publish"
 fi
 
+export PACKAGE_NAME=$(perl -ne 'print $1 if /"name":\s*"([^"]*)"/' package.json)
+if [ "${PACKAGE_NAME}" = "" ]; then
+    PACKAGE_NAME="N/A"
+fi
+export PACKAGE_VERSION=$(perl -ne 'print $1 if /"version":\s*"([^"]*)"/' package.json)
+if [ "${PACKAGE_VERSION}" = "" ]; then
+    PACKAGE_VERSION="N/A"
+fi
+
 export REACT_APP_REWIRED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
 if [ "${REACT_APP_REWIRED}" != "" ]; then
     echo ""
@@ -65,7 +74,7 @@ fi
 
 if [ "${ACTION}" = "publish" ]; then
     echo ""
-    echo "Are you sure you want to publish (y/n)?"
+    echo "Are you sure you want to publish ${PACKAGE_NAME}:${PACKAGE_VERSION} (y/n)?"
     read answer
     if [ "${answer}" = "y" ]; then
         npm publish --access=public

@@ -20,12 +20,6 @@ build-prod:
 
 build: build-dev
 
-pre-publish:
-	sh scripts/npm_publish.sh pre-publish
-
-publish:
-	sh scripts/npm_publish.sh publish
-
 dev:
 	npm install --dev
 
@@ -52,22 +46,28 @@ eject-dev:
 	npm run eject-dev
 
 config:
-	sh scripts/change_env_be_endpoint.sh dev
+	sh node_modules/genericsuite/scripts/change_env_be_endpoint.sh dev
 
 config_qa:
-	sh scripts/change_env_be_endpoint.sh qa
+	sh node_modules/genericsuite/scripts/change_env_be_endpoint.sh qa
+
+config_demo:
+	sh node_modules/genericsuite/scripts/change_env_be_endpoint.sh demo
 
 deploy: config
-	sh scripts/aws_deploy_to_s3.sh
+	sh node_modules/genericsuite/scripts/aws_deploy_to_s3.sh
 
 deploy_qa: config_qa
-	sh scripts/aws_deploy_to_s3.sh
+	sh node_modules/genericsuite/scripts/aws_deploy_to_s3.sh
+
+deploy_demo: config_demo
+	sh node_modules/genericsuite/scripts/aws_deploy_to_s3.sh
 
 run: config
-	sh scripts/run_app_frontend.sh dev
+	sh node_modules/genericsuite/scripts/run_app_frontend.sh dev
 
 run_qa: config_qa
-	sh scripts/run_app_frontend.sh qa
+	sh node_modules/genericsuite/scripts/run_app_frontend.sh qa
 
 server: run
 start: run
@@ -82,7 +82,21 @@ tailwind:
 	npx tailwindcss -i ./src/input.css -o ./public/output.css --watch
 
 add_submodules:
-	sh scripts/add_github_submodules.sh
+	sh node_modules/genericsuite/scripts/add_github_submodules.sh
 
 create_ssl_certs:
-	sh scripts/create_ssl_certs.sh
+	sh node_modules/genericsuite/scripts/create_ssl_certs.sh
+
+## NPM scripts library
+
+config_lib:
+	sh scripts/change_env_be_endpoint.sh dev
+
+run_lib: config_lib
+	sh scripts/run_app_frontend.sh dev
+
+pre-publish:
+	sh scripts/npm_publish.sh pre-publish
+
+publish:
+	sh scripts/npm_publish.sh publish

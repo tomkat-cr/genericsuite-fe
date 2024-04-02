@@ -22,7 +22,7 @@ There's a version of this library with AI features: [The GenericSuite AI](https:
 
 You need to install these tools:
 
-- [Node](https://nodejs.org/en/download/package-manager) 18+
+- Node version 18+, installed via [NVM (Node Package Manager)](https://nodejs.org/en/download/package-manager) or [NPM and Node](https://nodejs.org/en/download) install.
 - [Git](https://www.atlassian.com/git/tutorials/install-git)
 - Make: [Mac](https://formulae.brew.sh/formula/make) | [Windows](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows)
 
@@ -109,21 +109,30 @@ npm install --save-dev \
    
    And configure the variables according your needs:
 
-   1. Replace `exampleapp` with your App's name.
+   1. Assign `REACT_APP_APP_NAME` with your App's name.
+   
+   2. Assign `APP_LOCAL_DOMAIN_NAME` with the local development environment backend API domain name. E.g. app.exampleapp.local or localhost.<BR/>
+   Defaults to app.${REACT_APP_APP_NAME}.local (the REACT_APP_APP_NAME will be converted to all lowercase).
 
-   2. Replace `url-qa`, `url-staging` and `url-prod` with the corresponding public domain names for your App environments.
+   2. Assign `FRONTEND_LOCAL_PORT` with the port number for the local development environment backend API. Defaults to 3000.
 
-   3. Configure your desired `RUN_METHOD`. Available options are "webpack" and "react-scripts". Defaults to "webpack".
+   3. Assign `BACKEND_LOCAL_PORT` with the port number for the local development environment backend API. Defaults to 5000.
 
-   4. Configure `BACKEND_PATH` with the path for your backend API local development repo.
+   4. Assign `APP_API_URL_QA`, `APP_API_URL_STAGING`, `APP_API_URL_PROD`, and `APP_API_URL_DEMO` with the corresponding public backend API domain names for your App environments.
 
-   5. Configure `GITHUB_USERNAME` and `GITHUB_REPONAME`. It will be used by `scripts/aws_deploy_to_s3.sh` to change the `homepage` in `package.json` with the proper public domain during the AWS S3 deployment and restores to GITHUB_USERNAME.github.io/GITHUB_REPONAME after that.
+   5. Assign `APP_FE_URL_QA`, `APP_FE_URL_STAGING`, `APP_FE_URL_PROD`, and `APP_FE_URL_DEMO` with the corresponding public frontend domain names for your App environments.
 
-   6. Configure `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` with the JSON files submodule parameters to stablish a common configuration place for both frontend and backend (used by add_github_submodules.sh).<BR/>For example files, visit: [Generic Suite Configuration Guide](https://github.com/tomkat-cr/genericsuite-fe/tree/main/src/configs)
+   6. Assign `REACT_APP_URI_PREFIX` with the App URI prefix. This will be used in all environments after the domain name. E.g. https://app.exampleapp.com/exampleapp_frontend
 
-   7. Configure the `AWS_*` parameters with your AWS data (used by aws_deploy_to_s3.sh and change_env_be_endpoint.sh). You'll need an AWS account.
+   7. Configure your desired `RUN_METHOD`. Available options are "webpack" and "react-scripts". Defaults to "webpack".
 
-For more information, check the [.env.example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.env.example).
+   8. Configure `BACKEND_PATH` with the path for your backend API local development repo.
+
+   9. Configure `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` with the JSON files submodule parameters to stablish a common configuration place for both frontend and backend (used by add_github_submodules.sh).<BR/>For example files, visit: [Generic Suite Configuration Guide](https://github.com/tomkat-cr/genericsuite-fe/tree/main/src/configs)
+
+   10. Configure the `AWS_*` parameters with your AWS data (used by aws_deploy_to_s3.sh and change_env_be_endpoint.sh). You'll need an AWS account.
+
+For more information, check the comments for each variable in the [.env.example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.env.example) file.
 
 5. **Prepare the Makefile**
 
@@ -131,14 +140,6 @@ For more information, check the [.env.example](https://github.com/tomkat-cr/gene
 
    ```bash
    cp node_modules/genericsuite/Makefile ./Makefile
-   ```
-   
-   Open the `Makefile` and replace all `scripts/` with  `node_modules/genericsuite/scripts/`
-
-   ```bash
-   vi ./Makefile
-   # or
-   code ./Makefile
    ```
 
 6. **Change Scripts in Package.json**
@@ -148,10 +149,10 @@ For more information, check the [.env.example](https://github.com/tomkat-cr/gene
    ```bash
    vi ./package.json
    # or
-   code ./package.json
+   # code ./package.json
    ```
 
-   Add the homepage parameter:
+   If you want to host your frontend on **github.io**, add the homepage parameter:
 
    ```package.json
    "homepage": "https://your-github-username.github.io/your-github-repository/",
@@ -326,7 +327,7 @@ To perform a QA deployment over AWS S3:
 
 ## License
 
-GenericSuite is open-sourced software licensed under the MIT license.
+GenericSuite is open-sourced software licensed under the ISC license.
 
 ## Credits
 

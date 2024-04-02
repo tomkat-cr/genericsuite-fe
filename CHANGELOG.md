@@ -16,6 +16,28 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.17 (2024-04-01)
+---
+
+### New
+Add `make deploy_demo` and `make config_demo` to manage the "demo" stage.
+Add "demo" stage to REACT_APP_API_URL, and AWS_S3_BUCKET_NAME.
+Add APP_FE_URL_DEV, APP_FE_URL_QA, APP_FE_URL_STAGING, APP_FE_URL_PROD, APP_FE_URL_DEMO variables to .env file, to be used by "aws_deploy_to_s3.sh" and "change_env_be_endpoint.sh" as the frontend domain.
+Add the FRONTEND_LOCAL_PORT and BACKEND_LOCAL_PORT variables to .env file, to define the local frontend and backend port numbers.
+Add "scripts/aws_get_ssl_cert_arn.sh" to verify the AWS ACM Certificate ARNs for the frontend and backend domains.
+
+### Fixes
+Fix "add_github_submodules.sh" to do "git submodule init", "git submodule sync" and "git pull --tags origin main" instead of "git checkout origin/main" to effectively pull the JSON configs from the git repository when the directory specified in "GIT_SUBMODULE_LOCAL_PATH" already exists and "git submodule add" was already run.
+
+### Changes
+The REACT_APP_API_URL_DEV, REACT_APP_API_URL_QA, REACT_APP_API_URL_STAGING, REACT_APP_API_URL_PROD, and REACT_APP_API_URL_DEMO variable names in the .env file were changed to APP_API_URL_DEV, APP_API_URL_QA, APP_API_URL_STAGING, APP_API_URL_PROD, and APP_API_URL_DEMO.
+"aws_deploy_to_s3.sh" take into account the APP_FE_URL domain in the CloudFront distribution creation.
+"make publish" report the package name and version in the publishing confirmation.
+"run_app_frontend.sh" assign APP_API_URL_DEV and REACT_APP_API_URL in the "dev" stage for both http and https modes. Previously it was only made for http.
+Node install links changed to include the NVM alternative download in the README.
+License changed to ISC [FA-244].
+
+
 ## 1.0.16 (2024-03-21)
 ---
 

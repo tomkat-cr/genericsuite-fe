@@ -42,7 +42,7 @@ module.exports = {
         config.historyApiFallback = true;
         config.hot = true;
         config.compress = true;
-        config.port = 3000;
+        config.port = process.env.FRONTEND_LOCAL_PORT || 3000;
 
         if (process.env.REACT_APP_API_URL.includes("http://")) {
           config.https = false;

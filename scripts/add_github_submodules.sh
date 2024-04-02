@@ -100,25 +100,49 @@ if [ "${ERROR_MSG}" = "" ]; then
             echo "Updating submodule: ${GIT_SUBMODULE_URL}"
             echo "In: ${GIT_SUBMODULE_LOCAL_PATH}"
             echo ""
+            echo ">> Current directory: `pwd`"
+            echo ""
+
             echo "Running: git fetch"
             if ! git fetch
             then
                 ERROR_MSG="${ERROR_MSG}, Failed to fetch"
             fi
-            echo "Running: git checkout origin/main"
-            if ! git checkout origin/main
+
+            # echo "Running: git checkout origin/main"
+            # if ! git checkout origin/main
+            # then
+            #     ERROR_MSG="${ERROR_MSG}, Failed to git checkout origin/main"
+            # fi
+
+            echo "Running: git submodule init"
+            if ! git submodule init
             then
-                ERROR_MSG="${ERROR_MSG}, Failed to git checkout origin/main"
+                ERROR_MSG="${ERROR_MSG}, 'git submodule init' Failed"
             fi
+
+            echo "Running: git submodule sync"
+            if ! git submodule sync
+            then
+                ERROR_MSG="${ERROR_MSG}, 'git submodule sync' Failed"
+            fi
+
+            echo "Running: git pull --tags origin main"
+            if ! git pull --tags origin main
+            then
+                ERROR_MSG="${ERROR_MSG}, 'git pull --tags origin main' Failed"
+            fi
+
             echo "Running: git pull --recurse-submodules"
             if ! git pull --recurse-submodules
             then
-                ERROR_MSG="${ERROR_MSG}, Failed to pull --recurse-submodules"
+                ERROR_MSG="${ERROR_MSG}, 'git pull --recurse-submodules' Failed"
             fi
+
             echo "Running: git submodule update --remote --recursive"
             if ! git submodule update --remote --recursive
             then
-                ERROR_MSG="${ERROR_MSG}, Failed to update"
+                ERROR_MSG="${ERROR_MSG}, 'git submodule update --remote --recursive' Failed"
             fi
         fi
     fi
