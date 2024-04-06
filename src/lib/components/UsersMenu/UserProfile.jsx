@@ -19,7 +19,6 @@ import {
 
 import { UsersConfig } from './UsersConfig.jsx';
 import {
-    UsersDbPostWrite,
     UsersDbListPreRead,
     UsersDbPreWrite,
     UsersValidations,
@@ -34,7 +33,6 @@ export function UsersProfile_EditorData() {
         "TRUE_FALSE": TRUE_FALSE,
         "BILLING_PLANS": BILLING_PLANS,
         "GENDERS": GENDERS,
-        "UsersDbPostWrite": UsersDbPostWrite,
         "UsersConfig": UsersConfig,
         "UserProfileEditor": UserProfileEditor,
         "UsersDbListPreRead": UsersDbListPreRead,

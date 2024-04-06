@@ -46,10 +46,7 @@ Add: frontend/app_main_menu.json
 ---
 
 ### New
-Add: backend/food_moments.json
 Add: backend/users.json
-Add: backend/users_user_history.json
-Add: backend/users_food_times.json
 
 ## 0.0.1 (2023-07-11)
 ---
@@ -57,4 +54,3 @@ Add: backend/users_food_times.json
 ### New
 GCE_RFC: editor data definitions are in JSON files from an external git repository [FA-86].
 Add: frontend/users.json
-Add: frontend/users_user_history.json

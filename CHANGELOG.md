@@ -16,6 +16,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.18 (2024-04-06)
+---
+
+### Fixes
+Fix the labels color for required fields in the "generic.editor.rfc.formpage.jsx" data form.
+Fix users and user_profile save error "Connection failure (Possible CORS): Failed to fetch [EFFF-010]" by removing "UsersDbPostWrite".
+
+### Changes
+Change "convertHeight" and "convertWeight" to validate parameters and avoid throwing an error the they are empty during the generic editor Create action.
+Change "EditFormFormikFinal" to add the new Item created "id" to submitedtElements (data passed to processGenericFuncArray) before calling DbPostWrite.
+
+
 ## 1.0.17 (2024-04-01)
 ---
 

@@ -37,7 +37,6 @@ export function Users_EditorData(calleeName='Users_EditorData') {
         "TRUE_FALSE": TRUE_FALSE,
         "BILLING_PLANS": BILLING_PLANS,
         "GENDERS": GENDERS,
-        "UsersDbPostWrite": UsersDbPostWrite,
         "UsersConfig": UsersConfig,
         "Users": Users,
         "UsersDbListPreRead": UsersDbListPreRead,
@@ -185,61 +184,5 @@ export const UsersDbPreWrite = (data, editor, action) => {
         // Avoid passing the repeat password field to the backend
         resp.fieldsToDelete.push('passcode_repeat');
         resolve(resp);
-    });
-}
-
-/*
- * User's Profile
- */
-
-export const UsersDbPostWrite = (data, editor, action) => {
-    // Add an updated entry in user_history with current user's data
-    return new Promise((resolve, reject) => {
-        let resp = genericFuncArrayDefaultValue(data);
-        const parentId = data[editor.primaryKeyName];
-        if (debug) {
-            console_debug_log("UsersDbPostWrite - data:", data);
-        }
-        switch(action) {
-            case ACTION_CREATE:
-            case ACTION_UPDATE:
-                const db = new dbApiService({ url: 'users/user-user-history' });
-                // let itemToSave = (data['user_history']);
-                // const newElement = {
-                const itemToSave = {
-                    user_id: parentId,
-                    user_history: {
-                        // date: processDateToTimestamp(new Date().toISOString().slice(0, 10)),
-                        date: processDateToTimestamp(new Date().toISOString()),
-                        goal_code: data['goal_code'],
-                        goals: data['goals'],
-                        weight: data['weight'],
-                        weight_unit: data['weight_unit'],
-                    }
-                }
-                // itemToSave.push(newElement);
-                if (debug) {
-                    console_debug_log("UsersDbPostWrite - itemToSave:", itemToSave);
-                }
-                db.createRow(itemToSave).then(
-                    _ => {
-                        // To refresh parent component and show the new calorie total
-                        resp['otherData']['refresh'] = true;
-                        if (debug) {
-                            console_debug_log(`UsersDbPostWrite | resp:`, resp);
-                        }
-                        resolve(resp);
-                    },
-                    error => {
-                        console_debug_log(`[UDPW-020] UsersDbPostWrite | error:`, error);
-                        resp.error = true;
-                        resp.errorMsg = error;
-                        reject(resp)
-                    }
-                );
-                break;
-            default:
-                resolve(resp);
-        }
     });
 }

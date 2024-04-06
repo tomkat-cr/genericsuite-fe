@@ -1,4 +1,9 @@
+import { MSG_SELECT_AN_OPTION } from "../constants/general_constants.jsx";
+
 export const convertHeight = (height, height_unit, target_unit) => {
+    if (height_unit === null || height_unit === '' || height_unit === MSG_SELECT_AN_OPTION || target_unit === null || target_unit === '' || target_unit === MSG_SELECT_AN_OPTION) {
+        return 0;
+    }
     if (height_unit === target_unit) {
         return height;
     }
@@ -24,6 +29,9 @@ export const convertHeight = (height, height_unit, target_unit) => {
 }
 
 export const convertWeight = (weight, weight_unit, target_unit) => {
+    if (weight_unit === null || weight_unit === '' || weight_unit === MSG_SELECT_AN_OPTION || target_unit === null || target_unit === '' || target_unit === MSG_SELECT_AN_OPTION) {
+        return 0;
+    }
     if (weight_unit === target_unit) {
         return weight;
     }

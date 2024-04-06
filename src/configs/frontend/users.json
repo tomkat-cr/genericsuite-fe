@@ -143,9 +143,6 @@
     "dbPreWrite": [
         "UsersDbPreWrite"
     ],
-    "dbPostWrite": [
-        "UsersDbPostWrite"
-    ],
     "dbPreValidations": [
         "UsersValidations"
     ],

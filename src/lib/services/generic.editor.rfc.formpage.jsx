@@ -196,6 +196,7 @@ const PutOneFormfield = ({
     let currentObj = currentObjArray[1];
 
     const labelClass = "font-medium text-gray-700";
+    const labelClassRequiredFld = "font-medium text-red-700";
     const divclass = "flex flex-col form-group";
     const fieldClass =
         "form-control" +
@@ -214,6 +215,14 @@ const PutOneFormfield = ({
                 type="hidden"
             />
         );
+    }
+
+    const getLabelClass = () => {
+        return (currentObj.required && !readOnlyfield ? labelClassRequiredFld : labelClass);
+    }
+
+    const getLabelSuffix = () => {
+        return (currentObj.required && !readOnlyfield ? ' *' : '');
     }
 
     const addCalculation = (htmlElement) => {
@@ -280,9 +289,9 @@ const PutOneFormfield = ({
     let elementLabel = (
         <label
             htmlFor={idName}
-            className={divclass}
+            className={getLabelClass()}
         >
-            {currentObj.label}
+            {currentObj.label + getLabelSuffix()}
         </label>
     );
     let elementError = (
@@ -384,9 +393,9 @@ const PutOneFormfield = ({
             elementLabel = (
                 <label
                     htmlFor={currentObj.name}
-                    className={labelClass}
+                    className={getLabelClass()}
                 >
-                    {currentObj.label}
+                    {currentObj.label + getLabelSuffix()}
                 </label>
             );
             if (typeof currentObj.component === 'undefined') {
@@ -677,6 +686,9 @@ const EditFormFormikFinal = ({
                                                 setSubmitting(false);
                                                 setStatus(result);
                                             } else {
+                                                if (editorFlags.isCreate) {
+                                                    submitedtElements.id = result['resultset']['_id'];
+                                                }
                                                 if (debug) {
                                                     console_debug_log('BEFORE dbPostWrite | submitedtElements:', submitedtElements);
                                                 }
