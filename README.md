@@ -1,6 +1,6 @@
 # GenericSuite for ReactJS (frontend version)
 
-![GenericSuite Logo](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/images/gs_logo_circle.png)
+![GenericSuite Logo](https://genericsuite.carlosjramirez.com/images/gs_logo_circle.svg)
 
 Welcome to GenericSuite, a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the frontend part of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
 
@@ -77,6 +77,7 @@ npm install --save-dev \
    @testing-library/user-event \
    @types/jest \
    @types/react \
+   autoprefixer \
    babel-jest \
    babel-loader \
    babel-plugin-css-modules-transform \
@@ -95,6 +96,14 @@ npm install --save-dev \
    webpack-cli \
    webpack-dev-server \
    whatwg-fetch
+```
+
+### Uninstall not required dependencies
+
+Uninstall not required dependencies installed by CRA and included in the GenericSuite library:
+
+```bash
+npm uninstall react react-dom react-scripts web-vitals
 ```
 
 ### Prepare the Configuration Files
@@ -257,10 +266,14 @@ react-app-rewired configuration. Check [react-app-rewired documentation](https:/
 JEST test configuration.<br/><br/>
 - `server.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/server.js))<br/>
 Node server, to test and debug your App in a production-like environment.<br/><br/>
-- `tailwind.config.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/tailwind.config.js))<br/>
-Tailwind configuration. Check the [documentation here](https://tailwindcss.com/docs/configuration).<br/><br/>
+- `tailwind.config.js`<br/>
+Install and initialize Tailwind with [instructions here](https://tailwindcss.com/docs/installation).<br/>
+For additional Tailwind configuration check the [documentation here](https://tailwindcss.com/docs/configuration).<br/><br/>
 - `webpack.config.js` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/webpack.config.js))<br/>
-To configure Webpack as an alternative to CRA / `react-app-rewired`. Check the [documentation here](https://webpack.js.org/configuration).<br/><br/>
+To configure Webpack as an alternative to CRA / `react-app-rewired`.<br/>
+**IMPORTANT**: Make sure to replace `entry: './src/index.tsx'` by `entry: './src/index.jsx'`.<br/>
+Check the [documentation here](https://webpack.js.org/configuration).<br/>
+<br/>
 - `tsconfig.json`<br/>
 To configure TypeScript. e.g.
 ```json
@@ -278,9 +291,9 @@ To configure TypeScript. e.g.
     "allowJs": true,
     "checkJs": false,
     "jsx": "react",
-    "baseUrl": "./src/lib",
+    "baseUrl": "./src",
     "rootDirs": [
-      "src/lib"
+      "src"
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -301,11 +314,167 @@ To configure TypeScript. e.g.
 }
 ```
 
+## Customize index.html
+
+### Option 1
+
+If you don't have a customized `public/index.html` (just the default one created by CRA):
+
+Create the `index-template.html` file:
+
+```bash
+vi public/index-template.html
+```
+
+Copy and paste this content:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link href="%PUBLIC_URL%/output.css" rel="stylesheet">
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>exampleapp.com</title>
+    <!-- bootstrap css -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        a { cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <!-- credits -->
+    <div class="text-center">
+      <p>
+          <a href="https://exampleapp.com" target="_blank" rel="noreferrer">exampleapp.com</a>
+      </p>
+    </div>
+  </body>
+</html>
+```
+
+Replace `exampleapp.com` with your App domain name and the App name where it's necessary.
+
+For example in these lines:
+
+```html
+<title>exampleapp.com</title>
+```
+```html
+<a href="https://exampleapp.com" target="_blank" rel="noreferrer">exampleapp.com</a>
+```
+
+### Option 2
+
+If you already have a `public/index.html` file customized:
+
+Edit the `index.html` file:
+
+```bash
+vi public/index.html
+```
+
+Make sure to add `%PUBLIC_URL%` to these lines:
+
+```html
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+```
+```html
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+```
+```html
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+```
+
+After this line:
+
+```html
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+```
+
+... add this line:
+
+```html
+    <link href="%PUBLIC_URL%/output.css" rel="stylesheet">
+```
+
+Remove this line:
+
+```html
+    <base href="/">
+```
+
+Before the `<title>`, add this line:
+
+```html
+    <!-- bootstrap css -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+```
+
+Finally run this command:
+
+```bash
+cp public/index.html public/index-template.html
+```
+
+### Final step for any option
+
+Finally run this command to create the `src/output.css` file:
+
+```bash
+npx tailwindcss -i ./src/input.css -o ./src/output.css
+```
+
+And copy the file generated to the `public` directory:
+
+```bash
+cp src/output.css public/
+```
+
 ## Code examples and JSON configuration files
 
 The main menu, API endpoints and CRUD editor configurations are defined in the JSON configuration files.
 
 You can find examples about configurations and how to code an App in the [GenericSuite App Creation and Configuration guide](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/configs/README.md).
+
+## Do the first build
+
+```bash
+make build
+```
 
 ## Start Development Server
 
