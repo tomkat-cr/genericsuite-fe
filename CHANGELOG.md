@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 Customized "index.html" instructions to fix the frontend design when the project is created.
 Add more instructions to project creation process in the "src/configs/README".
 Change: README with main image from the official documentation site and .png version removed [FA-246].
+Change: Homepage pointed to "https://genericsuite.carlosjramirez.com/Frontend-Development/GenericSuite-Core/" [FA-257].
 
 
 ## 1.0.18 (2024-04-06)

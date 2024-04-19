@@ -1,6 +1,6 @@
 {
   "name": "genericsuite",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "The GenericSuite for ReactJS (frontend version)",
   "author": "Carlos J. Ramirez",
   "license": "MIT",
@@ -25,7 +25,7 @@
   "bugs": {
     "url": "https://github.com/tomkat-cr/genericsuite-fe/issues"
   },
-  "homepage": "https://github.com/tomkat-cr/genericsuite-fe#readme",
+  "homepage": "https://genericsuite.carlosjramirez.com/Frontend-Development/GenericSuite-Core/",
   "keywords": [
     "generic-crud",
     "menu-builder",

@@ -1,6 +1,12 @@
 # GenericSuite for ReactJS (frontend version)
 
-![GenericSuite Logo](https://genericsuite.carlosjramirez.com/images/gs_logo_circle.svg)
+<img 
+    align="right"
+    width="100"
+    height="100"
+    src="https://genericsuite.carlosjramirez.com/images/gs_logo_circle.svg"
+    title="GenericSuite logo by Carlos J. Ramirez"
+/>
 
 Welcome to GenericSuite, a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the frontend part of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
 
