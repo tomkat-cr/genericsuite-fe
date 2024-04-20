@@ -35,21 +35,61 @@ export function refreshPage() {
     window.location.reload();;
 };
 
+const extractErrorFromVariants = (errorRaw, element, subElement = null) => {
+    let error = errorRaw;
+    let errorJson;
+    if (typeof error['errorMsg'] !== 'undefined') {
+        error = error['errorMsg'];
+    }
+    if (typeof error === 'string') {
+        if (subElement) {
+            return '';
+        }
+        return error;
+    }
+    if (typeof error[element] !== 'undefined') {
+        errorJson = error[element];
+        if (typeof errorJson === 'string') {
+            try {
+                errorJson = JSON.parse(errorJson);
+            } catch (e) {
+                errorJson = null;
+            }
+            if (!errorJson) {
+                if (subElement) {
+                    return '';
+                }
+                return error[element];
+            }
+        }
+        if (subElement) {
+            if (typeof errorJson[subElement] === 'undefined') {
+                return '';
+            }
+            return errorJson[subElement];
+        }
+        return String(errorJson);
+    }
+    if (subElement) {
+        return '';
+    }
+    return String(error);
+}
+
 export const getErrorMessage = (error) => {
-    let errorMessage = error;
-    if (typeof error !== 'string') {
-        if (typeof error['errorMsg'] !== 'undefined') {
-            errorMessage = error['errorMsg'];
-        } else {
-            errorMessage = error['message'];
-        }
-        if (typeof error['reason'] !== 'undefined') {
-            errorMessage += ': ' + 
-                (
-                    typeof error['reason']['message'] !== "undefined" ?
-                        error['reason']['message'] : error['reason']
-                )
-        }
+    if (typeof error === 'string') {
+        return error;
+    }
+    let errorMessage = extractErrorFromVariants(error, 'message');
+    let errorReason = extractErrorFromVariants(error, 'reason', 'message');
+    if (!errorReason) {
+        errorReason = extractErrorFromVariants(error, 'reason', 'detail');
+    }
+    if (!errorReason) {
+        errorReason = extractErrorFromVariants(error, 'reason');
+    }
+    if (errorReason) {
+        errorMessage += ': ' + errorReason;
     }
     return errorMessage;
 }

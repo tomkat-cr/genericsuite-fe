@@ -16,8 +16,11 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## Unreleased
+## 1.0.19 (2024-04-20)
 ---
+
+### New
+Add FastAPI enhanced support [FA-246].
 
 ### Changes
 ".env.example" GIT_SUBMODULE_URL and AWS_S3_BUCKET_NAME_* variables with more descriptive values.
@@ -25,6 +28,9 @@ Customized "index.html" instructions to fix the frontend design when the project
 Add more instructions to project creation process in the "src/configs/README".
 Change: README with main image from the official documentation site and .png version removed [FA-246].
 Change: Homepage pointed to "https://genericsuite.carlosjramirez.com/Frontend-Development/GenericSuite-Core/" [FA-257].
+
+### Fixes
+Fix "Converting circular structure to JSON" error saving Child (array) sets with a "resultset" element in the "_old" value causing an infinite loop.
 
 
 ## 1.0.18 (2024-04-06)

@@ -858,6 +858,9 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
     if (typeof rowToSave["resultset"] !== "undefined") {
         delete rowToSave["resultset"];
     }
+    if (typeof initialValues["resultset"] !== "undefined") {
+        delete initialValues["resultset"];
+    }
     if (editor.type === "child_listing") {
         // Build the format for child table
         // Example:
