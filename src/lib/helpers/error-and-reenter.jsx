@@ -36,6 +36,8 @@ export function refreshPage() {
 };
 
 const extractErrorFromVariants = (errorRaw, element, subElement = null) => {
+
+console_debug_log(`extractErrorFromVariants | element = '${element}', subElement = '${subElement}' | errorRaw:`, errorRaw);
     let error = errorRaw;
     let errorJson;
     if (typeof error['errorMsg'] !== 'undefined') {
@@ -68,8 +70,10 @@ const extractErrorFromVariants = (errorRaw, element, subElement = null) => {
             }
             return errorJson[subElement];
         }
+console_debug_log(`(1) extractErrorFromVariants | errorJson:`, errorJson);
         return String(errorJson);
     }
+console_debug_log(`(2) extractErrorFromVariants | error:`, error);
     if (subElement) {
         return '';
     }
@@ -81,17 +85,46 @@ export const getErrorMessage = (error) => {
         return error;
     }
     let errorMessage = extractErrorFromVariants(error, 'message');
+    
+console_debug_log(`getErrorMessage | errorMessage = '${errorMessage}'`);
+
     let errorReason = extractErrorFromVariants(error, 'reason', 'message');
+
+console_debug_log(`getErrorMessage | errorReason 11:`, errorReason);
+
     if (!errorReason) {
         errorReason = extractErrorFromVariants(error, 'reason', 'detail');
+
+console_debug_log(`getErrorMessage | errorReason 22:`, errorReason);
+
     }
     if (!errorReason) {
         errorReason = extractErrorFromVariants(error, 'reason');
+
+console_debug_log(`getErrorMessage | errorReason 3:`, errorReason);
+
     }
     if (errorReason) {
         errorMessage += ': ' + errorReason;
     }
     return errorMessage;
+
+    // let errorMessage = error;
+    // if (typeof error !== 'string') {
+    //     if (typeof error['errorMsg'] !== 'undefined') {
+    //         errorMessage = error['errorMsg'];
+    //     } else {
+    //         errorMessage = error['message'];
+    //     }
+    //     if (typeof error['reason'] !== 'undefined') {
+    //         errorMessage += ': ' + 
+    //             (
+    //                 typeof error['reason']['message'] !== "undefined" ?
+    //                     error['reason']['message'] : error['reason']
+    //             )
+    //     }
+    // }
+    // return errorMessage;
 }
 
 export const isSessionExpired = (errorMessage) => {

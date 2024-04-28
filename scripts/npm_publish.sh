@@ -10,6 +10,14 @@
 #
 # 2024-03-16 | CR
 #
+
+show_date_time() {
+  if [ "${APP_TZ}" = "" ]; then
+    APP_TZ='America/New_York'
+  fi
+  TZ="${APP_TZ}" date
+}
+
 REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`" ;
 SCRIPTS_DIR="`pwd`" ;
@@ -83,3 +91,4 @@ fi
 
 echo ""
 echo "Done with ${ACTION} !"
+show_date_time
