@@ -15,6 +15,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Breaks
 
+## 1.0.21 (2024-05-02)
+---
+
+### Changes
+Change: remove <a /> from "ACCOUNT_INACTIVE" in "app_constants.json".
+
 
 ## 1.0.20 (2024-04-28)
 ---
