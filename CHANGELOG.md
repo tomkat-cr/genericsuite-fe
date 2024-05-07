@@ -16,7 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.20 (2024-05-04)
+## 1.0.20 (2024-05-06)
 ---
 
 ### New
@@ -24,12 +24,12 @@ Add AWS_SSL_CERTIFICATE_ARN env. var. for those cases where the SSL certificate 
 
 ### Changes
 Change "npm_publish.sh" to show the current date/time at the end [FA-83].
-Change "error-and-reenter.jsx" to show debug info in "getErrorMessage" [FA-246].
 Change: remove <a /> from "ACCOUNT_INACTIVE" in "app_constants.json".
 Redirect README instructions to the GenericSuite Documentation [GS-73].
 
 ### Fixes
-Fix the "ACM certificate ARN not found" error in "aws_deploy_to_s3.sh" and "aws_get_ssl_cert_arn.sh" by using AWS_SSL_CERTIFICATE_ARN env. va. [FA-98].
+Fix the "ACM certificate ARN not found" error in "aws_deploy_to_s3.sh" and "aws_get_ssl_cert_arn.sh" by using AWS_SSL_CERTIFICATE_ARN env. var. [FA-98].
+Fix "error-and-reenter.jsx" to log error in the JS console instead of showing "[object Object]" in the pop-up when "getErrorMessage" calls "extractErrorFromVariants" [FA-246].
 
 
 ## 1.0.19 (2024-04-20)
