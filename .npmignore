@@ -140,6 +140,7 @@ build
 .env.*.bak
 .jfrog/*
 venv/*
+tmp
 
 # SSL Certificates used by webpack
 *.pem
