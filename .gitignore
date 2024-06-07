@@ -89,7 +89,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# dist
 
 # Gatsby files
 .cache/
@@ -140,6 +140,7 @@ build
 .env.*.bak
 .jfrog/*
 venv/*
+tmp
 
 # SSL Certificates used by webpack
 *.pem

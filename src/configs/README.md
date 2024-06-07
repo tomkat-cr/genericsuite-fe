@@ -121,10 +121,39 @@ To share the JSON files between the frontend and backend development repositorie
 
 4. Define the `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` parametes in the backend [.env](https://github.com/tomkat-cr/genericsuite-be/blob/main/.env.example) file.
 
-5. In both frontend and backend repositories run:
+5. In the frontend directory run this to initialize the Git submodule:
 
 ```bash
 make add_submodules
+```
+
+6. In the backend directory, run this to initialize the Git submodule:
+
+```bash
+make add_submodules
+```
+
+6. In the backend directory, run this to copy the basic JSON configuration files:
+
+```bash
+make init_submodules
+```
+
+7. Commit and push the changes to make it availlable for the frontend:
+
+```bash
+# FastAPI
+cd app/config_dbdef
+# Flask
+# cd flaskr/config_dbdef
+# Chalice
+# cd lib/config_dbdef
+```
+```bash
+git commit -m "Initial JSON config files"
+```
+```bash
+git push
 ```
 
 ## App frontend
@@ -156,7 +185,7 @@ root.render(
 );
 ```
 
-- `index.css` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/index.css))<br/>
+- `input.css` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/input.css))<br/>
 General CSS and Tailwind configuration.
 ```css
 @tailwind base;
@@ -177,7 +206,9 @@ declare module "*.json"
 
 - Create the `src/components/About`, `src/components/App`, `src/components/HomePage` directories:
 
-- `About/About.jsx` component.
+- Create the `src/constants` directory.
+
+- `About/About.jsx` component ([example](https://github.com/tomkat-cr/genericsuite-fe-ai/blob/main/src/lib/components/About/About.jsx)).<br/>
 
    In the About pop-up will be your App description :
 ```js
@@ -195,16 +226,22 @@ export const AboutBody = () => {
 }
 ```
 
-- `App/App.jsx` component ([example](https://github.com/tomkat-cr/genericsuite-fe-ai/blob/main/src/lib/components/App/App.jsx))<br/>
+- `App/App.jsx` component ([example](https://github.com/tomkat-cr/genericsuite-fe-ai/blob/main/src/lib/components/App/App.jsx)).<br/>
 
    Configure the App logo (e.g. `app_logo_circle.svg`) and the main menu components (e.g. `ExampleMainElement` and `ExampleChildElement`).
 ```js
 import React from 'react';
 import * as gs from "genericsuite";
+
+import { HomePage } from '../HomePage/HomePage.jsx';
+import { AboutBody } from '../About/About.jsx';
+
 import { ExampleMainElement } from '../ExampleMenu/ExampleMainElement.jsx';
 import { ExampleChildElement } from '../ExampleMenu/ExampleChildElement.jsx';
 
 const componentMap = {
+    "AboutBody": AboutBody,
+    "HomePage": HomePage,
     "ExampleMainElement": ExampleMainElement,
     "ExampleChildElement": ExampleChildElement,
 };
@@ -219,7 +256,7 @@ export const App = () => {
 }
 ```
 
-- `HomePage/HomePage.jsx` component.
+- `HomePage/HomePage.jsx` component ([example](https://github.com/tomkat-cr/genericsuite-fe-ai/blob/main/src/lib/components/HomePage/HomePage.jsx)).<br/>
 
    Define the Home Page content.
 ```js
@@ -276,7 +313,7 @@ export const HomePage = () => {
 ```
 NOTE: replace `exampleapp.com`, `info@exampleapp.com` and `support@exampleapp.com` with your App domains and emails.
 
-- `src/_constants/app_constants.jsx` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/constants/app_constants.jsx))
+- `src/constants/app_constants.jsx` ([example](https://github.com/tomkat-cr/genericsuite-fe/blob/main/src/lib/constants/app_constants.jsx))
 
 ```js
 import constants from "../configs/frontend/app_constants.json";
@@ -1362,7 +1399,7 @@ To implement a Button that opens a ChaBot pop-up:
 }
 ```
 
-2. Frontend CRUD editor component `src/_components/UsersMenu/ExampleElement.jsx`
+2. Frontend CRUD editor component `src/components/UsersMenu/ExampleElement.jsx`
 
 ```js
 import React from 'react';
@@ -1388,9 +1425,151 @@ export const ExampleElement = () => (
 )
 ```
 
+## Create the MongoDB Database
+
+You can crate a MongoDB database in MongoDB Atlas:
+
+1. Go to [mongodb.com/](https://www.mongodb.com/)
+
+2. Create an account [here](https://account.mongodb.com/account/register) if you don't already have one, or [login](https://account.mongodb.com/account/login) to your existing account.
+
+3. Create a new Project.
+
+4. Create a new Database / Deployment.
+
+5. Assign a database user and password.
+
+6. Copy or write down the user's password.
+
+7. Click on the `Connect` button.
+
+8. Click on the `Drivers` option.
+
+9. In the `3. Add your connection string into your application code` section, copy the connection string.
+
+10. Replace `<password>` with the user's password copied in the previous steps. Ensure any option params are 
+URL encoded ([see documentation here](https://www.mongodb.com/docs/atlas/troubleshoot-connection/#special-characters-in-connection-string-password)).
+
+11. Assign the connection string in the `APP_DB_URI_QA`, `APP_DB_URI_STAGING`, `APP_DB_URI_PROD`, and `APP_DB_URI_DEMO` [.env](https://github.com/tomkat-cr/genericsuite-be/blob/main/.env.example) variables.
+
+## Create the Super Admin User
+
+To create the Administration User, run this:
+
+```bash
+# Run the backend API with the QA Database
+make run_qa
+# Or using the local Docker MongoDB
+# make run
+```
+
+When prompted, select `1` for the `http` option.
+
+Using [Postman](https://www.postman.com/home) (or your favorite application to send API Request):
+
+1. Create a new Request tab.
+
+2. In the `URL` field, select `POST` and assign the URL `http://127.0.0.1:5001/users/supad-create`
+
+3. Go to the `Authorization` tab.
+
+4. Select `Type: Basic Auth`.
+
+5. In the `Username` field, put the value assigned in the `APP_SUPERADMIN_EMAIL` [.env](https://github.com/tomkat-cr/genericsuite-be/blob/main/.env.example) variable.
+
+6. In the `Password` field, put the value assigned in the `APP_SECRET_KEY` [.env](https://github.com/tomkat-cr/genericsuite-be/blob/main/.env.example) variable.
+
+7. Send the Request.
+
+8. If the response looks like the following JSON, the Super Admin user was created successfully:
+
+```json
+{
+  "error": false,
+  "error_message": "",
+  "resultset": { ... },
+  "rows_affected": "1"
+}
+```
+
+9. If the response looks like the following JSON, the credentials are wrng. Check that `Username` and `Password` field values must be equal to `APP_SUPERADMIN_EMAIL` and `APP_SUPERADMIN_EMAIL` [.env](https://github.com/tomkat-cr/genericsuite-be/blob/main/.env.example) variables:
+
+```json
+{
+  "body": "Could not verify [SAC2]",
+    "status_code": 400,
+    "headers": {
+      "WWW.Authentication": "Basic realm: \"login required\""
+    }
+}
+```
+
+10. If the response looks like the following JSON, the Super Admin user was already created:
+
+```json
+{
+    "body": "User already exists [SAC4]",
+    "status_code": 400,
+    "headers": {
+        "WWW.Authentication": "Basic realm: \"login required\""
+    }
+}
+```
+
 ## AWS App backend
 
 This addendum is for App Backend using AWS Lambda Function, API Gateway, S3 buckets, DynamoDB and Chalice.
+
+### Define the Lambda function role
+
+Go to the `AWS Console > IAM > Roles` and create the `<exampleapp>-api_handler-role-<stage>` for each stage:
+
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Action": [
+				"logs:CreateLogGroup",
+				"logs:CreateLogStream",
+				"logs:PutLogEvents"
+			],
+			"Resource": "arn:aws:logs:*:*:*",
+			"Effect": "Allow"
+		},
+		{
+			"Action": [
+				"dynamodb:PutItem",
+				"dynamodb:DeleteItem",
+				"dynamodb:UpdateItem",
+				"dynamodb:GetItem",
+				"dynamodb:Scan",
+				"dynamodb:Query"
+			],
+			"Resource": [
+				"arn:aws:dynamodb:*:*:table/users",
+				"arn:aws:dynamodb:*:*:table/general_config"
+			],
+			"Effect": "Allow"
+		},
+		{
+			"Action": [
+				"s3:PutObject",
+				"s3:PutObjectAcl",
+				"s3:GetObject",
+				"s3:GetObjectAcl",
+				"s3:DeleteObject"
+			],
+			"Resource": [
+				"arn:aws:s3:::*/*",
+				"arn:aws:s3:::*",
+				"arn:aws:s3:::example-chatbot-attachments-<stage>/*"
+			],
+			"Effect": "Allow"
+		}
+	]
+}
+```
 
 ### Define Chalice config template
 

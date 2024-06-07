@@ -16,6 +16,39 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.20 (2024-05-06)
+---
+
+### New
+Add AWS_SSL_CERTIFICATE_ARN env. var. for those cases where the SSL certificate cannot be found automatically in AWS certificate manager [FA-98].
+
+### Changes
+Change "npm_publish.sh" to show the current date/time at the end [FA-83].
+Change: remove <a /> from "ACCOUNT_INACTIVE" in "app_constants.json".
+Redirect README instructions to the GenericSuite Documentation [GS-73].
+
+### Fixes
+Fix the "ACM certificate ARN not found" error in "aws_deploy_to_s3.sh" and "aws_get_ssl_cert_arn.sh" by using AWS_SSL_CERTIFICATE_ARN env. var. [FA-98].
+Fix "error-and-reenter.jsx" to log error in the JS console instead of showing "[object Object]" in the pop-up when "getErrorMessage" calls "extractErrorFromVariants" [FA-246].
+
+
+## 1.0.19 (2024-04-20)
+---
+
+### New
+Add FastAPI enhanced support [FA-246].
+
+### Changes
+".env.example" GIT_SUBMODULE_URL and AWS_S3_BUCKET_NAME_* variables with more descriptive values.
+Customized "index.html" instructions to fix the frontend design when the project is created.
+Add more instructions to project creation process in the "src/configs/README".
+Change: README with main image from the official documentation site and .png version removed [FA-246].
+Change: Homepage pointed to "https://genericsuite.carlosjramirez.com/Frontend-Development/GenericSuite-Core/" [FA-257].
+
+### Fixes
+Fix "Converting circular structure to JSON" error saving Child (array) sets with a "resultset" element in the "_old" value causing an infinite loop.
+
+
 ## 1.0.18 (2024-04-06)
 ---
 

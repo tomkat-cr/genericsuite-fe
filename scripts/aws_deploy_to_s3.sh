@@ -10,14 +10,15 @@ get_ssl_cert_arn() {
     echo ""
     echo "Fetching ACM Certificate ARN for '${domain_cleaned}'..."
     echo "(Originally: '${domain})"
-    # ACM_CERTIFICATE_ARN=$(aws acm list-certificates --region ${AWS_REGION} --output text --query "CertificateSummaryList[?DomainName=='${APP_FE_URL}'].CertificateArn | [0]")
-    ACM_CERTIFICATE_ARN=$(aws acm list-certificates --output text --query "CertificateSummaryList[?DomainName=='${domain_cleaned}'].CertificateArn | [0]")
-
+    if [ "${AWS_SSL_CERTIFICATE_ARN}" = "" ];then
+        # AWS_SSL_CERTIFICATE_ARN=$(aws acm list-certificates --region ${AWS_REGION} --output text --query "CertificateSummaryList[?DomainName=='${APP_FE_URL}'].CertificateArn | [0]")
+        AWS_SSL_CERTIFICATE_ARN=$(aws acm list-certificates --output text --query "CertificateSummaryList[?DomainName=='${domain_cleaned}'].CertificateArn | [0]")
+    fi
     echo ""
-    echo "[${domain_cleaned}] ACM Certificate ARN: ${ACM_CERTIFICATE_ARN}"
+    echo "[${domain_cleaned}] ACM Certificate ARN: ${AWS_SSL_CERTIFICATE_ARN}"
 
-    if [[ "${ACM_CERTIFICATE_ARN}" = "" || "${ACM_CERTIFICATE_ARN}" = "None" || "${ACM_CERTIFICATE_ARN}" = "null" || "${ACM_CERTIFICATE_ARN}" = "NULL" || "${ACM_CERTIFICATE_ARN}" = "Null" ]]; then
-        ACM_CERTIFICATE_ARN=""
+    if [[ "${AWS_SSL_CERTIFICATE_ARN}" = "" || "${AWS_SSL_CERTIFICATE_ARN}" = "None" || "${AWS_SSL_CERTIFICATE_ARN}" = "null" || "${AWS_SSL_CERTIFICATE_ARN}" = "NULL" || "${AWS_SSL_CERTIFICATE_ARN}" = "Null" ]]; then
+        AWS_SSL_CERTIFICATE_ARN=""
         echo "ERROR: ACM Certificate ARN not found for '${domain_cleaned}'"
     fi
 }
@@ -127,7 +128,7 @@ if [ "${ERROR_MSG}" = "" ]; then
         domain="${APP_FE_URL}"
         get_ssl_cert_arn
    
-        if [ "${ACM_CERTIFICATE_ARN}" = "" ]; then
+        if [ "${AWS_SSL_CERTIFICATE_ARN}" = "" ]; then
             echo ""
             echo "The ACM (SSL) Certificate ARN not found for ${domain}"
             echo "Do you want to proceed with no domain association? (y/N)"
@@ -176,7 +177,7 @@ if [ "${ERROR_MSG}" = "" ]; then
                 \"ViewerCertificate\": {
                     \"CertificateSource\": \"acm\",
                     \"SSLSupportMethod\": \"sni-only\",
-                    \"ACMCertificateArn\": \"${ACM_CERTIFICATE_ARN}\",
+                    \"ACMCertificateArn\": \"${AWS_SSL_CERTIFICATE_ARN}\",
                     \"MinimumProtocolVersion\": \"TLSv1.2_2019\"
                 },
                 \"DefaultCacheBehavior\": {
@@ -302,6 +303,7 @@ if [ "${ERROR_MSG}" = "" ]; then
         echo "To solve this:"
         echo ""
         echo "1) Go to the AWS Console"
+        echo ""
         echo "2) Go to S3"
         echo "3) Search for bucket: ${BUCKET_NAME}"
         echo "4) Click on the bucket name"
@@ -311,7 +313,30 @@ if [ "${ERROR_MSG}" = "" ]; then
         echo "8) Click on 'Save changes'"
         echo "9) Confirm the operation"
         echo ""
-        echo "Then retry the script..."
+        echo "To link this S3 bucket to the '${APP_FE_URL}' domain:"
+        echo ""
+        echo "10) Go to Route 53"
+        echo "11) Click on the Zone corresponding to the domain of '${APP_FE_URL}'"
+        echo "12) Click on 'Create Record'"
+        echo "13) Enter the subdomain part of '${APP_FE_URL}'"
+        echo "14) Enable 'alias'"
+        echo "15) In 'Route traffic to' select the 'Alias to CloudFront' option"
+        echo "16) In 'Choose distribution' select the one corresponding to '${APP_FE_URL}'"
+        echo "17) Click on 'Create Records'"
+        # echo ""
+        # echo "To link the backend API to the '${REACT_APP_API_URL}' domain:"
+        # echo ""
+        # echo "18) Go to Route 53"
+        # echo "19) Click on the Zone corresponding to the domain of '${REACT_APP_API_URL}'"
+        # echo "20) Click on 'Create Record'"
+        # echo "21) Enter the subdomain part of '${REACT_APP_API_URL}'"
+        # echo "22) Enable 'alias'"
+        # echo "23) In 'Route traffic to' select the 'Alias to API Gateway API' option"
+        # echo "24) In 'Choose region' select '${AWS_REGION}'"
+        # echo "25) In 'Choose endpoint' select the one corresponding to '${REACT_APP_API_URL}'"
+        # echo "26) Click on 'Create Records'"
+        echo ""
+        echo "Then retry this script..."
         echo ""
         read -p "Type 'y' and press Enter to continue, any other value to cancel..." var
         echo ""
