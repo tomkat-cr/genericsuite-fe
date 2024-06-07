@@ -16,7 +16,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.20 (2024-05-06)
+## Unreleased
+## 1.0.21 (2024-06-06)
+
+### Fixes
+Fix: error "Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1" [GS-95].
+
+
+## 1.0.20 (2024-06-06)
 ---
 
 ### New

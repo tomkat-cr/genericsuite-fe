@@ -636,6 +636,9 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
   const fileExtension = filename ? filename.split('.').pop() : null;
+  {
+    console_debug_log("|||| getFileExtension | filename: ".concat(filename, " | fileExtension: ").concat(fileExtension));
+  }
   return fileExtension;
 };
 const getContentType = function (filename) {
@@ -662,6 +665,9 @@ const getContentType = function (filename) {
     default:
       contentType = 'application/octet-stream';
   }
+  {
+    console_debug_log("|||| getContentType | filename: ".concat(filename, " | contentType: ").concat(contentType));
+  }
   return contentType;
 };
 const getFilenameFromContentDisposition = headers => {
@@ -669,6 +675,10 @@ const getFilenameFromContentDisposition = headers => {
   const contentDisposition = headers.get('content-disposition');
   const filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
   const filename = filenameMatch ? filenameMatch[1] : null;
+  {
+    console_debug_log('|||| Content-Disposition:', contentDisposition);
+    console_debug_log('|||| Content-Disposition filename:', filename);
+  }
   return filename;
 };
 const performDownload = function (fileUrl) {
@@ -700,25 +710,52 @@ const isBinaryFileType = filename => {
 const decodeBlob = function (base64String, filename) {
   let oldUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   const blobType = getContentType(filename);
+  console_debug_log('decodeBlob | base64String:', base64String);
   if (typeof base64String !== 'string') {
     if (oldUrl === null) {
       throw new Error('Expected a string');
     }
     return oldUrl;
   }
-  const binaryString = window.atob(base64String);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
+  let binaryString;
+  let stringIsAbinary = false;
+  try {
+    binaryString = window.atob(base64String);
+  } catch (e) {
+    if (e instanceof DOMException && e.name === 'InvalidCharacterError') {
+      // throw new Error("Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1 range. This may occur if the backend is in FastAPI instead of Chalice.");
+      stringIsAbinary = true;
+    } else {
+      throw e;
+    }
   }
-  const blob = new Blob([bytes], {
-    type: blobType
-  });
+  if (!stringIsAbinary) {
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    console_debug_log('decodeBlob v2 | bytes:', bytes);
+    new Blob([bytes], {
+      type: blobType
+    });
+  } else {
+    new Blob([base64String], {
+      type: blobType
+    });
+  }
+  console_debug_log('decodeBlob v2 | blob:', blob);
   const url = URL.createObjectURL(blob);
+  console_debug_log('decodeBlob v2 | new url:', url);
   return url;
 };
 const fixBlob = async (blobObj, filename) => {
+  // Verify if the blob is a binary encoded as Base64 string
+  // If so, decode it and return a new blob URL with the decoded content...
+  // Else, just return the blob URL...
+  {
+    console_debug_log("|||| fixBlob v2 | filename: ".concat(filename));
+  }
   let blobUrl = URL.createObjectURL(blobObj);
   if (!isBinaryFileType(filename)) {
     return new Promise((resolve, _) => {
