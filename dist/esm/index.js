@@ -770,7 +770,7 @@ class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
     _defineProperty(this, "apiUrl", process.env.REACT_APP_API_URL);
-    _defineProperty(this, "debug", false);
+    _defineProperty(this, "debug", true);
     this.props = props;
     this.props.authHeader = authHeader();
     this.props.authAndJsonHeader = Object.assign({
