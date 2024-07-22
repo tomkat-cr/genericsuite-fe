@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixes
 Fix: error "Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1" [GS-95].
+Fix: "ReferenceError: fetch is not defined" error in npm test.
 Fix: "ReferenceError: Response is not defined" error in npm test.
 Fix: "Warning: ReactDOMTestUtils.act is deprecated in favor of React.act" in npm test.
 Fix: "TypeError: (0 , _authenticationService.getUserData) is not a function" error in npm test.

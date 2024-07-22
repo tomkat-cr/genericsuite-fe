@@ -8,6 +8,8 @@ export function mockFetch(data: any, headers: any = null) {
         json: () => data,
         headers: new Headers(headers),
         text: () => Promise.resolve(JSON.stringify(data)),
+        status: 200,
+        statusText: '',
       }),
     );
 }
