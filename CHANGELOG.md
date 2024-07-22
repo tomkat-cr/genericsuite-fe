@@ -16,7 +16,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.21 (2024-07-19)
+## 1.0.21 (2024-07-22)
+
+### New
+Add: ".nvmrc" file to set the repo default node version.
 
 ### Fixes
 Fix: error "Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1" [GS-95].

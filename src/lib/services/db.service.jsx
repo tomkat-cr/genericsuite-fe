@@ -37,7 +37,7 @@ export class dbApiService {
 
     props = null;
     apiUrl = process.env.REACT_APP_API_URL;
-    debug = false;
+    debug = true;
 
     paramsToUrlQuery(params) {
         let urlQuery = '';
