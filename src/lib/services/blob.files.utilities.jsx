@@ -113,6 +113,7 @@ export const decodeBlob = (base64String, filename, oldUrl = null) => {
             throw e;
         }
     }
+    let blob;
     if (!stringIsAbinary) {
         const len = binaryString.length;
         const bytes = new Uint8Array(len);
@@ -120,9 +121,9 @@ export const decodeBlob = (base64String, filename, oldUrl = null) => {
             bytes[i] = binaryString.charCodeAt(i);
         }
         if (debug) console_debug_log('decodeBlob v2 | bytes:', bytes);
-        const blob = new Blob([bytes], { type: blobType });
+        blob = new Blob([bytes], { type: blobType });
     } else {
-        const blob = new Blob([base64String], { type: blobType });
+        blob = new Blob([base64String], { type: blobType });
     }
     if (debug) console_debug_log('decodeBlob v2 | blob:', blob);
     const url = URL.createObjectURL(blob);

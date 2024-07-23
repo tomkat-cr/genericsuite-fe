@@ -718,6 +718,7 @@ const decodeBlob = function (base64String, filename) {
       throw e;
     }
   }
+  let blob;
   if (!stringIsAbinary) {
     const len = binaryString.length;
     const bytes = new Uint8Array(len);
@@ -725,11 +726,11 @@ const decodeBlob = function (base64String, filename) {
       bytes[i] = binaryString.charCodeAt(i);
     }
     console_debug_log('decodeBlob v2 | bytes:', bytes);
-    new Blob([bytes], {
+    blob = new Blob([bytes], {
       type: blobType
     });
   } else {
-    new Blob([base64String], {
+    blob = new Blob([base64String], {
       type: blobType
     });
   }

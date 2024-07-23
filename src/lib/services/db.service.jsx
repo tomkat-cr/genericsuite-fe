@@ -64,7 +64,7 @@ export class dbApiService {
                         }
                         const headers = response.headers;
                         // Process blob
-                        if (responseHasFile(headers)) {                           
+                        if (responseHasFile(headers)) {
                             // Get file name and extension
                             const filename = getFilenameFromContentDisposition(headers);
                             return response.blob().then(blob => {
