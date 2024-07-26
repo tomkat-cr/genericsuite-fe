@@ -16,7 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.21 (2024-07-25)
+## 1.0.21 (2024-07-26)
 
 ### New
 Add: ".nvmrc" file to set the repo default node version.
@@ -24,6 +24,7 @@ Add: ".nvmrc" file to set the repo default node version.
 ### Fixes
 Fix: Fix audio processing issues in FastAPI Apps [GS-95].
 Fix: error "Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1" [GS-95].
+Fix: '[object Object]' in getErrorMessage() 'reason' [GS-70].
 Fix: "ReferenceError: fetch is not defined" error in npm test.
 Fix: "ReferenceError: Response is not defined" error in npm test.
 Fix: "Warning: ReactDOMTestUtils.act is deprecated in favor of React.act" in npm test.

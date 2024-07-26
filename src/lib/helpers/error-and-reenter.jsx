@@ -14,6 +14,7 @@ import {
 } from '../services/authentication.service.jsx';
 import {
     console_debug_log,
+    get_debug_flag,
 } from '../services/logging.service.jsx';
 import { history, getPrefix, setLastUrl } from './history.jsx';
 import { ModalPopUp } from './ModalPopUp.jsx'
@@ -112,9 +113,14 @@ export const getErrorMessage = (error) => {
             errorMessage += ': ' + 
                 (
                     typeof error['reason']['message'] !== "undefined" ?
-                        error['reason']['message'] : error['reason']
+                        error['reason']['message'] : 
+                        typeof error['reason'] === 'string' ?
+                            error['reason'] : JSON.stringify(error['reason'])
                 )
         }
+    }
+    if (debug || get_debug_flag()) {
+        errorMessage = `${errorMessage}\nDebug:\n${JSON.stringify(error)}`;
     }
     return errorMessage;
 }

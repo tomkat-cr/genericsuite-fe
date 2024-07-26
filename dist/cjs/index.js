@@ -1157,8 +1157,11 @@ const getErrorMessage = error => {
       errorMessage = error['message'];
     }
     if (typeof error['reason'] !== 'undefined') {
-      errorMessage += ': ' + (typeof error['reason']['message'] !== "undefined" ? error['reason']['message'] : error['reason']);
+      errorMessage += ': ' + (typeof error['reason']['message'] !== "undefined" ? error['reason']['message'] : typeof error['reason'] === 'string' ? error['reason'] : JSON.stringify(error['reason']));
     }
+  }
+  if (get_debug_flag()) {
+    errorMessage = "".concat(errorMessage, "\nDebug:\n").concat(JSON.stringify(error));
   }
   return errorMessage;
 };
