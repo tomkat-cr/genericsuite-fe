@@ -119,9 +119,9 @@ export const getErrorMessage = (error) => {
                 )
         }
     }
-    if (debug || get_debug_flag()) {
-        errorMessage = `${errorMessage}\nDebug:\n${JSON.stringify(error)}`;
-    }
+    // if (debug || get_debug_flag()) {
+    //     errorMessage = `${errorMessage}\nDebug:\n${JSON.stringify(error)}`;
+    // }
     return errorMessage;
 }
 

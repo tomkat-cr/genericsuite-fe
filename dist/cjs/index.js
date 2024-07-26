@@ -1160,9 +1160,9 @@ const getErrorMessage = error => {
       errorMessage += ': ' + (typeof error['reason']['message'] !== "undefined" ? error['reason']['message'] : typeof error['reason'] === 'string' ? error['reason'] : JSON.stringify(error['reason']));
     }
   }
-  if (get_debug_flag()) {
-    errorMessage = "".concat(errorMessage, "\nDebug:\n").concat(JSON.stringify(error));
-  }
+  // if (debug || get_debug_flag()) {
+  //     errorMessage = `${errorMessage}\nDebug:\n${JSON.stringify(error)}`;
+  // }
   return errorMessage;
 };
 const isSessionExpired = errorMessage => {
