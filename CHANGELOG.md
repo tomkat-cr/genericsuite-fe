@@ -16,7 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.21 (2024-07-26)
+## 1.0.21 (2024-07-27)
 
 ### New
 Add: ".nvmrc" file to set the repo default node version.
