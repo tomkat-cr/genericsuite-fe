@@ -6,15 +6,15 @@ import React from 'react';
 declare function About(): React.FunctionComponentElement<any>;
 declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 declare function App(_ref: any): React.FunctionComponentElement<{
-    children?: React.ReactNode;
+    children?: React.ReactNode | undefined;
 }>;
 declare function GeneralConfig(): React.FunctionComponentElement<any>;
 declare function GeneralConfig_EditorData(): any;
 declare function HomePage(_ref: any): React.FunctionComponentElement<{
-    children?: React.ReactNode;
+    children?: React.ReactNode | undefined;
 }> | React.FunctionComponentElement<any>;
 declare function LoginPage(props: any): React.FunctionComponentElement<{
-    children?: React.ReactNode;
+    children?: React.ReactNode | undefined;
 }>;
 declare var ModalPopUp$1: Readonly<{
     __proto__: null;
@@ -25,7 +25,7 @@ declare var ModalPopUp$1: Readonly<{
         href: string;
     }, HTMLElement>;
     ModalPopUp: (_ref: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }>;
 }>;
 declare var PrivateRoute$1: Readonly<{
@@ -33,7 +33,7 @@ declare var PrivateRoute$1: Readonly<{
     PrivateRoute: (_ref: any) => React.FunctionComponentElement<react_router_dom.RouteProps>;
 }>;
 declare function UserProfileEditor(props: any): React.FunctionComponentElement<{
-    children?: React.ReactNode;
+    children?: React.ReactNode | undefined;
 }>;
 declare function Users(): React.FunctionComponentElement<any>;
 declare function UsersConfig(): {
@@ -265,7 +265,7 @@ declare var generic_editor_rfc_search: Readonly<{
 declare var generic_editor_rfc_search_engine_button: Readonly<{
     __proto__: null;
     SearchEngineButton: (_ref: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }>;
 }>;
 declare var generic_editor_rfc_selector: Readonly<{
@@ -282,7 +282,7 @@ declare var generic_editor_rfc_service: Readonly<{
     __proto__: null;
     ConvertToComponents: (editorDataObj: any, registry: any) => any;
     GenericCrudEditor: (_ref: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }>;
     GetFormData: (editorData: any, registry: any, ...args: any[]) => any;
 }>;
@@ -303,7 +303,7 @@ declare var generic_editor_rfc_specific_func: Readonly<{
 declare var generic_editor_rfc_suggestion_dropdown: Readonly<{
     __proto__: null;
     SuggestionDropdown: (_ref: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }>;
 }>;
 declare var generic_editor_rfc_timestamp: Readonly<{
@@ -315,16 +315,16 @@ declare var generic_editor_rfc_timestamp: Readonly<{
 declare var generic_editor_rfc_ui: Readonly<{
     __proto__: null;
     ShowAsDisabledField: (_ref: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }>;
 }>;
 declare var generic_editor_singlepage: Readonly<{
     __proto__: null;
     GenericSinglePageEditor: (_ref: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }>;
     GenericSinglePageEditorMain: (props: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }> | React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement> | React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
@@ -400,7 +400,7 @@ declare const spark: "spark.svg";
 declare var ui: Readonly<{
     __proto__: null;
     CopyButton: (_ref2: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode;
+        children?: React.ReactNode | undefined;
     }>;
     LinkifyText: (_ref: any) => React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
     getElementWithErrorHandling: (elementId: any) => HTMLElement | null;
@@ -430,14 +430,6 @@ declare function authHeader(): {
     'x-access-tokens'?: undefined;
     Authorization?: undefined;
 };
-declare function login(username: any, password: any): Promise<{
-    id: any;
-    username: any;
-    firstName: any;
-    lastName: any;
-    token: any;
-}>;
-declare function logout(...args: any[]): void;
 declare class dbApiService {
     constructor(props: any);
     props: any;
@@ -467,16 +459,17 @@ declare function getPrefix(...args: any[]): string;
 declare function console_debug_log(debug_message: any, ...args: any[]): void;
 declare function get_debug_flag(): any;
 
+declare function logout(...args: any[]): void;
 declare function IsJsonString(str: any): boolean;
 declare function handleFetchError(error: any): Promise<never>;
 declare function handleResponse(response: any): any;
-declare function handleResponseText(response: any, text: any, headers: any): {
+declare function handleResponseText(response: any, text: any, headers: any): Promise<never> | {
     headers: any;
     file: any;
     error: boolean;
     message: any;
     resultset: any;
-} | Promise<never>;
+};
 declare function getUrlParams(...args: any[]): {};
 
 export { About, AboutBody, App, GeneralConfig, GeneralConfig_EditorData, HomePage, LoginPage, ModalPopUp$1 as ModalPopUp, PrivateRoute$1 as PrivateRoute, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoEmblem, appLogoHorizontal, appLogoSquare, arrowsRotateSolid, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, clip, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, googleLogo, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, madebyLogoEmblem, madebyLogoSquare, media, ramdomize, response_handlers_service as responseHandlersService, spark, ui, urlParams, wait_animation_utility as waitAnimationUtility };

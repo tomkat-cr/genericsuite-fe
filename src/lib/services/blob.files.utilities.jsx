@@ -101,17 +101,33 @@ export const decodeBlob = (base64String, filename, oldUrl = null) => {
         }
         return oldUrl;
     }
-    const binaryString = window.atob(base64String);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
+    let binaryString;
+    let stringIsAbinary = false;
+    try {
+        binaryString = window.atob(base64String);
+    } catch (e) {
+        if (e instanceof DOMException && e.name === 'InvalidCharacterError') {
+            // throw new Error("Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1 range. This may occur if the backend is in FastAPI instead of Chalice.");
+            stringIsAbinary = true;
+        } else {
+            throw e;
+        }
     }
-    if (debug) console_debug_log('decodeBlob | bytes:', bytes);
-    const blob = new Blob([bytes], { type: blobType });
-    if (debug) console_debug_log('decodeBlob | blob:', blob);
+    let blob;
+    if (!stringIsAbinary) {
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        if (debug) console_debug_log('decodeBlob v2 | bytes:', bytes);
+        blob = new Blob([bytes], { type: blobType });
+    } else {
+        blob = new Blob([base64String], { type: blobType });
+    }
+    if (debug) console_debug_log('decodeBlob v2 | blob:', blob);
     const url = URL.createObjectURL(blob);
-    if (debug) console_debug_log('decodeBlob | new url:', url);
+    if (debug) console_debug_log('decodeBlob v2 | new url:', url);
     return url;
 }
 
@@ -120,7 +136,7 @@ export const fixBlob = async (blobObj, filename) => {
     // If so, decode it and return a new blob URL with the decoded content...
     // Else, just return the blob URL...
     if (debug) {
-        console_debug_log(`|||| fixBlob | filename: ${filename}`);
+        console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
     let blobUrl = URL.createObjectURL(blobObj);
     if (!isBinaryFileType(filename)) {

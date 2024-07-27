@@ -14,6 +14,7 @@ import {
 } from '../services/authentication.service.jsx';
 import {
     console_debug_log,
+    get_debug_flag,
 } from '../services/logging.service.jsx';
 import { history, getPrefix, setLastUrl } from './history.jsx';
 import { ModalPopUp } from './ModalPopUp.jsx'
@@ -35,72 +36,7 @@ export function refreshPage() {
     window.location.reload();;
 };
 
-// const extractErrorFromVariants = (errorRaw, element, subElement=null) => {
-//     // console_debug_log(`extractErrorFromVariants | element = '${element}', subElement = '${subElement}' | errorRaw:`, errorRaw);
-//     let error = errorRaw;
-//     let errorJson;
-//     if (typeof error['errorMsg'] !== 'undefined') {
-//         error = error['errorMsg'];
-//     }
-//     if (typeof error === 'string') {
-//         if (subElement) {
-//             return '';
-//         }
-//         return error;
-//     }
-//     if (typeof error[element] !== 'undefined') {
-//         errorJson = error[element];
-//         if (typeof errorJson === 'string') {
-//             try {
-//                 errorJson = JSON.parse(errorJson);
-//             } catch (e) {
-//                 errorJson = null;
-//             }
-//             if (!errorJson) {
-//                 if (subElement) {
-//                     return '';
-//                 }
-//                 return error[element];
-//             }
-//         }
-//         if (subElement) {
-//             if (typeof errorJson[subElement] === 'undefined') {
-//                 return '';
-//             }
-//             console_debug_log(`(0) extractErrorFromVariants | errorJson[subElement]:`, errorJson[subElement]);
-//             return errorJson[subElement];
-//         }
-//         console_debug_log(`(1) extractErrorFromVariants | errorJson:`, errorJson);
-//         return String(errorJson);
-//     }
-//     console_debug_log(`(2) extractErrorFromVariants | error:`, error);
-//     if (subElement) {
-//         return '';
-//     }
-//     return String(error);
-// }
-
 export const getErrorMessage = (error) => {
-    // if (typeof error === 'string') {
-    //     return error;
-    // }
-    // let errorMessage = extractErrorFromVariants(error, 'message');
-    // console_debug_log(`getErrorMessage | errorMessage = '${errorMessage}'`);
-    // let errorReason = extractErrorFromVariants(error, 'reason', 'message');
-    // console_debug_log(`getErrorMessage | errorReason 11:`, errorReason);
-    // if (!errorReason) {
-    //     errorReason = extractErrorFromVariants(error, 'reason', 'detail');
-    //     console_debug_log(`getErrorMessage | errorReason 22:`, errorReason);
-    // }
-    // if (!errorReason) {
-    //     errorReason = extractErrorFromVariants(error, 'reason');
-    //     console_debug_log(`getErrorMessage | errorReason 3:`, errorReason);
-    // }
-    // if (errorReason) {
-    //     errorMessage += ': ' + errorReason;
-    // }
-    // return errorMessage;
-
     let errorMessage = error;
     if (typeof error !== 'string') {
         if (typeof error['errorMsg'] !== 'undefined') {
@@ -112,10 +48,15 @@ export const getErrorMessage = (error) => {
             errorMessage += ': ' + 
                 (
                     typeof error['reason']['message'] !== "undefined" ?
-                        error['reason']['message'] : error['reason']
+                        error['reason']['message'] : 
+                        typeof error['reason'] === 'string' ?
+                            error['reason'] : JSON.stringify(error['reason'])
                 )
         }
     }
+    // if (debug || get_debug_flag()) {
+    //     errorMessage = `${errorMessage}\nDebug:\n${JSON.stringify(error)}`;
+    // }
     return errorMessage;
 }
 

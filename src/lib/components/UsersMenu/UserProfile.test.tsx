@@ -1,9 +1,12 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { act } from "react-dom/test-utils";
 
 import { UserProfileEditor } from "./UserProfile";
+import { mockFetch } from '../../test-helpers/mock-fetch'
+
+const mockFetchResponse = [{}];
+window.fetch = mockFetch(mockFetchResponse);
 
 jest.mock('../../services/authentication.service.jsx', () => ({
   authenticationService: {
@@ -19,7 +22,7 @@ jest.mock('../../services/authentication.service.jsx', () => ({
 
 describe("UserProfileEditor", () => {
     test("renders the UserProfileEditor component", () =>
-        act(() => {
+        React.act(() => {
             render(<MemoryRouter><UserProfileEditor /></MemoryRouter>);
         })
     )

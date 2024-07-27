@@ -431,6 +431,23 @@ var logout_service = /*#__PURE__*/Object.freeze({
     logout: logout
 });
 
+function _defineProperty(e, r, t) {
+  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+function _extends() {
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
+    }
+    return n;
+  }, _extends.apply(null, arguments);
+}
 function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
@@ -444,34 +461,6 @@ function _toPrimitive(t, r) {
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, "string");
   return "symbol" == typeof i ? i : i + "";
-}
-function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends.apply(this, arguments);
 }
 
 function authHeader() {
@@ -615,6 +604,9 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
   const fileExtension = filename ? filename.split('.').pop() : null;
+  {
+    console_debug_log("|||| getFileExtension | filename: ".concat(filename, " | fileExtension: ").concat(fileExtension));
+  }
   return fileExtension;
 };
 const getContentType = function (filename) {
@@ -641,6 +633,9 @@ const getContentType = function (filename) {
     default:
       contentType = 'application/octet-stream';
   }
+  {
+    console_debug_log("|||| getContentType | filename: ".concat(filename, " | contentType: ").concat(contentType));
+  }
   return contentType;
 };
 const getFilenameFromContentDisposition = headers => {
@@ -648,6 +643,10 @@ const getFilenameFromContentDisposition = headers => {
   const contentDisposition = headers.get('content-disposition');
   const filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
   const filename = filenameMatch ? filenameMatch[1] : null;
+  {
+    console_debug_log('|||| Content-Disposition:', contentDisposition);
+    console_debug_log('|||| Content-Disposition filename:', filename);
+  }
   return filename;
 };
 const performDownload = function (fileUrl) {
@@ -679,25 +678,53 @@ const isBinaryFileType = filename => {
 const decodeBlob = function (base64String, filename) {
   let oldUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   const blobType = getContentType(filename);
+  console_debug_log('decodeBlob | base64String:', base64String);
   if (typeof base64String !== 'string') {
     if (oldUrl === null) {
       throw new Error('Expected a string');
     }
     return oldUrl;
   }
-  const binaryString = window.atob(base64String);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
+  let binaryString;
+  let stringIsAbinary = false;
+  try {
+    binaryString = window.atob(base64String);
+  } catch (e) {
+    if (e instanceof DOMException && e.name === 'InvalidCharacterError') {
+      // throw new Error("Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1 range. This may occur if the backend is in FastAPI instead of Chalice.");
+      stringIsAbinary = true;
+    } else {
+      throw e;
+    }
   }
-  const blob = new Blob([bytes], {
-    type: blobType
-  });
+  let blob;
+  if (!stringIsAbinary) {
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    console_debug_log('decodeBlob v2 | bytes:', bytes);
+    blob = new Blob([bytes], {
+      type: blobType
+    });
+  } else {
+    blob = new Blob([base64String], {
+      type: blobType
+    });
+  }
+  console_debug_log('decodeBlob v2 | blob:', blob);
   const url = URL.createObjectURL(blob);
+  console_debug_log('decodeBlob v2 | new url:', url);
   return url;
 };
 const fixBlob = async (blobObj, filename) => {
+  // Verify if the blob is a binary encoded as Base64 string
+  // If so, decode it and return a new blob URL with the decoded content...
+  // Else, just return the blob URL...
+  {
+    console_debug_log("|||| fixBlob v2 | filename: ".concat(filename));
+  }
   let blobUrl = URL.createObjectURL(blobObj);
   if (!isBinaryFileType(filename)) {
     return new Promise((resolve, _) => {
@@ -744,7 +771,7 @@ class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
     _defineProperty(this, "apiUrl", process.env.REACT_APP_API_URL);
-    _defineProperty(this, "debug", false);
+    _defineProperty(this, "debug", true);
     this.props = props;
     this.props.authHeader = authHeader();
     this.props.authAndJsonHeader = Object.assign({
@@ -1109,9 +1136,12 @@ const getErrorMessage = error => {
       errorMessage = error['message'];
     }
     if (typeof error['reason'] !== 'undefined') {
-      errorMessage += ': ' + (typeof error['reason']['message'] !== "undefined" ? error['reason']['message'] : error['reason']);
+      errorMessage += ': ' + (typeof error['reason']['message'] !== "undefined" ? error['reason']['message'] : typeof error['reason'] === 'string' ? error['reason'] : JSON.stringify(error['reason']));
     }
   }
+  // if (debug || get_debug_flag()) {
+  //     errorMessage = `${errorMessage}\nDebug:\n${JSON.stringify(error)}`;
+  // }
   return errorMessage;
 };
 const isSessionExpired = errorMessage => {
@@ -4577,7 +4607,7 @@ function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
   var insertAt = ref.insertAt;
 
-  if (!css || typeof document === 'undefined') { return; }
+  if (typeof document === 'undefined') { return; }
 
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');

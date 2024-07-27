@@ -1,8 +1,11 @@
 import React from "react";
 import renderer from 'react-test-renderer';
 import { HomePage } from "./HomePage.jsx";
+import { mockFetch } from '../../test-helpers/mock-fetch'
 
 it("renders the HomePage component with the children text", () => {
+    const mockFetchResponse = [{}];
+    window.fetch = mockFetch(mockFetchResponse);
     const component = renderer.create(
         <HomePage
             appLogo={""}
