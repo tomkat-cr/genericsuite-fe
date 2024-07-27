@@ -19,16 +19,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## 1.0.21 (2024-07-27)
 
 ### New
-Add: ".nvmrc" file to set the repo default node version.
+Add ".nvmrc" file to set the repo default node version.
+
+### Changes
+Update dependency versions (@testing-library/react: ^14.2.1 -> ^15.0.7).
 
 ### Fixes
-Fix: Fix audio processing issues in FastAPI Apps [GS-95].
-Fix: error "Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1" [GS-95].
-Fix: '[object Object]' in getErrorMessage() 'reason' [GS-70].
-Fix: "ReferenceError: fetch is not defined" error in npm test.
-Fix: "ReferenceError: Response is not defined" error in npm test.
-Fix: "Warning: ReactDOMTestUtils.act is deprecated in favor of React.act" in npm test.
-Fix: "TypeError: (0 , _authenticationService.getUserData) is not a function" error in npm test.
+Fix audio processing issues in FastAPI Apps [GS-95].
+Fix error "Failed to execute 'atob' on 'Window': The string to be decoded contains characters outside of the Latin1" [GS-95].
+Fix '[object Object]' in getErrorMessage() 'reason' [GS-70].
+Fix "ReferenceError: fetch is not defined" error in npm test.
+Fix "ReferenceError: Response is not defined" error in npm test.
+Fix "Warning: ReactDOMTestUtils.act is deprecated in favor of React.act" in npm test.
+Fix "TypeError: (0 , _authenticationService.getUserData) is not a function" error in npm test.
 
 
 ## 1.0.20 (2024-05-17)

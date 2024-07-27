@@ -2,7 +2,7 @@
 
 import { console_debug_log } from './logging.service.jsx';
 
-const debug = true;
+const debug = false;
 
 export const defaultFilenametoDownload = 'audio.wav';
 
