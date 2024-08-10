@@ -625,9 +625,6 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
   const fileExtension = filename ? filename.split('.').pop() : null;
-  {
-    console_debug_log("|||| getFileExtension | filename: ".concat(filename, " | fileExtension: ").concat(fileExtension));
-  }
   return fileExtension;
 };
 const getContentType = function (filename) {
@@ -654,9 +651,6 @@ const getContentType = function (filename) {
     default:
       contentType = 'application/octet-stream';
   }
-  {
-    console_debug_log("|||| getContentType | filename: ".concat(filename, " | contentType: ").concat(contentType));
-  }
   return contentType;
 };
 const getFilenameFromContentDisposition = headers => {
@@ -664,10 +658,6 @@ const getFilenameFromContentDisposition = headers => {
   const contentDisposition = headers.get('content-disposition');
   const filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
   const filename = filenameMatch ? filenameMatch[1] : null;
-  {
-    console_debug_log('|||| Content-Disposition:', contentDisposition);
-    console_debug_log('|||| Content-Disposition filename:', filename);
-  }
   return filename;
 };
 const performDownload = function (fileUrl) {
@@ -699,7 +689,6 @@ const isBinaryFileType = filename => {
 const decodeBlob = function (base64String, filename) {
   let oldUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   const blobType = getContentType(filename);
-  console_debug_log('decodeBlob | base64String:', base64String);
   if (typeof base64String !== 'string') {
     if (oldUrl === null) {
       throw new Error('Expected a string');
@@ -725,7 +714,6 @@ const decodeBlob = function (base64String, filename) {
     for (let i = 0; i < len; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
-    console_debug_log('decodeBlob v2 | bytes:', bytes);
     blob = new Blob([bytes], {
       type: blobType
     });
@@ -734,18 +722,10 @@ const decodeBlob = function (base64String, filename) {
       type: blobType
     });
   }
-  console_debug_log('decodeBlob v2 | blob:', blob);
   const url = URL.createObjectURL(blob);
-  console_debug_log('decodeBlob v2 | new url:', url);
   return url;
 };
 const fixBlob = async (blobObj, filename) => {
-  // Verify if the blob is a binary encoded as Base64 string
-  // If so, decode it and return a new blob URL with the decoded content...
-  // Else, just return the blob URL...
-  {
-    console_debug_log("|||| fixBlob v2 | filename: ".concat(filename));
-  }
   let blobUrl = URL.createObjectURL(blobObj);
   if (!isBinaryFileType(filename)) {
     return new Promise((resolve, _) => {
@@ -792,7 +772,7 @@ class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
     _defineProperty(this, "apiUrl", process.env.REACT_APP_API_URL);
-    _defineProperty(this, "debug", true);
+    _defineProperty(this, "debug", false);
     this.props = props;
     this.props.authHeader = authHeader();
     this.props.authAndJsonHeader = Object.assign({
@@ -1082,73 +1062,7 @@ function logoutHander() {
 function refreshPage() {
   window.location.reload();
 }
-
-// const extractErrorFromVariants = (errorRaw, element, subElement=null) => {
-//     // console_debug_log(`extractErrorFromVariants | element = '${element}', subElement = '${subElement}' | errorRaw:`, errorRaw);
-//     let error = errorRaw;
-//     let errorJson;
-//     if (typeof error['errorMsg'] !== 'undefined') {
-//         error = error['errorMsg'];
-//     }
-//     if (typeof error === 'string') {
-//         if (subElement) {
-//             return '';
-//         }
-//         return error;
-//     }
-//     if (typeof error[element] !== 'undefined') {
-//         errorJson = error[element];
-//         if (typeof errorJson === 'string') {
-//             try {
-//                 errorJson = JSON.parse(errorJson);
-//             } catch (e) {
-//                 errorJson = null;
-//             }
-//             if (!errorJson) {
-//                 if (subElement) {
-//                     return '';
-//                 }
-//                 return error[element];
-//             }
-//         }
-//         if (subElement) {
-//             if (typeof errorJson[subElement] === 'undefined') {
-//                 return '';
-//             }
-//             console_debug_log(`(0) extractErrorFromVariants | errorJson[subElement]:`, errorJson[subElement]);
-//             return errorJson[subElement];
-//         }
-//         console_debug_log(`(1) extractErrorFromVariants | errorJson:`, errorJson);
-//         return String(errorJson);
-//     }
-//     console_debug_log(`(2) extractErrorFromVariants | error:`, error);
-//     if (subElement) {
-//         return '';
-//     }
-//     return String(error);
-// }
-
 const getErrorMessage = error => {
-  // if (typeof error === 'string') {
-  //     return error;
-  // }
-  // let errorMessage = extractErrorFromVariants(error, 'message');
-  // console_debug_log(`getErrorMessage | errorMessage = '${errorMessage}'`);
-  // let errorReason = extractErrorFromVariants(error, 'reason', 'message');
-  // console_debug_log(`getErrorMessage | errorReason 11:`, errorReason);
-  // if (!errorReason) {
-  //     errorReason = extractErrorFromVariants(error, 'reason', 'detail');
-  //     console_debug_log(`getErrorMessage | errorReason 22:`, errorReason);
-  // }
-  // if (!errorReason) {
-  //     errorReason = extractErrorFromVariants(error, 'reason');
-  //     console_debug_log(`getErrorMessage | errorReason 3:`, errorReason);
-  // }
-  // if (errorReason) {
-  //     errorMessage += ': ' + errorReason;
-  // }
-  // return errorMessage;
-
   let errorMessage = error;
   if (typeof error !== 'string') {
     if (typeof error['errorMsg'] !== 'undefined') {
@@ -2408,7 +2322,7 @@ var generic_editor_rfc_common = /*#__PURE__*/Object.freeze({
 
 // GenericCrudEditor select components
 
-const debug$1 = false;
+const debug = false;
 const GenericSelectGenerator = props => {
   const [state, setState] = React.useState(null);
   const [config, setConfig] = React.useState(null);
@@ -2439,7 +2353,7 @@ const GenericSelectGenerator = props => {
             ...accessKeysListing,
             ...config.dbFilter
           };
-          if (debug$1) ;
+          if (debug) ;
         }
         ;
         config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setState(error));
@@ -3586,7 +3500,6 @@ var generic_editor_rfc_search = /*#__PURE__*/Object.freeze({
 fontawesome.library.add(fontawesomeFreeSolid.faPlus, fontawesomeFreeSolid.faEye, fontawesomeFreeSolid.faEdit, fontawesomeFreeSolid.faTrashAlt, fontawesomeFreeSolid.faCheck, fontawesomeFreeSolid.faList
 // faRecycle,
 );
-const debug = false;
 const GenericCrudEditor = _ref => {
   let {
     editorConfig,
@@ -3620,7 +3533,7 @@ const GenericCrudEditorMain = props => {
       } else if (editor_response.error) {
         console_debug_log("GCE-M-010:");
         console_debug_log(editor_response.errorMsg);
-        setStatus(errorAndReEnter(editor_response.errorMsg, null));
+        setStatus(errorAndReEnter(editor_response.errorMsg, '[GCE-M-010]' ));
       } else if (!editor_response.response) {
         setEditor(null);
       } else {
@@ -3629,7 +3542,7 @@ const GenericCrudEditorMain = props => {
     }, error => {
       console_debug_log("GCE-M-020:");
       console_debug_log(error);
-      setStatus(errorAndReEnter(error, null));
+      setStatus(errorAndReEnter(error, '[GCE-M-020]' ));
     });
   }, [props]);
   React.useEffect(() => {
@@ -3648,17 +3561,17 @@ const GenericCrudEditorMain = props => {
         editor.db.getAll(accessKeysListing).then(data => {
           ShowHidePageAnimation(false);
           // dbListPostRead: To fix Listing fields
-          processGenericFuncArray(editor, 'dbListPostRead', data, formMode).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, null)));
+          processGenericFuncArray(editor, 'dbListPostRead', data, formMode).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-M-030]' )));
         }, error => {
           console_debug_log("GenericCrudEditor / Listing - ERROR:");
           console.error(error);
           ShowHidePageAnimation(false);
-          setStatus(errorAndReEnter(error, null));
+          setStatus(errorAndReEnter(error, ' [GCE-M-040]' ));
         });
       }, error => {
         console_debug_log("GenericCrudEditor / dbListPreRead - ERROR:");
         console.error(error);
-        setStatus(errorAndReEnter(error, null));
+        setStatus(errorAndReEnter(error, ' [GCE-M-050]' ));
       });
     }
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
@@ -3703,6 +3616,9 @@ const GenericCrudEditorMain = props => {
     window.location.reload(true);
   };
   const rowId = row => {
+    {
+      console_debug_log("rowId | editor.primaryKeyName: ".concat(editor.primaryKeyName, " | row:"), row);
+    }
     const response = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
     return response;
   };
@@ -3710,7 +3626,7 @@ const GenericCrudEditorMain = props => {
     if (status) {
       return /*#__PURE__*/React.createElement("div", {
         className: ERROR_MSG_CLASS
-      }, status, debug );
+      }, status, "[GCEM-NES]");
     }
     return WaitAnimation();
   }
@@ -3720,7 +3636,7 @@ const GenericCrudEditorMain = props => {
   if (status) {
     return /*#__PURE__*/React.createElement("div", {
       className: ERROR_MSG_CLASS
-    }, status, debug );
+    }, status, "[GCEM-ST]");
   }
   if (rows && typeof rows['totalPages'] !== 'undefined' && rows['totalPages'] == null) {
     return 'Rows ok but not totalPages - ERROR # 3';
@@ -3781,8 +3697,10 @@ const GenericCrudEditorMain = props => {
     // key={rowId(row)}
     key: "".concat(editor.baseUrl, "_row_").concat(rowId(row))
   }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
-    key: key,
-    className: "px-6 py-4 break-words text-sm text-gray-800 dark:text-gray-200"
+    key: key
+    // className="px-6 py-4 break-words text-sm text-gray-800 dark:text-gray-200"
+    ,
+    className: "px-6 py-4 break-words text-sm"
   }, getSelectDescription(editor.fieldElements[key], row) // Show column value or select description
   )), /*#__PURE__*/React.createElement("td", {
     className: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
@@ -3839,7 +3757,7 @@ const GenericCrudEditorMain = props => {
     value: searchText
   }))), status && /*#__PURE__*/React.createElement("div", {
     className: ERROR_MSG_CLASS
-  }, status)), '');
+  }, status)), debugCache("GenericCrudEditorMain") );
 };
 const ConvertToComponents = (editorDataObj, registry) => {
   /*

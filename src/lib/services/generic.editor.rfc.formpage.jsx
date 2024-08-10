@@ -191,6 +191,8 @@ const PutOneFormfield = ({
     touched,
     initialValue,
 }) => {
+    const debug = false;
+
     const { setFieldValue } = useFormikContext();
 
     let currentObj = currentObjArray[1];
@@ -452,6 +454,11 @@ const PutOneFormfield = ({
             </div>
         );
     }
+
+    if (debug) {
+        console_debug_log(`PutOneFormfield | Field (key): ${currentObj.name} | className: ${divclass} | elementLabel: ${elementLabel}`);
+    }
+
     return (
         <div key={currentObj.name} className={divclass}>
             {elementLabel}

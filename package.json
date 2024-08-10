@@ -1,6 +1,6 @@
 {
   "name": "genericsuite",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "The GenericSuite for ReactJS (frontend version)",
   "author": "Carlos J. Ramirez",
   "license": "MIT",
@@ -116,8 +116,8 @@
   "peerDependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
-    "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@fortawesome/react-fontawesome": "^0.1.16",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "assert": "^2.1.0",
     "bootstrap": "^5.3.2",
     "buffer": "^6.0.3",

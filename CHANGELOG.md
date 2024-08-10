@@ -16,6 +16,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.22 (2024-08-10)
+
+### Fixes
+Fix the row values in index page not shown issue [GS-108].
+
+
 ## 1.0.21 (2024-07-27)
 
 ### New

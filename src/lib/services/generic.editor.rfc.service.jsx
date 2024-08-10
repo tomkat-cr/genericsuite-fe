@@ -79,7 +79,7 @@ fontawesome.library.add(
   // faRecycle,
 );
 
-const debug = false;
+const debug = true;
 
 export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActions = null }) => {
   return (
@@ -386,7 +386,8 @@ const GenericCrudEditorMain = (props) => {
                         editor.fieldElements[key].listing && (
                           <td
                             key={key}
-                            className="px-6 py-4 break-words text-sm text-gray-800 dark:text-gray-200"
+                            // className="px-6 py-4 break-words text-sm text-gray-800 dark:text-gray-200"
+                            className="px-6 py-4 break-words text-sm"
                           >
                             {
                               getSelectDescription(
