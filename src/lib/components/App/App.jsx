@@ -49,9 +49,13 @@ import './App.css';
 // const Nav = require('react-bootstrap').Nav;
 // const Navbar = require('react-bootstrap').Navbar;
 
-import Container from 'react-bootstrap/cjs/Container.js';
-import Nav from 'react-bootstrap/cjs/Nav.js';
-import Navbar from 'react-bootstrap/cjs/Navbar.js';
+// 2024-08-11
+// import Container from 'react-bootstrap/cjs/Container.js';
+// import Nav from 'react-bootstrap/cjs/Nav.js';
+// import Navbar from 'react-bootstrap/cjs/Navbar.js';
+import {MainContainer, AppSectionContainer, Nav, Navbar} from '../../helpers/styles-helper.jsx';
+import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
+
 
 const debug = false;
 
@@ -138,68 +142,70 @@ export const App = ({componentMap = {}, appLogo = null}) => {
     }
 
     return (
-        <>
-            {!showContentOnly && (<div className="w-screen">
-                    <Navbar
-                        id="navbar-main"
-                        collapseOnSelect
-                        expand="lg"
-                        className="bg-body-tertiary navbar-dark bg-dark"
-                    >
-                        <Container>
-                            <Navbar.Brand
-                                as={RouterLink}
-                                to={(currentUser ? '/' : '/#/login')}
-                                // to={(currentUser ? window.location.origin + '/#' : '/#/login')}
-                                onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
-                            >
-                                {appName} <span style={{fontSize: '60%'}}>{version}</span>
-                            </Navbar.Brand>
-                            {currentUser && <>
-                                <Navbar.Toggle
-                                    id="navbar-main-toggle"
-                                    aria-controls="responsive-navbar-nav"
-                                />
-                                <Navbar.Collapse
-                                    id="basic-navbar-nav"
-                                >
-                                    <Nav
-                                        className="me-auto"
+        <MainContainer>
+            {!showContentOnly && (
+                <Navbar
+                    id="navbar-main"
+                    collapseOnSelect
+                    expand="lg"
+                    // className="bg-body-tertiary navbar-dark bg-dark"
+                >
+                    <Navbar.Container>
+                        <Navbar.Brand
+                            as={RouterLink}
+                            to={(currentUser ? '/' : '/#/login')}
+                            // to={(currentUser ? window.location.origin + '/#' : '/#/login')}
+                            onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+                        >
+                            {appName} <span style={{fontSize: '60%'}}>{version}</span>
+                        </Navbar.Brand>
+                        <Navbar.OptionsContainer>
+                            {currentUser && (
+                                <>
+                                    <Navbar.Toggle
+                                        id="navbar-main-toggle"
+                                        aria-controls="responsive-navbar-nav"
+                                    />
+                                    <Navbar.Collapse
+                                        id="basic-navbar-nav"
                                     >
+                                        <Nav
+                                            // className="me-auto"
+                                        >
+                                            <GenericMenuBuilder
+                                                componentMapping={componentMapFinal}
+                                                itemType="top_menu"
+                                                menuOptions={menuOptions}
+                                                status={state}
+                                                setExpanded={setExpanded}
+                                            />
+                                            <DarkModeButton/>
+                                        </Nav>
+                                    </Navbar.Collapse>
+                                    <Navbar.Collapse
+                                        id="current-user-navbar-nav"
+                                        className="justify-content-end"
+                                    >
+                                        <Navbar.Text>
+                                            Signed in as:
+                                        </Navbar.Text>
                                         <GenericMenuBuilder
+                                            title={currentUser.firstName}
                                             componentMapping={componentMapFinal}
-                                            itemType="top_menu"
+                                            itemType="hamburger"
                                             menuOptions={menuOptions}
                                             status={state}
+                                            showContentOnly={showContentOnly}
                                             setExpanded={setExpanded}
                                         />
-                                    </Nav>
-                                </Navbar.Collapse>
-                                <Navbar.Collapse
-                                    id="current-user-navbar-nav"
-                                    className="justify-content-end"
-                                >
-                                    <Navbar.Text>
-                                        Signed in as:
-                                    </Navbar.Text>
-                                    <GenericMenuBuilder
-                                        title={currentUser.firstName}
-                                        componentMapping={componentMapFinal}
-                                        itemType="hamburger"
-                                        menuOptions={menuOptions}
-                                        status={state}
-                                        showContentOnly={showContentOnly}
-                                        setExpanded={setExpanded}
-                                    />
-                                </Navbar.Collapse>
-                            </>}
-                        </Container>
-                    </Navbar>
-            </div>)}
-            <div 
-                className="w-screen bg-gray-300 fyn_jumbotron"
-                style={{ minHeight: '88vh' }}
-            >
+                                    </Navbar.Collapse>
+                                </>
+                            )}
+                        </Navbar.OptionsContainer>
+                    </Navbar.Container>
+                </Navbar>
+            )}
+            <AppSectionContainer>
                 <div className="p-2">
                     <AppMainComponent
                         login={login}
@@ -212,11 +218,11 @@ export const App = ({componentMap = {}, appLogo = null}) => {
                         appLogo={appLogo}
                     />
                 </div>
-            </div>
+            </AppSectionContainer>
             {state !== '' && (
                 <DefaultRoutes/>
             )}
-        </>
+        </MainContainer>
     );
 };
 

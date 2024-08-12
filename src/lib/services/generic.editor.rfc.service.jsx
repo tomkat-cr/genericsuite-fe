@@ -11,6 +11,7 @@ import {
   faTrashAlt,
   faCheck,
   faList,
+  // faArrowRight,
   // faRecycle,
 } from "@fortawesome/fontawesome-free-solid";
 
@@ -76,10 +77,18 @@ fontawesome.library.add(
   faTrashAlt,
   faCheck,
   faList,
+  // faArrowRight,
   // faRecycle,
 );
 
-const debug = true;
+// 2024-08-11
+// tailwind and bootstrap together
+// https://stackoverflow.com/questions/62688037/can-use-both-tailwind-css-and-bootstrap-4-at-the-same-time
+// google: tailwind react bootstrap does not work
+// https://stackoverflow.com/questions/64557697/tailwindcss-not-working-in-create-react-app
+// import styles from "index.css"
+
+const debug = false;
 
 export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActions = null }) => {
   return (
@@ -313,18 +322,24 @@ const GenericCrudEditorMain = (props) => {
   return (
     <>
       {infoMsg && (
-        <div className={INFO_MSG_CLASS}>
+        <div
+          className={INFO_MSG_CLASS}
+        >
           {infoMsg}
         </div>
       )}
       {rows && (
-        // <div className="container mx-auto">
         <div 
-            className="w-screen bg-gray-300 fyn_jumbotron"
+            // className="w-screen bg-gray-300 fyn_jumbotron"
+            // className="w-screen bg-gray-300"
         >
-          <h1 className="text-2xl font-bold mb-4">
+          <h1
+            className="text-2xl font-bold mb-4"
+          >
             {editor.title + " - " + MSG_ACTION_LIST}
-            <span className="pl-2 align-bottom">
+            <span
+              className="pl-2 align-bottom"
+            >
               <button
                 onClick={handleRefresh}
                 className={`${BUTTON_LISTING_CLASS} text-xs` /* mb-4 */}
@@ -332,103 +347,157 @@ const GenericCrudEditorMain = (props) => {
                 {/* <FontAwesomeIcon icon="recycle" /> */}
                 <img src={imageDirectory + "arrows_rotate_solid.svg"}
                   width="14" height="14" alt="Reload"
-                  className={"text-white fill-white"}
+                  // className={"text-white fill-white"}
                 />
               </button>
             </span>
           </h1>
-          <table
-            className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+          <div
+            className="not-prose relative bg-slate-50 rounded-xl overflow-hidden dark:bg-slate-800/25"
           >
-            <thead>
-              <tr
-                key={`${editor.baseUrl}_thead`}
-              >
-                {Object.keys(editor.fieldElements).map(
-                  (key) =>
-                    editor.fieldElements[key].listing && (
-                      <th
-                        key={key}
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase break-words"
-                      >
-                        {editor.fieldElements[key].label}
-                      </th>
-                    )
-                )}
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap"
-                >
-                  <div>
-                    <span className="pr-2">{MSG_ACTIONS}</span>
-                    <button
-                      onClick={handleNew}
-                      className={`${BUTTON_LISTING_CLASS} mr-2`}
-                    >
-                      <FontAwesomeIcon icon="plus" /> {MSG_ACTION_NEW}
-                    </button>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              className="divide-y divide-gray-200 dark:divide-gray-700"
+            <div
+              // className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"
             >
-              {rows && typeof rows.resultset !== 'undefined' &&
-                rows.resultset.map((row) => (
-                  <tr
-                    // key={rowId(row)}
-                    key={`${editor.baseUrl}_row_${rowId(row)}`}
+              <div
+                className="relative rounded-xl overflow-auto"
+              >
+                <div
+                  className="shadow-sm overflow-hidden my-8"
+                >
+                  <table
+                    // className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                    // className="min-w-full"
+                    // className="table-auto"
+                    className="border-collapse table-auto w-full text-sm"
                   >
-                    {Object.keys(editor.fieldElements).map(
-                      (key) =>
-                        editor.fieldElements[key].listing && (
-                          <td
-                            key={key}
-                            // className="px-6 py-4 break-words text-sm text-gray-800 dark:text-gray-200"
-                            className="px-6 py-4 break-words text-sm"
-                          >
-                            {
-                              getSelectDescription(
-                                editor.fieldElements[key],
-                                row
-                              )  // Show column value or select description
-                            }
-                          </td>
-                        )
-                    )}
-                    <td
-                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
+                    <thead>
+                      <tr
+                        key={`${editor.baseUrl}_thead`}
+                      >
+                        {Object.keys(editor.fieldElements).map(
+                          (key) =>
+                            editor.fieldElements[key].listing && (
+                              <th
+                                key={key}
+                                // scope="col"
+                                // className="pr-2 text-xs font-medium text-gray-500 uppercase break-words"
+                                className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+                                >
+                                {editor.fieldElements[key].label}
+                              </th>
+                            )
+                          )}
+                        <th
+                          // scope="col"
+                          // // className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap"
+                          className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+                        >
+                          <div>
+                            <span
+                                // className="pr-2 text-xs font-medium text-gray-500 uppercase break-words"
+                            >
+                              {/* {MSG_ACTIONS}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}&nbsp;
+                            </span>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      // // className="divide-y divide-gray-200 dark:divide-gray-700"
+                      className="bg-white dark:bg-slate-800"
                     >
-                      <div>
-                        <button
-                          // type="button"
-                          onClick={() => handleView(rowId(row))}
-                          className={`${BUTTON_LISTING_CLASS} mr-2`}
-                        >
-                          <FontAwesomeIcon icon="eye" />
-                        </button>
-                        <button
-                          // type="button"
-                          onClick={() => handleModify(rowId(row))}
-                          className={`${BUTTON_LISTING_CLASS} mr-2`}
-                        >
-                          <FontAwesomeIcon icon="edit" />
-                        </button>
-                        <button
-                          // type="button"
-                          onClick={() => handleDelete(rowId(row))}
-                          className={`${BUTTON_LISTING_CLASS}`}
-                        >
-                          <FontAwesomeIcon icon="trash" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                      {rows && typeof rows.resultset !== 'undefined' &&
+                        rows.resultset.map((row) => (
+                          <tr
+                            id={`${editor.baseUrl}_row_${rowId(row)}_row`}
+                            key={`${editor.baseUrl}_row_${rowId(row)}`}
+                            // className="odd:bg-white even:bg-slate-50"
+                            onMouseOver={() => {
+                              const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
+                              // const magic_button = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magic_button`);
+                              // magic_button.classList.add('hidden');
+                              const row_element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
+                              row_element.classList.add('bg-white');
+                              element.classList.remove('hidden');
+                            }}
+                            onMouseLeave={() => {
+                              const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
+                              // const magic_button = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magic_button`);
+                              // magic_button.classList.remove('hidden');
+                              const row_element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
+                              row_element.classList.remove('bg-white');
+                              element.classList.add('hidden');
+                            }}
+                          >
+                            {Object.keys(editor.fieldElements).map(
+                              (key) =>
+                                editor.fieldElements[key].listing && (
+                                  <td
+                                    key={key}
+                                    // // className="px-6 py-0 break-words text-sm text-gray-50 dark:text-gray-50"
+                                    // className="break-words text-sm"
+                                    className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+                                  >
+                                    {
+                                      getSelectDescription(
+                                        editor.fieldElements[key],
+                                        row
+                                      )  // Show column value or select description
+                                    }
+                                  </td>
+                                )
+                            )}
+                            <td
+                              // Action buttons
+                              // className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
+                              // className="whitespace-nowrap text-sm"
+                              className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+                            >
+                              <div
+                                // className="flex items-center"
+                            >
+                                {/* <div
+                                  id={`${editor.baseUrl}_row_${rowId(row)}_magic_button`}
+                                  className="visible"
+                                >
+                                  <FontAwesomeIcon icon="arrow-right" />
+                                </div> */}
+                                <div
+                                  id={`${editor.baseUrl}_row_${rowId(row)}_controls`}
+                                  className="hidden"
+                                >
+                                  <button
+                                    // type="button"
+                                    onClick={() => handleView(rowId(row))}
+                                    className={`${BUTTON_LISTING_CLASS} mr-2`}
+                                  >
+                                    <FontAwesomeIcon icon="eye" />
+                                  </button>
+                                  <button
+                                    // type="button"
+                                    onClick={() => handleModify(rowId(row))}
+                                    className={`${BUTTON_LISTING_CLASS} mr-2`}
+                                  >
+                                    <FontAwesomeIcon icon="edit" />
+                                  </button>
+                                  <button
+                                    // type="button"
+                                    onClick={() => handleDelete(rowId(row))}
+                                    className={`${BUTTON_LISTING_CLASS}`}
+                                  >
+                                    <FontAwesomeIcon icon="trash" />
+                                  </button>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="mt-4 flex items-center">
             <button
@@ -478,6 +547,12 @@ const GenericCrudEditorMain = (props) => {
                 value={searchText}
               />
             </div>
+            <button
+              onClick={handleNew}
+              className={`${BUTTON_LISTING_CLASS} mr-2`}
+            >
+              <FontAwesomeIcon icon="plus" /> {MSG_ACTION_NEW}
+            </button>
           </div>
           {status && (
             <div className={ERROR_MSG_CLASS}>

@@ -10,7 +10,6 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link href="%PUBLIC_URL%/output.css" rel="stylesheet">
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -27,13 +26,15 @@
     -->
     <title>GenericSuite</title>
     <!-- bootstrap css -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" /> -->
+    <!-- tailwindcss -->
+    <link href="%PUBLIC_URL%/output.css" rel="stylesheet">
     <style>
         a { cursor: pointer; }
     </style>
     <base href="/">
   </head>
-  <body>
+  <body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

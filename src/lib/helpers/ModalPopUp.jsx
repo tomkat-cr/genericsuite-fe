@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+// import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal } from './styles-helper';
 
 // import { getPrefix } from '../../helpers';
 import { console_debug_log } from '../services/logging.service.jsx';

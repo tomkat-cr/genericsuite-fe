@@ -29,8 +29,10 @@ import { HomePage } from '../components/HomePage/HomePage.jsx';
 // const Nav = require('react-bootstrap').Nav;
 // const NavDropdown = require('react-bootstrap').NavDropdown;
 
-import Nav from 'react-bootstrap/cjs/Nav.js';
-import NavDropdown from 'react-bootstrap/cjs/NavDropdown.js';
+// 2024-08-11
+// import Nav from 'react-bootstrap/cjs/Nav.js';
+// import NavDropdown from 'react-bootstrap/cjs/NavDropdown.js';
+import {Nav, NavDropdown} from '../helpers/styles-helper.jsx';
 
 const debug = false;
 
@@ -174,7 +176,7 @@ export const GenericMenuBuilder = (
         );
     }
 
-    const GetNavs = (item_type_filter, topTitle) => {
+    const GetNavs = (item_type_filter, topTitle, itemType) => {
         // React-Bootstrap Navs and tabs
         // https://react-bootstrap.netlify.app/docs/components/navs
         if (debug) {
@@ -214,7 +216,7 @@ export const GenericMenuBuilder = (
                     <NavDropdown
                         key={item.title}
                         title={itemDefs["title"]}
-                        id="basic-nav-dropdown"
+                        id={`basic-nav-dropdown-${itemType}`}
                     >
                     {
                         item.sub_menu_options.map(subItem => {
@@ -255,7 +257,7 @@ export const GenericMenuBuilder = (
         );
     }
 
-    const menuItems = (item_type_filter, topTitle) => {
+    const menuItems = (item_type_filter, topTitle, itemType) => {
         if (login) {
             return '';
         }
@@ -267,7 +269,7 @@ export const GenericMenuBuilder = (
             return getRoutes();
         }
         // NavLinks
-        return GetNavs(item_type_filter, topTitle);
+        return GetNavs(item_type_filter, topTitle, itemType);
     };
 
     if (status !== "" && itemType === "routes") {
@@ -282,7 +284,7 @@ export const GenericMenuBuilder = (
         return <DefaultRoutes appLogo={appLogo} />;
     }
 
-    return menuItems(itemType, title);
+    return menuItems(itemType, title, itemType);
 }
 
 export const editorRoute = (editor) => {

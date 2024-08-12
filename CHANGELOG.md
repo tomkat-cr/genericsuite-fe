@@ -16,10 +16,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## Unreleased
 ## 1.0.22 (2024-08-10)
 
 ### Fixes
+Fix new Tailwind output CSS [GS-63].
 Fix the row values in index page not shown issue [GS-108].
+
+### Breaks
+General Bootstrap CSS replaced by Tailwind CSS [GS-63].
 
 
 ## 1.0.21 (2024-07-27)
