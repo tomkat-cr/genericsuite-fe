@@ -17,6 +17,7 @@ import {
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
 import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
+import { useUser } from '../helpers/UserContext.jsx';
 
 import {
   MainSectionContext,
@@ -119,6 +120,7 @@ const GenericCrudEditorMain = (props) => {
     initCache,
     debugCache,
   } = useContext(MainSectionContext);
+  const { currentUser } = useUser();
 
   useEffect(() => {
     setEditorParameters(props).then(
@@ -161,7 +163,7 @@ const GenericCrudEditorMain = (props) => {
       }
       // dbListPreRead: To set a Listing filters, assign funcResponse.fieldValues[db_field]=filter_value
       processGenericFuncArray(
-        editor, 'dbListPreRead', accessKeysListing, formMode
+        editor, 'dbListPreRead', accessKeysListing, formMode, currentUser
       ).then(
         funcResponse => {
           // console_debug_log(`GenericCrudEditor / dbListPreRead - funcResponse:`)
@@ -174,7 +176,7 @@ const GenericCrudEditorMain = (props) => {
               ShowHidePageAnimation(false);
               // dbListPostRead: To fix Listing fields
               processGenericFuncArray(
-                editor, 'dbListPostRead', data, formMode
+                editor, 'dbListPostRead', data, formMode, currentUser
               ).then(
                 funcResponse => setRows(funcResponse.fieldValues),
                 error => setStatus(
@@ -291,10 +293,10 @@ const GenericCrudEditorMain = (props) => {
 
   if (status) {
     return (
-      <div className={ERROR_MSG_CLASS}>
+      <>
         {status}
         {debug && "[GCEM-ST]"}
-      </div>
+      </>
     );
   }
 
@@ -557,6 +559,7 @@ const GenericCrudEditorMain = (props) => {
           {status && (
             <div className={ERROR_MSG_CLASS}>
               {status}
+              {debug && "[GCE-99]"}
             </div>
           )}
         </div>

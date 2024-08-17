@@ -1,24 +1,53 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { authenticationService } from '../../services/authentication.service.jsx';
+import { useUser } from '../../helpers/UserContext.jsx';
+
+import {
+    authenticationService,
+    getCurrentUserData,
+    getUserLocalData
+} from '../../services/authentication.service.jsx';
 import { getUrlParams } from '../../helpers/url-params.jsx';
 import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
 import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 import { imageDirectory } from '../../constants/general_constants.jsx';
+import {
+    ERROR_MSG_CLASS,
+    FORM_GROUP_CLASS,
+    FORM_CONTROL,
+    INVALID_FEEDBACK,
+    BUTTON_PRIMARY_CLASS,
+    IS_INVALID,
+} from '../../constants/class_name_constants.jsx';
+import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
+import { console_debug_log } from '../../services/logging.service.jsx';
 
 // This way to import the .svg files doesn't work on prod environents...
 // import DefaultAppLogo from '../../images/app_logo_square.svg';
 // import MadeByLogoSquare from '../../images/madeby_logo_square.svg';
 // import MadeByLogoCircle from '../../images/madeby_logo_emblem.svg';
 
+const debug = false;
+
 const defaultAppLogo = "app_logo_square.svg";
 
 export const LoginPage = (props) => {
     const [redirectUrl, setRedirectUrl] = useState(null);
+    const [performLogin, setPerformLogin] = useState(false);
+    const { currentUser, registerUser, unRegisterUser } = useUser();
+
     let appLogo = props.appLogo;
+
+    useEffect(() => {
+        if (currentUser && performLogin) {
+            unRegisterUser();
+        }
+    }, [currentUser]);
 
     useEffect(() => {
         const urlParams = getUrlParams(props)
@@ -29,11 +58,30 @@ export const LoginPage = (props) => {
             redirect = urlParams.redirect;
         }
         // Redirect to home OR redirect URL if already logged in
-        if (authenticationService.currentUserValue) {
+        if (debug) console_debug_log("LoginPage | authenticationService:", authenticationService);
+        if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
             removeLastUrl();
-            window.location.href = redirectUrl;
+            // window.location.href = redirectUrl;
+            getCurrentUserData()
+                .then( 
+                    userData => {
+                        if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
+                        if (userData.error) {
+                            console.error(userData.error_message);
+                            setPerformLogin(true);
+                        } else {
+                            registerUser(getUserLocalData(userData));
+                            return <Navigate to={redirectUrl}/>
+                        }
+                    },
+                    error => {
+                        console.error(error.errorMsg);
+                        setPerformLogin(true);
+                    }
+                );
         } else {
             setRedirectUrl(redirect);
+            setPerformLogin(true);
         }
         // Avoid need to add redirectUrl to dependency array
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,11 +94,15 @@ export const LoginPage = (props) => {
                 user => {
                     // To avoid stay in login page with the wait animation
                     setSubmitting(false);
+                    // Set user data to <App/>
+                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 2:", user);
+                    registerUser(user);
                     // Redirect to previous page
                     removeLastUrl();
-                    window.location.href = redirectUrl;
-                    // To handle menu access rights changes
-                    window.location.reload(true);
+                    return <Navigate to={redirectUrl}/>
+                        // window.location.href = redirectUrl;
+                        // // To handle menu access rights changes
+                        // window.location.reload(true);
                 },
                 error => {
                     setSubmitting(false);
@@ -58,6 +110,10 @@ export const LoginPage = (props) => {
                 }
             );
     };
+
+    if (!performLogin) {
+        return WaitAnimation();
+    }
 
     return (
         <>
@@ -74,8 +130,12 @@ export const LoginPage = (props) => {
                     handleSubmit(username, password, setStatus, setSubmitting);
                 }}
             >{({ errors, status, touched, isSubmitting }) => (
-                <div className="flex justify-center items-center min-h-screen mt-1 mb-1">
-                    <div className="bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4" style={{ width: '400px', margin: 'auto' }}>
+                // <div className="flex justify-center items-center min-h-screen mt-1 mb-1">
+                    // <div className="bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4" style={{ width: '400px', margin: 'auto' }}>
+                <div
+                    className="pt-4"
+                >
+                    <CenteredBoxContainer>
                         <Form>
                             <img src={imageDirectory + (appLogo || defaultAppLogo)}
                                 width="150"
@@ -85,40 +145,40 @@ export const LoginPage = (props) => {
                             />
                             {/* <MadeByLogoSquare alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
                             {/* <MadeByLogoCircle alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
-                            <div className="form-group">
+                            <div className={FORM_GROUP_CLASS}>
                                 <label htmlFor="username">Username</label>
                                 <Field
                                     name="username"
                                     type="text"
-                                    className={'form-control' + (
-                                        errors.username && touched.username ? ' is-invalid' : ''
+                                    className={FORM_CONTROL + (
+                                        errors.username && touched.username ? ' ' + {IS_INVALID} : ''
                                     )}
                                 />
                                 <ErrorMessage
                                     name="username"
                                     component="div"
-                                    className="invalid-feedback"
+                                    className={INVALID_FEEDBACK}
                                 />
                             </div>
-                            <div className="form-group">
+                            <div className={FORM_GROUP_CLASS}>
                                 <label htmlFor="password">Password</label>
                                 <Field
                                     name="password"
                                     type="password"
-                                    className={'form-control' + (
-                                        errors.password && touched.password ? ' is-invalid' : ''
+                                    className={FORM_CONTROL + (
+                                        errors.password && touched.password ? ' ' + {IS_INVALID} : ''
                                     )}
                                 />
                                 <ErrorMessage
                                     name="password"
                                     component="div"
-                                    className="invalid-feedback"
+                                    className={INVALID_FEEDBACK}
                                 />
                             </div>
-                            <div className="form-group">
+                            <div className={FORM_GROUP_CLASS}>
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className={BUTTON_PRIMARY_CLASS}
                                     disabled={isSubmitting}
                                 >
                                     Login
@@ -128,16 +188,20 @@ export const LoginPage = (props) => {
                                 }
                             </div>
                             {status && ! includesAppValidLinks(status) && 
-                                <div className={'alert alert-danger'}>{status}</div>
+                                // <div className={'alert alert-danger'}>{status}</div>
+                                <div className={ERROR_MSG_CLASS}>{status}</div>
                             }
                             {status && includesAppValidLinks(status) &&
                                 <div
-                                    className={'alert alert-danger'}
-                                    dangerouslySetInnerHTML={{ __html: status }}
-                                />
+                                    // className={'alert alert-danger'}
+                                    className={ERROR_MSG_CLASS}
+                                    // dangerouslySetInnerHTML={{ __html: status }}
+                                >
+                                    {status}
+                                </div>
                             }
                         </Form>
-                    </div>
+                    </CenteredBoxContainer>
                 </div>
             )}
             </Formik>

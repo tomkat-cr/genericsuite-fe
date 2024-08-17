@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Button } from 'react-bootstrap';
-import { Button } from './styles-helper';
+import { Button } from './ModalLib.jsx';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { 
@@ -10,6 +10,7 @@ import {
     MSG_ERROR_SESSION_EXPIRED,
 } from '../constants/general_constants.jsx';
 import { APP_EMAILS, APP_VALID_URLS } from '../constants/app_constants.jsx';
+import { ALERT_DANGER_CLASS } from '../constants/class_name_constants.jsx';
 import {
     authenticationService,
 } from '../services/authentication.service.jsx';
@@ -22,15 +23,16 @@ import { ModalPopUp } from './ModalPopUp.jsx'
 
 const debug = false;
 
-const hard_login = false;
+// const hard_login = true;
 
 export function logoutHander() {
     if (debug) console_debug_log(`logoutHander | history.push(${getPrefix(true)+'/login'})`);
     authenticationService.logout();
-    if (!history.push(getPrefix(true)+'/login') && hard_login) {
-        if (debug) console_debug_log(`logoutHander | window.location.href = ${window.location.origin+getPrefix(true)+'/login'}`);
-        window.location.href = window.location.origin + getPrefix(true) + '/login';
-    }
+    // if (!history.push(getPrefix(true)+'/login') && hard_login) {
+    //     if (debug) console_debug_log(`logoutHander | window.location.href = ${window.location.origin+getPrefix(true)+'/login'}`);
+    //     // window.location.href = window.location.origin + getPrefix(true) + '/login';
+    // }
+    window.location.reload(true);
 };
 
 export function refreshPage() {
@@ -41,7 +43,12 @@ export const getErrorMessage = (error) => {
     let errorMessage = error;
     if (typeof error !== 'string') {
         if (typeof error['errorMsg'] !== 'undefined') {
-            errorMessage = error['errorMsg'];
+            if (typeof error['errorMsg'] == 'string') {
+                errorMessage = error['errorMsg'];
+            } else {
+                error = error['errorMsg'];
+                errorMessage = error['message'];
+            }
         } else {
             errorMessage = error['message'];
         }
@@ -126,7 +133,7 @@ export function errorAndReEnter(
             primaryButtonAction={parentLogoutHandler}
             logoutButton={logoutButton}
             htmlContent={msgContainsHtml ? retryMessage : null}
-            htmlContentClass={'alert alert-danger'}
+            htmlContentClass={ALERT_DANGER_CLASS}
         >
             {msgContainsHtml ? null : errorMessageDiv(retryMessage)}
         </ModalPopUp>
@@ -199,7 +206,7 @@ export function errorAndRetry(errorMessage, refreshHandler=null) {
 
 export function errorMessageDiv(errorMessage) {
     return (
-        <div style={{ textAlign: 'center' }} className={'alert alert-danger'}>{errorMessage}</div>
+        <div style={{ textAlign: 'center' }} className={ALERT_DANGER_CLASS}>{errorMessage}</div>
     );
 }
 

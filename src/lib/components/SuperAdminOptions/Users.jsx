@@ -6,7 +6,6 @@ import {
 } from '../../services/generic.editor.rfc.service.jsx';
 import { genericFuncArrayDefaultValue } from '../../services/generic.editor.rfc.specific.func.jsx';
 import {
-    authenticationService,
     getUserData,
 } from '../../services/authentication.service.jsx';
 import { dbApiService } from '../../services/db.service.jsx';
@@ -56,12 +55,11 @@ export const Users = () => (
  * System Admin
  */
 
-export const UsersValidations = (data, editor, action) => {
+export const UsersValidations = (data, editor, action, currentUser) => {
     // Users pre-deletion/update validations
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
-        const { currentUserValue } = authenticationService;
-        getUserData(currentUserValue.id)
+        getUserData(currentUser.id)
             .then( 
                 userData => {
                     if (typeof data !== 'undefined' && typeof data['_id'] !== 'undefined') {
@@ -116,12 +114,11 @@ export const UsersValidations = (data, editor, action) => {
     });
 }
 
-export const UsersDbListPreRead = (data, editor, action) => {
+export const UsersDbListPreRead = (data, editor, action, currentUser) => {
     // Users pre-deletion/update validations
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
-        const { currentUserValue } = authenticationService;
-        getUserData(currentUserValue.id)
+        getUserData(currentUser.id)
             .then( 
                 currentUserData => {
                     if (currentUserData.error) {

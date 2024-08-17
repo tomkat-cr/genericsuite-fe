@@ -25,6 +25,7 @@ import {
     timestampToDate,
 } from '../helpers/date-timestamp.jsx';
 import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
+import { useUser } from '../helpers/UserContext.jsx';
 
 import {
     ACTION_CREATE,
@@ -54,6 +55,8 @@ import {
     INFO_MSG_CLASS,
 } from "../constants/class_name_constants.jsx";
 
+const debug = false;
+
 let calcFields = {};
 
 export const FormPage = ({
@@ -70,8 +73,7 @@ export const FormPage = ({
     const [status, setStatus] = useState("");
     const [refresh, setRefresh] = useState(0);
     const [formMsg, setFormMsg] = useState({message: message, messageType: messageType});
-
-    const debug = false;
+    const { currentUser } = useUser();
 
     const {
         debugCache,
@@ -84,7 +86,7 @@ export const FormPage = ({
     useEffect(() => {
         if (mode === ACTION_CREATE) {
             // To assign specific default values in creation...
-            processGenericFuncArray(editor, 'dbPreRead', {}, mode).then(
+            processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(
                 funcResponse => setFormData(funcResponse.fieldValues),
                 error => setStatus(errorAndReEnter(error,'[GCE-FD-010]'))
             )
@@ -96,7 +98,7 @@ export const FormPage = ({
         ) {
             let accessKeysDataScreen = {}
             accessKeysDataScreen[editor.primaryKeyName] = id;
-            processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode).then(
+            processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(
                 funcResponse => {
                     accessKeysDataScreen = Object.assign(
                         funcResponse.fieldValues, editor.parentFilter,
@@ -105,7 +107,7 @@ export const FormPage = ({
                         .then(
                             data => {
                                 // To assign specific default values in update, read or delete...
-                                processGenericFuncArray(editor, 'dbPostRead', data, mode).then(
+                                processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(
                                     funcResponse => setFormData(funcResponse.fieldValues),
                                     error => setStatus(errorAndReEnter(error, '[GCE-FD-020]'))
                                 );
@@ -191,8 +193,6 @@ const PutOneFormfield = ({
     touched,
     initialValue,
 }) => {
-    const debug = false;
-
     const { setFieldValue } = useFormikContext();
 
     let currentObj = currentObjArray[1];
@@ -234,7 +234,6 @@ const PutOneFormfield = ({
     }
     
     const runCalculation = (e) => {
-        const debug = false;
         for (const key in calcFields) {
             const formula = calcFields[key];
             if (debug) {
@@ -480,7 +479,6 @@ const EditFormFormik = (
         handleFormPageActions,
     }
 ) => {
-
     const [formData, setFormData] = useState({
         readyToShow: false,
         dataset: null,
@@ -488,6 +486,7 @@ const EditFormFormik = (
         message: null,
         messageType: null,
     });
+    const { currentUser } = useUser();
 
     useEffect(() => {
         const editorFlags = getEditorFlags(action);
@@ -504,7 +503,7 @@ const EditFormFormik = (
         } else {
             // Validate data before show the Data Form
             processGenericFuncArray(
-                editor, 'dbPreValidations', dataset, action
+                editor, 'dbPreValidations', dataset, action, currentUser
             ).then(
                 funcResponse => {
                     setFormData(
@@ -578,7 +577,7 @@ const EditFormFormikFinal = ({
     messageType,
     handleFormPageActions,
 }) => {
-    const debug = false;
+    const { currentUser } = useUser();
 
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);
@@ -661,14 +660,14 @@ const EditFormFormikFinal = ({
                         console_debug_log('BEFORE validations');
                     }
                     processGenericFuncArray(
-                        editor, 'validations', submitedtElements, action
+                        editor, 'validations', submitedtElements, action, currentUser
                     ).then(
                         funcResponse => {
                             if (debug) {
                                 console_debug_log('BEFORE dbPreWrite');
                             }
                             processGenericFuncArray(
-                                editor, 'dbPreWrite', submitedtElements, action
+                                editor, 'dbPreWrite', submitedtElements, action, currentUser
                             ).then(
                                 funcResponse => {
                                     // Save the row to Database
@@ -700,7 +699,7 @@ const EditFormFormikFinal = ({
                                                     console_debug_log('BEFORE dbPostWrite | submitedtElements:', submitedtElements);
                                                 }
                                                 processGenericFuncArray(
-                                                    editor, 'dbPostWrite', submitedtElements, action
+                                                    editor, 'dbPostWrite', submitedtElements, action, currentUser
                                                 ).then(
                                                     funcResponse => {
                                                         if (debug) {
@@ -823,7 +822,6 @@ const EditFormFormikFinal = ({
 };
 
 const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
-    const debug = false;
     let initialFieldValues = getFieldElementsDbValues(editor, dataset);
     if (initialFieldValues[editor.primaryKeyName] === 0) {
         // Dataset is stil not ready...

@@ -8,6 +8,7 @@ module.exports = {
   content: {
     relative: true,
     files: [
+      "./src/lib/constants/**/*.{html,js,jsx}",
       "./src/lib/components/**/*.{html,js,jsx}",
       "./src/lib/helpers/**/*.{html,js,jsx}",
       "./src/lib/services/**/*.{html,js,jsx}",

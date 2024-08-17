@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 import {
     GenericMenuBuilder,
     getMenuFromApi,
     DefaultRoutes,
 } from '../../services/generic.menu.service.jsx';
-import {
-    authenticationService,
-} from '../../services/authentication.service.jsx';
 import {
     console_debug_log,
 } from '../../services/logging.service.jsx';
@@ -24,6 +20,10 @@ import {
 import {
     mergeDicts,
 } from '../../helpers/dict-utilities.jsx';
+import {
+    UserProvider,
+    useUser
+} from '../../helpers/UserContext.jsx';
 
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 
@@ -53,9 +53,12 @@ import './App.css';
 // import Container from 'react-bootstrap/cjs/Container.js';
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import Navbar from 'react-bootstrap/cjs/Navbar.js';
-import {MainContainer, AppSectionContainer, Nav, Navbar} from '../../helpers/styles-helper.jsx';
+import { MainContainer, AppSectionContainer, Nav, Navbar } from '../../helpers/NavLib.jsx';
 import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
-
+import {
+    ALERT_DANGER_CLASS,
+    BUTTON_PRIMARY_CLASS,
+} from '../../constants/class_name_constants.jsx';
 
 const debug = false;
 
@@ -105,110 +108,138 @@ function setExpanded(componentObj) {
 }
 
 export const App = ({componentMap = {}, appLogo = null}) => {
-    
-    const [currentUser, setCurrentUser] = useState(null);
+    return (
+        <UserProvider>
+          <AppMain
+            componentMap={componentMap}
+            appLogo={appLogo}
+          />
+        </UserProvider>
+      );
+}
+
+const AppNavBar = ({ children }) => {
+    const { currentUser } = useUser();
+    const version = process.env.REACT_APP_VERSION;
+    const appName = process.env.REACT_APP_APP_NAME;
+    return (
+        <Navbar
+            id="navbar-main"
+            collapseOnSelect
+            expand="lg"
+            // className="bg-body-tertiary navbar-dark bg-dark"
+        >
+            <Navbar.Container>
+                <Navbar.Brand
+                    as={RouterLink}
+                    to='/'
+                    onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+                >
+                    {appName} <span style={{fontSize: '60%'}}>{version}</span>
+                </Navbar.Brand>
+                {children}
+            </Navbar.Container>
+        </Navbar>
+    );
+}
+
+const AppMain = ({componentMap = {}, appLogo = null}) => {
     const [state, setState] = useState("");
-    const [login, setLogin] = useState(false);
     const [menuOptions, setMenuOptions] = useState(null);
 
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
-    const version = process.env.REACT_APP_VERSION;
-    const appName = process.env.REACT_APP_APP_NAME;
     const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+
+    const location = useLocation();
+    console_debug_log("App | location:", location);
+
+    const { currentUser } = useUser();
 
     if (debug) {
         console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMapFinal:', componentMapFinal, 'appLogo:', appLogo);
     }
 
     useEffect(() => {
-        if (authenticationService.currentUser) {
-            const subscription = authenticationService.currentUser.subscribe(
-                x => setCurrentUser(x)
-            );
-            return () => subscription.unsubscribe();
-        }
-    }, []);
-
-    useEffect(() => {
-        if ( !(login || window.location.href.includes("/login")) ) {
+        if (currentUser) {
             getMenuFromApi(state, setState, setMenuOptions);
         }
-    }, [state, login]);
+    }, [currentUser, state]);
 
     const stateHandler = () => {
-        setLogin(true);
         logoutHander();
+    }
+
+    if (!currentUser) {
+        return (
+            <MainContainer>
+                <AppNavBar>
+                    <Navbar.OptionsContainer>
+                        <Navbar.Collapse
+                            id="basic-navbar-nav"
+                        >
+                            <Nav>
+                                <DarkModeButton/>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar.OptionsContainer>
+                </AppNavBar>
+                <AppSectionContainer>
+                    <LoginPage appLogo={appLogo}/>
+                </AppSectionContainer>
+            </MainContainer>
+        );
     }
 
     return (
         <MainContainer>
             {!showContentOnly && (
-                <Navbar
-                    id="navbar-main"
-                    collapseOnSelect
-                    expand="lg"
-                    // className="bg-body-tertiary navbar-dark bg-dark"
-                >
-                    <Navbar.Container>
-                        <Navbar.Brand
-                            as={RouterLink}
-                            to={(currentUser ? '/' : '/#/login')}
-                            // to={(currentUser ? window.location.origin + '/#' : '/#/login')}
-                            onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+                <AppNavBar>
+                    <Navbar.OptionsContainer>
+                        <Navbar.Toggle
+                            id="navbar-main-toggle"
+                            aria-controls="responsive-navbar-nav"
+                        />
+                        <Navbar.Collapse
+                            id="basic-navbar-nav"
                         >
-                            {appName} <span style={{fontSize: '60%'}}>{version}</span>
-                        </Navbar.Brand>
-                        <Navbar.OptionsContainer>
-                            {currentUser && (
-                                <>
-                                    <Navbar.Toggle
-                                        id="navbar-main-toggle"
-                                        aria-controls="responsive-navbar-nav"
-                                    />
-                                    <Navbar.Collapse
-                                        id="basic-navbar-nav"
-                                    >
-                                        <Nav
-                                            // className="me-auto"
-                                        >
-                                            <GenericMenuBuilder
-                                                componentMapping={componentMapFinal}
-                                                itemType="top_menu"
-                                                menuOptions={menuOptions}
-                                                status={state}
-                                                setExpanded={setExpanded}
-                                            />
-                                            <DarkModeButton/>
-                                        </Nav>
-                                    </Navbar.Collapse>
-                                    <Navbar.Collapse
-                                        id="current-user-navbar-nav"
-                                        className="justify-content-end"
-                                    >
-                                        <Navbar.Text>
-                                            Signed in as:
-                                        </Navbar.Text>
-                                        <GenericMenuBuilder
-                                            title={currentUser.firstName}
-                                            componentMapping={componentMapFinal}
-                                            itemType="hamburger"
-                                            menuOptions={menuOptions}
-                                            status={state}
-                                            showContentOnly={showContentOnly}
-                                            setExpanded={setExpanded}
-                                        />
-                                    </Navbar.Collapse>
-                                </>
-                            )}
-                        </Navbar.OptionsContainer>
-                    </Navbar.Container>
-                </Navbar>
+                            <Nav
+                                // className="me-auto"
+                            >
+                                <GenericMenuBuilder
+                                    componentMapping={componentMapFinal}
+                                    itemType="top_menu"
+                                    menuOptions={menuOptions}
+                                    status={state}
+                                    setExpanded={setExpanded}
+                                />
+                                <DarkModeButton/>
+                            </Nav>
+                        </Navbar.Collapse>
+                        <Navbar.Collapse
+                            id="current-user-navbar-nav"
+                            // className="justify-content-end"
+                        >
+                            <Navbar.Text>
+                                Signed in as:
+                            </Navbar.Text>
+                            <GenericMenuBuilder
+                                title={currentUser.firstName}
+                                componentMapping={componentMapFinal}
+                                itemType="hamburger"
+                                menuOptions={menuOptions}
+                                status={state}
+                                showContentOnly={showContentOnly}
+                                setExpanded={setExpanded}
+                            />
+                        </Navbar.Collapse>
+                    </Navbar.OptionsContainer>
+                </AppNavBar>
             )}
             <AppSectionContainer>
                 <div className="p-2">
                     <AppMainComponent
-                        login={login}
+                        // login={login}
                         state={state}
                         stateHandler={stateHandler}
                         menuOptions={menuOptions}
@@ -230,14 +261,16 @@ const CloseButton = ({children}) => {
     return (
         <>
             {children && (
-                <div className="alert alert-danger" role="alert">
+                <div
+                    className={ALERT_DANGER_CLASS} role="alert"
+                >
                     {children}
                 </div>
             )}
             <button
                 type="button"
                 onClick={() => window.close()}
-                className="ml-2 mb-1 bg-blue-500 text-white p-0 rounded close"
+                className={BUTTON_PRIMARY_CLASS}
             >
                 Close
             </button>
@@ -246,7 +279,6 @@ const CloseButton = ({children}) => {
 }
 
 const AppMainComponent = ({
-    login,
     state,
     stateHandler,
     menuOptions,
@@ -255,17 +287,9 @@ const AppMainComponent = ({
     setExpanded,
     appLogo = null,
 }) => {
-    if (login || window.location.href.includes("/login")) {
-        if (debug) console_debug_log("AppMainComponent | login");
-        if (showContentOnly) {
-            return (
-                <CloseButton>
-                    Re-login is required...
-                </CloseButton>
-            );
-        }
-        return (<LoginPage appLogo={appLogo}/>);
-    }
+    const location = useLocation();
+    if (debug) console_debug_log("AppMainComponent | location:", location);
+
     if (state !== "") {
         if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
         if (showContentOnly) {

@@ -31,12 +31,13 @@ const reduceAllResponses = (responses, data) => {
     return responsesReduced;
 };
 
-export const processGenericFuncArray = (editor, funcArrayName, data, action) => {
+export const processGenericFuncArray = (editor, funcArrayName, data, action, currentUser) => {
     if (debug) {
         console_debug_log('** PROCESS GENERIC FUNC ARRAY ** funcArrayName: ' + funcArrayName);
         console_debug_log('processGenericFuncArray | action: ' + action);
         console_debug_log('processGenericFuncArray | editor:', editor);
         console_debug_log('processGenericFuncArray | data:', data);
+        console_debug_log('processGenericFuncArray | currentUser:', currentUser);
         console_debug_log();
     }
     return new Promise((resolve, reject) => {
@@ -55,7 +56,7 @@ export const processGenericFuncArray = (editor, funcArrayName, data, action) => 
             //   'fieldsToDelete': [],
             //   'otherData': [],
             // }
-            return objFunc(data, editor, action);
+            return objFunc(data, editor, action, currentUser);
         });
         if (debug) {
             console_debug_log('processGenericFuncArray | allFuncPromises:');
@@ -92,27 +93,25 @@ export const processGenericFuncArray = (editor, funcArrayName, data, action) => 
 
 // General specific funcions 
 
-// export const UserFilterDbListPreRead = (data, editor, action) => {
+// export const UserFilterDbListPreRead = (data, editor, action, currentUser) => {
 //     // User filter DbListPreRead to filter by user_id
 //     return new Promise((resolve, reject) => {
 //         let resp = genericFuncArrayDefaultValue(data);
-//         const { currentUserValue } = authenticationService;
-//         resp.fieldValues['user_id'] = currentUserValue.id
+//         resp.fieldValues['user_id'] = currentUser.id
 //         // console_debug_log(">>> UserFilterDbListPreRead | resp:");
 //         // console_debug_log(resp);
 //         resolve(resp);
 //     });
 // }
 
-// export const UserFilterDbPreRead = (data, editor, action) => {
+// export const UserFilterDbPreRead = (data, editor, action, currentUser) => {
 //     // user_id assignment during Database Pre Read
 //     // Template: timestampDbPostRead
 //     return new Promise((resolve, reject) => {
 //         let resp = genericFuncArrayDefaultValue(data);
-//         const { currentUserValue } = authenticationService;
 //         // console_debug_log(`>>> UserFilterDbPreRead ||| data:`);
 //         // console_debug_log(data);
-//         data['user_id'] = currentUserValue.id
+//         data['user_id'] = currentUser.id
 //         resp.fieldValues.resultset =  Object.assign({}, data);
 //         // resp.fieldValues['user_id'] = currentUserValue.id
 //         // console_debug_log(`>>> UserFilterDbPreRead | currentUserValue.id: ${currentUserValue.id} | resp:`);
@@ -121,26 +120,26 @@ export const processGenericFuncArray = (editor, funcArrayName, data, action) => 
 //     });
 // }
 
-export const mandatoryFiltersDbListPreRead = (data, editor, action) => {
+export const mandatoryFiltersDbListPreRead = (data, editor, action, currentUser) => {
     // Mandatory Filters DbListPreRead to manage filters in list and search
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
         if (typeof editor.mandatoryFilters !== 'undefined') {
-            resp.fieldValues = replaceSpecialVars(editor.mandatoryFilters)
+            resp.fieldValues = replaceSpecialVars(editor.mandatoryFilters, currentUser)
         }
         // console_debug_log(`>>> mandatoryFiltersDbListPreRead | resp:`, resp, 'editor.mandatoryFilters:', editor.mandatoryFilters);
         resolve(resp);
     });
 }
 
-export const mandatoryFiltersDbPreRead = (data, editor, action) => {
+export const mandatoryFiltersDbPreRead = (data, editor, action, currentUser) => {
     // Mandatory Filters assignment during Database Pre Read
     // Template: timestampDbPostRead
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
         if (typeof editor.mandatoryFilters !== 'undefined') {
             resp.fieldValues.resultset =  Object.assign(
-                data, replaceSpecialVars(editor.mandatoryFilters)
+                data, replaceSpecialVars(editor.mandatoryFilters, currentUser)
             );
         }
         // console_debug_log(`>>> mandatoryFiltersDbPreRead | resp:`, resp, 'data:', data);

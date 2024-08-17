@@ -1,11 +1,11 @@
 import { console_debug_log } from '../services/logging.service.jsx';
-import { authenticationService } from '../services/authentication.service.jsx';
+import { getCurrentUserFromLocalStorage } from '../services/logout.service.jsx';
 
 export function authHeader() {
     // Returns authorization header with jwt token
     let currentUser = null;
     try {
-        currentUser = authenticationService.currentUserValue;
+        currentUser = getCurrentUserFromLocalStorage();
     } catch (error) {
         console_debug_log(`authHeader | ERROR: ${error}`);
     }

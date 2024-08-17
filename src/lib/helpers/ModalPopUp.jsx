@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { Button, Modal } from 'react-bootstrap';
-import { Button, Modal } from './styles-helper';
+import { Button, Modal } from './ModalLib.jsx';
 
 // import { getPrefix } from '../../helpers';
 import { console_debug_log } from '../services/logging.service.jsx';
@@ -65,11 +65,12 @@ export const ModalPopUp = ({
                         <>
                             <div
                                 className={htmlContentClass}
-                                dangerouslySetInnerHTML={{ __html: htmlContent }}
-                            />
+                                // dangerouslySetInnerHTML={{ __html: htmlContent }}
+                            >
+                                {htmlContent}
+                            </div>
                         </>
                     }
-
                 </Modal.Body>
                 <Modal.Footer>
                     {closeButtonMessage && (

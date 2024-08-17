@@ -35,17 +35,13 @@ function login(username, password) {
                 return Promise.reject(res.message);
             }
             let user = {
-                id: userService.convertId(res.resultset._id),
-                username: res.resultset.username,
-                // email: res.resultset.email,
-                firstName: res.resultset.firstname,
-                lastName: res.resultset.lastname,
                 token: res.resultset.token
             };
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            // Store the JWT token only in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
             currentUserSubject.next(user);
-            return user;
+            // Return user details and JWT token
+            return getUserLocalData(res);
         });
 }
 
@@ -55,7 +51,35 @@ export const getUserData = (userId) => {
         .then(
             data => (data),
             error => {
-                console_debug_log(`ERROR: getUserData(${userId}:)`)
+                console_debug_log(`ERROR: getUserData(${userId}):`)
+                console.error(error);
+                return {
+                    error: true,
+                    errorMsg: error,
+                };
+            },
+        );
+}
+
+export const getUserLocalData = (res) => {
+    let userService = new dbApiService({url: 'users'})
+    return {
+        id: userService.convertId(res.resultset._id),
+        // username: res.resultset.username,
+        // email: res.resultset.email,
+        firstName: res.resultset.firstname,
+        // lastName: res.resultset.lastname,
+        token: res.resultset.token
+    };
+}
+
+export const getCurrentUserData = () => {
+    const dbApi = new dbApiService({ url: 'users/current_user_d' });
+    return dbApi.getOne({})
+        .then(
+            data => (data),
+            error => {
+                console_debug_log(`ERROR: getCurrentUserData():`)
                 console.error(error);
                 return {
                     error: true,

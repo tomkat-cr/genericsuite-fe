@@ -5,13 +5,13 @@ export const DarkModeButton = () => {
     const [darkMode, setDarkMode] = useState(false);
 
     const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
         const htmlTag = document.getElementsByTagName('html')[0];
         if (darkMode) {
-            htmlTag.classList.add('dark');
-        } else {
             htmlTag.classList.remove('dark');
+        } else {
+            htmlTag.classList.add('dark');
         }
+        setDarkMode(!darkMode);
     };
 
     return (

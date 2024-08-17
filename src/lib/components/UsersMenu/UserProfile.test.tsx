@@ -1,29 +1,35 @@
 import React from "react";
-import { render } from "@testing-library/react";
+// import { render } from "@testing-library/react";
+import renderer from 'react-test-renderer';
 import { MemoryRouter } from "react-router-dom";
 
+import { App } from "../App/App.jsx";
+import { mockFetch, mockAuthService, mockUserData } from '../../test-helpers/mock-fetch'
+
 import { UserProfileEditor } from "./UserProfile";
-import { mockFetch } from '../../test-helpers/mock-fetch'
 
-const mockFetchResponse = [{}];
-window.fetch = mockFetch(mockFetchResponse);
+let mockJestObjects = [];
+mockJestObjects.push(mockAuthService());
+mockJestObjects.push(mockUserData());
+let mockObj = null as any;
+for (let i = 0; i < mockJestObjects.length; i++) {
+    mockObj = mockJestObjects[i].response;
+    jest.mock('../../' + mockJestObjects[i].codeFile, () => (mockObj));
+}
 
-jest.mock('../../services/authentication.service.jsx', () => ({
-  authenticationService: {
-    currentUserValue: {
-        id: 'mockedUserId',
-        username: "Mocked Username",
-        firstName: 'Mocked firstName',
-        lastName: 'Mocked lastName',
-        token: 'Mocked token',
-    }
-  }
-}));
-
-describe("UserProfileEditor", () => {
-    test("renders the UserProfileEditor component", () =>
-        React.act(() => {
-            render(<MemoryRouter><UserProfileEditor /></MemoryRouter>);
-        })
-    )
+it("renders the UserProfileEditor", () => {
+    const mockFetchResponse = [{}];
+    window.fetch = mockFetch(mockFetchResponse);
+    const component = renderer.create(
+        <MemoryRouter>
+            <App
+                componentMap={{}}
+                appLogo={null}
+            >
+                <UserProfileEditor/>
+            </App>
+        </MemoryRouter>
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
 });

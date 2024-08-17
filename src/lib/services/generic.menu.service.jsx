@@ -3,9 +3,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-// The 'tailwindcss' package does not export components like 'NavDropdown' or 'Nav'.
-// For navigation components, consider using a different library such as 'react-bootstrap'.
-// import { NavDropdown, Nav } from 'tailwindcss';
 
 import { history, getPrefix } from '../helpers/history.jsx';
 import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
@@ -32,7 +29,8 @@ import { HomePage } from '../components/HomePage/HomePage.jsx';
 // 2024-08-11
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import NavDropdown from 'react-bootstrap/cjs/NavDropdown.js';
-import {Nav, NavDropdown} from '../helpers/styles-helper.jsx';
+import { Nav, NavDropdown } from '../helpers/NavLib.jsx';
+import { ALERT_DANGER_CLASS } from '../constants/class_name_constants.jsx';
 
 const debug = false;
 
@@ -273,14 +271,10 @@ export const GenericMenuBuilder = (
     };
 
     if (status !== "" && itemType === "routes") {
-        // if (login) {
-        //     return '';
-        // }
         return <DefaultRoutes appLogo={appLogo} />;
     }
 
     if (status !== "") {
-        // return '';
         return <DefaultRoutes appLogo={appLogo} />;
     }
 
@@ -355,7 +349,7 @@ export const getDefaultRoutesRaw = ( appLogo = null ) => {
 const InvalidRouteRedirect = () => {
     console_debug_log('InvalidRouteRedirect');
     return (
-        <div className="alert alert-danger" role="alert">
+        <div className={ALERT_DANGER_CLASS} role="alert">
             URL not found...
         </div>
     );

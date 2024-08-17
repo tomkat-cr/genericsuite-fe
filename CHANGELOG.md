@@ -19,8 +19,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## Unreleased
 ## 1.0.22 (2024-08-10)
 
+### New
+Add Darkmode [GS-63].
+
+### Changes
+Replace react-bootstrap entirely and use only tailwindcss, because there are issues having both at the same time [GS-63].
+Delete local storage PII [GS-2]
+
 ### Fixes
-Fix new Tailwind output CSS [GS-63].
+Fix missing classes in the new  output.css of Tailwind v3.4.9 [GS-63].
 Fix the row values in index page not shown issue [GS-108].
 
 ### Breaks

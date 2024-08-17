@@ -2,8 +2,12 @@ import { BehaviorSubject } from 'rxjs';
 
 import { setLastUrl } from '../helpers/history.jsx';
 
+export const getCurrentUserFromLocalStorage = () => {
+    return JSON.parse(localStorage.getItem('currentUser'));
+};
+
 export const currentUserSubject = new BehaviorSubject(
-    JSON.parse(localStorage.getItem('currentUser'))
+    getCurrentUserFromLocalStorage()
 );
 
 export function logout(lastURL=null) {
