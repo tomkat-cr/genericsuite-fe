@@ -7,6 +7,8 @@ import { dbApiService } from './db.service.jsx';
 import { handleResponse, handleFetchError } from './response.handlers.service.jsx';
 import { console_debug_log } from './logging.service.jsx';
 
+const debug = false;
+
 export const authenticationService = {
     login,
     logout,
@@ -62,14 +64,17 @@ export const getUserData = (userId) => {
 }
 
 export const getUserLocalData = (res) => {
-    let userService = new dbApiService({url: 'users'})
+    const userService = new dbApiService({url: 'users'})
+    const data = res.resultset;
     return {
-        id: userService.convertId(res.resultset._id),
-        // username: res.resultset.username,
-        // email: res.resultset.email,
-        firstName: res.resultset.firstname,
-        // lastName: res.resultset.lastname,
-        token: res.resultset.token
+        id: userService.convertId(data._id),
+        // username: data.username,
+        // email: data.email,
+        firstName: data.firstname,
+        // lastName: data.lastname,
+        // token: data.token
+        pref_side_menu: (data.pref_side_menu ?? true),
+        pref_dark_mode: (data.pref_dark_mode ?? true),
     };
 }
 
@@ -79,8 +84,10 @@ export const getCurrentUserData = () => {
         .then(
             data => (data),
             error => {
-                console_debug_log(`ERROR: getCurrentUserData():`)
-                console.error(error);
+                if (debug) {
+                    console_debug_log(`ERROR: getCurrentUserData():`)
+                    console.error(error);
+                }
                 return {
                     error: true,
                     errorMsg: error,

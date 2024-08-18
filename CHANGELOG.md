@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### New
 Add Darkmode [GS-63].
+Add: Configurable sidebar menu [GS-114].
 
 ### Changes
 Replace react-bootstrap entirely and use only tailwindcss, because there are issues having both at the same time [GS-63].

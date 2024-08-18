@@ -26,6 +26,8 @@ import {
 } from '../../helpers/UserContext.jsx';
 
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
+import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
+import { MenuModeButton } from '../../helpers/MenuModeButton.jsx';
 
 // Specific imports
 
@@ -54,7 +56,6 @@ import './App.css';
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import Navbar from 'react-bootstrap/cjs/Navbar.js';
 import { MainContainer, AppSectionContainer, Nav, Navbar } from '../../helpers/NavLib.jsx';
-import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
 import {
     ALERT_DANGER_CLASS,
     BUTTON_PRIMARY_CLASS,
@@ -146,13 +147,14 @@ const AppNavBar = ({ children }) => {
 const AppMain = ({componentMap = {}, appLogo = null}) => {
     const [state, setState] = useState("");
     const [menuOptions, setMenuOptions] = useState(null);
+    const [sideMenu, setSideMenu] = useState(false);
 
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
     const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
 
     const location = useLocation();
-    console_debug_log("App | location:", location);
+    if (debug) console_debug_log("App | location:", location);
 
     const { currentUser } = useUser();
 
@@ -177,6 +179,7 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
                     <Navbar.OptionsContainer>
                         <Navbar.Collapse
                             id="basic-navbar-nav"
+                            className='content-end'
                         >
                             <Nav>
                                 <DarkModeButton/>
@@ -202,42 +205,79 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
                         />
                         <Navbar.Collapse
                             id="basic-navbar-nav"
+                            type="topmenu"
+                            // className='content-start'
+                            className='content-start justify-start w-full'
                         >
                             <Nav
                                 // className="me-auto"
+                                type="top_menu"
                             >
-                                <GenericMenuBuilder
-                                    componentMapping={componentMapFinal}
-                                    itemType="top_menu"
-                                    menuOptions={menuOptions}
-                                    status={state}
-                                    setExpanded={setExpanded}
-                                />
-                                <DarkModeButton/>
+                                {!sideMenu && (
+                                    <GenericMenuBuilder
+                                        componentMapping={componentMapFinal}
+                                        itemType="top_menu"
+                                        menuOptions={menuOptions}
+                                        status={state}
+                                        setExpanded={setExpanded}
+                                    />
+                                )}
                             </Nav>
                         </Navbar.Collapse>
                         <Navbar.Collapse
                             id="current-user-navbar-nav"
-                            // className="justify-content-end"
+                            className="content-end"
                         >
-                            <Navbar.Text>
-                                Signed in as:
-                            </Navbar.Text>
-                            <GenericMenuBuilder
-                                title={currentUser.firstName}
-                                componentMapping={componentMapFinal}
-                                itemType="hamburger"
-                                menuOptions={menuOptions}
-                                status={state}
-                                showContentOnly={showContentOnly}
-                                setExpanded={setExpanded}
-                            />
+                            <div
+                                className='flex items-center space-x-2'
+                            >
+                                <DarkModeButton/>
+                                <MenuModeButton
+                                    sideMenu={sideMenu}
+                                    setSideMenu={setSideMenu}
+                                />
+                                <Navbar.Text
+                                    className='flex items-center whitespace-nowrap'
+                                >
+                                    Signed in as:
+                                    <GenericMenuBuilder
+                                        title={currentUser.firstName}
+                                        componentMapping={componentMapFinal}
+                                        itemType="hamburger"
+                                        menuOptions={menuOptions}
+                                        status={state}
+                                        showContentOnly={showContentOnly}
+                                        setExpanded={setExpanded}
+                                    />
+                                </Navbar.Text>
+                            </div>
                         </Navbar.Collapse>
                     </Navbar.OptionsContainer>
                 </AppNavBar>
             )}
             <AppSectionContainer>
-                <div className="p-2">
+                <div
+                    className="flex flex-start"
+                >
+                    {sideMenu && (
+                        <Navbar.Collapse
+                            id="responsive-navbar-sidenav"
+                            type="sidebar"
+                            className='h-[87vh]'
+                        >
+                            <Nav
+                                type="side_menu"
+                            >
+                                <GenericMenuBuilder
+                                    componentMapping={componentMapFinal}
+                                    itemType="side_menu"
+                                    menuOptions={menuOptions}
+                                    status={state}
+                                    setExpanded={setExpanded}
+                                />
+                            </Nav>
+                        </Navbar.Collapse>
+                    )}
                     <AppMainComponent
                         // login={login}
                         state={state}
@@ -247,6 +287,7 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
                         setExpanded={setExpanded}
                         showContentOnly={showContentOnly}
                         appLogo={appLogo}
+                        // className='overflow-x-auto'
                     />
                 </div>
             </AppSectionContainer>

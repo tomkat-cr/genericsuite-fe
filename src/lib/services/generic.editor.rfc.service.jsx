@@ -51,7 +51,7 @@ import {
 
 import {
   BUTTON_LISTING_CLASS,
-  ERROR_MSG_CLASS,
+  // ERROR_MSG_CLASS,
   INFO_MSG_CLASS,
 } from "../constants/class_name_constants.jsx";
 import {
@@ -274,7 +274,9 @@ const GenericCrudEditorMain = (props) => {
   if (!editor) {
     if (status) {
       return (
-        <div className={ERROR_MSG_CLASS}>
+        <div
+          // className={ERROR_MSG_CLASS}
+        >
             {status}
             {debug && "[GCEM-NES]"}
         </div>
@@ -334,6 +336,8 @@ const GenericCrudEditorMain = (props) => {
         <div 
             // className="w-screen bg-gray-300 fyn_jumbotron"
             // className="w-screen bg-gray-300"
+            className="w-screen"
+            // className='w-screen overflow-x-visible overflow-visible overflow-x-auto'
         >
           <h1
             className="text-2xl font-bold mb-4"
@@ -557,7 +561,9 @@ const GenericCrudEditorMain = (props) => {
             </button>
           </div>
           {status && (
-            <div className={ERROR_MSG_CLASS}>
+            <div
+              // className={ERROR_MSG_CLASS}
+            >
               {status}
               {debug && "[GCE-99]"}
             </div>

@@ -1,12 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
+const debug = false
+
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   const registerUser = (userData) => {
-    console.log('Logging in user:', userData);
+    if (debug) console.log('RegisterUser | userData:', userData);
     setCurrentUser(userData);
   };
 

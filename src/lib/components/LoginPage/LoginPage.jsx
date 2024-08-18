@@ -67,7 +67,7 @@ export const LoginPage = (props) => {
                     userData => {
                         if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
                         if (userData.error) {
-                            console.error(userData.error_message);
+                            if (debug) console.error('userData.error_message:', userData.error_message);
                             setPerformLogin(true);
                         } else {
                             registerUser(getUserLocalData(userData));
@@ -188,12 +188,10 @@ export const LoginPage = (props) => {
                                 }
                             </div>
                             {status && ! includesAppValidLinks(status) && 
-                                // <div className={'alert alert-danger'}>{status}</div>
                                 <div className={ERROR_MSG_CLASS}>{status}</div>
                             }
                             {status && includesAppValidLinks(status) &&
                                 <div
-                                    // className={'alert alert-danger'}
                                     className={ERROR_MSG_CLASS}
                                     // dangerouslySetInnerHTML={{ __html: status }}
                                 >

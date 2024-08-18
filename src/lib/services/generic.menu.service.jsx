@@ -69,7 +69,6 @@ export const GenericMenuBuilder = (
         itemType,
         menuOptions = null,
         status,
-        login,
         setExpanded,
         appLogo = null,
     }
@@ -114,9 +113,6 @@ export const GenericMenuBuilder = (
     const getRoutes = () => {
         if (debug) {
             console_debug_log("GenericMenuBuilder: getRoutes | menuOptions:", menuOptions, "componentMapping:", componentMapping);
-        }
-        if (login) {
-            return '';
         }
         const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo)];
         if (debug) {
@@ -182,9 +178,6 @@ export const GenericMenuBuilder = (
             console_debug_log(menuOptions);
             console_debug_log(componentMapping);
         }
-        if (login) {
-            return '';
-        }
         return (
             menuOptions
             .filter(item => item.location === item_type_filter)
@@ -204,17 +197,20 @@ export const GenericMenuBuilder = (
                             to={itemDefs["path"]}
                             onClick={itemDefs["on_click"]}
                             reloadDocument={itemDefs["reload"]}
+                            type={itemType}
                         >
                             {itemDefs["title"]}
                         </Nav.Link>
                     );
                 }
                 // Navigation dropdown (main menu item with sub-menus)
+                const navDropdownId = `basic-nav-dropdown-${item.title.replace(/ /g, '_')}`
                 return (
                     <NavDropdown
                         key={item.title}
                         title={itemDefs["title"]}
-                        id={`basic-nav-dropdown-${itemType}`}
+                        id={navDropdownId}
+                        type={itemType}
                     >
                     {
                         item.sub_menu_options.map(subItem => {
@@ -229,6 +225,7 @@ export const GenericMenuBuilder = (
                                     return editorMenuOption(
                                         componentMapping[subItem.element](),
                                         setExpanded,
+                                        itemType,
                                     );
                                 } catch (error) {
                                     console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
@@ -243,6 +240,7 @@ export const GenericMenuBuilder = (
                                     to={itemDefs["path"]}
                                     onClick={itemDefs["on_click"]}
                                     reloadDocument={itemDefs["reload"]}
+                                    type={itemType}
                                 >
                                     {itemDefs["title"]}
                                 </NavDropdown.Item>
@@ -256,9 +254,6 @@ export const GenericMenuBuilder = (
     }
 
     const menuItems = (item_type_filter, topTitle, itemType) => {
-        if (login) {
-            return '';
-        }
         if (typeof menuOptions === 'undefined' || menuOptions === null) {
             return '';
         }
@@ -278,7 +273,7 @@ export const GenericMenuBuilder = (
         return <DefaultRoutes appLogo={appLogo} />;
     }
 
-    return menuItems(itemType, title, itemType);
+    return menuItems(itemType === 'side_menu' ? 'top_menu' : itemType, title, itemType);
 }
 
 export const editorRoute = (editor) => {
@@ -290,13 +285,14 @@ export const editorRoute = (editor) => {
     );
 }
 
-export const editorMenuOption = (editor, setExpanded) => {
+export const editorMenuOption = (editor, setExpanded, itemType) => {
     return (
         <NavDropdown.Item
             key={editor.title}
             as={RouterLink}
             to={getPrefix()+'/'+editor.baseUrl}
             onClick={getOnClickObject(null, setExpanded)}
+            type={itemType}
         >
             {editor.title}
         </NavDropdown.Item>

@@ -16,7 +16,8 @@
     "config-overrides.js",
     ".env.example",
     "CHANGELOG.md",
-    "src/lib/images"
+    "src/lib/images",
+    "public/output.css"
   ],
   "repository": {
     "type": "git",
