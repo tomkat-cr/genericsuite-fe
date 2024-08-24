@@ -1,29 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
+import { getLocalConfig, saveLocalConfig } from './local-config.jsx';
 import { useUser } from './UserContext.jsx';
+
+const debug = true;
 
 export const DarkModeButton = () => {
     const [darkMode, setDarkMode] = useState(false);
     const { currentUser } = useUser();
 
     const toggleDarkMode = () => {
-        const element = document.getElementsByTagName('html')[0];
-        if (darkMode) {
-            element.classList.remove('dark');
-        } else {
-            element.classList.add('dark');
-        }
         setDarkMode(!darkMode);
     };
 
     useEffect(() => {
+        // Component startup
+        let newDarkMode = false;
         if (currentUser) {
-            if (currentUser.pref_dark_mode !== darkMode) {
-                toggleDarkMode()
-            }
+            if (debug) console.log('Loading config from user\'s preferences:', currentUser);
+            // Initial menu configuration from current user config, if the user is authenticated
+            newDarkMode = (currentUser.pref_dark_mode === '1');
+        } else {
+            // Get previous preferences from localstorage
+            const localConfig = getLocalConfig();
+            if (debug) console.log('Loading local config', localConfig);
+            newDarkMode = (localConfig.pref_dark_mode === '1');
+        }
+        if (newDarkMode !== darkMode) {
+            setDarkMode(newDarkMode);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (currentUser) {
+            setDarkMode(currentUser.pref_dark_mode === '1');
         }
     }, [currentUser]);
+    
+    useEffect(() => {
+        // Save session side menu preference to localstorage when it changes
+        const localConfig = {
+            pref_dark_mode: (darkMode ? '1' : '0'),
+        }
+        if (debug) console.log('Saving local config', localConfig);
+        saveLocalConfig(localConfig);
+        // Fix the overall dark mode design
+        const element = document.getElementsByTagName('html')[0];
+        if (!darkMode) {
+            element.classList.remove('dark');
+        } else {
+            element.classList.add('dark');
+        }
+
+    }, [darkMode]);
 
     return (
         <div

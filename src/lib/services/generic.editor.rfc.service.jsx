@@ -51,8 +51,37 @@ import {
 
 import {
   BUTTON_LISTING_CLASS,
-  // ERROR_MSG_CLASS,
+  BUTTON_LISTING_DISABLED_CLASS,
+  BUTTON_RIGHT_SPACE_CLASS,
+  BUTTON_LISTING_NEW_CLASS,
+  BUTTON_LISTING_REFRESH_CLASS,
   INFO_MSG_CLASS,
+  HIDDEN_CLASS,
+  VISIBLE_CLASS,
+  APP_TOP_DIV_CLASS,
+  APP_LEVEL1_DIV_CLASS,
+  APP_TITLE_H1_CLASS,
+  APP_TITLE_RECYCLE_BUTTON_CLASS,
+  APP_LEVEL2_DIV_CLASS,
+  APP_LISTING_LEVEL2_DIV_CLASS,
+  APP_LISTING_LEVEL3_DIV_CLASS,
+  APP_LISTING_LEVEL4_DIV_CLASS,
+  APP_LISTING_TABLE_CLASS,
+  APP_LISTING_TABLE_HDR_THEAD_CLASS,
+  APP_LISTING_TABLE_HDR_TR_CLASS,
+  APP_LISTING_TABLE_HDR_TH_CLASS,
+  APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS,
+  APP_LISTING_TABLE_BODY_TBODY_CLASS,
+  APP_LISTING_TABLE_BODY_TR_CLASS,
+  APP_LISTING_TABLE_BODY_TD_BASE_CLASS,
+  APP_LISTING_TABLE_BODY_TD_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
+  APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
+  APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS,
 } from "../constants/class_name_constants.jsx";
 import {
   ACTION_CREATE,
@@ -121,6 +150,9 @@ const GenericCrudEditorMain = (props) => {
     debugCache,
   } = useContext(MainSectionContext);
   const { currentUser } = useUser();
+
+  const actionsHandlerAllowsMouseOver = true;
+  const actionsHandlerAllowsMagicButton = false;
 
   useEffect(() => {
     setEditorParameters(props).then(
@@ -271,12 +303,64 @@ const GenericCrudEditorMain = (props) => {
     return response;
   }
 
+  const actionsHandler = (mode, row) => {
+    const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
+    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
+    const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
+    const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
+    if (mode === 'show') {
+      // Highlight row
+      bgColorStype.map((key) => { rowElement.classList.add(key) });
+      // If mouse over allowed, show controls
+      if (actionsHandlerAllowsMouseOver) {
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.add('hidden');
+        }
+        element.classList.remove('hidden');
+      }
+    }
+    if (mode === 'hide') {
+      // Remove row highlight
+      bgColorStype.map((key) => { rowElement.classList.remove(key) });
+      // If mouse over allowed, hide controls
+      if (actionsHandlerAllowsMouseOver) {
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.remove('hidden');
+        }
+        element.classList.add('hidden');
+      }
+    }
+    if (mode === 'toggle') {
+      // Turn off previous opened controls
+      rows.resultset.map((thisRow) => {
+        const thisRowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(thisRow)}_controls`);
+        if (!thisRowElement.classList.contains('hidden')) {
+          thisRowElement.classList.add('hidden');
+        }
+      });
+      if (element.classList.contains('hidden')) {
+        // Controls hidden in this row
+        bgColorStype.map((key) => { rowElement.classList.add(key) });
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.add('hidden');
+        }
+        element.classList.remove('hidden');
+      } else {
+        // Controls activated in this row
+        bgColorStype.map((key) => { rowElement.classList.remove(key) });
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.remove('hidden');
+        }
+        element.classList.add('hidden');
+      }
+    }
+  }
+
+
   if (!editor) {
     if (status) {
       return (
-        <div
-          // className={ERROR_MSG_CLASS}
-        >
+        <div>
             {status}
             {debug && "[GCEM-NES]"}
         </div>
@@ -324,7 +408,10 @@ const GenericCrudEditorMain = (props) => {
   }
 
   return (
-    <>
+    <div
+      className={APP_TOP_DIV_CLASS}
+    >
+      {/* Information messsage */}
       {infoMsg && (
         <div
           className={INFO_MSG_CLASS}
@@ -332,53 +419,55 @@ const GenericCrudEditorMain = (props) => {
           {infoMsg}
         </div>
       )}
+      {/* Listing space */}
       {rows && (
         <div 
-            // className="w-screen bg-gray-300 fyn_jumbotron"
-            // className="w-screen bg-gray-300"
-            className="w-screen"
-            // className='w-screen overflow-x-visible overflow-visible overflow-x-auto'
+            className={APP_LEVEL1_DIV_CLASS}
         >
           <h1
-            className="text-2xl font-bold mb-4"
+            className={APP_TITLE_H1_CLASS}
           >
+            {/* Listing title */}
             {editor.title + " - " + MSG_ACTION_LIST}
             <span
-              className="pl-2 align-bottom"
+              className={APP_TITLE_RECYCLE_BUTTON_CLASS}
             >
               <button
                 onClick={handleRefresh}
-                className={`${BUTTON_LISTING_CLASS} text-xs` /* mb-4 */}
+                className={BUTTON_LISTING_REFRESH_CLASS}
               >
                 {/* <FontAwesomeIcon icon="recycle" /> */}
-                <img src={imageDirectory + "arrows_rotate_solid.svg"}
-                  width="14" height="14" alt="Reload"
-                  // className={"text-white fill-white"}
+                <img
+                  src={imageDirectory + "arrows_rotate_solid.svg"}
+                  width="14"
+                  height="14"
+                  alt="Reload"
                 />
               </button>
             </span>
           </h1>
           <div
-            className="not-prose relative bg-slate-50 rounded-xl overflow-hidden dark:bg-slate-800/25"
+            className={APP_LEVEL2_DIV_CLASS}
           >
             <div
-              // className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"
+              className={APP_LISTING_LEVEL2_DIV_CLASS}
             >
               <div
-                className="relative rounded-xl overflow-auto"
-              >
-                <div
-                  className="shadow-sm overflow-hidden my-8"
+                className={APP_LISTING_LEVEL3_DIV_CLASS}
                 >
-                  <table
-                    // className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                    // className="min-w-full"
-                    // className="table-auto"
-                    className="border-collapse table-auto w-full text-sm"
+                <div
+                  className={APP_LISTING_LEVEL4_DIV_CLASS}
                   >
-                    <thead>
+                  <table
+                    className={APP_LISTING_TABLE_CLASS}
+                  >
+                    {/* Listing header */}
+                    <thead
+                      className={APP_LISTING_TABLE_HDR_THEAD_CLASS}
+                    >
                       <tr
                         key={`${editor.baseUrl}_thead`}
+                        className={APP_LISTING_TABLE_HDR_TR_CLASS}
                       >
                         {Object.keys(editor.fieldElements).map(
                           (key) =>
@@ -386,53 +475,42 @@ const GenericCrudEditorMain = (props) => {
                               <th
                                 key={key}
                                 // scope="col"
-                                // className="pr-2 text-xs font-medium text-gray-500 uppercase break-words"
-                                className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
-                                >
+                                className={APP_LISTING_TABLE_HDR_TH_CLASS}
+                              >
                                 {editor.fieldElements[key].label}
                               </th>
                             )
                           )}
                         <th
                           // scope="col"
-                          // // className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap"
-                          className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"
+                          className={APP_LISTING_TABLE_HDR_TH_CLASS}
                         >
-                          <div>
-                            <span
-                                // className="pr-2 text-xs font-medium text-gray-500 uppercase break-words"
-                            >
-                              {/* {MSG_ACTIONS}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}&nbsp;
-                            </span>
+                          <div
+                              className={APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS}
+                          >
+                              {/* {MSG_ACTIONS} */}&nbsp;
                           </div>
                         </th>
                       </tr>
                     </thead>
+                    {/* Listing rows */}
                     <tbody
-                      // // className="divide-y divide-gray-200 dark:divide-gray-700"
-                      className="bg-white dark:bg-slate-800"
+                      className={APP_LISTING_TABLE_BODY_TBODY_CLASS}
                     >
                       {rows && typeof rows.resultset !== 'undefined' &&
                         rows.resultset.map((row) => (
                           <tr
                             id={`${editor.baseUrl}_row_${rowId(row)}_row`}
                             key={`${editor.baseUrl}_row_${rowId(row)}`}
-                            // className="odd:bg-white even:bg-slate-50"
+                            className={APP_LISTING_TABLE_BODY_TR_CLASS}
                             onMouseOver={() => {
-                              const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
-                              // const magic_button = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magic_button`);
-                              // magic_button.classList.add('hidden');
-                              const row_element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
-                              row_element.classList.add('bg-white');
-                              element.classList.remove('hidden');
+                              actionsHandler('show', row);
+                            }}
+                            onClick={() => {
+                              actionsHandler('toggle', row);
                             }}
                             onMouseLeave={() => {
-                              const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
-                              // const magic_button = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magic_button`);
-                              // magic_button.classList.remove('hidden');
-                              const row_element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
-                              row_element.classList.remove('bg-white');
-                              element.classList.add('hidden');
+                              actionsHandler('hide', row);
                             }}
                           >
                             {Object.keys(editor.fieldElements).map(
@@ -440,9 +518,7 @@ const GenericCrudEditorMain = (props) => {
                                 editor.fieldElements[key].listing && (
                                   <td
                                     key={key}
-                                    // // className="px-6 py-0 break-words text-sm text-gray-50 dark:text-gray-50"
-                                    // className="break-words text-sm"
-                                    className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+                                    className={APP_LISTING_TABLE_BODY_TD_CLASS}
                                   >
                                     {
                                       getSelectDescription(
@@ -455,46 +531,37 @@ const GenericCrudEditorMain = (props) => {
                             )}
                             <td
                               // Action buttons
-                              // className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
-                              // className="whitespace-nowrap text-sm"
-                              className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+                              className={APP_LISTING_TABLE_BODY_TD_ACTIONS_CLASS}
                             >
-                              <div
-                                // className="flex items-center"
-                            >
-                                {/* <div
-                                  id={`${editor.baseUrl}_row_${rowId(row)}_magic_button`}
-                                  className="visible"
+                                {actionsHandlerAllowsMagicButton && (<div
+                                  id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
+                                  className={VISIBLE_CLASS}
                                 >
                                   <FontAwesomeIcon icon="arrow-right" />
-                                </div> */}
+                                </div>)}
                                 <div
                                   id={`${editor.baseUrl}_row_${rowId(row)}_controls`}
-                                  className="hidden"
+                                  className={HIDDEN_CLASS}
                                 >
                                   <button
-                                    // type="button"
                                     onClick={() => handleView(rowId(row))}
-                                    className={`${BUTTON_LISTING_CLASS} mr-2`}
+                                    className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                                   >
                                     <FontAwesomeIcon icon="eye" />
                                   </button>
                                   <button
-                                    // type="button"
                                     onClick={() => handleModify(rowId(row))}
-                                    className={`${BUTTON_LISTING_CLASS} mr-2`}
+                                    className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                                   >
                                     <FontAwesomeIcon icon="edit" />
                                   </button>
                                   <button
-                                    // type="button"
                                     onClick={() => handleDelete(rowId(row))}
                                     className={`${BUTTON_LISTING_CLASS}`}
                                   >
                                     <FontAwesomeIcon icon="trash" />
                                   </button>
                                 </div>
-                              </div>
                             </td>
                           </tr>
                         ))}
@@ -504,34 +571,41 @@ const GenericCrudEditorMain = (props) => {
               </div>
             </div>
           </div>
-
-          <div className="mt-4 flex items-center">
+          {/* Toolbar */}
+          <div
+            className={APP_LISTING_TOOLBAR_TOP_DIV_CLASS}
+          >
             <button
               disabled={currentPage === 1}
               onClick={() => goToNewPage(currentPage - 1)}
-              className={`${currentPage === 1 ? "opacity-50" : ""
-                } ${BUTTON_LISTING_CLASS}`}
+              className={`${currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`}
             >
               {MSG_PREVIOUS}
             </button>
-            <span id="NavigationAnimation" className="ml-3 mr-3 hidden">
+            <div
+              id="NavigationAnimation"
+              className={APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS}
+            >
               {WaitAnimation()}
-            </span>
-            <span className="text-sm ml-2 mr-2">
+            </div>
+            <div
+              className={APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS}
+            >
               {MSG_PAGE} {currentPage} {MSG_OF} {rows.totalPages}
-            </span>
+            </div>
             <button
               disabled={currentPage === rows.totalPages}
               onClick={() => goToNewPage(currentPage + 1)}
-              className={`${currentPage === rows.totalPages ? "opacity-50" : ""
-                } ${BUTTON_LISTING_CLASS}`}
+              className={`${currentPage === rows.totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`}
             >
               {MSG_NEXT}
             </button>
-            <div className="mt-2 flex items-center">
+            <div
+              className={APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS}
+            >
               <label
                 htmlFor="newRowsPerPage"
-                className="ml-3 mr-2 text-sm"
+                className={APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS}
               >
                 {MSG_ROWS_PER_PAGE}:
               </label>
@@ -541,7 +615,7 @@ const GenericCrudEditorMain = (props) => {
                 max="500"
                 id="newRowsPerPage"
                 value={rowsPerPage}
-                className="mb-2 w-6 h-6 px-2 text-sm"
+                className={APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS}
                 onChange={handleRowsPerPageChange}
               />
             </div>
@@ -555,15 +629,13 @@ const GenericCrudEditorMain = (props) => {
             </div>
             <button
               onClick={handleNew}
-              className={`${BUTTON_LISTING_CLASS} mr-2`}
+              className={BUTTON_LISTING_NEW_CLASS}
             >
               <FontAwesomeIcon icon="plus" /> {MSG_ACTION_NEW}
             </button>
           </div>
           {status && (
-            <div
-              // className={ERROR_MSG_CLASS}
-            >
+            <div>
               {status}
               {debug && "[GCE-99]"}
             </div>
@@ -571,7 +643,7 @@ const GenericCrudEditorMain = (props) => {
         </div>
       )}
       {(debug ? debugCache("GenericCrudEditorMain") : '')}
-    </>
+    </div>
   );
 };
 

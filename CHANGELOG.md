@@ -21,14 +21,21 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### New
 Add Darkmode [GS-63].
-Add: Configurable sidebar menu [GS-114].
+Add Configurable sidebar menu [GS-114].
+Add localstorage generic functions [GS-112].
+Add Save darkmode and side menu set to localstorage [GS-112].
 
 ### Changes
-Replace react-bootstrap entirely and use only tailwindcss, because there are issues having both at the same time [GS-63].
+Replace react-bootstrap entirely and use only Tailwind CSS, because there are issues having both at the same time [GS-63].
 Delete local storage PII [GS-2]
+Change the behavior of actions so that they appear when clicking on the line in the GCE_RFC (generic CRUD editor) listing page [GS-112].
+Change the color when hovering over the line in the GCE_RFC listing page [GS-112].
+Change lines with different colors if they are even/odd in the GCE_RFC listing page [GS-112].
+Improve data page layout by implementing Tailwind constants in the GCE_RFC [GS-112].
+Change Search input box size too small in the GCE_RFC listing page [GS-112].
 
 ### Fixes
-Fix missing classes in the new  output.css of Tailwind v3.4.9 [GS-63].
+Fix missing classes in the new output.css of Tailwind v3.4.9 [GS-63].
 Fix the row values in index page not shown issue [GS-108].
 
 ### Breaks

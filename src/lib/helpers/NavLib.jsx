@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
 import { console_debug_log } from '../services/logging.service.jsx';
+import {
+    APP_SIDE_MENU_BG_COLOR_CLASS,
+    APP_MAIN_BOX_BG_COLOR_CLASS,
+} from '../constants/class_name_constants.jsx';
 
 // Containers
 
@@ -46,7 +50,7 @@ export const CenteredBoxContainer = ({ children }) => {
         >
             <div
                 // className="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg"
-                className="relative bg-white w-fit max-w-md m-auto flex-col flex rounded-lg"
+                className={`relative ${APP_MAIN_BOX_BG_COLOR_CLASS} w-fit max-w-md m-auto flex-col flex rounded-lg`}
             >
                 <div
                     // className="flex flex-col h-full"
@@ -382,7 +386,7 @@ export const Nav = ({ type, id, children }) => {
         top_menu: 'relative flex items-center',
         hamburger: 'relative flex items-center',
         // side_menu: 'top-0 left-0 h-full w-64 shadow-lg flex flex-col overflow-y-auto bg-white dark:bg-gray-800',
-        side_menu: 'top-0 left-0 h-full w-64 shadow-lg flex flex-col overflow-y-auto bg-white dark:bg-gray-800',
+        side_menu: `top-0 left-0 h-full w-64 shadow-lg flex flex-col overflow-y-auto ${APP_SIDE_MENU_BG_COLOR_CLASS}`,
     };
 
     const variantStyleTopDiv = variantsTopDiv[type] || variantsTopDiv.top_menu;

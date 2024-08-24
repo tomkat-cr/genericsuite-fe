@@ -17,6 +17,7 @@ import {
     console_debug_log,
 } from "./logging.service.jsx";
 import { useUser } from '../helpers/UserContext.jsx';
+import { INVALID_FEEDBACK_CLASS } from '../constants/class_name_constants.jsx';
 
 const debug = false;
 
@@ -197,7 +198,7 @@ export const SuggestionDropdown = ({
             </div>
             {inputValue && suggestions.length === 0 && (
                 <div
-                    className="invalid-feedback"
+                    className={INVALID_FEEDBACK_CLASS}
                 >
                     Error: No suggestions found.
                 </div>

@@ -53,6 +53,20 @@ import {
     BUTTON_SECONDARY_CLASS,
     ERROR_MSG_CLASS,
     INFO_MSG_CLASS,
+    APP_TOP_DIV_CLASS,
+    APP_TITLE_H1_CLASS,
+    APP_FORMPAGE_LEVEL1_DIV_CLASS,
+    APP_FORMPAGE_LEVEL2_DIV_CLASS,
+    INVALID_FEEDBACK_CLASS,
+    APP_FORMPAGE_FORM_TABLE_CLASS,
+    APP_FORMPAGE_LABEL_CLASS,
+    APP_FORMPAGE_LABEL_REQUIRED_CLASS,
+    APP_FORMPAGE_FIELD_CLASS,
+    APP_FORMPAGE_FIELD_BASE_CLASS,
+    APP_FORMPAGE_FIELD_GOOD_CLASS,
+    APP_FORMPAGE_FIELD_INVALID_CLASS,
+    APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS,
+    APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS,
 } from "../constants/class_name_constants.jsx";
 
 const debug = false;
@@ -151,36 +165,45 @@ export const FormPage = ({
                     : MSG_ACTION_DELETE;
 
     return (
-        // <div className="container mx-auto px-4">
         <div 
-            className="w-screen bg-gray-300 fyn_jumbotron"
+            className={APP_TOP_DIV_CLASS}
         >
-            <h1 className="text-2xl font-semibold mb-4">
-                {editor.title + " - " + actionTitle}
-            </h1>
-            {status && (
-                <div className={ERROR_MSG_CLASS}>
-                    {status}
+            <div 
+                className={APP_FORMPAGE_LEVEL1_DIV_CLASS}
+            >
+                <h1
+                    className={APP_TITLE_H1_CLASS}
+                >
+                    {editor.title + " - " + actionTitle}
+                </h1>
+                <div
+                    className={APP_FORMPAGE_LEVEL2_DIV_CLASS}
+                >
+                    {status && (
+                        <div className={ERROR_MSG_CLASS}>
+                            {status}
+                        </div>
+                    )}
+                    {!status && formData &&
+                        <EditFormFormik
+                            editor={editor}
+                            parenHandleCancel={onCancel_par}
+                            setInfoMsg={setInfoMsg_par}
+                            action={mode}
+                            dataset={formData.resultset}
+                            message={formMsg['message']}
+                            messageType={formMsg['messageType']}
+                            handleFormPageActions={handleFormPageActions}
+                        />
+                    }
+                    {!status &&
+                        formData &&
+                        !editorFlags.isCreate &&
+                        iterateChildComponents(editor, formData.resultset, handleFormPageActions)
+                    }
+                    {(debug ? debugCache("FormPage") : '')}
                 </div>
-            )}
-            {!status && formData &&
-                <EditFormFormik
-                    editor={editor}
-                    parenHandleCancel={onCancel_par}
-                    setInfoMsg={setInfoMsg_par}
-                    action={mode}
-                    dataset={formData.resultset}
-                    message={formMsg['message']}
-                    messageType={formMsg['messageType']}
-                    handleFormPageActions={handleFormPageActions}
-                />
-            }
-            {!status &&
-                formData &&
-                !editorFlags.isCreate &&
-                iterateChildComponents(editor, formData.resultset, handleFormPageActions)
-            }
-            {(debug ? debugCache("FormPage") : '')}
+            </div>
         </div>
     );
 };
@@ -197,13 +220,17 @@ const PutOneFormfield = ({
 
     let currentObj = currentObjArray[1];
 
-    const labelClass = "font-medium text-gray-700";
-    const labelClassRequiredFld = "font-medium text-red-700";
-    const divclass = "flex flex-col form-group";
-    const fieldClass =
-        "form-control" +
-        (errors[currentObj.name] && touched[currentObj.name] ? " is-invalid" : "") +
-        " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+    // const labelClass = "font-medium text-gray-700";
+    const labelClass = APP_FORMPAGE_LABEL_CLASS;
+    // const labelClassRequiredFld = "font-medium text-red-700";
+    const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
+    // const fieldClass = "flex flex-col form-group";
+    const divFieldClass = APP_FORMPAGE_FIELD_CLASS;
+    // const fieldClass =
+    //     "form-control" +
+    //     (errors[currentObj.name] && touched[currentObj.name] ? " is-invalid" : "") +
+    //     " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+    const fieldClass = (errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS);
 
     const readOnlyfield =
         editorFlags.isReadOnly ||
@@ -299,7 +326,7 @@ const PutOneFormfield = ({
         <ErrorMessage
             name={idName}
             component="div"
-            className="invalid-feedback"
+            className={INVALID_FEEDBACK_CLASS}
         />
     );
     
@@ -369,7 +396,9 @@ const PutOneFormfield = ({
             elementError = '';
             elementInput =  (
                 <div key={idName}>
-                    <label className={divclass}>
+                    <label
+                        className={divFieldClass}
+                    >
                         {currentObj.label}
                     </label>
                 </div>
@@ -435,7 +464,7 @@ const PutOneFormfield = ({
     if (chatbot_popup || google_popup) {
         elementInput = (
             <div
-                className="align-middle flex"
+                className={APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS}
             >
                 {elementInput}
                 {chatbot_popup && currentObj.aux_component !== null && (
@@ -455,11 +484,14 @@ const PutOneFormfield = ({
     }
 
     if (debug) {
-        console_debug_log(`PutOneFormfield | Field (key): ${currentObj.name} | className: ${divclass} | elementLabel: ${elementLabel}`);
+        console_debug_log(`PutOneFormfield | Field (key): ${currentObj.name} | className: ${divFieldClass} | elementLabel: ${elementLabel}`);
     }
 
     return (
-        <div key={currentObj.name} className={divclass}>
+        <div
+            key={currentObj.name}
+            className={divFieldClass}
+        >
             {elementLabel}
             {elementInput}
             {elementError}
@@ -773,7 +805,9 @@ const EditFormFormikFinal = ({
                             initialValue={initialFieldValues[htmlElement[1].name]}
                         />
                     })}
-                    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <table
+                        className={APP_FORMPAGE_FORM_TABLE_CLASS}
+                    >
                         <tbody>
                             <tr>
                                 {!editorFlags.isRead && canCommit && (
@@ -846,7 +880,7 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
         return (
             <div
                 key={'ChildElement_' + htmlElement[0]}
-                className="mt-6"
+                className={APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS}
             >
                 <ChildElement
                     parentData={initialFieldValues}

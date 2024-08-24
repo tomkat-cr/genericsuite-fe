@@ -6,6 +6,8 @@ import { logout, currentUserSubject } from './logout.service.jsx';
 import { dbApiService } from './db.service.jsx';
 import { handleResponse, handleFetchError } from './response.handlers.service.jsx';
 import { console_debug_log } from './logging.service.jsx';
+import { getLocalConfig } from '../helpers/local-config.jsx';
+import { saveItemToLocalStorage } from '../helpers/localstorage-manager.jsx';
 
 const debug = false;
 
@@ -40,7 +42,8 @@ function login(username, password) {
                 token: res.resultset.token
             };
             // Store the JWT token only in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            // localStorage.setItem('currentUser', JSON.stringify(user));
+            saveItemToLocalStorage('currentUser', user);
             currentUserSubject.next(user);
             // Return user details and JWT token
             return getUserLocalData(res);
@@ -66,6 +69,7 @@ export const getUserData = (userId) => {
 export const getUserLocalData = (res) => {
     const userService = new dbApiService({url: 'users'})
     const data = res.resultset;
+    const localConfig = getLocalConfig();
     return {
         id: userService.convertId(data._id),
         // username: data.username,
@@ -73,8 +77,8 @@ export const getUserLocalData = (res) => {
         firstName: data.firstname,
         // lastName: data.lastname,
         // token: data.token
-        pref_side_menu: (data.pref_side_menu ?? true),
-        pref_dark_mode: (data.pref_dark_mode ?? true),
+        pref_side_menu: (data.pref_side_menu ?? localConfig.pref_side_menu),
+        pref_dark_mode: (data.pref_dark_mode ?? localConfig.pref_dark_mode),
     };
 }
 

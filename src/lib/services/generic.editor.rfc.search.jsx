@@ -10,6 +10,11 @@ import {
 } from "../constants/general_constants.jsx";
 import {
     BUTTON_LISTING_CLASS,
+    APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS,
+    APP_LISTING_SEARCH_BOX_LABEL_CLASS,
+    APP_LISTING_SEARCH_BOX_INPUT_CLASS,
+    APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS,
+    APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS,
 } from "../constants/class_name_constants.jsx";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -101,29 +106,31 @@ export const CrudEditorSearch = ({
     }
 
     return (
-        <div className="mt-2 flex items-center">
+        <div
+            className={APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS}
+        >
             <label
                 htmlFor={searchTextId()}
-                className="ml-3 mr-2 text-sm"
+                className={APP_LISTING_SEARCH_BOX_LABEL_CLASS}
             >
                 {MSG_SEARCH}:
             </label>
             <input
                 id={searchTextId()}
                 // type="text"
-                className="mb-2 w-6 h-6 px-2 text-sm"
+                className={APP_LISTING_SEARCH_BOX_INPUT_CLASS}
                 value={searchText || ''}
                 onChange={handleTextChange}
             />
             <button
-                className={`${BUTTON_LISTING_CLASS} mb-2 ml-2 mr-2 text-xs`}
+                className={APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS}
                 onClick={handleSubmit}
             >
                 <FontAwesomeIcon icon="greater-than" />
             </button>
             {searchText !== '' &&
                 <button
-                    className={`${BUTTON_LISTING_CLASS} mb-2 mr-2 text-xs`}
+                    className={APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS}
                     onClick={handleCancelSearch}
                 >
                     X

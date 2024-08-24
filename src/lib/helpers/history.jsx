@@ -1,5 +1,11 @@
 import { createBrowserHistory } from 'history';
 
+import {
+    saveRawItemToLocalStorage,
+    getRawItemFromLocalStorage,
+    removeItemFromLocalStorage,
+} from './localstorage-manager.jsx';
+
 export const history = createBrowserHistory();
 
 export function getPrefix(hardPrefix=false) {
@@ -15,18 +21,21 @@ export const setLastUrl = (lastURL=null) => {
         lastURL = window.location.href;
     }
     if (lastURL.indexOf('/login') === -1) {
-        localStorage.setItem('lastURL', lastURL);
+        // localStorage.setItem('lastURL', lastURL);
+        saveRawItemToLocalStorage('lastURL', lastURL);
     }
 }
 
 export const removeLastUrl = () => {
     localStorage.removeItem('lastURL');
+    removeItemFromLocalStorage('lastURL');
 }
 
 export const getLastUrl = () => {
     let lastUrl = getPrefix(true)+'/';
     if (localStorage.getItem('lastURL')) {
-        lastUrl = localStorage.getItem('lastURL');
+        // lastUrl = localStorage.getItem('lastURL');
+        lastUrl = getRawItemFromLocalStorage('lastURL');
     }
     return lastUrl;
 }

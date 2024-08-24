@@ -24,6 +24,10 @@ import {
     UserProvider,
     useUser
 } from '../../helpers/UserContext.jsx';
+import {
+    getLocalConfig,
+    saveLocalConfig
+} from '../../helpers/local-config.jsx';
 
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
@@ -162,15 +166,16 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
         console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMapFinal:', componentMapFinal, 'appLogo:', appLogo);
     }
 
+    const stateHandler = () => {
+        logoutHander();
+    }
+
     useEffect(() => {
+        // Load menus from JSON configurations
         if (currentUser) {
             getMenuFromApi(state, setState, setMenuOptions);
         }
     }, [currentUser, state]);
-
-    const stateHandler = () => {
-        logoutHander();
-    }
 
     if (!currentUser) {
         return (

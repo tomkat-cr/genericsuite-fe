@@ -19,10 +19,10 @@ import { imageDirectory } from '../../constants/general_constants.jsx';
 import {
     ERROR_MSG_CLASS,
     FORM_GROUP_CLASS,
-    FORM_CONTROL,
-    INVALID_FEEDBACK,
+    FORM_CONTROL_CLASS,
+    INVALID_FEEDBACK_CLASS,
     BUTTON_PRIMARY_CLASS,
-    IS_INVALID,
+    IS_INVALID_CLASS,
 } from '../../constants/class_name_constants.jsx';
 import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
 import { console_debug_log } from '../../services/logging.service.jsx';
@@ -150,14 +150,14 @@ export const LoginPage = (props) => {
                                 <Field
                                     name="username"
                                     type="text"
-                                    className={FORM_CONTROL + (
-                                        errors.username && touched.username ? ' ' + {IS_INVALID} : ''
+                                    className={FORM_CONTROL_CLASS + (
+                                        errors.username && touched.username ? ' ' + {IS_INVALID_CLASS} : ''
                                     )}
                                 />
                                 <ErrorMessage
                                     name="username"
                                     component="div"
-                                    className={INVALID_FEEDBACK}
+                                    className={INVALID_FEEDBACK_CLASS}
                                 />
                             </div>
                             <div className={FORM_GROUP_CLASS}>
@@ -165,14 +165,14 @@ export const LoginPage = (props) => {
                                 <Field
                                     name="password"
                                     type="password"
-                                    className={FORM_CONTROL + (
-                                        errors.password && touched.password ? ' ' + {IS_INVALID} : ''
+                                    className={FORM_CONTROL_CLASS + (
+                                        errors.password && touched.password ? ' ' + {IS_INVALID_CLASS} : ''
                                     )}
                                 />
                                 <ErrorMessage
                                     name="password"
                                     component="div"
-                                    className={INVALID_FEEDBACK}
+                                    className={INVALID_FEEDBACK_CLASS}
                                 />
                             </div>
                             <div className={FORM_GROUP_CLASS}>
