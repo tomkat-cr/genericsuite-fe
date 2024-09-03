@@ -1274,7 +1274,7 @@ const WaitAnimation = () => {
   })));
 };
 const ShowHidePageAnimation = function (showFlag) {
-  let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "NavigationAnimation";
+  let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "nav_animation";
   let animationDiv = document.getElementById(elementId);
   if (animationDiv) {
     if (showFlag) {
@@ -3729,7 +3729,7 @@ const GenericCrudEditorMain = props => {
     onClick: () => goToNewPage(currentPage - 1),
     className: "".concat(currentPage === 1 ? "opacity-50" : "", " ").concat(BUTTON_LISTING_CLASS)
   }, MSG_PREVIOUS), /*#__PURE__*/React.createElement("span", {
-    id: "NavigationAnimation",
+    id: "nav_animation",
     className: "ml-3 mr-3 hidden"
   }, WaitAnimation()), /*#__PURE__*/React.createElement("span", {
     className: "text-sm ml-2 mr-2"
@@ -5124,7 +5124,7 @@ var generic_editor_rfc_ui = /*#__PURE__*/Object.freeze({
 // Images
 const appLogoEmblem = 'app_log_emblem.svg';
 const appLogoCircle = 'app_logo_circle.svg';
-const appLogoHorizontal = 'app_logo_horizontal.svg';
+const appLogoLandscape = 'app_logo_landscape.svg';
 const appLogoSquare = 'app_logo_square.svg';
 const arrowsRotateSolid = 'arrows_rotate_solid.svg';
 const clip = 'clip.svg';
@@ -5155,7 +5155,7 @@ exports.Users_EditorData = Users_EditorData;
 exports.appConstants = app_constants;
 exports.appLogoCircle = appLogoCircle;
 exports.appLogoEmblem = appLogoEmblem;
-exports.appLogoHorizontal = appLogoHorizontal;
+exports.appLogoLandscape = appLogoLandscape;
 exports.appLogoSquare = appLogoSquare;
 exports.arrowsRotateSolid = arrowsRotateSolid;
 exports.authHeader = authHeader$1;

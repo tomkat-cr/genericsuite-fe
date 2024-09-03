@@ -13,6 +13,7 @@ root.render(
       <App
           // appLogo={GsLogoCircle}
           appLogo={"gs_logo_circle.svg"}
+          appLogoHeader={"app_logo_landscape.svg"}
       />
     </HashRouter>
   </React.StrictMode>

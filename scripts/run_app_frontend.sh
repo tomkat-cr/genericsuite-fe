@@ -77,9 +77,9 @@ echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
 if [ "${STAGE}" = "dev" ]; then
     if [ "${RUN_METHOD}" = "webpack" ]; then
         perl -i -pe"s|\"type\": \"module\"|\"type1\": \"module\"|g" package.json
-        perl -i -pe"s|\%PUBLIC_URL\%||g" public/index.html
+        # perl -i -pe"s|\%PUBLIC_URL\%||g" public/index.html
         npm run start-dev-webpack
-        cp public/index-template.html public/index.html
+        # cp public/index-template.html public/index.html
         perl -i -pe"s|\"type1\": \"module\"|\"type\": \"module\"|g" package.json
     else
         npm run start-dev

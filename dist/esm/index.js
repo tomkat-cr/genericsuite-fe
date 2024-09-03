@@ -1253,7 +1253,7 @@ const WaitAnimation = () => {
   })));
 };
 const ShowHidePageAnimation = function (showFlag) {
-  let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "NavigationAnimation";
+  let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "nav_animation";
   let animationDiv = document.getElementById(elementId);
   if (animationDiv) {
     if (showFlag) {
@@ -3708,7 +3708,7 @@ const GenericCrudEditorMain = props => {
     onClick: () => goToNewPage(currentPage - 1),
     className: "".concat(currentPage === 1 ? "opacity-50" : "", " ").concat(BUTTON_LISTING_CLASS)
   }, MSG_PREVIOUS), /*#__PURE__*/React.createElement("span", {
-    id: "NavigationAnimation",
+    id: "nav_animation",
     className: "ml-3 mr-3 hidden"
   }, WaitAnimation()), /*#__PURE__*/React.createElement("span", {
     className: "text-sm ml-2 mr-2"
@@ -5103,7 +5103,7 @@ var generic_editor_rfc_ui = /*#__PURE__*/Object.freeze({
 // Images
 const appLogoEmblem = 'app_log_emblem.svg';
 const appLogoCircle = 'app_logo_circle.svg';
-const appLogoHorizontal = 'app_logo_horizontal.svg';
+const appLogoLandscape = 'app_logo_landscape.svg';
 const appLogoSquare = 'app_logo_square.svg';
 const arrowsRotateSolid = 'arrows_rotate_solid.svg';
 const clip = 'clip.svg';
@@ -5112,5 +5112,5 @@ const madebyLogoEmblem = 'madeby_logo_emblem.svg';
 const madebyLogoSquare = 'madeby_logo_square.svg';
 const spark = 'spark.svg';
 
-export { About, AboutBody, App, GeneralConfig, GeneralConfig_EditorData, HomePage, LoginPage, ModalPopUp$1 as ModalPopUp, PrivateRoute$1 as PrivateRoute, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoEmblem, appLogoHorizontal, appLogoSquare, arrowsRotateSolid, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, clip, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, googleLogo, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, madebyLogoEmblem, madebyLogoSquare, media, ramdomize, response_handlers_service as responseHandlersService, spark, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, GeneralConfig, GeneralConfig_EditorData, HomePage, LoginPage, ModalPopUp$1 as ModalPopUp, PrivateRoute$1 as PrivateRoute, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoEmblem, appLogoLandscape, appLogoSquare, arrowsRotateSolid, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, clip, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, googleLogo, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, madebyLogoEmblem, madebyLogoSquare, media, ramdomize, response_handlers_service as responseHandlersService, spark, ui, urlParams, wait_animation_utility as waitAnimationUtility };
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
@@ -79,16 +80,16 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "public", "index.html"),
+            template: './public/index.html',
+            filename: "./index.html",
             favicon: "./public/favicon.ico",
-            filename: "index.html",
             manifest: "./public/manifest.json",
             publicPath: '/'
         }),
         new webpack.DefinePlugin({
             // Environment variables
             'process.env': {
-                PUBLIC_URL: JSON.stringify(`https://${appLocalDomainName}`),
+                // PUBLIC_URL: JSON.stringify(`https://${appLocalDomainName}`),
                 REACT_APP_VERSION: JSON.stringify(process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
                 REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || `https://${appLocalDomainName}`),
                 REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || '0'),
@@ -99,7 +100,11 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             process: 'process/browser',
-        }), 
+        }),
+        // This solves the %PUBLIC_URL% issue in public/index.html file...
+        new InterpolateHtmlPlugin({
+            PUBLIC_URL: '',
+        }),
     ],
     devServer: devServerConfig,
     output: {

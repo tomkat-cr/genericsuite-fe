@@ -2,18 +2,18 @@
 
 import React, { useState, useEffect, useContext } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import fontawesome from "@fortawesome/fontawesome";
-import {
-  faPlus,
-  faEye,
-  faEdit,
-  faTrashAlt,
-  faCheck,
-  faList,
-  // faArrowRight,
-  // faRecycle,
-} from "@fortawesome/fontawesome-free-solid";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import fontawesome from "@fortawesome/fontawesome";
+// import {
+//   faPlus,
+//   faEye,
+//   faEdit,
+//   faTrashAlt,
+//   faCheck,
+//   faList,
+//   // faArrowRight,
+//   // faRecycle,
+// } from "@fortawesome/fontawesome-free-solid";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
 import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
@@ -55,6 +55,7 @@ import {
   BUTTON_RIGHT_SPACE_CLASS,
   BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS,
+  BUTTON_COMPOSED_LABEL_CLASS,
   INFO_MSG_CLASS,
   HIDDEN_CLASS,
   VISIBLE_CLASS,
@@ -72,10 +73,12 @@ import {
   APP_LISTING_TABLE_HDR_TH_CLASS,
   APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS,
   APP_LISTING_TABLE_BODY_TBODY_CLASS,
-  APP_LISTING_TABLE_BODY_TR_CLASS,
-  APP_LISTING_TABLE_BODY_TD_BASE_CLASS,
-  APP_LISTING_TABLE_BODY_TD_CLASS,
-  APP_LISTING_TABLE_BODY_TD_ACTIONS_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TR_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TD_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS,
   APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
   APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS,
   APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
@@ -100,16 +103,18 @@ import {
   MSG_ROWS_PER_PAGE,
 } from "../constants/general_constants.jsx";
 
-fontawesome.library.add(
-  faPlus,
-  faEye,
-  faEdit,
-  faTrashAlt,
-  faCheck,
-  faList,
-  // faArrowRight,
-  // faRecycle,
-);
+import { GsIcons } from "../helpers/IconsLib.jsx";
+
+// fontawesome.library.add(
+//   faPlus,
+//   faEye,
+//   faEdit,
+//   faTrashAlt,
+//   faCheck,
+//   faList,
+//   // faArrowRight,
+//   // faRecycle,
+// );
 
 // 2024-08-11
 // tailwind and bootstrap together
@@ -152,7 +157,7 @@ const GenericCrudEditorMain = (props) => {
   const { currentUser } = useUser();
 
   const actionsHandlerAllowsMouseOver = true;
-  const actionsHandlerAllowsMagicButton = false;
+  const actionsHandlerAllowsMagicButton = true;
 
   useEffect(() => {
     setEditorParameters(props).then(
@@ -437,12 +442,13 @@ const GenericCrudEditorMain = (props) => {
                 className={BUTTON_LISTING_REFRESH_CLASS}
               >
                 {/* <FontAwesomeIcon icon="recycle" /> */}
-                <img
+                {/* <img
                   src={imageDirectory + "arrows_rotate_solid.svg"}
                   width="14"
                   height="14"
                   alt="Reload"
-                />
+                /> */}
+                <GsIcons icon='arrows-rotate' />
               </button>
             </span>
           </h1>
@@ -498,11 +504,11 @@ const GenericCrudEditorMain = (props) => {
                       className={APP_LISTING_TABLE_BODY_TBODY_CLASS}
                     >
                       {rows && typeof rows.resultset !== 'undefined' &&
-                        rows.resultset.map((row) => (
+                        rows.resultset.map((row, index) => (
                           <tr
                             id={`${editor.baseUrl}_row_${rowId(row)}_row`}
                             key={`${editor.baseUrl}_row_${rowId(row)}`}
-                            className={APP_LISTING_TABLE_BODY_TR_CLASS}
+                            className={index % 2 ? APP_LISTING_TABLE_BODY_TR_ODD_CLASS : APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}
                             onMouseOver={() => {
                               actionsHandler('show', row);
                             }}
@@ -518,7 +524,7 @@ const GenericCrudEditorMain = (props) => {
                                 editor.fieldElements[key].listing && (
                                   <td
                                     key={key}
-                                    className={APP_LISTING_TABLE_BODY_TD_CLASS}
+                                    className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS}
                                   >
                                     {
                                       getSelectDescription(
@@ -531,13 +537,14 @@ const GenericCrudEditorMain = (props) => {
                             )}
                             <td
                               // Action buttons
-                              className={APP_LISTING_TABLE_BODY_TD_ACTIONS_CLASS}
+                              className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
                             >
                                 {actionsHandlerAllowsMagicButton && (<div
                                   id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
                                   className={VISIBLE_CLASS}
                                 >
-                                  <FontAwesomeIcon icon="arrow-right" />
+                                  {/* <FontAwesomeIcon icon="arrow-left" /> */}
+                                  <GsIcons icon="menu-dots-more" />
                                 </div>)}
                                 <div
                                   id={`${editor.baseUrl}_row_${rowId(row)}_controls`}
@@ -547,19 +554,22 @@ const GenericCrudEditorMain = (props) => {
                                     onClick={() => handleView(rowId(row))}
                                     className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                                   >
-                                    <FontAwesomeIcon icon="eye" />
+                                    {/* <FontAwesomeIcon icon="eye" /> */}
+                                    <GsIcons icon="eye" />
                                   </button>
                                   <button
                                     onClick={() => handleModify(rowId(row))}
                                     className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                                   >
-                                    <FontAwesomeIcon icon="edit" />
+                                    {/* <FontAwesomeIcon icon="edit" /> */}
+                                    <GsIcons icon="edit" />
                                   </button>
                                   <button
                                     onClick={() => handleDelete(rowId(row))}
                                     className={`${BUTTON_LISTING_CLASS}`}
                                   >
-                                    <FontAwesomeIcon icon="trash" />
+                                    {/* <FontAwesomeIcon icon="trash" /> */}
+                                    <GsIcons icon="trash" />
                                   </button>
                                 </div>
                             </td>
@@ -583,7 +593,7 @@ const GenericCrudEditorMain = (props) => {
               {MSG_PREVIOUS}
             </button>
             <div
-              id="NavigationAnimation"
+              id="nav_animation"
               className={APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS}
             >
               {WaitAnimation()}
@@ -631,7 +641,12 @@ const GenericCrudEditorMain = (props) => {
               onClick={handleNew}
               className={BUTTON_LISTING_NEW_CLASS}
             >
-              <FontAwesomeIcon icon="plus" /> {MSG_ACTION_NEW}
+              {/* <FontAwesomeIcon icon="plus" /> {MSG_ACTION_NEW} */}
+              <div
+                className={BUTTON_COMPOSED_LABEL_CLASS}
+              >
+                  <GsIcons icon="plus" />&nbsp;{MSG_ACTION_NEW}
+                </div>
             </button>
           </div>
           {status && (

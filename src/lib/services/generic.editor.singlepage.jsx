@@ -116,10 +116,12 @@ export const GenericSinglePageEditorMain = (props) => {
     if (!editor) {
         if (status) {
             return (
-                <div className={ERROR_MSG_CLASS}>
+                // <div className={ERROR_MSG_CLASS}>
+                <>
                     {status}
                     [GSPE-NES]
-                </div>
+                </>
+                // </div>
             );
         }
         return (

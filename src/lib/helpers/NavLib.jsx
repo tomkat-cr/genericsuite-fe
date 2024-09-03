@@ -5,6 +5,7 @@ import {
     APP_SIDE_MENU_BG_COLOR_CLASS,
     APP_MAIN_BOX_BG_COLOR_CLASS,
 } from '../constants/class_name_constants.jsx';
+import { GsIcons } from './IconsLib.jsx';
 
 // Containers
 
@@ -33,8 +34,9 @@ export const AppSectionContainer = ({ children }) => {
         <div
             // className="w-screen bg-gray-300 fyn_jumbotron"
             // className="w-screen bg-gray-300 dark:bg-black flex flex-col flex-start"
-            className="w-screen bg-gray-300 dark:bg-black min-h-[87vh]"
             // style={{ minHeight: '87vh' }}
+            // className="w-screen bg-gray-300 dark:bg-black min-h-[87vh]"
+            className="w-screen bg-gray-300 dark:bg-black min-h-[87vh]"
         >
             {children}
         </div>
@@ -194,46 +196,10 @@ export const NavDropdown = ({ children, title, id, type }) => {
         setDropDownOpen(!dropDownOpen);
     };
 
-    const downArrowImage = (
-        <svg
-            width="6"
-            height="3"
-            className="ml-2 overflow-visible"
-            aria-hidden="true"
-        >
-            <path
-                d="M0 0L3 3L6 0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-            >
-            </path>
-        </svg>
-    );
-
-    const rightArrowImage = (
-        <svg
-            width="3"
-            height="6"
-            className="ml-2 overflow-visible"
-            aria-hidden="true"
-        >
-            <path
-                d="M0 0L3 3L0 6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-            >
-            </path>
-        </svg>
-    );
-
     const variantsDirectionImage = {
-        top_menu: downArrowImage,
-        hamburger: downArrowImage,
-        side_menu: rightArrowImage,
+        top_menu: 'arrow-down-small',
+        hamburger: 'arrow-down-small',
+        side_menu: 'arrow-right-small',
     }
 
     const variantsTopDiv = {
@@ -274,7 +240,8 @@ export const NavDropdown = ({ children, title, id, type }) => {
                 onClick={toggledropDownOpen}
             >
                 {title}
-                {directionImage}
+                {/* {directionImage} */}
+                <GsIcons icon={directionImage}/>
             </button>
             <div
                 className={variantStyleInnerDiv}
@@ -350,9 +317,11 @@ NavDropdown.Item = NavDropdownItem;
 export const ToggleSideBar = ({ onClick }) => {
     return (
         <div
-            className="h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2"
+            // className="h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2"
             onClick={onClick}
-        />
+        >
+            <GsIcons icon='vertical-slider'/>
+        </div>
     );
 }
 

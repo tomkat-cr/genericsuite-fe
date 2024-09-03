@@ -23,6 +23,8 @@ import {
     INVALID_FEEDBACK_CLASS,
     BUTTON_PRIMARY_CLASS,
     IS_INVALID_CLASS,
+    POPUP_TOP_MARGIN_CLASS,
+    LOGIN_PAGE_APP_LOGO_CLASS,
 } from '../../constants/class_name_constants.jsx';
 import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
 import { console_debug_log } from '../../services/logging.service.jsx';
@@ -130,22 +132,22 @@ export const LoginPage = (props) => {
                     handleSubmit(username, password, setStatus, setSubmitting);
                 }}
             >{({ errors, status, touched, isSubmitting }) => (
-                // <div className="flex justify-center items-center min-h-screen mt-1 mb-1">
-                    // <div className="bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4" style={{ width: '400px', margin: 'auto' }}>
                 <div
-                    className="pt-4"
+                    className={POPUP_TOP_MARGIN_CLASS}
                 >
                     <CenteredBoxContainer>
                         <Form>
                             <img src={imageDirectory + (appLogo || defaultAppLogo)}
                                 width="150"
                                 height="150"
-                                className="mx-auto my-0"
+                                className={LOGIN_PAGE_APP_LOGO_CLASS}
                                 alt="App Logo"
                             />
-                            {/* <MadeByLogoSquare alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
-                            {/* <MadeByLogoCircle alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
-                            <div className={FORM_GROUP_CLASS}>
+                            {/* <MadeByLogoSquare alt="Madeby Logo" width="20" height="20" className={LOGIN_PAGE_APP_LOGO_CLASS} /> */}
+                            {/* <MadeByLogoCircle alt="Madeby Logo" width="20" height="20" className={LOGIN_PAGE_APP_LOGO_CLASS} /> */}
+                            <div
+                                className={FORM_GROUP_CLASS}
+                            >
                                 <label htmlFor="username">Username</label>
                                 <Field
                                     name="username"
@@ -160,7 +162,9 @@ export const LoginPage = (props) => {
                                     className={INVALID_FEEDBACK_CLASS}
                                 />
                             </div>
-                            <div className={FORM_GROUP_CLASS}>
+                            <div
+                                className={FORM_GROUP_CLASS}
+                            >
                                 <label htmlFor="password">Password</label>
                                 <Field
                                     name="password"
@@ -175,7 +179,9 @@ export const LoginPage = (props) => {
                                     className={INVALID_FEEDBACK_CLASS}
                                 />
                             </div>
-                            <div className={FORM_GROUP_CLASS}>
+                            <div
+                                className={FORM_GROUP_CLASS}
+                            >
                                 <button
                                     type="submit"
                                     className={BUTTON_PRIMARY_CLASS}
@@ -188,7 +194,11 @@ export const LoginPage = (props) => {
                                 }
                             </div>
                             {status && ! includesAppValidLinks(status) && 
-                                <div className={ERROR_MSG_CLASS}>{status}</div>
+                                <div
+                                    className={ERROR_MSG_CLASS}
+                                >
+                                    {status}
+                                </div>
                             }
                             {status && includesAppValidLinks(status) &&
                                 <div

@@ -48,16 +48,16 @@ import * as ramdomize from './services/ramdomize.jsx';
 import * as responseHandlersService from './services/response.handlers.service.jsx';
 import * as waitAnimationUtility from './services/wait.animation.utility.jsx';
 // Images
-const appLogoEmblem = 'app_log_emblem.svg';
+// const appLogoEmblem = 'app_log_emblem.svg';
 const appLogoCircle = 'app_logo_circle.svg';
-const appLogoHorizontal = 'app_logo_horizontal.svg';
-const appLogoSquare = 'app_logo_square.svg';
-const arrowsRotateSolid = 'arrows_rotate_solid.svg';
-const clip = 'clip.svg';
-const googleLogo = 'google_logo.svg';
-const madebyLogoEmblem = 'madeby_logo_emblem.svg';
-const madebyLogoSquare = 'madeby_logo_square.svg';
-const spark = 'spark.svg';
+const appLogoLandscape = 'app_logo_landscape.svg';
+// const appLogoSquare = 'app_logo_square.svg';
+// const arrowsRotateSolid = 'arrows_rotate_solid.svg';
+// const clip = 'clip.svg';
+// const googleLogo = 'google_logo.svg';
+// const madebyLogoEmblem = 'madeby_logo_emblem.svg';
+// const madebyLogoSquare = 'madeby_logo_square.svg';
+// const spark = 'spark.svg';
 
 export {
     // Components
@@ -110,14 +110,14 @@ export {
     responseHandlersService,
     waitAnimationUtility,
     // Images
-    appLogoEmblem,
+    // appLogoEmblem,
     appLogoCircle,
-    appLogoHorizontal,
-    appLogoSquare,
-    arrowsRotateSolid,
-    clip,
-    googleLogo,
-    madebyLogoEmblem,
-    madebyLogoSquare,
-    spark,
+    appLogoLandscape,
+    // appLogoSquare,
+    // arrowsRotateSolid,
+    // clip,
+    // googleLogo,
+    // madebyLogoEmblem,
+    // madebyLogoSquare,
+    // spark,
 }

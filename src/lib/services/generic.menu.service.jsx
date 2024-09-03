@@ -71,6 +71,7 @@ export const GenericMenuBuilder = (
         status,
         setExpanded,
         appLogo = null,
+        appLogoHeader = null,
     }
 ) => {
     const getElementObj = (item) => {
@@ -114,7 +115,7 @@ export const GenericMenuBuilder = (
         if (debug) {
             console_debug_log("GenericMenuBuilder: getRoutes | menuOptions:", menuOptions, "componentMapping:", componentMapping);
         }
-        const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo)];
+        const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo, appLogoHeader)];
         if (debug) {
             console_debug_log("GenericMenuBuilder: getRoutes | menuOptionsFinal", menuOptionsFinal);
         }
@@ -266,11 +267,21 @@ export const GenericMenuBuilder = (
     };
 
     if (status !== "" && itemType === "routes") {
-        return <DefaultRoutes appLogo={appLogo} />;
+        return (
+            <DefaultRoutes
+                appLogo={appLogo}
+                appLogoHeader={appLogoHeader}
+            />
+        );
     }
 
     if (status !== "") {
-        return <DefaultRoutes appLogo={appLogo} />;
+        return (
+            <DefaultRoutes
+                appLogo={appLogo}
+                appLogoHeader={appLogoHeader}
+            />
+        );
     }
 
     return menuItems(itemType === 'side_menu' ? 'top_menu' : itemType, title, itemType);
@@ -299,43 +310,43 @@ export const editorMenuOption = (editor, setExpanded, itemType) => {
     );
 }
 
-export const getDefaultRoutesRaw = ( appLogo = null ) => {
+export const getDefaultRoutesRaw = ( appLogo = null, appLogoHeader = null ) => {
     if (debug) console_debug_log('getDefaultRoutesRaw');
     return [
         {
             title: 'homepage1',
             path: "/",
-            element_obj: <HomePage appLogo={appLogo}/>,
+            element_obj: <HomePage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
             type: "nav_link",
         },
         {
             title: 'homepage2',
             path: getPrefix(true)+"/",
-            element_obj: <HomePage appLogo={appLogo}/>,
+            element_obj: <HomePage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
             type: "nav_link",
         },
         {
             title: 'homepage3',
             path: getPrefix(true).replace('/#', '/')+"/",
-            element_obj: <HomePage appLogo={appLogo}/>,
+            element_obj: <HomePage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
             type: "nav_link",
         },
         {
             title: 'loginpage1',
             path: "/login",
-            element_obj: <LoginPage appLogo={appLogo}/>,
+            element_obj: <LoginPage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
             type: "nav_link",
         },
         {
             title: 'loginpage2',
             path: getPrefix(true)+"/login",
-            element_obj: <LoginPage appLogo={appLogo}/>,
+            element_obj: <LoginPage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
             type: "nav_link",
         },
         {
             title: 'loginpage3',
             path: getPrefix(true).replace('/#', '/')+"/login",
-            element_obj: <LoginPage appLogo={appLogo}/>,
+            element_obj: <LoginPage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
             type: "nav_link",
         },
     ];
@@ -351,7 +362,7 @@ const InvalidRouteRedirect = () => {
     );
 }
 
-export const DefaultRoutes = ( { appLogo = null} ) => {
+export const DefaultRoutes = ( { appLogo = null, appLogoHeader = null} ) => {
     const homePagePath3 = getPrefix(true).replace('/#', '/')+"/";
     if (debug) {
         console_debug_log(`DefaultRoutes | homePagePath3: ${homePagePath3}`)
@@ -359,7 +370,7 @@ export const DefaultRoutes = ( { appLogo = null} ) => {
     return (
         <Routes history={history}>
             {
-                getDefaultRoutesRaw(appLogo).map(item => {
+                getDefaultRoutesRaw(appLogo, appLogoHeader).map(item => {
                     if (debug) {
                         console_debug_log("DefaultRoutes: item:", item);
                     }

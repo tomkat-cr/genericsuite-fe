@@ -4,6 +4,7 @@ import React, { useState } from "react"
 
 import { console_debug_log } from "./logging.service.jsx";
 import { processDateToTimestamp } from "../helpers/date-timestamp.jsx";
+import { GsIcons } from "../helpers/IconsLib.jsx";
     
 import {
     MSG_SEARCH,
@@ -17,14 +18,14 @@ import {
     APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS,
 } from "../constants/class_name_constants.jsx";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import fontawesome from "@fortawesome/fontawesome";
-import {
-    faGreaterThan,
-} from "@fortawesome/fontawesome-free-solid";
-fontawesome.library.add(
-    faGreaterThan,
-);
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import fontawesome from "@fortawesome/fontawesome";
+// import {
+//     faGreaterThan,
+// } from "@fortawesome/fontawesome-free-solid";
+// fontawesome.library.add(
+//     faGreaterThan,
+// );
 
 const debug = false;
 
@@ -126,7 +127,8 @@ export const CrudEditorSearch = ({
                 className={APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS}
                 onClick={handleSubmit}
             >
-                <FontAwesomeIcon icon="greater-than" />
+                {/* <FontAwesomeIcon icon="greater-than" /> */}
+                <GsIcons icon="greater-than" />
             </button>
             {searchText !== '' &&
                 <button

@@ -28,6 +28,7 @@ import {
     getLocalConfig,
     saveLocalConfig
 } from '../../helpers/local-config.jsx';
+import { imageDirectory } from '../../constants/general_constants.jsx';
 
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
@@ -63,6 +64,10 @@ import { MainContainer, AppSectionContainer, Nav, Navbar } from '../../helpers/N
 import {
     ALERT_DANGER_CLASS,
     BUTTON_PRIMARY_CLASS,
+    NAVBAR_APP_LOGO_CLASS,
+    NAVBAR_BRAND_ELEMENTS_CLASS,
+    NAVBAR_BRAND_NAME_CLASS,
+    NAVBAR_APP_VERSION_CLASS,
 } from '../../constants/class_name_constants.jsx';
 
 const debug = false;
@@ -112,21 +117,31 @@ function setExpanded(componentObj) {
     return '';
 }
 
-export const App = ({componentMap = {}, appLogo = null}) => {
+export const App = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
     return (
         <UserProvider>
           <AppMain
             componentMap={componentMap}
             appLogo={appLogo}
+            appLogoHeader={appLogoHeader}
           />
         </UserProvider>
       );
 }
 
-const AppNavBar = ({ children }) => {
+const AppNavBar = ({ children, appLogoHeader = null }) => {
     const { currentUser } = useUser();
     const version = process.env.REACT_APP_VERSION;
-    const appName = process.env.REACT_APP_APP_NAME;
+    const appName = (
+        appLogoHeader ? 
+            <img
+                src={imageDirectory + appLogoHeader}
+                className={NAVBAR_APP_LOGO_CLASS}
+                alt="App Logo"
+            />
+                :
+            process.env.REACT_APP_APP_NAME
+    );
     return (
         <Navbar
             id="navbar-main"
@@ -140,7 +155,18 @@ const AppNavBar = ({ children }) => {
                     to='/'
                     onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
                 >
-                    {appName} <span style={{fontSize: '60%'}}>{version}</span>
+                    <div
+                        className={NAVBAR_BRAND_ELEMENTS_CLASS}
+                    >
+                        <div
+                            className={NAVBAR_BRAND_NAME_CLASS}
+                        >
+                            {appName}
+                        </div>
+                        <div
+                            className={NAVBAR_APP_VERSION_CLASS}
+                        >{version}</div>
+                    </div>
                 </Navbar.Brand>
                 {children}
             </Navbar.Container>
@@ -148,7 +174,7 @@ const AppNavBar = ({ children }) => {
     );
 }
 
-const AppMain = ({componentMap = {}, appLogo = null}) => {
+const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
     const [state, setState] = useState("");
     const [menuOptions, setMenuOptions] = useState(null);
     const [sideMenu, setSideMenu] = useState(false);
@@ -163,7 +189,7 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
     const { currentUser } = useUser();
 
     if (debug) {
-        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMapFinal:', componentMapFinal, 'appLogo:', appLogo);
+        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMapFinal:', componentMapFinal, 'appLogo:', appLogo, 'appLogoHeader:', appLogoHeader);
     }
 
     const stateHandler = () => {
@@ -180,7 +206,9 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
     if (!currentUser) {
         return (
             <MainContainer>
-                <AppNavBar>
+                <AppNavBar
+                    appLogoHeader={appLogoHeader}
+                >
                     <Navbar.OptionsContainer>
                         <Navbar.Collapse
                             id="basic-navbar-nav"
@@ -193,7 +221,10 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
                     </Navbar.OptionsContainer>
                 </AppNavBar>
                 <AppSectionContainer>
-                    <LoginPage appLogo={appLogo}/>
+                    <LoginPage
+                        appLogo={appLogo}
+                        appLogoHeader={appLogoHeader}
+                    />
                 </AppSectionContainer>
             </MainContainer>
         );
@@ -202,7 +233,9 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
     return (
         <MainContainer>
             {!showContentOnly && (
-                <AppNavBar>
+                <AppNavBar
+                    appLogoHeader={appLogoHeader}
+                >
                     <Navbar.OptionsContainer>
                         <Navbar.Toggle
                             id="navbar-main-toggle"
@@ -292,6 +325,7 @@ const AppMain = ({componentMap = {}, appLogo = null}) => {
                         setExpanded={setExpanded}
                         showContentOnly={showContentOnly}
                         appLogo={appLogo}
+                        appLogoHeader={appLogoHeader}
                         // className='overflow-x-auto'
                     />
                 </div>
@@ -332,6 +366,7 @@ const AppMainComponent = ({
     showContentOnly,
     setExpanded,
     appLogo = null,
+    appLogoHeader = null,
 }) => {
     const location = useLocation();
     if (debug) console_debug_log("AppMainComponent | location:", location);
@@ -360,6 +395,7 @@ const AppMainComponent = ({
             status={state}
             setExpanded={setExpanded}
             appLogo={appLogo}
+            appLogoHeader={appLogoHeader}
         />
     )
 }

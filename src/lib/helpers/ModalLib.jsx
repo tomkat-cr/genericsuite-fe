@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 
 import { console_debug_log } from '../services/logging.service.jsx';
+
+import { POPUP_TOP_MARGIN_CLASS } from '../constants/class_name_constants.jsx';
 import { CenteredBoxContainer } from './NavLib.jsx';
 
 // Modal
@@ -48,9 +50,13 @@ export const Modal = ({ show, onHide, children }) => {
     if (!show) return null;
   
     return (
-        <CenteredBoxContainer>
-            {children}
-        </CenteredBoxContainer>
+        <div
+            className={POPUP_TOP_MARGIN_CLASS}
+        >
+            <CenteredBoxContainer>
+                {children}
+            </CenteredBoxContainer>
+        </div>
     );
 };
   

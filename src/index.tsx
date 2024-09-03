@@ -12,6 +12,7 @@ const app = require('./lib/components/App/App');
 // This way to import the .svg files doesn't work on prod environents...
 // const GsLogoCircle = require('./lib/images/gs_logo_circle.svg');
 const gsLogoCircle = 'gs_logo_circle.svg';
+const gsLogoLandscape = 'app_logo_landscape.svg';
 
 const componentMap = {
   "AboutBody": AboutBodyGsFe,
@@ -26,6 +27,7 @@ root.render(
       <app.App
           // appLogo={GsLogoCircle}
           appLogo={gsLogoCircle}
+          // appLogoHeader={gsLogoLandscape}
           componentMap={componentMap}
       />
     </HashRouter>

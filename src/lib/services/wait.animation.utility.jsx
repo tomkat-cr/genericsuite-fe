@@ -5,6 +5,11 @@ import {
     MSG_ALT_WAIT_ANIMATION,
 } from '../constants/general_constants.jsx';
 
+import {
+  SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS,
+  SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS,
+} from '../constants/class_name_constants.jsx';
+
 export const WaitAnimation = () => {
     return (
       <div>
@@ -16,15 +21,14 @@ export const WaitAnimation = () => {
 };
 
 export const ShowHidePageAnimation = (
-    showFlag,
-    elementId = "NavigationAnimation"
+    showAnimation,
+    elementId = "nav_animation"
 ) => {
     let animationDiv = document.getElementById(elementId);
     if (animationDiv) {
-      if (showFlag) {
-        animationDiv.className="ml-3 mr-3";
-      } else {
-        animationDiv.className="ml-3 mr-3 hidden";
-      }
+      animationDiv.className=(showAnimation ?
+        SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS
+          :
+        SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS);
     }
 };

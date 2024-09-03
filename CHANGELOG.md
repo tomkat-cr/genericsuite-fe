@@ -18,12 +18,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ## Unreleased
 ## 1.0.22 (2024-08-10)
+---
 
 ### New
 Add Darkmode [GS-63].
 Add Configurable sidebar menu [GS-114].
 Add localstorage generic functions [GS-112].
 Add Save darkmode and side menu set to localstorage [GS-112].
+New "GsIcons" library replaces FontAwesome [GS-115].
+Add landscape logo to the App header [GS-63].
 
 ### Changes
 Replace react-bootstrap entirely and use only Tailwind CSS, because there are issues having both at the same time [GS-63].
@@ -37,12 +40,15 @@ Change Search input box size too small in the GCE_RFC listing page [GS-112].
 ### Fixes
 Fix missing classes in the new output.css of Tailwind v3.4.9 [GS-63].
 Fix the row values in index page not shown issue [GS-108].
+Fix the %PUBLIC_URL% issue in public/index.html file running the app with webpack [GS-116].
 
 ### Breaks
 General Bootstrap CSS replaced by Tailwind CSS [GS-63].
+SVG images removed and included in the "GsIcons" library [GS-115].
 
 
 ## 1.0.21 (2024-07-27)
+---
 
 ### New
 Add ".nvmrc" file to set the repo default node version.
@@ -362,6 +368,7 @@ FE: bash script to deploy ReactJs app with AWS Cloudfront and S3 [FA-100].
 
 
 ## 0.0.17 (2023-11-01)
+---
 
 ### New
 Add SuggestionDropdown component (and autocomplete) as a field type in GCE_RFC [FA-120].
@@ -372,6 +379,7 @@ Add dishes and dish ingredients in json definitions [FA-135].
 
 
 ## 0.0.16 (2023-07-29)
+---
 
 ### Fixes
 Fix deployment to AWS Cloudfront because npm build does not allow function.name. Funcions names passed to GetFormData() passed as string.

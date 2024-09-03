@@ -72,12 +72,12 @@ export const UsersValidations = (data, editor, action, currentUser) => {
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'Super users can be deleted only by other Super users.';
                             }
-                            if (data['id'] === currentUserValue.id) {
+                            if (data['id'] === currentUser.id) {
                                 resp.error = true;
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'You cannot delete yourself';
                             }
-                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUserValue.id) {
+                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUser.id) {
                                 resp.error = true;
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'You cannot delete other\'s records';
@@ -91,7 +91,7 @@ export const UsersValidations = (data, editor, action, currentUser) => {
                             }
                             break;
                         case ACTION_UPDATE:
-                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUserValue.id) {
+                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUser.id) {
                                 resp.error = true;
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'You cannot modify other\'s records';
@@ -127,7 +127,7 @@ export const UsersDbListPreRead = (data, editor, action, currentUser) => {
                     } else {
                         // Set a filter to retrieve only the current user
                         if (currentUserData.resultset['superuser'] === '0') {
-                            resp.fieldValues['_id'] = currentUserValue.id
+                            resp.fieldValues['_id'] = currentUser.id
                         }    
                     }
                     if (resp.error) {

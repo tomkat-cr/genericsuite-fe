@@ -53,13 +53,20 @@ export const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50
 export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2`;
 export const BUTTON_LISTING_REFRESH_CLASS=`${BUTTON_LISTING_CLASS} text-xs`;
 
+// Special buttons
+
+export const BUTTON_SEARCH_ENGINE_TOP_DIV_CLASS='ml-2';
+export const BUTTON_COMPOSED_LABEL_CLASS="flex items-center";
+
 // General app section (e.g. GCE_RFC)
 
 // const APP_TOP_DIV_CLASS="w-screen bg-gray-300 fyn_jumbotron"
 // const APP_TOP_DIV_CLASS='w-screen overflow-x-visible overflow-visible overflow-x-auto'
-export const APP_TOP_DIV_CLASS = 'w-screen flex flex-col pb-2 ml-1 mr-1';
-export const APP_LEVEL1_DIV_CLASS = 'w-screen';
-export const APP_LEVEL2_DIV_CLASS = "not-prose relative bg-slate-50 rounded-xl overflow-hidden dark:bg-slate-800/25 mr-2";
+// export const APP_TOP_DIV_CLASS = 'w-screen flex flex-col pb-2 ml-1 mr-1';
+export const APP_TOP_DIV_CLASS = 'container mx-auto flex flex-col pb-2 ml-1 mr-1';
+// export const APP_LEVEL1_DIV_CLASS = 'w-screen';
+export const APP_LEVEL1_DIV_CLASS = '';
+export const APP_LEVEL2_DIV_CLASS = "not-prose relative rounded-xl overflow-hidden mr-2 bg-slate-50 dark:bg-slate-800/25";
 export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-2 mt-2';
 export const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom";
 
@@ -86,14 +93,18 @@ export const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = '';
 // // APP_LISTING_TABLE_BODY_TBODY_CLASS="divide-y divide-gray-200 dark:divide-gray-700"
 export const APP_LISTING_TABLE_BODY_TBODY_CLASS = `${APP_MAIN_BOX_BG_COLOR_CLASS}`;
 // APP_LISTING_TABLE_BODY_TBODY_CLASS="odd:bg-white even:bg-slate-50"
-export const APP_LISTING_TABLE_BODY_TR_CLASS = 'odd:bg-white bg-slate-500';
+export const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'bg-white';
+export const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'bg-slate-500';
 // // APP_LISTING_TABLE_BODY_TD_CLASS="px-6 py-0 break-words text-sm text-gray-50 dark:text-gray-50"
 // APP_LISTING_TABLE_BODY_TD_CLASS="break-words text-sm"
-export const APP_LISTING_TABLE_BODY_TD_BASE_CLASS="border-b border-slate-100 dark:border-slate-700 p-2 pl-2 odd:text-white text-slate-500 dark:text-slate-400";
-export const APP_LISTING_TABLE_BODY_TD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_CLASS} break-words`;
+export const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS="border-b border-slate-100 dark:border-slate-700 p-2 pl-2 text-slate-500 dark:text-slate-400";
+export const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS="border-b border-slate-100 dark:border-slate-700 p-2 pl-2 text-white dark:text-slate-400";
+export const APP_LISTING_TABLE_BODY_TD_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words`;
+export const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words`;
 // APP_LISTING_TABLE_BODY_TD_ACTIONS_CLASS="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
 // APP_LISTING_TABLE_BODY_TD_ACTIONS_CLASS="whitespace-nowrap text-sm"
-export const APP_LISTING_TABLE_BODY_TD_ACTIONS_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_CLASS} whitespace-nowrap text-sm`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} whitespace-nowrap text-sm`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} whitespace-nowrap text-sm`;
 
 // Listing page search box (GCE_RFC)
 
@@ -134,6 +145,26 @@ export const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS}`;
 export const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid`;
 export const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS="align-middle flex";
 export const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6";
+
+// Pop-ups
+
+export const POPUP_TOP_MARGIN_CLASS="pt-4";
+
+// Login page
+
+export const LOGIN_PAGE_APP_LOGO_CLASS="mx-auto my-0";
+
+// App component
+
+export const NAVBAR_APP_LOGO_CLASS="mx-auto my-0";
+export const NAVBAR_BRAND_ELEMENTS_CLASS="flex items-center";
+export const NAVBAR_BRAND_NAME_CLASS="";
+export const NAVBAR_APP_VERSION_CLASS="ml-2 text-xs";
+
+// Wait animation
+
+export const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS="ml-3 mr-3";
+export const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS="ml-3 mr-3 hidden";
 
 // AI Assistant and conversation pages
 
