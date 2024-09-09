@@ -5,24 +5,24 @@ const debug = false
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
 
-  const registerUser = (userData) => {
-    if (debug) console.log('RegisterUser | userData:', userData);
-    setCurrentUser(userData);
-  };
+    const registerUser = (userData) => {
+        if (debug) console.log('RegisterUser | userData:', userData);
+        setCurrentUser(userData);
+    };
 
-  const unRegisterUser = () => {
-    setCurrentUser(null);
-  };
+    const unRegisterUser = () => {
+        setCurrentUser(null);
+    };
 
-  return (
-    <UserContext.Provider value={{ currentUser, registerUser, unRegisterUser }}>
-      {children}
-    </UserContext.Provider>
-  );
+    return (
+        <UserContext.Provider value={{ currentUser, registerUser, unRegisterUser }}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
 export const useUser = () => {
-  return useContext(UserContext);
+    return useContext(UserContext);
 };

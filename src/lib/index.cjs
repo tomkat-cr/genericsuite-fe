@@ -7,6 +7,7 @@ import { GeneralConfig_EditorData, GeneralConfig } from './components/SuperAdmin
 import { Users_EditorData, Users, UsersValidations, UsersDbListPreRead, UsersPasswordValidations, UsersDbPreWrite } from './components/SuperAdminOptions/Users.jsx';
 import { UsersProfile_EditorData, UserProfileEditor } from './components/UsersMenu/UserProfile.jsx';
 import { UsersConfig_EditorData, UsersConfig } from './components/UsersMenu/UsersConfig.jsx';
+import { AppFooter } from './components/AppFooter/AppFooter.jsx';
 // Constants
 import * as appConstants from './constants/app_constants.jsx';
 import * as classNameConstants from './constants/class_name_constants.jsx';
@@ -69,6 +70,7 @@ export {
     Users_EditorData, Users, UsersValidations, UsersDbListPreRead, UsersPasswordValidations, UsersDbPreWrite,
     UsersProfile_EditorData, UserProfileEditor,
     UsersConfig_EditorData, UsersConfig,
+    AppFooter,
     appConstants,
     classNameConstants,
     generalConstants,

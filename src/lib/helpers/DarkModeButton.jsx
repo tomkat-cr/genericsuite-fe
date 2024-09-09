@@ -3,16 +3,19 @@ import { Link } from "react-router-dom";
 
 import { getLocalConfig, saveLocalConfig } from './local-config.jsx';
 import { useUser } from './UserContext.jsx';
+import { useAppContext } from './AppContext.jsx';
+import {
+    DARK_MODE_BUTTON_DARK_HIDDEN_CLASS,
+    DARK_MODE_BUTTON_DARK_INLINE_CLASS,
+    DARK_MODE_BUTTON_SVG_CLASS,
+    DARK_MODE_BUTTON_TOP_DIV_CLASS,
+} from '../constants/class_name_constants.jsx';
 
-const debug = true;
+const debug = false;
 
 export const DarkModeButton = () => {
-    const [darkMode, setDarkMode] = useState(false);
     const { currentUser } = useUser();
-
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
-    };
+    const { isDarkMode, setIsDarkMode, toggleDarkMode } = useAppContext();
 
     useEffect(() => {
         // Component startup
@@ -27,37 +30,38 @@ export const DarkModeButton = () => {
             if (debug) console.log('Loading local config', localConfig);
             newDarkMode = (localConfig.pref_dark_mode === '1');
         }
-        if (newDarkMode !== darkMode) {
-            setDarkMode(newDarkMode);
+        if (newDarkMode !== isDarkMode) {
+            setIsDarkMode(newDarkMode);
         }
     }, []);
 
     useEffect(() => {
         if (currentUser) {
-            setDarkMode(currentUser.pref_dark_mode === '1');
+            setIsDarkMode(currentUser.pref_dark_mode === '1');
         }
     }, [currentUser]);
     
     useEffect(() => {
         // Save session side menu preference to localstorage when it changes
         const localConfig = {
-            pref_dark_mode: (darkMode ? '1' : '0'),
+            pref_dark_mode: (isDarkMode ? '1' : '0'),
         }
         if (debug) console.log('Saving local config', localConfig);
         saveLocalConfig(localConfig);
         // Fix the overall dark mode design
         const element = document.getElementsByTagName('html')[0];
-        if (!darkMode) {
+        if (!isDarkMode) {
             element.classList.remove('dark');
         } else {
             element.classList.add('dark');
         }
 
-    }, [darkMode]);
+    }, [isDarkMode]);
 
     return (
         <div
-            className="dark-mode-button"
+            id="dark-mode-button"
+            className={DARK_MODE_BUTTON_TOP_DIV_CLASS}
         >
             <button
                 type="button"
@@ -69,7 +73,7 @@ export const DarkModeButton = () => {
                 onClick={toggleDarkMode}
             >
                 <span
-                    className="dark:hidden"
+                    className={DARK_MODE_BUTTON_DARK_HIDDEN_CLASS}
                 >
                     { /* Light button */ }
                     <svg
@@ -78,7 +82,7 @@ export const DarkModeButton = () => {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="w-6 h-6"
+                        className={DARK_MODE_BUTTON_SVG_CLASS}
                     >
                         <path
                             d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
@@ -91,13 +95,13 @@ export const DarkModeButton = () => {
                     </svg>
                 </span>
                 <span
-                    className="hidden dark:inline"
+                    className={DARK_MODE_BUTTON_DARK_INLINE_CLASS}
                 >
                     { /* Dark button */ }
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
-                        className="w-6 h-6"
+                        className={DARK_MODE_BUTTON_SVG_CLASS}
                     >
                         <path
                             fillRule="evenodd"

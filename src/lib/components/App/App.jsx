@@ -25,6 +25,11 @@ import {
     useUser
 } from '../../helpers/UserContext.jsx';
 import {
+    AppProvider,
+    useAppContext,
+} from '../../helpers/AppContext.jsx';
+
+import {
     getLocalConfig,
     saveLocalConfig
 } from '../../helpers/local-config.jsx';
@@ -43,6 +48,7 @@ import { HomePage } from '../HomePage/HomePage.jsx';
 import { LoginPage } from '../LoginPage/LoginPage.jsx';
 import { About, AboutBody } from '../About/About.jsx';
 import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx';
+import { AppFooter } from '../AppFooter/AppFooter.jsx';
 
 import './App.css';
 
@@ -60,14 +66,19 @@ import './App.css';
 // import Container from 'react-bootstrap/cjs/Container.js';
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import Navbar from 'react-bootstrap/cjs/Navbar.js';
-import { MainContainer, AppSectionContainer, Nav, Navbar } from '../../helpers/NavLib.jsx';
+import {
+    MainContainer,
+    AppSectionContainer,
+    AppFooterContainer,
+    Nav,
+    Navbar,
+} from '../../helpers/NavLib.jsx';
 import {
     ALERT_DANGER_CLASS,
     BUTTON_PRIMARY_CLASS,
-    NAVBAR_APP_LOGO_CLASS,
-    NAVBAR_BRAND_ELEMENTS_CLASS,
+    NAVBAR_BRAND_APP_LOGO_CLASS,
     NAVBAR_BRAND_NAME_CLASS,
-    NAVBAR_APP_VERSION_CLASS,
+    NAVBAR_BRAND_APP_VERSION_CLASS,
 } from '../../constants/class_name_constants.jsx';
 
 const debug = false;
@@ -81,62 +92,33 @@ const defaultComponentMap = {
     "LoginPage": LoginPage,
     "About": About,
     "AboutBody": AboutBody,
+    "AppFooter": AboutBody,
     "logout": logoutHander,
 };
-
-const isComponent = (componentObj) => {
-    return (String(componentObj).includes('component:'));
-}
-
-function setExpanded(componentObj) {
-    if (document.getElementById("navbar-main-toggle") &&
-        !document.getElementById("navbar-main-toggle").classList.contains("collapsed")) {
-        document.getElementById("navbar-main-toggle").click();
-    }
-    if (componentObj) {
-        if (debug) console_debug_log(`>> setExpanded [1] | isComponent: ${isComponent(componentObj)} | componentObj:`, componentObj);
-        if (isComponent(componentObj)){
-            try {
-                return <componentObj/>;
-            } catch (error) {
-                console_debug_log('[ASE-E010] componentObj:', componentObj);
-                console_debug_log(error);
-                return null;
-            }
-        } else {
-            try {
-                return componentObj();
-            } catch (error) {
-                console_debug_log('[ASE-E020] componentObj:', componentObj);
-                console_debug_log(error);
-                return null;
-            }
-        }
-    }
-    if (debug) console_debug_log(">> setExpanded [2]");
-    return '';
-}
 
 export const App = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
     return (
         <UserProvider>
-          <AppMain
-            componentMap={componentMap}
-            appLogo={appLogo}
-            appLogoHeader={appLogoHeader}
-          />
+            <AppProvider>
+                <AppMain
+                    componentMap={componentMap}
+                    appLogo={appLogo}
+                    appLogoHeader={appLogoHeader}
+                />
+            </AppProvider>
         </UserProvider>
       );
 }
 
 const AppNavBar = ({ children, appLogoHeader = null }) => {
     const { currentUser } = useUser();
+    const { setExpanded } = useAppContext();
     const version = process.env.REACT_APP_VERSION;
     const appName = (
         appLogoHeader ? 
             <img
                 src={imageDirectory + appLogoHeader}
-                className={NAVBAR_APP_LOGO_CLASS}
+                className={NAVBAR_BRAND_APP_LOGO_CLASS}
                 alt="App Logo"
             />
                 :
@@ -145,40 +127,47 @@ const AppNavBar = ({ children, appLogoHeader = null }) => {
     return (
         <Navbar
             id="navbar-main"
-            collapseOnSelect
-            expand="lg"
-            // className="bg-body-tertiary navbar-dark bg-dark"
+            // collapseOnSelect
+            // expand="lg"
         >
-            <Navbar.Container>
-                <Navbar.Brand
-                    as={RouterLink}
-                    to='/'
-                    onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+            <Navbar.Brand
+                as={RouterLink}
+                to='/'
+                onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+            >
+                <div
+                    className={NAVBAR_BRAND_NAME_CLASS}
                 >
-                    <div
-                        className={NAVBAR_BRAND_ELEMENTS_CLASS}
-                    >
-                        <div
-                            className={NAVBAR_BRAND_NAME_CLASS}
-                        >
-                            {appName}
-                        </div>
-                        <div
-                            className={NAVBAR_APP_VERSION_CLASS}
-                        >{version}</div>
-                    </div>
-                </Navbar.Brand>
-                {children}
-            </Navbar.Container>
+                    {appName}
+                </div>
+                <div
+                    className={NAVBAR_BRAND_APP_VERSION_CLASS}
+                >{version}</div>
+            </Navbar.Brand>
+            {children}
         </Navbar>
     );
 }
 
-const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
-    const [state, setState] = useState("");
-    const [menuOptions, setMenuOptions] = useState(null);
-    const [sideMenu, setSideMenu] = useState(false);
+const TopRightMenu = ({ componentMapping, showContentOnly }) => {
+    const { currentUser } = useUser();
+    return (
+        <Navbar.TopRightMenu>
+            <DarkModeButton />
+            <MenuModeButton />
+            <Navbar.Toggle />
+            <GenericMenuBuilder
+                icon="place-holder-circle"
+                title={currentUser.firstName}
+                componentMapping={componentMapping}
+                itemType="hamburger"
+                showContentOnly={showContentOnly}
+            />
+        </Navbar.TopRightMenu>
+    );
+}
 
+const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
     const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
@@ -187,6 +176,11 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
     if (debug) console_debug_log("App | location:", location);
 
     const { currentUser } = useUser();
+    const {
+        state, setState,
+        menuOptions, setMenuOptions,
+        sideMenu, setSideMenu,
+    } = useAppContext();
 
     if (debug) {
         console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMapFinal:', componentMapFinal, 'appLogo:', appLogo, 'appLogoHeader:', appLogoHeader);
@@ -209,16 +203,9 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                 <AppNavBar
                     appLogoHeader={appLogoHeader}
                 >
-                    <Navbar.OptionsContainer>
-                        <Navbar.Collapse
-                            id="basic-navbar-nav"
-                            className='content-end'
-                        >
-                            <Nav>
-                                <DarkModeButton/>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Navbar.OptionsContainer>
+                    <Navbar.TopRightMenu>
+                        <DarkModeButton/>
+                    </Navbar.TopRightMenu>
                 </AppNavBar>
                 <AppSectionContainer>
                     <LoginPage
@@ -226,6 +213,9 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                         appLogoHeader={appLogoHeader}
                     />
                 </AppSectionContainer>
+                <AppFooterContainer>
+                    <AppFooter/>
+                </AppFooterContainer>
             </MainContainer>
         );
     }
@@ -236,102 +226,57 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                 <AppNavBar
                     appLogoHeader={appLogoHeader}
                 >
-                    <Navbar.OptionsContainer>
-                        <Navbar.Toggle
-                            id="navbar-main-toggle"
-                            aria-controls="responsive-navbar-nav"
+                    <Navbar.TopCenterMenu>
+                        <GenericMenuBuilder
+                            componentMapping={componentMapFinal}
+                            itemType={sideMenu ? "side_menu" : "top_menu"}
                         />
-                        <Navbar.Collapse
-                            id="basic-navbar-nav"
-                            type="topmenu"
-                            // className='content-start'
-                            className='content-start justify-start w-full'
-                        >
-                            <Nav
-                                // className="me-auto"
-                                type="top_menu"
-                            >
-                                {!sideMenu && (
-                                    <GenericMenuBuilder
-                                        componentMapping={componentMapFinal}
-                                        itemType="top_menu"
-                                        menuOptions={menuOptions}
-                                        status={state}
-                                        setExpanded={setExpanded}
-                                    />
-                                )}
-                            </Nav>
-                        </Navbar.Collapse>
-                        <Navbar.Collapse
-                            id="current-user-navbar-nav"
-                            className="content-end"
-                        >
-                            <div
-                                className='flex items-center space-x-2'
-                            >
-                                <DarkModeButton/>
-                                <MenuModeButton
-                                    sideMenu={sideMenu}
-                                    setSideMenu={setSideMenu}
-                                />
-                                <Navbar.Text
-                                    className='flex items-center whitespace-nowrap'
-                                >
-                                    Signed in as:
-                                    <GenericMenuBuilder
-                                        title={currentUser.firstName}
-                                        componentMapping={componentMapFinal}
-                                        itemType="hamburger"
-                                        menuOptions={menuOptions}
-                                        status={state}
-                                        showContentOnly={showContentOnly}
-                                        setExpanded={setExpanded}
-                                    />
-                                </Navbar.Text>
-                            </div>
-                        </Navbar.Collapse>
-                    </Navbar.OptionsContainer>
+                    </Navbar.TopCenterMenu>
+                    {!sideMenu && (
+                        <TopRightMenu
+                            componentMapping={componentMapFinal}
+                            showContentOnly={showContentOnly}
+                        />
+                    )}
                 </AppNavBar>
             )}
             <AppSectionContainer>
-                <div
-                    className="flex flex-start"
-                >
-                    {sideMenu && (
-                        <Navbar.Collapse
-                            id="responsive-navbar-sidenav"
-                            type="sidebar"
-                            className='h-[87vh]'
-                        >
-                            <Nav
-                                type="side_menu"
-                            >
-                                <GenericMenuBuilder
-                                    componentMapping={componentMapFinal}
-                                    itemType="side_menu"
-                                    menuOptions={menuOptions}
-                                    status={state}
-                                    setExpanded={setExpanded}
-                                />
-                            </Nav>
-                        </Navbar.Collapse>
-                    )}
+                {!showContentOnly && sideMenu && (
+                    <Navbar.TopForSideMenu>
+                        <TopRightMenu
+                            componentMapping={componentMapFinal}
+                            showContentOnly={showContentOnly}
+                        />
+                    </Navbar.TopForSideMenu>
+                )}
+                <AppSectionContainer.ForSideMenu>
                     <AppMainComponent
-                        // login={login}
-                        state={state}
                         stateHandler={stateHandler}
-                        menuOptions={menuOptions}
                         componentMap={componentMapFinal}
-                        setExpanded={setExpanded}
                         showContentOnly={showContentOnly}
                         appLogo={appLogo}
                         appLogoHeader={appLogoHeader}
-                        // className='overflow-x-auto'
                     />
-                </div>
+                </AppSectionContainer.ForSideMenu>
+                {sideMenu && (
+                    <AppFooterContainer>
+                        <AppFooter/>
+                    </AppFooterContainer>
+                )}
             </AppSectionContainer>
+            <Navbar.MobileMenu>
+                <GenericMenuBuilder
+                    componentMapping={componentMapFinal}
+                    itemType="mobile_menu"
+                />
+            </Navbar.MobileMenu>
             {state !== '' && (
                 <DefaultRoutes/>
+            )}
+            {!sideMenu && (
+                <AppFooterContainer>
+                    <AppFooter/>
+                </AppFooterContainer>
             )}
         </MainContainer>
     );
@@ -359,17 +304,15 @@ const CloseButton = ({children}) => {
 }
 
 const AppMainComponent = ({
-    state,
     stateHandler,
-    menuOptions,
     componentMap,
     showContentOnly,
-    setExpanded,
     appLogo = null,
     appLogoHeader = null,
 }) => {
     const location = useLocation();
     if (debug) console_debug_log("AppMainComponent | location:", location);
+    const { state, menuOptions } = useAppContext();
 
     if (state !== "") {
         if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
@@ -391,9 +334,6 @@ const AppMainComponent = ({
         <GenericMenuBuilder
             componentMapping={componentMap}
             itemType="routes"
-            menuOptions={menuOptions}
-            status={state}
-            setExpanded={setExpanded}
             appLogo={appLogo}
             appLogoHeader={appLogoHeader}
         />

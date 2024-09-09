@@ -7,7 +7,7 @@ import {
 } from "./logging.service.jsx";
 import { imageDirectory } from '../constants/general_constants.jsx';
 
-import { BUTTON_SEARCH_ENGINE_TOP_DIV_CLASS } from '../constants/class_name_constants.jsx';
+import { SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS } from '../constants/class_name_constants.jsx';
 
 // import GoogleIcon from "../images/google_logo.svg";
 const googleIcon = "google_logo.svg";
@@ -39,7 +39,7 @@ export const SearchEngineButton = ({
     return (
         <>
             <div
-                className={BUTTON_SEARCH_ENGINE_TOP_DIV_CLASS}
+                className={SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS}
             >
                 <button
                     onClick={handleGoogleClick}

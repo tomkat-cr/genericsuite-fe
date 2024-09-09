@@ -4,6 +4,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
+import { useAppContext } from '../helpers/AppContext.jsx';
 import { history, getPrefix } from '../helpers/history.jsx';
 import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
 import {
@@ -30,7 +31,10 @@ import { HomePage } from '../components/HomePage/HomePage.jsx';
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import NavDropdown from 'react-bootstrap/cjs/NavDropdown.js';
 import { Nav, NavDropdown } from '../helpers/NavLib.jsx';
-import { ALERT_DANGER_CLASS } from '../constants/class_name_constants.jsx';
+import { GsIcons } from '../helpers/IconsLib.jsx';
+import {
+    ALERT_DANGER_CLASS,
+} from '../constants/class_name_constants.jsx';
 
 const debug = false;
 
@@ -64,16 +68,16 @@ const getOnClickObject = (onClickString, setExpanded, componentMapping = {}) => 
 
 export const GenericMenuBuilder = (
     {
-        title = null,
+        icon,
+        title,
         componentMapping,
         itemType,
-        menuOptions = null,
-        status,
-        setExpanded,
-        appLogo = null,
-        appLogoHeader = null,
+        appLogo,
+        appLogoHeader,
     }
 ) => {
+    const { state, menuOptions, setExpanded } = useAppContext();
+
     const getElementObj = (item) => {
         const ElementObj = componentMapping[item.element];
         if (typeof ElementObj === 'undefined') {
@@ -171,7 +175,7 @@ export const GenericMenuBuilder = (
         );
     }
 
-    const GetNavs = (item_type_filter, topTitle, itemType) => {
+    const GetNavs = (item_type_filter, topTitle, itemType, icon) => {
         // React-Bootstrap Navs and tabs
         // https://react-bootstrap.netlify.app/docs/components/navs
         if (debug) {
@@ -200,7 +204,7 @@ export const GenericMenuBuilder = (
                             reloadDocument={itemDefs["reload"]}
                             type={itemType}
                         >
-                            {itemDefs["title"]}
+                            {icon ? <GsIcons icon={icon} />: itemDefs["title"]}
                         </Nav.Link>
                     );
                 }
@@ -212,6 +216,7 @@ export const GenericMenuBuilder = (
                         title={itemDefs["title"]}
                         id={navDropdownId}
                         type={itemType}
+                        icon={icon}
                     >
                     {
                         item.sub_menu_options.map(subItem => {
@@ -263,10 +268,10 @@ export const GenericMenuBuilder = (
             return getRoutes();
         }
         // NavLinks
-        return GetNavs(item_type_filter, topTitle, itemType);
+        return GetNavs(item_type_filter, topTitle, itemType, icon);
     };
 
-    if (status !== "" && itemType === "routes") {
+    if (state !== "" && itemType === "routes") {
         return (
             <DefaultRoutes
                 appLogo={appLogo}
@@ -275,7 +280,7 @@ export const GenericMenuBuilder = (
         );
     }
 
-    if (status !== "") {
+    if (state !== "") {
         return (
             <DefaultRoutes
                 appLogo={appLogo}
@@ -284,8 +289,14 @@ export const GenericMenuBuilder = (
         );
     }
 
-    return menuItems(itemType === 'side_menu' ? 'top_menu' : itemType, title, itemType);
+    // return menuItems(itemType === 'side_menu' ? 'top_menu' : itemType, title, itemType);
+    return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType);
+
 }
+
+const isTopMenuAlternativeType = (itemType) => (
+    Object.values(['side_menu', 'mobile_menu']).some(element => itemType === element)
+)
 
 export const editorRoute = (editor) => {
     return (
