@@ -17,7 +17,9 @@
     ".env.example",
     "CHANGELOG.md",
     "src/lib/images",
-    "public/output.css"
+    "public/gs_core.css",
+    "src/lib/helpers/IconsLib.jsx",
+    "src/lib/constants/class_name_constants.jsx"
   ],
   "repository": {
     "type": "git",

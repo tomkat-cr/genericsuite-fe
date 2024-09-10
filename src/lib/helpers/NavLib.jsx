@@ -9,7 +9,8 @@ import {
     NAVBAR_HEADER_FOR_TOP_MENU_CLASS,
     NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS,
     NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS,
-    NAVBAR_TOP_RIGHT_MENU_CLASS,
+    NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS,
+    NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS,
     NAVBAR_TOGGLE_BUTTON_CLASS,
     NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
     NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
@@ -185,17 +186,17 @@ const NavbarBrand = ({ children, as, to, onClick }) => {
             <div
                 className={NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS}
             >
-                <div
-                    className={NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS}
+                <As
+                    // as={as}
+                    to={to}
+                    onClick={onClick}
                 >
-                    <As
-                        // as={as}
-                        to={to}
-                        onClick={onClick}
+                    <div
+                        className={NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS}
                     >
                         {children}
-                    </As>
-                </div>
+                    </div>
+                </As>
                 <MobileMenuCloseButton
                     className={NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN}
                 />
@@ -240,9 +241,10 @@ const NavbarTopCenterMenu = ({ children }) => {
 
 const NavbarTopRightMenu = ({ children }) => {
     if (debug) console_debug_log("||||| NavbarTopRightMenu", children);
+    const { sideMenu } = useAppContext();
     return (
         <div
-            className={NAVBAR_TOP_RIGHT_MENU_CLASS}
+            className={sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS}
         >
             {children}
         </div>
@@ -439,6 +441,7 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
         <div
             className={variantStyleTopDiv}
             // data-headlessui-state=""
+            // zIndex="9999"
         >
             <button
                 className={variantStyleButton}
@@ -448,6 +451,7 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
                 // aria-expanded="false"
                 // data-headlessui-state=""
                 onClick={toggledropDownOpen}
+                // zIndex="9999"
             >
                 {(icon ? <GsIcons icon={icon} /> : title)}
                 <GsIcons
@@ -458,9 +462,10 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
             </button>
             <div
                 className={variantStyleInnerDiv}
+                // zIndex="9999"
                 // aria-labelledby="headlessui-menu-button-:Rqcr6:"
                 // role="menu"
-                tabIndex="0"
+                // tabIndex="0"
                 // data-headlessui-state="open"
                 // data-open=""
                 id={`${fullId}_dropDown`}
