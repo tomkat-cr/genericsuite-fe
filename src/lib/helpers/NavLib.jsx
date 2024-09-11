@@ -59,6 +59,10 @@ import {
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS,
     NAVBAR_TOP_FOR_SIDE_MENU_CLASS,
     APP_FOOTER_CONTAINER_CLASS,
+    CENTERED_BOX_CONTAINER_DIV_1_CLASS,
+    CENTERED_BOX_CONTAINER_DIV_3_CLASS,
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS,
+    CENTERED_BOX_CONTAINER_DIV_2_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { GsIcons } from './IconsLib.jsx';
 import { useAppContext } from './AppContext.jsx';
@@ -103,10 +107,9 @@ export const AppSectionContainer = ({ children }) => {
 
 export const AppSectionContainerForSideMenu = ( { children }) => {
     if (debug) console_debug_log("||||| AppSectionContainerForSideMenu");
-    const { sideMenu } = useAppContext();
     return (
         <main
-            className={sideMenu ? "flex-grow p-4" : ""}
+            className={APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS}
         >
             {children}
         </main>
@@ -132,13 +135,13 @@ export const CenteredBoxContainer = ({ children }) => {
     if (debug) console_debug_log("||||| CenterdBoxContainer", children);
     return (
         <div
-            className="z-50 overflow-auto"
+            className={CENTERED_BOX_CONTAINER_DIV_1_CLASS}
         >
             <div
-                className={`relative ${APP_MAIN_BOX_BG_COLOR_CLASS} w-fit max-w-md m-auto flex-col flex rounded-lg`}
+                className={`${APP_MAIN_BOX_BG_COLOR_CLASS} ${CENTERED_BOX_CONTAINER_DIV_2_CLASS}`}
             >
                 <div
-                    className="flex flex-col items-center pt-1 pb-4 p-6"
+                    className={CENTERED_BOX_CONTAINER_DIV_3_CLASS}
                 >
                     {children}
                 </div>

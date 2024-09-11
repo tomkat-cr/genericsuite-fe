@@ -10,7 +10,7 @@ import {
 } from '../constants/class_name_constants.jsx';
 import { console_debug_log } from '../services/logging.service.jsx';
 
-const debug = true;
+const debug = false;
 
 export const MenuModeButton = () => {
     const { currentUser } = useUser();

@@ -12,20 +12,11 @@ import {
 import {
     BUTTON_LISTING_CLASS,
     APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS,
-    APP_LISTING_SEARCH_BOX_LABEL_CLASS,
+    // APP_LISTING_SEARCH_BOX_LABEL_CLASS,
     APP_LISTING_SEARCH_BOX_INPUT_CLASS,
     APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS,
     APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS,
 } from "../constants/class_name_constants.jsx";
-
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import fontawesome from "@fortawesome/fontawesome";
-// import {
-//     faGreaterThan,
-// } from "@fortawesome/fontawesome-free-solid";
-// fontawesome.library.add(
-//     faGreaterThan,
-// );
 
 const debug = false;
 
@@ -36,8 +27,6 @@ export const CrudEditorSearch = ({
     value="",
 }) => {
     const [searchText, setSearchText] = useState(value);
-
-    const searchTextId = () => (`searchText_${id}`)
 
     const getDateRange = (searchValue) => {
         const dateRange = searchValue.split(',');
@@ -110,16 +99,17 @@ export const CrudEditorSearch = ({
         <div
             className={APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS}
         >
-            <label
-                htmlFor={searchTextId()}
+            {/* <label
+                htmlFor={id}
                 className={APP_LISTING_SEARCH_BOX_LABEL_CLASS}
             >
                 {MSG_SEARCH}:
-            </label>
+            </label> */}
             <input
-                id={searchTextId()}
+                id={id}
                 // type="text"
                 className={APP_LISTING_SEARCH_BOX_INPUT_CLASS}
+                placeholder={`${MSG_SEARCH}...`}
                 value={searchText || ''}
                 onChange={handleTextChange}
             />
@@ -127,8 +117,7 @@ export const CrudEditorSearch = ({
                 className={APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS}
                 onClick={handleSubmit}
             >
-                {/* <FontAwesomeIcon icon="greater-than" /> */}
-                <GsIcons icon="greater-than" />
+                <GsIcons icon="search" />
             </button>
             {searchText !== '' &&
                 <button

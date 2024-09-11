@@ -26,6 +26,7 @@ import {
 } from '../helpers/date-timestamp.jsx';
 import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
 import { useUser } from '../helpers/UserContext.jsx';
+import { useAppContext } from '../helpers/AppContext.jsx';
 
 import {
     ACTION_CREATE,
@@ -87,7 +88,9 @@ export const FormPage = ({
     const [status, setStatus] = useState("");
     const [refresh, setRefresh] = useState(0);
     const [formMsg, setFormMsg] = useState({message: message, messageType: messageType});
+
     const { currentUser } = useUser();
+    const { theme } = useAppContext();
 
     const {
         debugCache,
@@ -166,16 +169,16 @@ export const FormPage = ({
 
     return (
         <div 
-            className={APP_TOP_DIV_CLASS}
+            className={`${APP_TOP_DIV_CLASS} ${theme.contentBg}`}
         >
             <div 
                 className={APP_FORMPAGE_LEVEL1_DIV_CLASS}
             >
-                <h1
+                <h2
                     className={APP_TITLE_H1_CLASS}
                 >
                     {editor.title + " - " + actionTitle}
-                </h1>
+                </h2>
                 <div
                     className={APP_FORMPAGE_LEVEL2_DIV_CLASS}
                 >

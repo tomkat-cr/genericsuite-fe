@@ -4,12 +4,14 @@ export const defaultTheme = {
     secondary: 'bg-gray-200 defaultThemeLightSecondary',
     text: 'text-gray-800 defaultThemeLightText',
     background: 'bg-gray-100 defaultThemeLightBackground',
+    contentBg: 'bg-gray-300 defaultThemeLightBackground',
   },
   dark: {
     primary: 'bg-blue-800 defaultThemeDarkPrimary',
     secondary: 'bg-gray-700 defaultThemeDarkSecondary',
     text: 'text-gray-200 defaultThemeDarkText',
     background: 'bg-gray-900 defaultThemeDarkBackground',
+    contentBg: 'bg-slate-500 defaultThemeLightBackground',
   }
 }
 
@@ -21,7 +23,13 @@ export const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContain
 export const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow p-4 appSectionContainerForTopMenuClass";
 export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col lg:ml-64 appSectionContainerForSideMenuClass";
 
+export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4";
+
 export const APP_FOOTER_CONTAINER_CLASS = "p-4 text-white text-center appFooterContainerClass";
+
+export const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto";
+export const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "relative w-fit max-w-md m-auto flex-col flex rounded-lg";
+export const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6";
 
 export const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
 export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
@@ -122,13 +130,6 @@ export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 export const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
 export const BUTTON_SECONDARY_CLASS = "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
 
-// Listing page buttons (GCE_RFC)
-
-export const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
-export const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
-export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2 buttonListingNewClass`;
-export const BUTTON_LISTING_REFRESH_CLASS=`${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
-
 // Special buttons
 
 export const BUTTON_COMPOSED_LABEL_CLASS="flex items-center buttonComposedLabelClass";
@@ -140,12 +141,24 @@ export const DARK_MODE_BUTTON_SVG_CLASS = "w-6 h-6 darkModeButtonSvgClass";
 export const DARK_MODE_BUTTON_DARK_HIDDEN_CLASS = "dark:hidden darkModeButtonDarkHiddenClass";
 export const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDarkInlineClass";
 
-// General app section (e.g. GCE_RFC)
+// Generic CRUD editor (GCE_RFC) - BEGIN
 
-export const APP_TOP_DIV_CLASS = 'container mx-auto flex flex-col pb-2 ml-1 mr-1 appTopDivClass';
+// Listing page buttons (GCE_RFC)
+
+export const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
+export const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
+export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2 buttonListingNewClass`;
+export const BUTTON_LISTING_REFRESH_CLASS=`${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
+
+// General app section (GCE_RFC)
+
+// export const APP_TOP_DIV_CLASS = 'container mx-auto flex flex-col pb-2 ml-1 mr-1 appTopDivClass';
+export const APP_TOP_DIV_CLASS = 'mb-4 p-4 rounded-lg appTopDivClass';
 export const APP_LEVEL1_DIV_CLASS = 'appLevel1DivClass';
-export const APP_LEVEL2_DIV_CLASS = "1-not-prose 1-relative rounded-xl overflow-hidden mr-2 bg-slate-50 dark:bg-slate-800/25 appLevel2DivClass";
-export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-2 mt-2 appTitleH1Class';
+// export const APP_LEVEL2_DIV_CLASS = "1-not-prose 1-relative rounded-xl overflow-hidden mr-2 bg-slate-50 dark:bg-slate-800/25 appLevel2DivClass";
+export const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
+// export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-2 mt-2 appTitleH1Class';
+export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
 export const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
 
 export const APP_MAIN_BOX_BG_COLOR_CLASS = "bg-white dark:bg-slate-800 appMainBoxBgColorClass";
@@ -153,40 +166,64 @@ export const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMe
 
 // Listing page (GCE_RFC)
 
-export const APP_LISTING_LEVEL2_DIV_CLASS = 'appListingLevel2DivClass';
-export const APP_LISTING_LEVEL3_DIV_CLASS = "1-relative rounded-xl overflow-auto appListingLevel3DivClass";
-export const APP_LISTING_LEVEL4_DIV_CLASS = "shadow-sm overflow-hidden my-4 appListingLevel4DivClass";
-export const APP_LISTING_TABLE_CLASS = "border-collapse table-auto w-full text-sm appListingTableClass";
-export const APP_LISTING_TABLE_HDR_THEAD_CLASS = "appListingTableHdrTheadClass";
-export const APP_LISTING_TABLE_HDR_TR_CLASS = "appListingTableHdrTrClass";
-export const APP_LISTING_TABLE_HDR_TH_CLASS = "border-b dark:border-slate-600 font-medium p-2 pl-2 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left appListingTableHdrThClass";
+// export const APP_LISTING_LEVEL2_DIV_CLASS = 'appListingLevel2DivClass';
+  // export const APP_LISTING_LEVEL3_DIV_CLASS = "1-relative rounded-xl overflow-auto appListingLevel3DivClass";
+// export const APP_LISTING_LEVEL3_DIV_CLASS = "appListingLevel3DivClass";
+  // export const APP_LISTING_LEVEL4_DIV_CLASS = "shadow-sm overflow-hidden my-4 appListingLevel4DivClass";
+// export const APP_LISTING_LEVEL4_DIV_CLASS = "appListingLevel4DivClass";
+
+// export const APP_LISTING_TABLE_CLASS = "border-collapse table-auto w-full text-sm appListingTableClass";
+export const APP_LISTING_TABLE_CLASS = "w-full text-sm appListingTableClass";
+export const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTableHdrTheadClass";
+export const APP_LISTING_TABLE_HDR_TR_CLASS = "border-b appListingTableHdrTrClass";
+// export const APP_LISTING_TABLE_HDR_TH_CLASS = "border-b dark:border-slate-600 font-medium p-2 pl-2 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left appListingTableHdrThClass";
+export const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
 export const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
-export const APP_LISTING_TABLE_BODY_TBODY_CLASS = `${APP_MAIN_BOX_BG_COLOR_CLASS} appListingTableBodyTbodyClass`;
-export const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'bg-white appListingTableBodyTrOddClass';
-export const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'bg-slate-500 appListingTableBodyTrEvenClass';
-export const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS="border-b border-slate-100 dark:border-slate-700 p-2 pl-2 text-slate-500 dark:text-slate-400 appListingTableBodyTdBaseOddClass";
-export const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS="border-b border-slate-100 dark:border-slate-700 p-2 pl-2 text-white dark:text-slate-400 appListingTableBodyTdBaseEvenClass";
+// export const APP_LISTING_TABLE_BODY_TBODY_CLASS = `${APP_MAIN_BOX_BG_COLOR_CLASS} appListingTableBodyTbodyClass`;
+export const APP_LISTING_TABLE_BODY_TBODY_CLASS = `appListingTableBodyTbodyClass`;
+// export const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'bg-white appListingTableBodyTrOddClass';
+export const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrOddClass';
+// export const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'bg-slate-500 appListingTableBodyTrEvenClass';
+export const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrEvenClass';
+export const APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS = 'appListingTableBodyTrActionsOddClass';
+export const APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS = 'appListingTableBodyTrActionsEvenClass';
+
+// export const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS="border-b border-slate-100 dark:border-slate-700 p-2 pl-2 text-slate-500 dark:text-slate-400 appListingTableBodyTdBaseOddClass";
+export const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS="p-2 appListingTableBodyTdBaseOddClass";
+// export const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS="border-b border-slate-100 dark:border-slate-700 p-2 pl-2 text-white dark:text-slate-400 appListingTableBodyTdBaseEvenClass";
+export const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS="p-2 appListingTableBodyTdBaseEvenClass";
 export const APP_LISTING_TABLE_BODY_TD_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words appListingTableBodyTdOddClass`;
 export const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words appListingTableBodyTdEvenClass`;
-export const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} whitespace-nowrap text-sm appListingTableBodyTdActionsOddClass`;
-export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} whitespace-nowrap text-sm appListingTableBodyTdActionsEvenClass`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsOddClass`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsEvenClass`;
 
 // Listing page search box (GCE_RFC)
 
-export const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS="flex items-center appListingSearchBoxTopDivClass";
+// export const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS="flex items-center appListingSearchBoxTopDivClass";
+export const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS="flex items-center space-x-2 appListingSearchBoxTopDivClass";
 export const APP_LISTING_SEARCH_BOX_LABEL_CLASS="mr-2 text-sm appListingSearchBoxLabelClass";
-export const APP_LISTING_SEARCH_BOX_INPUT_CLASS="w-30 Px-2 text-sm appListingSearchBoxInputClass";
+// export const APP_LISTING_SEARCH_BOX_INPUT_CLASS="w-30 Px-2 text-sm appListingSearchBoxInputClass";
+export const APP_LISTING_SEARCH_BOX_INPUT_CLASS="p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
 export const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS=`${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
 export const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS=`${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 export const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS='ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
-export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "ml-1 mr-1 mt-2 flex items-center appListingToolbarTopDivClass";
-export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS="text-sm ml-2 mr-2 appListingToolbarPageNumSectionClass";
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS="text-sm mr-2 flex items-center appListingToolbarRowPerPageSectionClass";
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS="ml-3 mr-2 text-sm appListingToolbarRowPerPageLabelClass";
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS="w-10 px-2 text-sm appListingToolbarRowPerPageInputClass";
+// export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "ml-1 mr-1 mt-2 flex items-center appListingToolbarTopDivClass";
+export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+
+export const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS="text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
+
+// export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS="text-sm ml-2 mr-2 appListingToolbarPageNumSectionClass";
+export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS="text-sm flex items-center 1-space-x-2 appListingToolbarPageNumSectionClass";
+
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS="text-sm ml-2 mr-2 flex items-center appListingToolbarRowPerPageSectionClass";
+// export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS="ml-3 mr-2 text-sm appListingToolbarRowPerPageLabelClass";
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS="mr-2 text-sm appListingToolbarRowPerPageLabelClass";
+// export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS="w-10 px-2 text-sm appListingToolbarRowPerPageInputClass";
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS="p-2 rounded border appListingToolbarRowPerPageInputClass";
+
 export const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS="ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
 
 // Data page (GCE_RFC)
@@ -202,6 +239,8 @@ export const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} a
 export const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid appFormPageFieldInvalidClass`;
 export const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS="align-middle flex appFormPageSpecialButtonDivClass";
 export const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChildComponentsTopDivClass";
+
+// Generic CRUD editor (GCE_RFC) - END
 
 // Pop-ups
 

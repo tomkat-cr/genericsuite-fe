@@ -241,28 +241,41 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                 </AppNavBar>
             )}
             <AppSectionContainer>
-                {!showContentOnly && sideMenu && (
-                    <Navbar.TopForSideMenu>
-                        <TopRightMenu
-                            componentMapping={componentMapFinal}
+                <>
+                    {!sideMenu && (
+                        <AppMainComponent
+                            stateHandler={stateHandler}
+                            componentMap={componentMapFinal}
                             showContentOnly={showContentOnly}
+                            appLogo={appLogo}
+                            appLogoHeader={appLogoHeader}
                         />
-                    </Navbar.TopForSideMenu>
-                )}
-                <AppSectionContainer.ForSideMenu>
-                    <AppMainComponent
-                        stateHandler={stateHandler}
-                        componentMap={componentMapFinal}
-                        showContentOnly={showContentOnly}
-                        appLogo={appLogo}
-                        appLogoHeader={appLogoHeader}
-                    />
-                </AppSectionContainer.ForSideMenu>
-                {sideMenu && (
-                    <AppFooterContainer>
-                        <AppFooter/>
-                    </AppFooterContainer>
-                )}
+                    )}
+                    {sideMenu && (
+                        <>
+                            {!showContentOnly && (
+                                <Navbar.TopForSideMenu>
+                                    <TopRightMenu
+                                        componentMapping={componentMapFinal}
+                                        showContentOnly={showContentOnly}
+                                    />
+                                </Navbar.TopForSideMenu>
+                            )}
+                            <AppSectionContainer.ForSideMenu>
+                                <AppMainComponent
+                                    stateHandler={stateHandler}
+                                    componentMap={componentMapFinal}
+                                    showContentOnly={showContentOnly}
+                                    appLogo={appLogo}
+                                    appLogoHeader={appLogoHeader}
+                                />
+                            </AppSectionContainer.ForSideMenu>
+                            <AppFooterContainer>
+                                <AppFooter/>
+                            </AppFooterContainer>
+                        </>
+                    )}
+                </>
             </AppSectionContainer>
             <Navbar.MobileMenu>
                 <GenericMenuBuilder

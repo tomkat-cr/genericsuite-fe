@@ -29,26 +29,6 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                 </svg>
             );
 
-        case 'greater-than':
-            return (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
-                    viewBox="0 0 384 512"
-                >
-                    <path
-                        fill="currentColor"
-                        d="M365.52 209.85L59.22 67.01c-16.06-7.49-35.15-.54-42.64 15.52L3.01 111.61c-7.49 16.06-.54 35.15 15.52 42.64L236.96 256.1 18.49 357.99C2.47 365.46-4.46 384.5 3.01 400.52l13.52 29C24 445.54 43.04 452.47 59.06 445l306.47-142.91a32.003 32.003 0 0 0 18.48-29v-34.23c-.01-12.45-7.21-23.76-18.49-29.01z"
-                    >
-                    </path>
-                </svg>
-            );
-
         case 'arrow-right-small':
             return (
                 <svg
@@ -200,6 +180,48 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                 </svg>
             );
 
+        case 'greater-than':
+            return (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id={id}
+                    alt={alt}
+                    width={width ?? "14"}
+                    height={height ?? "14"}
+                    className={className ?? 'h-4 w-4'}
+                    role={role}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <path d="m9 18 6-6-6-6"></path>
+                </svg>
+            );
+        
+        case 'less-than':
+            return (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id={id}
+                    alt={alt}
+                    width={width ?? "14"}
+                    height={height ?? "14"}
+                    className={className ?? 'h-4 w-4'}
+                    role={role}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <path d="m15 18-6-6 6-6"></path>
+                </svg>
+            );
+
         case 'menu-dots-more':
             return (
                 <svg
@@ -327,11 +349,6 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
         case 'plus':
             return (
                 <svg
-                    // aria-hidden="true"
-                    // focusable="false"
-                    // data-prefix="fas"
-                    // data-icon="plus"
-                    // class="svg-inline--fa fa-plus "
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
@@ -346,6 +363,27 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                         d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
                     >
                     </path>
+                </svg>
+            );
+
+        case 'search':
+            return (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id={id}
+                    alt={alt}
+                    width={currentWidth ?? '24'}
+                    height={currentHeight ?? '24'}
+                    className={className ?? "h-4 w-4"}
+                    role={role}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
                 </svg>
             );
 
