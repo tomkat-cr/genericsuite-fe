@@ -17,7 +17,10 @@ import {
     console_debug_log,
 } from "./logging.service.jsx";
 import { useUser } from '../helpers/UserContext.jsx';
-import { INVALID_FEEDBACK_CLASS } from '../constants/class_name_constants.jsx';
+import {
+    INVALID_FEEDBACK_CLASS,
+    SUGGESTION_DROPDOWN_CLASS,
+} from '../constants/class_name_constants.jsx';
 
 const debug = false;
 
@@ -144,7 +147,7 @@ export const SuggestionDropdown = ({
     return (
         <>
             <div
-                className="align-middle flex"
+                className={SUGGESTION_DROPDOWN_CLASS}
             >
                 <Downshift
                     inputValue={inputValue}

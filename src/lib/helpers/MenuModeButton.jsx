@@ -6,6 +6,8 @@ import { useUser } from './UserContext.jsx';
 import { useAppContext } from './AppContext.jsx';
 import { GsIcons } from './IconsLib.jsx';
 import {
+    HIDDEN_CLASS,
+    INLINE_CLASS,
     MENU_MODE_BUTTON_TOP_DIV_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { console_debug_log } from '../services/logging.service.jsx';
@@ -103,21 +105,16 @@ export const MenuModeButton = () => {
         >
             <button
                 type="button"
-                id="headlessui-listbox-button-:R2lkcr5:"
-                aria-haspopup="listbox"
-                aria-expanded="false"
-                data-headlessui-state=""
-                aria-labelledby="headlessui-label-:R1lkcr5: headlessui-listbox-button-:R2lkcr5:"
                 onClick={toggleSideMenu}
             >
                 <span
-                    className={!sideMenu ? "hidden" : "inline"}
+                    className={!sideMenu ? HIDDEN_CLASS : INLINE_CLASS}
                 >
                     { /* Side menu button */ }
                     <GsIcons icon='side-menu'/>
                 </span>
                 <span
-                    className={sideMenu ? "hidden" : "inline"}
+                    className={sideMenu ? HIDDEN_CLASS : INLINE_CLASS}
                 >
                     { /* Top menu button */ }
                     <GsIcons icon='top-menu'/>

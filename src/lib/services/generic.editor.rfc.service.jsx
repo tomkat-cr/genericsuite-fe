@@ -419,186 +419,164 @@ const GenericCrudEditorMain = (props) => {
       )}
       {/* Listing space */}
       {rows && (
-        // <div 
-        //     className={APP_LEVEL1_DIV_CLASS}
-        // >
         <>
-          <h2
-            key={`${editor.baseUrl}_title`}
-            className={APP_TITLE_H1_CLASS}
-          >
-            {/* Listing title */}
-            {editor.title + " - " + MSG_ACTION_LIST}
-            <span
-              className={APP_TITLE_RECYCLE_BUTTON_CLASS}
-            >
-              <button
-                onClick={handleRefresh}
-                className={BUTTON_LISTING_REFRESH_CLASS}
-              >
-                <GsIcons icon='arrows-rotate' />
-              </button>
-            </span>
-          </h2>
+          {/* Listing title */}
+          <CrudEditorListingTitle
+            baseUrl={editor.baseUrl}
+            title={editor.title}
+            handleRefresh={handleRefresh}
+          />
           <div
             key={`${editor.baseUrl}_level2_div`}
             className={APP_LEVEL2_DIV_CLASS}
           >
-            {/* <div
-              className={APP_LISTING_LEVEL2_DIV_CLASS}
+            <table
+              key={`${editor.baseUrl}_table`}
+              className={APP_LISTING_TABLE_CLASS}
             >
-              <div
-                className={APP_LISTING_LEVEL3_DIV_CLASS}
+              {/* Listing header */}
+              <thead
+                key={`${editor.baseUrl}_thead`}
+                className={APP_LISTING_TABLE_HDR_THEAD_CLASS}
+              >
+                <tr
+                  key={`${editor.baseUrl}_thead_tr`}
+                  className={APP_LISTING_TABLE_HDR_TR_CLASS}
                 >
-                <div
-                  className={APP_LISTING_LEVEL4_DIV_CLASS}
-                > */}
-                  <table
-                    key={`${editor.baseUrl}_table`}
-                    className={APP_LISTING_TABLE_CLASS}
-                  >
-                    {/* Listing header */}
-                    <thead
-                      key={`${editor.baseUrl}_thead`}
-                      className={APP_LISTING_TABLE_HDR_THEAD_CLASS}
+                  {Object.keys(editor.fieldElements).map(
+                    (key) =>
+                      editor.fieldElements[key].listing && (
+                        <th
+                          // scope="col"
+                          key={`${editor.baseUrl}_${key}_thead_th`}
+                          className={APP_LISTING_TABLE_HDR_TH_CLASS}
+                        >
+                          {editor.fieldElements[key].label}
+                        </th>
+                      )
+                  )}
+                  {actionsHandlerAllowsMagicButton && (
+                    <th
+                      // scope="col"
+                      key={`${editor.baseUrl}_actions`}
+                      className={APP_LISTING_TABLE_HDR_TH_CLASS}
                     >
+                      <div
+                        key={`${editor.baseUrl}_actions_div`}
+                        className={APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS}
+                      >
+                          {MSG_ACTIONS}
+                      </div>
+                    </th>
+                  )}
+                </tr>
+              </thead>
+              {/* Listing rows */}
+              <tbody
+                key={`${editor.baseUrl}_tbody`}
+                className={APP_LISTING_TABLE_BODY_TBODY_CLASS}
+              >
+                {rows && typeof rows.resultset !== 'undefined' &&
+                  rows.resultset.map((row, index) => (
+                    // To avoid use of <> to group 2 <tr> (one for the row and one for the actions)
+                    // because it throws the warning:
+                    // "Warning: Each child in a list should have a unique "key" prop."
+                    // we use <React.Fragment> instead
+                    <React.Fragment key={`${editor.baseUrl}_row_${rowId(row)}_tr_enclosure`}>
                       <tr
-                        key={`${editor.baseUrl}_thead_tr`}
-                        className={APP_LISTING_TABLE_HDR_TR_CLASS}
+                        id={`${editor.baseUrl}_row_${rowId(row)}_row`}
+                        key={`${editor.baseUrl}_row_${rowId(row)}_row`}
+                        className={index % 2 ? `${APP_LISTING_TABLE_BODY_TR_ODD_CLASS}` : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}`}
+                        onMouseOver={() => {
+                          actionsHandler('show', row);
+                        }}
+                        onClick={() => {
+                          actionsHandler('toggle', row);
+                        }}
+                        onMouseLeave={() => {
+                          actionsHandler('hide', row);
+                        }}
                       >
                         {Object.keys(editor.fieldElements).map(
                           (key) =>
                             editor.fieldElements[key].listing && (
-                              <th
-                                // scope="col"
-                                key={`${editor.baseUrl}_${key}_thead_th`}
-                                className={APP_LISTING_TABLE_HDR_TH_CLASS}
+                              <td
+                                key={`${editor.baseUrl}_row_${rowId(row)}_${key}_td`}
+                                className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS}
                               >
-                                {editor.fieldElements[key].label}
-                              </th>
+                                {
+                                  getSelectDescription(
+                                    editor.fieldElements[key],
+                                    row
+                                  )  // Show column value or select description
+                                }
+                              </td>
                             )
                         )}
                         {actionsHandlerAllowsMagicButton && (
-                          <th
-                            // scope="col"
-                            key={`${editor.baseUrl}_actions`}
-                            className={APP_LISTING_TABLE_HDR_TH_CLASS}
+                          <td
+                            // Action buttons
+                            key={`${editor.baseUrl}_row_${rowId(row)}_magicButton_td`}
+                            colSpan={Object.keys(editor.fieldElements).length + 1}
+                            className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
                           >
                             <div
-                              key={`${editor.baseUrl}_actions_div`}
-                              className={APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS}
+                              id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
+                              key={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
+                              className={VISIBLE_CLASS}
                             >
-                                {MSG_ACTIONS}
+                              <GsIcons icon="menu-dots-more" />
                             </div>
-                          </th>
+                          </td>
                         )}
                       </tr>
-                    </thead>
-                    {/* Listing rows */}
-                    <tbody
-                      key={`${editor.baseUrl}_tbody`}
-                      className={APP_LISTING_TABLE_BODY_TBODY_CLASS}
-                    >
-                      {rows && typeof rows.resultset !== 'undefined' &&
-                        rows.resultset.map((row, index) => (
-                          <React.Fragment key={`${editor.baseUrl}_row_${rowId(row)}_tr_enclosure`}>
-                            <tr
-                              id={`${editor.baseUrl}_row_${rowId(row)}_row`}
-                              key={`${editor.baseUrl}_row_${rowId(row)}_row`}
-                              className={index % 2 ? `${APP_LISTING_TABLE_BODY_TR_ODD_CLASS}` : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}`}
-                              onMouseOver={() => {
-                                actionsHandler('show', row);
-                              }}
-                              onClick={() => {
-                                actionsHandler('toggle', row);
-                              }}
-                              onMouseLeave={() => {
-                                actionsHandler('hide', row);
-                              }}
-                            >
-                              {Object.keys(editor.fieldElements).map(
-                                (key) =>
-                                  editor.fieldElements[key].listing && (
-                                    <td
-                                      key={`${editor.baseUrl}_row_${rowId(row)}_${key}_td`}
-                                      className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS}
-                                    >
-                                      {
-                                        getSelectDescription(
-                                          editor.fieldElements[key],
-                                          row
-                                        )  // Show column value or select description
-                                      }
-                                    </td>
-                                  )
-                              )}
-                              {actionsHandlerAllowsMagicButton && (
-                                <td
-                                  // Action buttons
-                                  key={`${editor.baseUrl}_row_${rowId(row)}_magicButton_td`}
-                                  colSpan={Object.keys(editor.fieldElements).length + 1}
-                                  className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
-                                >
-                                  <div
-                                    id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
-                                    key={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
-                                    className={VISIBLE_CLASS}
-                                  >
-                                    <GsIcons icon="menu-dots-more" />
-                                  </div>
-                                </td>
-                              )}
-                            </tr>
-                            <tr
-                              id={`${editor.baseUrl}_row_${rowId(row)}_controls`}
-                              key={`${editor.baseUrl}_row_${rowId(row)}_controls`}
-                              className={(index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS}
-                              onMouseOver={() => {
-                                actionsHandler('show', row);
-                              }}
-                              onClick={() => {
-                                actionsHandler('toggle', row);
-                              }}
-                              onMouseLeave={() => {
-                                actionsHandler('hide', row);
-                              }}
-                            >
-                              <td
-                                // Action buttons
-                                key={`${editor.baseUrl}_row_${rowId(row)}_controls_td`}
-                                colSpan={Object.keys(editor.fieldElements).length + 1}
-                                className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
-                              >
-                                <button
-                                  key={`${editor.baseUrl}_row_${rowId(row)}_controls_eye`}
-                                  onClick={() => handleView(rowId(row))}
-                                  className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
-                                >
-                                  <GsIcons icon="eye" />
-                                </button>
-                                <button
-                                  key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
-                                  onClick={() => handleModify(rowId(row))}
-                                  className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
-                                >
-                                  <GsIcons icon="edit" />
-                                </button>
-                                <button
-                                  key={`${editor.baseUrl}_row_${rowId(row)}_controls_trash`}
-                                  onClick={() => handleDelete(rowId(row))}
-                                  className={`${BUTTON_LISTING_CLASS}`}
-                                >
-                                  <GsIcons icon="trash" />
-                                </button>
-                              </td>
-                            </tr>
-                          </React.Fragment>
-                        ))}
-                    </tbody>
-                  </table>
-                {/* </div>
-              </div>
-            </div> */}
+                      <tr
+                        id={`${editor.baseUrl}_row_${rowId(row)}_controls`}
+                        key={`${editor.baseUrl}_row_${rowId(row)}_controls`}
+                        className={(index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS}
+                        onMouseOver={() => {
+                          actionsHandler('show', row);
+                        }}
+                        onClick={() => {
+                          actionsHandler('toggle', row);
+                        }}
+                        onMouseLeave={() => {
+                          actionsHandler('hide', row);
+                        }}
+                      >
+                        <td
+                          // Action buttons
+                          key={`${editor.baseUrl}_row_${rowId(row)}_controls_td`}
+                          colSpan={Object.keys(editor.fieldElements).length + 1}
+                          className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
+                        >
+                          <button
+                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_eye`}
+                            onClick={() => handleView(rowId(row))}
+                            className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+                          >
+                            <GsIcons icon="eye" />
+                          </button>
+                          <button
+                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
+                            onClick={() => handleModify(rowId(row))}
+                            className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+                          >
+                            <GsIcons icon="edit" />
+                          </button>
+                          <button
+                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_trash`}
+                            onClick={() => handleDelete(rowId(row))}
+                            className={`${BUTTON_LISTING_CLASS}`}
+                          >
+                            <GsIcons icon="trash" />
+                          </button>
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+              </tbody>
+            </table>
           </div>
           {/* Toolbar */}
           <div
@@ -632,7 +610,6 @@ const GenericCrudEditorMain = (props) => {
               {debug && "[GCE-99]"}
             </div>
           )}
-        {/* </div> */}
         </>
       )}
       {(debug ? debugCache("GenericCrudEditorMain") : '')}
@@ -719,18 +696,16 @@ export const ConvertToComponents = (editorDataObj, registry) => {
   return editorDataObj;
 }
 
-// export const GetFormData = (jsonFileName, registry, calleeName = null) => {
 export const GetFormData = (editorData, registry, calleeName = null) => {
   if (typeof registry === 'undefined') {
     registry = {};
   }
-  // const editorData = getConfigsJsonFile(jsonFileName);
   let editorDataObj = ConvertToComponents(editorData, registry);
   editorDataObj["calleeName"] = calleeName;
   return editorDataObj;
 }
 
-export const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange }) => {
+const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange }) => {
   return (
     <div
       className={APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS}
@@ -759,7 +734,6 @@ export const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange
         <option
           key={ROWS_PER_PAGE}
           value={ROWS_PER_PAGE}
-          // selected={ROWS_PER_PAGE === rowsPerPage}
         >
           {ROWS_PER_PAGE}
         </option>
@@ -767,7 +741,6 @@ export const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange
           <option
             key={value}
             value={value}
-            // selected={value === rowsPerPage}
           >
             {value}
           </option>
@@ -776,7 +749,6 @@ export const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange
           <option
             key={rowsPerPage}
             value={rowsPerPage}
-            // selected
           >
             {rowsPerPage}
           </option>
@@ -786,7 +758,7 @@ export const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange
   );
 }
 
-export const CrudEditorPagination = ({ id, currentPage, totalPages }) => {
+const CrudEditorPagination = ({ id, currentPage, totalPages }) => {
   return (
     <div
       id={id}
@@ -827,7 +799,7 @@ export const CrudEditorPagination = ({ id, currentPage, totalPages }) => {
   );
 }
 
-export const CrudEditorNewButton = ({ id, handleNew }) => {
+const CrudEditorNewButton = ({ id, handleNew }) => {
   return (
     <button
       id={id}
@@ -840,5 +812,26 @@ export const CrudEditorNewButton = ({ id, handleNew }) => {
           <GsIcons icon="plus" />&nbsp;{MSG_ACTION_NEW}
       </div>
     </button>
+  );
+}
+
+const CrudEditorListingTitle = ({ baseUrl, title, handleRefresh }) => {
+  return (
+    <h2
+      key={`${baseUrl}_title`}
+      className={APP_TITLE_H1_CLASS}
+    >
+      {title + " - " + MSG_ACTION_LIST}
+      <span
+        className={APP_TITLE_RECYCLE_BUTTON_CLASS}
+      >
+        <button
+          onClick={handleRefresh}
+          className={BUTTON_LISTING_REFRESH_CLASS}
+        >
+          <GsIcons icon='arrows-rotate' />
+        </button>
+      </span>
+    </h2>
   );
 }

@@ -15,9 +15,9 @@ import {
     NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
     NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
     NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
-    NAV_LINK_BUTTONS_TOP_MENU_CLASS,
-    NAV_LINK_BUTTONS_HAMBURGER_CLASS,
-    NAV_LINK_BUTTONS_SIDE_MENU_CLASS,
+    NAV_LINK_BUTTON_TOP_MENU_CLASS,
+    NAV_LINK_BUTTON_HAMBURGER_CLASS,
+    NAV_LINK_BUTTON_SIDE_MENU_CLASS,
     NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
     NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
     NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
@@ -30,8 +30,12 @@ import {
     NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
     NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS,
     NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS,
     NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
-    NAV_LINK_BUTTONS_MOBILE_MENU_CLASS,
+    NAV_LINK_BUTTON_MOBILE_MENU_CLASS,
     NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS,
     NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS,
     NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS,
@@ -85,6 +89,7 @@ export const MainContainer = ({ children }) => {
 }
 
 export const AppSectionContainer = ({ children }) => {
+    /* App section top container */
     if (debug) console_debug_log("||||| AppSectionContainer", children);
     const { sideMenu } = useAppContext();
     if (sideMenu) {
@@ -106,6 +111,7 @@ export const AppSectionContainer = ({ children }) => {
 }
 
 export const AppSectionContainerForSideMenu = ( { children }) => {
+    /* App section inner container for side menu */
     if (debug) console_debug_log("||||| AppSectionContainerForSideMenu");
     return (
         <main
@@ -132,6 +138,7 @@ export const AppFooterContainer = ({ children }) => {
 }
 
 export const CenteredBoxContainer = ({ children }) => {
+    /* Center box container, for pop-ups and login page like components */
     if (debug) console_debug_log("||||| CenterdBoxContainer", children);
     return (
         <div
@@ -222,6 +229,7 @@ const NavbarBrand = ({ children, as, to, onClick }) => {
 }
 
 const NavbarTopCenterMenu = ({ children }) => {
+    /* Header main top menu (center) */
     if (debug) console_debug_log("||||| NavbarTopCenterMenu", children);
     const { sideMenu } = useAppContext();
     if (sideMenu) {
@@ -243,6 +251,7 @@ const NavbarTopCenterMenu = ({ children }) => {
 }
 
 const NavbarTopRightMenu = ({ children }) => {
+    /* Header top menu (right side, for buttons like dark mode, menu place, hamburger menu) */
     if (debug) console_debug_log("||||| NavbarTopRightMenu", children);
     const { sideMenu } = useAppContext();
     return (
@@ -255,6 +264,7 @@ const NavbarTopRightMenu = ({ children }) => {
 }
 
 const MobileMenuCloseButton = ({ className }) => {
+    /* Mobile menu close button */
     const { toggleMobileMenu } = useAppContext();
     return (
         <button
@@ -270,15 +280,11 @@ const MobileMenuCloseButton = ({ className }) => {
 }
 
 const NavbarMobileMenu = ({ children }) => {
+    /* Mobile menu */
     if (debug) console_debug_log("||||| NavbarMobileMenu", children);
     const { theme, isMobileMenuOpen, sideMenu, toggleMobileMenu } = useAppContext();
-    if (!isMobileMenuOpen) {
+    if (!isMobileMenuOpen || sideMenu) {
         return null;
-    }
-    if (sideMenu) {
-        return (
-            <>{'Pass'}</>
-        );
     }
     return (
         <div className={NAVBAR_MOBILE_MENU_DIV_1_CLASS}>
@@ -305,7 +311,7 @@ const NavbarMobileMenu = ({ children }) => {
 }
 
 const NavbarToggle = () => {
-    /* Side mobile menu toggle */
+    /* Side mobile menu toggle (appears at top right when horizontal size is small, e.g. mobile devices) */
     if (debug) console_debug_log("||||| NavbarToggle");
     const { toggleMobileMenu } = useAppContext();
     return (
@@ -323,6 +329,7 @@ const NavbarToggle = () => {
 }
 
 const NavbarText = ({ children, className }) => {
+    /* Text at the header, e.g. "logged as..." */
     if (debug) console_debug_log("||||| NavbarText", children);
     return (
         <div
@@ -334,6 +341,7 @@ const NavbarText = ({ children, className }) => {
 }
 
 const NavbarTopForSideMenu = ({ children, className }) => {
+    /* Header on top for side menu */
     if (debug) console_debug_log("||||| NavbarForSideMenu", children);
     const { theme } = useAppContext();
     return (
@@ -356,7 +364,7 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 // NavDropdown
 
 export const NavDropdown = ({ children, title, id, type, icon }) => {
-    const { expandedMenus, toggleSubmenu } = useAppContext();
+    const { expandedMenus, toggleSubmenu, theme } = useAppContext();
 
     const [fullId, setFullId] = useState(`${id}_${type}`);
     const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -376,8 +384,8 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
     };
 
     const variantsDirectionImage = {
-        top_menu: 'arrow-down-small',
-        hamburger: 'arrow-down-small',
+        top_menu: 'arrow-right-small', // 'arrow-down-small',
+        hamburger: 'arrow-right-small', // 'arrow-down-small',
         side_menu: 'arrow-right-small',
         mobile_menu: 'arrow-right-small',
     }
@@ -397,10 +405,10 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
     };
 
     const variantsButton = {
-        top_menu: NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS,
-        hamburger: NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS,
-        side_menu: NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS,
-        mobile_menu: NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS,
+        top_menu: `${NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTop}`,
+        hamburger: `${NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS} ${theme.textHoverTop}`,
+        side_menu: `${NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+        mobile_menu: `${NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`,
     };
 
     const variantsSubmenuImage = {
@@ -443,18 +451,12 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
     return (
         <div
             className={variantStyleTopDiv}
-            // data-headlessui-state=""
-            // zIndex="9999"
         >
             <button
                 className={variantStyleButton}
                 id={`${fullId}_button`}
                 type="button"
-                // aria-haspopup="menu"
-                // aria-expanded="false"
-                // data-headlessui-state=""
                 onClick={toggledropDownOpen}
-                // zIndex="9999"
             >
                 {(icon ? <GsIcons icon={icon} /> : title)}
                 <GsIcons
@@ -465,12 +467,6 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
             </button>
             <div
                 className={variantStyleInnerDiv}
-                // zIndex="9999"
-                // aria-labelledby="headlessui-menu-button-:Rqcr6:"
-                // role="menu"
-                // tabIndex="0"
-                // data-headlessui-state="open"
-                // data-open=""
                 id={`${fullId}_dropDown`}
             >
                 {expandedMenus.includes(fullId) && (
@@ -487,6 +483,7 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
 
 const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, closeParent }) => {
     if (debug) console_debug_log("||||| NavDropdownItem", children);
+    const { theme } = useAppContext();
     const As = as;
 
     const variantsTopDiv = {
@@ -496,7 +493,15 @@ const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, clos
         mobile_menu: NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS,
     };
 
+    const variantsButton = {
+        top_menu: `${NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTopSubMenu}`,
+        hamburger: `${NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS} ${theme.textHoverTopSubMenu}`,
+        side_menu: `${NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+        mobile_menu: `${NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`,
+    };
+
     const variantStyleTopDiv = variantsTopDiv[type] || '';
+    const variantStyleButton = variantsButton[type] || '';
 
     return (
         <div
@@ -504,6 +509,7 @@ const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, clos
         >
             {As && (
                 <As
+                    className={variantStyleButton}
                     to={to}
                     onClick={(e) => {
                         if (debug) console_debug_log(`>>--> NavDropdownItem | 1) Called NavDropdown child and closes the dropdown... | e:`, e);
@@ -518,6 +524,7 @@ const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, clos
             )}
             {!As && (
                 <button
+                    className={variantStyleButton}
                     onClick={(e) => {
                         if (debug) console_debug_log(`>>--> NavDropdownItem | 2) Called NavDropdown child and closes the dropdown... | e:`, e);
                         closeParent();
@@ -540,7 +547,6 @@ NavDropdown.Item = NavDropdownItem;
 export const ToggleSideBar = ({ onClick }) => {
     return (
         <div
-            // className="h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2"
             onClick={onClick}
         >
             <GsIcons icon='vertical-slider' />
@@ -608,6 +614,7 @@ export const ToggleSideBar = ({ onClick }) => {
 
 const NavLink = ({ children, as, to, onClick, reloadDocument, type }) => {
     if (debug) console_debug_log("||||| NavLink", children);
+    const { theme } = useAppContext();
     const As = as;
 
     const variantsLi = {
@@ -617,10 +624,10 @@ const NavLink = ({ children, as, to, onClick, reloadDocument, type }) => {
         mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
     };
     const variantsButton = {
-        top_menu: NAV_LINK_BUTTONS_TOP_MENU_CLASS,
-        hamburger: NAV_LINK_BUTTONS_HAMBURGER_CLASS,
-        side_menu: NAV_LINK_BUTTONS_SIDE_MENU_CLASS,
-        mobile_menu: NAV_LINK_BUTTONS_MOBILE_MENU_CLASS,
+        top_menu: `${NAV_LINK_BUTTON_TOP_MENU_CLASS}  ${theme.textHoverTop}`,
+        hamburger: `${NAV_LINK_BUTTON_HAMBURGER_CLASS}  ${theme.textHoverTop}`,
+        side_menu: `${NAV_LINK_BUTTON_SIDE_MENU_CLASS}  ${theme.textHoverSide}`,
+        mobile_menu: `${NAV_LINK_BUTTON_MOBILE_MENU_CLASS}  ${theme.textHoverSide}`,
     };
 
     const variantStyleLi = variantsLi[type] || '';

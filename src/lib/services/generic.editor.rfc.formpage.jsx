@@ -56,8 +56,8 @@ import {
     INFO_MSG_CLASS,
     APP_TOP_DIV_CLASS,
     APP_TITLE_H1_CLASS,
-    APP_FORMPAGE_LEVEL1_DIV_CLASS,
-    APP_FORMPAGE_LEVEL2_DIV_CLASS,
+    // APP_FORMPAGE_LEVEL1_DIV_CLASS,
+    // APP_FORMPAGE_LEVEL2_DIV_CLASS,
     INVALID_FEEDBACK_CLASS,
     APP_FORMPAGE_FORM_TABLE_CLASS,
     APP_FORMPAGE_LABEL_CLASS,
@@ -171,17 +171,17 @@ export const FormPage = ({
         <div 
             className={`${APP_TOP_DIV_CLASS} ${theme.contentBg}`}
         >
-            <div 
+            {/* <div 
                 className={APP_FORMPAGE_LEVEL1_DIV_CLASS}
-            >
-                <h2
-                    className={APP_TITLE_H1_CLASS}
-                >
-                    {editor.title + " - " + actionTitle}
-                </h2>
-                <div
+            > */}
+                <CrudEditorFormPageTitle
+                    baseUrl={editor.baseUrl}
+                    title={editor.title}
+                    actionTitle={actionTitle}
+                />
+                {/* <div
                     className={APP_FORMPAGE_LEVEL2_DIV_CLASS}
-                >
+                > */}
                     {status && (
                         <div className={ERROR_MSG_CLASS}>
                             {status}
@@ -206,10 +206,21 @@ export const FormPage = ({
                     }
                     {(debug ? debugCache("FormPage") : '')}
                 </div>
-            </div>
-        </div>
+            // </div>
+        // </div>
     );
 };
+
+const CrudEditorFormPageTitle = ({ baseUrl, title, actionTitle }) => {
+    return (
+        <h2
+            key={`${baseUrl}_title`}
+            className={APP_TITLE_H1_CLASS}
+        >
+            {title + " - " + actionTitle}
+        </h2>
+    );
+}
 
 const PutOneFormfield = ({
     currentObjArray,

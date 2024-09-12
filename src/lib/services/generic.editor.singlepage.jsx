@@ -42,7 +42,6 @@ export const GenericSinglePageEditor = ({ editorConfig, id, parentData }) => {
     );
   }
   
-// export const GenericSinglePageEditorMain = ({ editorConfig, id, parentData }) => {
 export const GenericSinglePageEditorMain = (props) => {
     const [editor, setEditor] = useState(null);
     const [formMode, setFormMode] = useState(null);
@@ -68,7 +67,6 @@ export const GenericSinglePageEditorMain = (props) => {
               } else if (!editor_response.response) {
                 setEditor(null);
               } else {
-                // setEditor(getEditoObj({ editorConfig: editor_config }, editor_response));
                 if (debug) {
                     console_debug_log('GenericSinglePageEditor | $$$ editor_response:');
                     console_debug_log(editor_response);
@@ -116,12 +114,10 @@ export const GenericSinglePageEditorMain = (props) => {
     if (!editor) {
         if (status) {
             return (
-                // <div className={ERROR_MSG_CLASS}>
                 <>
                     {status}
                     [GSPE-NES]
                 </>
-                // </div>
             );
         }
         return (

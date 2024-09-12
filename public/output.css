@@ -1206,6 +1206,11 @@ video {
   padding-bottom: 10px;
 }
 
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -1662,4 +1667,9 @@ video {
 .dark\:text-slate-400:where(.dark, .dark *) {
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity));
+}
+
+.dark\:hover\:bg-gray-300:hover:where(.dark, .dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
