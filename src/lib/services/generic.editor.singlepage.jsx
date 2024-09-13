@@ -41,6 +41,8 @@ export const GenericSinglePageEditor = ({ editorConfig, id, parentData }) => {
       </>
     );
   }
+
+const debug = false;
   
 export const GenericSinglePageEditorMain = (props) => {
     const [editor, setEditor] = useState(null);
@@ -49,7 +51,6 @@ export const GenericSinglePageEditorMain = (props) => {
     const {
         initCache,
     } = useContext(MainSectionContext);
-    const debug = false;
 
     useEffect(() => {
         if (debug) {
@@ -128,7 +129,7 @@ export const GenericSinglePageEditorMain = (props) => {
         return (
             <div className={ERROR_MSG_CLASS}>
                 {status}
-                [GSPE-ST]
+                {debug && "[GSPE-ST]"}
             </div>
         );
     }

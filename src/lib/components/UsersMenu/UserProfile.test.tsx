@@ -17,17 +17,20 @@ for (let i = 0; i < mockJestObjects.length; i++) {
     jest.mock('../../' + mockJestObjects[i].codeFile, () => (mockObj));
 }
 
+const testComponentMap = {
+    "UserProfileEditor": () => (
+        <UserProfileEditor/>
+    )
+}
+
 it("renders the UserProfileEditor", () => {
     const mockFetchResponse = [{}];
     window.fetch = mockFetch(mockFetchResponse);
     const component = renderer.create(
         <MemoryRouter>
             <App
-                componentMap={{}}
-                appLogo={null}
-            >
-                <UserProfileEditor/>
-            </App>
+                componentMap={testComponentMap}
+            />
         </MemoryRouter>
     );
     let tree = component.toJSON();

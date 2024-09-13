@@ -3,7 +3,7 @@ import React from 'react';
 
 import {
     DISABLE_FIELD_BACKGROUND_COLOR_CLASS,
-} from '../constants/class_name_constants';
+} from '../constants/class_name_constants.jsx';
 
 export const ShowAsDisabledField = ( {
     className = '',

@@ -5,7 +5,7 @@ export const defaultTheme = {
     text: 'text-gray-800 defaultThemeLightText',
     textHoverTop: 'hover:bg-blue-400 defaultThemeLightTextHoverTop',
     textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeLightTextHoverTopSubMenu',
-    textHoverSide: 'hover:bg-gray-200 defaultThemeLightTextHoverSide',
+    textHoverSide: 'hover:bg-gray-300 defaultThemeLightTextHoverSide',
     background: 'bg-gray-100 defaultThemeLightBackground',
     contentBg: 'bg-gray-300 defaultThemeLightContentBg',
   },
@@ -27,18 +27,18 @@ export const MAIN_CONTAINER_FOR_TOP_MENU_CLASS = "flex flex-col min-h-screen mai
 export const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContainerForSideMenuClass";
 
 export const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow p-4 appSectionContainerForTopMenuClass";
-export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col lg:ml-64 appSectionContainerForSideMenuClass";
+export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
 
-export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4";
+export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4 appSectionContainerForSideMenuMainClass";
 
 export const APP_FOOTER_CONTAINER_CLASS = "p-4 text-white text-center appFooterContainerClass";
 
-export const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto";
-export const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "relative w-fit max-w-md m-auto flex-col flex rounded-lg";
-export const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6";
+export const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto centeredBoxContainerDiv1Class";
+export const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
+export const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
 
 export const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
-export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
 export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
 
@@ -46,13 +46,13 @@ export const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between
 
 export const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS="flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
 export const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS="flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
-export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "lg:hidden navbarBrandHiddenIfLargeScreen";
+export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
 
 export const NAVBAR_BRAND_NAME_CLASS="text-2xl font-bold navbarBrandNameClass";
 export const NAVBAR_BRAND_APP_VERSION_CLASS="text-xs navbarBrandAppVersionClass";
 export const NAVBAR_BRAND_APP_LOGO_CLASS="mx-auto my-0 navbarBrandAppLogoClass";
 
-export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="hidden md:flex space-x-4 navbarTopCenterMenuOnTopClass";
+export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
 export const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS='space-y-2 navbarTopCenterMenuOnLeftClass';
 
 export const NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS = "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
@@ -66,54 +66,54 @@ export const NAVBAR_MOBILE_CLOSE_BUTTON_CLASS = "p-2 rounded-full hover:bg-opaci
 export const NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS = "h-6 w-6 navbarMobileCloseButtonIconClass";
 export const NAVBAR_MOBILE_NAV_CLASS = "flex flex-col space-y-2 navbarMobileNavClass";
 
-export const NAVBAR_TOGGLE_BUTTON_CLASS = "lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
+export const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
 export const NAVBAR_TOGGLE_IMAGE_CLASS = "h-6 w-6 navbarToggleImageClass";
 
 export const NAVBAR_TEXT_CLASS='flex items-center navbarTextClass';
 
 export const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClass";
-export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden md:block relative group navLinkTopDivHamburgerClass";
+export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
 export const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
-export const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "flex flex-col space-y-2 navLinkTopDivMobileMenuClass";
+export const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
 
-export const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center 1-hover:bg-blue-400 navLinkButtonsTopMenuClass";
-export const NAV_LINK_BUTTON_HAMBURGER_CLASS = "block py-1 1-hover:bg-blue-400 navLinkButtonsHamburgerClass";
-export const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded 1-hover:bg-gray-200 navLinkButtonsSideMenuClass";
-export const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "w-full text-left flex justify-between items-center py-2 px-2 rounded 1-hover:bg-gray-200 navLinkButtonsMobileMenuClass";
+export const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
+export const NAV_LINK_BUTTON_HAMBURGER_CLASS = "block py-1 navLinkButtonsHamburgerClass";
+export const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded navLinkButtonsSideMenuClass";
+export const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
 
 export const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
-export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden md:block relative group navDropdownTopDivHamburgerClass";
-export const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "flex flex-col items-center space-x-4 navDropdownTopDivSideMenuClass";
-export const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "flex flex-col space-y-2 navDropdownTopDivMobileMenuClass";
+export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+export const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
+export const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
 
 export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
 export const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
-export const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 1-mt-2 space-y-2 navDropdownInnerDivSideMenuClass";
-export const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 1-mt-2 space-y-2 navDropdownInnerDivMobileMenuClass";
+export const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
+export const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
 
-export const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center 1-hover:bg-blue-400 navDropdownButtonTopMenuClass";
-export const NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS = "rounded p-2 block py-1 1-px-3 1-hover:bg-blue-400 flex items-center navDropdownButtonHamburgerClass";
-export const NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS = "w-full text-left flex justify-between items-center py-2 px-2 rounded 1-hover:bg-gray-200 navDropdownButtonSideMenuClass";
-export const NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS = "w-full text-left flex justify-between items-center py-2 px-2 rounded 1-hover:bg-gray-200 navDropdownButtonMobileMenuClass";
+export const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navDropdownButtonTopMenuClass";
+export const NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS = "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
+export const NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonSideMenuClass";
+export const NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonMobileMenuClass";
 
 export const NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS = "navDropdownImageTopMenuClass";
 export const NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS = "navDropdownImageHamburgerClass";
 export const NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS = "navDropdownImageSideMenuClass";
 export const NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS = "h-4 w-4 transform transition-transform navDropdownImageMobileMenuClass";
 
-export const NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS = "block py-1 1-hover:bg-gray-200 navDropdownItemTopDivTopMenuClass";
-export const NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS = "block py-1 1-hover:bg-gray-200 navDropdownItemTopDivHamburgerClass";
-export const NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS = "block rounded 1-hover:bg-gray-200 navDropdownItemTopDivSideMenuClass";
-export const NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS = "block rounded 1-hover:bg-gray-200 navDropdownItemTopDivMobileMenuClass";
+export const NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS = "block py-1 navDropdownItemTopDivTopMenuClass";
+export const NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS = "block py-1 navDropdownItemTopDivHamburgerClass";
+export const NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS = "block rounded navDropdownItemTopDivSideMenuClass";
+export const NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS = "block rounded navDropdownItemTopDivMobileMenuClass";
 
-export const NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS = "rounded px-2 flex items-center 1-hover:bg-blue-400 navDropDownItemButtonsTopMenuClass";
-export const NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS = "rounded block px-2 1-hover:bg-blue-400 navDropDownItemButtonsHamburgerClass";
-export const NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS = "rounded px-2 py-2 1-hover:bg-gray-200 navDropDownItemButtonsSideMenuClass";
-export const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "w-full text-left flex justify-between items-center py-2 px-2 rounded 1-hover:bg-gray-200 navDropDownItemButtonsMobileMenuClass";
+export const NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS = "rounded px-2 flex items-center navDropDownItemButtonsTopMenuClass";
+export const NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS = "rounded block px-2 navDropDownItemButtonsHamburgerClass";
+export const NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS = "rounded px-2 py-2 navDropDownItemButtonsSideMenuClass";
+export const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded py-2 px-2 navDropDownItemButtonsMobileMenuClass";
 
 // Alert messages and message boxes
 
-export const ALERT_BASE_CLASS = "relative p-3 border border-transparent rounded alertBaseClass";
+export const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded alertBaseClass";
 export const ALERT_DANGER_CLASS = `${ALERT_BASE_CLASS} text-red-800 bg-red-100 border-red-200 alertDangerClass`;
 export const ALERT_WARNING_CLASS = `${ALERT_BASE_CLASS} text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass`;
 export const ALERT_INFO_CLASS = `${ALERT_BASE_CLASS} text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass`;
@@ -172,7 +172,7 @@ export const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
 export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
 export const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
 
-export const APP_MAIN_BOX_BG_COLOR_CLASS = "bg-white dark:bg-slate-800 appMainBoxBgColorClass";
+// export const APP_MAIN_BOX_BG_COLOR_CLASS = "bg-white dark:bg-slate-800 appMainBoxBgColorClass";
 export const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
 
 // Listing page (GCE_RFC)

@@ -96,7 +96,7 @@ const defaultComponentMap = {
     "logout": logoutHander,
 };
 
-export const App = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
+export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
     return (
         <UserProvider>
             <AppProvider>
@@ -180,6 +180,7 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
         state, setState,
         menuOptions, setMenuOptions,
         sideMenu, setSideMenu,
+        isMobileMenuOpen,
     } = useAppContext();
 
     if (debug) {
@@ -231,6 +232,15 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                             componentMapping={componentMapFinal}
                             itemType={sideMenu ? "side_menu" : "top_menu"}
                         />
+                        {sideMenu && isMobileMenuOpen && (
+                            <GenericMenuBuilder
+                                title={currentUser.firstName}
+                                componentMapping={componentMapFinal}
+                                itemType="hamburger"
+                                showContentOnly={showContentOnly}
+                                mobileMenuMode={true}
+                            />
+                        )}
                     </Navbar.TopCenterMenu>
                     {!sideMenu && (
                         <TopRightMenu
@@ -281,6 +291,13 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                 <GenericMenuBuilder
                     componentMapping={componentMapFinal}
                     itemType="mobile_menu"
+                />
+                <GenericMenuBuilder
+                    title={currentUser.firstName}
+                    componentMapping={componentMapFinal}
+                    itemType="hamburger"
+                    showContentOnly={showContentOnly}
+                    mobileMenuMode={true}
                 />
             </Navbar.MobileMenu>
             {state !== '' && (

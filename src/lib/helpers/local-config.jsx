@@ -2,7 +2,7 @@ import {
     saveItemToLocalStorage,
     getItemFromLocalStorage,
     removeItemFromLocalStorage
-} from "./localstorage-manager";
+} from "./localstorage-manager.jsx";
 
 const defaultItemName = (lsItemName = null) => {
     return lsItemName ? lsItemName : 'currentConfig';

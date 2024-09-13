@@ -4,6 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { Users } from "./Users";
 import { UserProvider } from "../../helpers/UserContext.jsx";
+import { AppProvider } from "../../helpers/AppContext";
 import { mockAuthService, mockUserData } from '../../test-helpers/mock-fetch'
 
 // To fix the error:
@@ -24,7 +25,9 @@ describe("Users", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <Users />
+                        <AppProvider>
+                            <Users />
+                        </AppProvider>
                     </UserProvider>
                 </MemoryRouter>
             );

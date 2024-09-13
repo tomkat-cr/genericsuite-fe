@@ -9,7 +9,6 @@ import {
     mandatoryFiltersDbListPreRead,
     mandatoryFiltersDbPreRead,
 } from './generic.editor.rfc.specific.func.jsx';
-import { getSelectFieldsOptions } from './generic.editor.rfc.formpage.jsx';
 import { console_debug_log } from './logging.service.jsx';
 import { getUrlParams } from "../helpers/url-params.jsx";
 import { formatCaughtError } from "../helpers/error-and-reenter.jsx";
@@ -266,3 +265,22 @@ export const getEditorFlags = (action) => {
     editorFlags.isReadOnly = getIsReadOnly(action);
     return editorFlags;
 }
+
+export const getSelectFieldsOptions = (fieldElements) => {
+    return Object.entries(fieldElements)
+        .filter(function (key) {
+            let currentObj = key[1];
+            return (
+                currentObj.type === 'select_component' &&
+                typeof currentObj.dataPopulator !== "undefined"
+            );
+        })
+        .map(function (key) {
+            let currentObj = key[1];
+            return {
+                name: currentObj.name,
+                promiseResult: currentObj.dataPopulator()
+            };
+        });
+  };
+  

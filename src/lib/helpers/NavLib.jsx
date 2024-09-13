@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { console_debug_log } from '../services/logging.service.jsx';
 import {
     APP_SIDE_MENU_BG_COLOR_CLASS,
-    APP_MAIN_BOX_BG_COLOR_CLASS,
+    // APP_MAIN_BOX_BG_COLOR_CLASS,
     MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
     NAVBAR_HEADER_FOR_TOP_MENU_CLASS,
@@ -139,13 +139,15 @@ export const AppFooterContainer = ({ children }) => {
 
 export const CenteredBoxContainer = ({ children }) => {
     /* Center box container, for pop-ups and login page like components */
+    const { theme } = useAppContext();
     if (debug) console_debug_log("||||| CenterdBoxContainer", children);
     return (
         <div
             className={CENTERED_BOX_CONTAINER_DIV_1_CLASS}
         >
             <div
-                className={`${APP_MAIN_BOX_BG_COLOR_CLASS} ${CENTERED_BOX_CONTAINER_DIV_2_CLASS}`}
+                // className={`${APP_MAIN_BOX_BG_COLOR_CLASS} ${CENTERED_BOX_CONTAINER_DIV_2_CLASS}`}
+                className={`${CENTERED_BOX_CONTAINER_DIV_2_CLASS} ${theme.contentBg}`}
             >
                 <div
                     className={CENTERED_BOX_CONTAINER_DIV_3_CLASS}
@@ -363,7 +365,7 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 
 // NavDropdown
 
-export const NavDropdown = ({ children, title, id, type, icon }) => {
+export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode }) => {
     const { expandedMenus, toggleSubmenu, theme } = useAppContext();
 
     const [fullId, setFullId] = useState(`${id}_${type}`);
@@ -392,28 +394,28 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
 
     const variantsTopDiv = {
         top_menu: NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
-        hamburger: NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
+        hamburger: mobileMenuMode ? NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
         side_menu: NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
         mobile_menu: NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS,
     };
 
     const variantsInnerDiv = {
         top_menu: NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS,
-        hamburger: NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS,
+        hamburger: mobileMenuMode ? NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS,
         side_menu: NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS,
         mobile_menu: NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS,
     };
 
     const variantsButton = {
         top_menu: `${NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTop}`,
-        hamburger: `${NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS} ${theme.textHoverTop}`,
+        hamburger: `${mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
         side_menu: `${NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
         mobile_menu: `${NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`,
     };
 
     const variantsSubmenuImage = {
         top_menu: NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
-        hamburger: NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS,
+        hamburger: mobileMenuMode ? NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS : NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS,
         side_menu: NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
         mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS,
     };
@@ -481,21 +483,21 @@ export const NavDropdown = ({ children, title, id, type, icon }) => {
     );
 }
 
-const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, closeParent }) => {
+const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, closeParent, mobileMenuMode }) => {
     if (debug) console_debug_log("||||| NavDropdownItem", children);
     const { theme } = useAppContext();
     const As = as;
 
     const variantsTopDiv = {
         top_menu: NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
-        hamburger: NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS,
+        hamburger: mobileMenuMode ? NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS,
         side_menu: NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS,
         mobile_menu: NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS,
     };
 
     const variantsButton = {
         top_menu: `${NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTopSubMenu}`,
-        hamburger: `${NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS} ${theme.textHoverTopSubMenu}`,
+        hamburger: `${mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu}`,
         side_menu: `${NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
         mobile_menu: `${NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`,
     };
@@ -612,20 +614,20 @@ export const ToggleSideBar = ({ onClick }) => {
 //     );
 // }
 
-const NavLink = ({ children, as, to, onClick, reloadDocument, type }) => {
+const NavLink = ({ children, as, to, onClick, reloadDocument, type, mobileMenuMode }) => {
     if (debug) console_debug_log("||||| NavLink", children);
     const { theme } = useAppContext();
     const As = as;
 
     const variantsLi = {
         top_menu: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
-        hamburger: NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
+        hamburger: mobileMenuMode ? NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS : NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
         side_menu: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
         mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
     };
     const variantsButton = {
         top_menu: `${NAV_LINK_BUTTON_TOP_MENU_CLASS}  ${theme.textHoverTop}`,
-        hamburger: `${NAV_LINK_BUTTON_HAMBURGER_CLASS}  ${theme.textHoverTop}`,
+        hamburger: `${mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
         side_menu: `${NAV_LINK_BUTTON_SIDE_MENU_CLASS}  ${theme.textHoverSide}`,
         mobile_menu: `${NAV_LINK_BUTTON_MOBILE_MENU_CLASS}  ${theme.textHoverSide}`,
     };

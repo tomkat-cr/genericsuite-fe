@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 
 ## Unreleased
-## 1.0.22 (2024-08-10)
+## 1.0.22 (2024-09-14)
 ---
 
 ### New
@@ -29,7 +29,7 @@ New "GsIcons" library replaces FontAwesome [GS-115].
 Add landscape logo to the App header [GS-63].
 
 ### Changes
-Replace react-bootstrap entirely and use only Tailwind CSS, because there are issues having both at the same time [GS-63].
+Replace react-bootstrap entirely and use only Tailwind CSS [GS-63].
 Delete local storage PII [GS-2]
 Change the behavior of actions so that they appear when clicking on the line in the GCE_RFC (generic CRUD editor) listing page [GS-112].
 Change the color when hovering over the line in the GCE_RFC listing page [GS-112].
@@ -43,7 +43,8 @@ Fix the row values in index page not shown issue [GS-108].
 Fix the %PUBLIC_URL% issue in public/index.html file running the app with webpack [GS-116].
 
 ### Breaks
-General Bootstrap CSS replaced by Tailwind CSS [GS-63].
+Bootstrap CSS is not longer used [GS-63].
+FontAwesome is not longer used [GS-115].
 SVG images removed and included in the "GsIcons" library [GS-115].
 
 

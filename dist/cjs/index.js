@@ -1,40 +1,64 @@
 'use strict';
 
 var React = require('react');
-var reactBootstrap = require('react-bootstrap');
 var reactRouterDom = require('react-router-dom');
 var history$2 = require('history');
 var buffer = require('buffer');
 var rxjs = require('rxjs');
 var formik = require('formik');
 var Yup = require('yup');
-var Nav = require('react-bootstrap/cjs/Nav.js');
-var NavDropdown = require('react-bootstrap/cjs/NavDropdown.js');
-var reactFontawesome = require('@fortawesome/react-fontawesome');
-var fontawesome = require('@fortawesome/fontawesome');
-var fontawesomeFreeSolid = require('@fortawesome/fontawesome-free-solid');
 var Downshift = require('downshift');
-var Container = require('react-bootstrap/cjs/Container.js');
-var Navbar = require('react-bootstrap/cjs/Navbar.js');
 
 function _interopNamespaceDefault(e) {
-    var n = Object.create(null);
-    if (e) {
-        Object.keys(e).forEach(function (k) {
-            if (k !== 'default') {
-                var d = Object.getOwnPropertyDescriptor(e, k);
-                Object.defineProperty(n, k, d.get ? d : {
-                    enumerable: true,
-                    get: function () { return e[k]; }
-                });
-            }
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
         });
-    }
-    n.default = e;
-    return Object.freeze(n);
+      }
+    });
+  }
+  n.default = e;
+  return Object.freeze(n);
 }
 
 var Yup__namespace = /*#__PURE__*/_interopNamespaceDefault(Yup);
+
+function _defineProperty(e, r, t) {
+  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+function _extends() {
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
+    }
+    return n;
+  }, _extends.apply(null, arguments);
+}
+function _toPrimitive(t, r) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
 
 function console_debug_log(debug_message) {
   if (get_debug_flag() === true) {
@@ -54,35 +78,1664 @@ function get_debug_flag() {
 }
 
 var logging_service = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    console_debug_log: console_debug_log,
-    get_debug_flag: get_debug_flag
+  __proto__: null,
+  console_debug_log: console_debug_log,
+  get_debug_flag: get_debug_flag
 });
 
-const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
-const BUTTON_SECONDARY_CLASS = "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500";
-const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm";
-const INPUT_FLEXIBLE_CLASS = "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden";
+const defaultTheme = {
+  light: {
+    primary: 'bg-blue-600 defaultThemeLightPrimary',
+    secondary: 'bg-gray-200 defaultThemeLightSecondary',
+    text: 'text-gray-800 defaultThemeLightText',
+    textHoverTop: 'hover:bg-blue-400 defaultThemeLightTextHoverTop',
+    textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeLightTextHoverTopSubMenu',
+    textHoverSide: 'hover:bg-gray-300 defaultThemeLightTextHoverSide',
+    background: 'bg-gray-100 defaultThemeLightBackground',
+    contentBg: 'bg-gray-300 defaultThemeLightContentBg'
+  },
+  dark: {
+    primary: 'bg-blue-800 defaultThemeDarkPrimary',
+    secondary: 'bg-gray-700 defaultThemeDarkSecondary',
+    text: 'text-gray-200 defaultThemeDarkText',
+    textHoverTop: 'hover:bg-blue-400 defaultThemeDarkTextHoverTop',
+    textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeDarkTextHoverTopSubMenu',
+    textHoverSide: 'hover:bg-gray-400 defaultThemeDarkTextHoverSide',
+    background: 'bg-gray-900 defaultThemeDarkBackground',
+    contentBg: 'bg-slate-500 defaultThemeDarkContentBg'
+  }
+};
+
+// Navlib
+
+const MAIN_CONTAINER_FOR_TOP_MENU_CLASS = "flex flex-col min-h-screen mainContainerForTopMenuClass";
+const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContainerForSideMenuClass";
+const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow p-4 appSectionContainerForTopMenuClass";
+const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
+const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4 appSectionContainerForSideMenuMainClass";
+const APP_FOOTER_CONTAINER_CLASS = "p-4 text-white text-center appFooterContainerClass";
+const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto centeredBoxContainerDiv1Class";
+const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
+const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
+const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
+const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
+const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
+const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
+const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS = "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
+const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS = "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
+const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
+const NAVBAR_BRAND_NAME_CLASS = "text-2xl font-bold navbarBrandNameClass";
+const NAVBAR_BRAND_APP_VERSION_CLASS = "text-xs navbarBrandAppVersionClass";
+const NAVBAR_BRAND_APP_LOGO_CLASS = "mx-auto my-0 navbarBrandAppLogoClass";
+const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS = "hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
+const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS = 'space-y-2 navbarTopCenterMenuOnLeftClass';
+const NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS = "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
+const NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS = "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
+const NAVBAR_MOBILE_MENU_DIV_1_CLASS = "fixed inset-0 bg-black bg-opacity-50 z-50 navbarMobileMenuDiv1Class";
+const NAVBAR_MOBILE_MENU_DIV_2_CLASS = "fixed inset-y-0 left-0 w-64 p-4 overflow-y-auto navbarMobileMenuDiv2Class";
+const NAVBAR_MOBILE_MENU_DIV_3_CLASS = "flex justify-between items-center mb-4 navbarMobileMenuDiv3Class";
+const NAVBAR_MOBILE_MENU_H2_CLASS = "text-xl font-bold navbarMobileMenuH2Class";
+const NAVBAR_MOBILE_CLOSE_BUTTON_CLASS = "p-2 rounded-full hover:bg-opacity-80 navbarMobileCloseButtonClass";
+const NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS = "h-6 w-6 navbarMobileCloseButtonIconClass";
+const NAVBAR_MOBILE_NAV_CLASS = "flex flex-col space-y-2 navbarMobileNavClass";
+const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
+const NAVBAR_TOGGLE_IMAGE_CLASS = "h-6 w-6 navbarToggleImageClass";
+const NAVBAR_TEXT_CLASS = 'flex items-center navbarTextClass';
+const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClass";
+const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
+const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
+const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
+const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
+const NAV_LINK_BUTTON_HAMBURGER_CLASS = "block py-1 navLinkButtonsHamburgerClass";
+const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded navLinkButtonsSideMenuClass";
+const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
+const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
+const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
+const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
+const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
+const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
+const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
+const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
+const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navDropdownButtonTopMenuClass";
+const NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS = "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
+const NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonSideMenuClass";
+const NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonMobileMenuClass";
+const NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS = "navDropdownImageTopMenuClass";
+const NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS = "navDropdownImageHamburgerClass";
+const NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS = "navDropdownImageSideMenuClass";
+const NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS = "h-4 w-4 transform transition-transform navDropdownImageMobileMenuClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS = "block py-1 navDropdownItemTopDivTopMenuClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS = "block py-1 navDropdownItemTopDivHamburgerClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS = "block rounded navDropdownItemTopDivSideMenuClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS = "block rounded navDropdownItemTopDivMobileMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS = "rounded px-2 flex items-center navDropDownItemButtonsTopMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS = "rounded block px-2 navDropDownItemButtonsHamburgerClass";
+const NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS = "rounded px-2 py-2 navDropDownItemButtonsSideMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded py-2 px-2 navDropDownItemButtonsMobileMenuClass";
+
+// Alert messages and message boxes
+
+const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded alertBaseClass";
+const ALERT_DANGER_CLASS = "".concat(ALERT_BASE_CLASS, " text-red-800 bg-red-100 border-red-200 alertDangerClass");
+const ALERT_WARNING_CLASS = "".concat(ALERT_BASE_CLASS, " text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass");
+const ALERT_INFO_CLASS = "".concat(ALERT_BASE_CLASS, " text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass");
+const ALERT_SUCCESS_CLASS = "".concat(ALERT_BASE_CLASS, " text-green-800 bg-green-100 border-green-200 alertSuccessClass");
+const ERROR_MSG_CLASS = "".concat(ALERT_DANGER_CLASS, " mt-4 p-2 rounded-md errorMsgClass");
+const WARNING_MSG_CLASS = "".concat(ALERT_WARNING_CLASS, " mt-4 p-2 rounded-md warningMsgClass");
+const INFO_MSG_CLASS = "".concat(ALERT_INFO_CLASS, " mt-4 p-2 rounded-md infoMsgClass");
+const SUCCESS_MSG_CLASS = "".concat(ALERT_SUCCESS_CLASS, " mt-4 p-2 rounded-md successMsgClass");
+const GRAY_BOX_MSG_CLASS = "".concat(ALERT_BASE_CLASS, " text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass");
+
+// Forms
+
+const FORM_GROUP_CLASS = "mb-4 formGroupClass";
+const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass";
+const INVALID_FEEDBACK_CLASS = "text-red-500 text-sm mt-1 invalidFeedbackClass";
+const IS_INVALID_CLASS = "border-red-500 isInvalidClass";
+const DISABLE_FIELD_BACKGROUND_COLOR_CLASS = 'bg-gray-200 disableFieldBackgroundColorClass';
+const HIDDEN_CLASS = 'hidden hiddenClass';
+const VISIBLE_CLASS = 'visible visibleClass';
+const INLINE_CLASS = 'inline inlineClass';
+
+// Buttons
+
+const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
+const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
+const BUTTON_SECONDARY_CLASS = "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+
+// Special buttons
+
+const BUTTON_COMPOSED_LABEL_CLASS = "flex items-center buttonComposedLabelClass";
+const MENU_MODE_BUTTON_TOP_DIV_CLASS = "mt-1 menuModeButtonTopDivClass";
+const DARK_MODE_BUTTON_TOP_DIV_CLASS = "mt-1 darkModeButtonTopDivClass";
+const DARK_MODE_BUTTON_SVG_CLASS = "w-6 h-6 darkModeButtonSvgClass";
+const DARK_MODE_BUTTON_DARK_HIDDEN_CLASS = "dark:hidden darkModeButtonDarkHiddenClass";
+const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDarkInlineClass";
+
+// Generic CRUD editor (GCE_RFC) - BEGIN
+
+// Listing page buttons (GCE_RFC)
+
+const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
+const BUTTON_LISTING_DISABLED_CLASS = "".concat(BUTTON_LISTING_CLASS, " opacity-50 buttonListingDisabledClass");
+const BUTTON_LISTING_NEW_CLASS = "".concat(BUTTON_LISTING_CLASS, " ").concat(BUTTON_RIGHT_SPACE_CLASS, " ml-2 buttonListingNewClass");
+const BUTTON_LISTING_REFRESH_CLASS = "".concat(BUTTON_LISTING_CLASS, " text-xs buttonListingRefreshClass");
+
+// General app section (GCE_RFC)
+
+const APP_TOP_DIV_CLASS = 'mb-4 p-4 rounded-lg appTopDivClass';
+// export const APP_LEVEL1_DIV_CLASS = 'appLevel1DivClass';
+// export const APP_LEVEL2_DIV_CLASS = "1-not-prose 1-relative rounded-xl overflow-hidden mr-2 bg-slate-50 dark:bg-slate-800/25 appLevel2DivClass";
+const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
+const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
+const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
+
+// export const APP_MAIN_BOX_BG_COLOR_CLASS = "bg-white dark:bg-slate-800 appMainBoxBgColorClass";
+const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
+
+// Listing page (GCE_RFC)
+
+// export const APP_LISTING_LEVEL2_DIV_CLASS = 'appListingLevel2DivClass';
+// export const APP_LISTING_LEVEL3_DIV_CLASS = "appListingLevel3DivClass";
+// export const APP_LISTING_LEVEL4_DIV_CLASS = "appListingLevel4DivClass";
+
+const APP_LISTING_TABLE_CLASS = "w-full text-sm appListingTableClass";
+const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTableHdrTheadClass";
+const APP_LISTING_TABLE_HDR_TR_CLASS = "border-b appListingTableHdrTrClass";
+const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
+const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
+const APP_LISTING_TABLE_BODY_TBODY_CLASS = "appListingTableBodyTbodyClass";
+const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrOddClass';
+const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrEvenClass';
+const APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS = 'appListingTableBodyTrActionsOddClass';
+const APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS = 'appListingTableBodyTrActionsEvenClass';
+const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS = "p-2 appListingTableBodyTdBaseOddClass";
+const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS = "p-2 appListingTableBodyTdBaseEvenClass";
+const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " break-words appListingTableBodyTdOddClass");
+const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " break-words appListingTableBodyTdEvenClass");
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsOddClass");
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsEvenClass");
+
+// Listing page search box (GCE_RFC)
+
+const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
+const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
+const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
+const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass");
+const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " mr-2 text-xs appListingSearchBoxStopButtonClass");
+const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
+
+// Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
+
+const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS = "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
+const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center 1-space-x-2 appListingToolbarPageNumSectionClass";
+const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm ml-2 mr-2 flex items-center appListingToolbarRowPerPageSectionClass";
+const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS = "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
+const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded border appListingToolbarRowPerPageInputClass";
+const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
+
+// Data page (GCE_RFC)
+
+// export const APP_FORMPAGE_LEVEL1_DIV_CLASS = `${APP_LEVEL1_DIV_CLASS} appFormPageLevel1DivClass`;
+// export const APP_FORMPAGE_LEVEL2_DIV_CLASS = `${APP_LEVEL2_DIV_CLASS} p-2 appFormPageLevel2DivClass`;
+const APP_FORMPAGE_LABEL_CLASS = "font-medium text-gray-700 appFormPageLabelClass";
+const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
+const APP_FORMPAGE_FORM_TABLE_CLASS = "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormTableClass";
+const APP_FORMPAGE_FIELD_CLASS = "flex flex-col ".concat(FORM_GROUP_CLASS, " appFormPageFieldClass");
+const APP_FORMPAGE_FIELD_BASE_CLASS = "".concat(FORM_CONTROL_CLASS, " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass");
+const APP_FORMPAGE_FIELD_GOOD_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " appFormPageFieldGoodClass");
+const APP_FORMPAGE_FIELD_INVALID_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " is-invalid appFormPageFieldInvalidClass");
+const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS = "align-middle flex appFormPageSpecialButtonDivClass";
+const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChildComponentsTopDivClass";
+
+// Generic CRUD editor (GCE_RFC) - END
+
+// Pop-ups
+
+const POPUP_TOP_MARGIN_CLASS = "pt-4 popupTopMarginClass";
+
+// ModalLib
+
+const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass';
+const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass';
+const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass';
+const MODALIB_BUTTON_SUCCESS_CLASS = 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass';
+const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass';
+const MODALIB_MODAL_HEADER_CLASS = "flex items-center justify-between pb-3 modalibModalHeaderClass";
+const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold modalibModalTitleClass";
+const MODALIB_MODAL_BODY_CLASS = "py-4 modalibModalBodyClass";
+const MODALIB_MODAL_FOOTER_CLASS = "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
+
+// Login page
+
+const LOGIN_PAGE_APP_LOGO_CLASS = "mx-auto my-0 loginPageAppLogoClass";
+
+// Components
+
+const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
+
+// Wait animation
+
+const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 showHidePageAnimationEnabledClass";
+const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
+
+// AI Assistant and conversation pages
+
+// Flexible input type text that grows according to its content (e.g. for the AI Assistant conversation)
+const INPUT_FLEXIBLE_CLASS = "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
 // export const INPUT_FLEXIBLE_CLASS = "m-0 w-full resize-none border-0 rounded-md border py-[10px] pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:py-4 md:pr-12 gizmo:md:py-3.5 gizmo:placeholder-black/50 gizmo:dark:placeholder-white/50 pl-12 gizmo:pl-10 md:pl-[46px] gizmo:md:pl-[55px]";
 
-const ERROR_MSG_CLASS = "alert alert-danger mt-4 p-2 rounded-md";
-const WARNING_MSG_CLASS = "alert alert-warning mt-4 p-2 rounded-md";
-const INFO_MSG_CLASS = "alert alert-info mt-4 p-2 rounded-md";
-const SUCCESS_MSG_CLASS = "alert alert-success text-black mt-4 p-2 rounded-md";
-const GRAY_BOX_MSG_CLASS = "alert text-black bg-gray-200 mt-4 p-2 rounded-md";
-
 var class_name_constants = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    BUTTON_LISTING_CLASS: BUTTON_LISTING_CLASS,
-    BUTTON_PRIMARY_CLASS: BUTTON_PRIMARY_CLASS,
-    BUTTON_SECONDARY_CLASS: BUTTON_SECONDARY_CLASS,
-    ERROR_MSG_CLASS: ERROR_MSG_CLASS,
-    GRAY_BOX_MSG_CLASS: GRAY_BOX_MSG_CLASS,
-    INFO_MSG_CLASS: INFO_MSG_CLASS,
-    INPUT_FLEXIBLE_CLASS: INPUT_FLEXIBLE_CLASS,
-    SUCCESS_MSG_CLASS: SUCCESS_MSG_CLASS,
-    WARNING_MSG_CLASS: WARNING_MSG_CLASS
+  __proto__: null,
+  ALERT_BASE_CLASS: ALERT_BASE_CLASS,
+  ALERT_DANGER_CLASS: ALERT_DANGER_CLASS,
+  ALERT_INFO_CLASS: ALERT_INFO_CLASS,
+  ALERT_SUCCESS_CLASS: ALERT_SUCCESS_CLASS,
+  ALERT_WARNING_CLASS: ALERT_WARNING_CLASS,
+  APP_FOOTER_CONTAINER_CLASS: APP_FOOTER_CONTAINER_CLASS,
+  APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS: APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS,
+  APP_FORMPAGE_FIELD_BASE_CLASS: APP_FORMPAGE_FIELD_BASE_CLASS,
+  APP_FORMPAGE_FIELD_CLASS: APP_FORMPAGE_FIELD_CLASS,
+  APP_FORMPAGE_FIELD_GOOD_CLASS: APP_FORMPAGE_FIELD_GOOD_CLASS,
+  APP_FORMPAGE_FIELD_INVALID_CLASS: APP_FORMPAGE_FIELD_INVALID_CLASS,
+  APP_FORMPAGE_FORM_TABLE_CLASS: APP_FORMPAGE_FORM_TABLE_CLASS,
+  APP_FORMPAGE_LABEL_CLASS: APP_FORMPAGE_LABEL_CLASS,
+  APP_FORMPAGE_LABEL_REQUIRED_CLASS: APP_FORMPAGE_LABEL_REQUIRED_CLASS,
+  APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS,
+  APP_LEVEL2_DIV_CLASS: APP_LEVEL2_DIV_CLASS,
+  APP_LISTING_SEARCH_BOX_INPUT_CLASS: APP_LISTING_SEARCH_BOX_INPUT_CLASS,
+  APP_LISTING_SEARCH_BOX_LABEL_CLASS: APP_LISTING_SEARCH_BOX_LABEL_CLASS,
+  APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS: APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS,
+  APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS: APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS,
+  APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS: APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS,
+  APP_LISTING_TABLE_BODY_TBODY_CLASS: APP_LISTING_TABLE_BODY_TBODY_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS: APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS: APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS: APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS: APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TD_EVEN_CLASS: APP_LISTING_TABLE_BODY_TD_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ODD_CLASS: APP_LISTING_TABLE_BODY_TD_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS: APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS: APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TR_EVEN_CLASS: APP_LISTING_TABLE_BODY_TR_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ODD_CLASS: APP_LISTING_TABLE_BODY_TR_ODD_CLASS,
+  APP_LISTING_TABLE_CLASS: APP_LISTING_TABLE_CLASS,
+  APP_LISTING_TABLE_HDR_THEAD_CLASS: APP_LISTING_TABLE_HDR_THEAD_CLASS,
+  APP_LISTING_TABLE_HDR_TH_CLASS: APP_LISTING_TABLE_HDR_TH_CLASS,
+  APP_LISTING_TABLE_HDR_TR_CLASS: APP_LISTING_TABLE_HDR_TR_CLASS,
+  APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS: APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS,
+  APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS: APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS: APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS: APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_CLASS: APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
+  APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS,
+  APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS,
+  APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS,
+  APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS,
+  APP_SIDE_MENU_BG_COLOR_CLASS: APP_SIDE_MENU_BG_COLOR_CLASS,
+  APP_TITLE_H1_CLASS: APP_TITLE_H1_CLASS,
+  APP_TITLE_RECYCLE_BUTTON_CLASS: APP_TITLE_RECYCLE_BUTTON_CLASS,
+  APP_TOP_DIV_CLASS: APP_TOP_DIV_CLASS,
+  BUTTON_COMPOSED_LABEL_CLASS: BUTTON_COMPOSED_LABEL_CLASS,
+  BUTTON_LISTING_CLASS: BUTTON_LISTING_CLASS,
+  BUTTON_LISTING_DISABLED_CLASS: BUTTON_LISTING_DISABLED_CLASS,
+  BUTTON_LISTING_NEW_CLASS: BUTTON_LISTING_NEW_CLASS,
+  BUTTON_LISTING_REFRESH_CLASS: BUTTON_LISTING_REFRESH_CLASS,
+  BUTTON_PRIMARY_CLASS: BUTTON_PRIMARY_CLASS,
+  BUTTON_RIGHT_SPACE_CLASS: BUTTON_RIGHT_SPACE_CLASS,
+  BUTTON_SECONDARY_CLASS: BUTTON_SECONDARY_CLASS,
+  CENTERED_BOX_CONTAINER_DIV_1_CLASS: CENTERED_BOX_CONTAINER_DIV_1_CLASS,
+  CENTERED_BOX_CONTAINER_DIV_2_CLASS: CENTERED_BOX_CONTAINER_DIV_2_CLASS,
+  CENTERED_BOX_CONTAINER_DIV_3_CLASS: CENTERED_BOX_CONTAINER_DIV_3_CLASS,
+  DARK_MODE_BUTTON_DARK_HIDDEN_CLASS: DARK_MODE_BUTTON_DARK_HIDDEN_CLASS,
+  DARK_MODE_BUTTON_DARK_INLINE_CLASS: DARK_MODE_BUTTON_DARK_INLINE_CLASS,
+  DARK_MODE_BUTTON_SVG_CLASS: DARK_MODE_BUTTON_SVG_CLASS,
+  DARK_MODE_BUTTON_TOP_DIV_CLASS: DARK_MODE_BUTTON_TOP_DIV_CLASS,
+  DISABLE_FIELD_BACKGROUND_COLOR_CLASS: DISABLE_FIELD_BACKGROUND_COLOR_CLASS,
+  ERROR_MSG_CLASS: ERROR_MSG_CLASS,
+  FORM_CONTROL_CLASS: FORM_CONTROL_CLASS,
+  FORM_GROUP_CLASS: FORM_GROUP_CLASS,
+  GRAY_BOX_MSG_CLASS: GRAY_BOX_MSG_CLASS,
+  HIDDEN_CLASS: HIDDEN_CLASS,
+  INFO_MSG_CLASS: INFO_MSG_CLASS,
+  INLINE_CLASS: INLINE_CLASS,
+  INPUT_FLEXIBLE_CLASS: INPUT_FLEXIBLE_CLASS,
+  INVALID_FEEDBACK_CLASS: INVALID_FEEDBACK_CLASS,
+  IS_INVALID_CLASS: IS_INVALID_CLASS,
+  LOGIN_PAGE_APP_LOGO_CLASS: LOGIN_PAGE_APP_LOGO_CLASS,
+  MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
+  MAIN_CONTAINER_FOR_TOP_MENU_CLASS: MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
+  MENU_MODE_BUTTON_TOP_DIV_CLASS: MENU_MODE_BUTTON_TOP_DIV_CLASS,
+  MODALIB_BUTTON_BASESTYLE_CLASS: MODALIB_BUTTON_BASESTYLE_CLASS,
+  MODALIB_BUTTON_DANGER_CLASS: MODALIB_BUTTON_DANGER_CLASS,
+  MODALIB_BUTTON_PRIMARY_CLASS: MODALIB_BUTTON_PRIMARY_CLASS,
+  MODALIB_BUTTON_SECONDARY_CLASS: MODALIB_BUTTON_SECONDARY_CLASS,
+  MODALIB_BUTTON_SUCCESS_CLASS: MODALIB_BUTTON_SUCCESS_CLASS,
+  MODALIB_MODAL_BODY_CLASS: MODALIB_MODAL_BODY_CLASS,
+  MODALIB_MODAL_FOOTER_CLASS: MODALIB_MODAL_FOOTER_CLASS,
+  MODALIB_MODAL_HEADER_CLASS: MODALIB_MODAL_HEADER_CLASS,
+  MODALIB_MODAL_TITLE_CLASS: MODALIB_MODAL_TITLE_CLASS,
+  NAVBAR_BRAND_APP_LOGO_CLASS: NAVBAR_BRAND_APP_LOGO_CLASS,
+  NAVBAR_BRAND_APP_VERSION_CLASS: NAVBAR_BRAND_APP_VERSION_CLASS,
+  NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS,
+  NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS: NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS,
+  NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN: NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN,
+  NAVBAR_BRAND_NAME_CLASS: NAVBAR_BRAND_NAME_CLASS,
+  NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: NAVBAR_HEADER_FOR_SIDE_MENU_CLASS,
+  NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS,
+  NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS: NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS,
+  NAVBAR_HEADER_FOR_TOP_MENU_CLASS: NAVBAR_HEADER_FOR_TOP_MENU_CLASS,
+  NAVBAR_MOBILE_CLOSE_BUTTON_CLASS: NAVBAR_MOBILE_CLOSE_BUTTON_CLASS,
+  NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS: NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS,
+  NAVBAR_MOBILE_MENU_DIV_1_CLASS: NAVBAR_MOBILE_MENU_DIV_1_CLASS,
+  NAVBAR_MOBILE_MENU_DIV_2_CLASS: NAVBAR_MOBILE_MENU_DIV_2_CLASS,
+  NAVBAR_MOBILE_MENU_DIV_3_CLASS: NAVBAR_MOBILE_MENU_DIV_3_CLASS,
+  NAVBAR_MOBILE_MENU_H2_CLASS: NAVBAR_MOBILE_MENU_H2_CLASS,
+  NAVBAR_MOBILE_NAV_CLASS: NAVBAR_MOBILE_NAV_CLASS,
+  NAVBAR_TEXT_CLASS: NAVBAR_TEXT_CLASS,
+  NAVBAR_TOGGLE_BUTTON_CLASS: NAVBAR_TOGGLE_BUTTON_CLASS,
+  NAVBAR_TOGGLE_IMAGE_CLASS: NAVBAR_TOGGLE_IMAGE_CLASS,
+  NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS: NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS,
+  NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS: NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS,
+  NAVBAR_TOP_FOR_SIDE_MENU_CLASS: NAVBAR_TOP_FOR_SIDE_MENU_CLASS,
+  NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS: NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS,
+  NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS: NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS,
+  NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS: NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS,
+  NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS: NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS,
+  NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS: NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS,
+  NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS: NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS,
+  NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS: NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS,
+  NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS,
+  NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS: NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
+  NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS: NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
+  NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS: NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS,
+  NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS: NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS,
+  NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS: NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS,
+  NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS: NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS,
+  NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS: NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS,
+  NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS: NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS,
+  NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS: NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS,
+  NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS: NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS,
+  NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS: NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS,
+  NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS: NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS,
+  NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS: NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS,
+  NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS: NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
+  NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS: NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
+  NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS: NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS,
+  NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS: NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
+  NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS: NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
+  NAV_LINK_BUTTON_HAMBURGER_CLASS: NAV_LINK_BUTTON_HAMBURGER_CLASS,
+  NAV_LINK_BUTTON_MOBILE_MENU_CLASS: NAV_LINK_BUTTON_MOBILE_MENU_CLASS,
+  NAV_LINK_BUTTON_SIDE_MENU_CLASS: NAV_LINK_BUTTON_SIDE_MENU_CLASS,
+  NAV_LINK_BUTTON_TOP_MENU_CLASS: NAV_LINK_BUTTON_TOP_MENU_CLASS,
+  NAV_LINK_TOP_DIV_HAMBURGER_CLASS: NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
+  NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
+  NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
+  NAV_LINK_TOP_DIV_TOP_MENU_CLASS: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
+  POPUP_TOP_MARGIN_CLASS: POPUP_TOP_MARGIN_CLASS,
+  SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS,
+  SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS,
+  SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS,
+  SUCCESS_MSG_CLASS: SUCCESS_MSG_CLASS,
+  SUGGESTION_DROPDOWN_CLASS: SUGGESTION_DROPDOWN_CLASS,
+  VISIBLE_CLASS: VISIBLE_CLASS,
+  WARNING_MSG_CLASS: WARNING_MSG_CLASS,
+  defaultTheme: defaultTheme
 });
+
+// IconsLib
+const GsIcons = _ref => {
+  var _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9, _ref10, _ref11;
+  let {
+    icon,
+    width = null,
+    height = null,
+    alt = '',
+    id = '',
+    className = '',
+    role = "img"
+  } = _ref;
+  const currentWidth = width !== null && width !== void 0 ? width : "14";
+  const currentHeight = height !== null && height !== void 0 ? height : "14";
+  switch (icon.toLowerCase()) {
+    case 'arrow-down-small':
+      return /*#__PURE__*/React.createElement("svg", {
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "6",
+        height: height !== null && height !== void 0 ? height : "3",
+        className: (_ref2 = "ml-2 overflow-visible" + className) !== null && _ref2 !== void 0 ? _ref2 : '',
+        role: role
+        // aria-hidden="true"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "M0 0L3 3L6 0",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "1.5",
+        strokeLinecap: "round"
+      }));
+    case 'arrow-right-small':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "3",
+        height: height !== null && height !== void 0 ? height : "6",
+        className: (_ref3 = "ml-2 overflow-visible" + className) !== null && _ref3 !== void 0 ? _ref3 : '',
+        role: role
+        // aria-hidden="true"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "M0 0L3 3L0 6",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "1.5",
+        strokeLinecap: "round"
+      }));
+    case 'arrows-rotate':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        role: role,
+        viewBox: "0 0 512 512"
+      }, /*#__PURE__*/React.createElement("g", {
+        fill: "#FFFFFF"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H176c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"
+      })));
+    case 'clip':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none"
+      }, /*#__PURE__*/React.createElement("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M9 7C9 4.23858 11.2386 2 14 2C16.7614 2 19 4.23858 19 7V15C19 18.866 15.866 22 12 22C8.13401 22 5 18.866 5 15V9C5 8.44772 5.44772 8 6 8C6.55228 8 7 8.44772 7 9V15C7 17.7614 9.23858 20 12 20C14.7614 20 17 17.7614 17 15V7C17 5.34315 15.6569 4 14 4C12.3431 4 11 5.34315 11 7V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V9C13 8.44772 13.4477 8 14 8C14.5523 8 15 8.44772 15 9V15C15 16.6569 13.6569 18 12 18C10.3431 18 9 16.6569 9 15V7Z",
+        fill: "currentColor"
+      }));
+    case 'edit':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        role: role,
+        viewBox: "0 0 576 512"
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "currentColor",
+        d: "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+      }));
+    case 'eye':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        role: role,
+        viewBox: "0 0 576 512"
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "currentColor",
+        d: "M569.354 231.631C512.969 135.949 407.81 72 288 72 168.14 72 63.004 135.994 6.646 231.631a47.999 47.999 0 0 0 0 48.739C63.031 376.051 168.19 440 288 440c119.86 0 224.996-63.994 281.354-159.631a47.997 47.997 0 0 0 0-48.738zM288 392c-75.162 0-136-60.827-136-136 0-75.162 60.826-136 136-136 75.162 0 136 60.826 136 136 0 75.162-60.826 136-136 136zm104-136c0 57.438-46.562 104-104 104s-104-46.562-104-104c0-17.708 4.431-34.379 12.236-48.973l-.001.032c0 23.651 19.173 42.823 42.824 42.823s42.824-19.173 42.824-42.823c0-23.651-19.173-42.824-42.824-42.824l-.032.001C253.621 156.431 270.292 152 288 152c57.438 0 104 46.562 104 104z"
+      }));
+    case 'google-logo':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        role: role,
+        fill: "#000000",
+        viewBox: "-51.2 -51.2 614.40 614.40"
+      }, /*#__PURE__*/React.createElement("g", {
+        id: "SVGRepo_bgCarrier",
+        strokeWidth: "0"
+      }, /*#__PURE__*/React.createElement("rect", {
+        x: "-51.2",
+        y: "-51.2",
+        width: "614.40",
+        height: "614.40",
+        rx: "0",
+        fill: "#fcfcfc",
+        strokeWidth: "0"
+      })), /*#__PURE__*/React.createElement("g", {
+        id: "SVGRepo_tracerCarrier",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }), /*#__PURE__*/React.createElement("g", {
+        id: "SVGRepo_iconCarrier"
+      }, /*#__PURE__*/React.createElement("title", null, "ionicons-v5_logos"), /*#__PURE__*/React.createElement("path", {
+        d: "M473.16,221.48l-2.26-9.59H262.46v88.22H387c-12.93,61.4-72.93,93.72-121.94,93.72-35.66,0-73.25-15-98.13-39.11a140.08,140.08,0,0,1-41.8-98.88c0-37.16,16.7-74.33,41-98.78s61-38.13,97.49-38.13c41.79,0,71.74,22.19,82.94,32.31l62.69-62.36C390.86,72.72,340.34,32,261.6,32h0c-60.75,0-119,23.27-161.58,65.71C58,139.5,36.25,199.93,36.25,256S56.83,369.48,97.55,411.6C141.06,456.52,202.68,480,266.13,480c57.73,0,112.45-22.62,151.45-63.66,38.34-40.4,58.17-96.3,58.17-154.9C475.75,236.77,473.27,222.12,473.16,221.48Z"
+      })));
+    case 'greater-than':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "14",
+        height: height !== null && height !== void 0 ? height : "14",
+        className: className !== null && className !== void 0 ? className : 'h-4 w-4',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "m9 18 6-6-6-6"
+      }));
+    case 'less-than':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "14",
+        height: height !== null && height !== void 0 ? height : "14",
+        className: className !== null && className !== void 0 ? className : 'h-4 w-4',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "m15 18-6-6 6-6"
+      }));
+    case 'menu-dots-more':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        role: role,
+        fill: "#000000",
+        viewBox: "0 0 64 64",
+        version: "1.1"
+      }, /*#__PURE__*/React.createElement("rect", {
+        id: "Icons",
+        x: "-256",
+        y: "-64"
+      }), /*#__PURE__*/React.createElement("g", {
+        id: "vertical-menu",
+        fill: "currentColor"
+      }, /*#__PURE__*/React.createElement("circle", {
+        cx: "32.026",
+        cy: "12.028",
+        r: "4"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "32.026",
+        cy: "52.028",
+        r: "4"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "32.026",
+        cy: "32.028",
+        r: "4"
+      })));
+    case "menu-hamburger":
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "24",
+        height: height !== null && height !== void 0 ? height : "24",
+        className: (_ref4 = "h-6 w-6" + className) !== null && _ref4 !== void 0 ? _ref4 : '',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }, /*#__PURE__*/React.createElement("line", {
+        x1: "4",
+        x2: "20",
+        y1: "12",
+        y2: "12"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "4",
+        x2: "20",
+        y1: "6",
+        y2: "6"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "4",
+        x2: "20",
+        y1: "18",
+        y2: "18"
+      }));
+    case 'moon':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "24",
+        height: height !== null && height !== void 0 ? height : "24",
+        className: (_ref5 = "h-6 w-6" + className) !== null && _ref5 !== void 0 ? _ref5 : '',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"
+      }));
+    case 'place-holder-circle':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "32",
+        height: height !== null && height !== void 0 ? height : "32",
+        className: (_ref6 = "w-8 h-8 rounded-full" + className) !== null && _ref6 !== void 0 ? _ref6 : '',
+        role: role,
+        fill: "none"
+      }, /*#__PURE__*/React.createElement("rect", {
+        width: width !== null && width !== void 0 ? width : "32",
+        height: height !== null && height !== void 0 ? height : "32",
+        fill: "#EAEAEA",
+        rx: "3"
+      }, /*#__PURE__*/React.createElement("g", {
+        opacity: ".5"
+      }, /*#__PURE__*/React.createElement("g", {
+        opacity: ".5"
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "#FAFAFA",
+        d: "M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"
+      }), /*#__PURE__*/React.createElement("path", {
+        stroke: "#C9C9C9",
+        strokeWidth: "2.418",
+        d: "M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"
+      })), /*#__PURE__*/React.createElement("path", {
+        stroke: "url(#a)",
+        strokeWidth: "2.418",
+        d: "M0-1.209h553.581",
+        transform: "scale(1 -1) rotate(45 1163.11 91.165)"
+      }), /*#__PURE__*/React.createElement("path", {
+        stroke: "url(#b)",
+        strokeWidth: "2.418",
+        d: "M404.846 598.671h391.726"
+      }), /*#__PURE__*/React.createElement("path", {
+        stroke: "url(#c)",
+        strokeWidth: "2.418",
+        d: "M599.5 795.742V404.017"
+      }), /*#__PURE__*/React.createElement("path", {
+        stroke: "url(#d)",
+        strokeWidth: "2.418",
+        d: "m795.717 796.597-391.441-391.44"
+      }), /*#__PURE__*/React.createElement("path", {
+        fill: "#fff",
+        d: "M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"
+      }), /*#__PURE__*/React.createElement("g", {
+        clipPath: "url(#e)"
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "#666",
+        fillRule: "evenodd",
+        d: "M616.426 586.58h-31.434v16.176l3.553-3.554.531-.531h9.068l.074-.074 8.463-8.463h2.565l7.18 7.181V586.58Zm-15.715 14.654 3.698 3.699 1.283 1.282-2.565 2.565-1.282-1.283-5.2-5.199h-6.066l-5.514 5.514-.073.073v2.876a2.418 2.418 0 0 0 2.418 2.418h26.598a2.418 2.418 0 0 0 2.418-2.418v-8.317l-8.463-8.463-7.181 7.181-.071.072Zm-19.347 5.442v4.085a6.045 6.045 0 0 0 6.046 6.045h26.598a6.044 6.044 0 0 0 6.045-6.045v-7.108l1.356-1.355-1.282-1.283-.074-.073v-17.989h-38.689v23.43l-.146.146.146.147Z",
+        clipRule: "evenodd"
+      })), /*#__PURE__*/React.createElement("path", {
+        stroke: "#C9C9C9",
+        strokeWidth: "2.418",
+        d: "M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"
+      })), /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
+        id: "a",
+        x1: "554.061",
+        x2: "-.48",
+        y1: ".083",
+        y2: ".087",
+        gradientUnits: "userSpaceOnUse"
+      }, /*#__PURE__*/React.createElement("stop", {
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".208",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".792",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "1",
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      })), /*#__PURE__*/React.createElement("linearGradient", {
+        id: "b",
+        x1: "796.912",
+        x2: "404.507",
+        y1: "599.963",
+        y2: "599.965",
+        gradientUnits: "userSpaceOnUse"
+      }, /*#__PURE__*/React.createElement("stop", {
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".208",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".792",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "1",
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      })), /*#__PURE__*/React.createElement("linearGradient", {
+        id: "c",
+        x1: "600.792",
+        x2: "600.794",
+        y1: "403.677",
+        y2: "796.082",
+        gradientUnits: "userSpaceOnUse"
+      }, /*#__PURE__*/React.createElement("stop", {
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".208",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".792",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "1",
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      })), /*#__PURE__*/React.createElement("linearGradient", {
+        id: "d",
+        x1: "404.85",
+        x2: "796.972",
+        y1: "403.903",
+        y2: "796.02",
+        gradientUnits: "userSpaceOnUse"
+      }, /*#__PURE__*/React.createElement("stop", {
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".208",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: ".792",
+        stopColor: "#C9C9C9"
+      }), /*#__PURE__*/React.createElement("stop", {
+        offset: "1",
+        stopColor: "#C9C9C9",
+        stopOpacity: "0"
+      })), /*#__PURE__*/React.createElement("clipPath", {
+        id: "e"
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "#fff",
+        d: "M581.364 580.535h38.689v38.689h-38.689z"
+      })))));
+    case 'plus':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        role: role,
+        viewBox: "0 0 448 512"
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "currentColor",
+        d: "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+      }));
+    case 'search':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth !== null && currentWidth !== void 0 ? currentWidth : '24',
+        height: currentHeight !== null && currentHeight !== void 0 ? currentHeight : '24',
+        className: className !== null && className !== void 0 ? className : "h-4 w-4",
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }, /*#__PURE__*/React.createElement("circle", {
+        cx: "11",
+        cy: "11",
+        r: "8"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "m21 21-4.3-4.3"
+      }));
+    case 'side-menu':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        className: (_ref7 = "w-6 h-6" + className) !== null && _ref7 !== void 0 ? _ref7 : '',
+        role: role,
+        viewBox: "0 0 24 24"
+      }, /*#__PURE__*/React.createElement("rect", {
+        id: "Square-2",
+        x: "3",
+        y: "3",
+        width: "18",
+        height: "18",
+        rx: "2",
+        ry: "2",
+        fill: "none"
+        // className="stroke-black dark:stroke-white"
+        ,
+        className: "stroke-white",
+        strokeMiterlimit: "10",
+        strokeWidth: "2"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "9",
+        y1: "21",
+        x2: "9",
+        y2: "3",
+        fill: "none"
+        // className="stroke-black dark:stroke-white"
+        ,
+        className: "stroke-white",
+        strokeMiterlimit: "10",
+        strokeWidth: "2"
+      }));
+    case 'spark':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
+        viewBox: "0 0 24 24"
+        // role="presentation"
+        ,
+        role: role
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "currentColor",
+        fillRule: "evenodd",
+        d: "M9.276 4.382L7.357 9.247l-4.863 1.917a.78.78 0 000 1.45l4.863 1.918 1.919 4.863a.78.78 0 001.45 0h-.001l1.918-4.863 4.864-1.919a.781.781 0 000-1.45l-4.864-1.916-1.918-4.865a.776.776 0 00-.44-.438.778.778 0 00-1.01.438zm8.297-2.03l-.743 1.886-1.884.743a.56.56 0 000 1.038l1.884.743.743 1.886a.558.558 0 001.038 0l.745-1.886 1.883-.743a.557.557 0 000-1.038l-1.883-.743-.745-1.885a.552.552 0 00-.314-.314.562.562 0 00-.724.314zm-.704 13.003l-.744 1.883-1.883.744a.553.553 0 00-.316.314.56.56 0 00.316.724l1.883.743.744 1.884c.057.144.17.258.314.315a.56.56 0 00.724-.315l.744-1.884 1.883-.743a.557.557 0 000-1.038l-1.883-.744-.744-1.883a.551.551 0 00-.315-.316.56.56 0 00-.723.316z"
+      }));
+    case 'sun':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "24",
+        height: height !== null && height !== void 0 ? height : "24",
+        className: (_ref8 = "h-6 w-6" + className) !== null && _ref8 !== void 0 ? _ref8 : '',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }, /*#__PURE__*/React.createElement("circle", {
+        cx: "12",
+        cy: "12",
+        r: "4"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M12 2v2"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M12 20v2"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "m4.93 4.93 1.41 1.41"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "m17.66 17.66 1.41 1.41"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M2 12h2"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M20 12h2"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "m6.34 17.66-1.41 1.41"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "m19.07 4.93-1.41 1.41"
+      }));
+    case 'trash':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : ''
+        // aria-hidden="true"
+        // focusable="false"
+        // data-prefix="fas"
+        // data-icon="trash"
+        // class="svg-inline--fa fa-trash "
+        ,
+        role: role,
+        viewBox: "0 0 448 512"
+      }, /*#__PURE__*/React.createElement("path", {
+        fill: "currentColor",
+        d: "M0 84V56c0-13.3 10.7-24 24-24h112l9.4-18.7c4-8.2 12.3-13.3 21.4-13.3h114.3c9.1 0 17.4 5.1 21.5 13.3L312 32h112c13.3 0 24 10.7 24 24v28c0 6.6-5.4 12-12 12H12C5.4 96 0 90.6 0 84zm415.2 56.7L394.8 467c-1.6 25.3-22.6 45-47.9 45H101.1c-25.3 0-46.3-19.7-47.9-45L32.8 140.7c-.4-6.9 5.1-12.7 12-12.7h358.5c6.8 0 12.3 5.8 11.9 12.7z"
+      }));
+    case 'top-menu':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        className: (_ref9 = "w-6 h-6" + className) !== null && _ref9 !== void 0 ? _ref9 : '',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none"
+      }, /*#__PURE__*/React.createElement("rect", {
+        width: "18",
+        height: "18",
+        rx: "3",
+        transform: "matrix(1.39071e-07 1 1 -1.39071e-07 3 3)"
+        // className="stroke-black dark:stroke-white"
+        ,
+        className: "stroke-white",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "1",
+        y1: "-1",
+        x2: "17",
+        y2: "-1",
+        transform: "matrix(1 -1.82782e-07 -1.82782e-07 -1 3 8)"
+        // className="stroke-black dark:stroke-white"
+        ,
+        className: "stroke-white",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }));
+    case 'vertical-slider':
+      return /*#__PURE__*/React.createElement("div", {
+        id: id,
+        alt: alt,
+        className: (_ref10 = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2" + className) !== null && _ref10 !== void 0 ? _ref10 : '',
+        role: role
+      });
+    case 'x':
+      return /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        id: id,
+        alt: alt,
+        width: width !== null && width !== void 0 ? width : "24",
+        height: height !== null && height !== void 0 ? height : "24",
+        className: (_ref11 = "h-6 w-6" + className) !== null && _ref11 !== void 0 ? _ref11 : '',
+        role: role,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      }, /*#__PURE__*/React.createElement("path", {
+        d: "M18 6 6 18"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "m6 6 12 12"
+      }));
+    default:
+      return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid Icon *".concat(icon, "*"));
+  }
+};
+
+const AppContext = /*#__PURE__*/React.createContext();
+const AppProvider = _ref => {
+  let {
+    children
+  } = _ref;
+  const [state, setState] = React.useState("");
+  const [menuOptions, setMenuOptions] = React.useState(null);
+  const [sideMenu, setSideMenu] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [expandedMenus, setExpandedMenus] = React.useState([]);
+  const theme = isDarkMode ? defaultTheme.dark : defaultTheme.light;
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  const toggleSideMenu = () => setSideMenu(!sideMenu);
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleSubmenu = menuName => {
+    setExpandedMenus(prev => prev.includes(menuName) ? prev.filter(item => item !== menuName) : [...prev, menuName]);
+  };
+  const isComponent = componentObj => {
+    return String(componentObj).includes('component:');
+  };
+  const setExpanded = componentObj => {
+    /* Close mobile menu if any option is clicked */
+    if (document.getElementById("navbar-main-toggle") && isMobileMenuOpen) {
+      document.getElementById("navbar-main-toggle").click();
+    }
+    if (componentObj) {
+      if (isComponent(componentObj)) {
+        try {
+          return /*#__PURE__*/React.createElement("componentObj", null);
+        } catch (error) {
+          console_debug_log('[ASE-E010] componentObj:', componentObj);
+          console_debug_log(error);
+          return null;
+        }
+      } else {
+        try {
+          return componentObj();
+        } catch (error) {
+          console_debug_log('[ASE-E020] componentObj:', componentObj);
+          console_debug_log(error);
+          return null;
+        }
+      }
+    }
+    return '';
+  };
+  return /*#__PURE__*/React.createElement(AppContext.Provider, {
+    value: {
+      state,
+      setState,
+      menuOptions,
+      setMenuOptions,
+      sideMenu,
+      setSideMenu,
+      isDarkMode,
+      setIsDarkMode,
+      isMobileMenuOpen,
+      setIsMobileMenuOpen,
+      expandedMenus,
+      setExpandedMenus,
+      theme,
+      toggleDarkMode,
+      toggleSideMenu,
+      toggleMobileMenu,
+      toggleSubmenu,
+      setExpanded
+    }
+  }, children);
+};
+const useAppContext = () => {
+  return React.useContext(AppContext);
+};
+
+const MainContainer = _ref => {
+  let {
+    children
+  } = _ref;
+  const {
+    theme,
+    sideMenu
+  } = useAppContext();
+  return /*#__PURE__*/React.createElement("div", {
+    className: "".concat(sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+  }, children);
+};
+const AppSectionContainer = _ref2 => {
+  let {
+    children
+  } = _ref2;
+  const {
+    sideMenu
+  } = useAppContext();
+  if (sideMenu) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS
+    }, children);
+  }
+  return /*#__PURE__*/React.createElement("main", {
+    className: APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS
+  }, children);
+};
+const AppSectionContainerForSideMenu = _ref3 => {
+  let {
+    children
+  } = _ref3;
+  return /*#__PURE__*/React.createElement("main", {
+    className: APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS
+  }, children);
+};
+AppSectionContainer.ForSideMenu = AppSectionContainerForSideMenu;
+const AppFooterContainer = _ref4 => {
+  let {
+    children
+  } = _ref4;
+  /* App Footer */
+  const {
+    theme
+  } = useAppContext();
+  return /*#__PURE__*/React.createElement("footer", {
+    className: "".concat(APP_FOOTER_CONTAINER_CLASS, " ").concat(theme.primary)
+  }, children);
+};
+const CenteredBoxContainer = _ref5 => {
+  let {
+    children
+  } = _ref5;
+  /* Center box container, for pop-ups and login page like components */
+  const {
+    theme
+  } = useAppContext();
+  return /*#__PURE__*/React.createElement("div", {
+    className: CENTERED_BOX_CONTAINER_DIV_1_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    // className={`${APP_MAIN_BOX_BG_COLOR_CLASS} ${CENTERED_BOX_CONTAINER_DIV_2_CLASS}`}
+    className: "".concat(CENTERED_BOX_CONTAINER_DIV_2_CLASS, " ").concat(theme.contentBg)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: CENTERED_BOX_CONTAINER_DIV_3_CLASS
+  }, children)));
+};
+
+// NavBar
+
+const Navbar = _ref6 => {
+  let {
+    children,
+    collapseOnSelect,
+    expand
+  } = _ref6;
+  const {
+    theme,
+    sideMenu,
+    isMobileMenuOpen
+  } = useAppContext();
+  if (sideMenu) {
+    const translateStyle = isMobileMenuOpen ? NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS : NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS;
+    return /*#__PURE__*/React.createElement("nav", {
+      className: "".concat(translateStyle, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+    }, children);
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: "".concat(NAVBAR_HEADER_FOR_TOP_MENU_CLASS, " ").concat(theme.primary)
+  }, children);
+};
+const NavbarBrand = _ref7 => {
+  let {
+    children,
+    as,
+    to,
+    onClick
+  } = _ref7;
+  const {
+    sideMenu
+  } = useAppContext();
+  const As = as;
+  if (sideMenu) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS
+    }, /*#__PURE__*/React.createElement(As
+    // as={as}
+    , {
+      to: to,
+      onClick: onClick
+    }, /*#__PURE__*/React.createElement("div", {
+      className: NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS
+    }, children)), /*#__PURE__*/React.createElement(MobileMenuCloseButton, {
+      className: NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN
+    }));
+  }
+  return /*#__PURE__*/React.createElement(As
+  // as={as}
+  , {
+    to: to,
+    onClick: onClick
+  }, /*#__PURE__*/React.createElement("div", {
+    className: NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS
+  }, children));
+};
+const NavbarTopCenterMenu = _ref8 => {
+  let {
+    children
+  } = _ref8;
+  const {
+    sideMenu
+  } = useAppContext();
+  if (sideMenu) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS
+    }, children);
+  }
+  return /*#__PURE__*/React.createElement("nav", {
+    className: NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS
+  }, children);
+};
+const NavbarTopRightMenu = _ref9 => {
+  let {
+    children
+  } = _ref9;
+  const {
+    sideMenu
+  } = useAppContext();
+  return /*#__PURE__*/React.createElement("div", {
+    className: sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS
+  }, children);
+};
+const MobileMenuCloseButton = _ref10 => {
+  let {
+    className
+  } = _ref10;
+  /* Mobile menu close button */
+  const {
+    toggleMobileMenu
+  } = useAppContext();
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: toggleMobileMenu,
+    className: className !== null && className !== void 0 ? className : '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "x",
+    className: NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS
+  }));
+};
+const NavbarMobileMenu = _ref11 => {
+  let {
+    children
+  } = _ref11;
+  const {
+    theme,
+    isMobileMenuOpen,
+    sideMenu,
+    toggleMobileMenu
+  } = useAppContext();
+  if (!isMobileMenuOpen || sideMenu) {
+    return null;
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: NAVBAR_MOBILE_MENU_DIV_1_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "".concat(NAVBAR_MOBILE_MENU_DIV_2_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: NAVBAR_MOBILE_MENU_DIV_3_CLASS
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: NAVBAR_MOBILE_MENU_H2_CLASS
+  }, "Menu"), /*#__PURE__*/React.createElement(MobileMenuCloseButton, null)), /*#__PURE__*/React.createElement("nav", {
+    className: NAVBAR_MOBILE_NAV_CLASS
+  }, children)));
+};
+const NavbarToggle = () => {
+  const {
+    toggleMobileMenu
+  } = useAppContext();
+  return /*#__PURE__*/React.createElement("button", {
+    id: "navbar-main-toggle",
+    onClick: toggleMobileMenu,
+    className: NAVBAR_TOGGLE_BUTTON_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "menu-hamburger",
+    className: NAVBAR_TOGGLE_IMAGE_CLASS
+  }));
+};
+const NavbarText = _ref12 => {
+  let {
+    children,
+    className
+  } = _ref12;
+  return /*#__PURE__*/React.createElement("div", {
+    className: className !== null && className !== void 0 ? className : NAVBAR_TEXT_CLASS
+  }, children);
+};
+const NavbarTopForSideMenu = _ref13 => {
+  let {
+    children,
+    className
+  } = _ref13;
+  const {
+    theme
+  } = useAppContext();
+  return /*#__PURE__*/React.createElement("header", {
+    className: "".concat(NAVBAR_TOP_FOR_SIDE_MENU_CLASS, " ").concat(theme.primary)
+  }, children);
+};
+Navbar.Brand = NavbarBrand;
+Navbar.TopCenterMenu = NavbarTopCenterMenu;
+Navbar.TopRightMenu = NavbarTopRightMenu;
+Navbar.MobileMenu = NavbarMobileMenu;
+Navbar.Toggle = NavbarToggle;
+Navbar.Text = NavbarText;
+Navbar.TopForSideMenu = NavbarTopForSideMenu;
+
+// NavDropdown
+
+const NavDropdown = _ref14 => {
+  let {
+    children,
+    title,
+    id,
+    type,
+    icon,
+    mobileMenuMode
+  } = _ref14;
+  const {
+    expandedMenus,
+    toggleSubmenu,
+    theme
+  } = useAppContext();
+  const [fullId, setFullId] = React.useState("".concat(id, "_").concat(type));
+  const [dropDownOpen, setDropDownOpen] = React.useState(false);
+  const toggledropDownOpen = () => {
+    const elementId = "".concat(fullId, "_dropDown");
+    const element = document.getElementById(elementId);
+    if (dropDownOpen) {
+      element.classList.add('hidden');
+    } else {
+      element.classList.remove('hidden');
+    }
+    setDropDownOpen(!dropDownOpen);
+  };
+  const variantsDirectionImage = {
+    top_menu: 'arrow-right-small',
+    // 'arrow-down-small',
+    hamburger: 'arrow-right-small',
+    // 'arrow-down-small',
+    side_menu: 'arrow-right-small',
+    mobile_menu: 'arrow-right-small'
+  };
+  const variantsTopDiv = {
+    top_menu: NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
+    hamburger: mobileMenuMode ? NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
+    side_menu: NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
+    mobile_menu: NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS
+  };
+  const variantsInnerDiv = {
+    top_menu: NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS,
+    hamburger: mobileMenuMode ? NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS,
+    side_menu: NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS,
+    mobile_menu: NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS
+  };
+  const variantsButton = {
+    top_menu: "".concat(NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTop),
+    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
+    side_menu: "".concat(NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
+    mobile_menu: "".concat(NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+  };
+  const variantsSubmenuImage = {
+    top_menu: NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
+    hamburger: mobileMenuMode ? NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS : NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS,
+    side_menu: NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
+    mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS
+  };
+  const variantsOptionClick = {
+    top_menu: toggleSubmenu,
+    hamburger: toggleSubmenu,
+    side_menu: toggleSubmenu,
+    mobile_menu: toggleSubmenu
+  };
+  React.useEffect(() => {
+    variantOnClick(fullId);
+  }, [dropDownOpen, fullId]);
+  React.useEffect(() => {
+    const elementId = "".concat(fullId, "_submenu_image");
+    const element = document.getElementById(elementId);
+    if (element) {
+      if (expandedMenus.includes(fullId)) {
+        element.classList.add('rotate-90');
+      } else {
+        element.classList.remove('rotate-90');
+      }
+    }
+  }, [dropDownOpen, fullId, expandedMenus]);
+  const directionImage = variantsDirectionImage[type] || '';
+  const variantStyleTopDiv = variantsTopDiv[type] || '';
+  const variantStyleInnerDiv = variantsInnerDiv[type] || '';
+  const variantStyleButton = variantsButton[type] || '';
+  const variantStyleSubmenuImage = variantsSubmenuImage[type] || '';
+  const variantOnClick = variantsOptionClick[type] || '';
+  return /*#__PURE__*/React.createElement("div", {
+    className: variantStyleTopDiv
+  }, /*#__PURE__*/React.createElement("button", {
+    className: variantStyleButton,
+    id: "".concat(fullId, "_button"),
+    type: "button",
+    onClick: toggledropDownOpen
+  }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
+    icon: icon
+  }) : title, /*#__PURE__*/React.createElement(GsIcons, {
+    id: "".concat(fullId, "_submenu_image"),
+    icon: directionImage,
+    className: variantStyleSubmenuImage
+  })), /*#__PURE__*/React.createElement("div", {
+    className: variantStyleInnerDiv,
+    id: "".concat(fullId, "_dropDown")
+  }, expandedMenus.includes(fullId) && React.Children.map(children, child => /*#__PURE__*/React.cloneElement(child, {
+    closeParent: () => toggledropDownOpen()
+  }))));
+};
+const NavDropdownItem = _ref15 => {
+  let {
+    children,
+    as,
+    to,
+    onClick,
+    reloadDocument,
+    type,
+    closeParent,
+    mobileMenuMode
+  } = _ref15;
+  const {
+    theme
+  } = useAppContext();
+  const As = as;
+  const variantsTopDiv = {
+    top_menu: NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
+    hamburger: mobileMenuMode ? NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS,
+    side_menu: NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS,
+    mobile_menu: NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS
+  };
+  const variantsButton = {
+    top_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTopSubMenu),
+    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu),
+    side_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
+    mobile_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+  };
+  const variantStyleTopDiv = variantsTopDiv[type] || '';
+  const variantStyleButton = variantsButton[type] || '';
+  return /*#__PURE__*/React.createElement("div", {
+    className: variantStyleTopDiv
+  }, As && /*#__PURE__*/React.createElement(As, {
+    className: variantStyleButton,
+    to: to,
+    onClick: e => {
+      closeParent();
+      if (onClick) {
+        onClick(e);
+      }
+    }
+  }, children), !As && /*#__PURE__*/React.createElement("button", {
+    className: variantStyleButton,
+    onClick: e => {
+      closeParent();
+      if (onClick) {
+        onClick(e);
+      }
+    }
+  }, children));
+};
+NavDropdown.Item = NavDropdownItem;
+
+// export const Nav = ({ type, id, children }) => {
+//     /* Central Menu */
+//     const [visible, setVisible] = useState(false);
+//     if (debug) console_debug_log("||||| Nav", children);
+
+//     if (!id) {
+//         id = 'nav_' + Math.random().toString(36).substr(2, 9);
+//     }
+
+//     const togleVisibility = () => {
+//         const idName = `${id}_side_menu`;
+//         if (!visible) {
+//             document.getElementById(idName).classList.add('hidden');
+//         } else {
+//             document.getElementById(idName).classList.remove('hidden');
+//         }
+//         console_debug_log(`togleVisibility | idName: ${idName} | visible: ${visible}`);
+//         setVisible(!visible);
+//     }
+
+//     const variantsTopDiv = {
+//         top_menu: '',
+//         hamburger: '',
+//         side_menu: 'h-full flex items-center',
+//     };
+
+//     const variantsInnerDiv = {
+//         top_menu: 'flex flex-col pl-0 mb-0 list-none',
+//         top_menu: 'relative flex items-center',
+//         hamburger: 'relative flex items-center',
+//         // side_menu: 'top-0 left-0 h-full w-64 shadow-lg flex flex-col overflow-y-auto bg-white dark:bg-gray-800',
+//         side_menu: `top-0 left-0 h-full w-64 shadow-lg flex flex-col overflow-y-auto ${APP_SIDE_MENU_BG_COLOR_CLASS}`,
+//     };
+
+//     const variantStyleTopDiv = variantsTopDiv[type] || '';
+//     const variantStyleInnerDiv = variantsInnerDiv[type] || '';
+
+//     return (
+//         <div
+//             className={variantStyleTopDiv}
+//         >
+//             <div
+//                 className={variantStyleInnerDiv}
+//                 id={`${id}_side_menu`}
+//             >
+//                 {children}
+//             </div>
+//             {type === 'side_menu' && (
+//                 <ToggleSideBar
+//                     id={`${id}_toggle`}
+//                     className='flex items-center justify-center'
+//                     onClick={togleVisibility}
+//                 />
+//             )}
+//         </div>
+//     );
+// }
+
+const NavLink = _ref17 => {
+  let {
+    children,
+    as,
+    to,
+    onClick,
+    reloadDocument,
+    type,
+    mobileMenuMode
+  } = _ref17;
+  const {
+    theme
+  } = useAppContext();
+  const As = as;
+  const variantsLi = {
+    top_menu: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
+    hamburger: mobileMenuMode ? NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS : NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
+    side_menu: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
+    mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS
+  };
+  const variantsButton = {
+    top_menu: "".concat(NAV_LINK_BUTTON_TOP_MENU_CLASS, "  ").concat(theme.textHoverTop),
+    hamburger: "".concat(mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
+    side_menu: "".concat(NAV_LINK_BUTTON_SIDE_MENU_CLASS, "  ").concat(theme.textHoverSide),
+    mobile_menu: "".concat(NAV_LINK_BUTTON_MOBILE_MENU_CLASS, "  ").concat(theme.textHoverSide)
+  };
+  const variantStyleLi = variantsLi[type] || '';
+  const variantStyleButton = variantsButton[type] || '';
+  return /*#__PURE__*/React.createElement("div", {
+    className: variantStyleLi
+  }, /*#__PURE__*/React.createElement(As, {
+    to: to
+    // onClick={onClick}
+    ,
+    className: variantStyleButton
+  }, children));
+};
+const Nav = NavbarTopCenterMenu;
+Nav.Link = NavLink;
+
+const Button = _ref => {
+  let {
+    variant = 'primary',
+    className = '',
+    ...props
+  } = _ref;
+  const baseStyle = MODALIB_BUTTON_BASESTYLE_CLASS;
+  const variants = {
+    primary: MODALIB_BUTTON_PRIMARY_CLASS,
+    secondary: MODALIB_BUTTON_SECONDARY_CLASS,
+    success: MODALIB_BUTTON_SUCCESS_CLASS,
+    danger: MODALIB_BUTTON_DANGER_CLASS
+  };
+  const variantStyle = variants[variant] || variants.primary;
+  return /*#__PURE__*/React.createElement("button", _extends({
+    className: "".concat(baseStyle, " ").concat(variantStyle, " ").concat(className)
+  }, props));
+};
+const Modal = _ref2 => {
+  let {
+    show,
+    onHide,
+    children
+  } = _ref2;
+  React.useEffect(() => {
+    const handleOutsideClick = event => {
+      // Does not allow close the pop-up if click outside
+    };
+    if (show) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [show, onHide]);
+  if (!show) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    className: POPUP_TOP_MARGIN_CLASS
+  }, /*#__PURE__*/React.createElement(CenteredBoxContainer, null, children));
+};
+const ModalHeader = _ref3 => {
+  let {
+    children
+  } = _ref3;
+  return /*#__PURE__*/React.createElement("div", {
+    className: MODALIB_MODAL_HEADER_CLASS
+  }, children);
+};
+const ModalTitle = _ref4 => {
+  let {
+    children
+  } = _ref4;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
+    className: MODALIB_MODAL_TITLE_CLASS
+  }, children));
+};
+const ModalBody = _ref5 => {
+  let {
+    children
+  } = _ref5;
+  return /*#__PURE__*/React.createElement("div", {
+    className: MODALIB_MODAL_BODY_CLASS
+  }, children);
+};
+const ModalFooter = _ref6 => {
+  let {
+    children
+  } = _ref6;
+  return /*#__PURE__*/React.createElement("div", {
+    className: MODALIB_MODAL_FOOTER_CLASS
+  }, children);
+};
+Modal.Header = ModalHeader;
+Modal.Title = ModalTitle;
+Modal.Body = ModalBody;
+Modal.Footer = ModalFooter;
+Modal.Button = Button;
 
 const ModalPopUp = _ref => {
   let {
@@ -112,12 +1765,12 @@ const ModalPopUp = _ref => {
   //     </Button>
   // }
 
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(reactBootstrap.Modal, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Modal, {
     show: show,
     onHide: handleOnHide
-  }, title && showTitle && /*#__PURE__*/React.createElement(reactBootstrap.Modal.Header, {
+  }, title && showTitle && /*#__PURE__*/React.createElement(Modal.Header, {
     closeButton: true
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Modal.Title, null, title)), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Body, null, link && /*#__PURE__*/React.createElement("iframe", {
+  }, /*#__PURE__*/React.createElement(Modal.Title, null, title)), /*#__PURE__*/React.createElement(Modal.Body, null, link && /*#__PURE__*/React.createElement("iframe", {
     src: link + linkSuffix,
     style: {
       width: '100%',
@@ -125,11 +1778,9 @@ const ModalPopUp = _ref => {
     },
     title: title
   }), !link && htmlContent === null && children, !link && htmlContent !== null && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: htmlContentClass,
-    dangerouslySetInnerHTML: {
-      __html: htmlContent
-    }
-  }))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Footer, null, closeButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
+    className: htmlContentClass
+    // dangerouslySetInnerHTML={{ __html: htmlContent }}
+  }, htmlContent))), /*#__PURE__*/React.createElement(Modal.Footer, null, closeButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
     variant: "secondary",
     action: () => closeButtonAction ? closeButtonAction() : handleClose()
   }, closeButtonMessage), secondButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
@@ -149,7 +1800,7 @@ const DefaultButtonModal = _ref2 => {
     variant,
     action
   } = _ref2;
-  return /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+  return /*#__PURE__*/React.createElement(Button, {
     variant: variant,
     onClick: () => action ? action() : null
   }, children);
@@ -169,10 +1820,10 @@ const LogoutNavigate = _ref3 => {
 };
 
 var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    DefaultButtonModal: DefaultButtonModal,
-    LogoutNavigate: LogoutNavigate,
-    ModalPopUp: ModalPopUp
+  __proto__: null,
+  DefaultButtonModal: DefaultButtonModal,
+  LogoutNavigate: LogoutNavigate,
+  ModalPopUp: ModalPopUp
 });
 
 const About = () => {
@@ -191,6 +1842,22 @@ const AboutBody = _ref => {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), children);
 };
 
+const saveRawItemToLocalStorage = (lsItemName, lsData) => {
+  localStorage.setItem(lsItemName, lsData);
+};
+const getRawItemFromLocalStorage = lsItemName => {
+  return localStorage.getItem(lsItemName);
+};
+const removeItemFromLocalStorage = lsItemName => {
+  localStorage.removeItem(lsItemName);
+};
+const saveItemToLocalStorage = (lsItemName, lsDataDict) => {
+  saveRawItemToLocalStorage(lsItemName, JSON.stringify(lsDataDict));
+};
+const getItemFromLocalStorage = lsItemName => {
+  return JSON.parse(getRawItemFromLocalStorage(lsItemName));
+};
+
 const history = history$2.createBrowserHistory();
 function getPrefix() {
   let hardPrefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -206,27 +1873,30 @@ const setLastUrl = function () {
     lastURL = window.location.href;
   }
   if (lastURL.indexOf('/login') === -1) {
-    localStorage.setItem('lastURL', lastURL);
+    // localStorage.setItem('lastURL', lastURL);
+    saveRawItemToLocalStorage('lastURL', lastURL);
   }
 };
 const removeLastUrl = () => {
   localStorage.removeItem('lastURL');
+  removeItemFromLocalStorage('lastURL');
 };
 const getLastUrl = () => {
   let lastUrl = getPrefix(true) + '/';
   if (localStorage.getItem('lastURL')) {
-    lastUrl = localStorage.getItem('lastURL');
+    // lastUrl = localStorage.getItem('lastURL');
+    lastUrl = getRawItemFromLocalStorage('lastURL');
   }
   return lastUrl;
 };
 
 var history$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    getLastUrl: getLastUrl,
-    getPrefix: getPrefix,
-    history: history,
-    removeLastUrl: removeLastUrl,
-    setLastUrl: setLastUrl
+  __proto__: null,
+  getLastUrl: getLastUrl,
+  getPrefix: getPrefix,
+  history: history,
+  removeLastUrl: removeLastUrl,
+  setLastUrl: setLastUrl
 });
 
 // export function getConfigsJsonFile(jsonFileName) {
@@ -248,8 +1918,8 @@ const buildConstant = constants => {
 };
 
 var jsonUtilities = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    buildConstant: buildConstant
+  __proto__: null,
+  buildConstant: buildConstant
 });
 
 var TRUE_FALSE$1 = {
@@ -348,55 +2018,55 @@ const LANGUAGES = buildConstant(constants$1.LANGUAGES);
 const GENDERS = buildConstant(constants$1.GENDERS);
 
 var general_constants = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    ACTION_CREATE: ACTION_CREATE,
-    ACTION_DELETE: ACTION_DELETE,
-    ACTION_LIST: ACTION_LIST,
-    ACTION_READ: ACTION_READ,
-    ACTION_UPDATE: ACTION_UPDATE,
-    GENDERS: GENDERS,
-    LANGUAGES: LANGUAGES,
-    MSG_ACTIONS: MSG_ACTIONS,
-    MSG_ACTION_CANCEL: MSG_ACTION_CANCEL,
-    MSG_ACTION_CREATE: MSG_ACTION_CREATE,
-    MSG_ACTION_DELETE: MSG_ACTION_DELETE,
-    MSG_ACTION_EDIT: MSG_ACTION_EDIT,
-    MSG_ACTION_LIST: MSG_ACTION_LIST,
-    MSG_ACTION_NEW: MSG_ACTION_NEW,
-    MSG_ACTION_READ: MSG_ACTION_READ,
-    MSG_ACTION_UPDATE: MSG_ACTION_UPDATE,
-    MSG_ALT_WAIT_ANIMATION: MSG_ALT_WAIT_ANIMATION,
-    MSG_DELETE_CONFIRM: MSG_DELETE_CONFIRM,
-    MSG_DONE_CREATED: MSG_DONE_CREATED,
-    MSG_DONE_DELETED: MSG_DONE_DELETED,
-    MSG_DONE_UPDATED: MSG_DONE_UPDATED,
-    MSG_ERROR_CLICK_TO_RELOGIN: MSG_ERROR_CLICK_TO_RELOGIN,
-    MSG_ERROR_CLICK_TO_RETRY: MSG_ERROR_CLICK_TO_RETRY,
-    MSG_ERROR_CONNECTION_FAIL: MSG_ERROR_CONNECTION_FAIL,
-    MSG_ERROR_ID_NOT_FOUND: MSG_ERROR_ID_NOT_FOUND,
-    MSG_ERROR_INVALID_CREDS: MSG_ERROR_INVALID_CREDS,
-    MSG_ERROR_INVALID_TOKEN: MSG_ERROR_INVALID_TOKEN,
-    MSG_ERROR_MISSING_ARRAY_NAME_PARAM: MSG_ERROR_MISSING_ARRAY_NAME_PARAM,
-    MSG_ERROR_POSSIBLE_CORS: MSG_ERROR_POSSIBLE_CORS,
-    MSG_ERROR_SESSION_EXPIRED: MSG_ERROR_SESSION_EXPIRED,
-    MSG_IS_REQUIRED: MSG_IS_REQUIRED,
-    MSG_MUST_BE: MSG_MUST_BE,
-    MSG_NEXT: MSG_NEXT,
-    MSG_OF: MSG_OF,
-    MSG_PAGE: MSG_PAGE,
-    MSG_PREVIOUS: MSG_PREVIOUS,
-    MSG_ROWS_PER_PAGE: MSG_ROWS_PER_PAGE,
-    MSG_SEARCH: MSG_SEARCH,
-    MSG_SELECT_AN_OPTION: MSG_SELECT_AN_OPTION,
-    MSG_VALID_DATE: MSG_VALID_DATE,
-    MSG_VALID_EMAIL: MSG_VALID_EMAIL,
-    MSG_VALID_INTEGER: MSG_VALID_INTEGER,
-    MSG_VALID_NUMBER: MSG_VALID_NUMBER,
-    ROWS_PER_PAGE: ROWS_PER_PAGE,
-    TRUE_FALSE: TRUE_FALSE,
-    WAIT_ANIMATION_IMG: WAIT_ANIMATION_IMG,
-    YES_NO: YES_NO,
-    imageDirectory: imageDirectory
+  __proto__: null,
+  ACTION_CREATE: ACTION_CREATE,
+  ACTION_DELETE: ACTION_DELETE,
+  ACTION_LIST: ACTION_LIST,
+  ACTION_READ: ACTION_READ,
+  ACTION_UPDATE: ACTION_UPDATE,
+  GENDERS: GENDERS,
+  LANGUAGES: LANGUAGES,
+  MSG_ACTIONS: MSG_ACTIONS,
+  MSG_ACTION_CANCEL: MSG_ACTION_CANCEL,
+  MSG_ACTION_CREATE: MSG_ACTION_CREATE,
+  MSG_ACTION_DELETE: MSG_ACTION_DELETE,
+  MSG_ACTION_EDIT: MSG_ACTION_EDIT,
+  MSG_ACTION_LIST: MSG_ACTION_LIST,
+  MSG_ACTION_NEW: MSG_ACTION_NEW,
+  MSG_ACTION_READ: MSG_ACTION_READ,
+  MSG_ACTION_UPDATE: MSG_ACTION_UPDATE,
+  MSG_ALT_WAIT_ANIMATION: MSG_ALT_WAIT_ANIMATION,
+  MSG_DELETE_CONFIRM: MSG_DELETE_CONFIRM,
+  MSG_DONE_CREATED: MSG_DONE_CREATED,
+  MSG_DONE_DELETED: MSG_DONE_DELETED,
+  MSG_DONE_UPDATED: MSG_DONE_UPDATED,
+  MSG_ERROR_CLICK_TO_RELOGIN: MSG_ERROR_CLICK_TO_RELOGIN,
+  MSG_ERROR_CLICK_TO_RETRY: MSG_ERROR_CLICK_TO_RETRY,
+  MSG_ERROR_CONNECTION_FAIL: MSG_ERROR_CONNECTION_FAIL,
+  MSG_ERROR_ID_NOT_FOUND: MSG_ERROR_ID_NOT_FOUND,
+  MSG_ERROR_INVALID_CREDS: MSG_ERROR_INVALID_CREDS,
+  MSG_ERROR_INVALID_TOKEN: MSG_ERROR_INVALID_TOKEN,
+  MSG_ERROR_MISSING_ARRAY_NAME_PARAM: MSG_ERROR_MISSING_ARRAY_NAME_PARAM,
+  MSG_ERROR_POSSIBLE_CORS: MSG_ERROR_POSSIBLE_CORS,
+  MSG_ERROR_SESSION_EXPIRED: MSG_ERROR_SESSION_EXPIRED,
+  MSG_IS_REQUIRED: MSG_IS_REQUIRED,
+  MSG_MUST_BE: MSG_MUST_BE,
+  MSG_NEXT: MSG_NEXT,
+  MSG_OF: MSG_OF,
+  MSG_PAGE: MSG_PAGE,
+  MSG_PREVIOUS: MSG_PREVIOUS,
+  MSG_ROWS_PER_PAGE: MSG_ROWS_PER_PAGE,
+  MSG_SEARCH: MSG_SEARCH,
+  MSG_SELECT_AN_OPTION: MSG_SELECT_AN_OPTION,
+  MSG_VALID_DATE: MSG_VALID_DATE,
+  MSG_VALID_EMAIL: MSG_VALID_EMAIL,
+  MSG_VALID_INTEGER: MSG_VALID_INTEGER,
+  MSG_VALID_NUMBER: MSG_VALID_NUMBER,
+  ROWS_PER_PAGE: ROWS_PER_PAGE,
+  TRUE_FALSE: TRUE_FALSE,
+  WAIT_ANIMATION_IMG: WAIT_ANIMATION_IMG,
+  YES_NO: YES_NO,
+  imageDirectory: imageDirectory
 });
 
 var BILLING_PLANS$1 = {
@@ -428,18 +2098,23 @@ const APP_EMAILS = constants.APP_EMAILS;
 const APP_VALID_URLS = constants.APP_VALID_URLS;
 
 var app_constants = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    APP_EMAILS: APP_EMAILS,
-    APP_VALID_URLS: APP_VALID_URLS,
-    BILLING_PLANS: BILLING_PLANS,
-    ERROR_MESSAGES: ERROR_MESSAGES
+  __proto__: null,
+  APP_EMAILS: APP_EMAILS,
+  APP_VALID_URLS: APP_VALID_URLS,
+  BILLING_PLANS: BILLING_PLANS,
+  ERROR_MESSAGES: ERROR_MESSAGES
 });
 
-const currentUserSubject = new rxjs.BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+const getCurrentUserFromLocalStorage = () => {
+  // return JSON.parse(localStorage.getItem('currentUser'));
+  return getItemFromLocalStorage('currentUser');
+};
+const currentUserSubject = new rxjs.BehaviorSubject(getCurrentUserFromLocalStorage());
 function logout() {
   let lastURL = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   // Remove user from local storage to log user out
-  localStorage.removeItem('currentUser');
+  // localStorage.removeItem('currentUser');
+  removeItemFromLocalStorage('currentUser');
   currentUserSubject.next(null);
   if (lastURL) {
     setLastUrl(lastURL);
@@ -447,48 +2122,17 @@ function logout() {
 }
 
 var logout_service = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    currentUserSubject: currentUserSubject,
-    logout: logout
+  __proto__: null,
+  currentUserSubject: currentUserSubject,
+  getCurrentUserFromLocalStorage: getCurrentUserFromLocalStorage,
+  logout: logout
 });
-
-function _defineProperty(e, r, t) {
-  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
-  }) : e[r] = t, e;
-}
-function _extends() {
-  return _extends = Object.assign ? Object.assign.bind() : function (n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
-    }
-    return n;
-  }, _extends.apply(null, arguments);
-}
-function _toPrimitive(t, r) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r ? String : Number)(t);
-}
-function _toPropertyKey(t) {
-  var i = _toPrimitive(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
 
 function authHeader() {
   // Returns authorization header with jwt token
   let currentUser = null;
   try {
-    currentUser = authenticationService.currentUserValue;
+    currentUser = getCurrentUserFromLocalStorage();
   } catch (error) {
     console_debug_log("authHeader | ERROR: ".concat(error));
   }
@@ -508,8 +2152,8 @@ function authHeader() {
 }
 
 var authHeader$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    authHeader: authHeader
+  __proto__: null,
+  authHeader: authHeader
 });
 
 const usePlainFetch = false;
@@ -580,10 +2224,8 @@ async function handleFetchError(error) {
     */
     possibleCORS = error.statusText.includes('CORS');
     reasonDetail = await error.text().then(text => {
-      console_debug_log('Error body:', text);
       return text;
     }).catch(e => {
-      console_debug_log('Error reading body:', e);
       return "HTTP ".concat(error.status);
     });
     if (error.status === 401) {
@@ -612,12 +2254,12 @@ function IsJsonString(str) {
 }
 
 var response_handlers_service = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    IsJsonString: IsJsonString,
-    handleFetchError: handleFetchError,
-    handleResponse: handleResponse,
-    handleResponseText: handleResponseText,
-    usePlainFetch: usePlainFetch
+  __proto__: null,
+  IsJsonString: IsJsonString,
+  handleFetchError: handleFetchError,
+  handleResponse: handleResponse,
+  handleResponseText: handleResponseText,
+  usePlainFetch: usePlainFetch
 });
 
 // Blob files utilities
@@ -751,17 +2393,17 @@ const fixBlob = async (blobObj, filename) => {
 };
 
 var blob_files_utilities = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    decodeBlob: decodeBlob,
-    defaultFilenametoDownload: defaultFilenametoDownload,
-    fixBlob: fixBlob,
-    getContentType: getContentType,
-    getFileExtension: getFileExtension,
-    getFilenameFromContentDisposition: getFilenameFromContentDisposition,
-    getHeadersContentType: getHeadersContentType,
-    isBinaryFileType: isBinaryFileType,
-    performDownload: performDownload,
-    responseHasFile: responseHasFile
+  __proto__: null,
+  decodeBlob: decodeBlob,
+  defaultFilenametoDownload: defaultFilenametoDownload,
+  fixBlob: fixBlob,
+  getContentType: getContentType,
+  getFileExtension: getFileExtension,
+  getFilenameFromContentDisposition: getFilenameFromContentDisposition,
+  getHeadersContentType: getHeadersContentType,
+  isBinaryFileType: isBinaryFileType,
+  performDownload: performDownload,
+  responseHasFile: responseHasFile
 });
 
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
@@ -822,7 +2464,7 @@ class dbApiService {
                   response
                 };
               }, error => {
-                console_debug_log('||| getFetch | fixBlob | error:', error);
+                if (this.debug) console_debug_log('||| getFetch | fixBlob | error:', error);
                 return Promise.reject(response);
               });
             });
@@ -855,7 +2497,7 @@ class dbApiService {
         }).then(handleResponse).catch(handleFetchError);
       }
     } catch (e) {
-      console_debug_log('|| FETCH Error:', e);
+      if (this.debug) console_debug_log('|| FETCH Error:', e);
       response = Promise.resolve(handleFetchError(e));
     }
     return response;
@@ -982,11 +2624,50 @@ const convertId = id => {
 };
 
 var db_service = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    MULTIPART_FORM_DATA_HEADER: MULTIPART_FORM_DATA_HEADER,
-    convertId: convertId,
-    dbApiService: dbApiService
+  __proto__: null,
+  MULTIPART_FORM_DATA_HEADER: MULTIPART_FORM_DATA_HEADER,
+  convertId: convertId,
+  dbApiService: dbApiService
 });
+
+const defaultItemName = function () {
+  let lsItemName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  return lsItemName ? lsItemName : 'currentConfig';
+};
+const buildConfigData = function () {
+  var _lsDataDict;
+  let lsDataDict = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  const defaultConfigData = {
+    "pref_dark_mode": "1",
+    "pref_side_menu": "1",
+    "language": "en",
+    "currency": "USD",
+    "timezone": "America/New_York"
+  };
+  lsDataDict = (_lsDataDict = lsDataDict) !== null && _lsDataDict !== void 0 ? _lsDataDict : {};
+  // Merge defaultConfigData with lsDataDict
+  return {
+    ...defaultConfigData,
+    ...lsDataDict
+  };
+};
+const saveLocalConfig = function (lsDataDict) {
+  let lsItemName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  lsItemName = defaultItemName(lsItemName);
+  // This allows to add configuration items individually
+  const existingLocalConfig = getLocalConfig(lsItemName);
+  lsDataDict = {
+    ...existingLocalConfig,
+    ...lsDataDict
+  };
+  saveItemToLocalStorage(lsItemName, lsDataDict);
+};
+const getLocalConfig = function () {
+  let lsItemName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  lsItemName = defaultItemName(lsItemName);
+  const lsDataDict = getItemFromLocalStorage(lsItemName);
+  return buildConfigData(lsDataDict);
+};
 
 // Authentication service
 
@@ -1009,7 +2690,7 @@ function login(username, password) {
       "Authorization": "Basic " + buffer.Buffer.from(username + ":" + password).toString('base64')
     }
   };
-  let userService = new dbApiService({
+  new dbApiService({
     url: 'users'
   });
   return fetch("".concat(config.apiUrl, "/users/login"), requestOptions).then(handleResponse, handleFetchError).then(res => {
@@ -1017,17 +2698,14 @@ function login(username, password) {
       return Promise.reject(res.message);
     }
     let user = {
-      id: userService.convertId(res.resultset._id),
-      username: res.resultset.username,
-      // email: res.resultset.email,
-      firstName: res.resultset.firstname,
-      lastName: res.resultset.lastname,
       token: res.resultset.token
     };
-    // store user details and jwt token in local storage to keep user logged in between page refreshes
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    // Store the JWT token only in local storage to keep user logged in between page refreshes
+    // localStorage.setItem('currentUser', JSON.stringify(user));
+    saveItemToLocalStorage('currentUser', user);
     currentUserSubject.next(user);
-    return user;
+    // Return user details and JWT token
+    return getUserLocalData(res);
   });
 }
 const getUserData = userId => {
@@ -1037,8 +2715,37 @@ const getUserData = userId => {
   return dbApi.getOne({
     id: userId
   }).then(data => data, error => {
-    console_debug_log("ERROR: getUserData(".concat(userId, ":)"));
+    console_debug_log("ERROR: getUserData(".concat(userId, "):"));
     console.error(error);
+    return {
+      error: true,
+      errorMsg: error
+    };
+  });
+};
+const getUserLocalData = res => {
+  var _data$pref_side_menu, _data$pref_dark_mode;
+  const userService = new dbApiService({
+    url: 'users'
+  });
+  const data = res.resultset;
+  const localConfig = getLocalConfig();
+  return {
+    id: userService.convertId(data._id),
+    // username: data.username,
+    // email: data.email,
+    firstName: data.firstname,
+    // lastName: data.lastname,
+    // token: data.token
+    pref_side_menu: (_data$pref_side_menu = data.pref_side_menu) !== null && _data$pref_side_menu !== void 0 ? _data$pref_side_menu : localConfig.pref_side_menu,
+    pref_dark_mode: (_data$pref_dark_mode = data.pref_dark_mode) !== null && _data$pref_dark_mode !== void 0 ? _data$pref_dark_mode : localConfig.pref_dark_mode
+  };
+};
+const getCurrentUserData = () => {
+  const dbApi = new dbApiService({
+    url: 'users/current_user_d'
+  });
+  return dbApi.getOne({}).then(data => data, error => {
     return {
       error: true,
       errorMsg: error
@@ -1047,17 +2754,22 @@ const getUserData = userId => {
 };
 
 var authentication_service = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    authenticationService: authenticationService,
-    getUserData: getUserData
+  __proto__: null,
+  authenticationService: authenticationService,
+  getCurrentUserData: getCurrentUserData,
+  getUserData: getUserData,
+  getUserLocalData: getUserLocalData
 });
 
-const hard_login = false;
+// const hard_login = true;
+
 function logoutHander() {
   authenticationService.logout();
-  if (!history.push(getPrefix(true) + '/login') && hard_login) {
-    window.location.href = window.location.origin + getPrefix(true) + '/login';
-  }
+  // if (!history.push(getPrefix(true)+'/login') && hard_login) {
+  //     if (debug) console_debug_log(`logoutHander | window.location.href = ${window.location.origin+getPrefix(true)+'/login'}`);
+  //     // window.location.href = window.location.origin + getPrefix(true) + '/login';
+  // }
+  window.location.reload(true);
 }
 function refreshPage() {
   window.location.reload();
@@ -1066,7 +2778,12 @@ const getErrorMessage = error => {
   let errorMessage = error;
   if (typeof error !== 'string') {
     if (typeof error['errorMsg'] !== 'undefined') {
-      errorMessage = error['errorMsg'];
+      if (typeof error['errorMsg'] == 'string') {
+        errorMessage = error['errorMsg'];
+      } else {
+        error = error['errorMsg'];
+        errorMessage = error['message'];
+      }
     } else {
       errorMessage = error['message'];
     }
@@ -1123,7 +2840,7 @@ function errorAndReEnter(error) {
     primaryButtonAction: parentLogoutHandler,
     logoutButton: logoutButton,
     htmlContent: msgContainsHtml ? retryMessage : null,
-    htmlContentClass: 'alert alert-danger'
+    htmlContentClass: ALERT_DANGER_CLASS
   }, msgContainsHtml ? null : errorMessageDiv(retryMessage));
 }
 function errorAndReEnterNonModal(error) {
@@ -1144,8 +2861,9 @@ function errorLoginAgain(errorMessage) {
   }
   if (forceLogin || MSG_ERROR_INVALID_TOKEN.includes(errorMessage)) {
     setLastUrl();
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
-      as: reactRouterDom.Link,
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button
+    // as={RouterLink}
+    , {
       to: getPrefix() + '/login',
       onClick: parentLogoutHandler
     }, MSG_ERROR_CLICK_TO_RELOGIN));
@@ -1157,7 +2875,7 @@ function errorAndRetry(errorMessage) {
   if (refreshHandler === null) {
     refreshHandler = refreshPage;
   }
-  return /*#__PURE__*/React.createElement("div", null, errorMessageDiv(MSG_ERROR_INVALID_TOKEN.includes(errorMessage) ? MSG_ERROR_SESSION_EXPIRED : errorMessage), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+  return /*#__PURE__*/React.createElement("div", null, errorMessageDiv(MSG_ERROR_INVALID_TOKEN.includes(errorMessage) ? MSG_ERROR_SESSION_EXPIRED : errorMessage), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
     onClick: refreshHandler
   }, MSG_ERROR_CLICK_TO_RETRY));
 }
@@ -1166,7 +2884,7 @@ function errorMessageDiv(errorMessage) {
     style: {
       textAlign: 'center'
     },
-    className: 'alert alert-danger'
+    className: ALERT_DANGER_CLASS
   }, errorMessage);
 }
 const formatCaughtError = error => {
@@ -1178,18 +2896,18 @@ const formatCaughtError = error => {
 };
 
 var errorAndReenter = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    errorAndReEnter: errorAndReEnter,
-    errorAndReEnterNonModal: errorAndReEnterNonModal,
-    errorAndRetry: errorAndRetry,
-    errorLoginAgain: errorLoginAgain,
-    errorMessageDiv: errorMessageDiv,
-    formatCaughtError: formatCaughtError,
-    getErrorMessage: getErrorMessage,
-    includesAppValidLinks: includesAppValidLinks,
-    isSessionExpired: isSessionExpired,
-    logoutHander: logoutHander,
-    refreshPage: refreshPage
+  __proto__: null,
+  errorAndReEnter: errorAndReEnter,
+  errorAndReEnterNonModal: errorAndReEnterNonModal,
+  errorAndRetry: errorAndRetry,
+  errorLoginAgain: errorLoginAgain,
+  errorMessageDiv: errorMessageDiv,
+  formatCaughtError: formatCaughtError,
+  getErrorMessage: getErrorMessage,
+  includesAppValidLinks: includesAppValidLinks,
+  isSessionExpired: isSessionExpired,
+  logoutHander: logoutHander,
+  refreshPage: refreshPage
 });
 
 // GenericCrudEditor general utilities
@@ -1201,23 +2919,44 @@ const defaultValue = function (dictObj, elementName) {
   }
   return defaultValue;
 };
-const replaceSpecialVars = params => {
-  const {
-    currentUserValue
-  } = authenticationService;
+const replaceSpecialVars = (params, currentUser) => {
   Object.keys(params).forEach(key => {
     if (params[key] === "{CurrentUserId}") {
-      params[key] = currentUserValue.id;
+      params[key] = currentUser.id;
     }
   });
   return params;
 };
 
 var generic_editor_utilities = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    defaultValue: defaultValue,
-    replaceSpecialVars: replaceSpecialVars
+  __proto__: null,
+  defaultValue: defaultValue,
+  replaceSpecialVars: replaceSpecialVars
 });
+
+const UserContext = /*#__PURE__*/React.createContext();
+const UserProvider = _ref => {
+  let {
+    children
+  } = _ref;
+  const [currentUser, setCurrentUser] = React.useState(null);
+  const registerUser = userData => {
+    setCurrentUser(userData);
+  };
+  const unRegisterUser = () => {
+    setCurrentUser(null);
+  };
+  return /*#__PURE__*/React.createElement(UserContext.Provider, {
+    value: {
+      currentUser,
+      registerUser,
+      unRegisterUser
+    }
+  }, children);
+};
+const useUser = () => {
+  return React.useContext(UserContext);
+};
 
 function getUrlParams() {
   let props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window;
@@ -1263,8 +3002,8 @@ function getUrlParams() {
 }
 
 var urlParams = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    getUrlParams: getUrlParams
+  __proto__: null,
+  getUrlParams: getUrlParams
 });
 
 const WaitAnimation = () => {
@@ -1273,33 +3012,35 @@ const WaitAnimation = () => {
     alt: MSG_ALT_WAIT_ANIMATION
   })));
 };
-const ShowHidePageAnimation = function (showFlag) {
+const ShowHidePageAnimation = function (showAnimation) {
   let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "nav_animation";
   let animationDiv = document.getElementById(elementId);
   if (animationDiv) {
-    if (showFlag) {
-      animationDiv.className = "ml-3 mr-3";
-    } else {
-      animationDiv.className = "ml-3 mr-3 hidden";
-    }
+    animationDiv.className = showAnimation ? SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS : SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS;
   }
 };
 
 var wait_animation_utility = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    ShowHidePageAnimation: ShowHidePageAnimation,
-    WaitAnimation: WaitAnimation
+  __proto__: null,
+  ShowHidePageAnimation: ShowHidePageAnimation,
+  WaitAnimation: WaitAnimation
 });
-
-// This way to import the .svg files doesn't work on prod environents...
-// import DefaultAppLogo from '../../images/app_logo_square.svg';
-// import MadeByLogoSquare from '../../images/madeby_logo_square.svg';
-// import MadeByLogoCircle from '../../images/madeby_logo_emblem.svg';
 
 const defaultAppLogo = "app_logo_square.svg";
 const LoginPage = props => {
   const [redirectUrl, setRedirectUrl] = React.useState(null);
+  const [performLogin, setPerformLogin] = React.useState(false);
+  const {
+    currentUser,
+    registerUser,
+    unRegisterUser
+  } = useUser();
   let appLogo = props.appLogo;
+  React.useEffect(() => {
+    if (currentUser && performLogin) {
+      unRegisterUser();
+    }
+  }, [currentUser]);
   React.useEffect(() => {
     const urlParams = getUrlParams(props);
     let redirect;
@@ -1308,12 +3049,25 @@ const LoginPage = props => {
     } else {
       redirect = urlParams.redirect;
     }
-    // Redirect to home OR redirect URL if already logged in
-    if (authenticationService.currentUserValue) {
+    if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
       removeLastUrl();
-      window.location.href = redirectUrl;
+      // window.location.href = redirectUrl;
+      getCurrentUserData().then(userData => {
+        if (userData.error) {
+          setPerformLogin(true);
+        } else {
+          registerUser(getUserLocalData(userData));
+          return /*#__PURE__*/React.createElement(reactRouterDom.Navigate, {
+            to: redirectUrl
+          });
+        }
+      }, error => {
+        console.error(error.errorMsg);
+        setPerformLogin(true);
+      });
     } else {
       setRedirectUrl(redirect);
+      setPerformLogin(true);
     }
     // Avoid need to add redirectUrl to dependency array
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1323,16 +3077,23 @@ const LoginPage = props => {
     authenticationService.login(username, password).then(user => {
       // To avoid stay in login page with the wait animation
       setSubmitting(false);
+      registerUser(user);
       // Redirect to previous page
       removeLastUrl();
-      window.location.href = redirectUrl;
-      // To handle menu access rights changes
-      window.location.reload(true);
+      return /*#__PURE__*/React.createElement(reactRouterDom.Navigate, {
+        to: redirectUrl
+      });
+      // window.location.href = redirectUrl;
+      // // To handle menu access rights changes
+      // window.location.reload(true);
     }, error => {
       setSubmitting(false);
       setStatus(getErrorMessage(error));
     });
   };
+  if (!performLogin) {
+    return WaitAnimation();
+  }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(formik.Formik, {
     initialValues: {
       username: '',
@@ -1361,75 +3122,60 @@ const LoginPage = props => {
       isSubmitting
     } = _ref3;
     return /*#__PURE__*/React.createElement("div", {
-      className: "flex justify-center items-center min-h-screen mt-1 mb-1"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4",
-      style: {
-        width: '400px',
-        margin: 'auto'
-      }
-    }, /*#__PURE__*/React.createElement(formik.Form, null, /*#__PURE__*/React.createElement("img", {
+      className: POPUP_TOP_MARGIN_CLASS
+    }, /*#__PURE__*/React.createElement(CenteredBoxContainer, null, /*#__PURE__*/React.createElement(formik.Form, null, /*#__PURE__*/React.createElement("img", {
       src: imageDirectory + (appLogo || defaultAppLogo),
       width: "150",
       height: "150",
-      className: "mx-auto my-0",
+      className: LOGIN_PAGE_APP_LOGO_CLASS,
       alt: "App Logo"
     }), /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
+      className: FORM_GROUP_CLASS
     }, /*#__PURE__*/React.createElement("label", {
       htmlFor: "username"
     }, "Username"), /*#__PURE__*/React.createElement(formik.Field, {
       name: "username",
       type: "text",
-      className: 'form-control' + (errors.username && touched.username ? ' is-invalid' : '')
+      className: FORM_CONTROL_CLASS + (errors.username && touched.username ? ' ' + {
+        IS_INVALID_CLASS
+      } : '')
     }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
       name: "username",
       component: "div",
-      className: "invalid-feedback"
+      className: INVALID_FEEDBACK_CLASS
     })), /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
+      className: FORM_GROUP_CLASS
     }, /*#__PURE__*/React.createElement("label", {
       htmlFor: "password"
     }, "Password"), /*#__PURE__*/React.createElement(formik.Field, {
       name: "password",
       type: "password",
-      className: 'form-control' + (errors.password && touched.password ? ' is-invalid' : '')
+      className: FORM_CONTROL_CLASS + (errors.password && touched.password ? ' ' + {
+        IS_INVALID_CLASS
+      } : '')
     }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
       name: "password",
       component: "div",
-      className: "invalid-feedback"
+      className: INVALID_FEEDBACK_CLASS
     })), /*#__PURE__*/React.createElement("div", {
-      className: "form-group"
+      className: FORM_GROUP_CLASS
     }, /*#__PURE__*/React.createElement("button", {
       type: "submit",
-      className: "btn btn-primary",
+      className: BUTTON_PRIMARY_CLASS,
       disabled: isSubmitting
     }, "Login"), isSubmitting && WaitAnimation()), status && !includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
-      className: 'alert alert-danger'
+      className: ERROR_MSG_CLASS
     }, status), status && includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
-      className: 'alert alert-danger',
-      dangerouslySetInnerHTML: {
-        __html: status
-      }
-    }))));
+      className: ERROR_MSG_CLASS
+      // dangerouslySetInnerHTML={{ __html: status }}
+    }, status))));
   }));
 };
 
 const HomePage = _ref => {
   let {
-    children,
-    appLogo
+    children
   } = _ref;
-  const [currentUser, setCurrentUser] = React.useState(authenticationService.currentUserValue);
-  React.useEffect(() => {
-    const subscription = authenticationService.currentUser.subscribe(x => setCurrentUser(x));
-    return () => subscription.unsubscribe();
-  }, []);
-  if (!currentUser) {
-    return /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo || null
-    });
-  }
   return /*#__PURE__*/React.createElement(React.Fragment, null, children);
 };
 
@@ -1476,15 +3222,19 @@ const getOnClickObject = function (onClickString, setExpanded) {
 };
 const GenericMenuBuilder = _ref => {
   let {
-    title = null,
+    icon,
+    title,
     componentMapping,
     itemType,
-    menuOptions = null,
-    status,
-    login,
-    setExpanded,
-    appLogo = null
+    appLogo,
+    appLogoHeader,
+    mobileMenuMode
   } = _ref;
+  const {
+    state,
+    menuOptions,
+    setExpanded
+  } = useAppContext();
   const getElementObj = item => {
     const ElementObj = componentMapping[item.element];
     if (typeof ElementObj === 'undefined') {
@@ -1518,10 +3268,7 @@ const GenericMenuBuilder = _ref => {
     };
   };
   const getRoutes = () => {
-    if (login) {
-      return '';
-    }
-    const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo)];
+    const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo, appLogoHeader)];
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
       history: history
     }, menuOptionsFinal.map(item => {
@@ -1556,10 +3303,7 @@ const GenericMenuBuilder = _ref => {
       element: /*#__PURE__*/React.createElement(InvalidRouteRedirect, null)
     })));
   };
-  const GetNavs = (item_type_filter, topTitle) => {
-    if (login) {
-      return '';
-    }
+  const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
     return menuOptions.filter(item => item.location === item_type_filter).map(item => {
       const itemDefs = getItemDefaults(item, topTitle);
       if (item.type === "nav_link") {
@@ -1569,19 +3313,27 @@ const GenericMenuBuilder = _ref => {
           as: reactRouterDom.Link,
           to: itemDefs["path"],
           onClick: itemDefs["on_click"],
-          reloadDocument: itemDefs["reload"]
-        }, itemDefs["title"]);
+          reloadDocument: itemDefs["reload"],
+          type: itemType,
+          mobileMenuMode: mobileMenuMode
+        }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
+          icon: icon
+        }) : itemDefs["title"]);
       }
       // Navigation dropdown (main menu item with sub-menus)
+      const navDropdownId = "basic-nav-dropdown-".concat(item.title.replace(/ /g, '_'));
       return /*#__PURE__*/React.createElement(NavDropdown, {
         key: item.title,
         title: itemDefs["title"],
-        id: "basic-nav-dropdown"
+        id: navDropdownId,
+        type: itemType,
+        icon: icon,
+        mobileMenuMode: mobileMenuMode
       }, item.sub_menu_options.map(subItem => {
         const itemDefs = getItemDefaults(subItem);
         if (subItem.type === 'editor') {
           try {
-            return editorMenuOption(componentMapping[subItem.element](), setExpanded);
+            return editorMenuOption(componentMapping[subItem.element](), setExpanded, itemType, mobileMenuMode);
           } catch (error) {
             console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
             console_debug_log(error);
@@ -1593,15 +3345,14 @@ const GenericMenuBuilder = _ref => {
           as: reactRouterDom.Link,
           to: itemDefs["path"],
           onClick: itemDefs["on_click"],
-          reloadDocument: itemDefs["reload"]
+          reloadDocument: itemDefs["reload"],
+          type: itemType,
+          mobileMenuMode: mobileMenuMode
         }, itemDefs["title"]);
       }));
     });
   };
-  const menuItems = (item_type_filter, topTitle) => {
-    if (login) {
-      return '';
-    }
+  const menuItems = (item_type_filter, topTitle, itemType, mobileMenuMode) => {
     if (typeof menuOptions === 'undefined' || menuOptions === null) {
       return '';
     }
@@ -1610,80 +3361,88 @@ const GenericMenuBuilder = _ref => {
       return getRoutes();
     }
     // NavLinks
-    return GetNavs(item_type_filter, topTitle);
+    return GetNavs(item_type_filter, topTitle, itemType, icon, mobileMenuMode);
   };
-  if (status !== "" && itemType === "routes") {
-    // if (login) {
-    //     return '';
-    // }
+  if (state !== "" && itemType === "routes") {
     return /*#__PURE__*/React.createElement(DefaultRoutes, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     });
   }
-  if (status !== "") {
-    // return '';
+  if (state !== "") {
     return /*#__PURE__*/React.createElement(DefaultRoutes, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     });
   }
-  return menuItems(itemType, title);
+  return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType, mobileMenuMode);
 };
+const isTopMenuAlternativeType = itemType => Object.values(['side_menu', 'mobile_menu']).some(element => itemType === element);
 const editorRoute = editor => {
   return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
     path: getPrefix() + '/' + editor.baseUrl,
     element: /*#__PURE__*/React.createElement(editor.component, null)
   });
 };
-const editorMenuOption = (editor, setExpanded) => {
+const editorMenuOption = (editor, setExpanded, itemType, mobileMenuMode) => {
   return /*#__PURE__*/React.createElement(NavDropdown.Item, {
     key: editor.title,
     as: reactRouterDom.Link,
     to: getPrefix() + '/' + editor.baseUrl,
-    onClick: getOnClickObject(null, setExpanded)
+    onClick: getOnClickObject(null, setExpanded),
+    type: itemType,
+    mobileMenuMode: mobileMenuMode
   }, editor.title);
 };
 const getDefaultRoutesRaw = function () {
   let appLogo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  let appLogoHeader = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   return [{
     title: 'homepage1',
     path: "/",
     element_obj: /*#__PURE__*/React.createElement(HomePage, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     }),
     type: "nav_link"
   }, {
     title: 'homepage2',
     path: getPrefix(true) + "/",
     element_obj: /*#__PURE__*/React.createElement(HomePage, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     }),
     type: "nav_link"
   }, {
     title: 'homepage3',
     path: getPrefix(true).replace('/#', '/') + "/",
     element_obj: /*#__PURE__*/React.createElement(HomePage, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     }),
     type: "nav_link"
   }, {
     title: 'loginpage1',
     path: "/login",
     element_obj: /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     }),
     type: "nav_link"
   }, {
     title: 'loginpage2',
     path: getPrefix(true) + "/login",
     element_obj: /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     }),
     type: "nav_link"
   }, {
     title: 'loginpage3',
     path: getPrefix(true).replace('/#', '/') + "/login",
     element_obj: /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
     }),
     type: "nav_link"
   }];
@@ -1693,18 +3452,19 @@ const getDefaultRoutesRaw = function () {
 const InvalidRouteRedirect = () => {
   console_debug_log('InvalidRouteRedirect');
   return /*#__PURE__*/React.createElement("div", {
-    className: "alert alert-danger",
+    className: ALERT_DANGER_CLASS,
     role: "alert"
   }, "URL not found...");
 };
 const DefaultRoutes = _ref2 => {
   let {
-    appLogo = null
+    appLogo = null,
+    appLogoHeader = null
   } = _ref2;
   getPrefix(true).replace('/#', '/') + "/";
   return /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
     history: history
-  }, getDefaultRoutesRaw(appLogo).map(item => {
+  }, getDefaultRoutesRaw(appLogo, appLogoHeader).map(item => {
     return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
       key: item["title"],
       path: item["path"],
@@ -1731,13 +3491,13 @@ const getMenuFromApi = (state, setState, setMenuOptions) => {
 };
 
 var generic_menu_service = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    DefaultRoutes: DefaultRoutes,
-    GenericMenuBuilder: GenericMenuBuilder,
-    editorMenuOption: editorMenuOption,
-    editorRoute: editorRoute,
-    getDefaultRoutesRaw: getDefaultRoutesRaw,
-    getMenuFromApi: getMenuFromApi
+  __proto__: null,
+  DefaultRoutes: DefaultRoutes,
+  GenericMenuBuilder: GenericMenuBuilder,
+  editorMenuOption: editorMenuOption,
+  editorRoute: editorRoute,
+  getDefaultRoutesRaw: getDefaultRoutesRaw,
+  getMenuFromApi: getMenuFromApi
 });
 
 const mergeDicts = (dictToAdd, originDict) => {
@@ -1755,9 +3515,175 @@ const mergeDicts = (dictToAdd, originDict) => {
 };
 
 var dictUtilities = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    mergeDicts: mergeDicts
+  __proto__: null,
+  mergeDicts: mergeDicts
 });
+
+const DarkModeButton = () => {
+  const {
+    currentUser
+  } = useUser();
+  const {
+    isDarkMode,
+    setIsDarkMode,
+    toggleDarkMode
+  } = useAppContext();
+  React.useEffect(() => {
+    // Component startup
+    let newDarkMode = false;
+    if (currentUser) {
+      // Initial menu configuration from current user config, if the user is authenticated
+      newDarkMode = currentUser.pref_dark_mode === '1';
+    } else {
+      // Get previous preferences from localstorage
+      const localConfig = getLocalConfig();
+      newDarkMode = localConfig.pref_dark_mode === '1';
+    }
+    if (newDarkMode !== isDarkMode) {
+      setIsDarkMode(newDarkMode);
+    }
+  }, []);
+  React.useEffect(() => {
+    if (currentUser) {
+      setIsDarkMode(currentUser.pref_dark_mode === '1');
+    }
+  }, [currentUser]);
+  React.useEffect(() => {
+    // Save session side menu preference to localstorage when it changes
+    const localConfig = {
+      pref_dark_mode: isDarkMode ? '1' : '0'
+    };
+    saveLocalConfig(localConfig);
+    // Fix the overall dark mode design
+    const element = document.getElementsByTagName('html')[0];
+    if (!isDarkMode) {
+      element.classList.remove('dark');
+    } else {
+      element.classList.add('dark');
+    }
+  }, [isDarkMode]);
+  return /*#__PURE__*/React.createElement("div", {
+    id: "dark-mode-button",
+    className: DARK_MODE_BUTTON_TOP_DIV_CLASS
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    id: "headlessui-listbox-button-:R2lkcr6:",
+    "aria-haspopup": "listbox",
+    "aria-expanded": "false",
+    "data-headlessui-state": "",
+    "aria-labelledby": "headlessui-label-:R1lkcr6: headlessui-listbox-button-:R2lkcr6:",
+    onClick: toggleDarkMode
+  }, /*#__PURE__*/React.createElement("span", {
+    className: DARK_MODE_BUTTON_DARK_HIDDEN_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "sun",
+    className: DARK_MODE_BUTTON_SVG_CLASS
+  })), /*#__PURE__*/React.createElement("span", {
+    className: DARK_MODE_BUTTON_DARK_INLINE_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "moon",
+    className: DARK_MODE_BUTTON_SVG_CLASS
+  }))));
+};
+
+const MenuModeButton = () => {
+  const {
+    currentUser
+  } = useUser();
+  const {
+    sideMenu,
+    setSideMenu
+  } = useAppContext();
+  const saveNewLocalUserConfig = newSideMenuMode => {
+    const localConfig = {
+      pref_side_menu: newSideMenuMode ? '1' : '0'
+    };
+    saveLocalConfig(localConfig);
+  };
+  const toggleSideMenu = () => {
+    saveNewLocalUserConfig(!sideMenu);
+    setSideMenu(!sideMenu);
+  };
+  React.useEffect(() => {
+    let newSideMenuMode = false;
+    // Component startup
+    // if (currentUser) {
+    //     // Initial menu configuration from current user config, if the user is authenticated
+    //     newSideMenuMode = (currentUser.pref_side_menu === '1');
+    //     if (debug) console_debug_log('MenuModeButton', 'Initial menu configuration from current user config | currentUser.pref_side_menu', currentUser.pref_side_menu, 'newSideMenuMode:', newSideMenuMode);
+    // } else {
+    // Get previous preferences from localstorage
+    const localConfig = getLocalConfig();
+    newSideMenuMode = localConfig.pref_side_menu === '1';
+    // }
+    if (newSideMenuMode !== sideMenu) {
+      saveNewLocalUserConfig(newSideMenuMode);
+      setSideMenu(newSideMenuMode);
+    }
+  }, [currentUser, sideMenu]);
+
+  // useEffect(() => {
+  //     // Internal menu configuration when current user changes
+  //     if (currentUser) {
+  //         setSideMenu(currentUser.pref_side_menu === '1');
+  //     }
+  // }, [currentUser]);
+
+  // useEffect(() => {
+  //     // Internal menu configuration when current user changes
+  //     if (currentUser) {
+  //         setSideMenu(currentUser.pref_side_menu === '1');
+  //     }
+  // }, [currentUser]);
+
+  // useEffect(() => {
+  //     // Save user preferences to localstorage when current user changes
+  //     if (currentUser) {
+  //         const localConfig = {
+  //             pref_side_menu: (currentUser.pref_side_menu),
+  //         }
+  //         saveLocalConfig(localConfig);
+  //     }
+  // }, [currentUser]);
+
+  // useEffect(() => {
+  //     // External menu configuration when current user changes
+  //     if (currentUser) {
+  //         setSideMenu(currentUser.pref_side_menu === '1');
+  //     }
+  // }, [currentUser]);
+
+  // useEffect(() => {
+  //     // External menu configuration when side menu mode changes
+  //     if (debug) console_debug_log('>> MenuModeButton', 'Side menu mode', sideMenu);
+  //     setSideMenu(sideMenu);
+  // }, [sideMenu]);
+
+  // useEffect(() => {
+  //     // Save session side menu preference to localstorage when it changes
+  //     const localConfig = {
+  //         pref_side_menu: (sideMenu ? '1' : '0'),
+  //     }
+  //     if (debug) console_debug_log('MenuModeButton', 'saveLocalConfig', localConfig);
+  //     saveLocalConfig(localConfig);
+  // }, [sideMenu]);
+
+  return /*#__PURE__*/React.createElement("div", {
+    id: "menu-mode-button",
+    className: MENU_MODE_BUTTON_TOP_DIV_CLASS
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: toggleSideMenu
+  }, /*#__PURE__*/React.createElement("span", {
+    className: !sideMenu ? HIDDEN_CLASS : INLINE_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "side-menu"
+  })), /*#__PURE__*/React.createElement("span", {
+    className: sideMenu ? HIDDEN_CLASS : INLINE_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "top-menu"
+  }))));
+};
 
 // GenericCrudEditor provider. To share data and functions between the editor components
 
@@ -1807,9 +3733,9 @@ const MainSectionProvider = _ref => {
 };
 
 var generic_editor_rfc_provider = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    MainSectionContext: MainSectionContext,
-    MainSectionProvider: MainSectionProvider
+  __proto__: null,
+  MainSectionContext: MainSectionContext,
+  MainSectionProvider: MainSectionProvider
 });
 
 // GenericCrudEditor Specific Functions handling
@@ -1853,7 +3779,7 @@ const reduceAllResponses = (responses, data) => {
   }, defaultValues);
   return responsesReduced;
 };
-const processGenericFuncArray = (editor, funcArrayName, data, action) => {
+const processGenericFuncArray = (editor, funcArrayName, data, action, currentUser) => {
   return new Promise((resolve, reject) => {
     const genericFuncArray = editor[funcArrayName];
     const allFuncPromises = genericFuncArray.map(objFunc => {
@@ -1866,7 +3792,7 @@ const processGenericFuncArray = (editor, funcArrayName, data, action) => {
       //   'fieldsToDelete': [],
       //   'otherData': [],
       // }
-      return objFunc(data, editor, action);
+      return objFunc(data, editor, action, currentUser);
     });
     Promise.all(allFuncPromises).then(results => {
       // const allFuncResponses = results.forEach(
@@ -1882,27 +3808,25 @@ const processGenericFuncArray = (editor, funcArrayName, data, action) => {
 
 // General specific funcions 
 
-// export const UserFilterDbListPreRead = (data, editor, action) => {
+// export const UserFilterDbListPreRead = (data, editor, action, currentUser) => {
 //     // User filter DbListPreRead to filter by user_id
 //     return new Promise((resolve, reject) => {
 //         let resp = genericFuncArrayDefaultValue(data);
-//         const { currentUserValue } = authenticationService;
-//         resp.fieldValues['user_id'] = currentUserValue.id
+//         resp.fieldValues['user_id'] = currentUser.id
 //         // console_debug_log(">>> UserFilterDbListPreRead | resp:");
 //         // console_debug_log(resp);
 //         resolve(resp);
 //     });
 // }
 
-// export const UserFilterDbPreRead = (data, editor, action) => {
+// export const UserFilterDbPreRead = (data, editor, action, currentUser) => {
 //     // user_id assignment during Database Pre Read
 //     // Template: timestampDbPostRead
 //     return new Promise((resolve, reject) => {
 //         let resp = genericFuncArrayDefaultValue(data);
-//         const { currentUserValue } = authenticationService;
 //         // console_debug_log(`>>> UserFilterDbPreRead ||| data:`);
 //         // console_debug_log(data);
-//         data['user_id'] = currentUserValue.id
+//         data['user_id'] = currentUser.id
 //         resp.fieldValues.resultset =  Object.assign({}, data);
 //         // resp.fieldValues['user_id'] = currentUserValue.id
 //         // console_debug_log(`>>> UserFilterDbPreRead | currentUserValue.id: ${currentUserValue.id} | resp:`);
@@ -1911,24 +3835,24 @@ const processGenericFuncArray = (editor, funcArrayName, data, action) => {
 //     });
 // }
 
-const mandatoryFiltersDbListPreRead = (data, editor, action) => {
+const mandatoryFiltersDbListPreRead = (data, editor, action, currentUser) => {
   // Mandatory Filters DbListPreRead to manage filters in list and search
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     if (typeof editor.mandatoryFilters !== 'undefined') {
-      resp.fieldValues = replaceSpecialVars(editor.mandatoryFilters);
+      resp.fieldValues = replaceSpecialVars(editor.mandatoryFilters, currentUser);
     }
     // console_debug_log(`>>> mandatoryFiltersDbListPreRead | resp:`, resp, 'editor.mandatoryFilters:', editor.mandatoryFilters);
     resolve(resp);
   });
 };
-const mandatoryFiltersDbPreRead = (data, editor, action) => {
+const mandatoryFiltersDbPreRead = (data, editor, action, currentUser) => {
   // Mandatory Filters assignment during Database Pre Read
   // Template: timestampDbPostRead
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     if (typeof editor.mandatoryFilters !== 'undefined') {
-      resp.fieldValues.resultset = Object.assign(data, replaceSpecialVars(editor.mandatoryFilters));
+      resp.fieldValues.resultset = Object.assign(data, replaceSpecialVars(editor.mandatoryFilters, currentUser));
     }
     // console_debug_log(`>>> mandatoryFiltersDbPreRead | resp:`, resp, 'data:', data);
     resolve(resp);
@@ -1936,11 +3860,11 @@ const mandatoryFiltersDbPreRead = (data, editor, action) => {
 };
 
 var generic_editor_rfc_specific_func = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    genericFuncArrayDefaultValue: genericFuncArrayDefaultValue,
-    mandatoryFiltersDbListPreRead: mandatoryFiltersDbListPreRead,
-    mandatoryFiltersDbPreRead: mandatoryFiltersDbPreRead,
-    processGenericFuncArray: processGenericFuncArray
+  __proto__: null,
+  genericFuncArrayDefaultValue: genericFuncArrayDefaultValue,
+  mandatoryFiltersDbListPreRead: mandatoryFiltersDbListPreRead,
+  mandatoryFiltersDbPreRead: mandatoryFiltersDbPreRead,
+  processGenericFuncArray: processGenericFuncArray
 });
 
 const GMT_TAIL = '.000Z'; // '.000-0000'
@@ -2010,15 +3934,15 @@ const addZeroTimeToDate = dateValue => {
 };
 
 var dateTimestamp = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    addMissingTz: addMissingTz,
-    addZeroTimeToDate: addZeroTimeToDate,
-    dateToTimestap: dateToTimestap,
-    fixDateWithTz: fixDateWithTz,
-    nowToTimestap: nowToTimestap,
-    processDateToTimestamp: processDateToTimestamp,
-    processTimestampToDate: processTimestampToDate,
-    timestampToDate: timestampToDate
+  __proto__: null,
+  addMissingTz: addMissingTz,
+  addZeroTimeToDate: addZeroTimeToDate,
+  dateToTimestap: dateToTimestap,
+  fixDateWithTz: fixDateWithTz,
+  nowToTimestap: nowToTimestap,
+  processDateToTimestamp: processDateToTimestamp,
+  processTimestampToDate: processTimestampToDate,
+  timestampToDate: timestampToDate
 });
 
 // GenericCrudEditor timestamp components
@@ -2093,10 +4017,10 @@ const timestampDbPreWrite = (row, editor, action) => {
 };
 
 var generic_editor_rfc_timestamp = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    timestampDbListPostRead: timestampDbListPostRead,
-    timestampDbPostRead: timestampDbPostRead,
-    timestampDbPreWrite: timestampDbPreWrite
+  __proto__: null,
+  timestampDbListPostRead: timestampDbListPostRead,
+  timestampDbPostRead: timestampDbPostRead,
+  timestampDbPreWrite: timestampDbPreWrite
 });
 
 // GenericCrudEditor common functions
@@ -2310,19 +4234,32 @@ const getEditorFlags = action => {
   editorFlags.isReadOnly = getIsReadOnly(action);
   return editorFlags;
 };
+const getSelectFieldsOptions = fieldElements => {
+  return Object.entries(fieldElements).filter(function (key) {
+    let currentObj = key[1];
+    return currentObj.type === 'select_component' && typeof currentObj.dataPopulator !== "undefined";
+  }).map(function (key) {
+    let currentObj = key[1];
+    return {
+      name: currentObj.name,
+      promiseResult: currentObj.dataPopulator()
+    };
+  });
+};
 
 var generic_editor_rfc_common = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    getEditoObj: getEditoObj,
-    getEditorData: getEditorData,
-    getEditorFlags: getEditorFlags,
-    getIsReadOnly: getIsReadOnly,
-    setEditorParameters: setEditorParameters
+  __proto__: null,
+  getEditoObj: getEditoObj,
+  getEditorData: getEditorData,
+  getEditorFlags: getEditorFlags,
+  getIsReadOnly: getIsReadOnly,
+  getSelectFieldsOptions: getSelectFieldsOptions,
+  setEditorParameters: setEditorParameters
 });
 
 // GenericCrudEditor select components
 
-const debug = false;
+const debug$2 = false;
 const GenericSelectGenerator = props => {
   const [state, setState] = React.useState(null);
   const [config, setConfig] = React.useState(null);
@@ -2353,7 +4290,7 @@ const GenericSelectGenerator = props => {
             ...accessKeysListing,
             ...config.dbFilter
           };
-          if (debug) ;
+          if (debug$2) ;
         }
         ;
         config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setState(error));
@@ -2524,11 +4461,11 @@ const getSelectDescription = (currentObj, dbRow) => {
 };
 
 var generic_editor_rfc_selector = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    GenericSelectDataPopulator: GenericSelectDataPopulator,
-    GenericSelectGenerator: GenericSelectGenerator,
-    getSelectDescription: getSelectDescription,
-    putSelectOptionsFromArray: putSelectOptionsFromArray
+  __proto__: null,
+  GenericSelectDataPopulator: GenericSelectDataPopulator,
+  GenericSelectGenerator: GenericSelectGenerator,
+  getSelectDescription: getSelectDescription,
+  putSelectOptionsFromArray: putSelectOptionsFromArray
 });
 
 // Suggestion Dropdown
@@ -2547,6 +4484,9 @@ const SuggestionDropdown = _ref => {
   } = formik.useFormikContext();
   const [inputValue, setInputValue] = React.useState(value);
   const [suggestions, setSuggestions] = React.useState([]);
+  const {
+    currentUser
+  } = useUser();
 
   // This component's input field must be different to the external input field to enable value sync
   const nameInternal = "".concat(name, "_sdd");
@@ -2565,7 +4505,7 @@ const SuggestionDropdown = _ref => {
         url: filter_api_url
       });
       let urlParams = {};
-      let bodyData = replaceSpecialVars(filter_search_other_param);
+      let bodyData = replaceSpecialVars(filter_search_other_param, currentUser);
       bodyData[filter_search_param_name] = inputValue;
       if (filter_api_request_method === "GET") {
         urlParams = Object.assign({}, bodyData);
@@ -2597,7 +4537,7 @@ const SuggestionDropdown = _ref => {
     setInputValue(newInputValue);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "align-middle flex"
+    className: SUGGESTION_DROPDOWN_CLASS
   }, /*#__PURE__*/React.createElement(Downshift, {
     inputValue: inputValue,
     onChange: handleSuggestionSelected
@@ -2632,13 +4572,13 @@ const SuggestionDropdown = _ref => {
       }
     }), suggestion[suggestion_desc_fieldname])) : null));
   })), inputValue && suggestions.length === 0 && /*#__PURE__*/React.createElement("div", {
-    className: "invalid-feedback"
+    className: INVALID_FEEDBACK_CLASS
   }, "Error: No suggestions found."));
 };
 
 var generic_editor_rfc_suggestion_dropdown = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    SuggestionDropdown: SuggestionDropdown
+  __proto__: null,
+  SuggestionDropdown: SuggestionDropdown
 });
 
 // Search Engine button
@@ -2663,7 +4603,7 @@ const SearchEngineButton = _ref => {
     }
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "ml-2"
+    className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
   }, /*#__PURE__*/React.createElement("button", {
     onClick: handleGoogleClick
   }, /*#__PURE__*/React.createElement("img", {
@@ -2673,8 +4613,8 @@ const SearchEngineButton = _ref => {
 };
 
 var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    SearchEngineButton: SearchEngineButton
+  __proto__: null,
+  SearchEngineButton: SearchEngineButton
 });
 
 // GenericCrudEditor data form functions
@@ -2698,6 +4638,12 @@ const FormPage = _ref => {
     message: message,
     messageType: messageType
   });
+  const {
+    currentUser
+  } = useUser();
+  const {
+    theme
+  } = useAppContext();
   React.useContext(MainSectionContext);
   const editor = editor_par;
   const mode = mode_par;
@@ -2705,16 +4651,16 @@ const FormPage = _ref => {
   React.useEffect(() => {
     if (mode === ACTION_CREATE) {
       // To assign specific default values in creation...
-      processGenericFuncArray(editor, 'dbPreRead', {}, mode).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-010]')));
+      processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-010]')));
     }
     if (mode === ACTION_UPDATE || mode === ACTION_READ || mode === ACTION_DELETE) {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
-      processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode).then(funcResponse => {
+      processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
         accessKeysDataScreen = Object.assign(funcResponse.fieldValues, editor.parentFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
-          processGenericFuncArray(editor, 'dbPostRead', data, mode).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
+          processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
         }, error => {
           console_debug_log("ERROR - GCE-FD-030");
           console.error(error);
@@ -2739,28 +4685,40 @@ const FormPage = _ref => {
   }
   const editorFlags = getEditorFlags(mode);
   const actionTitle = mode === ACTION_CREATE ? MSG_ACTION_CREATE : mode === ACTION_UPDATE ? MSG_ACTION_UPDATE : mode === ACTION_READ ? MSG_ACTION_READ : MSG_ACTION_DELETE;
-  return (
-    /*#__PURE__*/
-    // <div className="container mx-auto px-4">
-    React.createElement("div", {
-      className: "w-screen bg-gray-300 fyn_jumbotron"
-    }, /*#__PURE__*/React.createElement("h1", {
-      className: "text-2xl font-semibold mb-4"
-    }, editor.title + " - " + actionTitle), status && /*#__PURE__*/React.createElement("div", {
-      className: ERROR_MSG_CLASS
-    }, status), !status && formData && /*#__PURE__*/React.createElement(EditFormFormik, {
-      editor: editor,
-      parenHandleCancel: onCancel_par,
-      setInfoMsg: setInfoMsg_par,
-      action: mode,
-      dataset: formData.resultset,
-      message: formMsg['message'],
-      messageType: formMsg['messageType'],
-      handleFormPageActions: handleFormPageActions
-    }), !status && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '')
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+  }, /*#__PURE__*/React.createElement(CrudEditorFormPageTitle, {
+    baseUrl: editor.baseUrl,
+    title: editor.title,
+    actionTitle: actionTitle
+  }), status && /*#__PURE__*/React.createElement("div", {
+    className: ERROR_MSG_CLASS
+  }, status), !status && formData && /*#__PURE__*/React.createElement(EditFormFormik, {
+    editor: editor,
+    parenHandleCancel: onCancel_par,
+    setInfoMsg: setInfoMsg_par,
+    action: mode,
+    dataset: formData.resultset,
+    message: formMsg['message'],
+    messageType: formMsg['messageType'],
+    handleFormPageActions: handleFormPageActions
+  }), !status && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '')
+  // </div>
+  // </div>
+  ;
 };
-const PutOneFormfield = _ref2 => {
+const CrudEditorFormPageTitle = _ref2 => {
+  let {
+    baseUrl,
+    title,
+    actionTitle
+  } = _ref2;
+  return /*#__PURE__*/React.createElement("h2", {
+    key: "".concat(baseUrl, "_title"),
+    className: APP_TITLE_H1_CLASS
+  }, title + " - " + actionTitle);
+};
+const PutOneFormfield = _ref3 => {
   let {
     currentObjArray,
     componentSelectFieldsOptions,
@@ -2768,15 +4726,23 @@ const PutOneFormfield = _ref2 => {
     errors,
     touched,
     initialValue
-  } = _ref2;
+  } = _ref3;
   const {
     setFieldValue
   } = formik.useFormikContext();
   let currentObj = currentObjArray[1];
-  const labelClass = "font-medium text-gray-700";
-  const labelClassRequiredFld = "font-medium text-red-700";
-  const divclass = "flex flex-col form-group";
-  const fieldClass = "form-control" + (errors[currentObj.name] && touched[currentObj.name] ? " is-invalid" : "") + " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+
+  // const labelClass = "font-medium text-gray-700";
+  const labelClass = APP_FORMPAGE_LABEL_CLASS;
+  // const labelClassRequiredFld = "font-medium text-red-700";
+  const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
+  // const fieldClass = "flex flex-col form-group";
+  const divFieldClass = APP_FORMPAGE_FIELD_CLASS;
+  // const fieldClass =
+  //     "form-control" +
+  //     (errors[currentObj.name] && touched[currentObj.name] ? " is-invalid" : "") +
+  //     " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const fieldClass = errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS;
   const readOnlyfield = editorFlags.isReadOnly || typeof currentObj.readonly !== "undefined" && currentObj.readonly;
   if (typeof currentObj.hidden !== "undefined" && currentObj.hidden) {
     return /*#__PURE__*/React.createElement(formik.Field, {
@@ -2838,7 +4804,7 @@ const PutOneFormfield = _ref2 => {
   let elementError = /*#__PURE__*/React.createElement(formik.ErrorMessage, {
     name: idName,
     component: "div",
-    className: "invalid-feedback"
+    className: INVALID_FEEDBACK_CLASS
   });
   switch (currentObj.type) {
     case 'select_component':
@@ -2895,7 +4861,7 @@ const PutOneFormfield = _ref2 => {
       elementInput = /*#__PURE__*/React.createElement("div", {
         key: idName
       }, /*#__PURE__*/React.createElement("label", {
-        className: divclass
+        className: divFieldClass
       }, currentObj.label));
       break;
     case 'hr':
@@ -2947,7 +4913,7 @@ const PutOneFormfield = _ref2 => {
   // Special buttons suffix
   if (chatbot_popup || google_popup) {
     elementInput = /*#__PURE__*/React.createElement("div", {
-      className: "align-middle flex"
+      className: APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS
     }, elementInput, chatbot_popup && currentObj.aux_component !== null && /*#__PURE__*/React.createElement(currentObj.aux_component, {
       valueElement: idName,
       chatbot_prompt: chatbot_prompt
@@ -2958,10 +4924,10 @@ const PutOneFormfield = _ref2 => {
   }
   return /*#__PURE__*/React.createElement("div", {
     key: currentObj.name,
-    className: divclass
+    className: divFieldClass
   }, elementLabel, elementInput, elementError);
 };
-const EditFormFormik = _ref3 => {
+const EditFormFormik = _ref4 => {
   let {
     editor,
     parenHandleCancel,
@@ -2971,7 +4937,7 @@ const EditFormFormik = _ref3 => {
     message = "",
     messageType = "",
     handleFormPageActions
-  } = _ref3;
+  } = _ref4;
   const [formData, setFormData] = React.useState({
     readyToShow: false,
     dataset: null,
@@ -2979,6 +4945,9 @@ const EditFormFormik = _ref3 => {
     message: null,
     messageType: null
   });
+  const {
+    currentUser
+  } = useUser();
   React.useEffect(() => {
     const editorFlags = getEditorFlags(action);
     if (editorFlags.isRead) {
@@ -2991,7 +4960,7 @@ const EditFormFormik = _ref3 => {
       });
     } else {
       // Validate data before show the Data Form
-      processGenericFuncArray(editor, 'dbPreValidations', dataset, action).then(funcResponse => {
+      processGenericFuncArray(editor, 'dbPreValidations', dataset, action, currentUser).then(funcResponse => {
         setFormData({
           readyToShow: true,
           dataset: funcResponse.fieldValues,
@@ -3034,7 +5003,7 @@ const EditFormFormik = _ref3 => {
     handleFormPageActions: handleFormPageActions
   });
 };
-const EditFormFormikFinal = _ref4 => {
+const EditFormFormikFinal = _ref5 => {
   let {
     editor,
     parenHandleCancel,
@@ -3045,7 +5014,10 @@ const EditFormFormikFinal = _ref4 => {
     message,
     messageType,
     handleFormPageActions
-  } = _ref4;
+  } = _ref5;
+  const {
+    currentUser
+  } = useUser();
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -3082,11 +5054,11 @@ const EditFormFormikFinal = _ref4 => {
     //     getFieldElementsYupValidations(editor, editorFlags)
     // )}
     ,
-    onSubmit: (submitedtElements, _ref5) => {
+    onSubmit: (submitedtElements, _ref6) => {
       let {
         setStatus,
         setSubmitting
-      } = _ref5;
+      } = _ref6;
       if (!canCommit) {
         setSubmitting(false);
       } else {
@@ -3100,8 +5072,8 @@ const EditFormFormikFinal = _ref4 => {
           // Removes calculated ID
           delete submitedtElements.id;
         }
-        processGenericFuncArray(editor, 'validations', submitedtElements, action).then(funcResponse => {
-          processGenericFuncArray(editor, 'dbPreWrite', submitedtElements, action).then(funcResponse => {
+        processGenericFuncArray(editor, 'validations', submitedtElements, action, currentUser).then(funcResponse => {
+          processGenericFuncArray(editor, 'dbPreWrite', submitedtElements, action, currentUser).then(funcResponse => {
             submitedtElements = {
               ...funcResponse.fieldValues
             };
@@ -3113,7 +5085,7 @@ const EditFormFormikFinal = _ref4 => {
                 if (editorFlags.isCreate) {
                   submitedtElements.id = result['resultset']['_id'];
                 }
-                processGenericFuncArray(editor, 'dbPostWrite', submitedtElements, action).then(funcResponse => {
+                processGenericFuncArray(editor, 'dbPostWrite', submitedtElements, action, currentUser).then(funcResponse => {
                   const infoMsg = editorFlags.isDelete ? MSG_DONE_DELETED : editorFlags.isCreate ? MSG_DONE_CREATED : editorFlags.isUpdate ? MSG_DONE_UPDATED : null;
                   handleFormPageActions(funcResponse);
                   if (editorFlags.isCreate && editor.createReenter) {
@@ -3149,13 +5121,13 @@ const EditFormFormikFinal = _ref4 => {
         });
       }
     }
-  }, _ref6 => {
+  }, _ref7 => {
     let {
       errors,
       status,
       touched,
       isSubmitting
-    } = _ref6;
+    } = _ref7;
     return /*#__PURE__*/React.createElement(formik.Form, {
       onKeyDown: submitHandler
     }, message && /*#__PURE__*/React.createElement("div", {
@@ -3171,7 +5143,7 @@ const EditFormFormikFinal = _ref4 => {
         initialValue: initialFieldValues[htmlElement[1].name]
       });
     }), /*#__PURE__*/React.createElement("table", {
-      className: "min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+      className: APP_FORMPAGE_FORM_TABLE_CLASS
     }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, !editorFlags.isRead && canCommit && /*#__PURE__*/React.createElement("td", {
       align: "left"
     }, /*#__PURE__*/React.createElement("button", {
@@ -3205,7 +5177,7 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
     }
     return /*#__PURE__*/React.createElement("div", {
       key: 'ChildElement_' + htmlElement[0],
-      className: "mt-6"
+      className: APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS
     }, /*#__PURE__*/React.createElement(ChildElement, {
       parentData: initialFieldValues,
       handleFormPageActions: handleFormPageActions
@@ -3250,18 +5222,6 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
     url: editor.dbApiUrl
   });
   return dbService.createUpdateDelete(action, rowId, rowToSave);
-};
-const getSelectFieldsOptions = fieldElements => {
-  return Object.entries(fieldElements).filter(function (key) {
-    let currentObj = key[1];
-    return currentObj.type === 'select_component' && typeof currentObj.dataPopulator !== "undefined";
-  }).map(function (key) {
-    let currentObj = key[1];
-    return {
-      name: currentObj.name,
-      promiseResult: currentObj.dataPopulator()
-    };
-  });
 };
 const setDefaultFieldValue = currentObj => {
   let response = null;
@@ -3398,15 +5358,13 @@ const getFieldElementsYupValidations = (editor, editorFlags) => {
 };
 
 var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    FormPage: FormPage,
-    getFieldElementsYupValidations: getFieldElementsYupValidations,
-    getSelectFieldsOptions: getSelectFieldsOptions
+  __proto__: null,
+  FormPage: FormPage,
+  getFieldElementsYupValidations: getFieldElementsYupValidations
 });
 
 // GenericCrudEditor search component
 
-fontawesome.library.add(fontawesomeFreeSolid.faGreaterThan);
 const CrudEditorSearch = _ref => {
   let {
     id,
@@ -3415,7 +5373,6 @@ const CrudEditorSearch = _ref => {
     value = ""
   } = _ref;
   const [searchText, setSearchText] = React.useState(value);
-  const searchTextId = () => "searchText_".concat(id);
   const getDateRange = searchValue => {
     const dateRange = searchValue.split(',');
     let result;
@@ -3468,38 +5425,53 @@ const CrudEditorSearch = _ref => {
     submitSearch(searchText);
   };
   return /*#__PURE__*/React.createElement("div", {
-    className: "mt-2 flex items-center"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: searchTextId(),
-    className: "ml-3 mr-2 text-sm"
-  }, MSG_SEARCH, ":"), /*#__PURE__*/React.createElement("input", {
-    id: searchTextId()
+    className: APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS
+  }, /*#__PURE__*/React.createElement("input", {
+    id: id
     // type="text"
     ,
-    className: "mb-2 w-6 h-6 px-2 text-sm",
+    className: APP_LISTING_SEARCH_BOX_INPUT_CLASS,
+    placeholder: "".concat(MSG_SEARCH, "..."),
     value: searchText || '',
     onChange: handleTextChange
   }), /*#__PURE__*/React.createElement("button", {
-    className: "".concat(BUTTON_LISTING_CLASS, " mb-2 ml-2 mr-2 text-xs"),
+    className: APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS,
     onClick: handleSubmit
-  }, /*#__PURE__*/React.createElement(reactFontawesome.FontAwesomeIcon, {
-    icon: "greater-than"
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "search"
   })), searchText !== '' && /*#__PURE__*/React.createElement("button", {
-    className: "".concat(BUTTON_LISTING_CLASS, " mb-2 mr-2 text-xs"),
+    className: APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS,
     onClick: handleCancelSearch
   }, "X"));
 };
 
 var generic_editor_rfc_search = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    CrudEditorSearch: CrudEditorSearch
+  __proto__: null,
+  CrudEditorSearch: CrudEditorSearch
 });
 
 // GenericCrudEditor (GCE) service main
 
-fontawesome.library.add(fontawesomeFreeSolid.faPlus, fontawesomeFreeSolid.faEye, fontawesomeFreeSolid.faEdit, fontawesomeFreeSolid.faTrashAlt, fontawesomeFreeSolid.faCheck, fontawesomeFreeSolid.faList
-// faRecycle,
-);
+
+// fontawesome.library.add(
+//   faPlus,
+//   faEye,
+//   faEdit,
+//   faTrashAlt,
+//   faCheck,
+//   faList,
+//   // faArrowRight,
+//   // faRecycle,
+// );
+
+// 2024-08-11
+// tailwind and bootstrap together
+// https://stackoverflow.com/questions/62688037/can-use-both-tailwind-css-and-bootstrap-4-at-the-same-time
+// google: tailwind react bootstrap does not work
+// https://stackoverflow.com/questions/64557697/tailwindcss-not-working-in-create-react-app
+// import styles from "index.css"
+
+const debug$1 = false;
 const GenericCrudEditor = _ref => {
   let {
     editorConfig,
@@ -3526,6 +5498,13 @@ const GenericCrudEditorMain = props => {
     initCache,
     debugCache
   } = React.useContext(MainSectionContext);
+  const {
+    currentUser
+  } = useUser();
+  const {
+    theme
+  } = useAppContext();
+  const actionsHandlerAllowsMagicButton = false;
   React.useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -3533,7 +5512,7 @@ const GenericCrudEditorMain = props => {
       } else if (editor_response.error) {
         console_debug_log("GCE-M-010:");
         console_debug_log(editor_response.errorMsg);
-        setStatus(errorAndReEnter(editor_response.errorMsg, '[GCE-M-010]' ));
+        setStatus(errorAndReEnter(editor_response.errorMsg, null));
       } else if (!editor_response.response) {
         setEditor(null);
       } else {
@@ -3542,7 +5521,7 @@ const GenericCrudEditorMain = props => {
     }, error => {
       console_debug_log("GCE-M-020:");
       console_debug_log(error);
-      setStatus(errorAndReEnter(error, '[GCE-M-020]' ));
+      setStatus(errorAndReEnter(error, null));
     });
   }, [props]);
   React.useEffect(() => {
@@ -3554,24 +5533,24 @@ const GenericCrudEditorMain = props => {
         limit: rowsPerPage
       };
       // dbListPreRead: To set a Listing filters, assign funcResponse.fieldValues[db_field]=filter_value
-      processGenericFuncArray(editor, 'dbListPreRead', accessKeysListing, formMode).then(funcResponse => {
+      processGenericFuncArray(editor, 'dbListPreRead', accessKeysListing, formMode, currentUser).then(funcResponse => {
         // console_debug_log(`GenericCrudEditor / dbListPreRead - funcResponse:`)
         // console_debug_log(funcResponse);
         accessKeysListing = Object.assign(accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
         editor.db.getAll(accessKeysListing).then(data => {
           ShowHidePageAnimation(false);
           // dbListPostRead: To fix Listing fields
-          processGenericFuncArray(editor, 'dbListPostRead', data, formMode).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-M-030]' )));
+          processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, null)));
         }, error => {
           console_debug_log("GenericCrudEditor / Listing - ERROR:");
           console.error(error);
           ShowHidePageAnimation(false);
-          setStatus(errorAndReEnter(error, ' [GCE-M-040]' ));
+          setStatus(errorAndReEnter(error, null));
         });
       }, error => {
         console_debug_log("GenericCrudEditor / dbListPreRead - ERROR:");
         console.error(error);
-        setStatus(errorAndReEnter(error, ' [GCE-M-050]' ));
+        setStatus(errorAndReEnter(error, null));
       });
     }
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
@@ -3599,10 +5578,6 @@ const GenericCrudEditorMain = props => {
   const handleDelete = id => {
     setFormMode([ACTION_DELETE, id]);
   };
-  const goToNewPage = newPage => {
-    setInfoMsg('');
-    setCurrentPage(newPage);
-  };
   const handleRowsPerPageChange = event => {
     if (!event.target.value) {
       return;
@@ -3616,17 +5591,60 @@ const GenericCrudEditorMain = props => {
     window.location.reload(true);
   };
   const rowId = row => {
-    {
-      console_debug_log("rowId | editor.primaryKeyName: ".concat(editor.primaryKeyName, " | row:"), row);
-    }
     const response = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
     return response;
   };
+  const actionsHandler = (mode, row) => {
+    const element = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls"));
+    document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(row), "_magicButton"));
+    const rowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(row), "_row"));
+    const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
+    if (mode === 'show') {
+      // Highlight row
+      bgColorStype.map(key => {
+        rowElement.classList.add(key);
+      });
+      // If mouse over allowed, show controls
+      {
+        element.classList.remove('hidden');
+      }
+    }
+    if (mode === 'hide') {
+      // Remove row highlight
+      bgColorStype.map(key => {
+        rowElement.classList.remove(key);
+      });
+      // If mouse over allowed, hide controls
+      {
+        element.classList.add('hidden');
+      }
+    }
+    if (mode === 'toggle') {
+      // Turn off previous opened controls
+      rows.resultset.map(thisRow => {
+        const thisRowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(thisRow), "_controls"));
+        if (!thisRowElement.classList.contains('hidden')) {
+          thisRowElement.classList.add('hidden');
+        }
+      });
+      if (element.classList.contains('hidden')) {
+        // Controls hidden in this row
+        bgColorStype.map(key => {
+          rowElement.classList.add(key);
+        });
+        element.classList.remove('hidden');
+      } else {
+        // Controls activated in this row
+        bgColorStype.map(key => {
+          rowElement.classList.remove(key);
+        });
+        element.classList.add('hidden');
+      }
+    }
+  };
   if (!editor) {
     if (status) {
-      return /*#__PURE__*/React.createElement("div", {
-        className: ERROR_MSG_CLASS
-      }, status, "[GCEM-NES]");
+      return /*#__PURE__*/React.createElement("div", null, status, debug$1 );
     }
     return WaitAnimation();
   }
@@ -3634,9 +5652,7 @@ const GenericCrudEditorMain = props => {
     return WaitAnimation();
   }
   if (status) {
-    return /*#__PURE__*/React.createElement("div", {
-      className: ERROR_MSG_CLASS
-    }, status, "[GCEM-ST]");
+    return /*#__PURE__*/React.createElement(React.Fragment, null, status, debug$1 );
   }
   if (rows && typeof rows['totalPages'] !== 'undefined' && rows['totalPages'] == null) {
     return 'Rows ok but not totalPages - ERROR # 3';
@@ -3653,111 +5669,116 @@ const GenericCrudEditorMain = props => {
       messageType: typeof formMode[3] !== 'undefined' ? formMode[3] : ''
     }));
   }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, infoMsg && /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
+    key: "".concat(editor.baseUrl, "_top_div"),
+    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+  }, infoMsg && /*#__PURE__*/React.createElement("div", {
+    key: "".concat(editor.baseUrl, "_info_msg"),
     className: INFO_MSG_CLASS
-  }, infoMsg), rows &&
-  /*#__PURE__*/
-  // <div className="container mx-auto">
-  React.createElement("div", {
-    className: "w-screen bg-gray-300 fyn_jumbotron"
-  }, /*#__PURE__*/React.createElement("h1", {
-    className: "text-2xl font-bold mb-4"
-  }, editor.title + " - " + MSG_ACTION_LIST, /*#__PURE__*/React.createElement("span", {
-    className: "pl-2 align-bottom"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: handleRefresh,
-    className: "".concat(BUTTON_LISTING_CLASS, " text-xs") /* mb-4 */
-  }, /*#__PURE__*/React.createElement("img", {
-    src: imageDirectory + "arrows_rotate_solid.svg",
-    width: "14",
-    height: "14",
-    alt: "Reload",
-    className: "text-white fill-white"
-  })))), /*#__PURE__*/React.createElement("table", {
-    className: "min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", {
-    key: "".concat(editor.baseUrl, "_thead")
+  }, infoMsg), rows && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(CrudEditorListingTitle, {
+    baseUrl: editor.baseUrl,
+    title: editor.title,
+    handleRefresh: handleRefresh
+  }), /*#__PURE__*/React.createElement("div", {
+    key: "".concat(editor.baseUrl, "_level2_div"),
+    className: APP_LEVEL2_DIV_CLASS
+  }, /*#__PURE__*/React.createElement("table", {
+    key: "".concat(editor.baseUrl, "_table"),
+    className: APP_LISTING_TABLE_CLASS
+  }, /*#__PURE__*/React.createElement("thead", {
+    key: "".concat(editor.baseUrl, "_thead"),
+    className: APP_LISTING_TABLE_HDR_THEAD_CLASS
+  }, /*#__PURE__*/React.createElement("tr", {
+    key: "".concat(editor.baseUrl, "_thead_tr"),
+    className: APP_LISTING_TABLE_HDR_TR_CLASS
   }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
-    key: key,
-    scope: "col",
-    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase break-words"
-  }, editor.fieldElements[key].label)), /*#__PURE__*/React.createElement("th", {
-    scope: "col",
-    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
-    className: "pr-2"
-  }, MSG_ACTIONS), /*#__PURE__*/React.createElement("button", {
-    onClick: handleNew,
-    className: "".concat(BUTTON_LISTING_CLASS, " mr-2")
-  }, /*#__PURE__*/React.createElement(reactFontawesome.FontAwesomeIcon, {
-    icon: "plus"
-  }), " ", MSG_ACTION_NEW))))), /*#__PURE__*/React.createElement("tbody", {
-    className: "divide-y divide-gray-200 dark:divide-gray-700"
-  }, rows && typeof rows.resultset !== 'undefined' && rows.resultset.map(row => /*#__PURE__*/React.createElement("tr", {
-    // key={rowId(row)}
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row))
+    // scope="col"
+    key: "".concat(editor.baseUrl, "_").concat(key, "_thead_th"),
+    className: APP_LISTING_TABLE_HDR_TH_CLASS
+  }, editor.fieldElements[key].label)), actionsHandlerAllowsMagicButton )), /*#__PURE__*/React.createElement("tbody", {
+    key: "".concat(editor.baseUrl, "_tbody"),
+    className: APP_LISTING_TABLE_BODY_TBODY_CLASS
+  }, rows && typeof rows.resultset !== 'undefined' && rows.resultset.map((row, index) =>
+  /*#__PURE__*/
+  // To avoid use of <> to group 2 <tr> (one for the row and one for the actions)
+  // because it throws the warning:
+  // "Warning: Each child in a list should have a unique "key" prop."
+  // we use <React.Fragment> instead
+  React.createElement(React.Fragment, {
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_tr_enclosure")
+  }, /*#__PURE__*/React.createElement("tr", {
+    id: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_row"),
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_row"),
+    className: index % 2 ? "".concat(APP_LISTING_TABLE_BODY_TR_ODD_CLASS) : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_EVEN_CLASS),
+    onMouseOver: () => {
+      actionsHandler('show', row);
+    },
+    onClick: () => {
+      actionsHandler('toggle', row);
+    },
+    onMouseLeave: () => {
+      actionsHandler('hide', row);
+    }
   }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
-    key: key
-    // className="px-6 py-4 break-words text-sm text-gray-800 dark:text-gray-200"
-    ,
-    className: "px-6 py-4 break-words text-sm"
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_").concat(key, "_td"),
+    className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS
   }, getSelectDescription(editor.fieldElements[key], row) // Show column value or select description
-  )), /*#__PURE__*/React.createElement("td", {
-    className: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
-    // type="button"
+  )), actionsHandlerAllowsMagicButton ), /*#__PURE__*/React.createElement("tr", {
+    id: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls"),
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls"),
+    className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS)) + " " + HIDDEN_CLASS,
+    onMouseOver: () => {
+      actionsHandler('show', row);
+    },
+    onClick: () => {
+      actionsHandler('toggle', row);
+    },
+    onMouseLeave: () => {
+      actionsHandler('hide', row);
+    }
+  }, /*#__PURE__*/React.createElement("td", {
+    // Action buttons
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_td"),
+    colSpan: Object.keys(editor.fieldElements).length + 1,
+    className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
+  }, /*#__PURE__*/React.createElement("button", {
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_eye"),
     onClick: () => handleView(rowId(row)),
-    className: "".concat(BUTTON_LISTING_CLASS, " mr-2")
-  }, /*#__PURE__*/React.createElement(reactFontawesome.FontAwesomeIcon, {
+    className: "".concat(BUTTON_LISTING_CLASS, " ").concat(BUTTON_RIGHT_SPACE_CLASS)
+  }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "eye"
   })), /*#__PURE__*/React.createElement("button", {
-    // type="button"
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_edit"),
     onClick: () => handleModify(rowId(row)),
-    className: "".concat(BUTTON_LISTING_CLASS, " mr-2")
-  }, /*#__PURE__*/React.createElement(reactFontawesome.FontAwesomeIcon, {
+    className: "".concat(BUTTON_LISTING_CLASS, " ").concat(BUTTON_RIGHT_SPACE_CLASS)
+  }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "edit"
   })), /*#__PURE__*/React.createElement("button", {
-    // type="button"
+    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_trash"),
     onClick: () => handleDelete(rowId(row)),
     className: "".concat(BUTTON_LISTING_CLASS)
-  }, /*#__PURE__*/React.createElement(reactFontawesome.FontAwesomeIcon, {
+  }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "trash"
-  })))))))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-4 flex items-center"
-  }, /*#__PURE__*/React.createElement("button", {
-    disabled: currentPage === 1,
-    onClick: () => goToNewPage(currentPage - 1),
-    className: "".concat(currentPage === 1 ? "opacity-50" : "", " ").concat(BUTTON_LISTING_CLASS)
-  }, MSG_PREVIOUS), /*#__PURE__*/React.createElement("span", {
-    id: "nav_animation",
-    className: "ml-3 mr-3 hidden"
-  }, WaitAnimation()), /*#__PURE__*/React.createElement("span", {
-    className: "text-sm ml-2 mr-2"
-  }, MSG_PAGE, " ", currentPage, " ", MSG_OF, " ", rows.totalPages), /*#__PURE__*/React.createElement("button", {
-    disabled: currentPage === rows.totalPages,
-    onClick: () => goToNewPage(currentPage + 1),
-    className: "".concat(currentPage === rows.totalPages ? "opacity-50" : "", " ").concat(BUTTON_LISTING_CLASS)
-  }, MSG_NEXT), /*#__PURE__*/React.createElement("div", {
-    className: "mt-2 flex items-center"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "newRowsPerPage",
-    className: "ml-3 mr-2 text-sm"
-  }, MSG_ROWS_PER_PAGE, ":"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
-    max: "500",
-    id: "newRowsPerPage",
-    value: rowsPerPage,
-    className: "mb-2 w-6 h-6 px-2 text-sm",
-    onChange: handleRowsPerPageChange
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(CrudEditorSearch, {
-    id: editor.baseUrl,
+  }))))))))), /*#__PURE__*/React.createElement("div", {
+    key: "".concat(editor.baseUrl, "_toolbar"),
+    className: APP_LISTING_TOOLBAR_TOP_DIV_CLASS
+  }, /*#__PURE__*/React.createElement(CrudEditorPagination, {
+    id: editor.baseUrl + "_pagination",
+    currentPage: currentPage,
+    totalPages: rows.totalPages
+  }), /*#__PURE__*/React.createElement(CrudEditorRowsPerPage, {
+    id: editor.baseUrl + "_newRowsPerPage",
+    rowsPerPage: rowsPerPage,
+    handleRowsPerPageChange: handleRowsPerPageChange
+  }), /*#__PURE__*/React.createElement(CrudEditorSearch, {
+    id: editor.baseUrl + "_searchText",
     fieldElements: editor.fieldElements,
     handleCancel: handleCancel,
     value: searchText
-  }))), status && /*#__PURE__*/React.createElement("div", {
-    className: ERROR_MSG_CLASS
-  }, status)), debugCache("GenericCrudEditorMain") );
+  }), /*#__PURE__*/React.createElement(CrudEditorNewButton, {
+    id: editor.baseUrl + "_newButton",
+    handleNew: handleNew
+  })), status && /*#__PURE__*/React.createElement("div", null, status, debug$1 )), '');
 };
 const ConvertToComponents = (editorDataObj, registry) => {
   /*
@@ -3811,24 +5832,113 @@ const ConvertToComponents = (editorDataObj, registry) => {
   });
   return editorDataObj;
 };
-
-// export const GetFormData = (jsonFileName, registry, calleeName = null) => {
 const GetFormData = function (editorData, registry) {
   let calleeName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   if (typeof registry === 'undefined') {
     registry = {};
   }
-  // const editorData = getConfigsJsonFile(jsonFileName);
   let editorDataObj = ConvertToComponents(editorData, registry);
   editorDataObj["calleeName"] = calleeName;
   return editorDataObj;
 };
+const CrudEditorRowsPerPage = _ref2 => {
+  let {
+    id,
+    rowsPerPage,
+    handleRowsPerPageChange
+  } = _ref2;
+  return /*#__PURE__*/React.createElement("div", {
+    className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "newRowsPerPage",
+    className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS
+  }, MSG_ROWS_PER_PAGE, ":"), /*#__PURE__*/React.createElement("select", {
+    id: "newRowsPerPage",
+    className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
+    onChange: handleRowsPerPageChange,
+    defaultValue: rowsPerPage
+  }, /*#__PURE__*/React.createElement("option", {
+    key: ROWS_PER_PAGE,
+    value: ROWS_PER_PAGE
+  }, ROWS_PER_PAGE), Array.from({
+    length: 10
+  }, (_, i) => (i + 1) * 10).map(value => /*#__PURE__*/React.createElement("option", {
+    key: value,
+    value: value
+  }, value)), rowsPerPage > 100 && /*#__PURE__*/React.createElement("option", {
+    key: rowsPerPage,
+    value: rowsPerPage
+  }, rowsPerPage)));
+};
+const CrudEditorPagination = _ref3 => {
+  let {
+    id,
+    currentPage,
+    totalPages
+  } = _ref3;
+  return /*#__PURE__*/React.createElement("div", {
+    id: id,
+    className: APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS
+  }, /*#__PURE__*/React.createElement("button", {
+    disabled: currentPage === 1,
+    onClick: () => goToNewPage(currentPage - 1),
+    className: "".concat(currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "less-than",
+    alt: MSG_PREVIOUS
+  })), /*#__PURE__*/React.createElement("div", {
+    id: id + "_nav_animation",
+    className: APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS
+  }, WaitAnimation()), /*#__PURE__*/React.createElement("div", {
+    className: APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS
+  }, MSG_PAGE, " ", currentPage, " ", MSG_OF, " ", totalPages), /*#__PURE__*/React.createElement("button", {
+    disabled: currentPage === totalPages,
+    onClick: () => goToNewPage(currentPage + 1),
+    className: "".concat(currentPage === totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "greater-than",
+    alt: MSG_NEXT
+  })));
+};
+const CrudEditorNewButton = _ref4 => {
+  let {
+    id,
+    handleNew
+  } = _ref4;
+  return /*#__PURE__*/React.createElement("button", {
+    id: id,
+    onClick: handleNew,
+    className: BUTTON_LISTING_NEW_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    className: BUTTON_COMPOSED_LABEL_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "plus"
+  }), "\xA0", MSG_ACTION_NEW));
+};
+const CrudEditorListingTitle = _ref5 => {
+  let {
+    baseUrl,
+    title,
+    handleRefresh
+  } = _ref5;
+  return /*#__PURE__*/React.createElement("h2", {
+    key: "".concat(baseUrl, "_title"),
+    className: APP_TITLE_H1_CLASS
+  }, title + " - " + MSG_ACTION_LIST, /*#__PURE__*/React.createElement("span", {
+    className: APP_TITLE_RECYCLE_BUTTON_CLASS
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleRefresh,
+    className: BUTTON_LISTING_REFRESH_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "arrows-rotate"
+  }))));
+};
 
 var generic_editor_rfc_service = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    ConvertToComponents: ConvertToComponents,
-    GenericCrudEditor: GenericCrudEditor,
-    GetFormData: GetFormData
+  __proto__: null,
+  ConvertToComponents: ConvertToComponents,
+  GenericCrudEditor: GenericCrudEditor,
+  GetFormData: GetFormData
 });
 
 var baseUrl$3 = "users_config";
@@ -4104,14 +6214,11 @@ const Users = () => /*#__PURE__*/React.createElement(GenericCrudEditor, {
  * System Admin
  */
 
-const UsersValidations = (data, editor, action) => {
+const UsersValidations = (data, editor, action, currentUser) => {
   // Users pre-deletion/update validations
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
-    const {
-      currentUserValue
-    } = authenticationService;
-    getUserData(currentUserValue.id).then(userData => {
+    getUserData(currentUser.id).then(userData => {
       if (typeof data !== 'undefined' && typeof data['_id'] !== 'undefined') {
         data['id'] = editor.db.convertId(data['_id']);
       }
@@ -4121,11 +6228,11 @@ const UsersValidations = (data, editor, action) => {
             resp.error = true;
             resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'Super users can be deleted only by other Super users.';
           }
-          if (data['id'] === currentUserValue.id) {
+          if (data['id'] === currentUser.id) {
             resp.error = true;
             resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'You cannot delete yourself';
           }
-          if (userData.resultset['superuser'] === '0' && data['id'] !== currentUserValue.id) {
+          if (userData.resultset['superuser'] === '0' && data['id'] !== currentUser.id) {
             resp.error = true;
             resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'You cannot delete other\'s records';
           }
@@ -4137,7 +6244,7 @@ const UsersValidations = (data, editor, action) => {
           }
           break;
         case ACTION_UPDATE:
-          if (userData.resultset['superuser'] === '0' && data['id'] !== currentUserValue.id) {
+          if (userData.resultset['superuser'] === '0' && data['id'] !== currentUser.id) {
             resp.error = true;
             resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'You cannot modify other\'s records';
           }
@@ -4155,21 +6262,18 @@ const UsersValidations = (data, editor, action) => {
     });
   });
 };
-const UsersDbListPreRead = (data, editor, action) => {
+const UsersDbListPreRead = (data, editor, action, currentUser) => {
   // Users pre-deletion/update validations
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
-    const {
-      currentUserValue
-    } = authenticationService;
-    getUserData(currentUserValue.id).then(currentUserData => {
+    getUserData(currentUser.id).then(currentUserData => {
       if (currentUserData.error) {
         resp.error = true;
         resp.errorMsg = currentUserData.errorMsg;
       } else {
         // Set a filter to retrieve only the current user
         if (currentUserData.resultset['superuser'] === '0') {
-          resp.fieldValues['_id'] = currentUserValue.id;
+          resp.fieldValues['_id'] = currentUser.id;
         }
       }
       if (resp.error) {
@@ -4234,14 +6338,12 @@ const GenericSinglePageEditor = _ref => {
     parentData: parentData
   })));
 };
-
-// export const GenericSinglePageEditorMain = ({ editorConfig, id, parentData }) => {
+const debug = false;
 const GenericSinglePageEditorMain = props => {
   const [editor, setEditor] = React.useState(null);
   const [formMode, setFormMode] = React.useState(null);
   const [status, setStatus] = React.useState("");
   React.useContext(MainSectionContext);
-  const debug = false;
   React.useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -4274,16 +6376,14 @@ const GenericSinglePageEditorMain = props => {
   };
   if (!editor) {
     if (status) {
-      return /*#__PURE__*/React.createElement("div", {
-        className: ERROR_MSG_CLASS
-      }, status, "[GSPE-NES]");
+      return /*#__PURE__*/React.createElement(React.Fragment, null, status, "[GSPE-NES]");
     }
     return WaitAnimation();
   }
   if (status) {
     return /*#__PURE__*/React.createElement("div", {
       className: ERROR_MSG_CLASS
-    }, status, "[GSPE-ST]");
+    }, status, debug );
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(FormPage, {
     mode_par: formMode[0],
@@ -4295,9 +6395,9 @@ const GenericSinglePageEditorMain = props => {
 };
 
 var generic_editor_singlepage = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    GenericSinglePageEditor: GenericSinglePageEditor,
-    GenericSinglePageEditorMain: GenericSinglePageEditorMain
+  __proto__: null,
+  GenericSinglePageEditor: GenericSinglePageEditor,
+  GenericSinglePageEditorMain: GenericSinglePageEditorMain
 });
 
 var baseUrl$1 = "users";
@@ -4461,10 +6561,10 @@ function UsersProfile_EditorData() {
 }
 const UserProfileEditor = props => {
   const {
-    currentUserValue
-  } = authenticationService;
+    currentUser
+  } = useUser();
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GenericSinglePageEditor, {
-    id: currentUserValue.id,
+    id: currentUser.id,
     editorConfig: UsersProfile_EditorData()
   }));
 };
@@ -4542,6 +6642,10 @@ const GeneralConfig = () => /*#__PURE__*/React.createElement(GenericCrudEditor, 
   editorConfig: GeneralConfig_EditorData()
 });
 
+const AppFooter = () => {
+  return /*#__PURE__*/React.createElement("p", null, "\xA9 ", new Date().getFullYear(), " ", process.env.REACT_APP_APP_NAME, ". All rights reserved.");
+};
+
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
   var insertAt = ref.insertAt;
@@ -4581,156 +6685,173 @@ const defaultComponentMap = {
   "LoginPage": LoginPage,
   "About": About,
   "AboutBody": AboutBody,
+  "AppFooter": AboutBody,
   "logout": logoutHander
 };
-const isComponent = componentObj => {
-  return String(componentObj).includes('component:');
-};
-function setExpanded(componentObj) {
-  if (document.getElementById("navbar-main-toggle") && !document.getElementById("navbar-main-toggle").classList.contains("collapsed")) {
-    document.getElementById("navbar-main-toggle").click();
-  }
-  if (componentObj) {
-    if (isComponent(componentObj)) {
-      try {
-        return /*#__PURE__*/React.createElement("componentObj", null);
-      } catch (error) {
-        console_debug_log('[ASE-E010] componentObj:', componentObj);
-        console_debug_log(error);
-        return null;
-      }
-    } else {
-      try {
-        return componentObj();
-      } catch (error) {
-        console_debug_log('[ASE-E020] componentObj:', componentObj);
-        console_debug_log(error);
-        return null;
-      }
-    }
-  }
-  return '';
-}
 const App = _ref => {
   let {
     componentMap = {},
-    appLogo = null
+    appLogo = "",
+    appLogoHeader = ""
   } = _ref;
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const [state, setState] = React.useState("");
-  const [login, setLogin] = React.useState(false);
-  const [menuOptions, setMenuOptions] = React.useState(null);
+  return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, null, /*#__PURE__*/React.createElement(AppMain, {
+    componentMap: componentMap,
+    appLogo: appLogo,
+    appLogoHeader: appLogoHeader
+  })));
+};
+const AppNavBar = _ref2 => {
+  let {
+    children,
+    appLogoHeader = null
+  } = _ref2;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    setExpanded
+  } = useAppContext();
+  const version = process.env.REACT_APP_VERSION;
+  const appName = appLogoHeader ? /*#__PURE__*/React.createElement("img", {
+    src: imageDirectory + appLogoHeader,
+    className: NAVBAR_BRAND_APP_LOGO_CLASS,
+    alt: "App Logo"
+  }) : process.env.REACT_APP_APP_NAME;
+  return /*#__PURE__*/React.createElement(Navbar, {
+    id: "navbar-main"
+    // collapseOnSelect
+    // expand="lg"
+  }, /*#__PURE__*/React.createElement(Navbar.Brand, {
+    as: reactRouterDom.Link,
+    to: "/",
+    onClick: () => currentUser ? setExpanded() : setExpanded(() => window.location.reload())
+  }, /*#__PURE__*/React.createElement("div", {
+    className: NAVBAR_BRAND_NAME_CLASS
+  }, appName), /*#__PURE__*/React.createElement("div", {
+    className: NAVBAR_BRAND_APP_VERSION_CLASS
+  }, version)), children);
+};
+const TopRightMenu = _ref3 => {
+  let {
+    componentMapping,
+    showContentOnly
+  } = _ref3;
+  const {
+    currentUser
+  } = useUser();
+  return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+    icon: "place-holder-circle",
+    title: currentUser.firstName,
+    componentMapping: componentMapping,
+    itemType: "hamburger",
+    showContentOnly: showContentOnly
+  }));
+};
+const AppMain = _ref4 => {
+  let {
+    componentMap = {},
+    appLogo = null,
+    appLogoHeader = null
+  } = _ref4;
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
-  const version = process.env.REACT_APP_VERSION;
-  const appName = process.env.REACT_APP_APP_NAME;
   const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
-  React.useEffect(() => {
-    if (authenticationService.currentUser) {
-      const subscription = authenticationService.currentUser.subscribe(x => setCurrentUser(x));
-      return () => subscription.unsubscribe();
-    }
-  }, []);
-  React.useEffect(() => {
-    if (!(login || window.location.href.includes("/login"))) {
-      getMenuFromApi(state, setState, setMenuOptions);
-    }
-  }, [state, login]);
+  reactRouterDom.useLocation();
+  const {
+    currentUser
+  } = useUser();
+  const {
+    state,
+    setState,
+    menuOptions,
+    setMenuOptions,
+    sideMenu,
+    setSideMenu,
+    isMobileMenuOpen
+  } = useAppContext();
   const stateHandler = () => {
-    setLogin(true);
     logoutHander();
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, !showContentOnly && /*#__PURE__*/React.createElement("div", {
-    className: "w-screen"
-  }, /*#__PURE__*/React.createElement(Navbar, {
-    id: "navbar-main",
-    collapseOnSelect: true,
-    expand: "lg",
-    className: "bg-body-tertiary navbar-dark bg-dark"
-  }, /*#__PURE__*/React.createElement(Container, null, /*#__PURE__*/React.createElement(Navbar.Brand, {
-    as: reactRouterDom.Link,
-    to: currentUser ? '/' : '/#/login'
-    // to={(currentUser ? window.location.origin + '/#' : '/#/login')}
-    ,
-    onClick: () => currentUser ? setExpanded() : setExpanded(() => window.location.reload())
-  }, appName, " ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: '60%'
+  React.useEffect(() => {
+    // Load menus from JSON configurations
+    if (currentUser) {
+      getMenuFromApi(state, setState, setMenuOptions);
     }
-  }, version)), currentUser && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Navbar.Toggle, {
-    id: "navbar-main-toggle",
-    "aria-controls": "responsive-navbar-nav"
-  }), /*#__PURE__*/React.createElement(Navbar.Collapse, {
-    id: "basic-navbar-nav"
-  }, /*#__PURE__*/React.createElement(Nav, {
-    className: "me-auto"
-  }, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  }, [currentUser, state]);
+  if (!currentUser) {
+    return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, {
+      appLogoHeader: appLogoHeader
+    }, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(LoginPage, {
+      appLogo: appLogo,
+      appLogoHeader: appLogoHeader
+    })), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+  }
+  return /*#__PURE__*/React.createElement(MainContainer, null, !showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, {
+    appLogoHeader: appLogoHeader
+  }, /*#__PURE__*/React.createElement(Navbar.TopCenterMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     componentMapping: componentMapFinal,
-    itemType: "top_menu",
-    menuOptions: menuOptions,
-    status: state,
-    setExpanded: setExpanded
-  }))), /*#__PURE__*/React.createElement(Navbar.Collapse, {
-    id: "current-user-navbar-nav",
-    className: "justify-content-end"
-  }, /*#__PURE__*/React.createElement(Navbar.Text, null, "Signed in as:"), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+    itemType: sideMenu ? "side_menu" : "top_menu"
+  }), sideMenu && isMobileMenuOpen && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
     componentMapping: componentMapFinal,
     itemType: "hamburger",
-    menuOptions: menuOptions,
-    status: state,
     showContentOnly: showContentOnly,
-    setExpanded: setExpanded
-  })))))), /*#__PURE__*/React.createElement("div", {
-    className: "w-screen bg-gray-300 fyn_jumbotron",
-    style: {
-      minHeight: '88vh'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "p-2"
-  }, /*#__PURE__*/React.createElement(AppMainComponent, {
-    login: login,
-    state: state,
+    mobileMenuMode: true
+  })), !sideMenu && /*#__PURE__*/React.createElement(TopRightMenu, {
+    componentMapping: componentMapFinal,
+    showContentOnly: showContentOnly
+  })), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(React.Fragment, null, !sideMenu && /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
-    menuOptions: menuOptions,
     componentMap: componentMapFinal,
-    setExpanded: setExpanded,
     showContentOnly: showContentOnly,
-    appLogo: appLogo
-  }))), state !== '' && /*#__PURE__*/React.createElement(DefaultRoutes, null));
+    appLogo: appLogo,
+    appLogoHeader: appLogoHeader
+  }), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, !showContentOnly && /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
+    componentMapping: componentMapFinal,
+    showContentOnly: showContentOnly
+  })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(AppMainComponent, {
+    stateHandler: stateHandler,
+    componentMap: componentMapFinal,
+    showContentOnly: showContentOnly,
+    appLogo: appLogo,
+    appLogoHeader: appLogoHeader
+  })), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+    componentMapping: componentMapFinal,
+    itemType: "mobile_menu"
+  }), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+    title: currentUser.firstName,
+    componentMapping: componentMapFinal,
+    itemType: "hamburger",
+    showContentOnly: showContentOnly,
+    mobileMenuMode: true
+  })), state !== '' && /*#__PURE__*/React.createElement(DefaultRoutes, null), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
-const CloseButton = _ref2 => {
+const CloseButton = _ref5 => {
   let {
     children
-  } = _ref2;
+  } = _ref5;
   return /*#__PURE__*/React.createElement(React.Fragment, null, children && /*#__PURE__*/React.createElement("div", {
-    className: "alert alert-danger",
+    className: ALERT_DANGER_CLASS,
     role: "alert"
   }, children), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => window.close(),
-    className: "ml-2 mb-1 bg-blue-500 text-white p-0 rounded close"
+    className: BUTTON_PRIMARY_CLASS
   }, "Close"));
 };
-const AppMainComponent = _ref3 => {
+const AppMainComponent = _ref6 => {
   let {
-    login,
-    state,
     stateHandler,
-    menuOptions,
     componentMap,
     showContentOnly,
-    setExpanded,
-    appLogo = null
-  } = _ref3;
-  if (login || window.location.href.includes("/login")) {
-    if (showContentOnly) {
-      return /*#__PURE__*/React.createElement(CloseButton, null, "Re-login is required...");
-    }
-    return /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo
-    });
-  }
+    appLogo = null,
+    appLogoHeader = null
+  } = _ref6;
+  reactRouterDom.useLocation();
+  const {
+    state,
+    menuOptions
+  } = useAppContext();
   if (state !== "") {
     if (showContentOnly) {
       return /*#__PURE__*/React.createElement(CloseButton, null, getErrorMessage(state));
@@ -4743,10 +6864,8 @@ const AppMainComponent = _ref3 => {
   return /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     componentMapping: componentMap,
     itemType: "routes",
-    menuOptions: menuOptions,
-    status: state,
-    setExpanded: setExpanded,
-    appLogo: appLogo
+    appLogo: appLogo,
+    appLogoHeader: appLogoHeader
   });
 };
 
@@ -4827,12 +6946,12 @@ const convertCaloriesToUnit = function (calories, fromUnit) {
 };
 
 var conversions = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    calculateAge: calculateAge,
-    convertCaloriesToUnit: convertCaloriesToUnit,
-    convertHeight: convertHeight,
-    convertWeight: convertWeight,
-    interpretString: interpretString
+  __proto__: null,
+  calculateAge: calculateAge,
+  convertCaloriesToUnit: convertCaloriesToUnit,
+  convertHeight: convertHeight,
+  convertWeight: convertWeight,
+  interpretString: interpretString
 });
 
 const mediaSupported = () => {
@@ -4900,9 +7019,9 @@ const getMediaTypeToRecord = () => {
 };
 
 var media = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    getMediaTypeToRecord: getMediaTypeToRecord,
-    mediaSupported: mediaSupported
+  __proto__: null,
+  getMediaTypeToRecord: getMediaTypeToRecord,
+  mediaSupported: mediaSupported
 });
 
 const PrivateRoute = _ref => {
@@ -4912,7 +7031,9 @@ const PrivateRoute = _ref => {
   } = _ref;
   return /*#__PURE__*/React.createElement(reactRouterDom.Route, _extends({}, rest, {
     render: props => {
-      const currentUser = authenticationService.currentUserValue;
+      const {
+        currentUser
+      } = useUser();
       if (!currentUser) {
         console_debug_log('PrivateRoute Not Authorized...');
         // not logged in so redirect to login page with the return url
@@ -4932,15 +7053,15 @@ const PrivateRoute = _ref => {
 };
 
 var PrivateRoute$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    PrivateRoute: PrivateRoute
+  __proto__: null,
+  PrivateRoute: PrivateRoute
 });
 
 const randomKey = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 var ramdomize = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    randomKey: randomKey
+  __proto__: null,
+  randomKey: randomKey
 });
 
 const textareaMinHeightDefault = 40;
@@ -5085,57 +7206,44 @@ const isMobileDevice = () => {
 };
 
 var ui = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    CopyButton: CopyButton,
-    LinkifyText: LinkifyText,
-    getElementWithErrorHandling: getElementWithErrorHandling,
-    growUpTextArea: growUpTextArea,
-    growUpTextAreaInner: growUpTextAreaInner,
-    isMobileDevice: isMobileDevice,
-    resetTextArea: resetTextArea,
-    toggleIdVisibility: toggleIdVisibility
+  __proto__: null,
+  CopyButton: CopyButton,
+  LinkifyText: LinkifyText,
+  getElementWithErrorHandling: getElementWithErrorHandling,
+  growUpTextArea: growUpTextArea,
+  growUpTextAreaInner: growUpTextAreaInner,
+  isMobileDevice: isMobileDevice,
+  resetTextArea: resetTextArea,
+  toggleIdVisibility: toggleIdVisibility
 });
 
 // GenericCrudEditor UI components
-
 const ShowAsDisabledField = _ref => {
   let {
     className = '',
-    // backgroundColor = 'bg-gray-200',
-    backgroundColor = '#e9ecef',
+    backgroundColor = null,
     children
   } = _ref;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    // className={`${backgroundColor} ${className}`}
-    // className={`${backgroundColor}`}
-    className: "".concat(className),
-    style: {
-      backgroundColor: backgroundColor
-    }
+    className: "".concat(backgroundColor !== null && backgroundColor !== void 0 ? backgroundColor : DISABLE_FIELD_BACKGROUND_COLOR_CLASS, " ").concat(className)
   }, children));
 };
 
 var generic_editor_rfc_ui = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    ShowAsDisabledField: ShowAsDisabledField
+  __proto__: null,
+  ShowAsDisabledField: ShowAsDisabledField
 });
 
 // Components
 // Images
-const appLogoEmblem = 'app_log_emblem.svg';
+// const appLogoEmblem = 'app_log_emblem.svg';
 const appLogoCircle = 'app_logo_circle.svg';
 const appLogoLandscape = 'app_logo_landscape.svg';
-const appLogoSquare = 'app_logo_square.svg';
-const arrowsRotateSolid = 'arrows_rotate_solid.svg';
-const clip = 'clip.svg';
-const googleLogo = 'google_logo.svg';
-const madebyLogoEmblem = 'madeby_logo_emblem.svg';
-const madebyLogoSquare = 'madeby_logo_square.svg';
-const spark = 'spark.svg';
 
 exports.About = About;
 exports.AboutBody = AboutBody;
 exports.App = App;
+exports.AppFooter = AppFooter;
 exports.GeneralConfig = GeneralConfig;
 exports.GeneralConfig_EditorData = GeneralConfig_EditorData;
 exports.HomePage = HomePage;
@@ -5154,15 +7262,11 @@ exports.UsersValidations = UsersValidations;
 exports.Users_EditorData = Users_EditorData;
 exports.appConstants = app_constants;
 exports.appLogoCircle = appLogoCircle;
-exports.appLogoEmblem = appLogoEmblem;
 exports.appLogoLandscape = appLogoLandscape;
-exports.appLogoSquare = appLogoSquare;
-exports.arrowsRotateSolid = arrowsRotateSolid;
 exports.authHeader = authHeader$1;
 exports.authenticationService = authentication_service;
 exports.blobFilesUtilities = blob_files_utilities;
 exports.classNameConstants = class_name_constants;
-exports.clip = clip;
 exports.conversions = conversions;
 exports.dateTimestamp = dateTimestamp;
 exports.dbService = db_service;
@@ -5183,17 +7287,13 @@ exports.genericEditorRfcUi = generic_editor_rfc_ui;
 exports.genericEditorSinglepage = generic_editor_singlepage;
 exports.genericEditorUtilities = generic_editor_utilities;
 exports.genericMenuService = generic_menu_service;
-exports.googleLogo = googleLogo;
 exports.history = history$1;
 exports.jsonUtilities = jsonUtilities;
 exports.loggingService = logging_service;
 exports.logoutService = logout_service;
-exports.madebyLogoEmblem = madebyLogoEmblem;
-exports.madebyLogoSquare = madebyLogoSquare;
 exports.media = media;
 exports.ramdomize = ramdomize;
 exports.responseHandlersService = response_handlers_service;
-exports.spark = spark;
 exports.ui = ui;
 exports.urlParams = urlParams;
 exports.waitAnimationUtility = wait_animation_utility;

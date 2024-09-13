@@ -941,24 +941,6 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
     return dbService.createUpdateDelete(action, rowId, rowToSave);
 };
 
-export const getSelectFieldsOptions = (fieldElements) => {
-    return Object.entries(fieldElements)
-        .filter(function (key) {
-            let currentObj = key[1];
-            return (
-                currentObj.type === 'select_component' &&
-                typeof currentObj.dataPopulator !== "undefined"
-            );
-        })
-        .map(function (key) {
-            let currentObj = key[1];
-            return {
-                name: currentObj.name,
-                promiseResult: currentObj.dataPopulator()
-            };
-        });
-};
-
 const setDefaultFieldValue = (currentObj) => {
     let response = null;
     if (typeof currentObj['default_value'] !== 'undefined') {

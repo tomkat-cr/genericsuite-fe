@@ -8,6 +8,7 @@ import { MemoryRouter } from "react-router-dom";
 import 'whatwg-fetch';
 
 import { UserProvider } from "../../helpers/UserContext";
+import { AppProvider } from "../../helpers/AppContext";
 import { mockFetch } from '../../test-helpers/mock-fetch'
 
 import { UsersConfigComponent } from "./UsersConfig";
@@ -20,9 +21,11 @@ describe("UsersConfigComponent", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <UsersConfigComponent
-                            parentData={{}}
-                        />
+                        <AppProvider>
+                            <UsersConfigComponent
+                                parentData={{}}
+                            />
+                        </AppProvider>
                     </UserProvider>
                 </MemoryRouter>
             );

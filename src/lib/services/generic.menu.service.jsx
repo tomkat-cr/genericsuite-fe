@@ -74,6 +74,7 @@ export const GenericMenuBuilder = (
         itemType,
         appLogo,
         appLogoHeader,
+        mobileMenuMode,
     }
 ) => {
     const { state, menuOptions, setExpanded } = useAppContext();
@@ -175,9 +176,7 @@ export const GenericMenuBuilder = (
         );
     }
 
-    const GetNavs = (item_type_filter, topTitle, itemType, icon) => {
-        // React-Bootstrap Navs and tabs
-        // https://react-bootstrap.netlify.app/docs/components/navs
+    const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
         if (debug) {
             console_debug_log("GenericMenuBuilder: GetNavs | menuOptions / componentMapping");
             console_debug_log(menuOptions);
@@ -189,7 +188,7 @@ export const GenericMenuBuilder = (
             .map(item => {
                 const itemDefs = getItemDefaults(item, topTitle);
                 if (debug) {
-                    console_debug_log("Nav y NavDropdown 1: subItem / itemDefs");
+                    console_debug_log("Nav & NavDropdown 1: subItem / itemDefs");
                     console_debug_log(item);
                     console_debug_log(itemDefs);
                 }
@@ -203,6 +202,7 @@ export const GenericMenuBuilder = (
                             onClick={itemDefs["on_click"]}
                             reloadDocument={itemDefs["reload"]}
                             type={itemType}
+                            mobileMenuMode={mobileMenuMode}
                         >
                             {icon ? <GsIcons icon={icon} />: itemDefs["title"]}
                         </Nav.Link>
@@ -217,6 +217,7 @@ export const GenericMenuBuilder = (
                         id={navDropdownId}
                         type={itemType}
                         icon={icon}
+                        mobileMenuMode={mobileMenuMode}
                     >
                     {
                         item.sub_menu_options.map(subItem => {
@@ -232,6 +233,7 @@ export const GenericMenuBuilder = (
                                         componentMapping[subItem.element](),
                                         setExpanded,
                                         itemType,
+                                        mobileMenuMode,
                                     );
                                 } catch (error) {
                                     console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
@@ -247,6 +249,7 @@ export const GenericMenuBuilder = (
                                     onClick={itemDefs["on_click"]}
                                     reloadDocument={itemDefs["reload"]}
                                     type={itemType}
+                                    mobileMenuMode={mobileMenuMode}
                                 >
                                     {itemDefs["title"]}
                                 </NavDropdown.Item>
@@ -259,7 +262,7 @@ export const GenericMenuBuilder = (
         );
     }
 
-    const menuItems = (item_type_filter, topTitle, itemType) => {
+    const menuItems = (item_type_filter, topTitle, itemType, mobileMenuMode) => {
         if (typeof menuOptions === 'undefined' || menuOptions === null) {
             return '';
         }
@@ -268,7 +271,7 @@ export const GenericMenuBuilder = (
             return getRoutes();
         }
         // NavLinks
-        return GetNavs(item_type_filter, topTitle, itemType, icon);
+        return GetNavs(item_type_filter, topTitle, itemType, icon, mobileMenuMode);
     };
 
     if (state !== "" && itemType === "routes") {
@@ -288,10 +291,7 @@ export const GenericMenuBuilder = (
             />
         );
     }
-
-    // return menuItems(itemType === 'side_menu' ? 'top_menu' : itemType, title, itemType);
-    return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType);
-
+    return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType, mobileMenuMode);
 }
 
 const isTopMenuAlternativeType = (itemType) => (
@@ -307,7 +307,7 @@ export const editorRoute = (editor) => {
     );
 }
 
-export const editorMenuOption = (editor, setExpanded, itemType) => {
+export const editorMenuOption = (editor, setExpanded, itemType, mobileMenuMode) => {
     return (
         <NavDropdown.Item
             key={editor.title}
@@ -315,6 +315,7 @@ export const editorMenuOption = (editor, setExpanded, itemType) => {
             to={getPrefix()+'/'+editor.baseUrl}
             onClick={getOnClickObject(null, setExpanded)}
             type={itemType}
+            mobileMenuMode={mobileMenuMode}
         >
             {editor.title}
         </NavDropdown.Item>

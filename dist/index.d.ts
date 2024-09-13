@@ -5,20 +5,19 @@ import React from 'react';
 
 declare function About(): React.FunctionComponentElement<any>;
 declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-declare function App(_ref: any): React.FunctionComponentElement<{
-    children?: React.ReactNode | undefined;
-}>;
+declare function App(_ref: any): React.FunctionComponentElement<any>;
+declare function AppFooter(): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 declare function GeneralConfig(): React.FunctionComponentElement<any>;
 declare function GeneralConfig_EditorData(): any;
 declare function HomePage(_ref: any): React.FunctionComponentElement<{
     children?: React.ReactNode | undefined;
-}> | React.FunctionComponentElement<any>;
+}>;
 declare function LoginPage(props: any): React.FunctionComponentElement<{
     children?: React.ReactNode | undefined;
-}>;
+}> | React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 declare var ModalPopUp$1: Readonly<{
     __proto__: null;
-    DefaultButtonModal: (_ref2: any) => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    DefaultButtonModal: (_ref2: any) => React.FunctionComponentElement<any>;
     LogoutNavigate: (_ref3: any) => React.DetailedReactHTMLElement<{
         variant: any;
         className: string;
@@ -41,11 +40,11 @@ declare function UsersConfig(): {
     component: (_ref: any) => React.FunctionComponentElement<any>;
 };
 declare function UsersConfig_EditorData(): any;
-declare function UsersDbListPreRead(data: any, editor: any, action: any): Promise<any>;
+declare function UsersDbListPreRead(data: any, editor: any, action: any, currentUser: any): Promise<any>;
 declare function UsersDbPreWrite(data: any, editor: any, action: any): Promise<any>;
 declare function UsersPasswordValidations(data: any, editor: any, action: any): Promise<any>;
 declare function UsersProfile_EditorData(): any;
-declare function UsersValidations(data: any, editor: any, action: any): Promise<any>;
+declare function UsersValidations(data: any, editor: any, action: any, currentUser: any): Promise<any>;
 declare function Users_EditorData(...args: any[]): any;
 declare var app_constants: Readonly<{
     __proto__: null;
@@ -66,10 +65,7 @@ declare var app_constants: Readonly<{
     };
 }>;
 declare const appLogoCircle: "app_logo_circle.svg";
-declare const appLogoEmblem: "app_log_emblem.svg";
 declare const appLogoLandscape: "app_logo_landscape.svg";
-declare const appLogoSquare: "app_logo_square.svg";
-declare const arrowsRotateSolid: "arrows_rotate_solid.svg";
 declare var authHeader$1: Readonly<{
     __proto__: null;
     authHeader: typeof authHeader;
@@ -82,7 +78,14 @@ declare var authentication_service: Readonly<{
         currentUser: rxjs.Observable<any>;
         readonly currentUserValue: any;
     };
+    getCurrentUserData: () => Promise<any>;
     getUserData: (userId: any) => Promise<any>;
+    getUserLocalData: (res: any) => {
+        id: any;
+        firstName: any;
+        pref_side_menu: any;
+        pref_dark_mode: any;
+    };
 }>;
 declare var blob_files_utilities: Readonly<{
     __proto__: null;
@@ -99,17 +102,184 @@ declare var blob_files_utilities: Readonly<{
 }>;
 declare var class_name_constants: Readonly<{
     __proto__: null;
-    BUTTON_LISTING_CLASS: "bg-blue-500 text-white p-2 rounded text-sm";
-    BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500";
-    BUTTON_SECONDARY_CLASS: "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500";
-    ERROR_MSG_CLASS: "alert alert-danger mt-4 p-2 rounded-md";
-    GRAY_BOX_MSG_CLASS: "alert text-black bg-gray-200 mt-4 p-2 rounded-md";
-    INFO_MSG_CLASS: "alert alert-info mt-4 p-2 rounded-md";
-    INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden";
-    SUCCESS_MSG_CLASS: "alert alert-success text-black mt-4 p-2 rounded-md";
-    WARNING_MSG_CLASS: "alert alert-warning mt-4 p-2 rounded-md";
+    ALERT_BASE_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass";
+    ALERT_DANGER_CLASS: string;
+    ALERT_INFO_CLASS: string;
+    ALERT_SUCCESS_CLASS: string;
+    ALERT_WARNING_CLASS: string;
+    APP_FOOTER_CONTAINER_CLASS: "p-4 text-white text-center appFooterContainerClass";
+    APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS: "mt-6 appFormPageChildComponentsTopDivClass";
+    APP_FORMPAGE_FIELD_BASE_CLASS: string;
+    APP_FORMPAGE_FIELD_CLASS: string;
+    APP_FORMPAGE_FIELD_GOOD_CLASS: string;
+    APP_FORMPAGE_FIELD_INVALID_CLASS: string;
+    APP_FORMPAGE_FORM_TABLE_CLASS: "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormTableClass";
+    APP_FORMPAGE_LABEL_CLASS: "font-medium text-gray-700 appFormPageLabelClass";
+    APP_FORMPAGE_LABEL_REQUIRED_CLASS: "font-medium text-red-700 appFormPageLabelRequiredClass";
+    APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: "align-middle flex appFormPageSpecialButtonDivClass";
+    APP_LEVEL2_DIV_CLASS: "overflow-x-auto appLevel2DivClass";
+    APP_LISTING_SEARCH_BOX_INPUT_CLASS: "p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
+    APP_LISTING_SEARCH_BOX_LABEL_CLASS: "mr-2 text-sm appListingSearchBoxLabelClass";
+    APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS: string;
+    APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS: string;
+    APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS: "flex items-center space-x-2 appListingSearchBoxTopDivClass";
+    APP_LISTING_TABLE_BODY_TBODY_CLASS: "appListingTableBodyTbodyClass";
+    APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS: string;
+    APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS: string;
+    APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS: "p-2 appListingTableBodyTdBaseEvenClass";
+    APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS: "p-2 appListingTableBodyTdBaseOddClass";
+    APP_LISTING_TABLE_BODY_TD_EVEN_CLASS: string;
+    APP_LISTING_TABLE_BODY_TD_ODD_CLASS: string;
+    APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS: "appListingTableBodyTrActionsEvenClass";
+    APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS: "appListingTableBodyTrActionsOddClass";
+    APP_LISTING_TABLE_BODY_TR_EVEN_CLASS: "hover:bg-opacity-80 appListingTableBodyTrEvenClass";
+    APP_LISTING_TABLE_BODY_TR_ODD_CLASS: "hover:bg-opacity-80 appListingTableBodyTrOddClass";
+    APP_LISTING_TABLE_CLASS: "w-full text-sm appListingTableClass";
+    APP_LISTING_TABLE_HDR_THEAD_CLASS: "bg-white dark:bg-black appListingTableHdrTheadClass";
+    APP_LISTING_TABLE_HDR_TH_CLASS: "text-left p-2 appListingTableHdrThClass";
+    APP_LISTING_TABLE_HDR_TR_CLASS: "border-b appListingTableHdrTrClass";
+    APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS: "appListingTableHrdActionsColClass";
+    APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS: "text-sm flex items-center 1-space-x-2 appListingToolbarPageNumSectionClass";
+    APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS: "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
+    APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: "p-2 rounded border appListingToolbarRowPerPageInputClass";
+    APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS: "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
+    APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: "text-sm ml-2 mr-2 flex items-center appListingToolbarRowPerPageSectionClass";
+    APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex flex-col sm:flex-row items-center 1-justify-between mt-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+    APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow p-4 appSectionContainerForSideMenuMainClass";
+    APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: "flex-grow p-4 appSectionContainerForTopMenuClass";
+    APP_SIDE_MENU_BG_COLOR_CLASS: "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
+    APP_TITLE_H1_CLASS: "text-2xl font-bold mb-4 appTitleH1Class";
+    APP_TITLE_RECYCLE_BUTTON_CLASS: "pl-2 align-bottom appTitleRecycleButtonClass";
+    APP_TOP_DIV_CLASS: "mb-4 p-4 rounded-lg appTopDivClass";
+    BUTTON_COMPOSED_LABEL_CLASS: "flex items-center buttonComposedLabelClass";
+    BUTTON_LISTING_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
+    BUTTON_LISTING_DISABLED_CLASS: string;
+    BUTTON_LISTING_NEW_CLASS: string;
+    BUTTON_LISTING_REFRESH_CLASS: string;
+    BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
+    BUTTON_RIGHT_SPACE_CLASS: "mr-2 buttonRightSpaceClass";
+    BUTTON_SECONDARY_CLASS: "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+    CENTERED_BOX_CONTAINER_DIV_1_CLASS: "z-50 overflow-auto centeredBoxContainerDiv1Class";
+    CENTERED_BOX_CONTAINER_DIV_2_CLASS: "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
+    CENTERED_BOX_CONTAINER_DIV_3_CLASS: "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
+    DARK_MODE_BUTTON_DARK_HIDDEN_CLASS: "dark:hidden darkModeButtonDarkHiddenClass";
+    DARK_MODE_BUTTON_DARK_INLINE_CLASS: "hidden dark:inline darkModeButtonDarkInlineClass";
+    DARK_MODE_BUTTON_SVG_CLASS: "w-6 h-6 darkModeButtonSvgClass";
+    DARK_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 darkModeButtonTopDivClass";
+    DISABLE_FIELD_BACKGROUND_COLOR_CLASS: "bg-gray-200 disableFieldBackgroundColorClass";
+    ERROR_MSG_CLASS: string;
+    FORM_CONTROL_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass";
+    FORM_GROUP_CLASS: "mb-4 formGroupClass";
+    GRAY_BOX_MSG_CLASS: string;
+    HIDDEN_CLASS: "hidden hiddenClass";
+    INFO_MSG_CLASS: string;
+    INLINE_CLASS: "inline inlineClass";
+    INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
+    INVALID_FEEDBACK_CLASS: "text-red-500 text-sm mt-1 invalidFeedbackClass";
+    IS_INVALID_CLASS: "border-red-500 isInvalidClass";
+    LOGIN_PAGE_APP_LOGO_CLASS: "mx-auto my-0 loginPageAppLogoClass";
+    MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: "flex min-h-screen mainContainerForSideMenuClass";
+    MAIN_CONTAINER_FOR_TOP_MENU_CLASS: "flex flex-col min-h-screen mainContainerForTopMenuClass";
+    MENU_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 menuModeButtonTopDivClass";
+    MODALIB_BUTTON_BASESTYLE_CLASS: "px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass";
+    MODALIB_BUTTON_DANGER_CLASS: "bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass";
+    MODALIB_BUTTON_PRIMARY_CLASS: "bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass";
+    MODALIB_BUTTON_SECONDARY_CLASS: "bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass";
+    MODALIB_BUTTON_SUCCESS_CLASS: "bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass";
+    MODALIB_MODAL_BODY_CLASS: "py-4 modalibModalBodyClass";
+    MODALIB_MODAL_FOOTER_CLASS: "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
+    MODALIB_MODAL_HEADER_CLASS: "flex items-center justify-between pb-3 modalibModalHeaderClass";
+    MODALIB_MODAL_TITLE_CLASS: "text-xl font-semibold modalibModalTitleClass";
+    NAVBAR_BRAND_APP_LOGO_CLASS: "mx-auto my-0 navbarBrandAppLogoClass";
+    NAVBAR_BRAND_APP_VERSION_CLASS: "text-xs navbarBrandAppVersionClass";
+    NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
+    NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS: "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
+    NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN: "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
+    NAVBAR_BRAND_NAME_CLASS: "text-2xl font-bold navbarBrandNameClass";
+    NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: "-translate-x-full navbarHeaderForSideMenuMobileCloseClass";
+    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS: "translate-x-0 navbarHeaderForSideMenuMobileOpenClass";
+    NAVBAR_HEADER_FOR_TOP_MENU_CLASS: "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
+    NAVBAR_MOBILE_CLOSE_BUTTON_CLASS: "p-2 rounded-full hover:bg-opacity-80 navbarMobileCloseButtonClass";
+    NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS: "h-6 w-6 navbarMobileCloseButtonIconClass";
+    NAVBAR_MOBILE_MENU_DIV_1_CLASS: "fixed inset-0 bg-black bg-opacity-50 z-50 navbarMobileMenuDiv1Class";
+    NAVBAR_MOBILE_MENU_DIV_2_CLASS: "fixed inset-y-0 left-0 w-64 p-4 overflow-y-auto navbarMobileMenuDiv2Class";
+    NAVBAR_MOBILE_MENU_DIV_3_CLASS: "flex justify-between items-center mb-4 navbarMobileMenuDiv3Class";
+    NAVBAR_MOBILE_MENU_H2_CLASS: "text-xl font-bold navbarMobileMenuH2Class";
+    NAVBAR_MOBILE_NAV_CLASS: "flex flex-col space-y-2 navbarMobileNavClass";
+    NAVBAR_TEXT_CLASS: "flex items-center navbarTextClass";
+    NAVBAR_TOGGLE_BUTTON_CLASS: "1-md:hidden lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
+    NAVBAR_TOGGLE_IMAGE_CLASS: "h-6 w-6 navbarToggleImageClass";
+    NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS: "space-y-2 navbarTopCenterMenuOnLeftClass";
+    NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS: "hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
+    NAVBAR_TOP_FOR_SIDE_MENU_CLASS: "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
+    NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS: "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
+    NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS: "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
+    NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS: "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
+    NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonMobileMenuClass";
+    NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonSideMenuClass";
+    NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS: "rounded p-1 flex items-center navDropdownButtonTopMenuClass";
+    NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS: "navDropdownImageHamburgerClass";
+    NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS: "h-4 w-4 transform transition-transform navDropdownImageMobileMenuClass";
+    NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS: "navDropdownImageSideMenuClass";
+    NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS: "navDropdownImageTopMenuClass";
+    NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS: "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
+    NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
+    NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
+    NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS: "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
+    NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS: "rounded block px-2 navDropDownItemButtonsHamburgerClass";
+    NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded py-2 px-2 navDropDownItemButtonsMobileMenuClass";
+    NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS: "rounded px-2 py-2 navDropDownItemButtonsSideMenuClass";
+    NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS: "rounded px-2 flex items-center navDropDownItemButtonsTopMenuClass";
+    NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS: "block py-1 navDropdownItemTopDivHamburgerClass";
+    NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS: "block rounded navDropdownItemTopDivMobileMenuClass";
+    NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS: "block rounded navDropdownItemTopDivSideMenuClass";
+    NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS: "block py-1 navDropdownItemTopDivTopMenuClass";
+    NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS: "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+    NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS: "1-space-y-2 navDropdownTopDivMobileMenuClass";
+    NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS: "1-space-x-4 navDropdownTopDivSideMenuClass";
+    NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS: "relative group navDropdownTopDivTopMenuClass";
+    NAV_LINK_BUTTON_HAMBURGER_CLASS: "block py-1 navLinkButtonsHamburgerClass";
+    NAV_LINK_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
+    NAV_LINK_BUTTON_SIDE_MENU_CLASS: "py-2 px-2 rounded navLinkButtonsSideMenuClass";
+    NAV_LINK_BUTTON_TOP_MENU_CLASS: "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
+    NAV_LINK_TOP_DIV_HAMBURGER_CLASS: "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
+    NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
+    NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: "navLinkTopDivSideMenuClass";
+    NAV_LINK_TOP_DIV_TOP_MENU_CLASS: "relative group navLinkTopDivTopMenuClass";
+    POPUP_TOP_MARGIN_CLASS: "pt-4 popupTopMarginClass";
+    SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: "ml-2 searchEngineButtonTopDivClass";
+    SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
+    SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: "ml-3 mr-3 showHidePageAnimationEnabledClass";
+    SUCCESS_MSG_CLASS: string;
+    SUGGESTION_DROPDOWN_CLASS: "align-middle flex";
+    VISIBLE_CLASS: "visible visibleClass";
+    WARNING_MSG_CLASS: string;
+    defaultTheme: {
+        light: {
+            primary: string;
+            secondary: string;
+            text: string;
+            textHoverTop: string;
+            textHoverTopSubMenu: string;
+            textHoverSide: string;
+            background: string;
+            contentBg: string;
+        };
+        dark: {
+            primary: string;
+            secondary: string;
+            text: string;
+            textHoverTop: string;
+            textHoverTopSubMenu: string;
+            textHoverSide: string;
+            background: string;
+            contentBg: string;
+        };
+    };
 }>;
-declare const clip: "clip.svg";
 declare var conversions: Readonly<{
     __proto__: null;
     calculateAge: (dateOfBirth: any) => number;
@@ -234,6 +404,10 @@ declare var generic_editor_rfc_common: Readonly<{
         isReadOnly: boolean;
     };
     getIsReadOnly: (mode: any) => boolean;
+    getSelectFieldsOptions: (fieldElements: any) => {
+        name: any;
+        promiseResult: any;
+    }[];
     setEditorParameters: (props: any) => Promise<{
         error: boolean;
         error_message: string;
@@ -246,10 +420,6 @@ declare var generic_editor_rfc_formpage: Readonly<{
         className: string;
     }, HTMLElement>;
     getFieldElementsYupValidations: (editor: any, editorFlags: any) => any;
-    getSelectFieldsOptions: (fieldElements: any) => {
-        name: any;
-        promiseResult: any;
-    }[];
 }>;
 declare var generic_editor_rfc_provider: Readonly<{
     __proto__: null;
@@ -296,9 +466,9 @@ declare var generic_editor_rfc_specific_func: Readonly<{
         fieldsToDelete: never[];
         otherData: {};
     };
-    mandatoryFiltersDbListPreRead: (data: any, editor: any, action: any) => Promise<any>;
-    mandatoryFiltersDbPreRead: (data: any, editor: any, action: any) => Promise<any>;
-    processGenericFuncArray: (editor: any, funcArrayName: any, data: any, action: any) => Promise<any>;
+    mandatoryFiltersDbListPreRead: (data: any, editor: any, action: any, currentUser: any) => Promise<any>;
+    mandatoryFiltersDbPreRead: (data: any, editor: any, action: any, currentUser: any) => Promise<any>;
+    processGenericFuncArray: (editor: any, funcArrayName: any, data: any, action: any, currentUser: any) => Promise<any>;
 }>;
 declare var generic_editor_rfc_suggestion_dropdown: Readonly<{
     __proto__: null;
@@ -332,13 +502,13 @@ declare var generic_editor_singlepage: Readonly<{
 declare var generic_editor_utilities: Readonly<{
     __proto__: null;
     defaultValue: (dictObj: any, elementName: any, ...args: any[]) => any;
-    replaceSpecialVars: (params: any) => any;
+    replaceSpecialVars: (params: any, currentUser: any) => any;
 }>;
 declare var generic_menu_service: Readonly<{
     __proto__: null;
     DefaultRoutes: (_ref2: any) => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     GenericMenuBuilder: (_ref: any) => any;
-    editorMenuOption: (editor: any, setExpanded: any) => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    editorMenuOption: (editor: any, setExpanded: any, itemType: any, mobileMenuMode: any) => React.FunctionComponentElement<any>;
     editorRoute: (editor: any) => React.FunctionComponentElement<react_router_dom.RouteProps>;
     getDefaultRoutesRaw: (...args: any[]) => {
         title: string;
@@ -348,7 +518,6 @@ declare var generic_menu_service: Readonly<{
     }[];
     getMenuFromApi: (state: any, setState: any, setMenuOptions: any) => void;
 }>;
-declare const googleLogo: "google_logo.svg";
 declare var history$1: Readonly<{
     __proto__: null;
     getLastUrl: () => string;
@@ -372,10 +541,9 @@ declare var logging_service: Readonly<{
 declare var logout_service: Readonly<{
     __proto__: null;
     currentUserSubject: BehaviorSubject<any>;
+    getCurrentUserFromLocalStorage: () => any;
     logout: typeof logout;
 }>;
-declare const madebyLogoEmblem: "madeby_logo_emblem.svg";
-declare const madebyLogoSquare: "madeby_logo_square.svg";
 declare var media: Readonly<{
     __proto__: null;
     getMediaTypeToRecord: () => {
@@ -396,7 +564,6 @@ declare var response_handlers_service: Readonly<{
     handleResponseText: typeof handleResponseText;
     usePlainFetch: false;
 }>;
-declare const spark: "spark.svg";
 declare var ui: Readonly<{
     __proto__: null;
     CopyButton: (_ref2: any) => React.FunctionComponentElement<{
@@ -416,7 +583,7 @@ declare var urlParams: Readonly<{
 }>;
 declare var wait_animation_utility: Readonly<{
     __proto__: null;
-    ShowHidePageAnimation: (showFlag: any, ...args: any[]) => void;
+    ShowHidePageAnimation: (showAnimation: any, ...args: any[]) => void;
     WaitAnimation: () => React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 }>;
 
@@ -472,4 +639,4 @@ declare function handleResponseText(response: any, text: any, headers: any): Pro
 };
 declare function getUrlParams(...args: any[]): {};
 
-export { About, AboutBody, App, GeneralConfig, GeneralConfig_EditorData, HomePage, LoginPage, ModalPopUp$1 as ModalPopUp, PrivateRoute$1 as PrivateRoute, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoEmblem, appLogoLandscape, appLogoSquare, arrowsRotateSolid, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, clip, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, googleLogo, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, madebyLogoEmblem, madebyLogoSquare, media, ramdomize, response_handlers_service as responseHandlersService, spark, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, LoginPage, ModalPopUp$1 as ModalPopUp, PrivateRoute$1 as PrivateRoute, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };

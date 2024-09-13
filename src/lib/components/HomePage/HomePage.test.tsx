@@ -16,23 +16,26 @@ for (let i = 0; i < mockJestObjects.length; i++) {
     jest.mock('../../' + mockJestObjects[i].codeFile, () => (mockObj));
 }
 
+const testComponentMap = {
+    "HomePage": () => (
+        <HomePage
+            appLogo={""}
+        >
+            <p>HomePage Children text 123</p>
+            <p>HomePage Children text 456</p>
+            <p>HomePage Children text 789</p>
+        </HomePage>
+    )
+}
+
 it("renders the HomePage component with the children text", () => {
     const mockFetchResponse = [{}];
     window.fetch = mockFetch(mockFetchResponse);
     const component = renderer.create(
         <MemoryRouter>
             <App
-                componentMap={{}}
-                appLogo={null}
-            >
-                <HomePage
-                    appLogo={""}
-                >
-                    <p>HomePage Children text 123</p>
-                    <p>HomePage Children text 456</p>
-                    <p>HomePage Children text 789</p>
-                </HomePage>
-            </App>
+                componentMap={testComponentMap}
+            />
         </MemoryRouter>
     );
     let tree = component.toJSON();

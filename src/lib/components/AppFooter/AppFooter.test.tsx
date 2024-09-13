@@ -1,20 +1,20 @@
-import React from "react";
+import React, { act } from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";
+import { AppFooter } from "./AppFooter";
 
-import { LoginPage } from "./LoginPage";
 
-describe("LoginPage", () => {
-    test("renders the LoginPage component", () =>
+describe("AppFooter", () => {
+    test("renders the AppFooter component", () =>
         React.act(() => {
             render(
                 <MemoryRouter>
                     <UserProvider>
                         <AppProvider>
-                            <LoginPage />
+                            <AppFooter />
                         </AppProvider>
                     </UserProvider>
                 </MemoryRouter>

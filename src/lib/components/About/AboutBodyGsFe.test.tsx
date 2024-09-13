@@ -4,6 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 // import { act } from "react-dom/test-utils";
 
 import { UserProvider } from "../../helpers/UserContext";
+import { AppProvider } from "../../helpers/AppContext";
 import { AboutBodyGsFe } from "./AboutBodyGsFe";
 
 
@@ -13,7 +14,9 @@ describe("AboutBodyGsFe", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <AboutBodyGsFe />
+                        <AppProvider>
+                            <AboutBodyGsFe />
+                        </AppProvider>
                     </UserProvider>
                 </MemoryRouter>
             );

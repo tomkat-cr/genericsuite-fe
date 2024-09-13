@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import { UserProvider } from "../../helpers/UserContext";
+import { AppProvider } from "../../helpers/AppContext";
 import { mockFetch } from '../../test-helpers/mock-fetch'
 
 import { GeneralConfig } from "./GeneralConfig";
@@ -15,7 +16,9 @@ describe("GeneralConfig", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <GeneralConfig />
+                        <AppProvider>
+                            <GeneralConfig />
+                        </AppProvider>
                     </UserProvider>
                 </MemoryRouter>
             );
