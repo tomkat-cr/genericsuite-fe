@@ -38,22 +38,36 @@ import {
 
 const debug = false;
 
-/* eslint no-eval: 0 */
-const jsPrefixToken = "|js|";
+const jsPrefixToken = /\|([^|]*)\|/;
 
 const getOnClickObject = (onClickString, setExpanded, componentMapping = {}) => {
     let resutlFunction = null;
-    if (onClickString === null) {
+    const windowOpenObjs = {
+        "about": {
+            "url": "about_body?menu=0",
+            "name": "AppAboutPopUp",
+            "options": "height=600,width=400",
+        },
+    }
+    if (!onClickString) {
         if (setExpanded) {
             resutlFunction = () => { setExpanded(); }
         }
     } else {
-        if (onClickString.startsWith(jsPrefixToken)) {
-            onClickString = onClickString.substring(jsPrefixToken.length);
-            if (setExpanded) {
-                resutlFunction = () => { setExpanded(); eval(onClickString); return window.location.href; };
-            } else {
-                resutlFunction = () => { eval(onClickString); return window.location.href };
+        if (onClickString.startsWith("|")) {
+            const match = onClickString.match(jsPrefixToken);
+            if (match) {
+                const woOptions = (typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null);
+                if (woOptions) {
+                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}/#/${woOptions.url}`, woOptions.name, woOptions.options));
+                    if (setExpanded) {
+                        resutlFunction = () => { setExpanded(); windowOpenFn(woOptions); return window.location.href; };
+                    } else {
+                        resutlFunction = () => { windowOpenFn(woOptions); return window.location.href };
+                    }
+                } else {
+                    resutlFunction = () => { alert(`ERROR: invalid onClick: ${onClickString}`); return window.location.href };
+                }
             }
         } else {
             if (setExpanded) {

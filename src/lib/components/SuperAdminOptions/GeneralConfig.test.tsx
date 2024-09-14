@@ -2,9 +2,10 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
+import { mockDefaultComponentMap, mockFetch } from '../../test-helpers/mock-fetch'
+
 import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";
-import { mockFetch } from '../../test-helpers/mock-fetch'
 
 import { GeneralConfig } from "./GeneralConfig";
 
@@ -16,7 +17,9 @@ describe("GeneralConfig", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <AppProvider>
+                        <AppProvider
+                            componentMap={mockDefaultComponentMap()}
+                        >
                             <GeneralConfig />
                         </AppProvider>
                     </UserProvider>

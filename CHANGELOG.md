@@ -46,6 +46,7 @@ Fix the %PUBLIC_URL% issue in public/index.html file running the app with webpac
 Bootstrap CSS is not longer used [GS-63].
 FontAwesome is not longer used [GS-115].
 SVG images removed and included in the "GsIcons" library [GS-115].
+Get rid of eval() in the GS FrontEnd [GS-127].
 
 
 ## 1.0.21 (2024-07-27)

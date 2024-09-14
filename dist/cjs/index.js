@@ -283,7 +283,8 @@ const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToo
 // export const APP_FORMPAGE_LEVEL2_DIV_CLASS = `${APP_LEVEL2_DIV_CLASS} p-2 appFormPageLevel2DivClass`;
 const APP_FORMPAGE_LABEL_CLASS = "font-medium text-gray-700 appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
-const APP_FORMPAGE_FORM_TABLE_CLASS = "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormTableClass";
+// export const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormButtonBarClass";
+const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
 const APP_FORMPAGE_FIELD_CLASS = "flex flex-col ".concat(FORM_GROUP_CLASS, " appFormPageFieldClass");
 const APP_FORMPAGE_FIELD_BASE_CLASS = "".concat(FORM_CONTROL_CLASS, " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass");
 const APP_FORMPAGE_FIELD_GOOD_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " appFormPageFieldGoodClass");
@@ -341,7 +342,7 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   APP_FORMPAGE_FIELD_CLASS: APP_FORMPAGE_FIELD_CLASS,
   APP_FORMPAGE_FIELD_GOOD_CLASS: APP_FORMPAGE_FIELD_GOOD_CLASS,
   APP_FORMPAGE_FIELD_INVALID_CLASS: APP_FORMPAGE_FIELD_INVALID_CLASS,
-  APP_FORMPAGE_FORM_TABLE_CLASS: APP_FORMPAGE_FORM_TABLE_CLASS,
+  APP_FORMPAGE_FORM_BUTTON_BAR_CLASS: APP_FORMPAGE_FORM_BUTTON_BAR_CLASS,
   APP_FORMPAGE_LABEL_CLASS: APP_FORMPAGE_LABEL_CLASS,
   APP_FORMPAGE_LABEL_REQUIRED_CLASS: APP_FORMPAGE_LABEL_REQUIRED_CLASS,
   APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS,
@@ -1098,6 +1099,7 @@ const GsIcons = _ref => {
 const AppContext = /*#__PURE__*/React.createContext();
 const AppProvider = _ref => {
   let {
+    componentMap,
     children
   } = _ref;
   const [state, setState] = React.useState("");
@@ -1106,7 +1108,7 @@ const AppProvider = _ref => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [expandedMenus, setExpandedMenus] = React.useState([]);
-  const theme = isDarkMode ? defaultTheme.dark : defaultTheme.light;
+  const theme = isDarkMode ? componentMap["defaultTheme"].dark : componentMap["defaultTheme"].light;
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const toggleSideMenu = () => setSideMenu(!sideMenu);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -3181,30 +3183,46 @@ const HomePage = _ref => {
 
 // GenericMenuService (GMS) main
 
-
-/* eslint no-eval: 0 */
-const jsPrefixToken = "|js|";
+const jsPrefixToken = /\|([^|]*)\|/;
 const getOnClickObject = function (onClickString, setExpanded) {
   let componentMapping = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   let resutlFunction = null;
-  if (onClickString === null) {
+  const windowOpenObjs = {
+    "about": {
+      "url": "about_body?menu=0",
+      "name": "AppAboutPopUp",
+      "options": "height=600,width=400"
+    }
+  };
+  if (!onClickString) {
     if (setExpanded) {
       resutlFunction = () => {
         setExpanded();
       };
     }
   } else {
-    if (onClickString.startsWith(jsPrefixToken)) {
-      onClickString = onClickString.substring(jsPrefixToken.length);
-      if (setExpanded) {
-        resutlFunction = () => {
-          setExpanded();
-          eval(onClickString);
-          return window.location.href;
-        };
+    if (onClickString.startsWith("|")) {
+      const match = onClickString.match(jsPrefixToken);
+      if (match) {
+        const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
+        if (woOptions) {
+          const windowOpenFn = woOptions => window.open("".concat(window.location.origin, "/#/").concat(woOptions.url), woOptions.name, woOptions.options);
+          if (setExpanded) {
+            resutlFunction = () => {
+              setExpanded();
+              windowOpenFn(woOptions);
+              return window.location.href;
+            };
+          } else {
+            resutlFunction = () => {
+              windowOpenFn(woOptions);
+              return window.location.href;
+            };
+          }
+        }
       } else {
         resutlFunction = () => {
-          eval(onClickString);
+          alert("ERROR: invalid onClick: ".concat(onClickString));
           return window.location.href;
         };
       }
@@ -4731,17 +4749,9 @@ const PutOneFormfield = _ref3 => {
     setFieldValue
   } = formik.useFormikContext();
   let currentObj = currentObjArray[1];
-
-  // const labelClass = "font-medium text-gray-700";
   const labelClass = APP_FORMPAGE_LABEL_CLASS;
-  // const labelClassRequiredFld = "font-medium text-red-700";
   const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
-  // const fieldClass = "flex flex-col form-group";
   const divFieldClass = APP_FORMPAGE_FIELD_CLASS;
-  // const fieldClass =
-  //     "form-control" +
-  //     (errors[currentObj.name] && touched[currentObj.name] ? " is-invalid" : "") +
-  //     " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
   const fieldClass = errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS;
   const readOnlyfield = editorFlags.isReadOnly || typeof currentObj.readonly !== "undefined" && currentObj.readonly;
   if (typeof currentObj.hidden !== "undefined" && currentObj.hidden) {
@@ -4765,23 +4775,23 @@ const PutOneFormfield = _ref3 => {
   const runCalculation = e => {
     for (const key in calcFields) {
       const formula = calcFields[key];
-      if (formula.includes(e.target.name)) {
-        const inputs = document.getElementsByName(key);
-        if (inputs.length > 0) {
-          // const input = inputs[0];
-          let calculatedValue = null;
-          try {
-            calculatedValue = eval(formula);
-          } catch (error) {
-            console.error('Error calculating value:', error);
-          }
-          if (!isNaN(calculatedValue)) {
-            setFieldValue(key, calculatedValue);
-          } else {
-            console.error('calculatedValue is:', calculatedValue);
-          }
+      // if (formula.includes(e.target.name)) {
+      const inputs = document.getElementsByName(key);
+      if (inputs.length > 0) {
+        let calculatedValue = null;
+        try {
+          // calculatedValue = eval(formula);
+          calculatedValue = formula(inputs);
+        } catch (error) {
+          console.error('Error calculating value:', error);
+        }
+        if (!isNaN(calculatedValue)) {
+          setFieldValue(key, calculatedValue);
+        } else {
+          console.error('calculatedValue is:', calculatedValue);
         }
       }
+      // }
     }
   };
   addCalculation(currentObj);
@@ -5142,26 +5152,22 @@ const EditFormFormikFinal = _ref5 => {
         touched: touched,
         initialValue: initialFieldValues[htmlElement[1].name]
       });
-    }), /*#__PURE__*/React.createElement("table", {
-      className: APP_FORMPAGE_FORM_TABLE_CLASS
-    }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, !editorFlags.isRead && canCommit && /*#__PURE__*/React.createElement("td", {
-      align: "left"
-    }, /*#__PURE__*/React.createElement("button", {
+    }), /*#__PURE__*/React.createElement("div", {
+      className: APP_FORMPAGE_FORM_BUTTON_BAR_CLASS
+    }, !editorFlags.isRead && canCommit && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
       key: "SubmitButton",
       type: "submit",
       className: BUTTON_PRIMARY_CLASS,
       disabled: isSubmitting
-    }, editorFlags.isCreate ? MSG_ACTION_CREATE : editorFlags.isDelete ? MSG_ACTION_DELETE : MSG_ACTION_UPDATE), isSubmitting && WaitAnimation()), /*#__PURE__*/React.createElement("td", {
-      align: "left"
-    }, /*#__PURE__*/React.createElement("button", {
+    }, editorFlags.isCreate ? MSG_ACTION_CREATE : editorFlags.isDelete ? MSG_ACTION_DELETE : MSG_ACTION_UPDATE), isSubmitting && WaitAnimation()), /*#__PURE__*/React.createElement("button", {
       key: "CancelButton",
       type: "button",
       className: BUTTON_SECONDARY_CLASS,
       disabled: isSubmitting,
       onClick: handleCancel
-    }, MSG_ACTION_CANCEL))))), status && /*#__PURE__*/React.createElement("div", {
+    }, MSG_ACTION_CANCEL)), status && /*#__PURE__*/React.createElement("div", {
       className: ERROR_MSG_CLASS
-    }, status), /*#__PURE__*/React.createElement("div", null));
+    }, status));
   });
 };
 const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
@@ -5810,7 +5816,7 @@ const ConvertToComponents = (editorDataObj, registry) => {
   });
 
   // Do the same for the rest of elements in fieldElements array
-  const fieldElementsArray = ['component', 'aux_component', 'select_elements', 'dataPopulator'];
+  const fieldElementsArray = ['component', 'aux_component', 'select_elements', 'dataPopulator', 'formula'];
   editorDataObj['fieldElements'] = editorDataObj['fieldElements'].map(fieldElement => {
     fieldElementsArray.forEach(element => {
       if (typeof fieldElement[element] !== 'undefined' && typeof fieldElement[element] === 'string') {
@@ -6642,8 +6648,21 @@ const GeneralConfig = () => /*#__PURE__*/React.createElement(GenericCrudEditor, 
   editorConfig: GeneralConfig_EditorData()
 });
 
-const AppFooter = () => {
-  return /*#__PURE__*/React.createElement("p", null, "\xA9 ", new Date().getFullYear(), " ", process.env.REACT_APP_APP_NAME, ". All rights reserved.");
+const AppFooter = _ref => {
+  let {
+    appName = null,
+    year = null,
+    url = null,
+    rights = null,
+    otherLine = null
+  } = _ref;
+  const appNameData = appName !== null && appName !== void 0 ? appName : process.env.REACT_APP_APP_NAME;
+  const yearData = year !== null && year !== void 0 ? year : new Date().getFullYear();
+  const rightsData = rights !== null && rights !== void 0 ? rights : "All rights reserved";
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, "\xA9 ", yearData, " ", url ? /*#__PURE__*/React.createElement("a", {
+    href: url,
+    target: "_blank"
+  }, appNameData) : appNameData, ". ", rightsData, "."), otherLine && /*#__PURE__*/React.createElement("p", null, otherLine));
 };
 
 function styleInject(css, ref) {
@@ -6686,7 +6705,8 @@ const defaultComponentMap = {
   "About": About,
   "AboutBody": AboutBody,
   "AppFooter": AboutBody,
-  "logout": logoutHander
+  "logout": logoutHander,
+  "defaultTheme": defaultTheme
 };
 const App = _ref => {
   let {
@@ -6694,8 +6714,11 @@ const App = _ref => {
     appLogo = "",
     appLogoHeader = ""
   } = _ref;
-  return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, null, /*#__PURE__*/React.createElement(AppMain, {
-    componentMap: componentMap,
+  const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+  return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
+    componentMap: componentMapFinal
+  }, /*#__PURE__*/React.createElement(AppMain, {
+    componentMap: componentMapFinal,
     appLogo: appLogo,
     appLogoHeader: appLogoHeader
   })));
@@ -6755,7 +6778,6 @@ const AppMain = _ref4 => {
   } = _ref4;
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
-  const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
   reactRouterDom.useLocation();
   const {
     currentUser
@@ -6789,38 +6811,38 @@ const AppMain = _ref4 => {
   return /*#__PURE__*/React.createElement(MainContainer, null, !showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, {
     appLogoHeader: appLogoHeader
   }, /*#__PURE__*/React.createElement(Navbar.TopCenterMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
-    componentMapping: componentMapFinal,
+    componentMapping: componentMap,
     itemType: sideMenu ? "side_menu" : "top_menu"
   }), sideMenu && isMobileMenuOpen && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
-    componentMapping: componentMapFinal,
+    componentMapping: componentMap,
     itemType: "hamburger",
     showContentOnly: showContentOnly,
     mobileMenuMode: true
   })), !sideMenu && /*#__PURE__*/React.createElement(TopRightMenu, {
-    componentMapping: componentMapFinal,
+    componentMapping: componentMap,
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(React.Fragment, null, !sideMenu && /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
-    componentMap: componentMapFinal,
+    componentMap: componentMap,
     showContentOnly: showContentOnly,
     appLogo: appLogo,
     appLogoHeader: appLogoHeader
   }), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, !showContentOnly && /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
-    componentMapping: componentMapFinal,
+    componentMapping: componentMap,
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
-    componentMap: componentMapFinal,
+    componentMap: componentMap,
     showContentOnly: showContentOnly,
     appLogo: appLogo,
     appLogoHeader: appLogoHeader
   })), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
-    componentMapping: componentMapFinal,
+    componentMapping: componentMap,
     itemType: "mobile_menu"
   }), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
-    componentMapping: componentMapFinal,
+    componentMapping: componentMap,
     itemType: "hamburger",
     showContentOnly: showContentOnly,
     mobileMenuMode: true

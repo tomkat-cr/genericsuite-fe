@@ -1,3 +1,5 @@
+import { defaultTheme } from "../constants/class_name_constants.jsx";
+
 export function mockFetch(data: any, headers: any = null) {
     if (!headers) {
         headers = {'Content-Type': 'application/json'};
@@ -58,5 +60,11 @@ export function mockAuthService() {
         }
       }}),
     }
+  };
+}
+
+export function mockDefaultComponentMap() {
+  return {
+    "defaultTheme": defaultTheme,
   };
 }

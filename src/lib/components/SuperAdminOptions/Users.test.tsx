@@ -2,10 +2,11 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
+import { mockAuthService, mockDefaultComponentMap, mockUserData } from '../../test-helpers/mock-fetch'
+
 import { Users } from "./Users";
 import { UserProvider } from "../../helpers/UserContext.jsx";
 import { AppProvider } from "../../helpers/AppContext";
-import { mockAuthService, mockUserData } from '../../test-helpers/mock-fetch'
 
 // To fix the error:
 // TypeError: Cannot read properties of null (reading 'id')
@@ -25,7 +26,9 @@ describe("Users", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <AppProvider>
+                        <AppProvider
+                            componentMap={mockDefaultComponentMap()}
+                        >
                             <Users />
                         </AppProvider>
                     </UserProvider>

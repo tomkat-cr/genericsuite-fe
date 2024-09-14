@@ -1,13 +1,13 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
-import { defaultTheme } from '../constants/class_name_constants.jsx';
+// import { defaultTheme } from '../constants/class_name_constants.jsx';
 import { console_debug_log } from '../services/logging.service.jsx';
 
 const debug = false
 
 const AppContext = createContext();
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ componentMap, children }) => {
     const [state, setState] = useState("");
     const [menuOptions, setMenuOptions] = useState(null);
     const [sideMenu, setSideMenu] = useState(false);
@@ -15,7 +15,7 @@ export const AppProvider = ({ children }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [expandedMenus, setExpandedMenus] = useState ([]);
 
-    const theme = isDarkMode ? defaultTheme.dark : defaultTheme.light;
+    const theme = isDarkMode ? componentMap["defaultTheme"].dark : componentMap["defaultTheme"].light;
 
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
     const toggleSideMenu = () => setSideMenu(!sideMenu);

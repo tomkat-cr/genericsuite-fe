@@ -6,7 +6,9 @@ import React from 'react';
 declare function About(): React.FunctionComponentElement<any>;
 declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 declare function App(_ref: any): React.FunctionComponentElement<any>;
-declare function AppFooter(): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+declare function AppFooter(_ref: any): React.FunctionComponentElement<{
+    children?: React.ReactNode | undefined;
+}>;
 declare function GeneralConfig(): React.FunctionComponentElement<any>;
 declare function GeneralConfig_EditorData(): any;
 declare function HomePage(_ref: any): React.FunctionComponentElement<{
@@ -113,7 +115,7 @@ declare var class_name_constants: Readonly<{
     APP_FORMPAGE_FIELD_CLASS: string;
     APP_FORMPAGE_FIELD_GOOD_CLASS: string;
     APP_FORMPAGE_FIELD_INVALID_CLASS: string;
-    APP_FORMPAGE_FORM_TABLE_CLASS: "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormTableClass";
+    APP_FORMPAGE_FORM_BUTTON_BAR_CLASS: "flex align-middle space-x-4 appFormPageFormButtonBarClass";
     APP_FORMPAGE_LABEL_CLASS: "font-medium text-gray-700 appFormPageLabelClass";
     APP_FORMPAGE_LABEL_REQUIRED_CLASS: "font-medium text-red-700 appFormPageLabelRequiredClass";
     APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: "align-middle flex appFormPageSpecialButtonDivClass";

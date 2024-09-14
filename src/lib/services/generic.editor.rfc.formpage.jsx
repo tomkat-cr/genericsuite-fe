@@ -1,8 +1,5 @@
 // GenericCrudEditor data form functions
 
-// To avoid the warning [eslint] eval can be harmful  no-eval
-/* eslint no-eval: 0 */
-
 import React, { useEffect, useState, useContext } from 'react';
 
 import { Formik, Field, Form, ErrorMessage, useFormikContext } from 'formik';
@@ -59,7 +56,7 @@ import {
     // APP_FORMPAGE_LEVEL1_DIV_CLASS,
     // APP_FORMPAGE_LEVEL2_DIV_CLASS,
     INVALID_FEEDBACK_CLASS,
-    APP_FORMPAGE_FORM_TABLE_CLASS,
+    APP_FORMPAGE_FORM_BUTTON_BAR_CLASS,
     APP_FORMPAGE_LABEL_CLASS,
     APP_FORMPAGE_LABEL_REQUIRED_CLASS,
     APP_FORMPAGE_FIELD_CLASS,
@@ -234,16 +231,9 @@ const PutOneFormfield = ({
 
     let currentObj = currentObjArray[1];
 
-    // const labelClass = "font-medium text-gray-700";
     const labelClass = APP_FORMPAGE_LABEL_CLASS;
-    // const labelClassRequiredFld = "font-medium text-red-700";
     const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
-    // const fieldClass = "flex flex-col form-group";
     const divFieldClass = APP_FORMPAGE_FIELD_CLASS;
-    // const fieldClass =
-    //     "form-control" +
-    //     (errors[currentObj.name] && touched[currentObj.name] ? " is-invalid" : "") +
-    //     " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
     const fieldClass = (errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS);
 
     const readOnlyfield =
@@ -282,13 +272,13 @@ const PutOneFormfield = ({
                 console_debug_log(`Formula: ${formula} `);
                 console_debug_log(`e.target.name: ${e.target.name} `);
             }
-            if (formula.includes(e.target.name)) {
+            // if (formula.includes(e.target.name)) {
                 const inputs = document.getElementsByName(key);
                 if (inputs.length > 0) {
-                    // const input = inputs[0];
                     let calculatedValue = null;
                     try {
-                        calculatedValue = eval(formula);
+                        // calculatedValue = eval(formula);
+                        calculatedValue = formula(inputs);
                     } catch (error) {
                         console.error('Error calculating value:', error);
                     }
@@ -297,17 +287,17 @@ const PutOneFormfield = ({
                     }
                     if (!isNaN(calculatedValue)) {
                         if (debug) {
-                            console_debug_log(`Antes de setFieldValue(${key}, ${calculatedValue})`);
+                            console_debug_log(`Before setFieldValue(${key}, ${calculatedValue})`);
                         }
                         setFieldValue(key, calculatedValue);
                         if (debug) {
-                            console_debug_log(`Despues de setFieldValue(${key}, ${calculatedValue})`);
+                            console_debug_log(`After setFieldValue(${key}, ${calculatedValue})`);
                         }
                     } else {
                         console.error('calculatedValue is:', calculatedValue);
                     }
                 }
-            }
+            // }
         }
     }
     
@@ -819,50 +809,43 @@ const EditFormFormikFinal = ({
                             initialValue={initialFieldValues[htmlElement[1].name]}
                         />
                     })}
-                    <table
-                        className={APP_FORMPAGE_FORM_TABLE_CLASS}
+                    <div
+                        className={APP_FORMPAGE_FORM_BUTTON_BAR_CLASS}
                     >
-                        <tbody>
-                            <tr>
-                                {!editorFlags.isRead && canCommit && (
-                                    <td align="left">
-                                        <button
-                                            key="SubmitButton"
-                                            type="submit"
-                                            className={BUTTON_PRIMARY_CLASS}
-                                            disabled={isSubmitting}
-                                        >
-                                            {editorFlags.isCreate
-                                                ? MSG_ACTION_CREATE
-                                                : editorFlags.isDelete
-                                                    ? MSG_ACTION_DELETE
-                                                    : MSG_ACTION_UPDATE}
-                                        </button>
-                                        {isSubmitting && (
-                                            WaitAnimation()
-                                        )}
-                                    </td>
+                        {!editorFlags.isRead && canCommit && (
+                            <>
+                                <button
+                                    key="SubmitButton"
+                                    type="submit"
+                                    className={BUTTON_PRIMARY_CLASS}
+                                    disabled={isSubmitting}
+                                >
+                                    {editorFlags.isCreate
+                                        ? MSG_ACTION_CREATE
+                                        : editorFlags.isDelete
+                                            ? MSG_ACTION_DELETE
+                                            : MSG_ACTION_UPDATE}
+                                </button>
+                                {isSubmitting && (
+                                    WaitAnimation()
                                 )}
-                                <td align="left">
-                                    <button
-                                        key="CancelButton"
-                                        type="button"
-                                        className={BUTTON_SECONDARY_CLASS}
-                                        disabled={isSubmitting}
-                                        onClick={handleCancel}
-                                    >
-                                        {MSG_ACTION_CANCEL}
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </>
+                        )}
+                        <button
+                            key="CancelButton"
+                            type="button"
+                            className={BUTTON_SECONDARY_CLASS}
+                            disabled={isSubmitting}
+                            onClick={handleCancel}
+                        >
+                            {MSG_ACTION_CANCEL}
+                        </button>
+                    </div>
                     {status &&
                         <div className={ERROR_MSG_CLASS}>
                             {status}
                         </div>
                     }
-                    <div />
                 </Form>
             )}
         </Formik>

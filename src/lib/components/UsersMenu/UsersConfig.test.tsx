@@ -7,9 +7,10 @@ import { MemoryRouter } from "react-router-dom";
 // $ npm install whatwg-fetch --save-dev
 import 'whatwg-fetch';
 
+import { mockDefaultComponentMap, mockFetch } from '../../test-helpers/mock-fetch'
+
 import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";
-import { mockFetch } from '../../test-helpers/mock-fetch'
 
 import { UsersConfigComponent } from "./UsersConfig";
 
@@ -21,7 +22,9 @@ describe("UsersConfigComponent", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <AppProvider>
+                        <AppProvider
+                            componentMap={mockDefaultComponentMap()}
+                        >
                             <UsersConfigComponent
                                 parentData={{}}
                             />

@@ -1,10 +1,12 @@
 import React, { act } from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-// import { act } from "react-dom/test-utils";
+
+import { mockDefaultComponentMap } from "../../test-helpers/mock-fetch";
 
 import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";
+
 import { AboutBodyGsFe } from "./AboutBodyGsFe";
 
 
@@ -14,7 +16,9 @@ describe("AboutBodyGsFe", () => {
             render(
                 <MemoryRouter>
                     <UserProvider>
-                        <AppProvider>
+                        <AppProvider
+                            componentMap={mockDefaultComponentMap()}
+                        >
                             <AboutBodyGsFe />
                         </AppProvider>
                     </UserProvider>

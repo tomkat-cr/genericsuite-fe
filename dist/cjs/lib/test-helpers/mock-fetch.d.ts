@@ -43,3 +43,27 @@ export declare function mockAuthService(): {
         }>;
     };
 };
+export declare function mockDefaultComponentMap(): {
+    defaultTheme: {
+        light: {
+            primary: string;
+            secondary: string;
+            text: string;
+            textHoverTop: string;
+            textHoverTopSubMenu: string;
+            textHoverSide: string;
+            background: string;
+            contentBg: string;
+        };
+        dark: {
+            primary: string;
+            secondary: string;
+            text: string;
+            textHoverTop: string;
+            textHoverTopSubMenu: string;
+            textHoverSide: string;
+            background: string;
+            contentBg: string;
+        };
+    };
+};

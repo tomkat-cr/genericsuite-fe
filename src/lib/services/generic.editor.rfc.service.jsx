@@ -660,6 +660,7 @@ export const ConvertToComponents = (editorDataObj, registry) => {
     'aux_component',
     'select_elements',
     'dataPopulator',
+    'formula',
   ];
   editorDataObj['fieldElements'] = editorDataObj['fieldElements'].map((fieldElement) => {
     fieldElementsArray.forEach(element => {

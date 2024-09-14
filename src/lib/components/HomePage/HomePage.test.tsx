@@ -18,9 +18,7 @@ for (let i = 0; i < mockJestObjects.length; i++) {
 
 const testComponentMap = {
     "HomePage": () => (
-        <HomePage
-            appLogo={""}
-        >
+        <HomePage>
             <p>HomePage Children text 123</p>
             <p>HomePage Children text 456</p>
             <p>HomePage Children text 789</p>
