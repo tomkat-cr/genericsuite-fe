@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext, useEffect } from 'react';
-import { Navigate, Route, Link, Routes, useLocation } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Buffer } from 'buffer';
 import { BehaviorSubject } from 'rxjs';
@@ -180,9 +180,9 @@ const INLINE_CLASS = 'inline inlineClass';
 
 // Buttons
 
-const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
 const BUTTON_SECONDARY_CLASS = "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+// export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 
 // Special buttons
 
@@ -199,7 +199,8 @@ const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDar
 
 const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
 const BUTTON_LISTING_DISABLED_CLASS = "".concat(BUTTON_LISTING_CLASS, " opacity-50 buttonListingDisabledClass");
-const BUTTON_LISTING_NEW_CLASS = "".concat(BUTTON_LISTING_CLASS, " ").concat(BUTTON_RIGHT_SPACE_CLASS, " ml-2 buttonListingNewClass");
+// export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2 buttonListingNewClass`;
+const BUTTON_LISTING_NEW_CLASS = "".concat(BUTTON_LISTING_CLASS, " buttonListingNewClass");
 const BUTTON_LISTING_REFRESH_CLASS = "".concat(BUTTON_LISTING_CLASS, " text-xs buttonListingRefreshClass");
 
 // General app section (GCE_RFC)
@@ -234,8 +235,8 @@ const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS = "p-2 appListingTableBodyTdBaseO
 const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS = "p-2 appListingTableBodyTdBaseEvenClass";
 const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " break-words appListingTableBodyTdOddClass");
 const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " break-words appListingTableBodyTdEvenClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsOddClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsEvenClass");
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass");
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass");
 
 // Listing page search box (GCE_RFC)
 
@@ -248,10 +249,10 @@ const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
-const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
 const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS = "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
-const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center 1-space-x-2 appListingToolbarPageNumSectionClass";
-const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm ml-2 mr-2 flex items-center appListingToolbarRowPerPageSectionClass";
+const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center appListingToolbarPageNumSectionClass";
+const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS = "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded border appListingToolbarRowPerPageInputClass";
 const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
@@ -367,7 +368,6 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   BUTTON_LISTING_NEW_CLASS: BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS: BUTTON_LISTING_REFRESH_CLASS,
   BUTTON_PRIMARY_CLASS: BUTTON_PRIMARY_CLASS,
-  BUTTON_RIGHT_SPACE_CLASS: BUTTON_RIGHT_SPACE_CLASS,
   BUTTON_SECONDARY_CLASS: BUTTON_SECONDARY_CLASS,
   CENTERED_BOX_CONTAINER_DIV_1_CLASS: CENTERED_BOX_CONTAINER_DIV_1_CLASS,
   CENTERED_BOX_CONTAINER_DIV_2_CLASS: CENTERED_BOX_CONTAINER_DIV_2_CLASS,
@@ -1075,12 +1075,22 @@ const GsIcons = _ref => {
   }
 };
 
+var IconsLib = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  GsIcons: GsIcons
+});
+
 const AppContext = /*#__PURE__*/createContext();
 const AppProvider = _ref => {
   let {
-    componentMap,
+    globalComponentMap,
+    globalAppLogo = "",
+    globalAppLogoHeader = "",
     children
   } = _ref;
+  const [appLogo, setAppLogo] = useState(globalAppLogo);
+  const [appLogoHeader, setAppLogoHeader] = useState(globalAppLogoHeader);
+  const [componentMap, setComponentMap] = useState(globalComponentMap);
   const [state, setState] = useState("");
   const [menuOptions, setMenuOptions] = useState(null);
   const [sideMenu, setSideMenu] = useState(false);
@@ -1125,6 +1135,12 @@ const AppProvider = _ref => {
   };
   return /*#__PURE__*/React.createElement(AppContext.Provider, {
     value: {
+      appLogo,
+      setAppLogo,
+      appLogoHeader,
+      setAppLogoHeader,
+      componentMap,
+      setComponentMap,
       state,
       setState,
       menuOptions,
@@ -1149,6 +1165,12 @@ const AppProvider = _ref => {
 const useAppContext = () => {
   return useContext(AppContext);
 };
+
+var AppContext$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  AppProvider: AppProvider,
+  useAppContext: useAppContext
+});
 
 const MainContainer = _ref => {
   let {
@@ -1324,8 +1346,7 @@ const NavbarMobileMenu = _ref11 => {
   const {
     theme,
     isMobileMenuOpen,
-    sideMenu,
-    toggleMobileMenu
+    sideMenu
   } = useAppContext();
   if (!isMobileMenuOpen || sideMenu) {
     return null;
@@ -1542,6 +1563,8 @@ const NavDropdownItem = _ref15 => {
 };
 NavDropdown.Item = NavDropdownItem;
 
+// Nav
+
 // export const Nav = ({ type, id, children }) => {
 //     /* Central Menu */
 //     const [visible, setVisible] = useState(false);
@@ -1600,7 +1623,7 @@ NavDropdown.Item = NavDropdownItem;
 //     );
 // }
 
-const NavLink = _ref17 => {
+const NavLink = _ref16 => {
   let {
     children,
     as,
@@ -1609,7 +1632,7 @@ const NavLink = _ref17 => {
     reloadDocument,
     type,
     mobileMenuMode
-  } = _ref17;
+  } = _ref16;
   const {
     theme
   } = useAppContext();
@@ -1640,6 +1663,64 @@ const NavLink = _ref17 => {
 const Nav = NavbarTopCenterMenu;
 Nav.Link = NavLink;
 
+// Buttons
+
+const ToggleSideBar = _ref17 => {
+  let {
+    onClick,
+    ...props
+  } = _ref17;
+  return /*#__PURE__*/React.createElement("div", _extends({
+    onClick: onClick
+  }, props), /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "vertical-slider"
+  }));
+};
+const GsButton = _ref18 => {
+  let {
+    variant = 'primary',
+    className = '',
+    as = null,
+    onClick = null,
+    type = null,
+    ...props
+  } = _ref18;
+  const variants = {
+    primary: BUTTON_PRIMARY_CLASS,
+    secondary: BUTTON_SECONDARY_CLASS
+  };
+  const variantStyle = variants[variant] || '';
+  if (as) {
+    // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
+    const As = as;
+    return /*#__PURE__*/React.createElement(As, _extends({
+      role: "button",
+      type: type !== null && type !== void 0 ? type : "button",
+      className: "".concat(variantStyle, " ").concat(className),
+      onClick: onClick !== null && onClick !== void 0 ? onClick : () => handleClick()
+    }, props));
+  }
+  return /*#__PURE__*/React.createElement("button", _extends({
+    type: type !== null && type !== void 0 ? type : "button",
+    className: "".concat(variantStyle, " ").concat(className),
+    onClick: onClick
+  }, props));
+};
+
+var NavLib = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  AppFooterContainer: AppFooterContainer,
+  AppSectionContainer: AppSectionContainer,
+  AppSectionContainerForSideMenu: AppSectionContainerForSideMenu,
+  CenteredBoxContainer: CenteredBoxContainer,
+  GsButton: GsButton,
+  MainContainer: MainContainer,
+  Nav: Nav,
+  NavDropdown: NavDropdown,
+  Navbar: Navbar,
+  ToggleSideBar: ToggleSideBar
+});
+
 const Button = _ref => {
   let {
     variant = 'primary',
@@ -1654,7 +1735,8 @@ const Button = _ref => {
     danger: MODALIB_BUTTON_DANGER_CLASS
   };
   const variantStyle = variants[variant] || variants.primary;
-  return /*#__PURE__*/React.createElement("button", _extends({
+  return /*#__PURE__*/React.createElement(GsButton, _extends({
+    variant: "",
     className: "".concat(baseStyle, " ").concat(variantStyle, " ").concat(className)
   }, props));
 };
@@ -2842,9 +2924,8 @@ function errorLoginAgain(errorMessage) {
   }
   if (forceLogin || MSG_ERROR_INVALID_TOKEN.includes(errorMessage)) {
     setLastUrl();
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button
-    // as={RouterLink}
-    , {
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
+      as: Link,
       to: getPrefix() + '/login',
       onClick: parentLogoutHandler
     }, MSG_ERROR_CLICK_TO_RELOGIN));
@@ -2939,6 +3020,12 @@ const useUser = () => {
   return useContext(UserContext);
 };
 
+var UserContext$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  UserProvider: UserProvider,
+  useUser: useUser
+});
+
 function getUrlParams() {
   let props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window;
   let urlParams = {};
@@ -3016,7 +3103,9 @@ const LoginPage = props => {
     registerUser,
     unRegisterUser
   } = useUser();
-  let appLogo = props.appLogo;
+  const {
+    appLogo
+  } = useAppContext();
   useEffect(() => {
     if (currentUser && performLogin) {
       unRegisterUser();
@@ -3163,8 +3252,11 @@ const HomePage = _ref => {
 // GenericMenuService (GMS) main
 
 const jsPrefixToken = /\|([^|]*)\|/;
-const getOnClickObject = function (onClickString, setExpanded) {
-  let componentMapping = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+const getOnClickObject = onClickString => {
+  const {
+    componentMap,
+    setExpanded
+  } = useAppContext();
   let resutlFunction = null;
   const windowOpenObjs = {
     "about": {
@@ -3198,20 +3290,20 @@ const getOnClickObject = function (onClickString, setExpanded) {
               return window.location.href;
             };
           }
+        } else {
+          resutlFunction = () => {
+            alert("ERROR: invalid onClick: ".concat(onClickString));
+            return window.location.href;
+          };
         }
-      } else {
-        resutlFunction = () => {
-          alert("ERROR: invalid onClick: ".concat(onClickString));
-          return window.location.href;
-        };
       }
     } else {
       if (setExpanded) {
         resutlFunction = () => {
-          setExpanded(componentMapping[onClickString]);
+          setExpanded(componentMap[onClickString]);
         };
       } else {
-        resutlFunction = componentMapping[onClickString];
+        resutlFunction = componentMap[onClickString];
       }
     }
   }
@@ -3221,19 +3313,17 @@ const GenericMenuBuilder = _ref => {
   let {
     icon,
     title,
-    componentMapping,
     itemType,
-    appLogo,
-    appLogoHeader,
     mobileMenuMode
   } = _ref;
   const {
     state,
     menuOptions,
-    setExpanded
+    setExpanded,
+    componentMap
   } = useAppContext();
   const getElementObj = item => {
-    const ElementObj = componentMapping[item.element];
+    const ElementObj = componentMap[item.element];
     if (typeof ElementObj === 'undefined') {
       return null;
     }
@@ -3252,7 +3342,7 @@ const GenericMenuBuilder = _ref => {
     if (!path) {
       path = "#";
     }
-    const on_click = getOnClickObject(defaultValue(item, "on_click", null), setExpanded, componentMapping);
+    const on_click = getOnClickObject(defaultValue(item, "on_click", null));
     const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
     return {
       "hard_prefix": hard_prefix,
@@ -3265,11 +3355,22 @@ const GenericMenuBuilder = _ref => {
     };
   };
   const getRoutes = () => {
-    const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo, appLogoHeader)];
+    {
+      console_debug_log("GenericMenuBuilder: getRoutes | menuOptions:", menuOptions, "componentMap:", componentMap);
+    }
+    const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw()];
+    {
+      console_debug_log("GenericMenuBuilder: getRoutes | menuOptionsFinal", menuOptionsFinal);
+    }
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Routes, {
       history: history
     }, menuOptionsFinal.map(item => {
       const itemDefs = getItemDefaults(item);
+      {
+        console_debug_log("getRoutes: item / itemDefs");
+        console_debug_log(item);
+        console_debug_log(itemDefs);
+      }
       if (item.type === "nav_link") {
         return /*#__PURE__*/React.createElement(Route, {
           key: itemDefs["title"],
@@ -3279,9 +3380,14 @@ const GenericMenuBuilder = _ref => {
       }
       return item.sub_menu_options.map(subItem => {
         const itemDefs = getItemDefaults(subItem);
+        {
+          console_debug_log("getRoutes - sub_menu_options: subItem / itemDefs");
+          console_debug_log(subItem);
+          console_debug_log(itemDefs);
+        }
         if (subItem.type === 'editor') {
           try {
-            return editorRoute(componentMapping[subItem.element]());
+            return editorRoute(componentMap[subItem.element]());
           } catch (error) {
             console_debug_log("[GMB-GR-E010] subItem.element: ".concat(subItem.element));
             console_debug_log(error);
@@ -3301,8 +3407,18 @@ const GenericMenuBuilder = _ref => {
     })));
   };
   const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
+    {
+      console_debug_log("GenericMenuBuilder: GetNavs | menuOptions / componentMap");
+      console_debug_log(menuOptions);
+      console_debug_log(componentMap);
+    }
     return menuOptions.filter(item => item.location === item_type_filter).map(item => {
       const itemDefs = getItemDefaults(item, topTitle);
+      {
+        console_debug_log("Nav & NavDropdown 1: subItem / itemDefs");
+        console_debug_log(item);
+        console_debug_log(itemDefs);
+      }
       if (item.type === "nav_link") {
         // Items in main menu, not belonging to any NavDropdown
         return /*#__PURE__*/React.createElement(Nav.Link, {
@@ -3328,9 +3444,14 @@ const GenericMenuBuilder = _ref => {
         mobileMenuMode: mobileMenuMode
       }, item.sub_menu_options.map(subItem => {
         const itemDefs = getItemDefaults(subItem);
+        {
+          console_debug_log("NavDropdown.Item 2: subItem / itemDefs");
+          console_debug_log(subItem);
+          console_debug_log(itemDefs);
+        }
         if (subItem.type === 'editor') {
           try {
-            return editorMenuOption(componentMapping[subItem.element](), setExpanded, itemType, mobileMenuMode);
+            return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode);
           } catch (error) {
             console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
             console_debug_log(error);
@@ -3361,16 +3482,10 @@ const GenericMenuBuilder = _ref => {
     return GetNavs(item_type_filter, topTitle, itemType, icon, mobileMenuMode);
   };
   if (state !== "" && itemType === "routes") {
-    return /*#__PURE__*/React.createElement(DefaultRoutes, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    });
+    return /*#__PURE__*/React.createElement(DefaultRoutes, null);
   }
   if (state !== "") {
-    return /*#__PURE__*/React.createElement(DefaultRoutes, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    });
+    return /*#__PURE__*/React.createElement(DefaultRoutes, null);
   }
   return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType, mobileMenuMode);
 };
@@ -3381,66 +3496,47 @@ const editorRoute = editor => {
     element: /*#__PURE__*/React.createElement(editor.component, null)
   });
 };
-const editorMenuOption = (editor, setExpanded, itemType, mobileMenuMode) => {
+const editorMenuOption = (editor, itemType, mobileMenuMode) => {
   return /*#__PURE__*/React.createElement(NavDropdown.Item, {
     key: editor.title,
     as: Link,
     to: getPrefix() + '/' + editor.baseUrl,
-    onClick: getOnClickObject(null, setExpanded),
+    onClick: getOnClickObject(null),
     type: itemType,
     mobileMenuMode: mobileMenuMode
   }, editor.title);
 };
-const getDefaultRoutesRaw = function () {
-  let appLogo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  let appLogoHeader = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+const getDefaultRoutesRaw = () => {
+  console_debug_log('getDefaultRoutesRaw');
   return [{
     title: 'homepage1',
     path: "/",
-    element_obj: /*#__PURE__*/React.createElement(HomePage, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    }),
+    element_obj: /*#__PURE__*/React.createElement(HomePage, null),
     type: "nav_link"
   }, {
     title: 'homepage2',
     path: getPrefix(true) + "/",
-    element_obj: /*#__PURE__*/React.createElement(HomePage, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    }),
+    element_obj: /*#__PURE__*/React.createElement(HomePage, null),
     type: "nav_link"
   }, {
     title: 'homepage3',
     path: getPrefix(true).replace('/#', '/') + "/",
-    element_obj: /*#__PURE__*/React.createElement(HomePage, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    }),
+    element_obj: /*#__PURE__*/React.createElement(HomePage, null),
     type: "nav_link"
   }, {
     title: 'loginpage1',
     path: "/login",
-    element_obj: /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    }),
+    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
     type: "nav_link"
   }, {
     title: 'loginpage2',
     path: getPrefix(true) + "/login",
-    element_obj: /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    }),
+    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
     type: "nav_link"
   }, {
     title: 'loginpage3',
     path: getPrefix(true).replace('/#', '/') + "/login",
-    element_obj: /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    }),
+    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
     type: "nav_link"
   }];
 };
@@ -3453,15 +3549,17 @@ const InvalidRouteRedirect = () => {
     role: "alert"
   }, "URL not found...");
 };
-const DefaultRoutes = _ref2 => {
-  let {
-    appLogo = null,
-    appLogoHeader = null
-  } = _ref2;
-  getPrefix(true).replace('/#', '/') + "/";
+const DefaultRoutes = () => {
+  const homePagePath3 = getPrefix(true).replace('/#', '/') + "/";
+  {
+    console_debug_log("DefaultRoutes | homePagePath3: ".concat(homePagePath3));
+  }
   return /*#__PURE__*/React.createElement(Routes, {
     history: history
-  }, getDefaultRoutesRaw(appLogo, appLogoHeader).map(item => {
+  }, getDefaultRoutesRaw().map(item => {
+    {
+      console_debug_log("DefaultRoutes: item:", item);
+    }
     return /*#__PURE__*/React.createElement(Route, {
       key: item["title"],
       path: item["path"],
@@ -3478,9 +3576,17 @@ const getMenuFromApi = (state, setState, setMenuOptions) => {
     url: endpoint
   });
   db.getAll().then(data => {
+    {
+      console_debug_log("getMenuFromApi: data");
+      console_debug_log(data);
+    }
     setMenuOptions(data.resultset);
   }, error => {
     error = formatCaughtError(error);
+    {
+      console_debug_log("getMenuFromApi: ERROR");
+      console_debug_log(error);
+    }
     if (!window.location.href.includes("/login")) {
       setState(error);
     }
@@ -4580,9 +4686,6 @@ var generic_editor_rfc_suggestion_dropdown = /*#__PURE__*/Object.freeze({
 
 // Search Engine button
 
-
-// import GoogleIcon from "../images/google_logo.svg";
-const googleIcon = "google_logo.svg";
 const SearchEngineButton = _ref => {
   let {
     valueElement,
@@ -4603,8 +4706,8 @@ const SearchEngineButton = _ref => {
     className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
   }, /*#__PURE__*/React.createElement("button", {
     onClick: handleGoogleClick
-  }, /*#__PURE__*/React.createElement("img", {
-    src: imageDirectory + googleIcon,
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "google-logo",
     alt: "Open Google Search"
   }))));
 };
@@ -5133,15 +5236,14 @@ const EditFormFormikFinal = _ref5 => {
       });
     }), /*#__PURE__*/React.createElement("div", {
       className: APP_FORMPAGE_FORM_BUTTON_BAR_CLASS
-    }, !editorFlags.isRead && canCommit && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    }, !editorFlags.isRead && canCommit && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GsButton, {
       key: "SubmitButton",
       type: "submit",
       className: BUTTON_PRIMARY_CLASS,
       disabled: isSubmitting
-    }, editorFlags.isCreate ? MSG_ACTION_CREATE : editorFlags.isDelete ? MSG_ACTION_DELETE : MSG_ACTION_UPDATE), isSubmitting && WaitAnimation()), /*#__PURE__*/React.createElement("button", {
+    }, editorFlags.isCreate ? MSG_ACTION_CREATE : editorFlags.isDelete ? MSG_ACTION_DELETE : MSG_ACTION_UPDATE), isSubmitting && WaitAnimation()), /*#__PURE__*/React.createElement(GsButton, {
       key: "CancelButton",
-      type: "button",
-      className: BUTTON_SECONDARY_CLASS,
+      variant: "secondary",
       disabled: isSubmitting,
       onClick: handleCancel
     }, MSG_ACTION_CANCEL)), status && /*#__PURE__*/React.createElement("div", {
@@ -5437,25 +5539,6 @@ var generic_editor_rfc_search = /*#__PURE__*/Object.freeze({
 
 // GenericCrudEditor (GCE) service main
 
-
-// fontawesome.library.add(
-//   faPlus,
-//   faEye,
-//   faEdit,
-//   faTrashAlt,
-//   faCheck,
-//   faList,
-//   // faArrowRight,
-//   // faRecycle,
-// );
-
-// 2024-08-11
-// tailwind and bootstrap together
-// https://stackoverflow.com/questions/62688037/can-use-both-tailwind-css-and-bootstrap-4-at-the-same-time
-// google: tailwind react bootstrap does not work
-// https://stackoverflow.com/questions/64557697/tailwindcss-not-working-in-create-react-app
-// import styles from "index.css"
-
 const debug$1 = false;
 const GenericCrudEditor = _ref => {
   let {
@@ -5728,14 +5811,18 @@ const GenericCrudEditorMain = props => {
     className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
   }, /*#__PURE__*/React.createElement("button", {
     key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_eye"),
-    onClick: () => handleView(rowId(row)),
-    className: "".concat(BUTTON_LISTING_CLASS, " ").concat(BUTTON_RIGHT_SPACE_CLASS)
+    onClick: () => handleView(rowId(row))
+    // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+    ,
+    className: "".concat(BUTTON_LISTING_CLASS)
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "eye"
   })), /*#__PURE__*/React.createElement("button", {
     key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_edit"),
-    onClick: () => handleModify(rowId(row)),
-    className: "".concat(BUTTON_LISTING_CLASS, " ").concat(BUTTON_RIGHT_SPACE_CLASS)
+    onClick: () => handleModify(rowId(row))
+    // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+    ,
+    className: "".concat(BUTTON_LISTING_CLASS)
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "edit"
   })), /*#__PURE__*/React.createElement("button", {
@@ -6644,36 +6731,6 @@ const AppFooter = _ref => {
   }, appNameData) : appNameData, ". ", rightsData, "."), otherLine && /*#__PURE__*/React.createElement("p", null, otherLine));
 };
 
-function styleInject(css, ref) {
-  if ( ref === void 0 ) ref = {};
-  var insertAt = ref.insertAt;
-
-  if (typeof document === 'undefined') { return; }
-
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
-
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
-    }
-  } else {
-    head.appendChild(style);
-  }
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-}
-
-var css_248z = ".fyn_jumbotron {\n    /* padding: 2rem 1rem;\n    margin-bottom: 2rem; */\n    background-color: #e9ecef;\n    border-radius: 0.3rem;\n    font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\";\n    font-size: 1rem;\n    font-weight: 400;\n    line-height: 1.5;\n}\n";
-styleInject(css_248z);
-
 const defaultComponentMap = {
   "Users_EditorData": Users_EditorData,
   "GeneralConfig_EditorData": GeneralConfig_EditorData,
@@ -6695,23 +6752,21 @@ const App = _ref => {
   } = _ref;
   const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
-    componentMap: componentMapFinal
-  }, /*#__PURE__*/React.createElement(AppMain, {
-    componentMap: componentMapFinal,
-    appLogo: appLogo,
-    appLogoHeader: appLogoHeader
-  })));
+    globalComponentMap: componentMapFinal,
+    globalAppLogo: appLogo,
+    globalAppLogoHeader: appLogoHeader
+  }, /*#__PURE__*/React.createElement(AppMain, null)));
 };
 const AppNavBar = _ref2 => {
   let {
-    children,
-    appLogoHeader = null
+    children
   } = _ref2;
   const {
     currentUser
   } = useUser();
   const {
-    setExpanded
+    setExpanded,
+    appLogoHeader
   } = useAppContext();
   const version = process.env.REACT_APP_VERSION;
   const appName = appLogoHeader ? /*#__PURE__*/React.createElement("img", {
@@ -6721,8 +6776,6 @@ const AppNavBar = _ref2 => {
   }) : process.env.REACT_APP_APP_NAME;
   return /*#__PURE__*/React.createElement(Navbar, {
     id: "navbar-main"
-    // collapseOnSelect
-    // expand="lg"
   }, /*#__PURE__*/React.createElement(Navbar.Brand, {
     as: Link,
     to: "/",
@@ -6735,7 +6788,6 @@ const AppNavBar = _ref2 => {
 };
 const TopRightMenu = _ref3 => {
   let {
-    componentMapping,
     showContentOnly
   } = _ref3;
   const {
@@ -6744,17 +6796,11 @@ const TopRightMenu = _ref3 => {
   return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     icon: "place-holder-circle",
     title: currentUser.firstName,
-    componentMapping: componentMapping,
     itemType: "hamburger",
     showContentOnly: showContentOnly
   }));
 };
-const AppMain = _ref4 => {
-  let {
-    componentMap = {},
-    appLogo = null,
-    appLogoHeader = null
-  } = _ref4;
+const AppMain = () => {
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
   useLocation();
@@ -6780,57 +6826,38 @@ const AppMain = _ref4 => {
     }
   }, [currentUser, state]);
   if (!currentUser) {
-    return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, {
-      appLogoHeader: appLogoHeader
-    }, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(LoginPage, {
-      appLogo: appLogo,
-      appLogoHeader: appLogoHeader
-    })), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+    return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(LoginPage, null)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
   }
-  return /*#__PURE__*/React.createElement(MainContainer, null, !showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, {
-    appLogoHeader: appLogoHeader
-  }, /*#__PURE__*/React.createElement(Navbar.TopCenterMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
-    componentMapping: componentMap,
+  return /*#__PURE__*/React.createElement(MainContainer, null, showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, null), !showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopCenterMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     itemType: sideMenu ? "side_menu" : "top_menu"
   }), sideMenu && isMobileMenuOpen && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
-    componentMapping: componentMap,
     itemType: "hamburger",
     showContentOnly: showContentOnly,
     mobileMenuMode: true
   })), !sideMenu && /*#__PURE__*/React.createElement(TopRightMenu, {
-    componentMapping: componentMap,
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(React.Fragment, null, !sideMenu && /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
-    componentMap: componentMap,
-    showContentOnly: showContentOnly,
-    appLogo: appLogo,
-    appLogoHeader: appLogoHeader
+    showContentOnly: showContentOnly
   }), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, !showContentOnly && /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
-    componentMapping: componentMap,
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
-    componentMap: componentMap,
-    showContentOnly: showContentOnly,
-    appLogo: appLogo,
-    appLogoHeader: appLogoHeader
+    showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
-    componentMapping: componentMap,
     itemType: "mobile_menu"
   }), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
-    componentMapping: componentMap,
     itemType: "hamburger",
     showContentOnly: showContentOnly,
     mobileMenuMode: true
   })), state !== '' && /*#__PURE__*/React.createElement(DefaultRoutes, null), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
-const CloseButton = _ref5 => {
+const CloseButton = _ref4 => {
   let {
     children
-  } = _ref5;
+  } = _ref4;
   return /*#__PURE__*/React.createElement(React.Fragment, null, children && /*#__PURE__*/React.createElement("div", {
     className: ALERT_DANGER_CLASS,
     role: "alert"
@@ -6840,14 +6867,11 @@ const CloseButton = _ref5 => {
     className: BUTTON_PRIMARY_CLASS
   }, "Close"));
 };
-const AppMainComponent = _ref6 => {
+const AppMainComponent = _ref5 => {
   let {
     stateHandler,
-    componentMap,
-    showContentOnly,
-    appLogo = null,
-    appLogoHeader = null
-  } = _ref6;
+    showContentOnly
+  } = _ref5;
   useLocation();
   const {
     state,
@@ -6863,10 +6887,7 @@ const AppMainComponent = _ref6 => {
     return WaitAnimation();
   }
   return /*#__PURE__*/React.createElement(GenericMenuBuilder, {
-    componentMapping: componentMap,
-    itemType: "routes",
-    appLogo: appLogo,
-    appLogoHeader: appLogoHeader
+    itemType: "routes"
   });
 };
 
@@ -7241,5 +7262,5 @@ var generic_editor_rfc_ui = /*#__PURE__*/Object.freeze({
 const appLogoCircle = 'app_logo_circle.svg';
 const appLogoLandscape = 'app_logo_landscape.svg';
 
-export { About, AboutBody, App, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, LoginPage, ModalPopUp$1 as ModalPopUp, PrivateRoute$1 as PrivateRoute, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };
 //# sourceMappingURL=index.js.map

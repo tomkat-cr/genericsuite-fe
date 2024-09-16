@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { useUser } from '../../helpers/UserContext.jsx';
+import { useAppContext } from '../../helpers/AppContext.jsx';
 
 import {
     authenticationService,
@@ -41,9 +42,9 @@ const defaultAppLogo = "app_logo_square.svg";
 export const LoginPage = (props) => {
     const [redirectUrl, setRedirectUrl] = useState(null);
     const [performLogin, setPerformLogin] = useState(false);
-    const { currentUser, registerUser, unRegisterUser } = useUser();
 
-    let appLogo = props.appLogo;
+    const { currentUser, registerUser, unRegisterUser } = useUser();
+    const { appLogo } = useAppContext();
 
     useEffect(() => {
         if (currentUser && performLogin) {

@@ -17,7 +17,7 @@ describe("AboutBodyGsFe", () => {
                 <MemoryRouter>
                     <UserProvider>
                         <AppProvider
-                            componentMap={mockDefaultComponentMap()}
+                            globalComponentMap={mockDefaultComponentMap()}
                         >
                             <AboutBodyGsFe />
                         </AppProvider>

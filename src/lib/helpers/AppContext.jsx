@@ -7,7 +7,10 @@ const debug = false
 
 const AppContext = createContext();
 
-export const AppProvider = ({ componentMap, children }) => {
+export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppLogoHeader = "", children }) => {
+    const [appLogo, setAppLogo] = useState(globalAppLogo);
+    const [appLogoHeader, setAppLogoHeader] = useState(globalAppLogoHeader);
+    const [componentMap, setComponentMap] = useState(globalComponentMap);
     const [state, setState] = useState("");
     const [menuOptions, setMenuOptions] = useState(null);
     const [sideMenu, setSideMenu] = useState(false);
@@ -65,6 +68,9 @@ export const AppProvider = ({ componentMap, children }) => {
 
     return (
         <AppContext.Provider value={{
+            appLogo, setAppLogo,
+            appLogoHeader, setAppLogoHeader,
+            componentMap, setComponentMap,
             state, setState,
             menuOptions, setMenuOptions,
             sideMenu, setSideMenu,

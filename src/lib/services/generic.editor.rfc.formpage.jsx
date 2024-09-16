@@ -24,6 +24,7 @@ import {
 import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
 import { useUser } from '../helpers/UserContext.jsx';
 import { useAppContext } from '../helpers/AppContext.jsx';
+import { GsButton } from '../helpers/NavLib.jsx';
 
 import {
     ACTION_CREATE,
@@ -814,7 +815,7 @@ const EditFormFormikFinal = ({
                     >
                         {!editorFlags.isRead && canCommit && (
                             <>
-                                <button
+                                <GsButton
                                     key="SubmitButton"
                                     type="submit"
                                     className={BUTTON_PRIMARY_CLASS}
@@ -825,21 +826,20 @@ const EditFormFormikFinal = ({
                                         : editorFlags.isDelete
                                             ? MSG_ACTION_DELETE
                                             : MSG_ACTION_UPDATE}
-                                </button>
+                                </GsButton>
                                 {isSubmitting && (
                                     WaitAnimation()
                                 )}
                             </>
                         )}
-                        <button
+                        <GsButton
                             key="CancelButton"
-                            type="button"
-                            className={BUTTON_SECONDARY_CLASS}
+                            variant="secondary"
                             disabled={isSubmitting}
                             onClick={handleCancel}
                         >
                             {MSG_ACTION_CANCEL}
-                        </button>
+                        </GsButton>
                     </div>
                     {status &&
                         <div className={ERROR_MSG_CLASS}>

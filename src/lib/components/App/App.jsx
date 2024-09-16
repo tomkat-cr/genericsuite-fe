@@ -50,7 +50,8 @@ import { About, AboutBody } from '../About/About.jsx';
 import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx';
 import { AppFooter } from '../AppFooter/AppFooter.jsx';
 
-import './App.css';
+// Component specific CSS:
+// import './App.css';
 
 // Not accepted this way:
 // import Container from 'react-bootstrap/Container';
@@ -103,21 +104,19 @@ export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
     return (
         <UserProvider>
             <AppProvider
-                componentMap={componentMapFinal}
+                globalComponentMap={componentMapFinal}
+                globalAppLogo={appLogo}
+                globalAppLogoHeader={appLogoHeader}
             >
-                <AppMain
-                    componentMap={componentMapFinal}
-                    appLogo={appLogo}
-                    appLogoHeader={appLogoHeader}
-                />
+                <AppMain/>
             </AppProvider>
         </UserProvider>
       );
 }
 
-const AppNavBar = ({ children, appLogoHeader = null }) => {
+const AppNavBar = ({ children }) => {
     const { currentUser } = useUser();
-    const { setExpanded } = useAppContext();
+    const { setExpanded, appLogoHeader } = useAppContext();
     const version = process.env.REACT_APP_VERSION;
     const appName = (
         appLogoHeader ? 
@@ -132,8 +131,6 @@ const AppNavBar = ({ children, appLogoHeader = null }) => {
     return (
         <Navbar
             id="navbar-main"
-            // collapseOnSelect
-            // expand="lg"
         >
             <Navbar.Brand
                 as={RouterLink}
@@ -154,7 +151,7 @@ const AppNavBar = ({ children, appLogoHeader = null }) => {
     );
 }
 
-const TopRightMenu = ({ componentMapping, showContentOnly }) => {
+const TopRightMenu = ({ showContentOnly }) => {
     const { currentUser } = useUser();
     return (
         <Navbar.TopRightMenu>
@@ -164,7 +161,6 @@ const TopRightMenu = ({ componentMapping, showContentOnly }) => {
             <GenericMenuBuilder
                 icon="place-holder-circle"
                 title={currentUser.firstName}
-                componentMapping={componentMapping}
                 itemType="hamburger"
                 showContentOnly={showContentOnly}
             />
@@ -172,7 +168,7 @@ const TopRightMenu = ({ componentMapping, showContentOnly }) => {
     );
 }
 
-const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
+const AppMain = () => {
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
 
@@ -188,7 +184,7 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
     } = useAppContext();
 
     if (debug) {
-        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMap:', componentMap, 'appLogo:', appLogo, 'appLogoHeader:', appLogoHeader);
+        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly);
     }
 
     const stateHandler = () => {
@@ -205,18 +201,13 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
     if (!currentUser) {
         return (
             <MainContainer>
-                <AppNavBar
-                    appLogoHeader={appLogoHeader}
-                >
+                <AppNavBar>
                     <Navbar.TopRightMenu>
                         <DarkModeButton/>
                     </Navbar.TopRightMenu>
                 </AppNavBar>
                 <AppSectionContainer>
-                    <LoginPage
-                        appLogo={appLogo}
-                        appLogoHeader={appLogoHeader}
-                    />
+                    <LoginPage/>
                 </AppSectionContainer>
                 <AppFooterContainer>
                     <AppFooter/>
@@ -227,19 +218,18 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
 
     return (
         <MainContainer>
+            {showContentOnly && (
+                <AppNavBar/>
+            )}
             {!showContentOnly && (
-                <AppNavBar
-                    appLogoHeader={appLogoHeader}
-                >
+                <AppNavBar>
                     <Navbar.TopCenterMenu>
                         <GenericMenuBuilder
-                            componentMapping={componentMap}
                             itemType={sideMenu ? "side_menu" : "top_menu"}
                         />
                         {sideMenu && isMobileMenuOpen && (
                             <GenericMenuBuilder
                                 title={currentUser.firstName}
-                                componentMapping={componentMap}
                                 itemType="hamburger"
                                 showContentOnly={showContentOnly}
                                 mobileMenuMode={true}
@@ -248,7 +238,6 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                     </Navbar.TopCenterMenu>
                     {!sideMenu && (
                         <TopRightMenu
-                            componentMapping={componentMap}
                             showContentOnly={showContentOnly}
                         />
                     )}
@@ -259,10 +248,7 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                     {!sideMenu && (
                         <AppMainComponent
                             stateHandler={stateHandler}
-                            componentMap={componentMap}
                             showContentOnly={showContentOnly}
-                            appLogo={appLogo}
-                            appLogoHeader={appLogoHeader}
                         />
                     )}
                     {sideMenu && (
@@ -270,7 +256,6 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                             {!showContentOnly && (
                                 <Navbar.TopForSideMenu>
                                     <TopRightMenu
-                                        componentMapping={componentMap}
                                         showContentOnly={showContentOnly}
                                     />
                                 </Navbar.TopForSideMenu>
@@ -278,10 +263,7 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
                             <AppSectionContainer.ForSideMenu>
                                 <AppMainComponent
                                     stateHandler={stateHandler}
-                                    componentMap={componentMap}
                                     showContentOnly={showContentOnly}
-                                    appLogo={appLogo}
-                                    appLogoHeader={appLogoHeader}
                                 />
                             </AppSectionContainer.ForSideMenu>
                             <AppFooterContainer>
@@ -293,12 +275,10 @@ const AppMain = ({componentMap = {}, appLogo = null, appLogoHeader = null}) => {
             </AppSectionContainer>
             <Navbar.MobileMenu>
                 <GenericMenuBuilder
-                    componentMapping={componentMap}
                     itemType="mobile_menu"
                 />
                 <GenericMenuBuilder
                     title={currentUser.firstName}
-                    componentMapping={componentMap}
                     itemType="hamburger"
                     showContentOnly={showContentOnly}
                     mobileMenuMode={true}
@@ -339,10 +319,7 @@ const CloseButton = ({children}) => {
 
 const AppMainComponent = ({
     stateHandler,
-    componentMap,
     showContentOnly,
-    appLogo = null,
-    appLogoHeader = null,
 }) => {
     const location = useLocation();
     if (debug) console_debug_log("AppMainComponent | location:", location);
@@ -366,10 +343,7 @@ const AppMainComponent = ({
     if (debug) console_debug_log("AppMainComponent | GenericMenuBuilder");
     return (
         <GenericMenuBuilder
-            componentMapping={componentMap}
             itemType="routes"
-            appLogo={appLogo}
-            appLogoHeader={appLogoHeader}
         />
     )
 }

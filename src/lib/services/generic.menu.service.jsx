@@ -24,23 +24,26 @@ import { HomePage } from '../components/HomePage/HomePage.jsx';
 // import Nav from 'react-bootstrap/Nav';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 
+// Not accepted this way neither:
 // const Nav = require('react-bootstrap').Nav;
 // const NavDropdown = require('react-bootstrap').NavDropdown;
 
 // 2024-08-11
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import NavDropdown from 'react-bootstrap/cjs/NavDropdown.js';
+
 import { Nav, NavDropdown } from '../helpers/NavLib.jsx';
 import { GsIcons } from '../helpers/IconsLib.jsx';
 import {
     ALERT_DANGER_CLASS,
 } from '../constants/class_name_constants.jsx';
 
-const debug = false;
+const debug = true;
 
 const jsPrefixToken = /\|([^|]*)\|/;
 
-const getOnClickObject = (onClickString, setExpanded, componentMapping = {}) => {
+const getOnClickObject = (onClickString) => {
+    const { componentMap, setExpanded } = useAppContext();
     let resutlFunction = null;
     const windowOpenObjs = {
         "about": {
@@ -71,9 +74,9 @@ const getOnClickObject = (onClickString, setExpanded, componentMapping = {}) => 
             }
         } else {
             if (setExpanded) {
-                resutlFunction = () => { setExpanded(componentMapping[onClickString]); };
+                resutlFunction = () => { setExpanded(componentMap[onClickString]); };
             } else {
-                resutlFunction = componentMapping[onClickString];
+                resutlFunction = componentMap[onClickString];
             }
         }
     }
@@ -84,17 +87,19 @@ export const GenericMenuBuilder = (
     {
         icon,
         title,
-        componentMapping,
         itemType,
-        appLogo,
-        appLogoHeader,
         mobileMenuMode,
     }
 ) => {
-    const { state, menuOptions, setExpanded } = useAppContext();
+    const {
+        state,
+        menuOptions,
+        setExpanded,
+        componentMap,
+    } = useAppContext();
 
     const getElementObj = (item) => {
-        const ElementObj = componentMapping[item.element];
+        const ElementObj = componentMap[item.element];
         if (typeof ElementObj === 'undefined') {
             return null;
         }
@@ -115,8 +120,6 @@ export const GenericMenuBuilder = (
         }
         const on_click = getOnClickObject(
             defaultValue(item, "on_click", null),
-            setExpanded,
-            componentMapping,
         );
         const title = (topTitle == null ? item.title : `[${topTitle}]`);
         return {
@@ -132,9 +135,9 @@ export const GenericMenuBuilder = (
 
     const getRoutes = () => {
         if (debug) {
-            console_debug_log("GenericMenuBuilder: getRoutes | menuOptions:", menuOptions, "componentMapping:", componentMapping);
+            console_debug_log("GenericMenuBuilder: getRoutes | menuOptions:", menuOptions, "componentMap:", componentMap);
         }
-        const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(appLogo, appLogoHeader)];
+        const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw()];
         if (debug) {
             console_debug_log("GenericMenuBuilder: getRoutes | menuOptionsFinal", menuOptionsFinal);
         }
@@ -164,7 +167,7 @@ export const GenericMenuBuilder = (
                             }    
                             if (subItem.type === 'editor') {
                                 try {
-                                    return editorRoute(componentMapping[subItem.element]());
+                                    return editorRoute(componentMap[subItem.element]());
                                 } catch (error) {
                                     console_debug_log(`[GMB-GR-E010] subItem.element: ${subItem.element}`);
                                     console_debug_log(error);
@@ -192,9 +195,9 @@ export const GenericMenuBuilder = (
 
     const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
         if (debug) {
-            console_debug_log("GenericMenuBuilder: GetNavs | menuOptions / componentMapping");
+            console_debug_log("GenericMenuBuilder: GetNavs | menuOptions / componentMap");
             console_debug_log(menuOptions);
-            console_debug_log(componentMapping);
+            console_debug_log(componentMap);
         }
         return (
             menuOptions
@@ -244,8 +247,7 @@ export const GenericMenuBuilder = (
                             if (subItem.type === 'editor') {
                                 try {
                                     return editorMenuOption(
-                                        componentMapping[subItem.element](),
-                                        setExpanded,
+                                        componentMap[subItem.element](),
                                         itemType,
                                         mobileMenuMode,
                                     );
@@ -290,19 +292,13 @@ export const GenericMenuBuilder = (
 
     if (state !== "" && itemType === "routes") {
         return (
-            <DefaultRoutes
-                appLogo={appLogo}
-                appLogoHeader={appLogoHeader}
-            />
+            <DefaultRoutes/>
         );
     }
 
     if (state !== "") {
         return (
-            <DefaultRoutes
-                appLogo={appLogo}
-                appLogoHeader={appLogoHeader}
-            />
+            <DefaultRoutes/>
         );
     }
     return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType, mobileMenuMode);
@@ -321,13 +317,13 @@ export const editorRoute = (editor) => {
     );
 }
 
-export const editorMenuOption = (editor, setExpanded, itemType, mobileMenuMode) => {
+export const editorMenuOption = (editor, itemType, mobileMenuMode) => {
     return (
         <NavDropdown.Item
             key={editor.title}
             as={RouterLink}
             to={getPrefix()+'/'+editor.baseUrl}
-            onClick={getOnClickObject(null, setExpanded)}
+            onClick={getOnClickObject(null)}
             type={itemType}
             mobileMenuMode={mobileMenuMode}
         >
@@ -336,43 +332,43 @@ export const editorMenuOption = (editor, setExpanded, itemType, mobileMenuMode) 
     );
 }
 
-export const getDefaultRoutesRaw = ( appLogo = null, appLogoHeader = null ) => {
+export const getDefaultRoutesRaw = () => {
     if (debug) console_debug_log('getDefaultRoutesRaw');
     return [
         {
             title: 'homepage1',
             path: "/",
-            element_obj: <HomePage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
+            element_obj: <HomePage/>,
             type: "nav_link",
         },
         {
             title: 'homepage2',
             path: getPrefix(true)+"/",
-            element_obj: <HomePage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
+            element_obj: <HomePage/>,
             type: "nav_link",
         },
         {
             title: 'homepage3',
             path: getPrefix(true).replace('/#', '/')+"/",
-            element_obj: <HomePage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
+            element_obj: <HomePage/>,
             type: "nav_link",
         },
         {
             title: 'loginpage1',
             path: "/login",
-            element_obj: <LoginPage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
+            element_obj: <LoginPage/>,
             type: "nav_link",
         },
         {
             title: 'loginpage2',
             path: getPrefix(true)+"/login",
-            element_obj: <LoginPage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
+            element_obj: <LoginPage/>,
             type: "nav_link",
         },
         {
             title: 'loginpage3',
             path: getPrefix(true).replace('/#', '/')+"/login",
-            element_obj: <LoginPage appLogo={appLogo} appLogoHeader={appLogoHeader}/>,
+            element_obj: <LoginPage/>,
             type: "nav_link",
         },
     ];
@@ -388,7 +384,7 @@ const InvalidRouteRedirect = () => {
     );
 }
 
-export const DefaultRoutes = ( { appLogo = null, appLogoHeader = null} ) => {
+export const DefaultRoutes = () => {
     const homePagePath3 = getPrefix(true).replace('/#', '/')+"/";
     if (debug) {
         console_debug_log(`DefaultRoutes | homePagePath3: ${homePagePath3}`)
@@ -396,7 +392,7 @@ export const DefaultRoutes = ( { appLogo = null, appLogoHeader = null} ) => {
     return (
         <Routes history={history}>
             {
-                getDefaultRoutesRaw(appLogo, appLogoHeader).map(item => {
+                getDefaultRoutesRaw().map(item => {
                     if (debug) {
                         console_debug_log("DefaultRoutes: item:", item);
                     }

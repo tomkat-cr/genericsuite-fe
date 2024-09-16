@@ -139,9 +139,9 @@ export const INLINE_CLASS = 'inline inlineClass';
 
 // Buttons
 
-export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 export const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
 export const BUTTON_SECONDARY_CLASS = "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+// export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 
 // Special buttons
 
@@ -160,7 +160,8 @@ export const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeBu
 
 export const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
 export const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
-export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2 buttonListingNewClass`;
+// export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2 buttonListingNewClass`;
+export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
 export const BUTTON_LISTING_REFRESH_CLASS=`${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
 
 // General app section (GCE_RFC)
@@ -196,8 +197,8 @@ export const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS="p-2 appListingTableBodyTd
 export const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS="p-2 appListingTableBodyTdBaseEvenClass";
 export const APP_LISTING_TABLE_BODY_TD_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words appListingTableBodyTdOddClass`;
 export const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words appListingTableBodyTdEvenClass`;
-export const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsOddClass`;
-export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm appListingTableBodyTdActionsEvenClass`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass`;
 
 // Listing page search box (GCE_RFC)
 
@@ -210,13 +211,13 @@ export const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS='ml-2 searchEngineButtonTopDivCl
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
-export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
 
 export const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS="text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
 
-export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS="text-sm flex items-center 1-space-x-2 appListingToolbarPageNumSectionClass";
+export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS="text-sm flex items-center appListingToolbarPageNumSectionClass";
 
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS="text-sm ml-2 mr-2 flex items-center appListingToolbarRowPerPageSectionClass";
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS="text-sm flex items-center appListingToolbarRowPerPageSectionClass";
 export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS="mr-2 text-sm appListingToolbarRowPerPageLabelClass";
 export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS="p-2 rounded border appListingToolbarRowPerPageInputClass";
 

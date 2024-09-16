@@ -27,7 +27,7 @@ describe("Users", () => {
                 <MemoryRouter>
                     <UserProvider>
                         <AppProvider
-                            componentMap={mockDefaultComponentMap()}
+                            globalComponentMap={mockDefaultComponentMap()}
                         >
                             <Users />
                         </AppProvider>

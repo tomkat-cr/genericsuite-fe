@@ -6,6 +6,11 @@ import React from 'react';
 declare function About(): React.FunctionComponentElement<any>;
 declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 declare function App(_ref: any): React.FunctionComponentElement<any>;
+declare var AppContext$1: Readonly<{
+    __proto__: null;
+    AppProvider: (_ref: any) => React.FunctionComponentElement<React.ProviderProps<any>>;
+    useAppContext: () => any;
+}>;
 declare function AppFooter(_ref: any): React.FunctionComponentElement<{
     children?: React.ReactNode | undefined;
 }>;
@@ -13,6 +18,17 @@ declare function GeneralConfig(): React.FunctionComponentElement<any>;
 declare function GeneralConfig_EditorData(): any;
 declare function HomePage(_ref: any): React.FunctionComponentElement<{
     children?: React.ReactNode | undefined;
+}>;
+declare var IconsLib: Readonly<{
+    __proto__: null;
+    GsIcons: (_ref: any) => React.ReactSVGElement | React.FunctionComponentElement<{
+        children?: React.ReactNode | undefined;
+    }> | React.DetailedReactHTMLElement<{
+        id: any;
+        alt: any;
+        className: string;
+        role: any;
+    }, HTMLElement>;
 }>;
 declare function LoginPage(props: any): React.FunctionComponentElement<{
     children?: React.ReactNode | undefined;
@@ -29,9 +45,84 @@ declare var ModalPopUp$1: Readonly<{
         children?: React.ReactNode | undefined;
     }>;
 }>;
+declare var NavLib: Readonly<{
+    __proto__: null;
+    AppFooterContainer: (_ref4: any) => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
+    AppSectionContainer: {
+        (_ref2: any): React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement>;
+        ForSideMenu: (_ref3: any) => React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement>;
+    };
+    AppSectionContainerForSideMenu: (_ref3: any) => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
+    CenteredBoxContainer: (_ref5: any) => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
+    GsButton: (_ref18: any) => React.CElement<any, React.Component<any, any, any>> | React.DetailedReactHTMLElement<any, HTMLElement>;
+    MainContainer: (_ref: any) => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
+    Nav: (_ref8: any) => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
+    NavDropdown: {
+        (_ref14: any): React.DetailedReactHTMLElement<{
+            className: any;
+        }, HTMLElement>;
+        Item: (_ref15: any) => React.DetailedReactHTMLElement<{
+            className: any;
+        }, HTMLElement>;
+    };
+    Navbar: {
+        (_ref6: any): React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement>;
+        Brand: (_ref7: any) => React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement> | React.CElement<{
+            to: any;
+            onClick: any;
+        }, React.Component<{
+            to: any;
+            onClick: any;
+        }, any, any>>;
+        TopCenterMenu: (_ref8: any) => React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement>;
+        TopRightMenu: (_ref9: any) => React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement>;
+        MobileMenu: (_ref11: any) => React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement> | null;
+        Toggle: () => React.DetailedReactHTMLElement<{
+            id: string;
+            onClick: any;
+            className: string;
+        }, HTMLElement>;
+        Text: (_ref12: any) => React.DetailedReactHTMLElement<{
+            className: any;
+        }, HTMLElement>;
+        TopForSideMenu: (_ref13: any) => React.DetailedReactHTMLElement<{
+            className: string;
+        }, HTMLElement>;
+    };
+    ToggleSideBar: (_ref17: any) => React.DetailedReactHTMLElement<any, HTMLElement>;
+}>;
 declare var PrivateRoute$1: Readonly<{
     __proto__: null;
     PrivateRoute: (_ref: any) => React.FunctionComponentElement<react_router_dom.RouteProps>;
+}>;
+declare var UserContext$1: Readonly<{
+    __proto__: null;
+    UserProvider: (_ref: any) => React.FunctionComponentElement<React.ProviderProps<any>>;
+    useUser: () => any;
 }>;
 declare function UserProfileEditor(props: any): React.FunctionComponentElement<{
     children?: React.ReactNode | undefined;
@@ -141,12 +232,12 @@ declare var class_name_constants: Readonly<{
     APP_LISTING_TABLE_HDR_TH_CLASS: "text-left p-2 appListingTableHdrThClass";
     APP_LISTING_TABLE_HDR_TR_CLASS: "border-b appListingTableHdrTrClass";
     APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS: "appListingTableHrdActionsColClass";
-    APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS: "text-sm flex items-center 1-space-x-2 appListingToolbarPageNumSectionClass";
+    APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS: "text-sm flex items-center appListingToolbarPageNumSectionClass";
     APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS: "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: "p-2 rounded border appListingToolbarRowPerPageInputClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS: "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
-    APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: "text-sm ml-2 mr-2 flex items-center appListingToolbarRowPerPageSectionClass";
-    APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex flex-col sm:flex-row items-center 1-justify-between mt-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+    APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
+    APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
     APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow p-4 appSectionContainerForSideMenuMainClass";
@@ -161,7 +252,6 @@ declare var class_name_constants: Readonly<{
     BUTTON_LISTING_NEW_CLASS: string;
     BUTTON_LISTING_REFRESH_CLASS: string;
     BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
-    BUTTON_RIGHT_SPACE_CLASS: "mr-2 buttonRightSpaceClass";
     BUTTON_SECONDARY_CLASS: "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
     CENTERED_BOX_CONTAINER_DIV_1_CLASS: "z-50 overflow-auto centeredBoxContainerDiv1Class";
     CENTERED_BOX_CONTAINER_DIV_2_CLASS: "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
@@ -508,11 +598,11 @@ declare var generic_editor_utilities: Readonly<{
 }>;
 declare var generic_menu_service: Readonly<{
     __proto__: null;
-    DefaultRoutes: (_ref2: any) => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    DefaultRoutes: () => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     GenericMenuBuilder: (_ref: any) => any;
-    editorMenuOption: (editor: any, setExpanded: any, itemType: any, mobileMenuMode: any) => React.FunctionComponentElement<any>;
+    editorMenuOption: (editor: any, itemType: any, mobileMenuMode: any) => React.FunctionComponentElement<any>;
     editorRoute: (editor: any) => React.FunctionComponentElement<react_router_dom.RouteProps>;
-    getDefaultRoutesRaw: (...args: any[]) => {
+    getDefaultRoutesRaw: () => {
         title: string;
         path: string;
         element_obj: React.FunctionComponentElement<any>;
@@ -641,4 +731,4 @@ declare function handleResponseText(response: any, text: any, headers: any): Pro
 };
 declare function getUrlParams(...args: any[]): {};
 
-export { About, AboutBody, App, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, LoginPage, ModalPopUp$1 as ModalPopUp, PrivateRoute$1 as PrivateRoute, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };

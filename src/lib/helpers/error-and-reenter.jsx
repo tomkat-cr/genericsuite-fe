@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Button } from 'react-bootstrap';
 import { Button } from './ModalLib.jsx';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -175,7 +174,7 @@ export function errorLoginAgain(
             <div>
                 <br/>
                 <Button
-                    // as={RouterLink}
+                    as={RouterLink}
                     to={getPrefix()+'/login'}
                     onClick={parentLogoutHandler}>{MSG_ERROR_CLICK_TO_RELOGIN}
                 </Button>

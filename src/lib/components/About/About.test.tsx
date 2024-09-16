@@ -16,7 +16,7 @@ it("renders the AboutBody component with the children text", () => {
     const component = renderer.create(
         <UserProvider>
             <AppProvider
-                componentMap={mockDefaultComponentMap()}
+                globalComponentMap={mockDefaultComponentMap()}
             >
                 <AboutBody>
                     <p>AboutBody Children text 123</p>

@@ -18,7 +18,7 @@ describe("GeneralConfig", () => {
                 <MemoryRouter>
                     <UserProvider>
                         <AppProvider
-                            componentMap={mockDefaultComponentMap()}
+                            globalComponentMap={mockDefaultComponentMap()}
                         >
                             <GeneralConfig />
                         </AppProvider>

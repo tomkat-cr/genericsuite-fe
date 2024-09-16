@@ -41,7 +41,7 @@ import {
 import {
   BUTTON_LISTING_CLASS,
   BUTTON_LISTING_DISABLED_CLASS,
-  BUTTON_RIGHT_SPACE_CLASS,
+  // BUTTON_RIGHT_SPACE_CLASS,
   BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS,
   BUTTON_COMPOSED_LABEL_CLASS,
@@ -94,24 +94,6 @@ import {
   MSG_ACTIONS,
   MSG_ROWS_PER_PAGE,
 } from "../constants/general_constants.jsx";
-
-// fontawesome.library.add(
-//   faPlus,
-//   faEye,
-//   faEdit,
-//   faTrashAlt,
-//   faCheck,
-//   faList,
-//   // faArrowRight,
-//   // faRecycle,
-// );
-
-// 2024-08-11
-// tailwind and bootstrap together
-// https://stackoverflow.com/questions/62688037/can-use-both-tailwind-css-and-bootstrap-4-at-the-same-time
-// google: tailwind react bootstrap does not work
-// https://stackoverflow.com/questions/64557697/tailwindcss-not-working-in-create-react-app
-// import styles from "index.css"
 
 const debug = false;
 
@@ -553,14 +535,16 @@ const GenericCrudEditorMain = (props) => {
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_eye`}
                             onClick={() => handleView(rowId(row))}
-                            className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+                            // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+                            className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons icon="eye" />
                           </button>
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
                             onClick={() => handleModify(rowId(row))}
-                            className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+                            // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
+                            className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons icon="edit" />
                           </button>

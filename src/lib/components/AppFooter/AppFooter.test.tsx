@@ -16,7 +16,7 @@ describe("AppFooter", () => {
                 <MemoryRouter>
                     <UserProvider>
                         <AppProvider
-                            componentMap={mockDefaultComponentMap()}
+                            globalComponentMap={mockDefaultComponentMap()}
                         >
                             <AppFooter />
                         </AppProvider>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { console_debug_log } from '../services/logging.service.jsx';
-
+import { CenteredBoxContainer, GsButton } from './NavLib.jsx';
 import {
     POPUP_TOP_MARGIN_CLASS,
     MODALIB_BUTTON_BASESTYLE_CLASS,
@@ -14,7 +14,6 @@ import {
     MODALIB_MODAL_BODY_CLASS,
     MODALIB_MODAL_FOOTER_CLASS,
 } from '../constants/class_name_constants.jsx';
-import { CenteredBoxContainer } from './NavLib.jsx';
 
 // Modal
 
@@ -30,11 +29,10 @@ export const Button = ({ variant = 'primary', className = '', ...props }) => {
         success: MODALIB_BUTTON_SUCCESS_CLASS,
         danger: MODALIB_BUTTON_DANGER_CLASS,
     };
-
     const variantStyle = variants[variant] || variants.primary;
-
     return (
-        <button
+        <GsButton
+            variant=""
             className={`${baseStyle} ${variantStyle} ${className}`}
             {...props}
         />

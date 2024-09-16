@@ -67,6 +67,8 @@ import {
     CENTERED_BOX_CONTAINER_DIV_3_CLASS,
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS,
     CENTERED_BOX_CONTAINER_DIV_2_CLASS,
+    BUTTON_PRIMARY_CLASS,
+    BUTTON_SECONDARY_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { GsIcons } from './IconsLib.jsx';
 import { useAppContext } from './AppContext.jsx';
@@ -284,7 +286,7 @@ const MobileMenuCloseButton = ({ className }) => {
 const NavbarMobileMenu = ({ children }) => {
     /* Mobile menu */
     if (debug) console_debug_log("||||| NavbarMobileMenu", children);
-    const { theme, isMobileMenuOpen, sideMenu, toggleMobileMenu } = useAppContext();
+    const { theme, isMobileMenuOpen, sideMenu } = useAppContext();
     if (!isMobileMenuOpen || sideMenu) {
         return null;
     }
@@ -546,16 +548,6 @@ NavDropdown.Item = NavDropdownItem;
 
 // Nav
 
-export const ToggleSideBar = ({ onClick }) => {
-    return (
-        <div
-            onClick={onClick}
-        >
-            <GsIcons icon='vertical-slider' />
-        </div>
-    );
-}
-
 // export const Nav = ({ type, id, children }) => {
 //     /* Central Menu */
 //     const [visible, setVisible] = useState(false);
@@ -652,3 +644,47 @@ const NavLink = ({ children, as, to, onClick, reloadDocument, type, mobileMenuMo
 
 export const Nav = NavbarTopCenterMenu;
 Nav.Link = NavLink;
+
+// Buttons
+
+
+export const ToggleSideBar = ({ onClick, ...props }) => {
+    return (
+        <div
+            onClick={onClick}
+            {...props}
+        >
+            <GsIcons icon='vertical-slider' />
+        </div>
+    );
+}
+
+export const GsButton = ({ variant = 'primary', className = '', as = null, onClick = null, type = null, ...props }) => {
+    if (debug) console_debug_log(`||||| GsButton | variant: ${variant} | className: ${className}`, 'props:', props);
+    const variants = {
+        primary: BUTTON_PRIMARY_CLASS,
+        secondary: BUTTON_SECONDARY_CLASS,
+    };
+    const variantStyle = variants[variant] || '';
+    if (as) {
+        // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
+        const As = as;
+        return (
+            <As
+                role="button"
+                type={type ?? "button"}
+                className={`${variantStyle} ${className}`}
+                onClick={onClick ?? (() => handleClick())}
+                {...props}
+            />
+        );
+    }
+    return (
+        <button
+            type={type ?? "button"}
+            className={`${variantStyle} ${className}`}
+            onClick={onClick}
+            {...props}
+        />
+    );
+};

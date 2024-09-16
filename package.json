@@ -30,20 +30,12 @@
   },
   "homepage": "https://genericsuite.carlosjramirez.com/Frontend-Development/GenericSuite-Core/",
   "keywords": [
+    "genericsuite",
     "generic-crud",
     "menu-builder",
     "security-builder",
     "react",
-    "reactjs",
-    "react-bootstrap",
-    "react-hooks",
-    "jwt",
-    "jwt-token",
-    "jwt-authentication",
-    "express",
-    "express-js",
-    "webpack",
-    "formik"
+    "reactjs"
   ],
   "scripts": {
     "start": "node server.js",

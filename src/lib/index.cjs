@@ -25,6 +25,10 @@ import * as ModalPopUp from './helpers/ModalPopUp.jsx';
 import * as PrivateRoute from './helpers/PrivateRoute.jsx';
 import * as ui from './helpers/ui.jsx';
 import * as urlParams from './helpers/url-params.jsx';
+import * as IconsLib from './helpers/IconsLib.jsx';
+import * as UserContext from './helpers/UserContext.jsx';
+import * as AppContext from './helpers/AppContext.jsx';
+import * as NavLib from './helpers/NavLib.jsx';
 // Services
 import * as authenticationService from './services/authentication.service.jsx';
 import * as blobFilesUtilities from './services/blob.files.utilities.jsx';
@@ -87,6 +91,10 @@ export {
     PrivateRoute,
     ui,
     urlParams,
+    IconsLib,
+    UserContext,
+    AppContext,
+    NavLib,
     // Services
     authenticationService,
     blobFilesUtilities,

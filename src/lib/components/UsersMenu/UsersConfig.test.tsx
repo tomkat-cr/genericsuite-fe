@@ -23,7 +23,7 @@ describe("UsersConfigComponent", () => {
                 <MemoryRouter>
                     <UserProvider>
                         <AppProvider
-                            componentMap={mockDefaultComponentMap()}
+                            globalComponentMap={mockDefaultComponentMap()}
                         >
                             <UsersConfigComponent
                                 parentData={{}}

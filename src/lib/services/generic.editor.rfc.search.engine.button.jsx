@@ -5,12 +5,16 @@ import React from 'react';
 import { 
     console_debug_log,
 } from "./logging.service.jsx";
-import { imageDirectory } from '../constants/general_constants.jsx';
 
 import { SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS } from '../constants/class_name_constants.jsx';
+import { GsIcons } from '../helpers/IconsLib.jsx';
 
+// Does not work:
 // import GoogleIcon from "../images/google_logo.svg";
-const googleIcon = "google_logo.svg";
+
+// Does work to use external image:
+// import { imageDirectory } from '../constants/general_constants.jsx';
+// const googleIcon = "google_logo.svg";
 
 const debug = false;
 
@@ -45,7 +49,11 @@ export const SearchEngineButton = ({
                     onClick={handleGoogleClick}
                 >
                     {/* <GoogleIcon alt="Open Google Search" /> */}
-                    <img src={imageDirectory + googleIcon} alt="Open Google Search" />
+                    {/* <img src={imageDirectory + googleIcon} alt="Open Google Search" /> */}
+                    <GsIcons
+                        icon="google-logo"
+                        alt="Open Google Search"
+                    />
                 </button>
             </div>
         </>
