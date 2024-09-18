@@ -36,14 +36,14 @@ import { Nav, NavDropdown } from '../helpers/NavLib.jsx';
 import { GsIcons } from '../helpers/IconsLib.jsx';
 import {
     ALERT_DANGER_CLASS,
+    NAV_LINK_ICON_CLASS,
 } from '../constants/class_name_constants.jsx';
 
-const debug = true;
+const debug = false;
 
 const jsPrefixToken = /\|([^|]*)\|/;
 
-const getOnClickObject = (onClickString) => {
-    const { componentMap, setExpanded } = useAppContext();
+const getOnClickObject = (onClickString, componentMap, setExpanded) => {
     let resutlFunction = null;
     const windowOpenObjs = {
         "about": {
@@ -120,6 +120,7 @@ export const GenericMenuBuilder = (
         }
         const on_click = getOnClickObject(
             defaultValue(item, "on_click", null),
+            componentMap, setExpanded
         );
         const title = (topTitle == null ? item.title : `[${topTitle}]`);
         return {
@@ -221,7 +222,7 @@ export const GenericMenuBuilder = (
                             type={itemType}
                             mobileMenuMode={mobileMenuMode}
                         >
-                            {icon ? <GsIcons icon={icon} />: itemDefs["title"]}
+                            {icon ? <GsIcons icon={icon ?? ''} size="2xl" className={NAV_LINK_ICON_CLASS} />: itemDefs["title"]}
                         </Nav.Link>
                     );
                 }
@@ -250,6 +251,7 @@ export const GenericMenuBuilder = (
                                         componentMap[subItem.element](),
                                         itemType,
                                         mobileMenuMode,
+                                        componentMap, setExpanded
                                     );
                                 } catch (error) {
                                     console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
@@ -317,13 +319,13 @@ export const editorRoute = (editor) => {
     );
 }
 
-export const editorMenuOption = (editor, itemType, mobileMenuMode) => {
+export const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap, setExpanded) => {
     return (
         <NavDropdown.Item
             key={editor.title}
             as={RouterLink}
             to={getPrefix()+'/'+editor.baseUrl}
-            onClick={getOnClickObject(null)}
+            onClick={getOnClickObject(null, componentMap, setExpanded)}
             type={itemType}
             mobileMenuMode={mobileMenuMode}
         >

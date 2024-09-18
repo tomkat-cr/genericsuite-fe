@@ -79,6 +79,7 @@ export const DarkModeButton = () => {
                     { /* Light button */ }
                     <GsIcons
                         icon="sun"
+                        size="xl"
                         className={DARK_MODE_BUTTON_SVG_CLASS}
                     />
                 </span>
@@ -88,6 +89,7 @@ export const DarkModeButton = () => {
                     { /* Dark button */ }
                     <GsIcons
                         icon="moon"
+                        size="xl"
                         className={DARK_MODE_BUTTON_SVG_CLASS}
                     />
                 </span>

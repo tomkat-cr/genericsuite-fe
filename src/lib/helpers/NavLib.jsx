@@ -69,6 +69,7 @@ import {
     CENTERED_BOX_CONTAINER_DIV_2_CLASS,
     BUTTON_PRIMARY_CLASS,
     BUTTON_SECONDARY_CLASS,
+    NAV_LINK_ICON_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { GsIcons } from './IconsLib.jsx';
 import { useAppContext } from './AppContext.jsx';
@@ -277,6 +278,7 @@ const MobileMenuCloseButton = ({ className }) => {
         >
             <GsIcons
                 icon='x'
+                size="sm"
                 className={NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS}
             />
         </button>
@@ -326,6 +328,7 @@ const NavbarToggle = () => {
         >
             <GsIcons
                 icon="menu-hamburger"
+                size="xl"
                 className={NAVBAR_TOGGLE_IMAGE_CLASS}
             />
         </button>
@@ -462,7 +465,7 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
                 type="button"
                 onClick={toggledropDownOpen}
             >
-                {(icon ? <GsIcons icon={icon} /> : title)}
+                {(icon ? <GsIcons icon={icon ?? ''} size="2xl" className={NAV_LINK_ICON_CLASS} /> : title)}
                 <GsIcons
                     id={`${fullId}_submenu_image`}
                     icon={directionImage}

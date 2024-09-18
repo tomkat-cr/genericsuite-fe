@@ -1,9 +1,116 @@
 // IconsLib
 import React from 'react';
 
-export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', className='', role="img" }) => {
-    const currentWidth = (width ?? "14");
-    const currentHeight = (height ?? "14");
+import { ROUNDED_ICON_CLASS } from '../constants/class_name_constants.jsx';
+
+export const GsIcons = ({ icon, size = null, width = null, height = null, alt = '', id = '', className='', role="img" }) => {
+
+/*
+Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
+expected one of ["2xs","xs","sm","lg","xl","2xl","1x","2x","3x","4x","5x","6x","7x","8x","9x","10x"].
+
+Reference::
+https://docs.fontawesome.com/web/style/size
+
+Relative Sizing Class	Font Size	Equivalent in Pixels
+fa-2xs	0.625em	10px
+fa-xs	0.75em	12px
+fa-sm	0.875em	14px
+fa-lg	1.25em	20px
+fa-xl	1.5em	24px
+fa-2xl	2em	    32px
+
+Literal Sizing Class	Font Size	Equivalent in Pixels
+fa-1x	1em     16px
+fa-2x	2em     32px
+fa-3x	3em     48px
+fa-4x	4em     64px
+fa-5x	5em     80px
+fa-6x	6em     96px
+fa-7x	7em     112px
+fa-8x	8em     128px
+fa-9x	9em     144px
+fa-10x	10em    160px
+*/
+    const sizeData = {
+        "2xs": {
+            "width": "10",
+            "height": "10",
+        },
+        "xs": {
+            "width": "12",
+            "height": "12",
+        },
+        "sm": {
+            "width": "14",
+            "height": "14",
+        },
+        "lg": {
+            "width": "20",
+            "height": "20",
+        },
+        "xl": {
+            "width": "24",
+            "height": "24",
+        },
+        "2xl": {
+            "width": "32",
+            "height": "32",
+        },
+        "1x": {
+            "width": "16",
+            "height": "16",
+        },
+        "2x": {
+            "width": "32",
+            "height": "32",
+        },
+        "3x": {
+            "width": "48",
+            "height": "48",
+        },
+        "4x": {
+            "width": "64",
+            "height": "64",
+        },
+        "5x": {
+            "width": "80",
+            "height": "80",
+        },
+        "6x": {
+            "width": "96",
+            "height": "96",
+        },
+        "7x": {
+            "width": "112",
+            "height": "112",
+        },
+        "8x": {
+            "width": "128",
+            "height": "128",
+        },
+        "9x": {
+            "width": "14",
+            "height": "14",
+        },
+        "10x": {
+            "width": "160",
+            "height": "160",
+        },
+    }
+
+    size = (size ?? 'sm');
+    if (typeof sizeData[size] === "undefined") {
+        console.error(`Invalid "size" *${size}*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x`)
+        return (
+            <>
+                {`Invalid "size" *${size}*`}
+            </>
+        );
+    }
+
+    const currentWidth = (sizeData[size].width);
+    const currentHeight = (sizeData[size].height);
 
     switch (icon.toLowerCase()) {
 
@@ -12,11 +119,11 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                 <svg
                     id={id}
                     alt={alt}
+                    // 2024-09-17
                     width={width ?? "6"}
                     height={height ?? "3"}
-                    className={"ml-2 overflow-visible" + className ?? ''}
+                    className={"ml-2 overflow-visible" + (className ?? '')}
                     role={role}
-                    // aria-hidden="true"
                 >
                     <path
                         d="M0 0L3 3L6 0"
@@ -35,11 +142,11 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
+                    // 2024-09-17
                     width={width ?? "3"}
                     height={height ?? "6"}
-                    className={"ml-2 overflow-visible" + className ?? ''}
+                    className={"ml-2 overflow-visible" + (className ?? '')}
                     role={role}
-                    // aria-hidden="true"
                 >
                     <path
                         d="M0 0L3 3L0 6"
@@ -186,9 +293,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={width ?? "14"}
-                    height={height ?? "14"}
-                    className={className ?? 'h-4 w-4'}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className ?? ''}
                     role={role}
                     viewBox="0 0 24 24"
                     fill="none"
@@ -207,9 +314,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={width ?? "14"}
-                    height={height ?? "14"}
-                    className={className ?? 'h-4 w-4'}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className ?? ''}
                     role={role}
                     viewBox="0 0 24 24"
                     fill="none"
@@ -258,9 +365,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={width ?? "24"}
-                    height={height ?? "24"}
-                    className={"h-6 w-6" + className ?? ''}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className ?? ''}
                     role={role}
                     viewBox="0 0 24 24"
                     fill="none"
@@ -290,9 +397,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={width ?? "24"}
-                    height={height ?? "24"}
-                    className={"h-6 w-6" + className ?? ''}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className ?? ''}
                     role={role}
                     viewBox="0 0 24 24"
                     fill="none"
@@ -311,15 +418,15 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={width ?? "32"}
-                    height={height ?? "32"}
-                    className={"w-8 h-8 rounded-full" + className ?? ''}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={ROUNDED_ICON_CLASS + (className ?? '')}
                     role={role}
                     fill="none"
                 >
                     <rect
-                        width={width ?? "32"}
-                        height={height ?? "32"}
+                        width={currentWidth}
+                        height={currentHeight}
                         fill="#EAEAEA"
                         rx="3"
                     >
@@ -372,9 +479,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={currentWidth ?? '24'}
-                    height={currentHeight ?? '24'}
-                    className={className ?? "h-4 w-4"}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className ?? ""}
                     role={role}
                     viewBox="0 0 24 24"
                     fill="none"
@@ -393,7 +500,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    className={"w-6 h-6" + className ?? ''}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className}
                     role={role}
                     viewBox="0 0 24 24"
                 >
@@ -406,7 +515,6 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                         rx="2"
                         ry="2"
                         fill="none"
-                        // className="stroke-black dark:stroke-white"
                         className="stroke-white"
                         strokeMiterlimit="10"
                         strokeWidth="2"
@@ -417,7 +525,6 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                         x2="9"
                         y2="3"
                         fill="none"
-                        // className="stroke-black dark:stroke-white"
                         className="stroke-white"
                         strokeMiterlimit="10"
                         strokeWidth="2"
@@ -453,8 +560,8 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={width ?? "24"}
-                    height={height ?? "24"}
+                    width={currentWidth}
+                    height={currentHeight}
                     className={"h-6 w-6" + className ?? ''}
                     role={role}
                     viewBox="0 0 24 24"
@@ -477,11 +584,6 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     width={currentWidth}
                     height={currentHeight}
                     className={className ?? ''}
-                    // aria-hidden="true"
-                    // focusable="false"
-                    // data-prefix="fas"
-                    // data-icon="trash"
-                    // class="svg-inline--fa fa-trash "
                     role={role}
                     viewBox="0 0 448 512"
                 >
@@ -498,7 +600,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    className={"w-6 h-6" + className ?? ''}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className}
                     role={role}
                     viewBox="0 0 24 24"
                     fill="none"
@@ -545,9 +649,9 @@ export const GsIcons = ({ icon, width = null, height = null, alt = '', id = '', 
                     xmlns="http://www.w3.org/2000/svg"
                     id={id}
                     alt={alt}
-                    width={width ?? "24"}
-                    height={height ?? "24"}
-                    className={"h-6 w-6" + className ?? ''}
+                    width={currentWidth}
+                    height={currentHeight}
+                    className={className}
                     role={role}
                     viewBox="0 0 24 24"
                     fill="none"

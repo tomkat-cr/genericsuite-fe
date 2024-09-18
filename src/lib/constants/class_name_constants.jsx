@@ -81,6 +81,9 @@ export const NAV_LINK_BUTTON_HAMBURGER_CLASS = "block py-1 navLinkButtonsHamburg
 export const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded navLinkButtonsSideMenuClass";
 export const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
 
+export const NAV_LINK_ICON_CLASS = "w-8 h-8 navLinkIconClass"
+export const ROUNDED_ICON_CLASS = "rounded-full roundedIconClass"
+
 export const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
 export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
 export const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";

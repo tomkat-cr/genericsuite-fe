@@ -111,13 +111,19 @@ export const MenuModeButton = () => {
                     className={!sideMenu ? HIDDEN_CLASS : INLINE_CLASS}
                 >
                     { /* Side menu button */ }
-                    <GsIcons icon='side-menu'/>
+                    <GsIcons
+                        icon='side-menu'
+                        size="xl"
+                    />
                 </span>
                 <span
                     className={sideMenu ? HIDDEN_CLASS : INLINE_CLASS}
                 >
                     { /* Top menu button */ }
-                    <GsIcons icon='top-menu'/>
+                    <GsIcons
+                        icon='top-menu'
+                        size="xl"
+                    />
                 </span>
             </button>
         </div>

@@ -117,7 +117,9 @@ export const CrudEditorSearch = ({
                 className={APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS}
                 onClick={handleSubmit}
             >
-                <GsIcons icon="search" />
+                <GsIcons
+                    icon="search"
+                />
             </button>
             {searchText !== '' &&
                 <button

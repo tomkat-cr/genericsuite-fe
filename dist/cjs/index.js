@@ -150,6 +150,8 @@ const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navLinkBut
 const NAV_LINK_BUTTON_HAMBURGER_CLASS = "block py-1 navLinkButtonsHamburgerClass";
 const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded navLinkButtonsSideMenuClass";
 const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
+const NAV_LINK_ICON_CLASS = "w-8 h-8 navLinkIconClass";
+const ROUNDED_ICON_CLASS = "rounded-full roundedIconClass";
 const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
 const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
 const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
@@ -474,11 +476,13 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   NAV_LINK_BUTTON_MOBILE_MENU_CLASS: NAV_LINK_BUTTON_MOBILE_MENU_CLASS,
   NAV_LINK_BUTTON_SIDE_MENU_CLASS: NAV_LINK_BUTTON_SIDE_MENU_CLASS,
   NAV_LINK_BUTTON_TOP_MENU_CLASS: NAV_LINK_BUTTON_TOP_MENU_CLASS,
+  NAV_LINK_ICON_CLASS: NAV_LINK_ICON_CLASS,
   NAV_LINK_TOP_DIV_HAMBURGER_CLASS: NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
   NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
   NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
   NAV_LINK_TOP_DIV_TOP_MENU_CLASS: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
   POPUP_TOP_MARGIN_CLASS: POPUP_TOP_MARGIN_CLASS,
+  ROUNDED_ICON_CLASS: ROUNDED_ICON_CLASS,
   SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS,
   SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS,
   SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS,
@@ -491,9 +495,10 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
 
 // IconsLib
 const GsIcons = _ref => {
-  var _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9, _ref10, _ref11;
+  var _size, _ref2, _ref3;
   let {
     icon,
+    size = null,
     width = null,
     height = null,
     alt = '',
@@ -501,18 +506,117 @@ const GsIcons = _ref => {
     className = '',
     role = "img"
   } = _ref;
-  const currentWidth = width !== null && width !== void 0 ? width : "14";
-  const currentHeight = height !== null && height !== void 0 ? height : "14";
+  /*
+  Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
+  expected one of ["2xs","xs","sm","lg","xl","2xl","1x","2x","3x","4x","5x","6x","7x","8x","9x","10x"].
+  
+  Reference::
+  https://docs.fontawesome.com/web/style/size
+  
+  Relative Sizing Class	Font Size	Equivalent in Pixels
+  fa-2xs	0.625em	10px
+  fa-xs	0.75em	12px
+  fa-sm	0.875em	14px
+  fa-lg	1.25em	20px
+  fa-xl	1.5em	24px
+  fa-2xl	2em	    32px
+  
+  Literal Sizing Class	Font Size	Equivalent in Pixels
+  fa-1x	1em     16px
+  fa-2x	2em     32px
+  fa-3x	3em     48px
+  fa-4x	4em     64px
+  fa-5x	5em     80px
+  fa-6x	6em     96px
+  fa-7x	7em     112px
+  fa-8x	8em     128px
+  fa-9x	9em     144px
+  fa-10x	10em    160px
+  */
+  const sizeData = {
+    "2xs": {
+      "width": "10",
+      "height": "10"
+    },
+    "xs": {
+      "width": "12",
+      "height": "12"
+    },
+    "sm": {
+      "width": "14",
+      "height": "14"
+    },
+    "lg": {
+      "width": "20",
+      "height": "20"
+    },
+    "xl": {
+      "width": "24",
+      "height": "24"
+    },
+    "2xl": {
+      "width": "32",
+      "height": "32"
+    },
+    "1x": {
+      "width": "16",
+      "height": "16"
+    },
+    "2x": {
+      "width": "32",
+      "height": "32"
+    },
+    "3x": {
+      "width": "48",
+      "height": "48"
+    },
+    "4x": {
+      "width": "64",
+      "height": "64"
+    },
+    "5x": {
+      "width": "80",
+      "height": "80"
+    },
+    "6x": {
+      "width": "96",
+      "height": "96"
+    },
+    "7x": {
+      "width": "112",
+      "height": "112"
+    },
+    "8x": {
+      "width": "128",
+      "height": "128"
+    },
+    "9x": {
+      "width": "14",
+      "height": "14"
+    },
+    "10x": {
+      "width": "160",
+      "height": "160"
+    }
+  };
+  size = (_size = size) !== null && _size !== void 0 ? _size : 'sm';
+  if (typeof sizeData[size] === "undefined") {
+    console.error("Invalid \"size\" *".concat(size, "*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x"));
+    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid \"size\" *".concat(size, "*"));
+  }
+  const currentWidth = sizeData[size].width;
+  const currentHeight = sizeData[size].height;
   switch (icon.toLowerCase()) {
     case 'arrow-down-small':
       return /*#__PURE__*/React.createElement("svg", {
         id: id,
-        alt: alt,
+        alt: alt
+        // 2024-09-17
+        ,
         width: width !== null && width !== void 0 ? width : "6",
         height: height !== null && height !== void 0 ? height : "3",
-        className: (_ref2 = "ml-2 overflow-visible" + className) !== null && _ref2 !== void 0 ? _ref2 : '',
+        className: "ml-2 overflow-visible" + (className !== null && className !== void 0 ? className : ''),
         role: role
-        // aria-hidden="true"
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L6 0",
         fill: "none",
@@ -524,12 +628,13 @@ const GsIcons = _ref => {
       return /*#__PURE__*/React.createElement("svg", {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
-        alt: alt,
+        alt: alt
+        // 2024-09-17
+        ,
         width: width !== null && width !== void 0 ? width : "3",
         height: height !== null && height !== void 0 ? height : "6",
-        className: (_ref3 = "ml-2 overflow-visible" + className) !== null && _ref3 !== void 0 ? _ref3 : '',
+        className: "ml-2 overflow-visible" + (className !== null && className !== void 0 ? className : ''),
         role: role
-        // aria-hidden="true"
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L0 6",
         fill: "none",
@@ -633,9 +738,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: width !== null && width !== void 0 ? width : "14",
-        height: height !== null && height !== void 0 ? height : "14",
-        className: className !== null && className !== void 0 ? className : 'h-4 w-4',
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
         role: role,
         viewBox: "0 0 24 24",
         fill: "none",
@@ -651,9 +756,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: width !== null && width !== void 0 ? width : "14",
-        height: height !== null && height !== void 0 ? height : "14",
-        className: className !== null && className !== void 0 ? className : 'h-4 w-4',
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
         role: role,
         viewBox: "0 0 24 24",
         fill: "none",
@@ -701,9 +806,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: width !== null && width !== void 0 ? width : "24",
-        height: height !== null && height !== void 0 ? height : "24",
-        className: (_ref4 = "h-6 w-6" + className) !== null && _ref4 !== void 0 ? _ref4 : '',
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
         role: role,
         viewBox: "0 0 24 24",
         fill: "none",
@@ -732,9 +837,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: width !== null && width !== void 0 ? width : "24",
-        height: height !== null && height !== void 0 ? height : "24",
-        className: (_ref5 = "h-6 w-6" + className) !== null && _ref5 !== void 0 ? _ref5 : '',
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : '',
         role: role,
         viewBox: "0 0 24 24",
         fill: "none",
@@ -750,14 +855,14 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: width !== null && width !== void 0 ? width : "32",
-        height: height !== null && height !== void 0 ? height : "32",
-        className: (_ref6 = "w-8 h-8 rounded-full" + className) !== null && _ref6 !== void 0 ? _ref6 : '',
+        width: currentWidth,
+        height: currentHeight,
+        className: ROUNDED_ICON_CLASS + (className !== null && className !== void 0 ? className : ''),
         role: role,
         fill: "none"
       }, /*#__PURE__*/React.createElement("rect", {
-        width: width !== null && width !== void 0 ? width : "32",
-        height: height !== null && height !== void 0 ? height : "32",
+        width: currentWidth,
+        height: currentHeight,
         fill: "#EAEAEA",
         rx: "3"
       }, /*#__PURE__*/React.createElement("g", {
@@ -907,9 +1012,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: currentWidth !== null && currentWidth !== void 0 ? currentWidth : '24',
-        height: currentHeight !== null && currentHeight !== void 0 ? currentHeight : '24',
-        className: className !== null && className !== void 0 ? className : "h-4 w-4",
+        width: currentWidth,
+        height: currentHeight,
+        className: className !== null && className !== void 0 ? className : "",
         role: role,
         viewBox: "0 0 24 24",
         fill: "none",
@@ -929,7 +1034,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        className: (_ref7 = "w-6 h-6" + className) !== null && _ref7 !== void 0 ? _ref7 : '',
+        width: currentWidth,
+        height: currentHeight,
+        className: className,
         role: role,
         viewBox: "0 0 24 24"
       }, /*#__PURE__*/React.createElement("rect", {
@@ -940,9 +1047,7 @@ const GsIcons = _ref => {
         height: "18",
         rx: "2",
         ry: "2",
-        fill: "none"
-        // className="stroke-black dark:stroke-white"
-        ,
+        fill: "none",
         className: "stroke-white",
         strokeMiterlimit: "10",
         strokeWidth: "2"
@@ -951,9 +1056,7 @@ const GsIcons = _ref => {
         y1: "21",
         x2: "9",
         y2: "3",
-        fill: "none"
-        // className="stroke-black dark:stroke-white"
-        ,
+        fill: "none",
         className: "stroke-white",
         strokeMiterlimit: "10",
         strokeWidth: "2"
@@ -980,9 +1083,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: width !== null && width !== void 0 ? width : "24",
-        height: height !== null && height !== void 0 ? height : "24",
-        className: (_ref8 = "h-6 w-6" + className) !== null && _ref8 !== void 0 ? _ref8 : '',
+        width: currentWidth,
+        height: currentHeight,
+        className: (_ref2 = "h-6 w-6" + className) !== null && _ref2 !== void 0 ? _ref2 : '',
         role: role,
         viewBox: "0 0 24 24",
         fill: "none",
@@ -1018,13 +1121,7 @@ const GsIcons = _ref => {
         alt: alt,
         width: currentWidth,
         height: currentHeight,
-        className: className !== null && className !== void 0 ? className : ''
-        // aria-hidden="true"
-        // focusable="false"
-        // data-prefix="fas"
-        // data-icon="trash"
-        // class="svg-inline--fa fa-trash "
-        ,
+        className: className !== null && className !== void 0 ? className : '',
         role: role,
         viewBox: "0 0 448 512"
       }, /*#__PURE__*/React.createElement("path", {
@@ -1036,7 +1133,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        className: (_ref9 = "w-6 h-6" + className) !== null && _ref9 !== void 0 ? _ref9 : '',
+        width: currentWidth,
+        height: currentHeight,
+        className: className,
         role: role,
         viewBox: "0 0 24 24",
         fill: "none"
@@ -1068,7 +1167,7 @@ const GsIcons = _ref => {
       return /*#__PURE__*/React.createElement("div", {
         id: id,
         alt: alt,
-        className: (_ref10 = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2" + className) !== null && _ref10 !== void 0 ? _ref10 : '',
+        className: (_ref3 = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2" + className) !== null && _ref3 !== void 0 ? _ref3 : '',
         role: role
       });
     case 'x':
@@ -1076,9 +1175,9 @@ const GsIcons = _ref => {
         xmlns: "http://www.w3.org/2000/svg",
         id: id,
         alt: alt,
-        width: width !== null && width !== void 0 ? width : "24",
-        height: height !== null && height !== void 0 ? height : "24",
-        className: (_ref11 = "h-6 w-6" + className) !== null && _ref11 !== void 0 ? _ref11 : '',
+        width: currentWidth,
+        height: currentHeight,
+        className: className,
         role: role,
         viewBox: "0 0 24 24",
         fill: "none",
@@ -1357,6 +1456,7 @@ const MobileMenuCloseButton = _ref10 => {
     className: className !== null && className !== void 0 ? className : '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "x",
+    size: "sm",
     className: NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS
   }));
 };
@@ -1394,6 +1494,7 @@ const NavbarToggle = () => {
     className: NAVBAR_TOGGLE_BUTTON_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "menu-hamburger",
+    size: "xl",
     className: NAVBAR_TOGGLE_IMAGE_CLASS
   }));
 };
@@ -1520,7 +1621,9 @@ const NavDropdown = _ref14 => {
     type: "button",
     onClick: toggledropDownOpen
   }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-    icon: icon
+    icon: icon !== null && icon !== void 0 ? icon : '',
+    size: "2xl",
+    className: NAV_LINK_ICON_CLASS
   }) : title, /*#__PURE__*/React.createElement(GsIcons, {
     id: "".concat(fullId, "_submenu_image"),
     icon: directionImage,
@@ -3273,11 +3376,7 @@ const HomePage = _ref => {
 // GenericMenuService (GMS) main
 
 const jsPrefixToken = /\|([^|]*)\|/;
-const getOnClickObject = onClickString => {
-  const {
-    componentMap,
-    setExpanded
-  } = useAppContext();
+const getOnClickObject = (onClickString, componentMap, setExpanded) => {
   let resutlFunction = null;
   const windowOpenObjs = {
     "about": {
@@ -3363,7 +3462,7 @@ const GenericMenuBuilder = _ref => {
     if (!path) {
       path = "#";
     }
-    const on_click = getOnClickObject(defaultValue(item, "on_click", null));
+    const on_click = getOnClickObject(defaultValue(item, "on_click", null), componentMap, setExpanded);
     const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
     return {
       "hard_prefix": hard_prefix,
@@ -3376,22 +3475,11 @@ const GenericMenuBuilder = _ref => {
     };
   };
   const getRoutes = () => {
-    {
-      console_debug_log("GenericMenuBuilder: getRoutes | menuOptions:", menuOptions, "componentMap:", componentMap);
-    }
     const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw()];
-    {
-      console_debug_log("GenericMenuBuilder: getRoutes | menuOptionsFinal", menuOptionsFinal);
-    }
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
       history: history
     }, menuOptionsFinal.map(item => {
       const itemDefs = getItemDefaults(item);
-      {
-        console_debug_log("getRoutes: item / itemDefs");
-        console_debug_log(item);
-        console_debug_log(itemDefs);
-      }
       if (item.type === "nav_link") {
         return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
           key: itemDefs["title"],
@@ -3401,11 +3489,6 @@ const GenericMenuBuilder = _ref => {
       }
       return item.sub_menu_options.map(subItem => {
         const itemDefs = getItemDefaults(subItem);
-        {
-          console_debug_log("getRoutes - sub_menu_options: subItem / itemDefs");
-          console_debug_log(subItem);
-          console_debug_log(itemDefs);
-        }
         if (subItem.type === 'editor') {
           try {
             return editorRoute(componentMap[subItem.element]());
@@ -3428,18 +3511,8 @@ const GenericMenuBuilder = _ref => {
     })));
   };
   const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
-    {
-      console_debug_log("GenericMenuBuilder: GetNavs | menuOptions / componentMap");
-      console_debug_log(menuOptions);
-      console_debug_log(componentMap);
-    }
     return menuOptions.filter(item => item.location === item_type_filter).map(item => {
       const itemDefs = getItemDefaults(item, topTitle);
-      {
-        console_debug_log("Nav & NavDropdown 1: subItem / itemDefs");
-        console_debug_log(item);
-        console_debug_log(itemDefs);
-      }
       if (item.type === "nav_link") {
         // Items in main menu, not belonging to any NavDropdown
         return /*#__PURE__*/React.createElement(Nav.Link, {
@@ -3451,7 +3524,9 @@ const GenericMenuBuilder = _ref => {
           type: itemType,
           mobileMenuMode: mobileMenuMode
         }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-          icon: icon
+          icon: icon !== null && icon !== void 0 ? icon : '',
+          size: "2xl",
+          className: NAV_LINK_ICON_CLASS
         }) : itemDefs["title"]);
       }
       // Navigation dropdown (main menu item with sub-menus)
@@ -3465,14 +3540,9 @@ const GenericMenuBuilder = _ref => {
         mobileMenuMode: mobileMenuMode
       }, item.sub_menu_options.map(subItem => {
         const itemDefs = getItemDefaults(subItem);
-        {
-          console_debug_log("NavDropdown.Item 2: subItem / itemDefs");
-          console_debug_log(subItem);
-          console_debug_log(itemDefs);
-        }
         if (subItem.type === 'editor') {
           try {
-            return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode);
+            return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode, componentMap, setExpanded);
           } catch (error) {
             console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
             console_debug_log(error);
@@ -3517,18 +3587,17 @@ const editorRoute = editor => {
     element: /*#__PURE__*/React.createElement(editor.component, null)
   });
 };
-const editorMenuOption = (editor, itemType, mobileMenuMode) => {
+const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap, setExpanded) => {
   return /*#__PURE__*/React.createElement(NavDropdown.Item, {
     key: editor.title,
     as: reactRouterDom.Link,
     to: getPrefix() + '/' + editor.baseUrl,
-    onClick: getOnClickObject(null),
+    onClick: getOnClickObject(null, componentMap, setExpanded),
     type: itemType,
     mobileMenuMode: mobileMenuMode
   }, editor.title);
 };
 const getDefaultRoutesRaw = () => {
-  console_debug_log('getDefaultRoutesRaw');
   return [{
     title: 'homepage1',
     path: "/",
@@ -3571,16 +3640,10 @@ const InvalidRouteRedirect = () => {
   }, "URL not found...");
 };
 const DefaultRoutes = () => {
-  const homePagePath3 = getPrefix(true).replace('/#', '/') + "/";
-  {
-    console_debug_log("DefaultRoutes | homePagePath3: ".concat(homePagePath3));
-  }
+  getPrefix(true).replace('/#', '/') + "/";
   return /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
     history: history
   }, getDefaultRoutesRaw().map(item => {
-    {
-      console_debug_log("DefaultRoutes: item:", item);
-    }
     return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
       key: item["title"],
       path: item["path"],
@@ -3597,17 +3660,9 @@ const getMenuFromApi = (state, setState, setMenuOptions) => {
     url: endpoint
   });
   db.getAll().then(data => {
-    {
-      console_debug_log("getMenuFromApi: data");
-      console_debug_log(data);
-    }
     setMenuOptions(data.resultset);
   }, error => {
     error = formatCaughtError(error);
-    {
-      console_debug_log("getMenuFromApi: ERROR");
-      console_debug_log(error);
-    }
     if (!window.location.href.includes("/login")) {
       setState(error);
     }
@@ -3701,11 +3756,13 @@ const DarkModeButton = () => {
     className: DARK_MODE_BUTTON_DARK_HIDDEN_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "sun",
+    size: "xl",
     className: DARK_MODE_BUTTON_SVG_CLASS
   })), /*#__PURE__*/React.createElement("span", {
     className: DARK_MODE_BUTTON_DARK_INLINE_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "moon",
+    size: "xl",
     className: DARK_MODE_BUTTON_SVG_CLASS
   }))));
 };
@@ -3801,11 +3858,13 @@ const MenuModeButton = () => {
   }, /*#__PURE__*/React.createElement("span", {
     className: !sideMenu ? HIDDEN_CLASS : INLINE_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "side-menu"
+    icon: "side-menu",
+    size: "xl"
   })), /*#__PURE__*/React.createElement("span", {
     className: sideMenu ? HIDDEN_CLASS : INLINE_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "top-menu"
+    icon: "top-menu",
+    size: "xl"
   }))));
 };
 

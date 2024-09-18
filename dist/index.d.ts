@@ -337,11 +337,13 @@ declare var class_name_constants: Readonly<{
     NAV_LINK_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
     NAV_LINK_BUTTON_SIDE_MENU_CLASS: "py-2 px-2 rounded navLinkButtonsSideMenuClass";
     NAV_LINK_BUTTON_TOP_MENU_CLASS: "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
+    NAV_LINK_ICON_CLASS: "w-8 h-8 navLinkIconClass";
     NAV_LINK_TOP_DIV_HAMBURGER_CLASS: "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
     NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
     NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: "navLinkTopDivSideMenuClass";
     NAV_LINK_TOP_DIV_TOP_MENU_CLASS: "relative group navLinkTopDivTopMenuClass";
     POPUP_TOP_MARGIN_CLASS: "pt-4 popupTopMarginClass";
+    ROUNDED_ICON_CLASS: "rounded-full roundedIconClass";
     SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: "ml-2 searchEngineButtonTopDivClass";
     SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
     SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: "ml-3 mr-3 showHidePageAnimationEnabledClass";
@@ -600,7 +602,7 @@ declare var generic_menu_service: Readonly<{
     __proto__: null;
     DefaultRoutes: () => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     GenericMenuBuilder: (_ref: any) => any;
-    editorMenuOption: (editor: any, itemType: any, mobileMenuMode: any) => React.FunctionComponentElement<any>;
+    editorMenuOption: (editor: any, itemType: any, mobileMenuMode: any, componentMap: any, setExpanded: any) => React.FunctionComponentElement<any>;
     editorRoute: (editor: any) => React.FunctionComponentElement<react_router_dom.RouteProps>;
     getDefaultRoutesRaw: () => {
         title: string;
