@@ -21,13 +21,12 @@ declare function HomePage(_ref: any): React.FunctionComponentElement<{
 }>;
 declare var IconsLib: Readonly<{
     __proto__: null;
-    GsIcons: (_ref: any) => React.ReactSVGElement | React.FunctionComponentElement<{
+    GsIcons: (_ref: any) => React.FunctionComponentElement<{
         children?: React.ReactNode | undefined;
     }> | React.DetailedReactHTMLElement<{
+        'data-icon': any;
         id: any;
-        alt: any;
-        className: string;
-        role: any;
+        className: any;
     }, HTMLElement>;
 }>;
 declare function LoginPage(props: any): React.FunctionComponentElement<{
@@ -80,7 +79,9 @@ declare var NavLib: Readonly<{
         }, HTMLElement>;
     };
     Navbar: {
-        (_ref6: any): React.DetailedReactHTMLElement<{
+        (_ref6: any): React.FunctionComponentElement<{
+            children?: React.ReactNode | undefined;
+        }> | React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement>;
         Brand: (_ref7: any) => React.DetailedReactHTMLElement<{
@@ -239,7 +240,7 @@ declare var class_name_constants: Readonly<{
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
     APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
     APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
-    APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col appSectionContainerForSideMenuClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow p-4 appSectionContainerForSideMenuMainClass";
     APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: "flex-grow p-4 appSectionContainerForTopMenuClass";
     APP_SIDE_MENU_BG_COLOR_CLASS: "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
@@ -275,6 +276,7 @@ declare var class_name_constants: Readonly<{
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: "flex min-h-screen mainContainerForSideMenuClass";
     MAIN_CONTAINER_FOR_TOP_MENU_CLASS: "flex flex-col min-h-screen mainContainerForTopMenuClass";
     MENU_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 menuModeButtonTopDivClass";
+    ML2_ICON_CLASS: "ml-2 overflow-visible";
     MODALIB_BUTTON_BASESTYLE_CLASS: "px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass";
     MODALIB_BUTTON_DANGER_CLASS: "bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass";
     MODALIB_BUTTON_PRIMARY_CLASS: "bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass";
@@ -290,7 +292,7 @@ declare var class_name_constants: Readonly<{
     NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS: "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
     NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN: "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
     NAVBAR_BRAND_NAME_CLASS: "text-2xl font-bold navbarBrandNameClass";
-    NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+    NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: "-translate-x-full navbarHeaderForSideMenuMobileCloseClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS: "translate-x-0 navbarHeaderForSideMenuMobileOpenClass";
     NAVBAR_HEADER_FOR_TOP_MENU_CLASS: "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
@@ -347,8 +349,12 @@ declare var class_name_constants: Readonly<{
     SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: "ml-2 searchEngineButtonTopDivClass";
     SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
     SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: "ml-3 mr-3 showHidePageAnimationEnabledClass";
+    STROKE_WHITE_ICON_CLASS: "stroke-white";
     SUCCESS_MSG_CLASS: string;
     SUGGESTION_DROPDOWN_CLASS: "align-middle flex";
+    TOP0_Z50_CLASS: "top-0 z-50 top0z50Class";
+    VERTICALLY_CENTERED_CLASS: "flex items-center justify-center verticallyCenteredClass";
+    VERTICAL_SLIDER_ICON_CLASS: "h-8 w-1.5 rounded-full bg-slate-400";
     VISIBLE_CLASS: "visible visibleClass";
     WARNING_MSG_CLASS: string;
     defaultTheme: {

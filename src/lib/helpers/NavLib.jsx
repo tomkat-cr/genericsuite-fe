@@ -70,6 +70,8 @@ import {
     BUTTON_PRIMARY_CLASS,
     BUTTON_SECONDARY_CLASS,
     NAV_LINK_ICON_CLASS,
+    VERTICALLY_CENTERED_CLASS,
+    TOP0_Z50_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { GsIcons } from './IconsLib.jsx';
 import { useAppContext } from './AppContext.jsx';
@@ -175,12 +177,17 @@ export const Navbar = ({ children, collapseOnSelect, expand }) => {
             NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS
         );
         return (
-            <nav
-                className={`${translateStyle} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`}
-            >
-                {children}
-            </nav>
-        );
+            <>
+                <nav
+                    id='navbar-side-menu'
+                    className={`${translateStyle} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`}
+                >
+                    {children}
+                </nav>
+                <ToggleSideBar
+                    onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
+                />
+            </>);
     }
     return (
         <div
@@ -248,6 +255,7 @@ const NavbarTopCenterMenu = ({ children }) => {
     }
     return (
         <nav
+            id='navbar-top-center-menu'
             className={NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS}
         >
             {children}
@@ -652,12 +660,15 @@ Nav.Link = NavLink;
 
 
 export const ToggleSideBar = ({ onClick, ...props }) => {
+    props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + (props.className ?? '');
     return (
         <div
             onClick={onClick}
             {...props}
         >
-            <GsIcons icon='vertical-slider' />
+            <GsIcons
+                icon='vertical-slider'
+            />
         </div>
     );
 }

@@ -90,14 +90,16 @@ const defaultTheme = {
 const MAIN_CONTAINER_FOR_TOP_MENU_CLASS = "flex flex-col min-h-screen mainContainerForTopMenuClass";
 const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContainerForSideMenuClass";
 const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow p-4 appSectionContainerForTopMenuClass";
-const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
+// export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
+const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col appSectionContainerForSideMenuClass";
 const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4 appSectionContainerForSideMenuMainClass";
 const APP_FOOTER_CONTAINER_CLASS = "p-4 text-white text-center appFooterContainerClass";
 const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto centeredBoxContainerDiv1Class";
 const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
 const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
 const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
-const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+// export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
 const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
 const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
@@ -131,6 +133,11 @@ const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded navLinkButtonsSideMen
 const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
 const NAV_LINK_ICON_CLASS = "w-8 h-8 navLinkIconClass";
 const ROUNDED_ICON_CLASS = "rounded-full roundedIconClass";
+const ML2_ICON_CLASS = "ml-2 overflow-visible";
+const STROKE_WHITE_ICON_CLASS = "stroke-white";
+
+// export const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2";
+const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400";
 const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
 const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
 const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
@@ -176,9 +183,14 @@ const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md f
 const INVALID_FEEDBACK_CLASS = "text-red-500 text-sm mt-1 invalidFeedbackClass";
 const IS_INVALID_CLASS = "border-red-500 isInvalidClass";
 const DISABLE_FIELD_BACKGROUND_COLOR_CLASS = 'bg-gray-200 disableFieldBackgroundColorClass';
+
+// Other general classes
+
 const HIDDEN_CLASS = 'hidden hiddenClass';
 const VISIBLE_CLASS = 'visible visibleClass';
 const INLINE_CLASS = 'inline inlineClass';
+const VERTICALLY_CENTERED_CLASS = "flex items-center justify-center verticallyCenteredClass";
+const TOP0_Z50_CLASS = "top-0 z-50 top0z50Class";
 
 // Buttons
 
@@ -393,6 +405,7 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
   MAIN_CONTAINER_FOR_TOP_MENU_CLASS: MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
   MENU_MODE_BUTTON_TOP_DIV_CLASS: MENU_MODE_BUTTON_TOP_DIV_CLASS,
+  ML2_ICON_CLASS: ML2_ICON_CLASS,
   MODALIB_BUTTON_BASESTYLE_CLASS: MODALIB_BUTTON_BASESTYLE_CLASS,
   MODALIB_BUTTON_DANGER_CLASS: MODALIB_BUTTON_DANGER_CLASS,
   MODALIB_BUTTON_PRIMARY_CLASS: MODALIB_BUTTON_PRIMARY_CLASS,
@@ -465,8 +478,12 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS,
   SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS,
   SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS,
+  STROKE_WHITE_ICON_CLASS: STROKE_WHITE_ICON_CLASS,
   SUCCESS_MSG_CLASS: SUCCESS_MSG_CLASS,
   SUGGESTION_DROPDOWN_CLASS: SUGGESTION_DROPDOWN_CLASS,
+  TOP0_Z50_CLASS: TOP0_Z50_CLASS,
+  VERTICALLY_CENTERED_CLASS: VERTICALLY_CENTERED_CLASS,
+  VERTICAL_SLIDER_ICON_CLASS: VERTICAL_SLIDER_ICON_CLASS,
   VISIBLE_CLASS: VISIBLE_CLASS,
   WARNING_MSG_CLASS: WARNING_MSG_CLASS,
   defaultTheme: defaultTheme
@@ -474,16 +491,17 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
 
 // IconsLib
 const GsIcons = _ref => {
-  var _size, _ref2, _ref3;
+  var _size, _selectedSvg$props$cl;
   let {
     icon,
     size = null,
-    width = null,
-    height = null,
+    // width = null,
+    // height = null,
     alt = '',
     id = '',
     className = '',
-    role = "img"
+    role = "img",
+    additionalIconsFn = null
   } = _ref;
   /*
   Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
@@ -585,17 +603,13 @@ const GsIcons = _ref => {
   }
   const currentWidth = sizeData[size].width;
   const currentHeight = sizeData[size].height;
+  let selectedSvg = null;
   switch (icon.toLowerCase()) {
     case 'arrow-down-small':
-      return /*#__PURE__*/React.createElement("svg", {
-        id: id,
-        alt: alt
-        // 2024-09-17
-        ,
-        width: width !== null && width !== void 0 ? width : "6",
-        height: height !== null && height !== void 0 ? height : "3",
-        className: "ml-2 overflow-visible" + (className !== null && className !== void 0 ? className : ''),
-        role: role
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
+        width: "6",
+        height: "3",
+        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L6 0",
         fill: "none",
@@ -603,17 +617,12 @@ const GsIcons = _ref => {
         strokeWidth: "1.5",
         strokeLinecap: "round"
       }));
+      break;
     case 'arrow-right-small':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt
-        // 2024-09-17
-        ,
-        width: width !== null && width !== void 0 ? width : "3",
-        height: height !== null && height !== void 0 ? height : "6",
-        className: "ml-2 overflow-visible" + (className !== null && className !== void 0 ? className : ''),
-        role: role
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
+        width: "3",
+        height: "6",
+        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L0 6",
         fill: "none",
@@ -621,30 +630,18 @@ const GsIcons = _ref => {
         strokeWidth: "1.5",
         strokeLinecap: "round"
       }));
+      break;
     case 'arrows-rotate':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 512 512"
       }, /*#__PURE__*/React.createElement("g", {
         fill: "#FFFFFF"
       }, /*#__PURE__*/React.createElement("path", {
         d: "M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H176c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"
       })));
+      break;
     case 'clip':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none"
       }, /*#__PURE__*/React.createElement("path", {
@@ -653,43 +650,25 @@ const GsIcons = _ref => {
         d: "M9 7C9 4.23858 11.2386 2 14 2C16.7614 2 19 4.23858 19 7V15C19 18.866 15.866 22 12 22C8.13401 22 5 18.866 5 15V9C5 8.44772 5.44772 8 6 8C6.55228 8 7 8.44772 7 9V15C7 17.7614 9.23858 20 12 20C14.7614 20 17 17.7614 17 15V7C17 5.34315 15.6569 4 14 4C12.3431 4 11 5.34315 11 7V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V9C13 8.44772 13.4477 8 14 8C14.5523 8 15 8.44772 15 9V15C15 16.6569 13.6569 18 12 18C10.3431 18 9 16.6569 9 15V7Z",
         fill: "currentColor"
       }));
+      break;
     case 'edit':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 576 512"
       }, /*#__PURE__*/React.createElement("path", {
         fill: "currentColor",
         d: "M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
       }));
+      break;
     case 'eye':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 576 512"
       }, /*#__PURE__*/React.createElement("path", {
         fill: "currentColor",
         d: "M569.354 231.631C512.969 135.949 407.81 72 288 72 168.14 72 63.004 135.994 6.646 231.631a47.999 47.999 0 0 0 0 48.739C63.031 376.051 168.19 440 288 440c119.86 0 224.996-63.994 281.354-159.631a47.997 47.997 0 0 0 0-48.738zM288 392c-75.162 0-136-60.827-136-136 0-75.162 60.826-136 136-136 75.162 0 136 60.826 136 136 0 75.162-60.826 136-136 136zm104-136c0 57.438-46.562 104-104 104s-104-46.562-104-104c0-17.708 4.431-34.379 12.236-48.973l-.001.032c0 23.651 19.173 42.823 42.824 42.823s42.824-19.173 42.824-42.823c0-23.651-19.173-42.824-42.824-42.824l-.032.001C253.621 156.431 270.292 152 288 152c57.438 0 104 46.562 104 104z"
       }));
+      break;
     case 'google-logo':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         fill: "#000000",
         viewBox: "-51.2 -51.2 614.40 614.40"
       }, /*#__PURE__*/React.createElement("g", {
@@ -712,15 +691,9 @@ const GsIcons = _ref => {
       }, /*#__PURE__*/React.createElement("title", null, "ionicons-v5_logos"), /*#__PURE__*/React.createElement("path", {
         d: "M473.16,221.48l-2.26-9.59H262.46v88.22H387c-12.93,61.4-72.93,93.72-121.94,93.72-35.66,0-73.25-15-98.13-39.11a140.08,140.08,0,0,1-41.8-98.88c0-37.16,16.7-74.33,41-98.78s61-38.13,97.49-38.13c41.79,0,71.74,22.19,82.94,32.31l62.69-62.36C390.86,72.72,340.34,32,261.6,32h0c-60.75,0-119,23.27-161.58,65.71C58,139.5,36.25,199.93,36.25,256S56.83,369.48,97.55,411.6C141.06,456.52,202.68,480,266.13,480c57.73,0,112.45-22.62,151.45-63.66,38.34-40.4,58.17-96.3,58.17-154.9C475.75,236.77,473.27,222.12,473.16,221.48Z"
       })));
+      break;
     case 'greater-than':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
@@ -730,15 +703,9 @@ const GsIcons = _ref => {
       }, /*#__PURE__*/React.createElement("path", {
         d: "m9 18 6-6-6-6"
       }));
+      break;
     case 'less-than':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
@@ -748,15 +715,9 @@ const GsIcons = _ref => {
       }, /*#__PURE__*/React.createElement("path", {
         d: "m15 18-6-6 6-6"
       }));
+      break;
     case 'menu-dots-more':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         fill: "#000000",
         viewBox: "0 0 64 64",
         version: "1.1"
@@ -780,15 +741,9 @@ const GsIcons = _ref => {
         cy: "32.028",
         r: "4"
       })));
+      break;
     case "menu-hamburger":
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
@@ -811,15 +766,9 @@ const GsIcons = _ref => {
         y1: "18",
         y2: "18"
       }));
+      break;
     case 'moon':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
@@ -829,15 +778,10 @@ const GsIcons = _ref => {
       }, /*#__PURE__*/React.createElement("path", {
         d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"
       }));
+      break;
     case 'place-holder-circle':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         className: ROUNDED_ICON_CLASS + (className !== null && className !== void 0 ? className : ''),
-        role: role,
         fill: "none"
       }, /*#__PURE__*/React.createElement("rect", {
         width: currentWidth,
@@ -972,29 +916,17 @@ const GsIcons = _ref => {
         fill: "#fff",
         d: "M581.364 580.535h38.689v38.689h-38.689z"
       })))));
+      break;
     case 'plus':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 448 512"
       }, /*#__PURE__*/React.createElement("path", {
         fill: "currentColor",
         d: "M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
       }));
+      break;
     case 'search':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : "",
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
@@ -1008,15 +940,9 @@ const GsIcons = _ref => {
       }), /*#__PURE__*/React.createElement("path", {
         d: "m21 21-4.3-4.3"
       }));
+      break;
     case 'side-menu':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className,
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24"
       }, /*#__PURE__*/React.createElement("rect", {
         id: "Square-2",
@@ -1027,7 +953,7 @@ const GsIcons = _ref => {
         rx: "2",
         ry: "2",
         fill: "none",
-        className: "stroke-white",
+        className: STROKE_WHITE_ICON_CLASS,
         strokeMiterlimit: "10",
         strokeWidth: "2"
       }), /*#__PURE__*/React.createElement("line", {
@@ -1036,36 +962,23 @@ const GsIcons = _ref => {
         x2: "9",
         y2: "3",
         fill: "none",
-        className: "stroke-white",
+        className: STROKE_WHITE_ICON_CLASS,
         strokeMiterlimit: "10",
         strokeWidth: "2"
       }));
+      break;
     case 'spark':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24"
         // role="presentation"
-        ,
-        role: role
       }, /*#__PURE__*/React.createElement("path", {
         fill: "currentColor",
         fillRule: "evenodd",
         d: "M9.276 4.382L7.357 9.247l-4.863 1.917a.78.78 0 000 1.45l4.863 1.918 1.919 4.863a.78.78 0 001.45 0h-.001l1.918-4.863 4.864-1.919a.781.781 0 000-1.45l-4.864-1.916-1.918-4.865a.776.776 0 00-.44-.438.778.778 0 00-1.01.438zm8.297-2.03l-.743 1.886-1.884.743a.56.56 0 000 1.038l1.884.743.743 1.886a.558.558 0 001.038 0l.745-1.886 1.883-.743a.557.557 0 000-1.038l-1.883-.743-.745-1.885a.552.552 0 00-.314-.314.562.562 0 00-.724.314zm-.704 13.003l-.744 1.883-1.883.744a.553.553 0 00-.316.314.56.56 0 00.316.724l1.883.743.744 1.884c.057.144.17.258.314.315a.56.56 0 00.724-.315l.744-1.884 1.883-.743a.557.557 0 000-1.038l-1.883-.744-.744-1.883a.551.551 0 00-.315-.316.56.56 0 00-.723.316z"
       }));
+      break;
     case 'sun':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: (_ref2 = "h-6 w-6" + className) !== null && _ref2 !== void 0 ? _ref2 : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
@@ -1093,29 +1006,17 @@ const GsIcons = _ref => {
       }), /*#__PURE__*/React.createElement("path", {
         d: "m19.07 4.93-1.41 1.41"
       }));
+      break;
     case 'trash':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className !== null && className !== void 0 ? className : '',
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 448 512"
       }, /*#__PURE__*/React.createElement("path", {
         fill: "currentColor",
         d: "M0 84V56c0-13.3 10.7-24 24-24h112l9.4-18.7c4-8.2 12.3-13.3 21.4-13.3h114.3c9.1 0 17.4 5.1 21.5 13.3L312 32h112c13.3 0 24 10.7 24 24v28c0 6.6-5.4 12-12 12H12C5.4 96 0 90.6 0 84zm415.2 56.7L394.8 467c-1.6 25.3-22.6 45-47.9 45H101.1c-25.3 0-46.3-19.7-47.9-45L32.8 140.7c-.4-6.9 5.1-12.7 12-12.7h358.5c6.8 0 12.3 5.8 11.9 12.7z"
       }));
+      break;
     case 'top-menu':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className,
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none"
       }, /*#__PURE__*/React.createElement("rect", {
@@ -1125,7 +1026,7 @@ const GsIcons = _ref => {
         transform: "matrix(1.39071e-07 1 1 -1.39071e-07 3 3)"
         // className="stroke-black dark:stroke-white"
         ,
-        className: "stroke-white",
+        className: STROKE_WHITE_ICON_CLASS,
         strokeWidth: "2",
         strokeLinecap: "round",
         strokeLinejoin: "round"
@@ -1137,27 +1038,19 @@ const GsIcons = _ref => {
         transform: "matrix(1 -1.82782e-07 -1.82782e-07 -1 3 8)"
         // className="stroke-black dark:stroke-white"
         ,
-        className: "stroke-white",
+        className: STROKE_WHITE_ICON_CLASS,
         strokeWidth: "2",
         strokeLinecap: "round",
         strokeLinejoin: "round"
       }));
+      break;
     case 'vertical-slider':
-      return /*#__PURE__*/React.createElement("div", {
-        id: id,
-        alt: alt,
-        className: (_ref3 = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2" + className) !== null && _ref3 !== void 0 ? _ref3 : '',
-        role: role
+      selectedSvg = /*#__PURE__*/React.createElement("div", {
+        className: VERTICAL_SLIDER_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
       });
+      break;
     case 'x':
-      return /*#__PURE__*/React.createElement("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        id: id,
-        alt: alt,
-        width: currentWidth,
-        height: currentHeight,
-        className: className,
-        role: role,
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
@@ -1169,9 +1062,35 @@ const GsIcons = _ref => {
       }), /*#__PURE__*/React.createElement("path", {
         d: "m6 6 12 12"
       }));
+      break;
     default:
-      return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid Icon *".concat(icon, "*"));
+      if (additionalIconsFn) {
+        selectedSvg = additionalIconsFn(icon, size, currentWidth,
+        // width,
+        currentHeight,
+        // height,
+        alt, id, className, role);
+      }
   }
+  if (!selectedSvg) {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid Icon *".concat(icon, "*"));
+  }
+  let iconProps = {
+    'data-icon': icon.toLowerCase(),
+    'id': id,
+    'className': (_selectedSvg$props$cl = selectedSvg.props.className) !== null && _selectedSvg$props$cl !== void 0 ? _selectedSvg$props$cl : className
+  };
+  if (selectedSvg.type === "svg") {
+    var _selectedSvg$props$xm, _selectedSvg$props$wi, _selectedSvg$props$he, _selectedSvg$props$ro, _selectedSvg$props$al;
+    // iconProps['viewBox'] = "0 0 " + currentWidth + " " + currentHeight;
+    iconProps['xmlns'] = (_selectedSvg$props$xm = selectedSvg.props.xmlns) !== null && _selectedSvg$props$xm !== void 0 ? _selectedSvg$props$xm : "http://www.w3.org/2000/svg";
+    iconProps['width'] = (_selectedSvg$props$wi = selectedSvg.props.width) !== null && _selectedSvg$props$wi !== void 0 ? _selectedSvg$props$wi : currentWidth;
+    iconProps['height'] = (_selectedSvg$props$he = selectedSvg.props.height) !== null && _selectedSvg$props$he !== void 0 ? _selectedSvg$props$he : currentHeight;
+    iconProps['role'] = (_selectedSvg$props$ro = selectedSvg.props.role) !== null && _selectedSvg$props$ro !== void 0 ? _selectedSvg$props$ro : role;
+    iconProps['alt'] = (_selectedSvg$props$al = selectedSvg.props.alt) !== null && _selectedSvg$props$al !== void 0 ? _selectedSvg$props$al : alt;
+  }
+  selectedSvg = /*#__PURE__*/React.cloneElement(selectedSvg, iconProps);
+  return selectedSvg;
 };
 
 var IconsLib = /*#__PURE__*/Object.freeze({
@@ -1353,9 +1272,12 @@ const Navbar = _ref6 => {
   } = useAppContext();
   if (sideMenu) {
     const translateStyle = isMobileMenuOpen ? NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS : NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS;
-    return /*#__PURE__*/React.createElement("nav", {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("nav", {
+      id: "navbar-side-menu",
       className: "".concat(translateStyle, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
-    }, children);
+    }, children), /*#__PURE__*/React.createElement(ToggleSideBar, {
+      onClick: () => document.getElementById('navbar-side-menu').classList.toggle('hidden')
+    }));
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "".concat(NAVBAR_HEADER_FOR_TOP_MENU_CLASS, " ").concat(theme.primary)
@@ -1408,6 +1330,7 @@ const NavbarTopCenterMenu = _ref8 => {
     }, children);
   }
   return /*#__PURE__*/React.createElement("nav", {
+    id: "navbar-top-center-menu",
     className: NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS
   }, children);
 };
@@ -1769,10 +1692,12 @@ Nav.Link = NavLink;
 // Buttons
 
 const ToggleSideBar = _ref17 => {
+  var _props$className;
   let {
     onClick,
     ...props
   } = _ref17;
+  props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + ((_props$className = props.className) !== null && _props$className !== void 0 ? _props$className : '');
   return /*#__PURE__*/React.createElement("div", _extends({
     onClick: onClick
   }, props), /*#__PURE__*/React.createElement(GsIcons, {

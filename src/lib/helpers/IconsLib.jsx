@@ -1,9 +1,26 @@
 // IconsLib
 import React from 'react';
 
-import { ROUNDED_ICON_CLASS } from '../constants/class_name_constants.jsx';
+import {
+    ROUNDED_ICON_CLASS,
+    ML2_ICON_CLASS,
+    VERTICAL_SLIDER_ICON_CLASS,
+    STROKE_WHITE_ICON_CLASS,
+} from '../constants/class_name_constants.jsx';
 
-export const GsIcons = ({ icon, size = null, width = null, height = null, alt = '', id = '', className='', role="img" }) => {
+const debug = false;
+
+export const GsIcons = ({
+    icon,
+    size = null,
+    // width = null,
+    // height = null,
+    alt = '',
+    id = '',
+    className = '',
+    role = "img",
+    additionalIconsFn = null,
+}) => {
 
 /*
 Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
@@ -108,22 +125,19 @@ fa-10x	10em    160px
             </>
         );
     }
-
     const currentWidth = (sizeData[size].width);
     const currentHeight = (sizeData[size].height);
+
+    let selectedSvg = null;
 
     switch (icon.toLowerCase()) {
 
         case 'arrow-down-small':
-            return (
+            selectedSvg = (
                 <svg
-                    id={id}
-                    alt={alt}
-                    // 2024-09-17
-                    width={width ?? "6"}
-                    height={height ?? "3"}
-                    className={"ml-2 overflow-visible" + (className ?? '')}
-                    role={role}
+                    width="6"
+                    height="3"
+                    className={ML2_ICON_CLASS + (className ?? '')}
                 >
                     <path
                         d="M0 0L3 3L6 0"
@@ -135,18 +149,14 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
 
         case 'arrow-right-small':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    // 2024-09-17
-                    width={width ?? "3"}
-                    height={height ?? "6"}
-                    className={"ml-2 overflow-visible" + (className ?? '')}
-                    role={role}
+                    width="3"
+                    height="6"
+                    className={ML2_ICON_CLASS + (className ?? '')}
                 >
                     <path
                         d="M0 0L3 3L0 6"
@@ -158,17 +168,11 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
     
         case 'arrows-rotate':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 512 512"
                 >
                     <g
@@ -180,17 +184,11 @@ fa-10x	10em    160px
                     </g>
                 </svg>
             );
+            break;
 
         case 'clip':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                 >
@@ -203,17 +201,11 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
 
         case 'edit':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 576 512"
                 >
                     <path
@@ -222,17 +214,11 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
     
         case 'eye':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 576 512"
                 >
                     <path
@@ -241,17 +227,11 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
 
         case 'google-logo':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     fill="#000000"
                     viewBox="-51.2 -51.2 614.40 614.40"
                 >
@@ -286,17 +266,11 @@ fa-10x	10em    160px
                     </g>
                 </svg>
             );
+            break;
 
         case 'greater-than':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -307,17 +281,11 @@ fa-10x	10em    160px
                     <path d="m9 18 6-6-6-6"></path>
                 </svg>
             );
+            break;
         
         case 'less-than':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -328,17 +296,11 @@ fa-10x	10em    160px
                     <path d="m15 18-6-6 6-6"></path>
                 </svg>
             );
+            break;
 
         case 'menu-dots-more':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     fill="#000000"
                     viewBox="0 0 64 64"
                     version="1.1"
@@ -358,17 +320,11 @@ fa-10x	10em    160px
                         </g>
                 </svg>
             );
+            break;
 
         case "menu-hamburger":
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -390,17 +346,11 @@ fa-10x	10em    160px
                     </line>
                 </svg>
             );
+            break;
 
         case 'moon':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -411,17 +361,12 @@ fa-10x	10em    160px
                     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                 </svg>
             );
+            break;
 
         case 'place-holder-circle':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
                     className={ROUNDED_ICON_CLASS + (className ?? '')}
-                    role={role}
                     fill="none"
                 >
                     <rect
@@ -452,17 +397,11 @@ fa-10x	10em    160px
                 </svg>
 
             );
+            break;
 
         case 'plus':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 448 512"
                 >
                     <path
@@ -472,17 +411,11 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
 
         case 'search':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ""}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -493,17 +426,11 @@ fa-10x	10em    160px
                     <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
                 </svg>
             );
+            break;
 
         case 'side-menu':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className}
-                    role={role}
                     viewBox="0 0 24 24"
                 >
                     <rect
@@ -515,7 +442,7 @@ fa-10x	10em    160px
                         rx="2"
                         ry="2"
                         fill="none"
-                        className="stroke-white"
+                        className={STROKE_WHITE_ICON_CLASS}
                         strokeMiterlimit="10"
                         strokeWidth="2"
                     />
@@ -525,25 +452,19 @@ fa-10x	10em    160px
                         x2="9"
                         y2="3"
                         fill="none"
-                        className="stroke-white"
+                        className={STROKE_WHITE_ICON_CLASS}
                         strokeMiterlimit="10"
                         strokeWidth="2"
                     />
                 </svg>
             );
+            break;
 
         case 'spark':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
                     viewBox="0 0 24 24"
                     // role="presentation"
-                    role={role}
                 >
                     <path
                         fill="currentColor"
@@ -553,17 +474,11 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
 
         case 'sun':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={"h-6 w-6" + className ?? ''}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -574,17 +489,11 @@ fa-10x	10em    160px
                     <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
                 </svg>
             );
+            break;
     
         case 'trash':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className ?? ''}
-                    role={role}
                     viewBox="0 0 448 512"
                 >
                     <path
@@ -593,17 +502,11 @@ fa-10x	10em    160px
                     </path>
                 </svg>
             );
+            break;
 
         case 'top-menu':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                 >
@@ -613,7 +516,7 @@ fa-10x	10em    160px
                         rx="3"
                         transform="matrix(1.39071e-07 1 1 -1.39071e-07 3 3)"
                         // className="stroke-black dark:stroke-white"
-                        className="stroke-white"
+                        className={STROKE_WHITE_ICON_CLASS}
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -625,34 +528,26 @@ fa-10x	10em    160px
                         y2="-1"
                         transform="matrix(1 -1.82782e-07 -1.82782e-07 -1 3 8)"
                         // className="stroke-black dark:stroke-white"
-                        className="stroke-white"
+                        className={STROKE_WHITE_ICON_CLASS}
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
                 </svg>
             );
+            break;
             
         case 'vertical-slider':
-            return (
+            selectedSvg = (
                 <div
-                    id={id}
-                    alt={alt}
-                    className={"h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2" + className ?? ''}
-                    role={role}
+                    className={VERTICAL_SLIDER_ICON_CLASS + (className ?? '')}
                 />
             );
+            break;
 
         case 'x':
-            return (
+            selectedSvg = (
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id={id}
-                    alt={alt}
-                    width={currentWidth}
-                    height={currentHeight}
-                    className={className}
-                    role={role}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -663,12 +558,47 @@ fa-10x	10em    160px
                     <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
                 </svg>
             );
+            break;
 
         default:
-            return (
-                <>
-                    {`Invalid Icon *${icon}*`}
-                </>
-            );
+            if (additionalIconsFn) {
+                selectedSvg = additionalIconsFn(
+                    icon,
+                    size,
+                    currentWidth, // width,
+                    currentHeight, // height,
+                    alt,
+                    id,
+                    className,
+                    role,
+                );
+            }
     }
+
+    if (!selectedSvg) {
+        return (
+            <>
+                {`Invalid Icon *${icon}*`}
+            </>
+        );
+    }
+    if (debug) console.log("selectedSvg # 1", selectedSvg, " | selectedSvg.type", selectedSvg.type, ' | icon:', icon);
+    let iconProps = {
+        'data-icon': icon.toLowerCase(),
+        'id': id,
+        'className': selectedSvg.props.className ?? className,
+    };
+    if (selectedSvg.type === "svg") {
+        // iconProps['viewBox'] = "0 0 " + currentWidth + " " + currentHeight;
+        iconProps['xmlns'] = selectedSvg.props.xmlns ?? "http://www.w3.org/2000/svg";
+        iconProps['width'] = selectedSvg.props.width ?? currentWidth;
+        iconProps['height'] = selectedSvg.props.height ?? currentHeight;
+        iconProps['role'] = selectedSvg.props.role ?? role;
+        iconProps['alt'] = selectedSvg.props.alt ?? alt;
+        if (debug) console.log("It's a SVG.... | iconProps", iconProps);
+    }
+    if (debug) console.log("selectedSvg # 2", selectedSvg);
+    selectedSvg = React.cloneElement(selectedSvg, iconProps);
+    if (debug) console.log("selectedSvg # 3", selectedSvg);
+    return selectedSvg;
 }

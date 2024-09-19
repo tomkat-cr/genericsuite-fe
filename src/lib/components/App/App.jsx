@@ -71,8 +71,8 @@ import {
     MainContainer,
     AppSectionContainer,
     AppFooterContainer,
-    Nav,
     Navbar,
+    // ToggleSideBar,
 } from '../../helpers/NavLib.jsx';
 import {
     defaultTheme,
@@ -261,6 +261,9 @@ const AppMain = () => {
                                 </Navbar.TopForSideMenu>
                             )}
                             <AppSectionContainer.ForSideMenu>
+                                {/* <ToggleSideBar
+                                    onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
+                                /> */}
                                 <AppMainComponent
                                     stateHandler={stateHandler}
                                     showContentOnly={showContentOnly}
