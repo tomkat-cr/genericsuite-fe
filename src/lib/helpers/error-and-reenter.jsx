@@ -174,7 +174,7 @@ export function errorLoginAgain(
             <div>
                 <br/>
                 <Button
-                    as={RouterLink}
+                    // as={RouterLink}
                     to={getPrefix()+'/login'}
                     onClick={parentLogoutHandler}>{MSG_ERROR_CLICK_TO_RELOGIN}
                 </Button>

@@ -1427,6 +1427,10 @@ video {
 }
 
 @media (min-width: 768px) {
+  .md\:ml-64 {
+    margin-left: 16rem;
+  }
+
   .md\:py-4 {
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -1444,6 +1448,10 @@ video {
 @media (min-width: 1024px) {
   .lg\:ml-64 {
     margin-left: 16rem;
+  }
+
+  .lg\:ml-96 {
+    margin-left: 24rem;
   }
 
   .lg\:block {

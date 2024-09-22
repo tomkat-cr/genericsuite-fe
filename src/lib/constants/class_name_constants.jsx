@@ -257,7 +257,7 @@ export const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChil
 
 // Pop-ups
 
-export const POPUP_TOP_MARGIN_CLASS="pt-4 popupTopMarginClass";
+export const POPUP_TOP_MARGIN_CLASS="fixed ml-3 md:ml-64 lg:ml-96 pt-4 popupTopMarginClass";
 
 // ModalLib
 
