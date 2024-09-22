@@ -49,6 +49,8 @@ export declare function mockDefaultComponentMap(): {
             primary: string;
             secondary: string;
             text: string;
+            label: string;
+            input: string;
             textHoverTop: string;
             textHoverTopSubMenu: string;
             textHoverSide: string;
@@ -59,6 +61,8 @@ export declare function mockDefaultComponentMap(): {
             primary: string;
             secondary: string;
             text: string;
+            label: string;
+            input: string;
             textHoverTop: string;
             textHoverTopSubMenu: string;
             textHoverSide: string;

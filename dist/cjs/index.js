@@ -88,6 +88,8 @@ const defaultTheme = {
     primary: 'bg-blue-600 defaultThemeLightPrimary',
     secondary: 'bg-gray-200 defaultThemeLightSecondary',
     text: 'text-gray-800 defaultThemeLightText',
+    label: 'text-gray-700 defaultThemeLightLabel',
+    input: 'text-gray-800 defaultThemeLightInput',
     textHoverTop: 'hover:bg-blue-400 defaultThemeLightTextHoverTop',
     textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeLightTextHoverTopSubMenu',
     textHoverSide: 'hover:bg-gray-300 defaultThemeLightTextHoverSide',
@@ -98,6 +100,8 @@ const defaultTheme = {
     primary: 'bg-blue-800 defaultThemeDarkPrimary',
     secondary: 'bg-gray-700 defaultThemeDarkSecondary',
     text: 'text-gray-200 defaultThemeDarkText',
+    label: 'text-white defaultThemeDarkLabel',
+    input: 'text-black defaultThemeDarkInput',
     textHoverTop: 'hover:bg-blue-400 defaultThemeDarkTextHoverTop',
     textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeDarkTextHoverTopSubMenu',
     textHoverSide: 'hover:bg-gray-400 defaultThemeDarkTextHoverSide',
@@ -201,7 +205,7 @@ const GRAY_BOX_MSG_CLASS = "".concat(ALERT_BASE_CLASS, " text-black bg-gray-200 
 
 const FORM_GROUP_CLASS = "mb-4 formGroupClass";
 const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass";
-const INVALID_FEEDBACK_CLASS = "text-red-500 text-sm mt-1 invalidFeedbackClass";
+const INVALID_FEEDBACK_CLASS = "text-red-800 text-sm mt-1 invalidFeedbackClass";
 const IS_INVALID_CLASS = "border-red-500 isInvalidClass";
 const DISABLE_FIELD_BACKGROUND_COLOR_CLASS = 'bg-gray-200 disableFieldBackgroundColorClass';
 
@@ -296,7 +300,7 @@ const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToo
 
 // export const APP_FORMPAGE_LEVEL1_DIV_CLASS = `${APP_LEVEL1_DIV_CLASS} appFormPageLevel1DivClass`;
 // export const APP_FORMPAGE_LEVEL2_DIV_CLASS = `${APP_LEVEL2_DIV_CLASS} p-2 appFormPageLevel2DivClass`;
-const APP_FORMPAGE_LABEL_CLASS = "font-medium text-gray-700 appFormPageLabelClass";
+const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
 // export const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormButtonBarClass";
 const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
@@ -315,6 +319,7 @@ const POPUP_TOP_MARGIN_CLASS = "pt-4 popupTopMarginClass";
 
 // ModalLib
 
+const MODALIB_TOP_DIV_CLASS = "pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibTopDivClass";
 const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass';
 const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass';
 const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass';
@@ -436,6 +441,7 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   MODALIB_MODAL_FOOTER_CLASS: MODALIB_MODAL_FOOTER_CLASS,
   MODALIB_MODAL_HEADER_CLASS: MODALIB_MODAL_HEADER_CLASS,
   MODALIB_MODAL_TITLE_CLASS: MODALIB_MODAL_TITLE_CLASS,
+  MODALIB_TOP_DIV_CLASS: MODALIB_TOP_DIV_CLASS,
   NAVBAR_BRAND_APP_LOGO_CLASS: NAVBAR_BRAND_APP_LOGO_CLASS,
   NAVBAR_BRAND_APP_VERSION_CLASS: NAVBAR_BRAND_APP_VERSION_CLASS,
   NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS,
@@ -1808,7 +1814,7 @@ const Modal = _ref2 => {
   }, [show, onHide]);
   if (!show) return null;
   return /*#__PURE__*/React.createElement("div", {
-    className: POPUP_TOP_MARGIN_CLASS
+    className: MODALIB_TOP_DIV_CLASS
   }, /*#__PURE__*/React.createElement(CenteredBoxContainer, null, children));
 };
 const ModalHeader = _ref3 => {
@@ -2973,8 +2979,9 @@ function errorLoginAgain(errorMessage) {
   }
   if (forceLogin || MSG_ERROR_INVALID_TOKEN.includes(errorMessage)) {
     setLastUrl();
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
-      as: reactRouterDom.Link,
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button
+    // as={RouterLink}
+    , {
       to: getPrefix() + '/login',
       onClick: parentLogoutHandler
     }, MSG_ERROR_CLICK_TO_RELOGIN));
@@ -3153,7 +3160,8 @@ const LoginPage = props => {
     unRegisterUser
   } = useUser();
   const {
-    appLogo
+    appLogo,
+    theme
   } = useAppContext();
   React.useEffect(() => {
     if (currentUser && performLogin) {
@@ -3251,13 +3259,12 @@ const LoginPage = props => {
     }), /*#__PURE__*/React.createElement("div", {
       className: FORM_GROUP_CLASS
     }, /*#__PURE__*/React.createElement("label", {
-      htmlFor: "username"
+      htmlFor: "username",
+      className: theme.label
     }, "Username"), /*#__PURE__*/React.createElement(formik.Field, {
       name: "username",
       type: "text",
-      className: FORM_CONTROL_CLASS + (errors.username && touched.username ? ' ' + {
-        IS_INVALID_CLASS
-      } : '')
+      className: FORM_CONTROL_CLASS + ' ' + (errors.username && touched.username ? IS_INVALID_CLASS : theme.input)
     }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
       name: "username",
       component: "div",
@@ -3265,13 +3272,12 @@ const LoginPage = props => {
     })), /*#__PURE__*/React.createElement("div", {
       className: FORM_GROUP_CLASS
     }, /*#__PURE__*/React.createElement("label", {
-      htmlFor: "password"
+      htmlFor: "password",
+      className: theme.label
     }, "Password"), /*#__PURE__*/React.createElement(formik.Field, {
       name: "password",
       type: "password",
-      className: FORM_CONTROL_CLASS + (errors.password && touched.password ? ' ' + {
-        IS_INVALID_CLASS
-      } : '')
+      className: FORM_CONTROL_CLASS + ' ' + (errors.password && touched.password ? IS_INVALID_CLASS : theme.input)
     }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
       name: "password",
       component: "div",
@@ -4806,7 +4812,8 @@ const FormPage = _ref => {
     dataset: formData.resultset,
     message: formMsg['message'],
     messageType: formMsg['messageType'],
-    handleFormPageActions: handleFormPageActions
+    handleFormPageActions: handleFormPageActions,
+    theme: theme
   }), !status && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '')
   // </div>
   // </div>
@@ -4830,16 +4837,17 @@ const PutOneFormfield = _ref3 => {
     editorFlags,
     errors,
     touched,
-    initialValue
+    initialValue,
+    theme
   } = _ref3;
   const {
     setFieldValue
   } = formik.useFormikContext();
   let currentObj = currentObjArray[1];
-  const labelClass = APP_FORMPAGE_LABEL_CLASS;
+  const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
   const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
-  const divFieldClass = APP_FORMPAGE_FIELD_CLASS;
-  const fieldClass = errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS;
+  const divFieldClass = APP_FORMPAGE_FIELD_CLASS + " " + theme.label;
+  const fieldClass = errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input;
   const readOnlyfield = editorFlags.isReadOnly || typeof currentObj.readonly !== "undefined" && currentObj.readonly;
   if (typeof currentObj.hidden !== "undefined" && currentObj.hidden) {
     return /*#__PURE__*/React.createElement(formik.Field, {
@@ -5033,7 +5041,8 @@ const EditFormFormik = _ref4 => {
     dataset,
     message = "",
     messageType = "",
-    handleFormPageActions
+    handleFormPageActions,
+    theme
   } = _ref4;
   const [formData, setFormData] = React.useState({
     readyToShow: false,
@@ -5097,7 +5106,8 @@ const EditFormFormik = _ref4 => {
     canCommit: formData['canCommit'],
     message: formData['message'],
     messageType: formData['messageType'],
-    handleFormPageActions: handleFormPageActions
+    handleFormPageActions: handleFormPageActions,
+    theme: theme
   });
 };
 const EditFormFormikFinal = _ref5 => {
@@ -5110,7 +5120,8 @@ const EditFormFormikFinal = _ref5 => {
     canCommit,
     message,
     messageType,
-    handleFormPageActions
+    handleFormPageActions,
+    theme
   } = _ref5;
   const {
     currentUser
@@ -5237,7 +5248,8 @@ const EditFormFormikFinal = _ref5 => {
         editorFlags: editorFlags,
         errors: errors,
         touched: touched,
-        initialValue: initialFieldValues[htmlElement[1].name]
+        initialValue: initialFieldValues[htmlElement[1].name],
+        theme: theme
       });
     }), /*#__PURE__*/React.createElement("div", {
       className: APP_FORMPAGE_FORM_BUTTON_BAR_CLASS
@@ -5464,6 +5476,9 @@ const CrudEditorSearch = _ref => {
     handleCancel,
     value = ""
   } = _ref;
+  const {
+    theme
+  } = useAppContext();
   const [searchText, setSearchText] = React.useState(value);
   const getDateRange = searchValue => {
     const dateRange = searchValue.split(',');
@@ -5522,7 +5537,7 @@ const CrudEditorSearch = _ref => {
     id: id
     // type="text"
     ,
-    className: APP_LISTING_SEARCH_BOX_INPUT_CLASS,
+    className: APP_LISTING_SEARCH_BOX_INPUT_CLASS + " " + theme.input,
     placeholder: "".concat(MSG_SEARCH, "..."),
     value: searchText || '',
     onChange: handleTextChange
@@ -5924,6 +5939,9 @@ const CrudEditorRowsPerPage = _ref2 => {
     rowsPerPage,
     handleRowsPerPageChange
   } = _ref2;
+  const {
+    theme
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("div", {
     className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS
   }, /*#__PURE__*/React.createElement("label", {
@@ -5931,7 +5949,7 @@ const CrudEditorRowsPerPage = _ref2 => {
     className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS
   }, MSG_ROWS_PER_PAGE, ":"), /*#__PURE__*/React.createElement("select", {
     id: "newRowsPerPage",
-    className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
+    className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS + " " + theme.input,
     onChange: handleRowsPerPageChange,
     defaultValue: rowsPerPage
   }, /*#__PURE__*/React.createElement("option", {

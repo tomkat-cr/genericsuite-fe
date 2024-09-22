@@ -208,7 +208,7 @@ declare var class_name_constants: Readonly<{
     APP_FORMPAGE_FIELD_GOOD_CLASS: string;
     APP_FORMPAGE_FIELD_INVALID_CLASS: string;
     APP_FORMPAGE_FORM_BUTTON_BAR_CLASS: "flex align-middle space-x-4 appFormPageFormButtonBarClass";
-    APP_FORMPAGE_LABEL_CLASS: "font-medium text-gray-700 appFormPageLabelClass";
+    APP_FORMPAGE_LABEL_CLASS: "font-medium appFormPageLabelClass";
     APP_FORMPAGE_LABEL_REQUIRED_CLASS: "font-medium text-red-700 appFormPageLabelRequiredClass";
     APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: "align-middle flex appFormPageSpecialButtonDivClass";
     APP_LEVEL2_DIV_CLASS: "overflow-x-auto appLevel2DivClass";
@@ -270,7 +270,7 @@ declare var class_name_constants: Readonly<{
     INFO_MSG_CLASS: string;
     INLINE_CLASS: "inline inlineClass";
     INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
-    INVALID_FEEDBACK_CLASS: "text-red-500 text-sm mt-1 invalidFeedbackClass";
+    INVALID_FEEDBACK_CLASS: "text-red-800 text-sm mt-1 invalidFeedbackClass";
     IS_INVALID_CLASS: "border-red-500 isInvalidClass";
     LOGIN_PAGE_APP_LOGO_CLASS: "mx-auto my-0 loginPageAppLogoClass";
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: "flex min-h-screen mainContainerForSideMenuClass";
@@ -286,6 +286,7 @@ declare var class_name_constants: Readonly<{
     MODALIB_MODAL_FOOTER_CLASS: "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
     MODALIB_MODAL_HEADER_CLASS: "flex items-center justify-between pb-3 modalibModalHeaderClass";
     MODALIB_MODAL_TITLE_CLASS: "text-xl font-semibold modalibModalTitleClass";
+    MODALIB_TOP_DIV_CLASS: "pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibTopDivClass";
     NAVBAR_BRAND_APP_LOGO_CLASS: "mx-auto my-0 navbarBrandAppLogoClass";
     NAVBAR_BRAND_APP_VERSION_CLASS: "text-xs navbarBrandAppVersionClass";
     NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
@@ -362,6 +363,8 @@ declare var class_name_constants: Readonly<{
             primary: string;
             secondary: string;
             text: string;
+            label: string;
+            input: string;
             textHoverTop: string;
             textHoverTopSubMenu: string;
             textHoverSide: string;
@@ -372,6 +375,8 @@ declare var class_name_constants: Readonly<{
             primary: string;
             secondary: string;
             text: string;
+            label: string;
+            input: string;
             textHoverTop: string;
             textHoverTopSubMenu: string;
             textHoverSide: string;
