@@ -15,7 +15,7 @@ export const defaultTheme = {
     primary: 'bg-blue-800 defaultThemeDarkPrimary',
     secondary: 'bg-gray-700 defaultThemeDarkSecondary',
     text: 'text-gray-200 defaultThemeDarkText',
-    label: 'text-black defaultThemeDarkLabel',
+    label: 'text-white defaultThemeDarkLabel',
     input: 'text-black defaultThemeDarkInput',
     textHoverTop: 'hover:bg-blue-400 defaultThemeDarkTextHoverTop',
     textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeDarkTextHoverTopSubMenu',
@@ -143,7 +143,7 @@ export const GRAY_BOX_MSG_CLASS = `${ALERT_BASE_CLASS} text-black bg-gray-200 mt
 
 export const FORM_GROUP_CLASS = "mb-4 formGroupClass";
 export const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass";
-export const INVALID_FEEDBACK_CLASS = "text-red-500 text-sm mt-1 invalidFeedbackClass";
+export const INVALID_FEEDBACK_CLASS = "text-red-800 text-sm mt-1 invalidFeedbackClass";
 export const IS_INVALID_CLASS = "border-red-500 isInvalidClass";
 export const DISABLE_FIELD_BACKGROUND_COLOR_CLASS = 'bg-gray-200 disableFieldBackgroundColorClass';
 
@@ -261,10 +261,11 @@ export const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChil
 
 // Pop-ups
 
-export const POPUP_TOP_MARGIN_CLASS="fixed ml-3 md:ml-64 lg:ml-96 pt-4 popupTopMarginClass";
+export const POPUP_TOP_MARGIN_CLASS="pt-4 popupTopMarginClass";
 
 // ModalLib
 
+export const MODALIB_TOP_DIV_CLASS="pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibTopDivClass";
 export const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass';
 export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass';
 export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass';

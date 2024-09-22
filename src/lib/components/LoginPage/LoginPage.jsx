@@ -149,12 +149,17 @@ export const LoginPage = (props) => {
                             <div
                                 className={FORM_GROUP_CLASS}
                             >
-                                <label htmlFor="username">Username</label>
+                                <label
+                                    htmlFor="username"
+                                    className={theme.label}
+                                >
+                                    Username
+                                </label>
                                 <Field
                                     name="username"
                                     type="text"
                                     className={FORM_CONTROL_CLASS + ' ' + (
-                                        errors.username && touched.username ? {IS_INVALID_CLASS} : theme.input
+                                        errors.username && touched.username ? IS_INVALID_CLASS : theme.input
                                     )}
                                 />
                                 <ErrorMessage
@@ -166,14 +171,19 @@ export const LoginPage = (props) => {
                             <div
                                 className={FORM_GROUP_CLASS}
                             >
-                                <label htmlFor="password">Password</label>
+                                <label
+                                    htmlFor="password"
+                                    className={theme.label}
+                                >
+                                    Password
+                                </label>
                                 <Field
                                     name="password"
                                     type="password"
                                     className={FORM_CONTROL_CLASS + ' ' + (
-                                        errors.password && touched.password ? {IS_INVALID_CLASS} : theme.input
+                                        errors.password && touched.password ? IS_INVALID_CLASS : theme.input
                                     )}
-                                />
+                                    />
                                 <ErrorMessage
                                     name="password"
                                     component="div"

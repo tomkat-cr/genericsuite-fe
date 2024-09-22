@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { console_debug_log } from '../services/logging.service.jsx';
 import { CenteredBoxContainer, GsButton } from './NavLib.jsx';
 import {
-    POPUP_TOP_MARGIN_CLASS,
+    MODALIB_TOP_DIV_CLASS,
     MODALIB_BUTTON_BASESTYLE_CLASS,
     MODALIB_BUTTON_PRIMARY_CLASS,
     MODALIB_BUTTON_SECONDARY_CLASS,
@@ -60,7 +60,7 @@ export const Modal = ({ show, onHide, children }) => {
   
     return (
         <div
-            className={POPUP_TOP_MARGIN_CLASS}
+            className={MODALIB_TOP_DIV_CLASS}
         >
             <CenteredBoxContainer>
                 {children}
