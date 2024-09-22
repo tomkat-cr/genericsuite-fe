@@ -195,6 +195,7 @@ export const FormPage = ({
                             message={formMsg['message']}
                             messageType={formMsg['messageType']}
                             handleFormPageActions={handleFormPageActions}
+                            theme={theme}
                         />
                     }
                     {!status &&
@@ -227,15 +228,16 @@ const PutOneFormfield = ({
     errors,
     touched,
     initialValue,
+    theme,
 }) => {
     const { setFieldValue } = useFormikContext();
 
     let currentObj = currentObjArray[1];
 
-    const labelClass = APP_FORMPAGE_LABEL_CLASS;
+    const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
     const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
-    const divFieldClass = APP_FORMPAGE_FIELD_CLASS;
-    const fieldClass = (errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS);
+    const divFieldClass = APP_FORMPAGE_FIELD_CLASS + " " + theme.label;
+    const fieldClass = (errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input);
 
     const readOnlyfield =
         editorFlags.isReadOnly ||
@@ -514,6 +516,7 @@ const EditFormFormik = (
         message = "",
         messageType = "",
         handleFormPageActions,
+        theme,
     }
 ) => {
     const [formData, setFormData] = useState({
@@ -599,6 +602,7 @@ const EditFormFormik = (
             message: formData['message'],
             messageType: formData['messageType'],
             handleFormPageActions: handleFormPageActions,
+            theme: theme,
         })
     )
 }
@@ -613,6 +617,7 @@ const EditFormFormikFinal = ({
     message,
     messageType,
     handleFormPageActions,
+    theme,
 }) => {
     const { currentUser } = useUser();
 
@@ -808,6 +813,7 @@ const EditFormFormikFinal = ({
                             errors={errors}
                             touched={touched}
                             initialValue={initialFieldValues[htmlElement[1].name]}
+                            theme={theme}
                         />
                     })}
                     <div

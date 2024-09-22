@@ -691,6 +691,7 @@ export const GetFormData = (editorData, registry, calleeName = null) => {
 }
 
 const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange }) => {
+  const { theme } = useAppContext();
   return (
     <div
       className={APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS}
@@ -712,7 +713,7 @@ const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange }) => 
       /> */}
       <select
         id="newRowsPerPage"
-        className={APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS}
+        className={APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS + " " + theme.input}
         onChange={handleRowsPerPageChange}
         defaultValue={rowsPerPage}
       >

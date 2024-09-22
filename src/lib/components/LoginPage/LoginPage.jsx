@@ -44,7 +44,7 @@ export const LoginPage = (props) => {
     const [performLogin, setPerformLogin] = useState(false);
 
     const { currentUser, registerUser, unRegisterUser } = useUser();
-    const { appLogo } = useAppContext();
+    const { appLogo, theme } = useAppContext();
 
     useEffect(() => {
         if (currentUser && performLogin) {
@@ -153,8 +153,8 @@ export const LoginPage = (props) => {
                                 <Field
                                     name="username"
                                     type="text"
-                                    className={FORM_CONTROL_CLASS + (
-                                        errors.username && touched.username ? ' ' + {IS_INVALID_CLASS} : ''
+                                    className={FORM_CONTROL_CLASS + ' ' + (
+                                        errors.username && touched.username ? {IS_INVALID_CLASS} : theme.input
                                     )}
                                 />
                                 <ErrorMessage
@@ -170,8 +170,8 @@ export const LoginPage = (props) => {
                                 <Field
                                     name="password"
                                     type="password"
-                                    className={FORM_CONTROL_CLASS + (
-                                        errors.password && touched.password ? ' ' + {IS_INVALID_CLASS} : ''
+                                    className={FORM_CONTROL_CLASS + ' ' + (
+                                        errors.password && touched.password ? {IS_INVALID_CLASS} : theme.input
                                     )}
                                 />
                                 <ErrorMessage

@@ -5,6 +5,7 @@ import React, { useState } from "react"
 import { console_debug_log } from "./logging.service.jsx";
 import { processDateToTimestamp } from "../helpers/date-timestamp.jsx";
 import { GsIcons } from "../helpers/IconsLib.jsx";
+import { useAppContext } from "../helpers/AppContext.jsx";
     
 import {
     MSG_SEARCH,
@@ -26,6 +27,7 @@ export const CrudEditorSearch = ({
     handleCancel,
     value="",
 }) => {
+    const { theme } = useAppContext();
     const [searchText, setSearchText] = useState(value);
 
     const getDateRange = (searchValue) => {
@@ -108,7 +110,7 @@ export const CrudEditorSearch = ({
             <input
                 id={id}
                 // type="text"
-                className={APP_LISTING_SEARCH_BOX_INPUT_CLASS}
+                className={APP_LISTING_SEARCH_BOX_INPUT_CLASS + " " + theme.input}
                 placeholder={`${MSG_SEARCH}...`}
                 value={searchText || ''}
                 onChange={handleTextChange}

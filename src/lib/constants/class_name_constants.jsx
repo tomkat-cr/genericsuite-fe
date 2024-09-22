@@ -3,6 +3,8 @@ export const defaultTheme = {
     primary: 'bg-blue-600 defaultThemeLightPrimary',
     secondary: 'bg-gray-200 defaultThemeLightSecondary',
     text: 'text-gray-800 defaultThemeLightText',
+    label: 'text-gray-700 defaultThemeLightLabel',
+    input: 'text-gray-800 defaultThemeLightInput',
     textHoverTop: 'hover:bg-blue-400 defaultThemeLightTextHoverTop',
     textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeLightTextHoverTopSubMenu',
     textHoverSide: 'hover:bg-gray-300 defaultThemeLightTextHoverSide',
@@ -13,6 +15,8 @@ export const defaultTheme = {
     primary: 'bg-blue-800 defaultThemeDarkPrimary',
     secondary: 'bg-gray-700 defaultThemeDarkSecondary',
     text: 'text-gray-200 defaultThemeDarkText',
+    label: 'text-black defaultThemeDarkLabel',
+    input: 'text-black defaultThemeDarkInput',
     textHoverTop: 'hover:bg-blue-400 defaultThemeDarkTextHoverTop',
     textHoverTopSubMenu: 'hover:bg-gray-200 defaultThemeDarkTextHoverTopSubMenu',
     textHoverSide: 'hover:bg-gray-400 defaultThemeDarkTextHoverSide',
@@ -242,7 +246,7 @@ export const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS="ml-3 mr-3 hidden appListi
 
 // export const APP_FORMPAGE_LEVEL1_DIV_CLASS = `${APP_LEVEL1_DIV_CLASS} appFormPageLevel1DivClass`;
 // export const APP_FORMPAGE_LEVEL2_DIV_CLASS = `${APP_LEVEL2_DIV_CLASS} p-2 appFormPageLevel2DivClass`;
-export const APP_FORMPAGE_LABEL_CLASS = "font-medium text-gray-700 appFormPageLabelClass";
+export const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 export const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
 // export const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormButtonBarClass";
 export const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
