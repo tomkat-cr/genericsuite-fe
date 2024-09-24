@@ -132,9 +132,11 @@ export function errorAndReEnter(
             primaryButtonAction={parentLogoutHandler}
             logoutButton={logoutButton}
             htmlContent={msgContainsHtml ? retryMessage : null}
-            htmlContentClass={ALERT_DANGER_CLASS}
+            // htmlContentClass={ALERT_DANGER_CLASS}
+            iconClassName={ALERT_DANGER_CLASS}
         >
-            {msgContainsHtml ? null : errorMessageDiv(retryMessage)}
+            {/* {msgContainsHtml ? null : errorMessageDiv(retryMessage)} */}
+            {msgContainsHtml ? null : retryMessage}
         </ModalPopUp>
     );
 }

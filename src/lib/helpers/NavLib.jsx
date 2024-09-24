@@ -683,12 +683,14 @@ export const GsButton = ({ variant = 'primary', className = '', as = null, onCli
     if (as) {
         // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
         const As = as;
+        // console.log(`||||| GsButton | As:`, As, ' | props:', props);
         return (
             <As
-                role="button"
-                type={type ?? "button"}
+                // role="button"
+                to={props.to ?? props.href ?? null}
+                // type={type ?? "button"}
                 className={`${variantStyle} ${className}`}
-                onClick={onClick ?? (() => handleClick())}
+                onClick={onClick ?? null}
                 {...props}
             />
         );

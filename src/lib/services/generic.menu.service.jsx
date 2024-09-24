@@ -373,6 +373,12 @@ export const getDefaultRoutesRaw = () => {
             element_obj: <LoginPage/>,
             type: "nav_link",
         },
+        {
+            title: 'loginpage4',
+            path: '/#/login',
+            element_obj: <LoginPage/>,
+            type: "nav_link",
+        },
     ];
 }
 

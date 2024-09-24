@@ -35,7 +35,7 @@ declare function LoginPage(props: any): React.FunctionComponentElement<{
 declare var ModalPopUp$1: Readonly<{
     __proto__: null;
     DefaultButtonModal: (_ref2: any) => React.FunctionComponentElement<any>;
-    LogoutNavigate: (_ref3: any) => React.DetailedReactHTMLElement<{
+    LogoutNavigate: (_ref3: any) => React.FunctionComponentElement<any> | React.DetailedReactHTMLElement<{
         variant: any;
         className: string;
         href: string;
@@ -277,16 +277,25 @@ declare var class_name_constants: Readonly<{
     MAIN_CONTAINER_FOR_TOP_MENU_CLASS: "flex flex-col min-h-screen mainContainerForTopMenuClass";
     MENU_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 menuModeButtonTopDivClass";
     ML2_ICON_CLASS: "ml-2 overflow-visible";
-    MODALIB_BUTTON_BASESTYLE_CLASS: "px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass";
+    MODALIB_BUTTON_BASESTYLE_CLASS: "px-4 py-2 border rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass";
+    MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS: "w-full flex justify-center modalibButtonBaseStyleNotWideClass";
+    MODALIB_BUTTON_BASESTYLE_WIDE_CLASS: "flex-1 modalibButtonBaseStyleWideClass";
     MODALIB_BUTTON_DANGER_CLASS: "bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass";
-    MODALIB_BUTTON_PRIMARY_CLASS: "bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass";
-    MODALIB_BUTTON_SECONDARY_CLASS: "bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass";
+    MODALIB_BUTTON_PRIMARY_CLASS: "bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass";
+    MODALIB_BUTTON_SECONDARY_CLASS: "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass";
     MODALIB_BUTTON_SUCCESS_CLASS: "bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass";
-    MODALIB_MODAL_BODY_CLASS: "py-4 modalibModalBodyClass";
-    MODALIB_MODAL_FOOTER_CLASS: "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
-    MODALIB_MODAL_HEADER_CLASS: "flex items-center justify-between pb-3 modalibModalHeaderClass";
-    MODALIB_MODAL_TITLE_CLASS: "text-xl font-semibold modalibModalTitleClass";
-    MODALIB_TOP_DIV_CLASS: "pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibTopDivClass";
+    MODALIB_MODAL_BODY_CLASS: "text-gray-600 text-center mb-6 modalibModalBodyClass";
+    MODALIB_MODAL_DIV_1_CLASS: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+    MODALIB_MODAL_DIV_2_CLASS: "bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+    MODALIB_MODAL_DIV_3_CLASS: "p-6 modalibModalDiv3Class";
+    MODALIB_MODAL_FOOTER_CLASS: "flex modalibModalFooterClass";
+    MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS: "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
+    MODALIB_MODAL_FOOTER_WIDE_CLASS: "flex-row space-x-4 modalibModalFooterWideClass";
+    MODALIB_MODAL_HEADER_CLASS: "modalibModalHeaderClass";
+    MODALIB_MODAL_ICON_1_CLASS: "flex justify-center mb-4 modalibModalIcon1Class";
+    MODALIB_MODAL_ICON_2_CLASS: "rounded-full p-2 modalibModalIcon2Class";
+    MODALIB_MODAL_ICON_3_CLASS: "w-6 h-6 modalibModalIcon3Class";
+    MODALIB_MODAL_TITLE_CLASS: "text-xl font-semibold text-center mb-2 modalibModalTitleClass";
     NAVBAR_BRAND_APP_LOGO_CLASS: "mx-auto my-0 navbarBrandAppLogoClass";
     NAVBAR_BRAND_APP_VERSION_CLASS: "text-xs navbarBrandAppVersionClass";
     NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";

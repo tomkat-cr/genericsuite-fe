@@ -319,16 +319,34 @@ const POPUP_TOP_MARGIN_CLASS = "pt-4 popupTopMarginClass";
 
 // ModalLib
 
-const MODALIB_TOP_DIV_CLASS = "pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibTopDivClass";
-const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass';
-const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass';
-const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass';
+// export const MODALIB_MODAL_DIV_1_CLASS="pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibModalDiv1Class";
+const MODALIB_MODAL_DIV_1_CLASS = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+const MODALIB_MODAL_DIV_2_CLASS = "bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+const MODALIB_MODAL_DIV_3_CLASS = "p-6 modalibModalDiv3Class";
+const MODALIB_MODAL_ICON_1_CLASS = "flex justify-center mb-4 modalibModalIcon1Class";
+const MODALIB_MODAL_ICON_2_CLASS = "rounded-full p-2 modalibModalIcon2Class";
+const MODALIB_MODAL_ICON_3_CLASS = "w-6 h-6 modalibModalIcon3Class";
+// export const MODALIB_MODAL_HEADER_CLASS = "flex items-center justify-between pb-3 modalibModalHeaderClass";
+const MODALIB_MODAL_HEADER_CLASS = "modalibModalHeaderClass";
+// export const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold modalibModalTitleClass";
+const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold text-center mb-2 modalibModalTitleClass";
+// export const MODALIB_MODAL_BODY_CLASS = "text-gray-600 text-center mb-6 modalibModalBodyClass";
+const MODALIB_MODAL_BODY_CLASS = "text-gray-600 text-center mb-6 modalibModalBodyClass";
+// export const MODALIB_MODAL_FOOTER_CLASS = "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
+const MODALIB_MODAL_FOOTER_CLASS = "flex modalibModalFooterClass";
+const MODALIB_MODAL_FOOTER_WIDE_CLASS = "flex-row space-x-4 modalibModalFooterWideClass";
+const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
+
+// export const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass';
+const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
+const MODALIB_BUTTON_BASESTYLE_WIDE_CLASS = 'flex-1 modalibButtonBaseStyleWideClass';
+const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center modalibButtonBaseStyleNotWideClass';
+// export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass';
+const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass';
+// export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass';
+const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass';
 const MODALIB_BUTTON_SUCCESS_CLASS = 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass';
 const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass';
-const MODALIB_MODAL_HEADER_CLASS = "flex items-center justify-between pb-3 modalibModalHeaderClass";
-const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold modalibModalTitleClass";
-const MODALIB_MODAL_BODY_CLASS = "py-4 modalibModalBodyClass";
-const MODALIB_MODAL_FOOTER_CLASS = "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
 
 // Login page
 
@@ -433,15 +451,24 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   MENU_MODE_BUTTON_TOP_DIV_CLASS: MENU_MODE_BUTTON_TOP_DIV_CLASS,
   ML2_ICON_CLASS: ML2_ICON_CLASS,
   MODALIB_BUTTON_BASESTYLE_CLASS: MODALIB_BUTTON_BASESTYLE_CLASS,
+  MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS: MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS,
+  MODALIB_BUTTON_BASESTYLE_WIDE_CLASS: MODALIB_BUTTON_BASESTYLE_WIDE_CLASS,
   MODALIB_BUTTON_DANGER_CLASS: MODALIB_BUTTON_DANGER_CLASS,
   MODALIB_BUTTON_PRIMARY_CLASS: MODALIB_BUTTON_PRIMARY_CLASS,
   MODALIB_BUTTON_SECONDARY_CLASS: MODALIB_BUTTON_SECONDARY_CLASS,
   MODALIB_BUTTON_SUCCESS_CLASS: MODALIB_BUTTON_SUCCESS_CLASS,
   MODALIB_MODAL_BODY_CLASS: MODALIB_MODAL_BODY_CLASS,
+  MODALIB_MODAL_DIV_1_CLASS: MODALIB_MODAL_DIV_1_CLASS,
+  MODALIB_MODAL_DIV_2_CLASS: MODALIB_MODAL_DIV_2_CLASS,
+  MODALIB_MODAL_DIV_3_CLASS: MODALIB_MODAL_DIV_3_CLASS,
   MODALIB_MODAL_FOOTER_CLASS: MODALIB_MODAL_FOOTER_CLASS,
+  MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS: MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS,
+  MODALIB_MODAL_FOOTER_WIDE_CLASS: MODALIB_MODAL_FOOTER_WIDE_CLASS,
   MODALIB_MODAL_HEADER_CLASS: MODALIB_MODAL_HEADER_CLASS,
+  MODALIB_MODAL_ICON_1_CLASS: MODALIB_MODAL_ICON_1_CLASS,
+  MODALIB_MODAL_ICON_2_CLASS: MODALIB_MODAL_ICON_2_CLASS,
+  MODALIB_MODAL_ICON_3_CLASS: MODALIB_MODAL_ICON_3_CLASS,
   MODALIB_MODAL_TITLE_CLASS: MODALIB_MODAL_TITLE_CLASS,
-  MODALIB_TOP_DIV_CLASS: MODALIB_TOP_DIV_CLASS,
   NAVBAR_BRAND_APP_LOGO_CLASS: NAVBAR_BRAND_APP_LOGO_CLASS,
   NAVBAR_BRAND_APP_VERSION_CLASS: NAVBAR_BRAND_APP_VERSION_CLASS,
   NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS,
@@ -1075,6 +1102,35 @@ const GsIcons = _ref => {
       selectedSvg = /*#__PURE__*/React.createElement("div", {
         className: VERTICAL_SLIDER_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
       });
+      break;
+    case 'warning-sign':
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
+        class: "h-6 w-6 text-red-600",
+        fill: "none",
+        viewBox: "0 0 24 24",
+        strokeWidth: "1.5",
+        stroke: "currentColor",
+        "aria-hidden": "true"
+      }, /*#__PURE__*/React.createElement("path", {
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        d: "M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+      }));
+      break;
+    case 'checked-sign':
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
+        xmlns: "http://www.w3.org/2000/svg",
+        fill: "none",
+        viewBox: "0 0 24 24",
+        strokeWidth: "1.5",
+        stroke: "currentColor",
+        "aria-hidden": "true",
+        className: "oi sl aye"
+      }, /*#__PURE__*/React.createElement("path", {
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        d: "M4.5 12.75l6 6 9-13.5"
+      }));
       break;
     case 'x':
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
@@ -1746,13 +1802,18 @@ const GsButton = _ref18 => {
   };
   const variantStyle = variants[variant] || '';
   if (as) {
+    var _ref19, _props$to;
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
     const As = as;
-    return /*#__PURE__*/React.createElement(As, _extends({
-      role: "button",
-      type: type !== null && type !== void 0 ? type : "button",
+    // console.log(`||||| GsButton | As:`, As, ' | props:', props);
+    return /*#__PURE__*/React.createElement(As
+    // role="button"
+    , _extends({
+      to: (_ref19 = (_props$to = props.to) !== null && _props$to !== void 0 ? _props$to : props.href) !== null && _ref19 !== void 0 ? _ref19 : null
+      // type={type ?? "button"}
+      ,
       className: "".concat(variantStyle, " ").concat(className),
-      onClick: onClick !== null && onClick !== void 0 ? onClick : () => handleClick()
+      onClick: onClick !== null && onClick !== void 0 ? onClick : null
     }, props));
   }
   return /*#__PURE__*/React.createElement("button", _extends({
@@ -1778,11 +1839,12 @@ var NavLib = /*#__PURE__*/Object.freeze({
 
 const Button = _ref => {
   let {
+    isWide,
     variant = 'primary',
     className = '',
     ...props
   } = _ref;
-  const baseStyle = MODALIB_BUTTON_BASESTYLE_CLASS;
+  const baseStyle = MODALIB_BUTTON_BASESTYLE_CLASS + " " + (isWide ? MODALIB_BUTTON_BASESTYLE_WIDE_CLASS : MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS);
   const variants = {
     primary: MODALIB_BUTTON_PRIMARY_CLASS,
     secondary: MODALIB_BUTTON_SECONDARY_CLASS,
@@ -1799,6 +1861,7 @@ const Modal = _ref2 => {
   let {
     show,
     onHide,
+    className,
     children
   } = _ref2;
   React.useEffect(() => {
@@ -1814,151 +1877,75 @@ const Modal = _ref2 => {
   }, [show, onHide]);
   if (!show) return null;
   return /*#__PURE__*/React.createElement("div", {
-    className: MODALIB_TOP_DIV_CLASS
-  }, /*#__PURE__*/React.createElement(CenteredBoxContainer, null, children));
+    className: MODALIB_MODAL_DIV_1_CLASS,
+    role: "dialog",
+    "aria-modal": "true"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: MODALIB_MODAL_DIV_2_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    className: MODALIB_MODAL_DIV_3_CLASS
+  }, children)));
 };
 const ModalHeader = _ref3 => {
   let {
     children
   } = _ref3;
+  // if MODALIB_MODAL_HEADER_CLASS has no spaces or is empty, means it has no styling...
+  if (MODALIB_MODAL_HEADER_CLASS.indexOf(' ') === -1) {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, children);
+  }
   return /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_HEADER_CLASS
   }, children);
 };
-const ModalTitle = _ref4 => {
+const ModalIcon = _ref4 => {
+  let {
+    children,
+    iconClassName
+  } = _ref4;
+  if (!iconClassName) {
+    return null;
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: MODALIB_MODAL_ICON_1_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    className: (iconClassName !== null && iconClassName !== void 0 ? iconClassName : '') + " " + MODALIB_MODAL_ICON_2_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: iconClassName === ALERT_DANGER_CLASS ? "warning-sign" : "checked-sign",
+    className: MODALIB_MODAL_ICON_3_CLASS
+  })));
+};
+const ModalTitle = _ref5 => {
   let {
     children
-  } = _ref4;
+  } = _ref5;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
     className: MODALIB_MODAL_TITLE_CLASS
   }, children));
 };
-const ModalBody = _ref5 => {
-  let {
-    children
-  } = _ref5;
-  return /*#__PURE__*/React.createElement("div", {
-    className: MODALIB_MODAL_BODY_CLASS
-  }, children);
-};
-const ModalFooter = _ref6 => {
+const ModalBody = _ref6 => {
   let {
     children
   } = _ref6;
   return /*#__PURE__*/React.createElement("div", {
-    className: MODALIB_MODAL_FOOTER_CLASS
+    className: MODALIB_MODAL_BODY_CLASS
+  }, children);
+};
+const ModalFooter = _ref7 => {
+  let {
+    children,
+    isWide
+  } = _ref7;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "".concat(MODALIB_MODAL_FOOTER_CLASS, " ").concat(isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS)
   }, children);
 };
 Modal.Header = ModalHeader;
 Modal.Title = ModalTitle;
 Modal.Body = ModalBody;
 Modal.Footer = ModalFooter;
+Modal.Icon = ModalIcon;
 Modal.Button = Button;
-
-const ModalPopUp = _ref => {
-  let {
-    title = null,
-    children,
-    closeButtonMessage = "Close",
-    closeButtonAction = null,
-    primaryButtonMessage = null,
-    primaryButtonAction = null,
-    secondButtonMessage = null,
-    secondButtonAction = null,
-    logoutButton = false,
-    allowOnHide = true,
-    link = null,
-    showTitle = true,
-    htmlContent = null,
-    htmlContentClass = null
-  } = _ref;
-  const [show, setShow] = React.useState(true);
-  const handleClose = () => setShow(false);
-  const handleOnHide = () => setShow(!allowOnHide);
-  const linkSuffix = "?menu=0";
-  // const handleShow = () => setShow(true);
-  // {
-  //     <Button variant="primary" onClick={handleShow}>
-  //         Open Modal
-  //     </Button>
-  // }
-
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Modal, {
-    show: show,
-    onHide: handleOnHide
-  }, title && showTitle && /*#__PURE__*/React.createElement(Modal.Header, {
-    closeButton: true
-  }, /*#__PURE__*/React.createElement(Modal.Title, null, title)), /*#__PURE__*/React.createElement(Modal.Body, null, link && /*#__PURE__*/React.createElement("iframe", {
-    src: link + linkSuffix,
-    style: {
-      width: '100%',
-      height: '400px'
-    },
-    title: title
-  }), !link && htmlContent === null && children, !link && htmlContent !== null && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: htmlContentClass
-    // dangerouslySetInnerHTML={{ __html: htmlContent }}
-  }, htmlContent))), /*#__PURE__*/React.createElement(Modal.Footer, null, closeButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
-    variant: "secondary",
-    action: () => closeButtonAction ? closeButtonAction() : handleClose()
-  }, closeButtonMessage), secondButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
-    variant: "secondary",
-    action: secondButtonAction
-  }, secondButtonMessage), primaryButtonMessage && logoutButton && /*#__PURE__*/React.createElement(LogoutNavigate, {
-    variant: "primary",
-    action: primaryButtonAction
-  }, primaryButtonMessage), primaryButtonMessage && !logoutButton && /*#__PURE__*/React.createElement(DefaultButtonModal, {
-    variant: "primary",
-    action: primaryButtonAction
-  }, primaryButtonMessage))));
-};
-const DefaultButtonModal = _ref2 => {
-  let {
-    children,
-    variant,
-    action
-  } = _ref2;
-  return /*#__PURE__*/React.createElement(Button, {
-    variant: variant,
-    onClick: () => action ? action() : null
-  }, children);
-};
-const LogoutNavigate = _ref3 => {
-  let {
-    children,
-    variant
-  } = _ref3;
-  return /*#__PURE__*/React.createElement("a", {
-    variant: variant,
-    className: BUTTON_PRIMARY_CLASS
-    // href={getPrefix(true)+'/login'}
-    ,
-    href: '/#/login'
-  }, children);
-};
-
-var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  DefaultButtonModal: DefaultButtonModal,
-  LogoutNavigate: LogoutNavigate,
-  ModalPopUp: ModalPopUp
-});
-
-const About = () => {
-  return /*#__PURE__*/React.createElement(ModalPopUp, {
-    title: "About",
-    link: window.location.origin + '/#/about_body',
-    showTitle: false
-  });
-};
-const AboutBody = _ref => {
-  let {
-    children
-  } = _ref;
-  const version = process.env.REACT_APP_VERSION;
-  const appName = process.env.REACT_APP_APP_NAME;
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), children);
-};
 
 const saveRawItemToLocalStorage = (lsItemName, lsData) => {
   localStorage.setItem(lsItemName, lsData);
@@ -2016,6 +2003,151 @@ var history$1 = /*#__PURE__*/Object.freeze({
   removeLastUrl: removeLastUrl,
   setLastUrl: setLastUrl
 });
+
+const ModalPopUp = _ref => {
+  let {
+    title = null,
+    children,
+    closeButtonMessage = "Close",
+    closeButtonAction = null,
+    primaryButtonMessage = null,
+    primaryButtonAction = null,
+    secondButtonMessage = null,
+    secondButtonAction = null,
+    logoutButton = false,
+    allowOnHide = true,
+    link = null,
+    showTitle = true,
+    htmlContent = null,
+    htmlContentClass = null,
+    iconClassName = null
+  } = _ref;
+  const [show, setShow] = React.useState(true);
+  const [isWide, setIsWide] = React.useState(window.innerWidth >= 640);
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsWide(window.innerWidth >= 640);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  const handleClose = () => setShow(false);
+  const handleOnHide = () => setShow(!allowOnHide);
+  const linkSuffix = "?menu=0";
+
+  // const handleShow = () => setShow(true);
+  // {
+  //     <Button variant="primary" onClick={handleShow}>
+  //         Open Modal
+  //     </Button>
+  // }
+
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Modal, {
+    show: show,
+    onHide: handleOnHide
+  }, (iconClassName || title) && showTitle && /*#__PURE__*/React.createElement(Modal.Header, {
+    closeButton: true
+  }, /*#__PURE__*/React.createElement(Modal.Icon, {
+    iconClassName: iconClassName
+  }), /*#__PURE__*/React.createElement(Modal.Title, null, title)), /*#__PURE__*/React.createElement(Modal.Body, null, link && /*#__PURE__*/React.createElement("iframe", {
+    src: link + linkSuffix,
+    style: {
+      width: '100%',
+      height: '400px'
+    },
+    title: title
+  }), !link && htmlContent === null && children, !link && htmlContent !== null && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: htmlContentClass
+    // dangerouslySetInnerHTML={{ __html: htmlContent }}
+  }, htmlContent))), /*#__PURE__*/React.createElement(Modal.Footer, {
+    isWide: isWide
+  }, closeButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
+    variant: "secondary",
+    action: () => closeButtonAction ? closeButtonAction() : handleClose(),
+    isWide: isWide
+  }, closeButtonMessage), secondButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
+    variant: "secondary",
+    action: secondButtonAction,
+    isWide: isWide
+  }, secondButtonMessage), primaryButtonMessage && logoutButton && /*#__PURE__*/React.createElement(LogoutNavigate, {
+    variant: "primary",
+    action: primaryButtonAction,
+    isWide: isWide
+  }, primaryButtonMessage), primaryButtonMessage && !logoutButton && /*#__PURE__*/React.createElement(DefaultButtonModal, {
+    variant: "primary",
+    action: primaryButtonAction,
+    isWide: isWide
+  }, primaryButtonMessage))));
+};
+const DefaultButtonModal = _ref2 => {
+  let {
+    children,
+    variant,
+    action
+  } = _ref2;
+  return /*#__PURE__*/React.createElement(Button, {
+    variant: variant,
+    onClick: () => action ? action() : null
+  }, children);
+};
+const LogoutNavigate = _ref3 => {
+  let {
+    children,
+    variant,
+    asAhref = false
+  } = _ref3;
+  if (asAhref) {
+    return /*#__PURE__*/React.createElement("a", {
+      variant: variant,
+      className: BUTTON_PRIMARY_CLASS
+      // href={getPrefix(true)+'/login'}
+      ,
+      href: '/#/login'
+    }, children);
+  }
+  // Aria reference:
+  // https://www.w3.org/TR/wai-aria-1.2/#aria-details
+  return /*#__PURE__*/React.createElement(Button, {
+    "aria-details": "ModalLib | LogoutNavigate",
+    as: reactRouterDom.Link,
+    variant: variant,
+    to: '/login'
+  }, children);
+};
+
+var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  DefaultButtonModal: DefaultButtonModal,
+  LogoutNavigate: LogoutNavigate,
+  ModalPopUp: ModalPopUp
+});
+
+const About = () => {
+  return /*#__PURE__*/React.createElement(ModalPopUp, {
+    title: "About",
+    link: window.location.origin + '/#/about_body'
+  });
+};
+const AboutBody = _ref => {
+  let {
+    children,
+    modalPopUpTest = false
+  } = _ref;
+  const version = process.env.REACT_APP_VERSION;
+  const appName = process.env.REACT_APP_APP_NAME;
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, modalPopUpTest && /*#__PURE__*/React.createElement(ModalPopUp, {
+    title: "Test title",
+    showTitle: true
+    // iconClassName={ALERT_DANGER_CLASS}
+    ,
+    iconClassName: ALERT_SUCCESS_CLASS,
+    primaryButtonMessage: "Login Again",
+    primaryButtonAction: null,
+    secondButtonMessage: "Retry",
+    secondButtonAction: null,
+    logoutButton: true
+  }, "This is a test test test in ", /*#__PURE__*/React.createElement("i", null, "Italic"), " and ", /*#__PURE__*/React.createElement("b", null, "boldface")));
+};
 
 // export function getConfigsJsonFile(jsonFileName) {
 //     // const basePath = process.env.REACT_APP_JSON_CONFIG_PATH || '../src/configs';
@@ -2957,9 +3089,11 @@ function errorAndReEnter(error) {
     primaryButtonMessage: loginButton,
     primaryButtonAction: parentLogoutHandler,
     logoutButton: logoutButton,
-    htmlContent: msgContainsHtml ? retryMessage : null,
-    htmlContentClass: ALERT_DANGER_CLASS
-  }, msgContainsHtml ? null : errorMessageDiv(retryMessage));
+    htmlContent: msgContainsHtml ? retryMessage : null
+    // htmlContentClass={ALERT_DANGER_CLASS}
+    ,
+    iconClassName: ALERT_DANGER_CLASS
+  }, msgContainsHtml ? null : retryMessage);
 }
 function errorAndReEnterNonModal(error) {
   let forceLogin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -3557,6 +3691,11 @@ const getDefaultRoutesRaw = () => {
   }, {
     title: 'loginpage3',
     path: getPrefix(true).replace('/#', '/') + "/login",
+    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
+    type: "nav_link"
+  }, {
+    title: 'loginpage4',
+    path: '/#/login',
     element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
     type: "nav_link"
   }];
