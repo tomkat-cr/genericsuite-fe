@@ -10,8 +10,13 @@ export const AboutBodyGsFe = () => {
         <AboutBody>
             <>
                 <p>
-                    Welcome to GenericSuite (React version for Frontends), a comprehensive software solution designed to enhance your productivity and streamline your workflows. This repository contains the frontend BASE part of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
+                    Welcome to <b>GenericSuite</b> (React version for Frontends), a comprehensive software solution designed to enhance your productivity and streamline your workflows.
                 </p>
+                <br/>
+                <p>
+                    This repository contains the frontend BASE part of GenericSuite, equipped with a customizable CRUD editor, login interface and a suite of tools to kickstart your development process.
+                </p>
+                <br/>
                 <p>
                     2024-03-11 | Carlos J. Ramirez
                 </p>

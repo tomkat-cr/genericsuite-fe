@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // import { defaultTheme } from '../constants/class_name_constants.jsx';
 import { console_debug_log } from '../services/logging.service.jsx';
+import { isWindowWide, resizeManager } from './ui.jsx';
 
 const debug = false
 
@@ -17,6 +18,7 @@ export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppL
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [expandedMenus, setExpandedMenus] = useState ([]);
+    const [isWide, setIsWide] = useState(isWindowWide())
 
     const theme = isDarkMode ? componentMap["defaultTheme"].dark : componentMap["defaultTheme"].light;
 
@@ -66,6 +68,14 @@ export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppL
         return '';
     }
 
+    useEffect(() => {
+        const resizer = resizeManager(() => {
+            setIsWide(isWindowWide())
+        })
+        resizer.addListener();
+        return () => resizer.removeListener();
+    }, [])
+
     return (
         <AppContext.Provider value={{
             appLogo, setAppLogo,
@@ -77,6 +87,7 @@ export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppL
             isDarkMode, setIsDarkMode,
             isMobileMenuOpen, setIsMobileMenuOpen,
             expandedMenus, setExpandedMenus,
+            isWide, setIsWide,
             theme,
             toggleDarkMode,
             toggleSideMenu,

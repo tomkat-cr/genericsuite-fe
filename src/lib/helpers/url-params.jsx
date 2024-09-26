@@ -1,6 +1,11 @@
+import { console_debug_log } from "../services/logging.service.jsx";
+
+const debug = false;
+
 export function getUrlParams(props = window) {
     let urlParams = {};
     let searchString;
+    if (debug) console_debug_log('getUrlParams | props:', props);
     try {
         if (props.hasOwnProperty('location')) {
             if (props.location.hasOwnProperty('search')) {
@@ -8,11 +13,9 @@ export function getUrlParams(props = window) {
                     searchString = props.location.search;
                 } else {
                     searchString = props.location.href;
-                    if (searchString.includes('?')) {
-                        searchString = searchString.split('?')[1];
-                    } else {
-                        searchString = '';
-                    }
+                }
+                if (searchString.startsWith('?')) {
+                    searchString = searchString.split('?')[1];
                 }
                 if (searchString === '') {
                     return urlParams;
@@ -38,5 +41,6 @@ export function getUrlParams(props = window) {
         console.log(`getUrlParams ERROR | ${props}`);
         console.error(error)
     }
+    if (debug) console_debug_log('getUrlParams | urlParams:', urlParams);
     return urlParams;
 }

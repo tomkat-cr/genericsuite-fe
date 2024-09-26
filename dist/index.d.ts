@@ -5,7 +5,7 @@ import React from 'react';
 
 declare function About(): React.FunctionComponentElement<any>;
 declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-declare function App(_ref: any): React.FunctionComponentElement<any>;
+declare function App(_ref6: any): React.FunctionComponentElement<any>;
 declare var AppContext$1: Readonly<{
     __proto__: null;
     AppProvider: (_ref: any) => React.FunctionComponentElement<React.ProviderProps<any>>;
@@ -31,7 +31,7 @@ declare var IconsLib: Readonly<{
 }>;
 declare function LoginPage(props: any): React.FunctionComponentElement<{
     children?: React.ReactNode | undefined;
-}> | React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+}>;
 declare var ModalPopUp$1: Readonly<{
     __proto__: null;
     DefaultButtonModal: (_ref2: any) => React.FunctionComponentElement<any>;
@@ -83,7 +83,7 @@ declare var NavLib: Readonly<{
             children?: React.ReactNode | undefined;
         }> | React.DetailedReactHTMLElement<{
             className: string;
-        }, HTMLElement>;
+        }, HTMLElement> | null;
         Brand: (_ref7: any) => React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement> | React.CElement<{
@@ -180,6 +180,7 @@ declare var authentication_service: Readonly<{
         pref_side_menu: any;
         pref_dark_mode: any;
     };
+    verifyCurrentUser: (registerUser: any) => void;
 }>;
 declare var blob_files_utilities: Readonly<{
     __proto__: null;
@@ -238,7 +239,9 @@ declare var class_name_constants: Readonly<{
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: "p-2 rounded border appListingToolbarRowPerPageInputClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS: "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
-    APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+    APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex items-center mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+    APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS: "flex-col appListingToolbarTopDivNotWideClass";
+    APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS: "flex-row appListingToolbarTopDivWideClass";
     APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col appSectionContainerForSideMenuClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow p-4 appSectionContainerForSideMenuMainClass";
@@ -300,10 +303,9 @@ declare var class_name_constants: Readonly<{
     NAVBAR_BRAND_APP_VERSION_CLASS: "text-xs navbarBrandAppVersionClass";
     NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
     NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS: "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
-    NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN: "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
     NAVBAR_BRAND_NAME_CLASS: "text-2xl font-bold navbarBrandNameClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
-    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: "-translate-x-full navbarHeaderForSideMenuMobileCloseClass";
+    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: "navbarHeaderForSideMenuMobileCloseClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS: "translate-x-0 navbarHeaderForSideMenuMobileOpenClass";
     NAVBAR_HEADER_FOR_TOP_MENU_CLASS: "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
     NAVBAR_MOBILE_CLOSE_BUTTON_CLASS: "p-2 rounded-full hover:bg-opacity-80 navbarMobileCloseButtonClass";
@@ -314,7 +316,7 @@ declare var class_name_constants: Readonly<{
     NAVBAR_MOBILE_MENU_H2_CLASS: "text-xl font-bold navbarMobileMenuH2Class";
     NAVBAR_MOBILE_NAV_CLASS: "flex flex-col space-y-2 navbarMobileNavClass";
     NAVBAR_TEXT_CLASS: "flex items-center navbarTextClass";
-    NAVBAR_TOGGLE_BUTTON_CLASS: "1-md:hidden lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
+    NAVBAR_TOGGLE_BUTTON_CLASS: "1-md:hidden 1-lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
     NAVBAR_TOGGLE_IMAGE_CLASS: "h-6 w-6 navbarToggleImageClass";
     NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS: "space-y-2 navbarTopCenterMenuOnLeftClass";
     NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS: "hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
@@ -341,7 +343,7 @@ declare var class_name_constants: Readonly<{
     NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS: "block rounded navDropdownItemTopDivMobileMenuClass";
     NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS: "block rounded navDropdownItemTopDivSideMenuClass";
     NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS: "block py-1 navDropdownItemTopDivTopMenuClass";
-    NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS: "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+    NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS: "block relative group navDropdownTopDivHamburgerClass";
     NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS: "1-space-y-2 navDropdownTopDivMobileMenuClass";
     NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS: "1-space-x-4 navDropdownTopDivSideMenuClass";
     NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS: "relative group navDropdownTopDivTopMenuClass";
@@ -350,7 +352,7 @@ declare var class_name_constants: Readonly<{
     NAV_LINK_BUTTON_SIDE_MENU_CLASS: "py-2 px-2 rounded navLinkButtonsSideMenuClass";
     NAV_LINK_BUTTON_TOP_MENU_CLASS: "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
     NAV_LINK_ICON_CLASS: "w-8 h-8 navLinkIconClass";
-    NAV_LINK_TOP_DIV_HAMBURGER_CLASS: "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
+    NAV_LINK_TOP_DIV_HAMBURGER_CLASS: "block relative group navLinkTopDivHamburgerClass";
     NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
     NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: "navLinkTopDivSideMenuClass";
     NAV_LINK_TOP_DIV_TOP_MENU_CLASS: "relative group navLinkTopDivTopMenuClass";
@@ -620,19 +622,55 @@ declare var generic_editor_utilities: Readonly<{
 }>;
 declare var generic_menu_service: Readonly<{
     __proto__: null;
-    DefaultRoutes: () => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    DefaultRoutes: () => {
+        key: string;
+        path: string;
+        element: () => React.DetailedReactHTMLElement<{
+            className: string;
+            role: "alert";
+        }, HTMLElement>;
+    }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     GenericMenuBuilder: (_ref: any) => any;
     editorMenuOption: (editor: any, itemType: any, mobileMenuMode: any, componentMap: any, setExpanded: any) => React.FunctionComponentElement<any>;
-    editorRoute: (editor: any) => React.FunctionComponentElement<react_router_dom.RouteProps>;
-    getDefaultRoutesRaw: () => {
+    editorRoute: (editor: any, title: any) => {
+        key: any;
+        exact: any;
+        path: string;
+        element: any;
+    };
+    getDefaultRoutes: (currentUser: any, componentMap: any, setExpanded: any, ...args: any[]) => {
+        key: string;
+        path: string;
+        element: () => React.DetailedReactHTMLElement<{
+            className: string;
+            role: "alert";
+        }, HTMLElement>;
+    }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    getDefaultRoutesRaw: (componentMap: any) => {
         title: string;
         path: string;
-        element_obj: React.FunctionComponentElement<any>;
+        element: string;
         type: string;
     }[];
     getMenuFromApi: (state: any, setState: any, setMenuOptions: any) => void;
+    getRoutes: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any, ...args: any[]) => {
+        key: string;
+        path: string;
+        element: () => React.DetailedReactHTMLElement<{
+            className: string;
+            role: "alert";
+        }, HTMLElement>;
+    }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    getRoutesRaw: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any) => {
+        key: string;
+        path: string;
+        element: () => React.DetailedReactHTMLElement<{
+            className: string;
+            role: "alert";
+        }, HTMLElement>;
+    }[];
 }>;
-declare var history$1: Readonly<{
+declare var history$2: Readonly<{
     __proto__: null;
     getLastUrl: () => string;
     getPrefix: typeof getPrefix;
@@ -688,7 +726,12 @@ declare var ui: Readonly<{
     growUpTextArea: (textAreaId: any, conversationBlockId: any, sectionViewportHeight: any, maxOffsetHeight: any, ...args: any[]) => void;
     growUpTextAreaInner: (textAreaId: any, conversationBlockId: any, sectionViewportHeight: any, maxOffsetHeight: any, ...args: any[]) => void;
     isMobileDevice: () => boolean;
+    isWindowWide: () => boolean;
     resetTextArea: (textAreaId: any, conversationBlockId: any, sectionViewportHeight: any, maxOffsetHeight: any, ...args: any[]) => void;
+    resizeManager: (callback: any) => {
+        addListener: () => void;
+        removeListener: () => void;
+    };
     toggleIdVisibility: (onOff: any, ids: any) => void;
 }>;
 declare var urlParams: Readonly<{
@@ -753,4 +796,4 @@ declare function handleResponseText(response: any, text: any, headers: any): Pro
 };
 declare function getUrlParams(...args: any[]): {};
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$2 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };

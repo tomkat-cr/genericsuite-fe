@@ -2,7 +2,7 @@
 
 var React = require('react');
 var reactRouterDom = require('react-router-dom');
-var history$2 = require('history');
+var history$3 = require('history');
 var buffer = require('buffer');
 var rxjs = require('rxjs');
 var formik = require('formik');
@@ -126,11 +126,13 @@ const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-4 
 // export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
-const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
+// export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '1-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
+const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = 'navbarHeaderForSideMenuMobileCloseClass';
 const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
 const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS = "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
 const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS = "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
-const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
+// export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
+
 const NAVBAR_BRAND_NAME_CLASS = "text-2xl font-bold navbarBrandNameClass";
 const NAVBAR_BRAND_APP_VERSION_CLASS = "text-xs navbarBrandAppVersionClass";
 const NAVBAR_BRAND_APP_LOGO_CLASS = "mx-auto my-0 navbarBrandAppLogoClass";
@@ -145,11 +147,12 @@ const NAVBAR_MOBILE_MENU_H2_CLASS = "text-xl font-bold navbarMobileMenuH2Class";
 const NAVBAR_MOBILE_CLOSE_BUTTON_CLASS = "p-2 rounded-full hover:bg-opacity-80 navbarMobileCloseButtonClass";
 const NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS = "h-6 w-6 navbarMobileCloseButtonIconClass";
 const NAVBAR_MOBILE_NAV_CLASS = "flex flex-col space-y-2 navbarMobileNavClass";
-const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
+const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden 1-lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
 const NAVBAR_TOGGLE_IMAGE_CLASS = "h-6 w-6 navbarToggleImageClass";
 const NAVBAR_TEXT_CLASS = 'flex items-center navbarTextClass';
 const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClass";
-const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
+// export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
+const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "block relative group navLinkTopDivHamburgerClass";
 const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
 const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
 const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
@@ -164,7 +167,8 @@ const STROKE_WHITE_ICON_CLASS = "stroke-white";
 // export const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2";
 const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400";
 const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
-const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+// export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "block relative group navDropdownTopDivHamburgerClass";
 const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
 const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
 const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
@@ -288,7 +292,10 @@ const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
-const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+// export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex items-center mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+const APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS = "flex-row appListingToolbarTopDivWideClass";
+const APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS = "flex-col appListingToolbarTopDivNotWideClass";
 const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS = "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
 const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center appListingToolbarPageNumSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
@@ -412,6 +419,8 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS: APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS,
   APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
   APP_LISTING_TOOLBAR_TOP_DIV_CLASS: APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS: APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS: APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS,
   APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS,
   APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS,
   APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS,
@@ -473,7 +482,6 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   NAVBAR_BRAND_APP_VERSION_CLASS: NAVBAR_BRAND_APP_VERSION_CLASS,
   NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS,
   NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS: NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS,
-  NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN: NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN,
   NAVBAR_BRAND_NAME_CLASS: NAVBAR_BRAND_NAME_CLASS,
   NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: NAVBAR_HEADER_FOR_SIDE_MENU_CLASS,
   NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS,
@@ -1105,7 +1113,7 @@ const GsIcons = _ref => {
       break;
     case 'warning-sign':
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
-        class: "h-6 w-6 text-red-600",
+        className: "h-6 w-6 text-red-600",
         fill: "none",
         viewBox: "0 0 24 24",
         strokeWidth: "1.5",
@@ -1181,6 +1189,184 @@ var IconsLib = /*#__PURE__*/Object.freeze({
   GsIcons: GsIcons
 });
 
+const randomKey = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+var ramdomize = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  randomKey: randomKey
+});
+
+const textareaMinHeightDefault = 40;
+const toggleIdVisibility = (onOff, ids) => {
+  ids.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.style.display = onOff === 'on' ? '' : 'none';
+    }
+  });
+};
+const getElementWithErrorHandling = elementId => {
+  try {
+    const elementObj = document.getElementById(elementId);
+    return elementObj;
+  } catch (error) {
+    // Element not found or stil loading...            
+    return null;
+  }
+};
+const growUpTextAreaInner = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
+  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
+  const textarea = getElementWithErrorHandling(textAreaId);
+  if (textarea) {
+    // Grow upwards
+    // Adjust the height of the textarea to grow as the user types
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+    // If the content goes beyond its height, adjust the scroll to grow upwards
+    const conversationObj = document.getElementById(conversationBlockId);
+    // Calculate the height based on the viewport height (82vh, ".conversation-block.height" in FynBot.css)
+    const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    // Ensure the textarea does not exceed its max-height...
+    if (textarea.scrollHeight > maxOffsetHeight) {
+      textarea.style.height = "".concat(maxOffsetHeight, "px");
+    }
+    // Set conversation height to make textarea to scroll up according its height
+    const sectionViewportHeightInPx = sectionViewportHeight / 100 * viewportHeight;
+    const conversationHeight = sectionViewportHeightInPx - textarea.clientHeight + textareaMinHeight;
+    conversationObj.style.height = "".concat(conversationHeight, "px");
+  }
+};
+const growUpTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
+  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
+  const textarea = getElementWithErrorHandling(textAreaId);
+  if (textarea) {
+    textarea.addEventListener('input', event => growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight));
+  }
+};
+const resetTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
+  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
+  const textarea = getElementWithErrorHandling(textAreaId);
+  if (textarea) {
+    growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight);
+  }
+};
+const LinkifyText = _ref => {
+  let {
+    children
+  } = _ref;
+  // Detect links in the text.
+  // Example: [Carlos Jose Ramirez Divo - Sitio web oficial](https://www.carlosjramirez.com/en/about-carlos-jose-ramirez-divo/)
+
+  const regex = /\[[^\]]+\]\([^)]+\)/g;
+  const matches = children.match(regex);
+  const links = !matches ? [] : matches.map(match => {
+    const title = match.substring(1, match.indexOf(']'));
+    const url = match.substring(match.indexOf('(') + 1, match.length - 1);
+    return /*#__PURE__*/React.createElement("a", {
+      key: url,
+      href: url,
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, title);
+  });
+  const formattedText = children.split(regex).reduce((acc, textChunk, index) => {
+    if (index === 0) {
+      return [textChunk];
+    }
+    acc.push(links[index - 1]);
+    acc.push(textChunk);
+    return acc;
+  }, []);
+  return /*#__PURE__*/React.createElement("div", null, formattedText.map((chunck, index) => {
+    if (typeof chunck !== 'string') {
+      return chunck;
+    }
+    return chunck.split('\n').map((line, index) => {
+      return /*#__PURE__*/React.createElement("p", {
+        key: randomKey()
+      }, line);
+    });
+  }));
+};
+const CopyButton = _ref2 => {
+  let {
+    text
+  } = _ref2;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    id: "copyButton",
+    style: {
+      position: 'absolute',
+      top: '10px',
+      right: '20px',
+      padding: '3px',
+      borderRadius: '5px',
+      border: 'none',
+      background: 'grey',
+      color: 'white',
+      cursor: 'pointer',
+      fontSize: '12px'
+    },
+    onClick: e => {
+      navigator.clipboard.writeText(text);
+      const copiedMessage = document.createElement('div');
+      copiedMessage.textContent = 'Copied!';
+      copiedMessage.style.position = 'absolute';
+      copiedMessage.style.bottom = '-40px'; // Position under the button
+      copiedMessage.style.left = '-20px'; // Align with the button's left edge
+      copiedMessage.style.padding = '5px';
+      copiedMessage.style.borderRadius = '5px';
+      copiedMessage.style.border = 'none';
+      copiedMessage.style.background = 'grey';
+      copiedMessage.style.color = 'white';
+      copiedMessage.style.fontSize = '0.75rem';
+      copiedMessage.style.zIndex = '1000';
+      copiedMessage.style.opacity = '0';
+      copiedMessage.style.transition = 'opacity 0.3s';
+      e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
+      setTimeout(() => {
+        copiedMessage.style.opacity = '1';
+      }, 100);
+      setTimeout(() => {
+        copiedMessage.style.opacity = '0';
+        setTimeout(() => copiedMessage.remove(), 2000);
+      }, 2000);
+    }
+  }, "Copy"));
+};
+const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+const isWindowWide = () => window.innerWidth >= 640;
+const resizeManager = callback => {
+  const handleResize = () => {
+    callback();
+  };
+  const addListener = () => {
+    window.addEventListener('resize', handleResize);
+  };
+  const removeListener = () => {
+    window.removeEventListener('resize', handleResize);
+  };
+  return {
+    addListener,
+    removeListener
+  };
+};
+
+var ui = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  CopyButton: CopyButton,
+  LinkifyText: LinkifyText,
+  getElementWithErrorHandling: getElementWithErrorHandling,
+  growUpTextArea: growUpTextArea,
+  growUpTextAreaInner: growUpTextAreaInner,
+  isMobileDevice: isMobileDevice,
+  isWindowWide: isWindowWide,
+  resetTextArea: resetTextArea,
+  resizeManager: resizeManager,
+  toggleIdVisibility: toggleIdVisibility
+});
+
 const AppContext = /*#__PURE__*/React.createContext();
 const AppProvider = _ref => {
   let {
@@ -1198,6 +1384,7 @@ const AppProvider = _ref => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [expandedMenus, setExpandedMenus] = React.useState([]);
+  const [isWide, setIsWide] = React.useState(isWindowWide());
   const theme = isDarkMode ? componentMap["defaultTheme"].dark : componentMap["defaultTheme"].light;
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const toggleSideMenu = () => setSideMenu(!sideMenu);
@@ -1234,6 +1421,13 @@ const AppProvider = _ref => {
     }
     return '';
   };
+  React.useEffect(() => {
+    const resizer = resizeManager(() => {
+      setIsWide(isWindowWide());
+    });
+    resizer.addListener();
+    return () => resizer.removeListener();
+  }, []);
   return /*#__PURE__*/React.createElement(AppContext.Provider, {
     value: {
       appLogo,
@@ -1254,6 +1448,8 @@ const AppProvider = _ref => {
       setIsMobileMenuOpen,
       expandedMenus,
       setExpandedMenus,
+      isWide,
+      setIsWide,
       theme,
       toggleDarkMode,
       toggleSideMenu,
@@ -1351,16 +1547,25 @@ const Navbar = _ref6 => {
   const {
     theme,
     sideMenu,
-    isMobileMenuOpen
+    isMobileMenuOpen,
+    isWide
   } = useAppContext();
   if (sideMenu) {
-    const translateStyle = isMobileMenuOpen ? NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS : NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS;
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("nav", {
-      id: "navbar-side-menu",
-      className: "".concat(translateStyle, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
-    }, children), /*#__PURE__*/React.createElement(ToggleSideBar, {
-      onClick: () => document.getElementById('navbar-side-menu').classList.toggle('hidden')
-    }));
+    if (isMobileMenuOpen) {
+      return /*#__PURE__*/React.createElement("nav", {
+        id: "navbar-side-menu",
+        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+      }, children);
+    }
+    if (isWide) {
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("nav", {
+        id: "navbar-side-menu",
+        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+      }, children), /*#__PURE__*/React.createElement(ToggleSideBar, {
+        onClick: () => document.getElementById('navbar-side-menu').classList.toggle('hidden')
+      }));
+    }
+    return null;
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "".concat(NAVBAR_HEADER_FOR_TOP_MENU_CLASS, " ").concat(theme.primary)
@@ -1374,7 +1579,8 @@ const NavbarBrand = _ref7 => {
     onClick
   } = _ref7;
   const {
-    sideMenu
+    sideMenu,
+    isWide
   } = useAppContext();
   const As = as;
   if (sideMenu) {
@@ -1387,8 +1593,10 @@ const NavbarBrand = _ref7 => {
       onClick: onClick
     }, /*#__PURE__*/React.createElement("div", {
       className: NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS
-    }, children)), /*#__PURE__*/React.createElement(MobileMenuCloseButton, {
-      className: NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN
+    }, children)), /*#__PURE__*/React.createElement(MobileMenuCloseButton
+    // className={NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN}
+    , {
+      className: isWide ? HIDDEN_CLASS : ""
     }));
   }
   return /*#__PURE__*/React.createElement(As
@@ -1471,12 +1679,13 @@ const NavbarMobileMenu = _ref11 => {
 };
 const NavbarToggle = () => {
   const {
-    toggleMobileMenu
+    toggleMobileMenu,
+    isWide
   } = useAppContext();
   return /*#__PURE__*/React.createElement("button", {
     id: "navbar-main-toggle",
     onClick: toggleMobileMenu,
-    className: NAVBAR_TOGGLE_BUTTON_CLASS
+    className: NAVBAR_TOGGLE_BUTTON_CLASS + (isWide ? " " + HIDDEN_CLASS : "")
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "menu-hamburger",
     size: "xl",
@@ -1526,7 +1735,8 @@ const NavDropdown = _ref14 => {
   const {
     expandedMenus,
     toggleSubmenu,
-    theme
+    theme,
+    isWide
   } = useAppContext();
   const [fullId, setFullId] = React.useState("".concat(id, "_").concat(type));
   const [dropDownOpen, setDropDownOpen] = React.useState(false);
@@ -1550,7 +1760,7 @@ const NavDropdown = _ref14 => {
   };
   const variantsTopDiv = {
     top_menu: NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
-    hamburger: mobileMenuMode ? NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
+    hamburger: mobileMenuMode ? NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS + (isWide ? "" : " " + HIDDEN_CLASS),
     side_menu: NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
     mobile_menu: NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS
   };
@@ -1597,7 +1807,7 @@ const NavDropdown = _ref14 => {
   const variantStyleInnerDiv = variantsInnerDiv[type] || '';
   const variantStyleButton = variantsButton[type] || '';
   const variantStyleSubmenuImage = variantsSubmenuImage[type] || '';
-  const variantOnClick = variantsOptionClick[type] || '';
+  const variantOnClick = variantsOptionClick[type] || (() => '');
   return /*#__PURE__*/React.createElement("div", {
     className: variantStyleTopDiv
   }, /*#__PURE__*/React.createElement("button", {
@@ -1743,12 +1953,13 @@ const NavLink = _ref16 => {
     mobileMenuMode
   } = _ref16;
   const {
-    theme
+    theme,
+    isWide
   } = useAppContext();
   const As = as;
   const variantsLi = {
     top_menu: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
-    hamburger: mobileMenuMode ? NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS : NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
+    hamburger: mobileMenuMode ? NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS : NAV_LINK_TOP_DIV_HAMBURGER_CLASS + (isWide ? "" : " " + HIDDEN_CLASS),
     side_menu: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
     mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS
   };
@@ -1963,11 +2174,12 @@ const getItemFromLocalStorage = lsItemName => {
   return JSON.parse(getRawItemFromLocalStorage(lsItemName));
 };
 
-const history = history$2.createBrowserHistory();
+const history$1 = history$3.createBrowserHistory();
 function getPrefix() {
   let hardPrefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   if (hardPrefix) {
-    const prefix = process.env.REACT_APP_URI_PREFIX ? process.env.REACT_APP_URI_PREFIX : '';
+    var _process$env$REACT_AP;
+    const prefix = (_process$env$REACT_AP = process.env.REACT_APP_URI_PREFIX) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : '';
     return '/#' + prefix;
   }
   return '';
@@ -1987,19 +2199,19 @@ const removeLastUrl = () => {
   removeItemFromLocalStorage('lastURL');
 };
 const getLastUrl = () => {
-  let lastUrl = getPrefix(true) + '/';
-  if (localStorage.getItem('lastURL')) {
-    // lastUrl = localStorage.getItem('lastURL');
-    lastUrl = getRawItemFromLocalStorage('lastURL');
+  let lastUrl = getRawItemFromLocalStorage('lastURL');
+  if (lastUrl === null || lastUrl === '' || lastUrl === "null") {
+    // lastUrl = getPrefix(true)+'/';
+    lastUrl = '/';
   }
   return lastUrl;
 };
 
-var history$1 = /*#__PURE__*/Object.freeze({
+var history$2 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   getLastUrl: getLastUrl,
   getPrefix: getPrefix,
-  history: history,
+  history: history$1,
   removeLastUrl: removeLastUrl,
   setLastUrl: setLastUrl
 });
@@ -2022,15 +2234,10 @@ const ModalPopUp = _ref => {
     htmlContentClass = null,
     iconClassName = null
   } = _ref;
+  const {
+    isWide
+  } = useAppContext();
   const [show, setShow] = React.useState(true);
-  const [isWide, setIsWide] = React.useState(window.innerWidth >= 640);
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsWide(window.innerWidth >= 640);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   const handleClose = () => setShow(false);
   const handleOnHide = () => setShow(!allowOnHide);
   const linkSuffix = "?menu=0";
@@ -2148,6 +2355,36 @@ const AboutBody = _ref => {
     logoutButton: true
   }, "This is a test test test in ", /*#__PURE__*/React.createElement("i", null, "Italic"), " and ", /*#__PURE__*/React.createElement("b", null, "boldface")));
 };
+
+const UserContext = /*#__PURE__*/React.createContext();
+const UserProvider = _ref => {
+  let {
+    children
+  } = _ref;
+  const [currentUser, setCurrentUser] = React.useState(null);
+  const registerUser = userData => {
+    setCurrentUser(userData);
+  };
+  const unRegisterUser = () => {
+    setCurrentUser(null);
+  };
+  return /*#__PURE__*/React.createElement(UserContext.Provider, {
+    value: {
+      currentUser,
+      registerUser,
+      unRegisterUser
+    }
+  }, children);
+};
+const useUser = () => {
+  return React.useContext(UserContext);
+};
+
+var UserContext$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  UserProvider: UserProvider,
+  useUser: useUser
+});
 
 // export function getConfigsJsonFile(jsonFileName) {
 //     // const basePath = process.env.REACT_APP_JSON_CONFIG_PATH || '../src/configs';
@@ -3002,24 +3239,33 @@ const getCurrentUserData = () => {
     };
   });
 };
+const verifyCurrentUser = registerUser => {
+  if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
+    getCurrentUserData().then(userData => {
+      if (userData.error) ; else {
+        registerUser(getUserLocalData(userData));
+      }
+    }, error => {
+      console.error(error.errorMsg);
+    });
+  }
+};
 
 var authentication_service = /*#__PURE__*/Object.freeze({
   __proto__: null,
   authenticationService: authenticationService,
   getCurrentUserData: getCurrentUserData,
   getUserData: getUserData,
-  getUserLocalData: getUserLocalData
+  getUserLocalData: getUserLocalData,
+  verifyCurrentUser: verifyCurrentUser
 });
 
-// const hard_login = true;
-
 function logoutHander() {
+  const loginUrl = window.location.origin + '/login';
   authenticationService.logout();
-  // if (!history.push(getPrefix(true)+'/login') && hard_login) {
-  //     if (debug) console_debug_log(`logoutHander | window.location.href = ${window.location.origin+getPrefix(true)+'/login'}`);
-  //     // window.location.href = window.location.origin + getPrefix(true) + '/login';
-  // }
-  window.location.reload(true);
+  {
+    window.location.href = loginUrl;
+  }
 }
 function refreshPage() {
   window.location.reload();
@@ -3186,34 +3432,421 @@ var generic_editor_utilities = /*#__PURE__*/Object.freeze({
   replaceSpecialVars: replaceSpecialVars
 });
 
-const UserContext = /*#__PURE__*/React.createContext();
-const UserProvider = _ref => {
-  let {
-    children
-  } = _ref;
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const registerUser = userData => {
-    setCurrentUser(userData);
-  };
-  const unRegisterUser = () => {
-    setCurrentUser(null);
-  };
-  return /*#__PURE__*/React.createElement(UserContext.Provider, {
-    value: {
-      currentUser,
-      registerUser,
-      unRegisterUser
+// GenericMenuService (GMS) main
+
+const jsPrefixToken = /\|([^|]*)\|/;
+const routeExact = false;
+const getOnClickObject = (onClickString, componentMap, setExpanded) => {
+  let resutlFunction = null;
+  const windowOpenObjs = {
+    "about": {
+      "url": "about_body?menu=0",
+      "name": "AppAboutPopUp",
+      "options": "height=600,width=400"
     }
-  }, children);
+  };
+  if (!onClickString) {
+    if (setExpanded) {
+      resutlFunction = () => {
+        setExpanded();
+      };
+    }
+  } else {
+    // |about|
+    // Before:
+    // "|js|window.open(window.location.origin + '/#/about_body?menu=0', 'AppAboutPopUp','height=600,width=400')"
+    if (onClickString.startsWith("|")) {
+      const match = onClickString.match(jsPrefixToken);
+      if (match) {
+        const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
+        if (woOptions) {
+          // const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}/#/${woOptions.url}`, woOptions.name, woOptions.options));
+          const windowOpenFn = woOptions => window.open("".concat(window.location.origin, "/").concat(woOptions.url), woOptions.name, woOptions.options);
+          if (setExpanded) {
+            resutlFunction = () => {
+              setExpanded();
+              windowOpenFn(woOptions);
+              return window.location.href;
+            };
+          } else {
+            resutlFunction = () => {
+              windowOpenFn(woOptions);
+              return window.location.href;
+            };
+          }
+        } else {
+          resutlFunction = () => {
+            alert("ERROR: invalid onClick: ".concat(onClickString));
+            return window.location.href;
+          };
+        }
+      }
+    } else {
+      if (setExpanded) {
+        resutlFunction = () => {
+          setExpanded(componentMap[onClickString]);
+        };
+      } else {
+        resutlFunction = componentMap[onClickString];
+      }
+    }
+  }
+  return resutlFunction;
 };
-const useUser = () => {
-  return React.useContext(UserContext);
+const getElementObj = (componentMap, item) => {
+  const ElementObj = componentMap[item.element];
+  if (ElementObj) {
+    return ElementObj;
+  }
+  return null;
+};
+const getItemDefaults = function (componentMap, setExpanded, item) {
+  let topTitle = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+  const hard_prefix = defaultValue(item, "hard_prefix", false);
+  const get_prefix = defaultValue(item, "get_prefix", true);
+  const reload = defaultValue(item, "reload", false);
+  const element_obj = getElementObj(componentMap, item);
+  let path = defaultValue(item, "path", null);
+  if (get_prefix && path) {
+    path = getPrefix(hard_prefix) + path;
+  }
+  if (!path) {
+    path = "#";
+  }
+  const on_click = getOnClickObject(defaultValue(item, "on_click", null), componentMap, setExpanded);
+  const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
+  return {
+    "hard_prefix": hard_prefix,
+    "get_prefix": get_prefix,
+    "element_obj": element_obj,
+    "path": path,
+    "on_click": on_click,
+    "title": title,
+    "reload": reload
+  };
+};
+const putRoutes = routes => /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
+  id: "menuOptionsRoutes",
+  history: history$1
+}, routes.map(item => {
+  return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+    key: item.key,
+    path: item.path,
+    exact: item.exact,
+    element: item.element_obj
+  });
+}));
+const editorRoute = (editor, title) => {
+  var _editor$exact;
+  return {
+    key: title,
+    exact: (_editor$exact = editor.exact) !== null && _editor$exact !== void 0 ? _editor$exact : routeExact,
+    path: '/' + editor.baseUrl,
+    element: editor.component
+  };
+};
+const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
+  const AppMainInner = componentMap["AppMainInner"];
+  let indexRoute = -1;
+  let loginRoute = -1;
+  let routes = [];
+  const addOneroute = resultRoute => {
+    if (resultRoute) {
+      switch (resultRoute.path) {
+        case "/":
+          if (indexRoute == -1) {
+            routes.push(resultRoute);
+            indexRoute = routes.length - 1;
+          }
+          break;
+        case "/login":
+          if (loginRoute == -1) {
+            routes.push(resultRoute);
+            loginRoute = routes.length - 1;
+          }
+          break;
+        default:
+          routes.push(resultRoute);
+      }
+    }
+  };
+  menuOptions.map(item => {
+    const itemDefs = getItemDefaults(componentMap, setExpanded, item);
+    let resultRoute = null;
+    if (item.type === "nav_link") {
+      var _item$exact;
+      resultRoute = {
+        key: itemDefs["title"],
+        exact: (_item$exact = item["exact"]) !== null && _item$exact !== void 0 ? _item$exact : routeExact,
+        path: itemDefs["path"],
+        element: itemDefs["element_obj"]
+      };
+      addOneroute(resultRoute);
+    } else {
+      item.sub_menu_options.map(subItem => {
+        const itemDefs = getItemDefaults(componentMap, setExpanded, subItem);
+        if (subItem.type === 'editor') {
+          try {
+            resultRoute = editorRoute(componentMap[subItem.element](), itemDefs["title"]);
+            addOneroute(resultRoute);
+          } catch (error) {
+            console_debug_log("[GMB-GR-E010] subItem.element:", subItem.element);
+            console_debug_log(error);
+          }
+        } else {
+          var _item$exact2;
+          resultRoute = {
+            key: itemDefs["title"],
+            exact: (_item$exact2 = item["exact"]) !== null && _item$exact2 !== void 0 ? _item$exact2 : routeExact,
+            path: itemDefs["path"],
+            element: itemDefs["element_obj"]
+          };
+          addOneroute(resultRoute);
+        }
+      });
+    }
+  });
+  routes.push({
+    key: 'invalidRoute',
+    path: '*',
+    element: InvalidRouteRedirect
+  });
+  routes = routes.map(route => {
+    route.element = /*#__PURE__*/React.createElement(AppMainInner, {
+      componentMap: componentMap
+    }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement("p", null, route.key, " Not Implemented..."));
+    return route;
+  });
+  if (currentUser) {
+    routes[indexRoute].path = "/";
+    {
+      routes[indexRoute].index = true;
+    }
+  } else {
+    {
+      routes.push({
+        ...routes[loginRoute]
+      });
+      routes[loginRoute].index = true;
+      routes[loginRoute].path = "/";
+      routes[indexRoute].path = "index";
+    }
+  }
+  return routes;
+};
+const getRoutes = function (currentUser, menuOptions, componentMap, setExpanded) {
+  let returnType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "routes";
+  const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(componentMap)];
+  const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
+  if (returnType === "array") {
+    return routes;
+  }
+  return putRoutes(routes);
+};
+const isTopMenuAlternativeType = itemType => Object.values(['side_menu', 'mobile_menu']).some(element => itemType === element);
+const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap, setExpanded) => {
+  return /*#__PURE__*/React.createElement(NavDropdown.Item, {
+    key: editor.title,
+    as: reactRouterDom.Link
+    // to={getPrefix()+'/'+editor.baseUrl}
+    ,
+    to: '/' + editor.baseUrl,
+    onClick: getOnClickObject(null, componentMap, setExpanded),
+    type: itemType,
+    mobileMenuMode: mobileMenuMode
+  }, editor.title);
+};
+const getDefaultRoutesRaw = componentMap => {
+  componentMap["LoginPage"];
+  componentMap["HomePage"];
+  return [{
+    title: 'loginpage',
+    path: "/login",
+    element: "LoginPage",
+    type: "nav_link"
+  }, {
+    title: 'homepage',
+    path: "/",
+    element: "HomePage",
+    type: "nav_link"
+  }
+  // {
+  //     title: 'homepage2',
+  //     path: getPrefix(true)+"/",
+  //     element_obj: <HomePage/>,
+  //     type: "nav_link",
+  // },
+  // {
+  //     title: 'homepage3',
+  //     path: getPrefix(true).replace('/#', '/')+"/",
+  //     element_obj: <HomePage/>,
+  //     type: "nav_link",
+  // },
+  // {
+  //     title: 'loginpage2',
+  //     path: getPrefix(true)+"/login",
+  //     element_obj: <LoginPage/>,
+  //     type: "nav_link",
+  // },
+  // {
+  //     title: 'loginpage3',
+  //     path: getPrefix(true).replace('/#', '/')+"/login",
+  //     element_obj: <LoginPage/>,
+  //     type: "nav_link",
+  // },
+  // {
+  //     title: 'loginpage4',
+  //     path: '/#/login',
+  //     element_obj: <LoginPage/>,
+  //     type: "nav_link",
+  // },
+  ];
+};
+const DefaultRoutes = () => {
+  const {
+    currentUser
+  } = useUser();
+  const {
+    componentMap,
+    setExpanded
+  } = useAppContext();
+  return getDefaultRoutes(currentUser, componentMap, setExpanded, "routes");
+};
+const getDefaultRoutes = function (currentUser, componentMap, setExpanded) {
+  let returnType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "routes";
+  const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
+  const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
+  if (returnType === "array") {
+    return routes;
+  }
+  return putRoutes(routes);
 };
 
-var UserContext$1 = /*#__PURE__*/Object.freeze({
+// Catch all invalid routes and redirect to a default page or show a not found component
+const InvalidRouteRedirect = () => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: ALERT_DANGER_CLASS,
+    role: "alert"
+  }, "URL not found...");
+};
+const getMenuFromApi = (state, setState, setMenuOptions) => {
+  if (state !== "") {
+    return;
+  }
+  const endpoint = "menu_options";
+  const db = new dbApiService({
+    url: endpoint
+  });
+  db.getAll().then(data => {
+    setMenuOptions(data.resultset);
+  }, error => {
+    error = formatCaughtError(error);
+    if (!window.location.href.includes("/login")) {
+      setState(error);
+    }
+  });
+};
+const GenericMenuBuilder = _ref => {
+  let {
+    icon,
+    title,
+    itemType,
+    mobileMenuMode
+  } = _ref;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    state,
+    menuOptions,
+    setExpanded,
+    componentMap
+  } = useAppContext();
+  const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
+    if (!menuOptions) {
+      return '';
+    }
+    return menuOptions.filter(item => item.location === item_type_filter).map(item => {
+      const itemDefs = getItemDefaults(componentMap, setExpanded, item, topTitle);
+      if (item.type === "nav_link") {
+        // Items in main menu, not belonging to any NavDropdown
+        return /*#__PURE__*/React.createElement(Nav.Link, {
+          key: item.title,
+          as: reactRouterDom.Link,
+          to: itemDefs["path"],
+          onClick: itemDefs["on_click"],
+          reloadDocument: itemDefs["reload"],
+          type: itemType,
+          mobileMenuMode: mobileMenuMode
+        }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
+          icon: icon !== null && icon !== void 0 ? icon : '',
+          size: "2xl",
+          className: NAV_LINK_ICON_CLASS
+        }) : itemDefs["title"]);
+      }
+      // Navigation dropdown (main menu item with sub-menus)
+      const navDropdownId = "basic-nav-dropdown-".concat(item.title.replace(/ /g, '_'));
+      return /*#__PURE__*/React.createElement(NavDropdown, {
+        key: item.title,
+        title: itemDefs["title"],
+        id: navDropdownId,
+        type: itemType,
+        icon: icon,
+        mobileMenuMode: mobileMenuMode
+      }, item.sub_menu_options.map(subItem => {
+        const itemDefs = getItemDefaults(componentMap, setExpanded, subItem);
+        if (subItem.type === 'editor') {
+          try {
+            return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode, componentMap, setExpanded);
+          } catch (error) {
+            console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
+            console_debug_log(error);
+            return null;
+          }
+        }
+        return /*#__PURE__*/React.createElement(NavDropdown.Item, {
+          key: subItem.title,
+          as: reactRouterDom.Link,
+          to: itemDefs["path"],
+          onClick: itemDefs["on_click"],
+          reloadDocument: itemDefs["reload"],
+          type: itemType,
+          mobileMenuMode: mobileMenuMode
+        }, itemDefs["title"]);
+      }));
+    });
+  };
+  const menuItems = (item_type_filter, topTitle, itemType, mobileMenuMode) => {
+    if (typeof menuOptions === 'undefined' || menuOptions === null) {
+      return '';
+    }
+    // Routes
+    if (item_type_filter === "routes") {
+      return getRoutes(currentUser, menuOptions, componentMap, setExpanded);
+    }
+    // NavLinks
+    return GetNavs(item_type_filter, topTitle, itemType, icon, mobileMenuMode);
+  };
+  if (state !== "" && itemType === "routes") {
+    return /*#__PURE__*/React.createElement(DefaultRoutes, null);
+  }
+  if (state !== "") {
+    return /*#__PURE__*/React.createElement(DefaultRoutes, null);
+  }
+  return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType, mobileMenuMode);
+};
+
+var generic_menu_service = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  UserProvider: UserProvider,
-  useUser: useUser
+  DefaultRoutes: DefaultRoutes,
+  GenericMenuBuilder: GenericMenuBuilder,
+  editorMenuOption: editorMenuOption,
+  editorRoute: editorRoute,
+  getDefaultRoutes: getDefaultRoutes,
+  getDefaultRoutesRaw: getDefaultRoutesRaw,
+  getMenuFromApi: getMenuFromApi,
+  getRoutes: getRoutes,
+  getRoutesRaw: getRoutesRaw
 });
 
 function getUrlParams() {
@@ -3227,11 +3860,9 @@ function getUrlParams() {
           searchString = props.location.search;
         } else {
           searchString = props.location.href;
-          if (searchString.includes('?')) {
-            searchString = searchString.split('?')[1];
-          } else {
-            searchString = '';
-          }
+        }
+        if (searchString.startsWith('?')) {
+          searchString = searchString.split('?')[1];
         }
         if (searchString === '') {
           return urlParams;
@@ -3264,6 +3895,25 @@ var urlParams = /*#__PURE__*/Object.freeze({
   getUrlParams: getUrlParams
 });
 
+const mergeDicts = (dictToAdd, originDict) => {
+  if (!(typeof dictToAdd === 'object' && dictToAdd !== null)) {
+    dictToAdd = {};
+  }
+  const dictToAddFinal = Object.entries(dictToAdd).reduce((acc, _ref) => {
+    let [key, value] = _ref;
+    acc[key] = value;
+    return acc;
+  }, {
+    ...originDict
+  });
+  return dictToAddFinal;
+};
+
+var dictUtilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  mergeDicts: mergeDicts
+});
+
 const WaitAnimation = () => {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("center", null, /*#__PURE__*/React.createElement("img", {
     src: WAIT_ANIMATION_IMG,
@@ -3282,490 +3932,6 @@ var wait_animation_utility = /*#__PURE__*/Object.freeze({
   __proto__: null,
   ShowHidePageAnimation: ShowHidePageAnimation,
   WaitAnimation: WaitAnimation
-});
-
-const defaultAppLogo = "app_logo_square.svg";
-const LoginPage = props => {
-  const [redirectUrl, setRedirectUrl] = React.useState(null);
-  const [performLogin, setPerformLogin] = React.useState(false);
-  const {
-    currentUser,
-    registerUser,
-    unRegisterUser
-  } = useUser();
-  const {
-    appLogo,
-    theme
-  } = useAppContext();
-  React.useEffect(() => {
-    if (currentUser && performLogin) {
-      unRegisterUser();
-    }
-  }, [currentUser]);
-  React.useEffect(() => {
-    const urlParams = getUrlParams(props);
-    let redirect;
-    if (typeof urlParams.redirect === 'undefined') {
-      redirect = getLastUrl();
-    } else {
-      redirect = urlParams.redirect;
-    }
-    if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
-      removeLastUrl();
-      // window.location.href = redirectUrl;
-      getCurrentUserData().then(userData => {
-        if (userData.error) {
-          setPerformLogin(true);
-        } else {
-          registerUser(getUserLocalData(userData));
-          return /*#__PURE__*/React.createElement(reactRouterDom.Navigate, {
-            to: redirectUrl
-          });
-        }
-      }, error => {
-        console.error(error.errorMsg);
-        setPerformLogin(true);
-      });
-    } else {
-      setRedirectUrl(redirect);
-      setPerformLogin(true);
-    }
-    // Avoid need to add redirectUrl to dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
-  const handleSubmit = (username, password, setStatus, setSubmitting) => {
-    setStatus();
-    authenticationService.login(username, password).then(user => {
-      // To avoid stay in login page with the wait animation
-      setSubmitting(false);
-      registerUser(user);
-      // Redirect to previous page
-      removeLastUrl();
-      return /*#__PURE__*/React.createElement(reactRouterDom.Navigate, {
-        to: redirectUrl
-      });
-      // window.location.href = redirectUrl;
-      // // To handle menu access rights changes
-      // window.location.reload(true);
-    }, error => {
-      setSubmitting(false);
-      setStatus(getErrorMessage(error));
-    });
-  };
-  if (!performLogin) {
-    return WaitAnimation();
-  }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(formik.Formik, {
-    initialValues: {
-      username: '',
-      password: ''
-    },
-    validationSchema: Yup__namespace.object().shape({
-      username: Yup__namespace.string().required('Username is required'),
-      password: Yup__namespace.string().required('Password is required')
-    }),
-    onSubmit: (_ref, _ref2) => {
-      let {
-        username,
-        password
-      } = _ref;
-      let {
-        setStatus,
-        setSubmitting
-      } = _ref2;
-      handleSubmit(username, password, setStatus, setSubmitting);
-    }
-  }, _ref3 => {
-    let {
-      errors,
-      status,
-      touched,
-      isSubmitting
-    } = _ref3;
-    return /*#__PURE__*/React.createElement("div", {
-      className: POPUP_TOP_MARGIN_CLASS
-    }, /*#__PURE__*/React.createElement(CenteredBoxContainer, null, /*#__PURE__*/React.createElement(formik.Form, null, /*#__PURE__*/React.createElement("img", {
-      src: imageDirectory + (appLogo || defaultAppLogo),
-      width: "150",
-      height: "150",
-      className: LOGIN_PAGE_APP_LOGO_CLASS,
-      alt: "App Logo"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: FORM_GROUP_CLASS
-    }, /*#__PURE__*/React.createElement("label", {
-      htmlFor: "username",
-      className: theme.label
-    }, "Username"), /*#__PURE__*/React.createElement(formik.Field, {
-      name: "username",
-      type: "text",
-      className: FORM_CONTROL_CLASS + ' ' + (errors.username && touched.username ? IS_INVALID_CLASS : theme.input)
-    }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
-      name: "username",
-      component: "div",
-      className: INVALID_FEEDBACK_CLASS
-    })), /*#__PURE__*/React.createElement("div", {
-      className: FORM_GROUP_CLASS
-    }, /*#__PURE__*/React.createElement("label", {
-      htmlFor: "password",
-      className: theme.label
-    }, "Password"), /*#__PURE__*/React.createElement(formik.Field, {
-      name: "password",
-      type: "password",
-      className: FORM_CONTROL_CLASS + ' ' + (errors.password && touched.password ? IS_INVALID_CLASS : theme.input)
-    }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
-      name: "password",
-      component: "div",
-      className: INVALID_FEEDBACK_CLASS
-    })), /*#__PURE__*/React.createElement("div", {
-      className: FORM_GROUP_CLASS
-    }, /*#__PURE__*/React.createElement("button", {
-      type: "submit",
-      className: BUTTON_PRIMARY_CLASS,
-      disabled: isSubmitting
-    }, "Login"), isSubmitting && WaitAnimation()), status && !includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
-      className: ERROR_MSG_CLASS
-    }, status), status && includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
-      className: ERROR_MSG_CLASS
-      // dangerouslySetInnerHTML={{ __html: status }}
-    }, status))));
-  }));
-};
-
-const HomePage = _ref => {
-  let {
-    children
-  } = _ref;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, children);
-};
-
-// GenericMenuService (GMS) main
-
-const jsPrefixToken = /\|([^|]*)\|/;
-const getOnClickObject = (onClickString, componentMap, setExpanded) => {
-  let resutlFunction = null;
-  const windowOpenObjs = {
-    "about": {
-      "url": "about_body?menu=0",
-      "name": "AppAboutPopUp",
-      "options": "height=600,width=400"
-    }
-  };
-  if (!onClickString) {
-    if (setExpanded) {
-      resutlFunction = () => {
-        setExpanded();
-      };
-    }
-  } else {
-    if (onClickString.startsWith("|")) {
-      const match = onClickString.match(jsPrefixToken);
-      if (match) {
-        const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
-        if (woOptions) {
-          const windowOpenFn = woOptions => window.open("".concat(window.location.origin, "/#/").concat(woOptions.url), woOptions.name, woOptions.options);
-          if (setExpanded) {
-            resutlFunction = () => {
-              setExpanded();
-              windowOpenFn(woOptions);
-              return window.location.href;
-            };
-          } else {
-            resutlFunction = () => {
-              windowOpenFn(woOptions);
-              return window.location.href;
-            };
-          }
-        } else {
-          resutlFunction = () => {
-            alert("ERROR: invalid onClick: ".concat(onClickString));
-            return window.location.href;
-          };
-        }
-      }
-    } else {
-      if (setExpanded) {
-        resutlFunction = () => {
-          setExpanded(componentMap[onClickString]);
-        };
-      } else {
-        resutlFunction = componentMap[onClickString];
-      }
-    }
-  }
-  return resutlFunction;
-};
-const GenericMenuBuilder = _ref => {
-  let {
-    icon,
-    title,
-    itemType,
-    mobileMenuMode
-  } = _ref;
-  const {
-    state,
-    menuOptions,
-    setExpanded,
-    componentMap
-  } = useAppContext();
-  const getElementObj = item => {
-    const ElementObj = componentMap[item.element];
-    if (typeof ElementObj === 'undefined') {
-      return null;
-    }
-    return /*#__PURE__*/React.createElement(ElementObj, null);
-  };
-  const getItemDefaults = function (item) {
-    let topTitle = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    const hard_prefix = defaultValue(item, "hard_prefix", false);
-    const get_prefix = defaultValue(item, "get_prefix", true);
-    const reload = defaultValue(item, "reload", false);
-    const element_obj = getElementObj(item);
-    let path = defaultValue(item, "path", null);
-    if (get_prefix && path) {
-      path = getPrefix(hard_prefix) + path;
-    }
-    if (!path) {
-      path = "#";
-    }
-    const on_click = getOnClickObject(defaultValue(item, "on_click", null), componentMap, setExpanded);
-    const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
-    return {
-      "hard_prefix": hard_prefix,
-      "get_prefix": get_prefix,
-      "element_obj": element_obj,
-      "path": path,
-      "on_click": on_click,
-      "title": title,
-      "reload": reload
-    };
-  };
-  const getRoutes = () => {
-    const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw()];
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
-      history: history
-    }, menuOptionsFinal.map(item => {
-      const itemDefs = getItemDefaults(item);
-      if (item.type === "nav_link") {
-        return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
-          key: itemDefs["title"],
-          path: itemDefs["path"],
-          element: itemDefs["element_obj"]
-        });
-      }
-      return item.sub_menu_options.map(subItem => {
-        const itemDefs = getItemDefaults(subItem);
-        if (subItem.type === 'editor') {
-          try {
-            return editorRoute(componentMap[subItem.element]());
-          } catch (error) {
-            console_debug_log("[GMB-GR-E010] subItem.element: ".concat(subItem.element));
-            console_debug_log(error);
-            return null;
-          }
-        }
-        return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
-          key: itemDefs["title"],
-          path: itemDefs["path"],
-          element: itemDefs["element_obj"]
-        });
-      });
-    }), /*#__PURE__*/React.createElement(reactRouterDom.Route, {
-      key: "invalidRoute",
-      path: "*",
-      element: /*#__PURE__*/React.createElement(InvalidRouteRedirect, null)
-    })));
-  };
-  const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
-    return menuOptions.filter(item => item.location === item_type_filter).map(item => {
-      const itemDefs = getItemDefaults(item, topTitle);
-      if (item.type === "nav_link") {
-        // Items in main menu, not belonging to any NavDropdown
-        return /*#__PURE__*/React.createElement(Nav.Link, {
-          key: item.title,
-          as: reactRouterDom.Link,
-          to: itemDefs["path"],
-          onClick: itemDefs["on_click"],
-          reloadDocument: itemDefs["reload"],
-          type: itemType,
-          mobileMenuMode: mobileMenuMode
-        }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-          icon: icon !== null && icon !== void 0 ? icon : '',
-          size: "2xl",
-          className: NAV_LINK_ICON_CLASS
-        }) : itemDefs["title"]);
-      }
-      // Navigation dropdown (main menu item with sub-menus)
-      const navDropdownId = "basic-nav-dropdown-".concat(item.title.replace(/ /g, '_'));
-      return /*#__PURE__*/React.createElement(NavDropdown, {
-        key: item.title,
-        title: itemDefs["title"],
-        id: navDropdownId,
-        type: itemType,
-        icon: icon,
-        mobileMenuMode: mobileMenuMode
-      }, item.sub_menu_options.map(subItem => {
-        const itemDefs = getItemDefaults(subItem);
-        if (subItem.type === 'editor') {
-          try {
-            return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode, componentMap, setExpanded);
-          } catch (error) {
-            console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
-            console_debug_log(error);
-            return null;
-          }
-        }
-        return /*#__PURE__*/React.createElement(NavDropdown.Item, {
-          key: subItem.title,
-          as: reactRouterDom.Link,
-          to: itemDefs["path"],
-          onClick: itemDefs["on_click"],
-          reloadDocument: itemDefs["reload"],
-          type: itemType,
-          mobileMenuMode: mobileMenuMode
-        }, itemDefs["title"]);
-      }));
-    });
-  };
-  const menuItems = (item_type_filter, topTitle, itemType, mobileMenuMode) => {
-    if (typeof menuOptions === 'undefined' || menuOptions === null) {
-      return '';
-    }
-    // Routes
-    if (item_type_filter === 'routes') {
-      return getRoutes();
-    }
-    // NavLinks
-    return GetNavs(item_type_filter, topTitle, itemType, icon, mobileMenuMode);
-  };
-  if (state !== "" && itemType === "routes") {
-    return /*#__PURE__*/React.createElement(DefaultRoutes, null);
-  }
-  if (state !== "") {
-    return /*#__PURE__*/React.createElement(DefaultRoutes, null);
-  }
-  return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType, mobileMenuMode);
-};
-const isTopMenuAlternativeType = itemType => Object.values(['side_menu', 'mobile_menu']).some(element => itemType === element);
-const editorRoute = editor => {
-  return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
-    path: getPrefix() + '/' + editor.baseUrl,
-    element: /*#__PURE__*/React.createElement(editor.component, null)
-  });
-};
-const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap, setExpanded) => {
-  return /*#__PURE__*/React.createElement(NavDropdown.Item, {
-    key: editor.title,
-    as: reactRouterDom.Link,
-    to: getPrefix() + '/' + editor.baseUrl,
-    onClick: getOnClickObject(null, componentMap, setExpanded),
-    type: itemType,
-    mobileMenuMode: mobileMenuMode
-  }, editor.title);
-};
-const getDefaultRoutesRaw = () => {
-  return [{
-    title: 'homepage1',
-    path: "/",
-    element_obj: /*#__PURE__*/React.createElement(HomePage, null),
-    type: "nav_link"
-  }, {
-    title: 'homepage2',
-    path: getPrefix(true) + "/",
-    element_obj: /*#__PURE__*/React.createElement(HomePage, null),
-    type: "nav_link"
-  }, {
-    title: 'homepage3',
-    path: getPrefix(true).replace('/#', '/') + "/",
-    element_obj: /*#__PURE__*/React.createElement(HomePage, null),
-    type: "nav_link"
-  }, {
-    title: 'loginpage1',
-    path: "/login",
-    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
-    type: "nav_link"
-  }, {
-    title: 'loginpage2',
-    path: getPrefix(true) + "/login",
-    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
-    type: "nav_link"
-  }, {
-    title: 'loginpage3',
-    path: getPrefix(true).replace('/#', '/') + "/login",
-    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
-    type: "nav_link"
-  }, {
-    title: 'loginpage4',
-    path: '/#/login',
-    element_obj: /*#__PURE__*/React.createElement(LoginPage, null),
-    type: "nav_link"
-  }];
-};
-
-// Catch all invalid routes and redirect to a default page or show a not found component
-const InvalidRouteRedirect = () => {
-  console_debug_log('InvalidRouteRedirect');
-  return /*#__PURE__*/React.createElement("div", {
-    className: ALERT_DANGER_CLASS,
-    role: "alert"
-  }, "URL not found...");
-};
-const DefaultRoutes = () => {
-  getPrefix(true).replace('/#', '/') + "/";
-  return /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
-    history: history
-  }, getDefaultRoutesRaw().map(item => {
-    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
-      key: item["title"],
-      path: item["path"],
-      element: item["element_obj"]
-    });
-  }));
-};
-const getMenuFromApi = (state, setState, setMenuOptions) => {
-  if (state !== "") {
-    return;
-  }
-  const endpoint = "menu_options";
-  const db = new dbApiService({
-    url: endpoint
-  });
-  db.getAll().then(data => {
-    setMenuOptions(data.resultset);
-  }, error => {
-    error = formatCaughtError(error);
-    if (!window.location.href.includes("/login")) {
-      setState(error);
-    }
-  });
-};
-
-var generic_menu_service = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  DefaultRoutes: DefaultRoutes,
-  GenericMenuBuilder: GenericMenuBuilder,
-  editorMenuOption: editorMenuOption,
-  editorRoute: editorRoute,
-  getDefaultRoutesRaw: getDefaultRoutesRaw,
-  getMenuFromApi: getMenuFromApi
-});
-
-const mergeDicts = (dictToAdd, originDict) => {
-  if (!(typeof dictToAdd === 'object' && dictToAdd !== null)) {
-    dictToAdd = {};
-  }
-  const dictToAddFinal = Object.entries(dictToAdd).reduce((acc, _ref) => {
-    let [key, value] = _ref;
-    acc[key] = value;
-    return acc;
-  }, {
-    ...originDict
-  });
-  return dictToAddFinal;
-};
-
-var dictUtilities = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  mergeDicts: mergeDicts
 });
 
 const DarkModeButton = () => {
@@ -4952,7 +5118,8 @@ const FormPage = _ref => {
     message: formMsg['message'],
     messageType: formMsg['messageType'],
     handleFormPageActions: handleFormPageActions,
-    theme: theme
+    theme: theme,
+    currentUser: currentUser
   }), !status && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '')
   // </div>
   // </div>
@@ -5181,7 +5348,8 @@ const EditFormFormik = _ref4 => {
     message = "",
     messageType = "",
     handleFormPageActions,
-    theme
+    theme,
+    currentUser
   } = _ref4;
   const [formData, setFormData] = React.useState({
     readyToShow: false,
@@ -5190,9 +5358,8 @@ const EditFormFormik = _ref4 => {
     message: null,
     messageType: null
   });
-  const {
-    currentUser
-  } = useUser();
+  // const { currentUser } = useUser();
+
   React.useEffect(() => {
     const editorFlags = getEditorFlags(action);
     if (editorFlags.isRead) {
@@ -5246,7 +5413,8 @@ const EditFormFormik = _ref4 => {
     message: formData['message'],
     messageType: formData['messageType'],
     handleFormPageActions: handleFormPageActions,
-    theme: theme
+    theme: theme,
+    currentUser: currentUser
   });
 };
 const EditFormFormikFinal = _ref5 => {
@@ -5260,11 +5428,11 @@ const EditFormFormikFinal = _ref5 => {
     message,
     messageType,
     handleFormPageActions,
-    theme
-  } = _ref5;
-  const {
+    theme,
     currentUser
-  } = useUser();
+  } = _ref5;
+  // const { currentUser } = useUser();
+
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -5729,7 +5897,8 @@ const GenericCrudEditorMain = props => {
     currentUser
   } = useUser();
   const {
-    theme
+    theme,
+    isWide
   } = useAppContext();
   const actionsHandlerAllowsMagicButton = false;
   React.useEffect(() => {
@@ -5992,7 +6161,7 @@ const GenericCrudEditorMain = props => {
     icon: "trash"
   }))))))))), /*#__PURE__*/React.createElement("div", {
     key: "".concat(editor.baseUrl, "_toolbar"),
-    className: APP_LISTING_TOOLBAR_TOP_DIV_CLASS
+    className: APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS : APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)
   }, /*#__PURE__*/React.createElement(CrudEditorPagination, {
     id: editor.baseUrl + "_pagination",
     currentPage: currentPage,
@@ -6803,6 +6972,172 @@ const UserProfileEditor = props => {
   }));
 };
 
+const HomePage = _ref => {
+  let {
+    children
+  } = _ref;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, children);
+};
+
+const defaultAppLogo = "app_logo_square.svg";
+const LoginPage = props => {
+  const [redirectUrl, setRedirectUrl] = React.useState("/");
+  React.useState(false);
+  const {
+    currentUser,
+    registerUser,
+    unRegisterUser
+  } = useUser();
+  const {
+    appLogo,
+    theme
+  } = useAppContext();
+
+  // useEffect(() => {
+  //     if (currentUser && performLogin) {
+  //         unRegisterUser();
+  //     }
+  // }, [currentUser]);
+
+  // useEffect(() => {
+  //     const urlParams = getUrlParams(props)
+  //     let redirect;
+  //     if (typeof urlParams.redirect === 'undefined') {
+  //         redirect = getLastUrl();
+  //     } else {
+  //         redirect = urlParams.redirect;
+  //     }
+  //     // Redirect to home OR redirect URL if already logged in
+  //     if (debug) console_debug_log("LoginPage | authenticationService:", authenticationService);
+  //     if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
+  //         removeLastUrl();
+  //         // window.location.href = redirectUrl;
+  //         getCurrentUserData()
+  //             .then( 
+  //                 userData => {
+  //                     if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
+  //                     if (userData.error) {
+  //                         if (debug) console.error('userData.error_message:', userData.error_message);
+  //                         setPerformLogin(true);
+  //                     } else {
+  //                         registerUser(getUserLocalData(userData));
+  //                         return <Navigate to={redirectUrl} replace={true}/>
+  //                     }
+  //                 },
+  //                 error => {
+  //                     console.error(error.errorMsg);
+  //                     setPerformLogin(true);
+  //                 }
+  //             );
+  //     } else {
+  //         setRedirectUrl(redirect);
+  //         setPerformLogin(true);
+  //     }
+  //     // Avoid need to add redirectUrl to dependency array
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [props]);
+
+  const handleSubmit = (username, password, setStatus, setSubmitting) => {
+    setStatus();
+    authenticationService.login(username, password).then(user => {
+      // To avoid stay in login page with the wait animation
+      setSubmitting(false);
+      registerUser(user);
+      // Redirect to previous page
+      removeLastUrl();
+      if (redirectUrl == '/login') {
+        redirectUrl = '/';
+      }
+      // return <Navigate to={redirectUrl} replace={true}/>
+      window.location.href = redirectUrl;
+      // To handle menu access rights changes
+      // window.location.reload(true);
+    }, error => {
+      setSubmitting(false);
+      setStatus(getErrorMessage(error));
+    });
+  };
+
+  // if (!performLogin) {
+  //     return WaitAnimation();
+  // }
+
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(formik.Formik, {
+    initialValues: {
+      username: '',
+      password: ''
+    },
+    validationSchema: Yup__namespace.object().shape({
+      username: Yup__namespace.string().required('Username is required'),
+      password: Yup__namespace.string().required('Password is required')
+    }),
+    onSubmit: (_ref, _ref2) => {
+      let {
+        username,
+        password
+      } = _ref;
+      let {
+        setStatus,
+        setSubmitting
+      } = _ref2;
+      handleSubmit(username, password, setStatus, setSubmitting);
+    }
+  }, _ref3 => {
+    let {
+      errors,
+      status,
+      touched,
+      isSubmitting
+    } = _ref3;
+    return /*#__PURE__*/React.createElement("div", {
+      className: POPUP_TOP_MARGIN_CLASS
+    }, /*#__PURE__*/React.createElement(CenteredBoxContainer, null, /*#__PURE__*/React.createElement(formik.Form, null, /*#__PURE__*/React.createElement("img", {
+      src: imageDirectory + (appLogo || defaultAppLogo),
+      width: "150",
+      height: "150",
+      className: LOGIN_PAGE_APP_LOGO_CLASS,
+      alt: "App Logo"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: FORM_GROUP_CLASS
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "username",
+      className: theme.label
+    }, "Username"), /*#__PURE__*/React.createElement(formik.Field, {
+      name: "username",
+      type: "text",
+      className: FORM_CONTROL_CLASS + ' ' + (errors.username && touched.username ? IS_INVALID_CLASS : theme.input)
+    }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
+      name: "username",
+      component: "div",
+      className: INVALID_FEEDBACK_CLASS
+    })), /*#__PURE__*/React.createElement("div", {
+      className: FORM_GROUP_CLASS
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "password",
+      className: theme.label
+    }, "Password"), /*#__PURE__*/React.createElement(formik.Field, {
+      name: "password",
+      type: "password",
+      className: FORM_CONTROL_CLASS + ' ' + (errors.password && touched.password ? IS_INVALID_CLASS : theme.input)
+    }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
+      name: "password",
+      component: "div",
+      className: INVALID_FEEDBACK_CLASS
+    })), /*#__PURE__*/React.createElement("div", {
+      className: FORM_GROUP_CLASS
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "submit",
+      className: BUTTON_PRIMARY_CLASS,
+      disabled: isSubmitting
+    }, "Login"), isSubmitting && WaitAnimation()), status && !includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
+      className: ERROR_MSG_CLASS
+    }, status), status && includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
+      className: ERROR_MSG_CLASS
+      // dangerouslySetInnerHTML={{ __html: status }}
+    }, status))));
+  }));
+};
+
 var baseUrl = "general_config";
 var title = "Configuration Parameters";
 var name = "Configuration Parameter";
@@ -6893,39 +7228,24 @@ const AppFooter = _ref => {
   }, appNameData) : appNameData, ". ", rightsData, "."), otherLine && /*#__PURE__*/React.createElement("p", null, otherLine));
 };
 
-const defaultComponentMap = {
-  "Users_EditorData": Users_EditorData,
-  "GeneralConfig_EditorData": GeneralConfig_EditorData,
-  "UserProfileEditor": UserProfileEditor,
-  // "Chatbot": ChatBot,
-  "HomePage": HomePage,
-  "LoginPage": LoginPage,
-  "About": About,
-  "AboutBody": AboutBody,
-  "AppFooter": AboutBody,
-  "logout": logoutHander,
-  "defaultTheme": defaultTheme
-};
-const App = _ref => {
+const CloseButton = _ref => {
   let {
-    componentMap = {},
-    appLogo = "",
-    appLogoHeader = ""
+    children
   } = _ref;
-  const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
-  return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
-    globalComponentMap: componentMapFinal,
-    globalAppLogo: appLogo,
-    globalAppLogoHeader: appLogoHeader
-  }, /*#__PURE__*/React.createElement(AppMain, null)));
+  return /*#__PURE__*/React.createElement(React.Fragment, null, children && /*#__PURE__*/React.createElement("div", {
+    className: ALERT_DANGER_CLASS,
+    role: "alert"
+  }, children), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => window.close(),
+    className: BUTTON_PRIMARY_CLASS
+  }, "Close"));
 };
 const AppNavBar = _ref2 => {
   let {
     children
   } = _ref2;
-  const {
-    currentUser
-  } = useUser();
+  useUser();
   const {
     setExpanded,
     appLogoHeader
@@ -6940,8 +7260,8 @@ const AppNavBar = _ref2 => {
     id: "navbar-main"
   }, /*#__PURE__*/React.createElement(Navbar.Brand, {
     as: reactRouterDom.Link,
-    to: "/",
-    onClick: () => currentUser ? setExpanded() : setExpanded(() => window.location.reload())
+    to: "/"
+    // onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
   }, /*#__PURE__*/React.createElement("div", {
     className: NAVBAR_BRAND_NAME_CLASS
   }, appName), /*#__PURE__*/React.createElement("div", {
@@ -6962,10 +7282,17 @@ const TopRightMenu = _ref3 => {
     showContentOnly: showContentOnly
   }));
 };
-const AppMain = () => {
+const AppMainInner = _ref4 => {
+  let {
+    children
+  } = _ref4;
+  // const debug = true;
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
-  reactRouterDom.useLocation();
+
+  // const location = useLocation();
+  // if (debug) console_debug_log("App | location:", location);
+
   const {
     currentUser
   } = useUser();
@@ -6976,7 +7303,8 @@ const AppMain = () => {
     setMenuOptions,
     sideMenu,
     setSideMenu,
-    isMobileMenuOpen
+    isMobileMenuOpen,
+    componentMap
   } = useAppContext();
   const stateHandler = () => {
     logoutHander();
@@ -6988,7 +7316,7 @@ const AppMain = () => {
     }
   }, [currentUser, state]);
   if (!currentUser) {
-    return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(LoginPage, null)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+    return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, children), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
   }
   return /*#__PURE__*/React.createElement(MainContainer, null, showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, null), !showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopCenterMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     itemType: sideMenu ? "side_menu" : "top_menu"
@@ -7002,39 +7330,28 @@ const AppMain = () => {
   })), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(React.Fragment, null, !sideMenu && /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
     showContentOnly: showContentOnly
-  }), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, !showContentOnly && /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
+  }, children), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, !showContentOnly && /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
     showContentOnly: showContentOnly
-  })), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  }, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     itemType: "mobile_menu"
   }), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
     itemType: "hamburger",
     showContentOnly: showContentOnly,
     mobileMenuMode: true
-  })), state !== '' && /*#__PURE__*/React.createElement(DefaultRoutes, null), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
-};
-const CloseButton = _ref4 => {
-  let {
-    children
-  } = _ref4;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, children && /*#__PURE__*/React.createElement("div", {
-    className: ALERT_DANGER_CLASS,
-    role: "alert"
-  }, children), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: () => window.close(),
-    className: BUTTON_PRIMARY_CLASS
-  }, "Close"));
+  })), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
 const AppMainComponent = _ref5 => {
   let {
     stateHandler,
-    showContentOnly
+    showContentOnly,
+    children
   } = _ref5;
-  reactRouterDom.useLocation();
+  // const location = useLocation();
+  // if (debug) console_debug_log("AppMainComponent | location:", location);
   const {
     state,
     menuOptions
@@ -7048,9 +7365,74 @@ const AppMainComponent = _ref5 => {
   if (!menuOptions) {
     return WaitAnimation();
   }
-  return /*#__PURE__*/React.createElement(GenericMenuBuilder, {
-    itemType: "routes"
+  // if (debug) console_debug_log("AppMainComponent | GenericMenuBuilder");
+  // return (
+  //     <GenericMenuBuilder
+  //         itemType="routes"
+  //     />
+  // )
+  return children;
+};
+const AppMain = () => {
+  // const debug = true;
+  const {
+    currentUser,
+    registerUser
+  } = useUser();
+  const {
+    state,
+    setState,
+    menuOptions,
+    setMenuOptions,
+    componentMap,
+    setExpanded
+  } = useAppContext();
+  const [router, setRouter] = React.useState(getDefaultRoutes(currentUser, componentMap, setExpanded, 'array'));
+  React.useEffect(() => {
+    verifyCurrentUser(registerUser);
+  }, []);
+  React.useEffect(() => {
+    // Load menus from JSON configurations
+    if (currentUser) {
+      getMenuFromApi(state, setState, setMenuOptions);
+    }
+  }, [currentUser, state]);
+  React.useEffect(() => {
+    if (menuOptions) {
+      setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded, 'array'));
+    }
+  }, [menuOptions]);
+  return /*#__PURE__*/React.createElement(reactRouterDom.RouterProvider, {
+    router: reactRouterDom.createBrowserRouter(router),
+    history: history
   });
+};
+const defaultComponentMap = {
+  "Users_EditorData": Users_EditorData,
+  "GeneralConfig_EditorData": GeneralConfig_EditorData,
+  "UserProfileEditor": UserProfileEditor,
+  // "Chatbot": ChatBot,
+  "HomePage": HomePage,
+  "LoginPage": LoginPage,
+  "About": About,
+  "AboutBody": AboutBody,
+  "AppFooter": AppFooter,
+  "AppMainInner": AppMainInner,
+  "logout": logoutHander,
+  "defaultTheme": defaultTheme
+};
+const App = _ref6 => {
+  let {
+    componentMap = {},
+    appLogo = "",
+    appLogoHeader = ""
+  } = _ref6;
+  const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+  return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
+    globalComponentMap: componentMapFinal,
+    globalAppLogo: appLogo,
+    globalAppLogoHeader: appLogoHeader
+  }, /*#__PURE__*/React.createElement(AppMain, null)));
 };
 
 const convertHeight = (height, height_unit, target_unit) => {
@@ -7241,166 +7623,6 @@ var PrivateRoute$1 = /*#__PURE__*/Object.freeze({
   PrivateRoute: PrivateRoute
 });
 
-const randomKey = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
-var ramdomize = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  randomKey: randomKey
-});
-
-const textareaMinHeightDefault = 40;
-const toggleIdVisibility = (onOff, ids) => {
-  ids.forEach(id => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.style.display = onOff === 'on' ? '' : 'none';
-    }
-  });
-};
-const getElementWithErrorHandling = elementId => {
-  try {
-    const elementObj = document.getElementById(elementId);
-    return elementObj;
-  } catch (error) {
-    // Element not found or stil loading...            
-    return null;
-  }
-};
-const growUpTextAreaInner = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
-  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
-  const textarea = getElementWithErrorHandling(textAreaId);
-  if (textarea) {
-    // Grow upwards
-    // Adjust the height of the textarea to grow as the user types
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
-    // If the content goes beyond its height, adjust the scroll to grow upwards
-    const conversationObj = document.getElementById(conversationBlockId);
-    // Calculate the height based on the viewport height (82vh, ".conversation-block.height" in FynBot.css)
-    const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-    // Ensure the textarea does not exceed its max-height...
-    if (textarea.scrollHeight > maxOffsetHeight) {
-      textarea.style.height = "".concat(maxOffsetHeight, "px");
-    }
-    // Set conversation height to make textarea to scroll up according its height
-    const sectionViewportHeightInPx = sectionViewportHeight / 100 * viewportHeight;
-    const conversationHeight = sectionViewportHeightInPx - textarea.clientHeight + textareaMinHeight;
-    conversationObj.style.height = "".concat(conversationHeight, "px");
-  }
-};
-const growUpTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
-  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
-  const textarea = getElementWithErrorHandling(textAreaId);
-  if (textarea) {
-    textarea.addEventListener('input', event => growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight));
-  }
-};
-const resetTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
-  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
-  const textarea = getElementWithErrorHandling(textAreaId);
-  if (textarea) {
-    growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight);
-  }
-};
-const LinkifyText = _ref => {
-  let {
-    children
-  } = _ref;
-  // Detect links in the text.
-  // Example: [Carlos Jose Ramirez Divo - Sitio web oficial](https://www.carlosjramirez.com/en/about-carlos-jose-ramirez-divo/)
-
-  const regex = /\[[^\]]+\]\([^)]+\)/g;
-  const matches = children.match(regex);
-  const links = !matches ? [] : matches.map(match => {
-    const title = match.substring(1, match.indexOf(']'));
-    const url = match.substring(match.indexOf('(') + 1, match.length - 1);
-    return /*#__PURE__*/React.createElement("a", {
-      key: url,
-      href: url,
-      target: "_blank",
-      rel: "noopener noreferrer"
-    }, title);
-  });
-  const formattedText = children.split(regex).reduce((acc, textChunk, index) => {
-    if (index === 0) {
-      return [textChunk];
-    }
-    acc.push(links[index - 1]);
-    acc.push(textChunk);
-    return acc;
-  }, []);
-  return /*#__PURE__*/React.createElement("div", null, formattedText.map((chunck, index) => {
-    if (typeof chunck !== 'string') {
-      return chunck;
-    }
-    return chunck.split('\n').map((line, index) => {
-      return /*#__PURE__*/React.createElement("p", {
-        key: randomKey()
-      }, line);
-    });
-  }));
-};
-const CopyButton = _ref2 => {
-  let {
-    text
-  } = _ref2;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
-    id: "copyButton",
-    style: {
-      position: 'absolute',
-      top: '10px',
-      right: '20px',
-      padding: '3px',
-      borderRadius: '5px',
-      border: 'none',
-      background: 'grey',
-      color: 'white',
-      cursor: 'pointer',
-      fontSize: '12px'
-    },
-    onClick: e => {
-      navigator.clipboard.writeText(text);
-      const copiedMessage = document.createElement('div');
-      copiedMessage.textContent = 'Copied!';
-      copiedMessage.style.position = 'absolute';
-      copiedMessage.style.bottom = '-40px'; // Position under the button
-      copiedMessage.style.left = '-20px'; // Align with the button's left edge
-      copiedMessage.style.padding = '5px';
-      copiedMessage.style.borderRadius = '5px';
-      copiedMessage.style.border = 'none';
-      copiedMessage.style.background = 'grey';
-      copiedMessage.style.color = 'white';
-      copiedMessage.style.fontSize = '0.75rem';
-      copiedMessage.style.zIndex = '1000';
-      copiedMessage.style.opacity = '0';
-      copiedMessage.style.transition = 'opacity 0.3s';
-      e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
-      setTimeout(() => {
-        copiedMessage.style.opacity = '1';
-      }, 100);
-      setTimeout(() => {
-        copiedMessage.style.opacity = '0';
-        setTimeout(() => copiedMessage.remove(), 2000);
-      }, 2000);
-    }
-  }, "Copy"));
-};
-const isMobileDevice = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-};
-
-var ui = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  CopyButton: CopyButton,
-  LinkifyText: LinkifyText,
-  getElementWithErrorHandling: getElementWithErrorHandling,
-  growUpTextArea: growUpTextArea,
-  growUpTextAreaInner: growUpTextAreaInner,
-  isMobileDevice: isMobileDevice,
-  resetTextArea: resetTextArea,
-  toggleIdVisibility: toggleIdVisibility
-});
-
 // GenericCrudEditor UI components
 const ShowAsDisabledField = _ref => {
   let {
@@ -7475,7 +7697,7 @@ exports.genericEditorRfcUi = generic_editor_rfc_ui;
 exports.genericEditorSinglepage = generic_editor_singlepage;
 exports.genericEditorUtilities = generic_editor_utilities;
 exports.genericMenuService = generic_menu_service;
-exports.history = history$1;
+exports.history = history$2;
 exports.jsonUtilities = jsonUtilities;
 exports.loggingService = logging_service;
 exports.logoutService = logout_service;

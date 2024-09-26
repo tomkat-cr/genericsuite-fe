@@ -194,3 +194,23 @@ export const CopyButton = ({ text }) => {
 export const isMobileDevice = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
+
+export const isWindowWide = () => (
+    window.innerWidth >= 640
+)
+
+export const resizeManager = (callback) => {
+    const handleResize = () => {
+        callback();
+    }
+    const addListener = () => {
+        window.addEventListener('resize', handleResize)
+    }
+    const removeListener = () => {
+        window.removeEventListener('resize', handleResize)
+    }
+    return {
+        addListener,
+        removeListener,
+    }
+}

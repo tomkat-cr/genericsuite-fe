@@ -40,55 +40,55 @@ const debug = false;
 const defaultAppLogo = "app_logo_square.svg";
 
 export const LoginPage = (props) => {
-    const [redirectUrl, setRedirectUrl] = useState(null);
+    const [redirectUrl, setRedirectUrl] = useState("/");
     const [performLogin, setPerformLogin] = useState(false);
 
     const { currentUser, registerUser, unRegisterUser } = useUser();
     const { appLogo, theme } = useAppContext();
 
-    useEffect(() => {
-        if (currentUser && performLogin) {
-            unRegisterUser();
-        }
-    }, [currentUser]);
+    // useEffect(() => {
+    //     if (currentUser && performLogin) {
+    //         unRegisterUser();
+    //     }
+    // }, [currentUser]);
 
-    useEffect(() => {
-        const urlParams = getUrlParams(props)
-        let redirect;
-        if (typeof urlParams.redirect === 'undefined') {
-            redirect = getLastUrl();
-        } else {
-            redirect = urlParams.redirect;
-        }
-        // Redirect to home OR redirect URL if already logged in
-        if (debug) console_debug_log("LoginPage | authenticationService:", authenticationService);
-        if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
-            removeLastUrl();
-            // window.location.href = redirectUrl;
-            getCurrentUserData()
-                .then( 
-                    userData => {
-                        if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
-                        if (userData.error) {
-                            if (debug) console.error('userData.error_message:', userData.error_message);
-                            setPerformLogin(true);
-                        } else {
-                            registerUser(getUserLocalData(userData));
-                            return <Navigate to={redirectUrl}/>
-                        }
-                    },
-                    error => {
-                        console.error(error.errorMsg);
-                        setPerformLogin(true);
-                    }
-                );
-        } else {
-            setRedirectUrl(redirect);
-            setPerformLogin(true);
-        }
-        // Avoid need to add redirectUrl to dependency array
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props]);
+    // useEffect(() => {
+    //     const urlParams = getUrlParams(props)
+    //     let redirect;
+    //     if (typeof urlParams.redirect === 'undefined') {
+    //         redirect = getLastUrl();
+    //     } else {
+    //         redirect = urlParams.redirect;
+    //     }
+    //     // Redirect to home OR redirect URL if already logged in
+    //     if (debug) console_debug_log("LoginPage | authenticationService:", authenticationService);
+    //     if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
+    //         removeLastUrl();
+    //         // window.location.href = redirectUrl;
+    //         getCurrentUserData()
+    //             .then( 
+    //                 userData => {
+    //                     if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
+    //                     if (userData.error) {
+    //                         if (debug) console.error('userData.error_message:', userData.error_message);
+    //                         setPerformLogin(true);
+    //                     } else {
+    //                         registerUser(getUserLocalData(userData));
+    //                         return <Navigate to={redirectUrl} replace={true}/>
+    //                     }
+    //                 },
+    //                 error => {
+    //                     console.error(error.errorMsg);
+    //                     setPerformLogin(true);
+    //                 }
+    //             );
+    //     } else {
+    //         setRedirectUrl(redirect);
+    //         setPerformLogin(true);
+    //     }
+    //     // Avoid need to add redirectUrl to dependency array
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [props]);
 
     const handleSubmit = (username, password, setStatus, setSubmitting) => {
         setStatus();
@@ -102,10 +102,13 @@ export const LoginPage = (props) => {
                     registerUser(user);
                     // Redirect to previous page
                     removeLastUrl();
-                    return <Navigate to={redirectUrl}/>
-                        // window.location.href = redirectUrl;
-                        // // To handle menu access rights changes
-                        // window.location.reload(true);
+                    if (redirectUrl == '/login') {
+                        redirectUrl = '/';
+                    }
+                    // return <Navigate to={redirectUrl} replace={true}/>
+                    window.location.href = redirectUrl;
+                    // To handle menu access rights changes
+                    // window.location.reload(true);
                 },
                 error => {
                     setSubmitting(false);
@@ -114,9 +117,9 @@ export const LoginPage = (props) => {
             );
     };
 
-    if (!performLogin) {
-        return WaitAnimation();
-    }
+    // if (!performLogin) {
+    //     return WaitAnimation();
+    // }
 
     return (
         <>

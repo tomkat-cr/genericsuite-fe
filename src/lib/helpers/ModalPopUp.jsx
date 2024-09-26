@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Modal } from './ModalLib.jsx';
 
@@ -6,6 +6,8 @@ import { getPrefix } from '../helpers/history.jsx';
 import { console_debug_log } from '../services/logging.service.jsx';
 
 import { BUTTON_PRIMARY_CLASS } from '../constants/class_name_constants.jsx';
+import { resizeManager, isWindowWide } from './ui.jsx';
+import { useAppContext } from './AppContext.jsx';
 
 const debug = false;
 
@@ -26,16 +28,8 @@ export const ModalPopUp = ({
     htmlContentClass = null,
     iconClassName = null,
 }) => {
+    const { isWide } = useAppContext();
     const [show, setShow] = useState(true);
-    const [isWide, setIsWide] = useState(window.innerWidth >= 640)
-
-    React.useEffect(() => {
-        const handleResize = () => {
-          setIsWide(window.innerWidth >= 640)
-        }
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
 
     const handleClose = () => setShow(false);
     const handleOnHide = () => setShow(!allowOnHide);

@@ -10,7 +10,7 @@ export const history = createBrowserHistory();
 
 export function getPrefix(hardPrefix=false) {
     if (hardPrefix) {
-        const prefix = process.env.REACT_APP_URI_PREFIX ? process.env.REACT_APP_URI_PREFIX : '';
+        const prefix = process.env.REACT_APP_URI_PREFIX ?? '';
         return '/#'+prefix;
     }
     return '';
@@ -32,10 +32,10 @@ export const removeLastUrl = () => {
 }
 
 export const getLastUrl = () => {
-    let lastUrl = getPrefix(true)+'/';
-    if (localStorage.getItem('lastURL')) {
-        // lastUrl = localStorage.getItem('lastURL');
-        lastUrl = getRawItemFromLocalStorage('lastURL');
+    let lastUrl = getRawItemFromLocalStorage('lastURL')
+    if (lastUrl === null || lastUrl === '' || lastUrl === "null") {
+        // lastUrl = getPrefix(true)+'/';
+        lastUrl = '/';
     }
     return lastUrl;
 }

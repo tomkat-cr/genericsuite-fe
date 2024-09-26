@@ -44,7 +44,7 @@
             },
             {
                 "title": "About",
-                "on_click": "|js|window.open(window.location.origin + '/#/about_body?menu=0', 'AppAboutPopUp','height=600,width=400')"
+                "on_click": "|about|"
             },
             {
                 "title": "Logout",

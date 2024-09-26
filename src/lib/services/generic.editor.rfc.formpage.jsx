@@ -196,6 +196,7 @@ export const FormPage = ({
                             messageType={formMsg['messageType']}
                             handleFormPageActions={handleFormPageActions}
                             theme={theme}
+                            currentUser={currentUser}
                         />
                     }
                     {!status &&
@@ -517,6 +518,7 @@ const EditFormFormik = (
         messageType = "",
         handleFormPageActions,
         theme,
+        currentUser,
     }
 ) => {
     const [formData, setFormData] = useState({
@@ -526,7 +528,7 @@ const EditFormFormik = (
         message: null,
         messageType: null,
     });
-    const { currentUser } = useUser();
+    // const { currentUser } = useUser();
 
     useEffect(() => {
         const editorFlags = getEditorFlags(action);
@@ -603,6 +605,7 @@ const EditFormFormik = (
             messageType: formData['messageType'],
             handleFormPageActions: handleFormPageActions,
             theme: theme,
+            currentUser: currentUser,
         })
     )
 }
@@ -618,8 +621,9 @@ const EditFormFormikFinal = ({
     messageType,
     handleFormPageActions,
     theme,
+    currentUser,
 }) => {
-    const { currentUser } = useUser();
+    // const { currentUser } = useUser();
 
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);

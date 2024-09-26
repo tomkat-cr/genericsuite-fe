@@ -46,13 +46,14 @@ export const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-betwe
 // export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
-export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
+// export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '1-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
+export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = 'navbarHeaderForSideMenuMobileCloseClass';
 
 export const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
 
 export const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS="flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
 export const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS="flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
-export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
+// export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
 
 export const NAVBAR_BRAND_NAME_CLASS="text-2xl font-bold navbarBrandNameClass";
 export const NAVBAR_BRAND_APP_VERSION_CLASS="text-xs navbarBrandAppVersionClass";
@@ -72,13 +73,14 @@ export const NAVBAR_MOBILE_CLOSE_BUTTON_CLASS = "p-2 rounded-full hover:bg-opaci
 export const NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS = "h-6 w-6 navbarMobileCloseButtonIconClass";
 export const NAVBAR_MOBILE_NAV_CLASS = "flex flex-col space-y-2 navbarMobileNavClass";
 
-export const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
+export const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden 1-lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
 export const NAVBAR_TOGGLE_IMAGE_CLASS = "h-6 w-6 navbarToggleImageClass";
 
 export const NAVBAR_TEXT_CLASS='flex items-center navbarTextClass';
 
 export const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClass";
-export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
+// export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
+export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "block relative group navLinkTopDivHamburgerClass";
 export const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
 export const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
 
@@ -96,7 +98,8 @@ export const STROKE_WHITE_ICON_CLASS = "stroke-white";
 export const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400";
 
 export const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
-export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+// export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
+export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "block relative group navDropdownTopDivHamburgerClass";
 export const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
 export const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
 
@@ -230,7 +233,10 @@ export const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS='ml-2 searchEngineButtonTopDivCl
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
-export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+// export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex items-center mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
+export const APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS = "flex-row appListingToolbarTopDivWideClass";
+export const APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS = "flex-col appListingToolbarTopDivNotWideClass";
 
 export const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS="text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
 

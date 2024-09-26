@@ -77,6 +77,8 @@ import {
   APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS,
   APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS,
   APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS,
 } from "../constants/class_name_constants.jsx";
 import {
   ACTION_CREATE,
@@ -127,7 +129,7 @@ const GenericCrudEditorMain = (props) => {
     debugCache,
   } = useContext(MainSectionContext);
   const { currentUser } = useUser();
-  const { theme } = useAppContext();
+  const { theme, isWide } = useAppContext();
 
   const actionsHandlerAllowsMouseOver = true;
   const actionsHandlerAllowsMagicButton = false;
@@ -565,7 +567,7 @@ const GenericCrudEditorMain = (props) => {
           {/* Toolbar */}
           <div
             key={`${editor.baseUrl}_toolbar`}
-            className={APP_LISTING_TOOLBAR_TOP_DIV_CLASS}
+            className={APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS :  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)}
           >
             <CrudEditorPagination
               id={editor.baseUrl + "_pagination"}

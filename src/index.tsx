@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { HashRouter } from 'react-router-dom';
+// import { HashRouter } from 'react-router-dom';
 
-import { HomePageGsFe } from './lib/components/HomePage/HomePageGsFe.jsx';
-import { AboutBodyGsFe } from './lib/components/About/AboutBodyGsFe.jsx';
+import { HomePageGsFe as HomePage} from './lib/components/HomePage/HomePageGsFe.jsx';
+import { AboutBodyGsFe as AboutBody } from './lib/components/About/AboutBodyGsFe.jsx';
 
 const reactDomClient = require('react-dom/client');
 
@@ -18,20 +18,22 @@ const gsLogoCircle = 'gs_logo_circle.svg';
 // const gsLogoLandscape = 'app_logo_landscape.svg';
 
 const componentMap = {
-  "AboutBody": AboutBodyGsFe,
-  "HomePage": HomePageGsFe,
+  // "AboutBody": AboutBodyGsFe,
+  // "HomePage": HomePageGsFe,
+  "AboutBody": AboutBody,
+  "HomePage": HomePage,
 };
 
 const root = reactDomClient.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    {/* <HashRouter> */}
       <app.App
           appLogo={gsLogoCircle}
           // appLogoHeader={gsLogoLandscape}
           componentMap={componentMap}
       />
-    </HashRouter>
+    {/* </HashRouter> */}
   </React.StrictMode>
 );

@@ -99,3 +99,22 @@ export const getCurrentUserData = () => {
             },
         );
 }
+
+export const verifyCurrentUser = (registerUser) => {
+    if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
+        getCurrentUserData()
+            .then( 
+                userData => {
+                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
+                    if (userData.error) {
+                        if (debug) console.error('userData.error_message:', userData.error_message);
+                    } else {
+                        registerUser(getUserLocalData(userData));
+                    }
+                },
+                error => {
+                    console.error(error.errorMsg);
+                }
+            );
+    }
+}

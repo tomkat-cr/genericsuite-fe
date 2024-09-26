@@ -30,11 +30,11 @@ it("renders the HomePage component with the children text", () => {
     const mockFetchResponse = [{}];
     window.fetch = mockFetch(mockFetchResponse);
     const component = renderer.create(
-        <MemoryRouter>
+        // <MemoryRouter>
             <App
                 componentMap={testComponentMap}
             />
-        </MemoryRouter>
+        // </MemoryRouter>
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();

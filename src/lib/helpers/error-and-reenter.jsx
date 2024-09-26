@@ -22,16 +22,17 @@ import { ModalPopUp } from './ModalPopUp.jsx'
 
 const debug = false;
 
-// const hard_login = true;
+const hardLogin = true;
 
 export function logoutHander() {
-    if (debug) console_debug_log(`logoutHander | history.push(${getPrefix(true)+'/login'})`);
+    const loginUrl = window.location.origin+'/login';
     authenticationService.logout();
-    // if (!history.push(getPrefix(true)+'/login') && hard_login) {
-    //     if (debug) console_debug_log(`logoutHander | window.location.href = ${window.location.origin+getPrefix(true)+'/login'}`);
-    //     // window.location.href = window.location.origin + getPrefix(true) + '/login';
-    // }
-    window.location.reload(true);
+    if (hardLogin) {
+        if (debug) console_debug_log(`logoutHander | window.location.href = ${loginUrl}`);
+        window.location.href = loginUrl;
+    } else {
+        window.location.reload(true);
+    }
 };
 
 export function refreshPage() {

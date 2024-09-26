@@ -27,11 +27,11 @@ it("renders the UserProfileEditor", () => {
     const mockFetchResponse = [{}];
     window.fetch = mockFetch(mockFetchResponse);
     const component = renderer.create(
-        <MemoryRouter>
+        // <MemoryRouter>
             <App
                 componentMap={testComponentMap}
             />
-        </MemoryRouter>
+        // </MemoryRouter>
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();

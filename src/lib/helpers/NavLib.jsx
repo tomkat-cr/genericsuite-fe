@@ -56,7 +56,7 @@ import {
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS,
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS,
     NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS,
-    NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN,
+    // NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN,
     NAVBAR_TEXT_CLASS,
     NAVBAR_TOGGLE_IMAGE_CLASS,
     NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS,
@@ -72,6 +72,7 @@ import {
     NAV_LINK_ICON_CLASS,
     VERTICALLY_CENTERED_CLASS,
     TOP0_Z50_CLASS,
+    HIDDEN_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { GsIcons } from './IconsLib.jsx';
 import { useAppContext } from './AppContext.jsx';
@@ -169,25 +170,33 @@ export const CenteredBoxContainer = ({ children }) => {
 export const Navbar = ({ children, collapseOnSelect, expand }) => {
     /* App Header */
     if (debug) console_debug_log("||||| Navbar", children);
-    const { theme, sideMenu, isMobileMenuOpen } = useAppContext();
+    const { theme, sideMenu, isMobileMenuOpen, isWide } = useAppContext();
     if (sideMenu) {
-        const translateStyle = (isMobileMenuOpen ?
-            NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS
-            :
-            NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS
-        );
-        return (
-            <>
+        if (isMobileMenuOpen) {
+            return (
                 <nav
                     id='navbar-side-menu'
-                    className={`${translateStyle} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`}
+                    className={`${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`}
                 >
+                    {children}
+                </nav>
+            );
+        }
+        if (isWide) {
+            return (
+                <>
+                <nav
+                    id='navbar-side-menu'
+                    className={`${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`}
+                    >
                     {children}
                 </nav>
                 <ToggleSideBar
                     onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
-                />
+                    />
             </>);
+        }
+        return null;
     }
     return (
         <div
@@ -201,7 +210,7 @@ export const Navbar = ({ children, collapseOnSelect, expand }) => {
 const NavbarBrand = ({ children, as, to, onClick }) => {
     /* App Logo */
     if (debug) console_debug_log("||||| NavbarBrand", children);
-    const { sideMenu } = useAppContext();
+    const { sideMenu, isWide } = useAppContext();
     const As = as;
     if (sideMenu) {
         return (
@@ -220,7 +229,8 @@ const NavbarBrand = ({ children, as, to, onClick }) => {
                     </div>
                 </As>
                 <MobileMenuCloseButton
-                    className={NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN}
+                    // className={NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN}
+                    className={isWide ? HIDDEN_CLASS : ""}
                 />
             </div>
         );
@@ -327,12 +337,12 @@ const NavbarMobileMenu = ({ children }) => {
 const NavbarToggle = () => {
     /* Side mobile menu toggle (appears at top right when horizontal size is small, e.g. mobile devices) */
     if (debug) console_debug_log("||||| NavbarToggle");
-    const { toggleMobileMenu } = useAppContext();
+    const { toggleMobileMenu, isWide } = useAppContext();
     return (
         <button
             id="navbar-main-toggle"
             onClick={toggleMobileMenu}
-            className={NAVBAR_TOGGLE_BUTTON_CLASS}
+            className={NAVBAR_TOGGLE_BUTTON_CLASS + (isWide ? " " + HIDDEN_CLASS : "") }
         >
             <GsIcons
                 icon="menu-hamburger"
@@ -379,7 +389,7 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 // NavDropdown
 
 export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode }) => {
-    const { expandedMenus, toggleSubmenu, theme } = useAppContext();
+    const { expandedMenus, toggleSubmenu, theme, isWide } = useAppContext();
 
     const [fullId, setFullId] = useState(`${id}_${type}`);
     const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -407,7 +417,7 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
 
     const variantsTopDiv = {
         top_menu: NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
-        hamburger: mobileMenuMode ? NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS : NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
+        hamburger: mobileMenuMode ? NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS : (NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS + (isWide ? "" : " " + HIDDEN_CLASS)),
         side_menu: NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
         mobile_menu: NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS,
     };
@@ -461,7 +471,7 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
     const variantStyleInnerDiv = variantsInnerDiv[type] || '';
     const variantStyleButton = variantsButton[type] || '';
     const variantStyleSubmenuImage = variantsSubmenuImage[type] || '';
-    const variantOnClick = variantsOptionClick[type] || '';
+    const variantOnClick = variantsOptionClick[type] || (() => (''));
 
     return (
         <div
@@ -619,12 +629,12 @@ NavDropdown.Item = NavDropdownItem;
 
 const NavLink = ({ children, as, to, onClick, reloadDocument, type, mobileMenuMode }) => {
     if (debug) console_debug_log("||||| NavLink", children);
-    const { theme } = useAppContext();
+    const { theme, isWide } = useAppContext();
     const As = as;
 
     const variantsLi = {
         top_menu: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
-        hamburger: mobileMenuMode ? NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS : NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
+        hamburger: mobileMenuMode ? NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS : (NAV_LINK_TOP_DIV_HAMBURGER_CLASS + (isWide ? "" : " " + HIDDEN_CLASS)),
         side_menu: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
         mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
     };

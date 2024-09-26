@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+// import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from "react-router-dom";
 
 import {
     GenericMenuBuilder,
     getMenuFromApi,
-    DefaultRoutes,
+    // DefaultRoutes,
+    getDefaultRoutes,
+    getRoutes,
 } from '../../services/generic.menu.service.jsx';
 import {
     console_debug_log,
 } from '../../services/logging.service.jsx';
+import {
+    verifyCurrentUser
+} from '../../services/authentication.service.jsx';
 import {
     errorAndReEnter,
     logoutHander,
@@ -85,33 +95,25 @@ import {
 
 const debug = false;
 
-const defaultComponentMap = {
-    "Users_EditorData": Users_EditorData,
-    "GeneralConfig_EditorData": GeneralConfig_EditorData,
-    "UserProfileEditor": UserProfileEditor,
-    // "Chatbot": ChatBot,
-    "HomePage": HomePage,
-    "LoginPage": LoginPage,
-    "About": About,
-    "AboutBody": AboutBody,
-    "AppFooter": AboutBody,
-    "logout": logoutHander,
-    "defaultTheme": defaultTheme,
-};
-
-export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
-    const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+const CloseButton = ({children}) => {
     return (
-        <UserProvider>
-            <AppProvider
-                globalComponentMap={componentMapFinal}
-                globalAppLogo={appLogo}
-                globalAppLogoHeader={appLogoHeader}
+        <>
+            {children && (
+                <div
+                    className={ALERT_DANGER_CLASS} role="alert"
+                >
+                    {children}
+                </div>
+            )}
+            <button
+                type="button"
+                onClick={() => window.close()}
+                className={BUTTON_PRIMARY_CLASS}
             >
-                <AppMain/>
-            </AppProvider>
-        </UserProvider>
-      );
+                Close
+            </button>
+        </>
+    );
 }
 
 const AppNavBar = ({ children }) => {
@@ -135,7 +137,7 @@ const AppNavBar = ({ children }) => {
             <Navbar.Brand
                 as={RouterLink}
                 to='/'
-                onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+                // onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
             >
                 <div
                     className={NAVBAR_BRAND_NAME_CLASS}
@@ -168,12 +170,13 @@ const TopRightMenu = ({ showContentOnly }) => {
     );
 }
 
-const AppMain = () => {
+const AppMainInner = ({ children }) => {
+    // const debug = true;
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
 
-    const location = useLocation();
-    if (debug) console_debug_log("App | location:", location);
+    // const location = useLocation();
+    // if (debug) console_debug_log("App | location:", location);
 
     const { currentUser } = useUser();
     const {
@@ -181,6 +184,7 @@ const AppMain = () => {
         menuOptions, setMenuOptions,
         sideMenu, setSideMenu,
         isMobileMenuOpen,
+        componentMap,
     } = useAppContext();
 
     if (debug) {
@@ -207,7 +211,7 @@ const AppMain = () => {
                     </Navbar.TopRightMenu>
                 </AppNavBar>
                 <AppSectionContainer>
-                    <LoginPage/>
+                    {children}
                 </AppSectionContainer>
                 <AppFooterContainer>
                     <AppFooter/>
@@ -249,7 +253,9 @@ const AppMain = () => {
                         <AppMainComponent
                             stateHandler={stateHandler}
                             showContentOnly={showContentOnly}
-                        />
+                        >
+                            {children}
+                        </AppMainComponent>
                     )}
                     {sideMenu && (
                         <>
@@ -267,7 +273,9 @@ const AppMain = () => {
                                 <AppMainComponent
                                     stateHandler={stateHandler}
                                     showContentOnly={showContentOnly}
-                                />
+                                >
+                                    {children}
+                                </AppMainComponent>
                             </AppSectionContainer.ForSideMenu>
                             <AppFooterContainer>
                                 <AppFooter/>
@@ -287,9 +295,9 @@ const AppMain = () => {
                     mobileMenuMode={true}
                 />
             </Navbar.MobileMenu>
-            {state !== '' && (
+            {/* {state !== '' && (
                 <DefaultRoutes/>
-            )}
+            )} */}
             {!sideMenu && (
                 <AppFooterContainer>
                     <AppFooter/>
@@ -299,33 +307,13 @@ const AppMain = () => {
     );
 };
 
-const CloseButton = ({children}) => {
-    return (
-        <>
-            {children && (
-                <div
-                    className={ALERT_DANGER_CLASS} role="alert"
-                >
-                    {children}
-                </div>
-            )}
-            <button
-                type="button"
-                onClick={() => window.close()}
-                className={BUTTON_PRIMARY_CLASS}
-            >
-                Close
-            </button>
-        </>
-    );
-}
-
 const AppMainComponent = ({
     stateHandler,
     showContentOnly,
+    children,
 }) => {
-    const location = useLocation();
-    if (debug) console_debug_log("AppMainComponent | location:", location);
+    // const location = useLocation();
+    // if (debug) console_debug_log("AppMainComponent | location:", location);
     const { state, menuOptions } = useAppContext();
 
     if (state !== "") {
@@ -343,10 +331,81 @@ const AppMainComponent = ({
         if (debug) console_debug_log("AppMainComponent | WaitAnimation");
         return WaitAnimation();
     }
-    if (debug) console_debug_log("AppMainComponent | GenericMenuBuilder");
+    // if (debug) console_debug_log("AppMainComponent | GenericMenuBuilder");
+    // return (
+    //     <GenericMenuBuilder
+    //         itemType="routes"
+    //     />
+    // )
+    return (children);
+}
+
+const AppMain = () => {
+    // const debug = true;
+    const { currentUser, registerUser } = useUser();
+
+    const {
+        state, setState,
+        menuOptions, setMenuOptions,
+        componentMap,
+        setExpanded,
+    } = useAppContext();
+
+    const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded, 'array'));
+
+    useEffect(() => {
+        verifyCurrentUser(registerUser);
+    }, []);
+
+    useEffect(() => {
+        // Load menus from JSON configurations
+        if (currentUser) {
+            getMenuFromApi(state, setState, setMenuOptions);
+        }
+    }, [currentUser, state]);
+
+    useEffect(() => {
+        if (menuOptions) {
+            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded, 'array'));
+        }
+    }, [menuOptions])
+
+    if (debug) console_debug_log("App | router:", router, "menuOptions:", menuOptions, "currentUser:", currentUser);
+
     return (
-        <GenericMenuBuilder
-            itemType="routes"
+        <RouterProvider
+            router={createBrowserRouter(router)}
+            history={history}
         />
-    )
+    );
+}
+
+const defaultComponentMap = {
+    "Users_EditorData": Users_EditorData,
+    "GeneralConfig_EditorData": GeneralConfig_EditorData,
+    "UserProfileEditor": UserProfileEditor,
+    // "Chatbot": ChatBot,
+    "HomePage": HomePage,
+    "LoginPage": LoginPage,
+    "About": About,
+    "AboutBody": AboutBody,
+    "AppFooter": AppFooter,
+    "AppMainInner": AppMainInner,
+    "logout": logoutHander,
+    "defaultTheme": defaultTheme,
+};
+
+export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
+    const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+    return (
+        <UserProvider>
+            <AppProvider
+                globalComponentMap={componentMapFinal}
+                globalAppLogo={appLogo}
+                globalAppLogoHeader={appLogoHeader}
+            >
+                <AppMain/>
+            </AppProvider>
+        </UserProvider>
+      );
 }
