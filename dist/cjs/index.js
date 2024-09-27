@@ -6520,6 +6520,18 @@ var fieldElements$2 = [
 		listing: false
 	},
 	{
+		name: "openai_api_key",
+		required: false,
+		label: "OpenAI API Key",
+		type: "text"
+	},
+	{
+		name: "openai_model",
+		required: false,
+		label: "OpenAI Model (defaults to gpt-4o-mini)",
+		type: "text"
+	},
+	{
 		name: "creation_date",
 		required: true,
 		label: "Created",
@@ -6885,6 +6897,18 @@ var fieldElements$1 = [
 		select_elements: "TRUE_FALSE",
 		default_value: "1",
 		readonly: true
+	},
+	{
+		name: "openai_api_key",
+		required: false,
+		label: "OpenAI API Key",
+		type: "text"
+	},
+	{
+		name: "openai_model",
+		required: false,
+		label: "OpenAI Model (defaults to gpt-4o-mini)",
+		type: "text"
 	},
 	{
 		name: "creation_date",
@@ -7590,6 +7614,8 @@ var media = /*#__PURE__*/Object.freeze({
   mediaSupported: mediaSupported
 });
 
+// import { getPrefix } from './history.jsx';
+
 const PrivateRoute = _ref => {
   let {
     component: Component,
@@ -7603,9 +7629,10 @@ const PrivateRoute = _ref => {
       if (!currentUser) {
         console_debug_log('PrivateRoute Not Authorized...');
         // not logged in so redirect to login page with the return url
+        // return <Navigate to={{ pathname: getPrefix(true)+'/login', state: { from: props.location } }} />
         return /*#__PURE__*/React.createElement(reactRouterDom.Navigate, {
           to: {
-            pathname: getPrefix(true) + '/login',
+            pathname: '/login',
             state: {
               from: props.location
             }

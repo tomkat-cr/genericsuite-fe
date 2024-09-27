@@ -83,6 +83,18 @@
             "readonly": true
         },
         {
+            "name": "openai_api_key",
+            "required": false,
+            "label": "OpenAI API Key",
+            "type": "text"
+        }, 
+        {
+            "name": "openai_model",
+            "required": false,
+            "label": "OpenAI Model (defaults to gpt-4o-mini)",
+            "type": "text"
+        },
+        {
             "name": "creation_date",
             "required": true,
             "label": "Client Since",

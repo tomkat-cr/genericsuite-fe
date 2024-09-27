@@ -48,7 +48,7 @@
             },
             {
                 "title": "Logout",
-                "path": "/login",
+                "path": "/logout",
                 "on_click": "logout"
             }
         ]

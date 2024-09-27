@@ -36,6 +36,10 @@ Change the color when hovering over the line in the GCE_RFC listing page [GS-112
 Change lines with different colors if they are even/odd in the GCE_RFC listing page [GS-112].
 Improve data page layout by implementing Tailwind constants in the GCE_RFC [GS-112].
 Change Search input box size too small in the GCE_RFC listing page [GS-112].
+<HashRouter> was replaced by <RouterProvider> and createBrowserRouter() [GS-112].
+"/login" replaced by "/logout" in the Log Out option [GS-112].
+Add "openai_api_key" and "openai_model" fields  to user and user_profile json default configs [FA-200] [FA-201].
+<PrivateRoute/> avoid use getPrefix(true) [GS-112].
 
 ### Fixes
 Fix missing classes in the new output.css of Tailwind v3.4.9 [GS-63].
