@@ -30,23 +30,21 @@ export const defaultTheme = {
 export const MAIN_CONTAINER_FOR_TOP_MENU_CLASS = "flex flex-col min-h-screen mainContainerForTopMenuClass";
 export const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContainerForSideMenuClass";
 
-export const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow p-4 appSectionContainerForTopMenuClass";
+export const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow 1-p-4 appSectionContainerForTopMenuClass";
 // export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
 export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col appSectionContainerForSideMenuClass";
 
 export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4 appSectionContainerForSideMenuMainClass";
 
-export const APP_FOOTER_CONTAINER_CLASS = "p-4 text-white text-center appFooterContainerClass";
+export const APP_FOOTER_CONTAINER_CLASS = "p-1 text-white text-center appFooterContainerClass";
 
 export const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto centeredBoxContainerDiv1Class";
 export const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
 export const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
 
-export const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
-// export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+export const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-1 text-white navbarHeaderForTopMenuClass";
 export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
-// export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '1-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
 export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = 'navbarHeaderForSideMenuMobileCloseClass';
 
 export const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
@@ -55,11 +53,12 @@ export const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS="flex items-center space-x
 export const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS="flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
 // export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
 
-export const NAVBAR_BRAND_NAME_CLASS="text-2xl font-bold navbarBrandNameClass";
+export const NAVBAR_BRAND_NAME_CLASS="text-2xl ml-2 font-bold navbarBrandNameClass";
 export const NAVBAR_BRAND_APP_VERSION_CLASS="text-xs navbarBrandAppVersionClass";
 export const NAVBAR_BRAND_APP_LOGO_CLASS="mx-auto my-0 navbarBrandAppLogoClass";
 
-export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
+// export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
+export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="flex space-x-4 navbarTopCenterMenuOnTopClass";
 export const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS='space-y-2 navbarTopCenterMenuOnLeftClass';
 
 export const NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS = "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
@@ -79,7 +78,6 @@ export const NAVBAR_TOGGLE_IMAGE_CLASS = "h-6 w-6 navbarToggleImageClass";
 export const NAVBAR_TEXT_CLASS='flex items-center navbarTextClass';
 
 export const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClass";
-// export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
 export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "block relative group navLinkTopDivHamburgerClass";
 export const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
 export const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
@@ -94,16 +92,15 @@ export const ROUNDED_ICON_CLASS = "rounded-full roundedIconClass"
 export const ML2_ICON_CLASS = "ml-2 overflow-visible";
 export const STROKE_WHITE_ICON_CLASS = "stroke-white";
 
-// export const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2";
 export const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400";
 
 export const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
-// export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
 export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "block relative group navDropdownTopDivHamburgerClass";
 export const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
 export const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
 
-export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
+// export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
+export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
 export const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
 export const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
 export const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
@@ -156,13 +153,15 @@ export const HIDDEN_CLASS = 'hidden hiddenClass';
 export const VISIBLE_CLASS = 'visible visibleClass';
 export const INLINE_CLASS = 'inline inlineClass';
 
+export const HORIZONTALLY_CENTERED_CLASS = "flex flex-col items-center horizontallyCenteredClass";
 export const VERTICALLY_CENTERED_CLASS = "flex items-center justify-center verticallyCenteredClass";
+
 export const TOP0_Z50_CLASS = "top-0 z-50 top0z50Class";
 
 // Buttons
 
 export const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
-export const BUTTON_SECONDARY_CLASS = "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+export const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
 // export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 
 // Special buttons
@@ -182,20 +181,20 @@ export const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeBu
 
 export const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
 export const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
-// export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2 buttonListingNewClass`;
 export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
 export const BUTTON_LISTING_REFRESH_CLASS=`${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
 
 // General app section (GCE_RFC)
 
-export const APP_TOP_DIV_CLASS = 'mb-4 p-4 rounded-lg appTopDivClass';
-// export const APP_LEVEL1_DIV_CLASS = 'appLevel1DivClass';
-// export const APP_LEVEL2_DIV_CLASS = "1-not-prose 1-relative rounded-xl overflow-hidden mr-2 bg-slate-50 dark:bg-slate-800/25 appLevel2DivClass";
+export const APP_GENERAL_MARGINS_CLASS = 'mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass';
+
+// export const APP_TOP_DIV_CLASS = 'mb-4 p-4 rounded-lg appTopDivClass';
+export const APP_TOP_DIV_CLASS = `${APP_GENERAL_MARGINS_CLASS} rounded-lg appTopDivClass`;
 export const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
-export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
+// export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
+export const APP_TITLE_H1_CLASS = 'text-xl font-bold mb-4 appTitleH1Class';
 export const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
 
-// export const APP_MAIN_BOX_BG_COLOR_CLASS = "bg-white dark:bg-slate-800 appMainBoxBgColorClass";
 export const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
 
 // Listing page (GCE_RFC)
@@ -233,7 +232,6 @@ export const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS='ml-2 searchEngineButtonTopDivCl
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
-// export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
 export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex items-center mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
 export const APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS = "flex-row appListingToolbarTopDivWideClass";
 export const APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS = "flex-col appListingToolbarTopDivNotWideClass";
@@ -250,11 +248,8 @@ export const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS="ml-3 mr-3 hidden appListi
 
 // Data page (GCE_RFC)
 
-// export const APP_FORMPAGE_LEVEL1_DIV_CLASS = `${APP_LEVEL1_DIV_CLASS} appFormPageLevel1DivClass`;
-// export const APP_FORMPAGE_LEVEL2_DIV_CLASS = `${APP_LEVEL2_DIV_CLASS} p-2 appFormPageLevel2DivClass`;
 export const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 export const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
-// export const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormButtonBarClass";
 export const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
 export const APP_FORMPAGE_FIELD_CLASS = `flex flex-col ${FORM_GROUP_CLASS} appFormPageFieldClass`;
 export const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
@@ -271,41 +266,40 @@ export const POPUP_TOP_MARGIN_CLASS="pt-4 popupTopMarginClass";
 
 // ModalLib
 
-// export const MODALIB_MODAL_DIV_1_CLASS="pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibModalDiv1Class";
-export const MODALIB_MODAL_DIV_1_CLASS="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-export const MODALIB_MODAL_DIV_2_CLASS="bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+// export const MODALIB_MODAL_DIV_1_CLASS="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+export const MODALIB_MODAL_DIV_1_CLASS="z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+export const MODALIB_MODAL_DIV_2_CLASS="1-bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
 export const MODALIB_MODAL_DIV_3_CLASS="p-6 modalibModalDiv3Class";
 
 export const MODALIB_MODAL_ICON_1_CLASS = "flex justify-center mb-4 modalibModalIcon1Class";
 export const MODALIB_MODAL_ICON_2_CLASS = "rounded-full p-2 modalibModalIcon2Class";
 export const MODALIB_MODAL_ICON_3_CLASS = "w-6 h-6 modalibModalIcon3Class";
-// export const MODALIB_MODAL_HEADER_CLASS = "flex items-center justify-between pb-3 modalibModalHeaderClass";
 export const MODALIB_MODAL_HEADER_CLASS = "modalibModalHeaderClass";
-// export const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold modalibModalTitleClass";
 export const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold text-center mb-2 modalibModalTitleClass";
-// export const MODALIB_MODAL_BODY_CLASS = "text-gray-600 text-center mb-6 modalibModalBodyClass";
-export const MODALIB_MODAL_BODY_CLASS = "text-gray-600 text-center mb-6 modalibModalBodyClass";
-// export const MODALIB_MODAL_FOOTER_CLASS = "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
-export const MODALIB_MODAL_FOOTER_CLASS = "flex modalibModalFooterClass";
+export const MODALIB_MODAL_BODY_CLASS = "1-text-gray-600 text-center mb-6 modalibModalBodyClass";
+export const MODALIB_MODAL_FOOTER_CLASS = "flex mt-4 modalibModalFooterClass";
 export const MODALIB_MODAL_FOOTER_WIDE_CLASS = "flex-row space-x-4 modalibModalFooterWideClass";
 export const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
 
-// export const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass';
 export const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
 export const MODALIB_BUTTON_BASESTYLE_WIDE_CLASS = 'flex-1 modalibButtonBaseStyleWideClass';
 export const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center modalibButtonBaseStyleNotWideClass';
-// export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass';
-export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass';
-// export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass';
-export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass';
+
+// export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass';
+// export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass';
+export const MODALIB_BUTTON_PRIMARY_CLASS = `${BUTTON_PRIMARY_CLASS} modalibButtonPrimaryClass`;
+export const MODALIB_BUTTON_SECONDARY_CLASS = `${BUTTON_SECONDARY_CLASS} modalibButtonSecondaryClass`;
 
 export const MODALIB_BUTTON_SUCCESS_CLASS = 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass';
 export const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass';
 
-
 // Login page
 
 export const LOGIN_PAGE_APP_LOGO_CLASS="mx-auto my-0 loginPageAppLogoClass";
+
+// Login button
+
+export const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = `${HORIZONTALLY_CENTERED_CLASS} p-4 loginButtonInAppComponentClass`;
 
 // Components
 

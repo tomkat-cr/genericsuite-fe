@@ -9,8 +9,6 @@ import { useAppContext } from '../../helpers/AppContext.jsx';
 
 import {
     authenticationService,
-    getCurrentUserData,
-    getUserLocalData
 } from '../../services/authentication.service.jsx';
 import { getUrlParams } from '../../helpers/url-params.jsx';
 import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
@@ -35,13 +33,22 @@ import { console_debug_log } from '../../services/logging.service.jsx';
 // import MadeByLogoSquare from '../../images/madeby_logo_square.svg';
 // import MadeByLogoCircle from '../../images/madeby_logo_emblem.svg';
 
-const debug = false;
+const debug = true;
 
 const defaultAppLogo = "app_logo_square.svg";
 
 export const LoginPage = (props) => {
+
+    const getRedirect = () => {
+        const urlParams = getUrlParams(props)
+        if (typeof urlParams.redirect === 'undefined') {
+            return getLastUrl();
+        }
+        return urlParams.redirect;
+    }
+
+    // const [performLogin, setPerformLogin] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState("/");
-    const [performLogin, setPerformLogin] = useState(false);
 
     const { currentUser, registerUser, unRegisterUser } = useUser();
     const { appLogo, theme } = useAppContext();

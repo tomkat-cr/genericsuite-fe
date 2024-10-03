@@ -93,29 +93,29 @@ const defaultTheme = {
 
 const MAIN_CONTAINER_FOR_TOP_MENU_CLASS = "flex flex-col min-h-screen mainContainerForTopMenuClass";
 const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContainerForSideMenuClass";
-const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow p-4 appSectionContainerForTopMenuClass";
+const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow 1-p-4 appSectionContainerForTopMenuClass";
 // export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
 const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col appSectionContainerForSideMenuClass";
 const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4 appSectionContainerForSideMenuMainClass";
-const APP_FOOTER_CONTAINER_CLASS = "p-4 text-white text-center appFooterContainerClass";
+const APP_FOOTER_CONTAINER_CLASS = "p-1 text-white text-center appFooterContainerClass";
 const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto centeredBoxContainerDiv1Class";
 const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
 const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
-const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
-// export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-1 text-white navbarHeaderForTopMenuClass";
 const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
-// export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = '1-translate-x-full navbarHeaderForSideMenuMobileCloseClass';
 const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = 'navbarHeaderForSideMenuMobileCloseClass';
 const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
 const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS = "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
 const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS = "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
 // export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
 
-const NAVBAR_BRAND_NAME_CLASS = "text-2xl font-bold navbarBrandNameClass";
+const NAVBAR_BRAND_NAME_CLASS = "text-2xl ml-2 font-bold navbarBrandNameClass";
 const NAVBAR_BRAND_APP_VERSION_CLASS = "text-xs navbarBrandAppVersionClass";
 const NAVBAR_BRAND_APP_LOGO_CLASS = "mx-auto my-0 navbarBrandAppLogoClass";
-const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS = "hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
+
+// export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
+const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS = "flex space-x-4 navbarTopCenterMenuOnTopClass";
 const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS = 'space-y-2 navbarTopCenterMenuOnLeftClass';
 const NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS = "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
 const NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS = "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
@@ -130,7 +130,6 @@ const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden 1-lg:hidden p-2 rounded-full hov
 const NAVBAR_TOGGLE_IMAGE_CLASS = "h-6 w-6 navbarToggleImageClass";
 const NAVBAR_TEXT_CLASS = 'flex items-center navbarTextClass';
 const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClass";
-// export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navLinkTopDivHamburgerClass";
 const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "block relative group navLinkTopDivHamburgerClass";
 const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
 const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
@@ -142,15 +141,14 @@ const NAV_LINK_ICON_CLASS = "w-8 h-8 navLinkIconClass";
 const ROUNDED_ICON_CLASS = "rounded-full roundedIconClass";
 const ML2_ICON_CLASS = "ml-2 overflow-visible";
 const STROKE_WHITE_ICON_CLASS = "stroke-white";
-
-// export const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400 mr-2 ml-2";
 const VERTICAL_SLIDER_ICON_CLASS = "h-8 w-1.5 rounded-full bg-slate-400";
 const NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS = "relative group navDropdownTopDivTopMenuClass";
-// export const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "hidden 1-md:block lg:block relative group navDropdownTopDivHamburgerClass";
 const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "block relative group navDropdownTopDivHamburgerClass";
 const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
 const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
-const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
+
+// export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
+const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
 const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
 const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
 const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
@@ -197,13 +195,14 @@ const DISABLE_FIELD_BACKGROUND_COLOR_CLASS = 'bg-gray-200 disableFieldBackground
 const HIDDEN_CLASS = 'hidden hiddenClass';
 const VISIBLE_CLASS = 'visible visibleClass';
 const INLINE_CLASS = 'inline inlineClass';
+const HORIZONTALLY_CENTERED_CLASS = "flex flex-col items-center horizontallyCenteredClass";
 const VERTICALLY_CENTERED_CLASS = "flex items-center justify-center verticallyCenteredClass";
 const TOP0_Z50_CLASS = "top-0 z-50 top0z50Class";
 
 // Buttons
 
 const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
-const BUTTON_SECONDARY_CLASS = "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
 // export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 
 // Special buttons
@@ -221,20 +220,19 @@ const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDar
 
 const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
 const BUTTON_LISTING_DISABLED_CLASS = "".concat(BUTTON_LISTING_CLASS, " opacity-50 buttonListingDisabledClass");
-// export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS} ml-2 buttonListingNewClass`;
 const BUTTON_LISTING_NEW_CLASS = "".concat(BUTTON_LISTING_CLASS, " buttonListingNewClass");
 const BUTTON_LISTING_REFRESH_CLASS = "".concat(BUTTON_LISTING_CLASS, " text-xs buttonListingRefreshClass");
 
 // General app section (GCE_RFC)
 
-const APP_TOP_DIV_CLASS = 'mb-4 p-4 rounded-lg appTopDivClass';
-// export const APP_LEVEL1_DIV_CLASS = 'appLevel1DivClass';
-// export const APP_LEVEL2_DIV_CLASS = "1-not-prose 1-relative rounded-xl overflow-hidden mr-2 bg-slate-50 dark:bg-slate-800/25 appLevel2DivClass";
-const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
-const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
-const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
+const APP_GENERAL_MARGINS_CLASS = 'mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass';
 
-// export const APP_MAIN_BOX_BG_COLOR_CLASS = "bg-white dark:bg-slate-800 appMainBoxBgColorClass";
+// export const APP_TOP_DIV_CLASS = 'mb-4 p-4 rounded-lg appTopDivClass';
+const APP_TOP_DIV_CLASS = "".concat(APP_GENERAL_MARGINS_CLASS, " rounded-lg appTopDivClass");
+const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
+// export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
+const APP_TITLE_H1_CLASS = 'text-xl font-bold mb-4 appTitleH1Class';
+const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
 const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
 
 // Listing page (GCE_RFC)
@@ -271,7 +269,6 @@ const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
-// export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex flex-col sm:flex-row items-center 1-justify-between mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
 const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex items-center mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
 const APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS = "flex-row appListingToolbarTopDivWideClass";
 const APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS = "flex-col appListingToolbarTopDivNotWideClass";
@@ -284,11 +281,8 @@ const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToo
 
 // Data page (GCE_RFC)
 
-// export const APP_FORMPAGE_LEVEL1_DIV_CLASS = `${APP_LEVEL1_DIV_CLASS} appFormPageLevel1DivClass`;
-// export const APP_FORMPAGE_LEVEL2_DIV_CLASS = `${APP_LEVEL2_DIV_CLASS} p-2 appFormPageLevel2DivClass`;
 const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
-// export const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "min-w-full divide-y divide-gray-200 dark:divide-gray-700 appFormPageFormButtonBarClass";
 const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
 const APP_FORMPAGE_FIELD_CLASS = "flex flex-col ".concat(FORM_GROUP_CLASS, " appFormPageFieldClass");
 const APP_FORMPAGE_FIELD_BASE_CLASS = "".concat(FORM_CONTROL_CLASS, " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass");
@@ -305,38 +299,37 @@ const POPUP_TOP_MARGIN_CLASS = "pt-4 popupTopMarginClass";
 
 // ModalLib
 
-// export const MODALIB_MODAL_DIV_1_CLASS="pt-4 fixed ml-3 md:ml-64 lg:ml-96 modalibModalDiv1Class";
-const MODALIB_MODAL_DIV_1_CLASS = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-const MODALIB_MODAL_DIV_2_CLASS = "bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+// export const MODALIB_MODAL_DIV_1_CLASS="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+const MODALIB_MODAL_DIV_1_CLASS = "z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+const MODALIB_MODAL_DIV_2_CLASS = "1-bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
 const MODALIB_MODAL_DIV_3_CLASS = "p-6 modalibModalDiv3Class";
 const MODALIB_MODAL_ICON_1_CLASS = "flex justify-center mb-4 modalibModalIcon1Class";
 const MODALIB_MODAL_ICON_2_CLASS = "rounded-full p-2 modalibModalIcon2Class";
 const MODALIB_MODAL_ICON_3_CLASS = "w-6 h-6 modalibModalIcon3Class";
-// export const MODALIB_MODAL_HEADER_CLASS = "flex items-center justify-between pb-3 modalibModalHeaderClass";
 const MODALIB_MODAL_HEADER_CLASS = "modalibModalHeaderClass";
-// export const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold modalibModalTitleClass";
 const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold text-center mb-2 modalibModalTitleClass";
-// export const MODALIB_MODAL_BODY_CLASS = "text-gray-600 text-center mb-6 modalibModalBodyClass";
-const MODALIB_MODAL_BODY_CLASS = "text-gray-600 text-center mb-6 modalibModalBodyClass";
-// export const MODALIB_MODAL_FOOTER_CLASS = "flex justify-end pt-2 space-x-2 modalibModalFooterClass";
-const MODALIB_MODAL_FOOTER_CLASS = "flex modalibModalFooterClass";
+const MODALIB_MODAL_BODY_CLASS = "1-text-gray-600 text-center mb-6 modalibModalBodyClass";
+const MODALIB_MODAL_FOOTER_CLASS = "flex mt-4 modalibModalFooterClass";
 const MODALIB_MODAL_FOOTER_WIDE_CLASS = "flex-row space-x-4 modalibModalFooterWideClass";
 const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
-
-// export const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-opacity-75 modalibButtonBaseStyleClass';
 const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
 const MODALIB_BUTTON_BASESTYLE_WIDE_CLASS = 'flex-1 modalibButtonBaseStyleWideClass';
 const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center modalibButtonBaseStyleNotWideClass';
-// export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400 modalibButtonPrimaryClass';
-const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass';
-// export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-300 modalibButtonSecondaryClass';
-const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass';
+
+// export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass';
+// export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass';
+const MODALIB_BUTTON_PRIMARY_CLASS = "".concat(BUTTON_PRIMARY_CLASS, " modalibButtonPrimaryClass");
+const MODALIB_BUTTON_SECONDARY_CLASS = "".concat(BUTTON_SECONDARY_CLASS, " modalibButtonSecondaryClass");
 const MODALIB_BUTTON_SUCCESS_CLASS = 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass';
 const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass';
 
 // Login page
 
 const LOGIN_PAGE_APP_LOGO_CLASS = "mx-auto my-0 loginPageAppLogoClass";
+
+// Login button
+
+const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = "".concat(HORIZONTALLY_CENTERED_CLASS, " p-4 loginButtonInAppComponentClass");
 
 // Components
 
@@ -370,6 +363,7 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   APP_FORMPAGE_LABEL_CLASS: APP_FORMPAGE_LABEL_CLASS,
   APP_FORMPAGE_LABEL_REQUIRED_CLASS: APP_FORMPAGE_LABEL_REQUIRED_CLASS,
   APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS,
+  APP_GENERAL_MARGINS_CLASS: APP_GENERAL_MARGINS_CLASS,
   APP_LEVEL2_DIV_CLASS: APP_LEVEL2_DIV_CLASS,
   APP_LISTING_SEARCH_BOX_INPUT_CLASS: APP_LISTING_SEARCH_BOX_INPUT_CLASS,
   APP_LISTING_SEARCH_BOX_LABEL_CLASS: APP_LISTING_SEARCH_BOX_LABEL_CLASS,
@@ -428,11 +422,13 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   FORM_GROUP_CLASS: FORM_GROUP_CLASS,
   GRAY_BOX_MSG_CLASS: GRAY_BOX_MSG_CLASS,
   HIDDEN_CLASS: HIDDEN_CLASS,
+  HORIZONTALLY_CENTERED_CLASS: HORIZONTALLY_CENTERED_CLASS,
   INFO_MSG_CLASS: INFO_MSG_CLASS,
   INLINE_CLASS: INLINE_CLASS,
   INPUT_FLEXIBLE_CLASS: INPUT_FLEXIBLE_CLASS,
   INVALID_FEEDBACK_CLASS: INVALID_FEEDBACK_CLASS,
   IS_INVALID_CLASS: IS_INVALID_CLASS,
+  LOGIN_BUTTON_IN_APP_COMPONENT_CLASS: LOGIN_BUTTON_IN_APP_COMPONENT_CLASS,
   LOGIN_PAGE_APP_LOGO_CLASS: LOGIN_PAGE_APP_LOGO_CLASS,
   MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
   MAIN_CONTAINER_FOR_TOP_MENU_CLASS: MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
@@ -583,6 +579,14 @@ const GsIcons = _ref => {
     "sm": {
       "width": "14",
       "height": "14"
+    },
+    "m": {
+      "width": "16",
+      "height": "16"
+    },
+    "2m": {
+      "width": "18",
+      "height": "18"
     },
     "lg": {
       "width": "20",
@@ -1508,7 +1512,6 @@ const CenteredBoxContainer = _ref5 => {
   return /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    // className={`${APP_MAIN_BOX_BG_COLOR_CLASS} ${CENTERED_BOX_CONTAINER_DIV_2_CLASS}`}
     className: "".concat(CENTERED_BOX_CONTAINER_DIV_2_CLASS, " ").concat(theme.contentBg)
   }, /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_3_CLASS
@@ -1592,7 +1595,8 @@ const NavbarTopCenterMenu = _ref8 => {
     children
   } = _ref8;
   const {
-    sideMenu
+    sideMenu,
+    isWide
   } = useAppContext();
   if (sideMenu) {
     return /*#__PURE__*/React.createElement("div", {
@@ -1601,7 +1605,7 @@ const NavbarTopCenterMenu = _ref8 => {
   }
   return /*#__PURE__*/React.createElement("nav", {
     id: "navbar-top-center-menu",
-    className: NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS
+    className: NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS + (isWide ? "" : " " + HIDDEN_CLASS)
   }, children);
 };
 const NavbarTopRightMenu = _ref9 => {
@@ -2054,6 +2058,9 @@ const Modal = _ref2 => {
     className,
     children
   } = _ref2;
+  const {
+    theme
+  } = useAppContext();
   useEffect(() => {
     const handleOutsideClick = event => {
       // Does not allow close the pop-up if click outside
@@ -2071,7 +2078,7 @@ const Modal = _ref2 => {
     role: "dialog",
     "aria-modal": "true"
   }, /*#__PURE__*/React.createElement("div", {
-    className: MODALIB_MODAL_DIV_2_CLASS
+    className: "".concat(MODALIB_MODAL_DIV_2_CLASS, " ").concat(theme.contentBg, " ").concat(theme.text)
   }, /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_DIV_3_CLASS
   }, children)));
@@ -2316,23 +2323,14 @@ const About = () => {
 };
 const AboutBody = _ref => {
   let {
-    children,
-    modalPopUpTest = false
+    children
   } = _ref;
+  const modalPopUpTest = false;
   const version = process.env.REACT_APP_VERSION;
   const appName = process.env.REACT_APP_APP_NAME;
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, modalPopUpTest && /*#__PURE__*/React.createElement(ModalPopUp, {
-    title: "Test title",
-    showTitle: true
-    // iconClassName={ALERT_DANGER_CLASS}
-    ,
-    iconClassName: ALERT_SUCCESS_CLASS,
-    primaryButtonMessage: "Login Again",
-    primaryButtonAction: null,
-    secondButtonMessage: "Retry",
-    secondButtonAction: null,
-    logoutButton: true
-  }, "This is a test test test in ", /*#__PURE__*/React.createElement("i", null, "Italic"), " and ", /*#__PURE__*/React.createElement("b", null, "boldface")));
+  return /*#__PURE__*/React.createElement("div", {
+    className: APP_GENERAL_MARGINS_CLASS
+  }, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, modalPopUpTest );
 };
 
 const UserContext = /*#__PURE__*/createContext();
@@ -3526,6 +3524,7 @@ const editorRoute = (editor, title) => {
 };
 const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   const AppMainInner = componentMap["AppMainInner"];
+  const AppMainInnerUnauthenticated = componentMap["AppMainInnerUnauthenticated"];
   let indexRoute = -1;
   let loginRoute = -1;
   let routes = [];
@@ -3588,12 +3587,19 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   routes.push({
     key: 'invalidRoute',
     path: '*',
-    element: InvalidRouteRedirect
+    element: InvalidRoute
   });
   routes = routes.map(route => {
-    route.element = /*#__PURE__*/React.createElement(AppMainInner, {
-      componentMap: componentMap
-    }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement("p", null, route.key, " Not Implemented..."));
+    console_debug_log('getRoutesRaw | route.path:', route.path);
+    if (route.path === '/login') {
+      console_debug_log('getRoutesRaw | LOGIN !!!');
+      route.element = /*#__PURE__*/React.createElement(AppMainInnerUnauthenticated, null, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
+    } else {
+      route.element = /*#__PURE__*/React.createElement(AppMainInner, {
+        componentMap: componentMap,
+        currentUser: currentUser
+      }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
+    }
     return route;
   });
   if (currentUser) {
@@ -3603,12 +3609,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
     }
   } else {
     {
-      routes.push({
-        ...routes[loginRoute]
-      });
-      routes[loginRoute].index = true;
-      routes[loginRoute].path = "/";
-      routes[indexRoute].path = "index";
+      {
+        routes[indexRoute].index = true;
+      }
     }
   }
   return routes;
@@ -3696,17 +3699,24 @@ const getDefaultRoutes = function (currentUser, componentMap, setExpanded) {
   const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
   const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
   if (returnType === "array") {
+    console_debug_log('getDefaultRoutes | returnType: array');
     return routes;
   }
   return putRoutes(routes);
 };
-
-// Catch all invalid routes and redirect to a default page or show a not found component
-const InvalidRouteRedirect = () => {
+const InvalidElement = _ref => {
+  let {
+    children
+  } = _ref;
   return /*#__PURE__*/React.createElement("div", {
-    className: ALERT_DANGER_CLASS,
+    className: APP_GENERAL_MARGINS_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "".concat(ALERT_DANGER_CLASS, " ").concat(HORIZONTALLY_CENTERED_CLASS),
     role: "alert"
-  }, "URL not found...");
+  }, children));
+};
+const InvalidRoute = () => {
+  return /*#__PURE__*/React.createElement(InvalidElement, null, "URL not found...");
 };
 const getMenuFromApi = (state, setState, setMenuOptions) => {
   if (state !== "") {
@@ -3725,13 +3735,13 @@ const getMenuFromApi = (state, setState, setMenuOptions) => {
     }
   });
 };
-const GenericMenuBuilder = _ref => {
+const GenericMenuBuilder = _ref2 => {
   let {
     icon,
     title,
     itemType,
     mobileMenuMode
-  } = _ref;
+  } = _ref2;
   const {
     currentUser
   } = useUser();
@@ -6766,7 +6776,8 @@ const GenericSinglePageEditorMain = props => {
     console_debug_log(msg);
   };
   const handleCancel = () => {
-    window.location.href = getPrefix(true) + '/';
+    // window.location.href = getPrefix(true) + '/';
+    window.location.href = '/';
   };
   if (!editor) {
     if (status) {
@@ -6979,13 +6990,16 @@ const HomePage = _ref => {
   let {
     children
   } = _ref;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, children);
+  return /*#__PURE__*/React.createElement("div", {
+    className: APP_GENERAL_MARGINS_CLASS
+  }, children);
 };
 
 const defaultAppLogo = "app_logo_square.svg";
 const LoginPage = props => {
+
+  // const [performLogin, setPerformLogin] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState("/");
-  useState(false);
   const {
     currentUser,
     registerUser,
@@ -7045,6 +7059,8 @@ const LoginPage = props => {
     authenticationService.login(username, password).then(user => {
       // To avoid stay in login page with the wait animation
       setSubmitting(false);
+      // Set user data to <App/>
+      console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 2:", user);
       registerUser(user);
       // Redirect to previous page
       removeLastUrl();
@@ -7278,17 +7294,23 @@ const TopRightMenu = _ref3 => {
   const {
     currentUser
   } = useUser();
-  return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), currentUser && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     icon: "place-holder-circle",
     title: currentUser.firstName,
     itemType: "hamburger",
     showContentOnly: showContentOnly
   }));
 };
-const AppMainInner = _ref4 => {
+const AppMainInnerUnauthenticated = _ref4 => {
   let {
     children
   } = _ref4;
+  return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, children), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+};
+const AppMainInner = _ref5 => {
+  let {
+    children
+  } = _ref5;
   // const debug = true;
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
@@ -7318,12 +7340,12 @@ const AppMainInner = _ref4 => {
       getMenuFromApi(state, setState, setMenuOptions);
     }
   }, [currentUser, state]);
-  if (!currentUser) {
-    return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, children), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+  if (showContentOnly) {
+    return /*#__PURE__*/React.createElement(AppMainInnerUnauthenticated, null, children);
   }
-  return /*#__PURE__*/React.createElement(MainContainer, null, showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, null), !showContentOnly && /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopCenterMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopCenterMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     itemType: sideMenu ? "side_menu" : "top_menu"
-  }), sideMenu && isMobileMenuOpen && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  }), sideMenu && isMobileMenuOpen && currentUser && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
     itemType: "hamburger",
     showContentOnly: showContentOnly,
@@ -7333,31 +7355,32 @@ const AppMainInner = _ref4 => {
   })), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(React.Fragment, null, !sideMenu && /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
     showContentOnly: showContentOnly
-  }, children), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, !showContentOnly && /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
+  }, children), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
     showContentOnly: showContentOnly
   }, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     itemType: "mobile_menu"
-  }), /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  }), currentUser && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
     itemType: "hamburger",
     showContentOnly: showContentOnly,
     mobileMenuMode: true
   })), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
-const AppMainComponent = _ref5 => {
+const AppMainComponent = _ref6 => {
   let {
     stateHandler,
     showContentOnly,
     children
-  } = _ref5;
+  } = _ref6;
   // const location = useLocation();
   // if (debug) console_debug_log("AppMainComponent | location:", location);
   const {
     state,
-    menuOptions
+    menuOptions,
+    currentUser
   } = useAppContext();
   if (state !== "") {
     if (showContentOnly) {
@@ -7366,14 +7389,14 @@ const AppMainComponent = _ref5 => {
     return errorAndReEnter(state, null, true, null, stateHandler, false, false);
   }
   if (!menuOptions) {
-    return WaitAnimation();
+    // return WaitAnimation();
+    return /*#__PURE__*/React.createElement("div", {
+      className: LOGIN_BUTTON_IN_APP_COMPONENT_CLASS
+    }, /*#__PURE__*/React.createElement(GsButton, {
+      as: Link,
+      to: "/login"
+    }, "Login"));
   }
-  // if (debug) console_debug_log("AppMainComponent | GenericMenuBuilder");
-  // return (
-  //     <GenericMenuBuilder
-  //         itemType="routes"
-  //     />
-  // )
   return children;
 };
 const AppMain = () => {
@@ -7421,15 +7444,16 @@ const defaultComponentMap = {
   "AboutBody": AboutBody,
   "AppFooter": AppFooter,
   "AppMainInner": AppMainInner,
+  "AppMainInnerUnauthenticated": AppMainInnerUnauthenticated,
   "logout": logoutHander,
   "defaultTheme": defaultTheme
 };
-const App = _ref6 => {
+const App = _ref7 => {
   let {
     componentMap = {},
     appLogo = "",
     appLogoHeader = ""
-  } = _ref6;
+  } = _ref7;
   const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
     globalComponentMap: componentMapFinal,

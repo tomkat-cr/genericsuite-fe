@@ -25,6 +25,7 @@ import {
     MODALIB_BUTTON_BASESTYLE_WIDE_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { GsIcons } from './IconsLib.jsx';
+import { useAppContext } from './AppContext.jsx';
 
 // Modal
 
@@ -52,6 +53,7 @@ export const Button = ({ isWide, variant = 'primary', className = '', ...props }
   
 export const Modal = ({ show, onHide, className, children }) => {
     if (debug) console_debug_log(`||||| Modal | show: ${show} | onHide: ${onHide}`, 'children:', children);
+    const { theme } = useAppContext();
 
     useEffect(() => {
         const handleOutsideClick = (event) => {
@@ -76,7 +78,7 @@ export const Modal = ({ show, onHide, className, children }) => {
             aria-modal="true"
         >
             <div
-                className={MODALIB_MODAL_DIV_2_CLASS}
+                className={`${MODALIB_MODAL_DIV_2_CLASS} ${theme.contentBg} ${theme.text}`}
             >
                 <div
                     className={MODALIB_MODAL_DIV_3_CLASS}

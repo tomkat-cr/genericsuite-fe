@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-// import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
 import {
+    Link as RouterLink,
     createBrowserRouter,
     RouterProvider,
+    Navigate,
+    Link,
 } from "react-router-dom";
+// import { useLocation } from 'react-router-dom';
 
 import {
     GenericMenuBuilder,
@@ -83,6 +85,7 @@ import {
     AppFooterContainer,
     Navbar,
     // ToggleSideBar,
+    GsButton,
 } from '../../helpers/NavLib.jsx';
 import {
     defaultTheme,
@@ -91,6 +94,8 @@ import {
     NAVBAR_BRAND_APP_LOGO_CLASS,
     NAVBAR_BRAND_NAME_CLASS,
     NAVBAR_BRAND_APP_VERSION_CLASS,
+    APP_GENERAL_MARGINS_CLASS,
+    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS,
 } from '../../constants/class_name_constants.jsx';
 
 const debug = false;
@@ -160,13 +165,33 @@ const TopRightMenu = ({ showContentOnly }) => {
             <DarkModeButton />
             <MenuModeButton />
             <Navbar.Toggle />
-            <GenericMenuBuilder
-                icon="place-holder-circle"
-                title={currentUser.firstName}
-                itemType="hamburger"
-                showContentOnly={showContentOnly}
-            />
+            {currentUser && (
+                <GenericMenuBuilder
+                    icon="place-holder-circle"
+                    title={currentUser.firstName}
+                    itemType="hamburger"
+                    showContentOnly={showContentOnly}
+                />
+            )}
         </Navbar.TopRightMenu>
+    );
+}
+
+const AppMainInnerUnauthenticated = ({ children }) => {
+    return (
+        <MainContainer>
+            <AppNavBar>
+                <Navbar.TopRightMenu>
+                    <DarkModeButton/>
+                </Navbar.TopRightMenu>
+            </AppNavBar>
+            <AppSectionContainer>
+                {children}
+            </AppSectionContainer>
+            <AppFooterContainer>
+                <AppFooter/>
+            </AppFooterContainer>
+        </MainContainer>
     );
 }
 
@@ -202,36 +227,26 @@ const AppMainInner = ({ children }) => {
         }
     }, [currentUser, state]);
 
-    if (!currentUser) {
+    if (showContentOnly) {
         return (
-            <MainContainer>
-                <AppNavBar>
-                    <Navbar.TopRightMenu>
-                        <DarkModeButton/>
-                    </Navbar.TopRightMenu>
-                </AppNavBar>
-                <AppSectionContainer>
-                    {children}
-                </AppSectionContainer>
-                <AppFooterContainer>
-                    <AppFooter/>
-                </AppFooterContainer>
-            </MainContainer>
+            <AppMainInnerUnauthenticated>
+                {children}
+            </AppMainInnerUnauthenticated>
         );
     }
 
     return (
         <MainContainer>
-            {showContentOnly && (
+            {/* {showContentOnly && (
                 <AppNavBar/>
-            )}
-            {!showContentOnly && (
+            )} */}
+            {/* {!showContentOnly && ( */}
                 <AppNavBar>
                     <Navbar.TopCenterMenu>
                         <GenericMenuBuilder
                             itemType={sideMenu ? "side_menu" : "top_menu"}
                         />
-                        {sideMenu && isMobileMenuOpen && (
+                        {sideMenu && isMobileMenuOpen && currentUser && (
                             <GenericMenuBuilder
                                 title={currentUser.firstName}
                                 itemType="hamburger"
@@ -246,7 +261,7 @@ const AppMainInner = ({ children }) => {
                         />
                     )}
                 </AppNavBar>
-            )}
+            {/* )} */}
             <AppSectionContainer>
                 <>
                     {!sideMenu && (
@@ -259,13 +274,13 @@ const AppMainInner = ({ children }) => {
                     )}
                     {sideMenu && (
                         <>
-                            {!showContentOnly && (
+                            {/* {!showContentOnly && ( */}
                                 <Navbar.TopForSideMenu>
                                     <TopRightMenu
                                         showContentOnly={showContentOnly}
                                     />
                                 </Navbar.TopForSideMenu>
-                            )}
+                            {/* )} */}
                             <AppSectionContainer.ForSideMenu>
                                 {/* <ToggleSideBar
                                     onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
@@ -288,16 +303,15 @@ const AppMainInner = ({ children }) => {
                 <GenericMenuBuilder
                     itemType="mobile_menu"
                 />
-                <GenericMenuBuilder
-                    title={currentUser.firstName}
-                    itemType="hamburger"
-                    showContentOnly={showContentOnly}
-                    mobileMenuMode={true}
-                />
+                {currentUser && (
+                    <GenericMenuBuilder
+                        title={currentUser.firstName}
+                        itemType="hamburger"
+                        showContentOnly={showContentOnly}
+                        mobileMenuMode={true}
+                    />
+                )}
             </Navbar.MobileMenu>
-            {/* {state !== '' && (
-                <DefaultRoutes/>
-            )} */}
             {!sideMenu && (
                 <AppFooterContainer>
                     <AppFooter/>
@@ -314,7 +328,7 @@ const AppMainComponent = ({
 }) => {
     // const location = useLocation();
     // if (debug) console_debug_log("AppMainComponent | location:", location);
-    const { state, menuOptions } = useAppContext();
+    const { state, menuOptions, currentUser } = useAppContext();
 
     if (state !== "") {
         if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
@@ -329,14 +343,18 @@ const AppMainComponent = ({
     }
     if (!menuOptions) {
         if (debug) console_debug_log("AppMainComponent | WaitAnimation");
-        return WaitAnimation();
+        // return WaitAnimation();
+        return (<div 
+            className={LOGIN_BUTTON_IN_APP_COMPONENT_CLASS}
+        >
+            <GsButton
+                as={Link}
+                to='/login'
+                >
+                Login
+            </GsButton>
+        </div>)
     }
-    // if (debug) console_debug_log("AppMainComponent | GenericMenuBuilder");
-    // return (
-    //     <GenericMenuBuilder
-    //         itemType="routes"
-    //     />
-    // )
     return (children);
 }
 
@@ -391,6 +409,7 @@ const defaultComponentMap = {
     "AboutBody": AboutBody,
     "AppFooter": AppFooter,
     "AppMainInner": AppMainInner,
+    "AppMainInnerUnauthenticated": AppMainInnerUnauthenticated,
     "logout": logoutHander,
     "defaultTheme": defaultTheme,
 };

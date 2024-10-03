@@ -62,6 +62,14 @@ fa-10x	10em    160px
             "width": "14",
             "height": "14",
         },
+        "m": {
+            "width": "16",
+            "height": "16",
+        },
+        "2m": {
+            "width": "18",
+            "height": "18",
+        },
         "lg": {
             "width": "20",
             "height": "20",

@@ -35,6 +35,8 @@ import { Nav, NavDropdown } from '../helpers/NavLib.jsx';
 import { GsIcons } from '../helpers/IconsLib.jsx';
 import {
     ALERT_DANGER_CLASS,
+    APP_GENERAL_MARGINS_CLASS,
+    HORIZONTALLY_CENTERED_CLASS,
     NAV_LINK_ICON_CLASS,
 } from '../constants/class_name_constants.jsx';
 
@@ -44,6 +46,7 @@ const jsPrefixToken = /\|([^|]*)\|/;
 
 const nestedRoutes = false;
 const routeExact = false;
+const forcedLoginRoute = false;
 
 const getOnClickObject = (onClickString, componentMap, setExpanded) => {
     let resutlFunction = null;
@@ -156,6 +159,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
     if (debug) console_debug_log("getRoutesRaw: menuOptions:", menuOptions);
 
     const AppMainInner = componentMap["AppMainInner"];
+    const AppMainInnerUnauthenticated = componentMap["AppMainInnerUnauthenticated"];
 
     let indexRoute = -1;
     let loginRoute = -1;
@@ -230,20 +234,32 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
     routes.push({
         key: 'invalidRoute',
         path: '*',
-        element: InvalidRouteRedirect,
+        element: InvalidRoute,
     });
     routes = routes.map(route => {
         if (nestedRoutes) {
             route.path = route.path.replace(/\//, "");
         }
-        route.element = (
-            <AppMainInner
-                componentMap={componentMap}
-            >
-                {route.element !== null && (<route.element/>)}
-                {route.element === null && (<p>{route.key} Not Implemented...</p>)}
-            </AppMainInner>
-        );
+        console_debug_log('getRoutesRaw | route.path:', route.path);
+        if (route.path === '/login') {
+            console_debug_log('getRoutesRaw | LOGIN !!!');
+            route.element = (
+                <AppMainInnerUnauthenticated>
+                    {route.element !== null && (<route.element/>)}
+                    {route.element === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
+                </AppMainInnerUnauthenticated>
+            );
+        } else {
+            route.element = (
+                <AppMainInner
+                    componentMap={componentMap}
+                    currentUser={currentUser}
+                >
+                    {route.element !== null && (<route.element/>)}
+                    {route.element === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
+                </AppMainInner>
+            );
+        }
         return route;
     })
     let finalRoutes;
@@ -263,10 +279,14 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
             routes[indexRoute].path = "index";
             finalRoutes.children = routes;
         } else {
-            routes.push({...routes[loginRoute]});
-            routes[loginRoute].index = true;
-            routes[loginRoute].path = "/";
-            routes[indexRoute].path = "index";
+            if (forcedLoginRoute) {
+                routes.push({...routes[loginRoute]});
+                routes[loginRoute].index = true;
+                routes[loginRoute].path = "/";
+                routes[indexRoute].path = "index";
+            } else {
+                routes[indexRoute].index = true;
+            }
         }
     }
     if (debug) console_debug_log("getRoutesRaw2 | finalRoutes:", finalRoutes, "indexRoute:", indexRoute, "loginRoute:", loginRoute, "currentUser:", currentUser);
@@ -372,18 +392,35 @@ export const getDefaultRoutes = (currentUser, componentMap, setExpanded, returnT
     const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
     const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
     if (returnType === "array") {
+        console_debug_log('getDefaultRoutes | returnType: array');
         return routes;
     }
     return putRoutes(routes);
 }
 
-// Catch all invalid routes and redirect to a default page or show a not found component
-const InvalidRouteRedirect = () => {
-    if (debug) console_debug_log('InvalidRouteRedirect');
+const InvalidElement = ({ children }) => {
+    if (debug) console_debug_log('ElementNotImplemented');
     return (
-        <div className={ALERT_DANGER_CLASS} role="alert">
-            URL not found...
+        <div
+            className={APP_GENERAL_MARGINS_CLASS}
+        >
+            <div
+                className={`${ALERT_DANGER_CLASS} ${HORIZONTALLY_CENTERED_CLASS}`}
+                role="alert"
+            >
+                {children}
+            </div>
         </div>
+    );
+}
+
+const InvalidRoute = () => {
+    // Catch all invalid routes and redirect to a default page or show a not found component
+    if (debug) console_debug_log('InvalidRoute');
+    return (
+        <InvalidElement>
+            URL not found...
+        </InvalidElement>
     );
 }
 

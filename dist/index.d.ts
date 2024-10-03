@@ -4,8 +4,10 @@ import * as react_router_dom from 'react-router-dom';
 import React from 'react';
 
 declare function About(): React.FunctionComponentElement<any>;
-declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-declare function App(_ref6: any): React.FunctionComponentElement<any>;
+declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<{
+    className: string;
+}, HTMLElement>;
+declare function App(_ref7: any): React.FunctionComponentElement<any>;
 declare var AppContext$1: Readonly<{
     __proto__: null;
     AppProvider: (_ref: any) => React.FunctionComponentElement<React.ProviderProps<any>>;
@@ -16,9 +18,9 @@ declare function AppFooter(_ref: any): React.FunctionComponentElement<{
 }>;
 declare function GeneralConfig(): React.FunctionComponentElement<any>;
 declare function GeneralConfig_EditorData(): any;
-declare function HomePage(_ref: any): React.FunctionComponentElement<{
-    children?: React.ReactNode | undefined;
-}>;
+declare function HomePage(_ref: any): React.DetailedReactHTMLElement<{
+    className: string;
+}, HTMLElement>;
 declare var IconsLib: Readonly<{
     __proto__: null;
     GsIcons: (_ref: any) => React.FunctionComponentElement<{
@@ -202,7 +204,7 @@ declare var class_name_constants: Readonly<{
     ALERT_INFO_CLASS: string;
     ALERT_SUCCESS_CLASS: string;
     ALERT_WARNING_CLASS: string;
-    APP_FOOTER_CONTAINER_CLASS: "p-4 text-white text-center appFooterContainerClass";
+    APP_FOOTER_CONTAINER_CLASS: "p-1 text-white text-center appFooterContainerClass";
     APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS: "mt-6 appFormPageChildComponentsTopDivClass";
     APP_FORMPAGE_FIELD_BASE_CLASS: string;
     APP_FORMPAGE_FIELD_CLASS: string;
@@ -212,6 +214,7 @@ declare var class_name_constants: Readonly<{
     APP_FORMPAGE_LABEL_CLASS: "font-medium appFormPageLabelClass";
     APP_FORMPAGE_LABEL_REQUIRED_CLASS: "font-medium text-red-700 appFormPageLabelRequiredClass";
     APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: "align-middle flex appFormPageSpecialButtonDivClass";
+    APP_GENERAL_MARGINS_CLASS: "mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass";
     APP_LEVEL2_DIV_CLASS: "overflow-x-auto appLevel2DivClass";
     APP_LISTING_SEARCH_BOX_INPUT_CLASS: "p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
     APP_LISTING_SEARCH_BOX_LABEL_CLASS: "mr-2 text-sm appListingSearchBoxLabelClass";
@@ -245,18 +248,18 @@ declare var class_name_constants: Readonly<{
     APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col appSectionContainerForSideMenuClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow p-4 appSectionContainerForSideMenuMainClass";
-    APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: "flex-grow p-4 appSectionContainerForTopMenuClass";
+    APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: "flex-grow 1-p-4 appSectionContainerForTopMenuClass";
     APP_SIDE_MENU_BG_COLOR_CLASS: "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
-    APP_TITLE_H1_CLASS: "text-2xl font-bold mb-4 appTitleH1Class";
+    APP_TITLE_H1_CLASS: "text-xl font-bold mb-4 appTitleH1Class";
     APP_TITLE_RECYCLE_BUTTON_CLASS: "pl-2 align-bottom appTitleRecycleButtonClass";
-    APP_TOP_DIV_CLASS: "mb-4 p-4 rounded-lg appTopDivClass";
+    APP_TOP_DIV_CLASS: string;
     BUTTON_COMPOSED_LABEL_CLASS: "flex items-center buttonComposedLabelClass";
     BUTTON_LISTING_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
     BUTTON_LISTING_DISABLED_CLASS: string;
     BUTTON_LISTING_NEW_CLASS: string;
     BUTTON_LISTING_REFRESH_CLASS: string;
     BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
-    BUTTON_SECONDARY_CLASS: "bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+    BUTTON_SECONDARY_CLASS: "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
     CENTERED_BOX_CONTAINER_DIV_1_CLASS: "z-50 overflow-auto centeredBoxContainerDiv1Class";
     CENTERED_BOX_CONTAINER_DIV_2_CLASS: "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
     CENTERED_BOX_CONTAINER_DIV_3_CLASS: "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
@@ -270,11 +273,13 @@ declare var class_name_constants: Readonly<{
     FORM_GROUP_CLASS: "mb-4 formGroupClass";
     GRAY_BOX_MSG_CLASS: string;
     HIDDEN_CLASS: "hidden hiddenClass";
+    HORIZONTALLY_CENTERED_CLASS: "flex flex-col items-center horizontallyCenteredClass";
     INFO_MSG_CLASS: string;
     INLINE_CLASS: "inline inlineClass";
     INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
     INVALID_FEEDBACK_CLASS: "text-red-800 text-sm mt-1 invalidFeedbackClass";
     IS_INVALID_CLASS: "border-red-500 isInvalidClass";
+    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS: string;
     LOGIN_PAGE_APP_LOGO_CLASS: "mx-auto my-0 loginPageAppLogoClass";
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: "flex min-h-screen mainContainerForSideMenuClass";
     MAIN_CONTAINER_FOR_TOP_MENU_CLASS: "flex flex-col min-h-screen mainContainerForTopMenuClass";
@@ -284,14 +289,14 @@ declare var class_name_constants: Readonly<{
     MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS: "w-full flex justify-center modalibButtonBaseStyleNotWideClass";
     MODALIB_BUTTON_BASESTYLE_WIDE_CLASS: "flex-1 modalibButtonBaseStyleWideClass";
     MODALIB_BUTTON_DANGER_CLASS: "bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass";
-    MODALIB_BUTTON_PRIMARY_CLASS: "bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass";
-    MODALIB_BUTTON_SECONDARY_CLASS: "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass";
+    MODALIB_BUTTON_PRIMARY_CLASS: string;
+    MODALIB_BUTTON_SECONDARY_CLASS: string;
     MODALIB_BUTTON_SUCCESS_CLASS: "bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass";
-    MODALIB_MODAL_BODY_CLASS: "text-gray-600 text-center mb-6 modalibModalBodyClass";
-    MODALIB_MODAL_DIV_1_CLASS: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-    MODALIB_MODAL_DIV_2_CLASS: "bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+    MODALIB_MODAL_BODY_CLASS: "1-text-gray-600 text-center mb-6 modalibModalBodyClass";
+    MODALIB_MODAL_DIV_1_CLASS: "z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+    MODALIB_MODAL_DIV_2_CLASS: "1-bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
     MODALIB_MODAL_DIV_3_CLASS: "p-6 modalibModalDiv3Class";
-    MODALIB_MODAL_FOOTER_CLASS: "flex modalibModalFooterClass";
+    MODALIB_MODAL_FOOTER_CLASS: "flex mt-4 modalibModalFooterClass";
     MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS: "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
     MODALIB_MODAL_FOOTER_WIDE_CLASS: "flex-row space-x-4 modalibModalFooterWideClass";
     MODALIB_MODAL_HEADER_CLASS: "modalibModalHeaderClass";
@@ -303,11 +308,11 @@ declare var class_name_constants: Readonly<{
     NAVBAR_BRAND_APP_VERSION_CLASS: "text-xs navbarBrandAppVersionClass";
     NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
     NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS: "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
-    NAVBAR_BRAND_NAME_CLASS: "text-2xl font-bold navbarBrandNameClass";
+    NAVBAR_BRAND_NAME_CLASS: "text-2xl ml-2 font-bold navbarBrandNameClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: "navbarHeaderForSideMenuMobileCloseClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS: "translate-x-0 navbarHeaderForSideMenuMobileOpenClass";
-    NAVBAR_HEADER_FOR_TOP_MENU_CLASS: "flex items-center justify-between p-4 text-white navbarHeaderForTopMenuClass";
+    NAVBAR_HEADER_FOR_TOP_MENU_CLASS: "flex items-center justify-between p-1 text-white navbarHeaderForTopMenuClass";
     NAVBAR_MOBILE_CLOSE_BUTTON_CLASS: "p-2 rounded-full hover:bg-opacity-80 navbarMobileCloseButtonClass";
     NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS: "h-6 w-6 navbarMobileCloseButtonIconClass";
     NAVBAR_MOBILE_MENU_DIV_1_CLASS: "fixed inset-0 bg-black bg-opacity-50 z-50 navbarMobileMenuDiv1Class";
@@ -319,7 +324,7 @@ declare var class_name_constants: Readonly<{
     NAVBAR_TOGGLE_BUTTON_CLASS: "1-md:hidden 1-lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
     NAVBAR_TOGGLE_IMAGE_CLASS: "h-6 w-6 navbarToggleImageClass";
     NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS: "space-y-2 navbarTopCenterMenuOnLeftClass";
-    NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS: "hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
+    NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS: "flex space-x-4 navbarTopCenterMenuOnTopClass";
     NAVBAR_TOP_FOR_SIDE_MENU_CLASS: "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
     NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS: "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
     NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS: "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
@@ -334,7 +339,7 @@ declare var class_name_constants: Readonly<{
     NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS: "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
     NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
     NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
-    NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS: "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
+    NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS: "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
     NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS: "rounded block px-2 navDropDownItemButtonsHamburgerClass";
     NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded py-2 px-2 navDropDownItemButtonsMobileMenuClass";
     NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS: "rounded px-2 py-2 navDropDownItemButtonsSideMenuClass";
@@ -625,12 +630,9 @@ declare var generic_menu_service: Readonly<{
     DefaultRoutes: () => {
         key: string;
         path: string;
-        element: () => React.DetailedReactHTMLElement<{
-            className: string;
-            role: "alert";
-        }, HTMLElement>;
+        element: () => React.FunctionComponentElement<any>;
     }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
-    GenericMenuBuilder: (_ref: any) => any;
+    GenericMenuBuilder: (_ref2: any) => any;
     editorMenuOption: (editor: any, itemType: any, mobileMenuMode: any, componentMap: any, setExpanded: any) => React.FunctionComponentElement<any>;
     editorRoute: (editor: any, title: any) => {
         key: any;
@@ -641,10 +643,7 @@ declare var generic_menu_service: Readonly<{
     getDefaultRoutes: (currentUser: any, componentMap: any, setExpanded: any, ...args: any[]) => {
         key: string;
         path: string;
-        element: () => React.DetailedReactHTMLElement<{
-            className: string;
-            role: "alert";
-        }, HTMLElement>;
+        element: () => React.FunctionComponentElement<any>;
     }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     getDefaultRoutesRaw: (componentMap: any) => {
         title: string;
@@ -656,18 +655,12 @@ declare var generic_menu_service: Readonly<{
     getRoutes: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any, ...args: any[]) => {
         key: string;
         path: string;
-        element: () => React.DetailedReactHTMLElement<{
-            className: string;
-            role: "alert";
-        }, HTMLElement>;
+        element: () => React.FunctionComponentElement<any>;
     }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     getRoutesRaw: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
-        element: () => React.DetailedReactHTMLElement<{
-            className: string;
-            role: "alert";
-        }, HTMLElement>;
+        element: () => React.FunctionComponentElement<any>;
     }[];
 }>;
 declare var history$2: Readonly<{

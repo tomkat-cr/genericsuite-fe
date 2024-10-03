@@ -98,7 +98,8 @@ export const GenericSinglePageEditorMain = (props) => {
     };
 
     const handleCancel = () => {
-        window.location.href = getPrefix(true) + '/';
+        // window.location.href = getPrefix(true) + '/';
+        window.location.href = '/';
     };
 
     // eslint-disable-next-line

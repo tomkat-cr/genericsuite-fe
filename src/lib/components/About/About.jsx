@@ -1,6 +1,10 @@
 import React from 'react'
 import { ModalPopUp } from '../../helpers/ModalPopUp.jsx'
-import { ALERT_DANGER_CLASS, ALERT_SUCCESS_CLASS } from '../../constants/class_name_constants.jsx'
+import {
+    ALERT_DANGER_CLASS,
+    ALERT_SUCCESS_CLASS,
+    APP_GENERAL_MARGINS_CLASS,
+} from '../../constants/class_name_constants.jsx'
 
 export const About = () => {
     return (
@@ -13,12 +17,14 @@ export const About = () => {
 
 export const AboutBody = ({
     children,
-    modalPopUpTest = false,
 }) => {
+    const modalPopUpTest = false;
     const version = process.env.REACT_APP_VERSION;
     const appName = process.env.REACT_APP_APP_NAME;
     return (
-        <div>
+        <div
+            className={APP_GENERAL_MARGINS_CLASS}
+        >
             <h1>About {appName}</h1>
             <p>(Version: {(version && version !== '') ? version : "N/A"})</p>
             <br/>

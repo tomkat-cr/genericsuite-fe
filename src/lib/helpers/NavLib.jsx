@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { console_debug_log } from '../services/logging.service.jsx';
 import {
     APP_SIDE_MENU_BG_COLOR_CLASS,
-    // APP_MAIN_BOX_BG_COLOR_CLASS,
     MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
     NAVBAR_HEADER_FOR_TOP_MENU_CLASS,
@@ -152,7 +151,6 @@ export const CenteredBoxContainer = ({ children }) => {
             className={CENTERED_BOX_CONTAINER_DIV_1_CLASS}
         >
             <div
-                // className={`${APP_MAIN_BOX_BG_COLOR_CLASS} ${CENTERED_BOX_CONTAINER_DIV_2_CLASS}`}
                 className={`${CENTERED_BOX_CONTAINER_DIV_2_CLASS} ${theme.contentBg}`}
             >
                 <div
@@ -253,7 +251,7 @@ const NavbarBrand = ({ children, as, to, onClick }) => {
 const NavbarTopCenterMenu = ({ children }) => {
     /* Header main top menu (center) */
     if (debug) console_debug_log("||||| NavbarTopCenterMenu", children);
-    const { sideMenu } = useAppContext();
+    const { sideMenu, isWide } = useAppContext();
     if (sideMenu) {
         return (
             <div
@@ -266,7 +264,7 @@ const NavbarTopCenterMenu = ({ children }) => {
     return (
         <nav
             id='navbar-top-center-menu'
-            className={NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS}
+            className={NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS + (isWide ? "" : " " + HIDDEN_CLASS)}
         >
             {children}
         </nav>
