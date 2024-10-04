@@ -27,6 +27,8 @@ Add localstorage generic functions [GS-112].
 Add Save darkmode and side menu set to localstorage [GS-112].
 New "GsIcons" library replaces FontAwesome [GS-115].
 Add landscape logo to the App header [GS-63].
+Add the optional "template" attribute to app_main_menu.json entries to customize the menu option design [GS-112] [GS-129].
+Add the <NoDesignComponent>> to have menu options with no GS FE Core design [GS-112] [GS-129].
 
 ### Changes
 Replace react-bootstrap entirely and use only Tailwind CSS [GS-63].
@@ -45,6 +47,7 @@ Add "openai_api_key" and "openai_model" fields  to user and user_profile json de
 Fix missing classes in the new output.css of Tailwind v3.4.9 [GS-63].
 Fix the row values in index page not shown issue [GS-108].
 Fix the %PUBLIC_URL% issue in public/index.html file running the app with webpack [GS-116].
+Fix show WaitAnimation() in iterateChildComponents() and EditFormFormik() to make the data loading evident in the User Profile menu option [GS-112].
 
 ### Breaks
 Bootstrap CSS is not longer used [GS-63].

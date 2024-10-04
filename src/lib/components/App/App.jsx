@@ -177,6 +177,22 @@ const TopRightMenu = ({ showContentOnly }) => {
     );
 }
 
+const NoDesignComponent = ({ children, errorMessage }) => {
+    return (
+        <>
+                {errorMessage && (
+                    <div
+                        className={ALERT_DANGER_CLASS}
+                        role="alert"
+                    >
+                        {errorMessage}
+                    </div>
+                )}
+                {children}
+            </>
+    );
+}
+
 const AppMainInnerUnauthenticated = ({ children }) => {
     return (
         <MainContainer>
@@ -410,6 +426,7 @@ const defaultComponentMap = {
     "AppFooter": AppFooter,
     "AppMainInner": AppMainInner,
     "AppMainInnerUnauthenticated": AppMainInnerUnauthenticated,
+    "NoDesignComponent": NoDesignComponent,
     "logout": logoutHander,
     "defaultTheme": defaultTheme,
 };

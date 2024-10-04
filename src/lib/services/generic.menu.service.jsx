@@ -164,6 +164,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
     let indexRoute = -1;
     let loginRoute = -1;
     let routes = [];
+    let RouteTemplateComponent;
 
     const addOneroute = (resultRoute) => {
         if (resultRoute) {
@@ -237,29 +238,34 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
         element: InvalidRoute,
     });
     routes = routes.map(route => {
+        let error = null;
         if (nestedRoutes) {
             route.path = route.path.replace(/\//, "");
         }
         console_debug_log('getRoutesRaw | route.path:', route.path);
         if (route.path === '/login') {
-            console_debug_log('getRoutesRaw | LOGIN !!!');
-            route.element = (
-                <AppMainInnerUnauthenticated>
-                    {route.element !== null && (<route.element/>)}
-                    {route.element === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
-                </AppMainInnerUnauthenticated>
-            );
+            RouteTemplateComponent = AppMainInnerUnauthenticated;
+        } else if (typeof route.template !== 'undefined') {
+            if (typeof componentMap[route.template] === "undefined") {
+                error = `[GMB-GR-E030] ERROR - template not registered in "componentMap" | route.template: ${route.template}`;
+                console_debug_log(error);
+                RouteTemplateComponent = componentMap["NoDesignComponent"];
+            } else {
+                RouteTemplateComponent = componentMap[route.template];
+            }
         } else {
-            route.element = (
-                <AppMainInner
-                    componentMap={componentMap}
-                    currentUser={currentUser}
-                >
-                    {route.element !== null && (<route.element/>)}
-                    {route.element === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
-                </AppMainInner>
-            );
+            RouteTemplateComponent = AppMainInner;
         }
+        route.element = (
+            <RouteTemplateComponent
+                // componentMap={componentMap}
+                // currentUser={currentUser}
+                errorMessage={error}
+            >
+                {route.element !== null && (<route.element/>)}
+                {route.element === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
+            </RouteTemplateComponent>
+        );
         return route;
     })
     let finalRoutes;
@@ -349,36 +355,6 @@ export const getDefaultRoutesRaw = (componentMap) => {
             element: "HomePage",
             type: "nav_link",
         },
-        // {
-        //     title: 'homepage2',
-        //     path: getPrefix(true)+"/",
-        //     element_obj: <HomePage/>,
-        //     type: "nav_link",
-        // },
-        // {
-        //     title: 'homepage3',
-        //     path: getPrefix(true).replace('/#', '/')+"/",
-        //     element_obj: <HomePage/>,
-        //     type: "nav_link",
-        // },
-        // {
-        //     title: 'loginpage2',
-        //     path: getPrefix(true)+"/login",
-        //     element_obj: <LoginPage/>,
-        //     type: "nav_link",
-        // },
-        // {
-        //     title: 'loginpage3',
-        //     path: getPrefix(true).replace('/#', '/')+"/login",
-        //     element_obj: <LoginPage/>,
-        //     type: "nav_link",
-        // },
-        // {
-        //     title: 'loginpage4',
-        //     path: '/#/login',
-        //     element_obj: <LoginPage/>,
-        //     type: "nav_link",
-        // },
     ];
 }
 

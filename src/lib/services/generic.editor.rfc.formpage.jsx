@@ -580,7 +580,10 @@ const EditFormFormik = (
     );
 
     if (!formData['readyToShow']) {
-        return '';
+        // return '';
+        return (
+            WaitAnimation()
+        );
     }
 
     if (!formData['canCommit'] === null) {
@@ -866,7 +869,10 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
     let initialFieldValues = getFieldElementsDbValues(editor, dataset);
     if (initialFieldValues[editor.primaryKeyName] === 0) {
         // Dataset is stil not ready...
-        return ('');
+        // return ('');
+        return (
+            WaitAnimation()
+        );
     }
     return Object.entries(editor.childComponents).map(function (
         htmlElement

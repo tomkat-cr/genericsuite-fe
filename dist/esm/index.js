@@ -3528,6 +3528,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   let indexRoute = -1;
   let loginRoute = -1;
   let routes = [];
+  let RouteTemplateComponent;
   const addOneroute = resultRoute => {
     if (resultRoute) {
       switch (resultRoute.path) {
@@ -3590,16 +3591,27 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
     element: InvalidRoute
   });
   routes = routes.map(route => {
+    let error = null;
     console_debug_log('getRoutesRaw | route.path:', route.path);
     if (route.path === '/login') {
-      console_debug_log('getRoutesRaw | LOGIN !!!');
-      route.element = /*#__PURE__*/React.createElement(AppMainInnerUnauthenticated, null, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
+      RouteTemplateComponent = AppMainInnerUnauthenticated;
+    } else if (typeof route.template !== 'undefined') {
+      if (typeof componentMap[route.template] === "undefined") {
+        error = "[GMB-GR-E030] ERROR - template not registered in \"componentMap\" | route.template: ".concat(route.template);
+        console_debug_log(error);
+        RouteTemplateComponent = componentMap["NoDesignComponent"];
+      } else {
+        RouteTemplateComponent = componentMap[route.template];
+      }
     } else {
-      route.element = /*#__PURE__*/React.createElement(AppMainInner, {
-        componentMap: componentMap,
-        currentUser: currentUser
-      }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
+      RouteTemplateComponent = AppMainInner;
     }
+    route.element = /*#__PURE__*/React.createElement(RouteTemplateComponent
+    // componentMap={componentMap}
+    // currentUser={currentUser}
+    , {
+      errorMessage: error
+    }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
     return route;
   });
   if (currentUser) {
@@ -3651,38 +3663,7 @@ const getDefaultRoutesRaw = componentMap => {
     path: "/",
     element: "HomePage",
     type: "nav_link"
-  }
-  // {
-  //     title: 'homepage2',
-  //     path: getPrefix(true)+"/",
-  //     element_obj: <HomePage/>,
-  //     type: "nav_link",
-  // },
-  // {
-  //     title: 'homepage3',
-  //     path: getPrefix(true).replace('/#', '/')+"/",
-  //     element_obj: <HomePage/>,
-  //     type: "nav_link",
-  // },
-  // {
-  //     title: 'loginpage2',
-  //     path: getPrefix(true)+"/login",
-  //     element_obj: <LoginPage/>,
-  //     type: "nav_link",
-  // },
-  // {
-  //     title: 'loginpage3',
-  //     path: getPrefix(true).replace('/#', '/')+"/login",
-  //     element_obj: <LoginPage/>,
-  //     type: "nav_link",
-  // },
-  // {
-  //     title: 'loginpage4',
-  //     path: '/#/login',
-  //     element_obj: <LoginPage/>,
-  //     type: "nav_link",
-  // },
-  ];
+  }];
 };
 const DefaultRoutes = () => {
   const {
@@ -5381,7 +5362,8 @@ const EditFormFormik = _ref4 => {
     }
   }, [editor, action, dataset]);
   if (!formData['readyToShow']) {
-    return '';
+    // return '';
+    return WaitAnimation();
   }
   if (!formData['canCommit'] === null) {
     formData['canCommit'] = false;
@@ -5568,7 +5550,8 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
   let initialFieldValues = getFieldElementsDbValues(editor, dataset);
   if (initialFieldValues[editor.primaryKeyName] === 0) {
     // Dataset is stil not ready...
-    return '';
+    // return ('');
+    return WaitAnimation();
   }
   return Object.entries(editor.childComponents).map(function (htmlElement) {
     let ChildElement = htmlElement[1];
@@ -7301,16 +7284,26 @@ const TopRightMenu = _ref3 => {
     showContentOnly: showContentOnly
   }));
 };
-const AppMainInnerUnauthenticated = _ref4 => {
+const NoDesignComponent = _ref4 => {
   let {
-    children
+    children,
+    errorMessage
   } = _ref4;
-  return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, children), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+  return /*#__PURE__*/React.createElement(React.Fragment, null, errorMessage && /*#__PURE__*/React.createElement("div", {
+    className: ALERT_DANGER_CLASS,
+    role: "alert"
+  }, errorMessage), children);
 };
-const AppMainInner = _ref5 => {
+const AppMainInnerUnauthenticated = _ref5 => {
   let {
     children
   } = _ref5;
+  return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, children), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+};
+const AppMainInner = _ref6 => {
+  let {
+    children
+  } = _ref6;
   // const debug = true;
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
@@ -7369,12 +7362,12 @@ const AppMainInner = _ref5 => {
     mobileMenuMode: true
   })), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
-const AppMainComponent = _ref6 => {
+const AppMainComponent = _ref7 => {
   let {
     stateHandler,
     showContentOnly,
     children
-  } = _ref6;
+  } = _ref7;
   // const location = useLocation();
   // if (debug) console_debug_log("AppMainComponent | location:", location);
   const {
@@ -7445,15 +7438,16 @@ const defaultComponentMap = {
   "AppFooter": AppFooter,
   "AppMainInner": AppMainInner,
   "AppMainInnerUnauthenticated": AppMainInnerUnauthenticated,
+  "NoDesignComponent": NoDesignComponent,
   "logout": logoutHander,
   "defaultTheme": defaultTheme
 };
-const App = _ref7 => {
+const App = _ref8 => {
   let {
     componentMap = {},
     appLogo = "",
     appLogoHeader = ""
-  } = _ref7;
+  } = _ref8;
   const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
     globalComponentMap: componentMapFinal,

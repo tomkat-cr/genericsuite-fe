@@ -7,7 +7,7 @@ declare function About(): React.FunctionComponentElement<any>;
 declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<{
     className: string;
 }, HTMLElement>;
-declare function App(_ref7: any): React.FunctionComponentElement<any>;
+declare function App(_ref8: any): React.FunctionComponentElement<any>;
 declare var AppContext$1: Readonly<{
     __proto__: null;
     AppProvider: (_ref: any) => React.FunctionComponentElement<React.ProviderProps<any>>;
