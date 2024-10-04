@@ -33,7 +33,7 @@ import { console_debug_log } from '../../services/logging.service.jsx';
 // import MadeByLogoSquare from '../../images/madeby_logo_square.svg';
 // import MadeByLogoCircle from '../../images/madeby_logo_emblem.svg';
 
-const debug = true;
+const debug = false;
 
 const defaultAppLogo = "app_logo_square.svg";
 

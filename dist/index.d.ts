@@ -634,11 +634,12 @@ declare var generic_menu_service: Readonly<{
     }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     GenericMenuBuilder: (_ref2: any) => any;
     editorMenuOption: (editor: any, itemType: any, mobileMenuMode: any, componentMap: any, setExpanded: any) => React.FunctionComponentElement<any>;
-    editorRoute: (editor: any, title: any) => {
+    editorRoute: (editor: any, itemDefs: any) => {
         key: any;
         exact: any;
         path: string;
         element: any;
+        template: any;
     };
     getDefaultRoutes: (currentUser: any, componentMap: any, setExpanded: any, ...args: any[]) => {
         key: string;

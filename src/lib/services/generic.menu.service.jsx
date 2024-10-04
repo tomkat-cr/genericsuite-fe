@@ -105,6 +105,7 @@ const getItemDefaults = (componentMap, setExpanded, item, topTitle = null) => {
     const hard_prefix = defaultValue(item, "hard_prefix", false);
     const get_prefix = defaultValue(item, "get_prefix", true);
     const reload = defaultValue(item, "reload", false);
+    const template = defaultValue(item, "template", null);
     const element_obj = getElementObj(componentMap, item);
     let path = defaultValue(item, "path", null);
     if (get_prefix && path) {
@@ -126,6 +127,7 @@ const getItemDefaults = (componentMap, setExpanded, item, topTitle = null) => {
         "on_click": on_click,
         "title": title,
         "reload": reload,
+        "template": template,
     }
 }
 
@@ -145,12 +147,13 @@ const putRoutes = (routes) => (
     </Routes>
 );
 
-export const editorRoute = (editor, title) => (
+export const editorRoute = (editor, itemDefs) => (
     {
-        key: title,
+        key: itemDefs.title,
         exact: (editor.exact ?? routeExact),
         path: '/'+editor.baseUrl,
         element: editor.component,
+        template: itemDefs.template,
     }
 );
 
@@ -202,6 +205,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                 exact: (item["exact"] ?? routeExact),
                 path: itemDefs["path"],
                 element: itemDefs["element_obj"],
+                template: itemDefs.template,
             };
             addOneroute(resultRoute);
         } else {
@@ -214,7 +218,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                 }    
                 if (subItem.type === 'editor') {
                     try {
-                        resultRoute = editorRoute(componentMap[subItem.element](), itemDefs["title"])
+                        resultRoute = editorRoute(componentMap[subItem.element](), itemDefs)
                         addOneroute(resultRoute);
                     } catch (error) {
                         console_debug_log("[GMB-GR-E010] subItem.element:", subItem.element);
@@ -226,6 +230,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                         exact: (item["exact"] ?? routeExact),
                         path: itemDefs["path"],
                         element: itemDefs["element_obj"],
+                        template: itemDefs.template,
                     };
                     addOneroute(resultRoute);
                 }
@@ -242,10 +247,10 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
         if (nestedRoutes) {
             route.path = route.path.replace(/\//, "");
         }
-        console_debug_log('getRoutesRaw | route.path:', route.path);
+        if (debug) console_debug_log('getRoutesRaw | route.path:', route.path, '| route: ', );
         if (route.path === '/login') {
             RouteTemplateComponent = AppMainInnerUnauthenticated;
-        } else if (typeof route.template !== 'undefined') {
+        } else if (route.template) {
             if (typeof componentMap[route.template] === "undefined") {
                 error = `[GMB-GR-E030] ERROR - template not registered in "componentMap" | route.template: ${route.template}`;
                 console_debug_log(error);
@@ -368,7 +373,7 @@ export const getDefaultRoutes = (currentUser, componentMap, setExpanded, returnT
     const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
     const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
     if (returnType === "array") {
-        console_debug_log('getDefaultRoutes | returnType: array');
+        if (debug) console_debug_log('getDefaultRoutes | returnType: array');
         return routes;
     }
     return putRoutes(routes);

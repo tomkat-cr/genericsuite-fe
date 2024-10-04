@@ -3482,6 +3482,7 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
   const hard_prefix = defaultValue(item, "hard_prefix", false);
   const get_prefix = defaultValue(item, "get_prefix", true);
   const reload = defaultValue(item, "reload", false);
+  const template = defaultValue(item, "template", null);
   const element_obj = getElementObj(componentMap, item);
   let path = defaultValue(item, "path", null);
   if (get_prefix && path) {
@@ -3499,7 +3500,8 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
     "path": path,
     "on_click": on_click,
     "title": title,
-    "reload": reload
+    "reload": reload,
+    "template": template
   };
 };
 const putRoutes = routes => /*#__PURE__*/React.createElement(Routes, {
@@ -3513,13 +3515,14 @@ const putRoutes = routes => /*#__PURE__*/React.createElement(Routes, {
     element: item.element_obj
   });
 }));
-const editorRoute = (editor, title) => {
+const editorRoute = (editor, itemDefs) => {
   var _editor$exact;
   return {
-    key: title,
+    key: itemDefs.title,
     exact: (_editor$exact = editor.exact) !== null && _editor$exact !== void 0 ? _editor$exact : routeExact,
     path: '/' + editor.baseUrl,
-    element: editor.component
+    element: editor.component,
+    template: itemDefs.template
   };
 };
 const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
@@ -3558,7 +3561,8 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
         key: itemDefs["title"],
         exact: (_item$exact = item["exact"]) !== null && _item$exact !== void 0 ? _item$exact : routeExact,
         path: itemDefs["path"],
-        element: itemDefs["element_obj"]
+        element: itemDefs["element_obj"],
+        template: itemDefs.template
       };
       addOneroute(resultRoute);
     } else {
@@ -3566,7 +3570,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
         const itemDefs = getItemDefaults(componentMap, setExpanded, subItem);
         if (subItem.type === 'editor') {
           try {
-            resultRoute = editorRoute(componentMap[subItem.element](), itemDefs["title"]);
+            resultRoute = editorRoute(componentMap[subItem.element](), itemDefs);
             addOneroute(resultRoute);
           } catch (error) {
             console_debug_log("[GMB-GR-E010] subItem.element:", subItem.element);
@@ -3578,7 +3582,8 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
             key: itemDefs["title"],
             exact: (_item$exact2 = item["exact"]) !== null && _item$exact2 !== void 0 ? _item$exact2 : routeExact,
             path: itemDefs["path"],
-            element: itemDefs["element_obj"]
+            element: itemDefs["element_obj"],
+            template: itemDefs.template
           };
           addOneroute(resultRoute);
         }
@@ -3592,10 +3597,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   });
   routes = routes.map(route => {
     let error = null;
-    console_debug_log('getRoutesRaw | route.path:', route.path);
     if (route.path === '/login') {
       RouteTemplateComponent = AppMainInnerUnauthenticated;
-    } else if (typeof route.template !== 'undefined') {
+    } else if (route.template) {
       if (typeof componentMap[route.template] === "undefined") {
         error = "[GMB-GR-E030] ERROR - template not registered in \"componentMap\" | route.template: ".concat(route.template);
         console_debug_log(error);
@@ -3680,7 +3684,6 @@ const getDefaultRoutes = function (currentUser, componentMap, setExpanded) {
   const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
   const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
   if (returnType === "array") {
-    console_debug_log('getDefaultRoutes | returnType: array');
     return routes;
   }
   return putRoutes(routes);
@@ -7042,8 +7045,6 @@ const LoginPage = props => {
     authenticationService.login(username, password).then(user => {
       // To avoid stay in login page with the wait animation
       setSubmitting(false);
-      // Set user data to <App/>
-      console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 2:", user);
       registerUser(user);
       // Redirect to previous page
       removeLastUrl();
