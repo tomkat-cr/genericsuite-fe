@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
-import { mockDefaultComponentMap } from "../../test-helpers/mock-fetch";
+import { mockDefaultComponentMap } from "../../test-helpers/mocks";
 
 import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";

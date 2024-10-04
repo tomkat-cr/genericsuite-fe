@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import { MemoryRouter } from "react-router-dom";
 
 import { App } from "../App/App.jsx";
-import { mockFetch, mockAuthService, mockUserData } from '../../test-helpers/mock-fetch'
+import { mockFetch, mockAuthService, mockUserData } from '../../test-helpers/mocks'
 
 import { UserProfileEditor } from "./UserProfile";
 

@@ -710,6 +710,13 @@ declare var response_handlers_service: Readonly<{
     handleResponseText: typeof handleResponseText;
     usePlainFetch: false;
 }>;
+declare var mocks: Readonly<{
+    __proto__: null;
+    mockAuthService: typeof mockAuthService;
+    mockDefaultComponentMap: typeof mockDefaultComponentMap;
+    mockFetch: typeof mockFetch;
+    mockUserData: typeof mockUserData;
+}>;
 declare var ui: Readonly<{
     __proto__: null;
     CopyButton: (_ref2: any) => React.FunctionComponentElement<{
@@ -788,6 +795,79 @@ declare function handleResponseText(response: any, text: any, headers: any): Pro
     message: any;
     resultset: any;
 };
+declare function mockAuthService(): {
+    codeFile: string;
+    response: {
+        authenticationService: {
+            currentUserValue: {
+                token: string;
+            };
+        };
+        getUserData: () => Promise<{
+            error: boolean;
+            error_message: null;
+            resultset: {
+                _id: string;
+                first_name: string;
+                last_name: string;
+                superuser: number;
+            };
+        }>;
+        getCurrentUserData: () => Promise<{
+            resultset: {
+                error: boolean;
+                error_message: null;
+                resultset: {
+                    _id: string;
+                    first_name: string;
+                    last_name: string;
+                    superuser: number;
+                };
+            };
+        }>;
+    };
+};
+declare function mockDefaultComponentMap(): {
+    defaultTheme: {
+        light: {
+            primary: string;
+            secondary: string;
+            text: string;
+            label: string;
+            input: string;
+            textHoverTop: string;
+            textHoverTopSubMenu: string;
+            textHoverSide: string;
+            background: string;
+            contentBg: string;
+        };
+        dark: {
+            primary: string;
+            secondary: string;
+            text: string;
+            label: string;
+            input: string;
+            textHoverTop: string;
+            textHoverTopSubMenu: string;
+            textHoverSide: string;
+            background: string;
+            contentBg: string;
+        };
+    };
+};
+declare function mockFetch(data: any, ...args: any[]): jest.Mock<any, any, any>;
+declare function mockUserData(): {
+    codeFile: string;
+    response: {
+        currentUser: {
+            id: string;
+            firstName: string;
+            token: string;
+        };
+        registerUser: () => null;
+        unRegisterUser: () => null;
+    };
+};
 declare function getUrlParams(...args: any[]): {};
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$2 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$2 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };

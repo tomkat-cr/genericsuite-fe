@@ -1,8 +1,8 @@
 import React from "react";
 import renderer from 'react-test-renderer';
-import { MemoryRouter } from "react-router-dom";
+// import { MemoryRouter } from "react-router-dom";
 
-import { mockFetch, mockAuthService, mockUserData } from '../../test-helpers/mock-fetch'
+import { mockFetch, mockAuthService, mockUserData } from '../../test-helpers/mocks'
 
 import { App } from "../App/App.jsx";
 import { HomePage } from "./HomePage.jsx";

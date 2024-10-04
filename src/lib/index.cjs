@@ -29,6 +29,8 @@ import * as IconsLib from './helpers/IconsLib.jsx';
 import * as UserContext from './helpers/UserContext.jsx';
 import * as AppContext from './helpers/AppContext.jsx';
 import * as NavLib from './helpers/NavLib.jsx';
+// Test Helpers
+import * as testHelpersMocks from './test-helpers/mocks';
 // Services
 import * as authenticationService from './services/authentication.service.jsx';
 import * as blobFilesUtilities from './services/blob.files.utilities.jsx';
@@ -95,6 +97,8 @@ export {
     UserContext,
     AppContext,
     NavLib,
+    // Test Helpers
+    testHelpersMocks,
     // Services
     authenticationService,
     blobFilesUtilities,

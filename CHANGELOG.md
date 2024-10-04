@@ -29,6 +29,7 @@ New "GsIcons" library replaces FontAwesome [GS-115].
 Add landscape logo to the App header [GS-63].
 Add the optional "template" attribute to app_main_menu.json entries to customize the menu option design [GS-112] [GS-129].
 Add the <NoDesignComponent>> to have menu options with no GS FE Core design [GS-112] [GS-129].
+Add testHelpersMocks export [GS-129].
 
 ### Changes
 Replace react-bootstrap entirely and use only Tailwind CSS [GS-63].
@@ -42,6 +43,7 @@ Change Search input box size too small in the GCE_RFC listing page [GS-112].
 "/login" replaced by "/logout" in the Log Out option [GS-112].
 Add "openai_api_key" and "openai_model" fields  to user and user_profile json default configs [FA-200] [FA-201].
 <PrivateRoute/> avoid use getPrefix(true) [GS-112].
+Rename "test-helpers/mock-fetch.ts" to "test-helpers/mocks.js" to make it more generic and change the ".ts" extension by ".js" to fix the "Parameter 'data' implicitly has an 'any' type | export function mockFetch(data)..." error during the "make publish" [GS-129].
 
 ### Fixes
 Fix missing classes in the new output.css of Tailwind v3.4.9 [GS-63].

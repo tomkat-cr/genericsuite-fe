@@ -3,7 +3,7 @@ import React from "react";
 // import { MemoryRouter } from "react-router-dom";
 import renderer from 'react-test-renderer';
 
-import { mockFetch } from '../../test-helpers/mock-fetch'
+import { mockFetch } from '../../test-helpers/mocks'
 
 import { App } from "./App";
 

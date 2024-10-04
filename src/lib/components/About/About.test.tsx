@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from 'react-test-renderer';
 
-import { mockDefaultComponentMap } from '../../test-helpers/mock-fetch'
+import { mockDefaultComponentMap } from '../../test-helpers/mocks'
 
 import { UserProvider } from "../../helpers/UserContext.jsx";
 import { AppProvider } from "../../helpers/AppContext.jsx";

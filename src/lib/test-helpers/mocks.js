@@ -1,6 +1,8 @@
 import { defaultTheme } from "../constants/class_name_constants.jsx";
 
-export function mockFetch(data: any, headers: any = null) {
+
+// export function mockFetch(data: any, headers: any = null) {
+export function mockFetch(data, headers = null) {
     if (!headers) {
         headers = {'Content-Type': 'application/json'};
     }
@@ -15,6 +17,7 @@ export function mockFetch(data: any, headers: any = null) {
       }),
     );
 }
+
 export function mockUserData() {
   return {
     codeFile: 'helpers/UserContext.jsx',

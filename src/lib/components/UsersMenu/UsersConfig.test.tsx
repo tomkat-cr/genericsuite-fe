@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 // $ npm install whatwg-fetch --save-dev
 import 'whatwg-fetch';
 
-import { mockDefaultComponentMap, mockFetch } from '../../test-helpers/mock-fetch'
+import { mockDefaultComponentMap, mockFetch } from '../../test-helpers/mocks'
 
 import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";

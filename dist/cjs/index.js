@@ -7669,6 +7669,86 @@ var PrivateRoute$1 = /*#__PURE__*/Object.freeze({
   PrivateRoute: PrivateRoute
 });
 
+// export function mockFetch(data: any, headers: any = null) {
+function mockFetch(data) {
+  let headers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  if (!headers) {
+    headers = {
+      'Content-Type': 'application/json'
+    };
+  }
+  return jest.fn().mockImplementation(() => Promise.resolve({
+    ok: true,
+    json: () => data,
+    headers: new Headers(headers),
+    text: () => Promise.resolve(JSON.stringify(data)),
+    status: 200,
+    statusText: ''
+  }));
+}
+function mockUserData() {
+  return {
+    codeFile: 'helpers/UserContext.jsx',
+    response: {
+      currentUser: {
+        id: 'mockedUserId',
+        firstName: 'Mocked firstName',
+        token: 'Mocked token'
+      },
+      registerUser: () => null,
+      unRegisterUser: () => null
+    }
+  };
+}
+function mockAuthService() {
+  return {
+    codeFile: 'services/authentication.service.jsx',
+    response: {
+      authenticationService: {
+        currentUserValue: {
+          token: 'Mocked token'
+        }
+      },
+      // To fix the error: "TypeError: (0 , _authenticationService.getUserData) is not a function"
+      getUserData: () => Promise.resolve({
+        error: false,
+        error_message: null,
+        resultset: {
+          _id: 'mockedUserId',
+          first_name: 'Mocked firstName',
+          last_name: 'Mocked lastName',
+          superuser: 0
+        }
+      }),
+      getCurrentUserData: () => Promise.resolve({
+        resultset: {
+          error: false,
+          error_message: null,
+          resultset: {
+            _id: 'mockedUserId',
+            first_name: 'Mocked firstName',
+            last_name: 'Mocked lastName',
+            superuser: 0
+          }
+        }
+      })
+    }
+  };
+}
+function mockDefaultComponentMap() {
+  return {
+    "defaultTheme": defaultTheme
+  };
+}
+
+var mocks = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  mockAuthService: mockAuthService,
+  mockDefaultComponentMap: mockDefaultComponentMap,
+  mockFetch: mockFetch,
+  mockUserData: mockUserData
+});
+
 // GenericCrudEditor UI components
 const ShowAsDisabledField = _ref => {
   let {
@@ -7750,6 +7830,7 @@ exports.logoutService = logout_service;
 exports.media = media;
 exports.ramdomize = ramdomize;
 exports.responseHandlersService = response_handlers_service;
+exports.testHelpersMocks = mocks;
 exports.ui = ui;
 exports.urlParams = urlParams;
 exports.waitAnimationUtility = wait_animation_utility;
