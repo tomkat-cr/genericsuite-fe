@@ -325,7 +325,7 @@ declare var class_name_constants: Readonly<{
     NAVBAR_TOGGLE_IMAGE_CLASS: "h-6 w-6 navbarToggleImageClass";
     NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS: "space-y-2 navbarTopCenterMenuOnLeftClass";
     NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS: "flex space-x-4 navbarTopCenterMenuOnTopClass";
-    NAVBAR_TOP_FOR_SIDE_MENU_CLASS: "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
+    NAVBAR_TOP_FOR_SIDE_MENU_CLASS: "flex items-center justify-between p-1 text-white navbarTopForSideMenuClass";
     NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS: "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
     NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS: "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
     NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS: "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";

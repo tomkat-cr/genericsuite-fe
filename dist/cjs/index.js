@@ -126,7 +126,7 @@ const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-1 
 const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
 const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = 'navbarHeaderForSideMenuMobileCloseClass';
-const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-4 text-white navbarTopForSideMenuClass";
+const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-1 text-white navbarTopForSideMenuClass";
 const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS = "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
 const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS = "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
 // export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
@@ -3636,7 +3636,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
     // currentUser={currentUser}
     , {
       errorMessage: error
-    }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
+    }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && route.on_click !== null && /*#__PURE__*/React.createElement("p", null, "Redirecting..."), route.element === null && route.on_click === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
     return route;
   });
   if (currentUser) {

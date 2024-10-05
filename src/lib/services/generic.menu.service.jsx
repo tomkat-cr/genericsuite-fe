@@ -268,7 +268,8 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                 errorMessage={error}
             >
                 {route.element !== null && (<route.element/>)}
-                {route.element === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
+                {route.element === null && route.on_click !== null && (<p>Redirecting...</p>)}
+                {route.element === null && route.on_click === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
             </RouteTemplateComponent>
         );
         return route;
