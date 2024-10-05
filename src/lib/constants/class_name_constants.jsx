@@ -34,7 +34,7 @@ export const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow 1-p-4 appSect
 // export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
 export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col appSectionContainerForSideMenuClass";
 
-export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow p-4 appSectionContainerForSideMenuMainClass";
+export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow appSectionContainerForSideMenuMainClass";
 
 export const APP_FOOTER_CONTAINER_CLASS = "p-1 text-white text-center appFooterContainerClass";
 
@@ -43,7 +43,7 @@ export const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-a
 export const CENTERED_BOX_CONTAINER_DIV_3_CLASS = "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
 
 export const NAVBAR_HEADER_FOR_TOP_MENU_CLASS = "flex items-center justify-between p-1 text-white navbarHeaderForTopMenuClass";
-export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+export const NAVBAR_HEADER_FOR_SIDE_MENU_CLASS = "top-0 left-0 w-64 p-2 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
 export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS = 'translate-x-0 navbarHeaderForSideMenuMobileOpenClass';
 export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = 'navbarHeaderForSideMenuMobileCloseClass';
 

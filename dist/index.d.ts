@@ -247,7 +247,7 @@ declare var class_name_constants: Readonly<{
     APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS: "flex-row appListingToolbarTopDivWideClass";
     APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col appSectionContainerForSideMenuClass";
-    APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow p-4 appSectionContainerForSideMenuMainClass";
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow appSectionContainerForSideMenuMainClass";
     APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: "flex-grow 1-p-4 appSectionContainerForTopMenuClass";
     APP_SIDE_MENU_BG_COLOR_CLASS: "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
     APP_TITLE_H1_CLASS: "text-xl font-bold mb-4 appTitleH1Class";
@@ -309,7 +309,7 @@ declare var class_name_constants: Readonly<{
     NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS: "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
     NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS: "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
     NAVBAR_BRAND_NAME_CLASS: "text-2xl ml-2 font-bold navbarBrandNameClass";
-    NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: "top-0 left-0 w-64 p-4 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
+    NAVBAR_HEADER_FOR_SIDE_MENU_CLASS: "top-0 left-0 w-64 p-2 overflow-y-auto transition-transform duration-300 ease-in-out 1-md:translate-x-0 lg:translate-x-0 z-20 navbarHeaderForSideMenuClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS: "navbarHeaderForSideMenuMobileCloseClass";
     NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS: "translate-x-0 navbarHeaderForSideMenuMobileOpenClass";
     NAVBAR_HEADER_FOR_TOP_MENU_CLASS: "flex items-center justify-between p-1 text-white navbarHeaderForTopMenuClass";
