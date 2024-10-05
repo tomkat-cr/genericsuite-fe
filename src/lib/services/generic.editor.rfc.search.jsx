@@ -121,6 +121,7 @@ export const CrudEditorSearch = ({
             >
                 <GsIcons
                     icon="search"
+                    alt={MSG_SEARCH}
                 />
             </button>
             {searchText !== '' &&

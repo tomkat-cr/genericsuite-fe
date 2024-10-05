@@ -114,8 +114,9 @@ const getItemDefaults = (componentMap, setExpanded, item, topTitle = null) => {
     if (!path) {
         path = "#"
     }
+    const on_click_string = defaultValue(item, "on_click", null);
     const on_click = getOnClickObject(
-        defaultValue(item, "on_click", null),
+        on_click_string,
         componentMap, setExpanded
     );
     const title = (topTitle == null ? item.title : `[${topTitle}]`);
@@ -125,6 +126,7 @@ const getItemDefaults = (componentMap, setExpanded, item, topTitle = null) => {
         "element_obj": element_obj,
         "path": path,
         "on_click": on_click,
+        "on_click_string": on_click_string,
         "title": title,
         "reload": reload,
         "template": template,
@@ -154,6 +156,7 @@ export const editorRoute = (editor, itemDefs) => (
         path: '/'+editor.baseUrl,
         element: editor.component,
         template: itemDefs.template,
+        on_click_string: itemDefs.on_click_string,
     }
 );
 
@@ -206,6 +209,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                 path: itemDefs["path"],
                 element: itemDefs["element_obj"],
                 template: itemDefs.template,
+                on_click_string: itemDefs.on_click_string,
             };
             addOneroute(resultRoute);
         } else {
@@ -231,6 +235,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                         path: itemDefs["path"],
                         element: itemDefs["element_obj"],
                         template: itemDefs.template,
+                        on_click_string: itemDefs.on_click_string,
                     };
                     addOneroute(resultRoute);
                 }
@@ -260,6 +265,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
             }
         } else {
             RouteTemplateComponent = AppMainInner;
+            // RouteTemplateComponent = (({ children} ) => (<>{children}</>));
         }
         route.element = (
             <RouteTemplateComponent
@@ -268,8 +274,8 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                 errorMessage={error}
             >
                 {route.element !== null && (<route.element/>)}
-                {route.element === null && route.on_click !== null && (<p>Redirecting...</p>)}
-                {route.element === null && route.on_click === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
+                {route.element === null && route.on_click_string !== null && (<p>Redirecting...</p>)}
+                {route.element === null && route.on_click_string === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
             </RouteTemplateComponent>
         );
         return route;

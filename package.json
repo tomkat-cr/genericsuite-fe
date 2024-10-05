@@ -16,8 +16,8 @@
     "config-overrides.js",
     ".env.example",
     "CHANGELOG.md",
-    "src/lib/images",
     "public/gs_core.css",
+    "src/lib/images",
     "src/lib/helpers/IconsLib.jsx",
     "src/lib/constants/class_name_constants.jsx"
   ],

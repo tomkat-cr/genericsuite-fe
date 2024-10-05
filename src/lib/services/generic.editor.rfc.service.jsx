@@ -31,7 +31,14 @@ import {
 import {
   console_debug_log,
 } from './logging.service.jsx';
-import { imageDirectory } from "../constants/general_constants.jsx";
+import {
+  imageDirectory,
+  MSG_ACTION_DELETE,
+  MSG_ACTION_EDIT,
+  MSG_ACTION_READ,
+  MSG_MORE,
+  MSG_RELOAD,
+} from "../constants/general_constants.jsx";
 
 import {
   ShowHidePageAnimation,
@@ -509,7 +516,10 @@ const GenericCrudEditorMain = (props) => {
                               key={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
                               className={VISIBLE_CLASS}
                             >
-                              <GsIcons icon="menu-dots-more" />
+                              <GsIcons
+                                icon="menu-dots-more"
+                                alt={MSG_MORE}
+                              />
                             </div>
                           </td>
                         )}
@@ -540,7 +550,10 @@ const GenericCrudEditorMain = (props) => {
                             // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
-                            <GsIcons icon="eye" />
+                            <GsIcons
+                              icon="eye"
+                              alt={MSG_ACTION_READ}
+                            />
                           </button>
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
@@ -548,14 +561,20 @@ const GenericCrudEditorMain = (props) => {
                             // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
-                            <GsIcons icon="edit" />
+                            <GsIcons
+                              icon="edit"
+                              alt={MSG_ACTION_EDIT}
+                            />
                           </button>
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_trash`}
                             onClick={() => handleDelete(rowId(row))}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
-                            <GsIcons icon="trash" />
+                            <GsIcons
+                              icon="trash"
+                              alt={MSG_ACTION_DELETE}
+                            />
                           </button>
                         </td>
                       </tr>
@@ -573,6 +592,7 @@ const GenericCrudEditorMain = (props) => {
               id={editor.baseUrl + "_pagination"}
               currentPage={currentPage}
               totalPages={rows.totalPages}
+              goToNewPage={goToNewPage}
             />
             <CrudEditorRowsPerPage
               id={editor.baseUrl + "_newRowsPerPage"}
@@ -746,7 +766,7 @@ const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange }) => 
   );
 }
 
-const CrudEditorPagination = ({ id, currentPage, totalPages }) => {
+const CrudEditorPagination = ({ id, currentPage, totalPages, goToNewPage }) => {
   return (
     <div
       id={id}
@@ -797,7 +817,11 @@ const CrudEditorNewButton = ({ id, handleNew }) => {
       <div
         className={BUTTON_COMPOSED_LABEL_CLASS}
       >
-          <GsIcons icon="plus" />&nbsp;{MSG_ACTION_NEW}
+          <GsIcons
+            icon="plus"
+            alt={MSG_ACTION_NEW}
+          />
+          &nbsp;{MSG_ACTION_NEW}
       </div>
     </button>
   );
@@ -817,7 +841,10 @@ const CrudEditorListingTitle = ({ baseUrl, title, handleRefresh }) => {
           onClick={handleRefresh}
           className={BUTTON_LISTING_REFRESH_CLASS}
         >
-          <GsIcons icon='arrows-rotate' />
+          <GsIcons
+            icon='arrows-rotate'
+            alt={MSG_RELOAD}
+          />
         </button>
       </span>
     </h2>

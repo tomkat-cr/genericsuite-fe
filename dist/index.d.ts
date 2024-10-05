@@ -488,11 +488,13 @@ declare var general_constants: Readonly<{
     MSG_ERROR_POSSIBLE_CORS: "Possible CORS";
     MSG_ERROR_SESSION_EXPIRED: "Session expired.";
     MSG_IS_REQUIRED: "is required";
+    MSG_MORE: "More";
     MSG_MUST_BE: "must be";
     MSG_NEXT: "Next";
     MSG_OF: "of";
     MSG_PAGE: "Page";
     MSG_PREVIOUS: "Previous";
+    MSG_RELOAD: "Reload";
     MSG_ROWS_PER_PAGE: "Rows per page";
     MSG_SEARCH: "Search";
     MSG_SELECT_AN_OPTION: "Select an option...";
@@ -640,6 +642,7 @@ declare var generic_menu_service: Readonly<{
         path: string;
         element: any;
         template: any;
+        on_click_string: any;
     };
     getDefaultRoutes: (currentUser: any, componentMap: any, setExpanded: any, ...args: any[]) => {
         key: string;

@@ -733,7 +733,7 @@ const GsIcons = _ref => {
         strokeLinejoin: "round"
       }), /*#__PURE__*/React.createElement("g", {
         id: "SVGRepo_iconCarrier"
-      }, /*#__PURE__*/React.createElement("title", null, "ionicons-v5_logos"), /*#__PURE__*/React.createElement("path", {
+      }, /*#__PURE__*/React.createElement("path", {
         d: "M473.16,221.48l-2.26-9.59H262.46v88.22H387c-12.93,61.4-72.93,93.72-121.94,93.72-35.66,0-73.25-15-98.13-39.11a140.08,140.08,0,0,1-41.8-98.88c0-37.16,16.7-74.33,41-98.78s61-38.13,97.49-38.13c41.79,0,71.74,22.19,82.94,32.31l62.69-62.36C390.86,72.72,340.34,32,261.6,32h0c-60.75,0-119,23.27-161.58,65.71C58,139.5,36.25,199.93,36.25,256S56.83,369.48,97.55,411.6C141.06,456.52,202.68,480,266.13,480c57.73,0,112.45-22.62,151.45-63.66,38.34-40.4,58.17-96.3,58.17-154.9C475.75,236.77,473.27,222.12,473.16,221.48Z"
       })));
       break;
@@ -1155,13 +1155,14 @@ const GsIcons = _ref => {
     'className': (_selectedSvg$props$cl = selectedSvg.props.className) !== null && _selectedSvg$props$cl !== void 0 ? _selectedSvg$props$cl : className
   };
   if (selectedSvg.type === "svg") {
-    var _selectedSvg$props$xm, _selectedSvg$props$wi, _selectedSvg$props$he, _selectedSvg$props$ro, _selectedSvg$props$al;
+    var _selectedSvg$props$xm, _selectedSvg$props$wi, _selectedSvg$props$he, _selectedSvg$props$ro, _selectedSvg$props$al, _selectedSvg$props$ti;
     // iconProps['viewBox'] = "0 0 " + currentWidth + " " + currentHeight;
     iconProps['xmlns'] = (_selectedSvg$props$xm = selectedSvg.props.xmlns) !== null && _selectedSvg$props$xm !== void 0 ? _selectedSvg$props$xm : "http://www.w3.org/2000/svg";
     iconProps['width'] = (_selectedSvg$props$wi = selectedSvg.props.width) !== null && _selectedSvg$props$wi !== void 0 ? _selectedSvg$props$wi : currentWidth;
     iconProps['height'] = (_selectedSvg$props$he = selectedSvg.props.height) !== null && _selectedSvg$props$he !== void 0 ? _selectedSvg$props$he : currentHeight;
     iconProps['role'] = (_selectedSvg$props$ro = selectedSvg.props.role) !== null && _selectedSvg$props$ro !== void 0 ? _selectedSvg$props$ro : role;
     iconProps['alt'] = (_selectedSvg$props$al = selectedSvg.props.alt) !== null && _selectedSvg$props$al !== void 0 ? _selectedSvg$props$al : alt;
+    iconProps['title'] = (_selectedSvg$props$ti = selectedSvg.props.title) !== null && _selectedSvg$props$ti !== void 0 ? _selectedSvg$props$ti : alt;
   }
   selectedSvg = /*#__PURE__*/React.cloneElement(selectedSvg, iconProps);
   return selectedSvg;
@@ -2461,6 +2462,8 @@ const MSG_DONE_CREATED = 'Item has been created';
 const MSG_DONE_UPDATED = 'Item has been updated';
 const MSG_ACTIONS = 'Actions';
 const MSG_SEARCH = 'Search';
+const MSG_RELOAD = 'Reload';
+const MSG_MORE = 'More';
 const MSG_IS_REQUIRED = 'is required';
 const MSG_MUST_BE = 'must be';
 const MSG_VALID_INTEGER = 'an integer number';
@@ -2514,11 +2517,13 @@ var general_constants = /*#__PURE__*/Object.freeze({
   MSG_ERROR_POSSIBLE_CORS: MSG_ERROR_POSSIBLE_CORS,
   MSG_ERROR_SESSION_EXPIRED: MSG_ERROR_SESSION_EXPIRED,
   MSG_IS_REQUIRED: MSG_IS_REQUIRED,
+  MSG_MORE: MSG_MORE,
   MSG_MUST_BE: MSG_MUST_BE,
   MSG_NEXT: MSG_NEXT,
   MSG_OF: MSG_OF,
   MSG_PAGE: MSG_PAGE,
   MSG_PREVIOUS: MSG_PREVIOUS,
+  MSG_RELOAD: MSG_RELOAD,
   MSG_ROWS_PER_PAGE: MSG_ROWS_PER_PAGE,
   MSG_SEARCH: MSG_SEARCH,
   MSG_SELECT_AN_OPTION: MSG_SELECT_AN_OPTION,
@@ -3491,7 +3496,8 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
   if (!path) {
     path = "#";
   }
-  const on_click = getOnClickObject(defaultValue(item, "on_click", null), componentMap, setExpanded);
+  const on_click_string = defaultValue(item, "on_click", null);
+  const on_click = getOnClickObject(on_click_string, componentMap, setExpanded);
   const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
   return {
     "hard_prefix": hard_prefix,
@@ -3499,6 +3505,7 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
     "element_obj": element_obj,
     "path": path,
     "on_click": on_click,
+    "on_click_string": on_click_string,
     "title": title,
     "reload": reload,
     "template": template
@@ -3522,7 +3529,8 @@ const editorRoute = (editor, itemDefs) => {
     exact: (_editor$exact = editor.exact) !== null && _editor$exact !== void 0 ? _editor$exact : routeExact,
     path: '/' + editor.baseUrl,
     element: editor.component,
-    template: itemDefs.template
+    template: itemDefs.template,
+    on_click_string: itemDefs.on_click_string
   };
 };
 const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
@@ -3562,7 +3570,8 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
         exact: (_item$exact = item["exact"]) !== null && _item$exact !== void 0 ? _item$exact : routeExact,
         path: itemDefs["path"],
         element: itemDefs["element_obj"],
-        template: itemDefs.template
+        template: itemDefs.template,
+        on_click_string: itemDefs.on_click_string
       };
       addOneroute(resultRoute);
     } else {
@@ -3583,7 +3592,8 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
             exact: (_item$exact2 = item["exact"]) !== null && _item$exact2 !== void 0 ? _item$exact2 : routeExact,
             path: itemDefs["path"],
             element: itemDefs["element_obj"],
-            template: itemDefs.template
+            template: itemDefs.template,
+            on_click_string: itemDefs.on_click_string
           };
           addOneroute(resultRoute);
         }
@@ -3609,13 +3619,14 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
       }
     } else {
       RouteTemplateComponent = AppMainInner;
+      // RouteTemplateComponent = (({ children} ) => (<>{children}</>));
     }
     route.element = /*#__PURE__*/React.createElement(RouteTemplateComponent
     // componentMap={componentMap}
     // currentUser={currentUser}
     , {
       errorMessage: error
-    }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && route.on_click !== null && /*#__PURE__*/React.createElement("p", null, "Redirecting..."), route.element === null && route.on_click === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
+    }, route.element !== null && /*#__PURE__*/React.createElement(route.element, null), route.element === null && route.on_click_string !== null && /*#__PURE__*/React.createElement("p", null, "Redirecting..."), route.element === null && route.on_click_string === null && /*#__PURE__*/React.createElement(InvalidElement, null, route.key, " Not Implemented..."));
     return route;
   });
   if (currentUser) {
@@ -4879,6 +4890,9 @@ const SuggestionDropdown = _ref => {
   const {
     currentUser
   } = useUser();
+  const {
+    theme
+  } = useAppContext();
 
   // This component's input field must be different to the external input field to enable value sync
   const nameInternal = "".concat(name, "_sdd");
@@ -4929,7 +4943,7 @@ const SuggestionDropdown = _ref => {
     setInputValue(newInputValue);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: SUGGESTION_DROPDOWN_CLASS
+    className: "".concat(SUGGESTION_DROPDOWN_CLASS, " ").concat(theme.input)
   }, /*#__PURE__*/React.createElement(Downshift, {
     inputValue: inputValue,
     onChange: handleSuggestionSelected
@@ -5827,7 +5841,8 @@ const CrudEditorSearch = _ref => {
     className: APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS,
     onClick: handleSubmit
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "search"
+    icon: "search",
+    alt: MSG_SEARCH
   })), searchText !== '' && /*#__PURE__*/React.createElement("button", {
     className: APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS,
     onClick: handleCancelSearch
@@ -5948,6 +5963,10 @@ const GenericCrudEditorMain = props => {
   };
   const handleDelete = id => {
     setFormMode([ACTION_DELETE, id]);
+  };
+  const goToNewPage = newPage => {
+    setInfoMsg('');
+    setCurrentPage(newPage);
   };
   const handleRowsPerPageChange = event => {
     if (!event.target.value) {
@@ -6119,7 +6138,8 @@ const GenericCrudEditorMain = props => {
     ,
     className: "".concat(BUTTON_LISTING_CLASS)
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "eye"
+    icon: "eye",
+    alt: MSG_ACTION_READ
   })), /*#__PURE__*/React.createElement("button", {
     key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_edit"),
     onClick: () => handleModify(rowId(row))
@@ -6127,20 +6147,23 @@ const GenericCrudEditorMain = props => {
     ,
     className: "".concat(BUTTON_LISTING_CLASS)
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "edit"
+    icon: "edit",
+    alt: MSG_ACTION_EDIT
   })), /*#__PURE__*/React.createElement("button", {
     key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_trash"),
     onClick: () => handleDelete(rowId(row)),
     className: "".concat(BUTTON_LISTING_CLASS)
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "trash"
+    icon: "trash",
+    alt: MSG_ACTION_DELETE
   }))))))))), /*#__PURE__*/React.createElement("div", {
     key: "".concat(editor.baseUrl, "_toolbar"),
     className: APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS : APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)
   }, /*#__PURE__*/React.createElement(CrudEditorPagination, {
     id: editor.baseUrl + "_pagination",
     currentPage: currentPage,
-    totalPages: rows.totalPages
+    totalPages: rows.totalPages,
+    goToNewPage: goToNewPage
   }), /*#__PURE__*/React.createElement(CrudEditorRowsPerPage, {
     id: editor.baseUrl + "_newRowsPerPage",
     rowsPerPage: rowsPerPage,
@@ -6252,7 +6275,8 @@ const CrudEditorPagination = _ref3 => {
   let {
     id,
     currentPage,
-    totalPages
+    totalPages,
+    goToNewPage
   } = _ref3;
   return /*#__PURE__*/React.createElement("div", {
     id: id,
@@ -6290,7 +6314,8 @@ const CrudEditorNewButton = _ref4 => {
   }, /*#__PURE__*/React.createElement("div", {
     className: BUTTON_COMPOSED_LABEL_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "plus"
+    icon: "plus",
+    alt: MSG_ACTION_NEW
   }), "\xA0", MSG_ACTION_NEW));
 };
 const CrudEditorListingTitle = _ref5 => {
@@ -6308,7 +6333,8 @@ const CrudEditorListingTitle = _ref5 => {
     onClick: handleRefresh,
     className: BUTTON_LISTING_REFRESH_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "arrows-rotate"
+    icon: "arrows-rotate",
+    alt: MSG_RELOAD
   }))));
 };
 

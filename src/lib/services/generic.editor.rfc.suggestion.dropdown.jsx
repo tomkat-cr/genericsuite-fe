@@ -17,6 +17,7 @@ import {
     console_debug_log,
 } from "./logging.service.jsx";
 import { useUser } from '../helpers/UserContext.jsx';
+import { useAppContext } from '../helpers/AppContext.jsx';
 import {
     INVALID_FEEDBACK_CLASS,
     SUGGESTION_DROPDOWN_CLASS,
@@ -36,6 +37,7 @@ export const SuggestionDropdown = ({
     const [inputValue, setInputValue] = useState(value);
     const [suggestions, setSuggestions] = useState([]);
     const { currentUser } = useUser();
+    const { theme } = useAppContext();
 
     // This component's input field must be different to the external input field to enable value sync
     const nameInternal = `${name}_sdd`;
@@ -147,7 +149,7 @@ export const SuggestionDropdown = ({
     return (
         <>
             <div
-                className={SUGGESTION_DROPDOWN_CLASS}
+                className={`${SUGGESTION_DROPDOWN_CLASS} ${theme.input}`}
             >
                 <Downshift
                     inputValue={inputValue}
