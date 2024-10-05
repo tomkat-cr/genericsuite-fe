@@ -170,7 +170,7 @@ const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMob
 
 // export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
 const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
-const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
+const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
 const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
 const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
 const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navDropdownButtonTopMenuClass";

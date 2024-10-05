@@ -336,7 +336,7 @@ declare var class_name_constants: Readonly<{
     NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS: "h-4 w-4 transform transition-transform navDropdownImageMobileMenuClass";
     NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS: "navDropdownImageSideMenuClass";
     NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS: "navDropdownImageTopMenuClass";
-    NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS: "absolute right-0 hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
+    NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS: "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
     NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
     NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
     NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS: "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
