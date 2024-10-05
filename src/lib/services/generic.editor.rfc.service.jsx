@@ -175,7 +175,8 @@ const GenericCrudEditorMain = (props) => {
   useEffect(() => {
     // if (editor && !status) {
     if (editor) {
-      ShowHidePageAnimation(true);
+      const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation"
+      ShowHidePageAnimation(true, animationElementId);
       let accessKeysListing = {
         page: currentPage,
         limit: rowsPerPage,
@@ -192,7 +193,7 @@ const GenericCrudEditorMain = (props) => {
           );
           editor.db.getAll(accessKeysListing).then(
             data => {
-              ShowHidePageAnimation(false);
+              ShowHidePageAnimation(false, animationElementId);
               // dbListPostRead: To fix Listing fields
               processGenericFuncArray(
                 editor, 'dbListPostRead', data, formMode, currentUser
@@ -208,7 +209,7 @@ const GenericCrudEditorMain = (props) => {
             error => {
               console_debug_log(`GenericCrudEditor / Listing - ERROR:`)
               console.error(error);
-              ShowHidePageAnimation(false);
+              ShowHidePageAnimation(false, animationElementId);
               setStatus(
                 errorAndReEnter(
                   error, (debug ? ' [GCE-M-040]' : null)
@@ -783,12 +784,6 @@ const CrudEditorPagination = ({ id, currentPage, totalPages, goToNewPage }) => {
         />
       </button>
       <div
-        id={id + "_nav_animation"}
-        className={APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS}
-      >
-        {WaitAnimation()}
-      </div>
-      <div
         className={APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS}
       >
         {MSG_PAGE} {currentPage} {MSG_OF} {totalPages}
@@ -803,6 +798,12 @@ const CrudEditorPagination = ({ id, currentPage, totalPages, goToNewPage }) => {
           alt={MSG_NEXT}
         />
       </button>
+      <div
+        id={id + "_nav_animation"}
+        className={APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS}
+      >
+        {WaitAnimation()}
+      </div>
     </div>
   );
 }

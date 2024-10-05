@@ -5934,7 +5934,8 @@ const GenericCrudEditorMain = props => {
   React.useEffect(() => {
     // if (editor && !status) {
     if (editor) {
-      ShowHidePageAnimation(true);
+      const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation";
+      ShowHidePageAnimation(true, animationElementId);
       let accessKeysListing = {
         page: currentPage,
         limit: rowsPerPage
@@ -5945,13 +5946,13 @@ const GenericCrudEditorMain = props => {
         // console_debug_log(funcResponse);
         accessKeysListing = Object.assign(accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
         editor.db.getAll(accessKeysListing).then(data => {
-          ShowHidePageAnimation(false);
+          ShowHidePageAnimation(false, animationElementId);
           // dbListPostRead: To fix Listing fields
           processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, null)));
         }, error => {
           console_debug_log("GenericCrudEditor / Listing - ERROR:");
           console.error(error);
-          ShowHidePageAnimation(false);
+          ShowHidePageAnimation(false, animationElementId);
           setStatus(errorAndReEnter(error, null));
         });
       }, error => {
@@ -6310,9 +6311,6 @@ const CrudEditorPagination = _ref3 => {
     icon: "less-than",
     alt: MSG_PREVIOUS
   })), /*#__PURE__*/React.createElement("div", {
-    id: id + "_nav_animation",
-    className: APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS
-  }, WaitAnimation()), /*#__PURE__*/React.createElement("div", {
     className: APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS
   }, MSG_PAGE, " ", currentPage, " ", MSG_OF, " ", totalPages), /*#__PURE__*/React.createElement("button", {
     disabled: currentPage === totalPages,
@@ -6321,7 +6319,10 @@ const CrudEditorPagination = _ref3 => {
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "greater-than",
     alt: MSG_NEXT
-  })));
+  })), /*#__PURE__*/React.createElement("div", {
+    id: id + "_nav_animation",
+    className: APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS
+  }, WaitAnimation()));
 };
 const CrudEditorNewButton = _ref4 => {
   let {
