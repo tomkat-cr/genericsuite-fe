@@ -292,9 +292,9 @@ declare var class_name_constants: Readonly<{
     MODALIB_BUTTON_PRIMARY_CLASS: string;
     MODALIB_BUTTON_SECONDARY_CLASS: string;
     MODALIB_BUTTON_SUCCESS_CLASS: "bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass";
-    MODALIB_MODAL_BODY_CLASS: "1-text-gray-600 text-center mb-6 modalibModalBodyClass";
+    MODALIB_MODAL_BODY_CLASS: "text-center mb-6 max-h-80 overflow-auto modalibModalBodyClass";
     MODALIB_MODAL_DIV_1_CLASS: "z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-    MODALIB_MODAL_DIV_2_CLASS: "1-bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+    MODALIB_MODAL_DIV_2_CLASS: "rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
     MODALIB_MODAL_DIV_3_CLASS: "p-6 modalibModalDiv3Class";
     MODALIB_MODAL_FOOTER_CLASS: "flex mt-4 modalibModalFooterClass";
     MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS: "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";

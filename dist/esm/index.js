@@ -301,14 +301,14 @@ const POPUP_TOP_MARGIN_CLASS = "pt-4 popupTopMarginClass";
 
 // export const MODALIB_MODAL_DIV_1_CLASS="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
 const MODALIB_MODAL_DIV_1_CLASS = "z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-const MODALIB_MODAL_DIV_2_CLASS = "1-bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+const MODALIB_MODAL_DIV_2_CLASS = "rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
 const MODALIB_MODAL_DIV_3_CLASS = "p-6 modalibModalDiv3Class";
 const MODALIB_MODAL_ICON_1_CLASS = "flex justify-center mb-4 modalibModalIcon1Class";
 const MODALIB_MODAL_ICON_2_CLASS = "rounded-full p-2 modalibModalIcon2Class";
 const MODALIB_MODAL_ICON_3_CLASS = "w-6 h-6 modalibModalIcon3Class";
 const MODALIB_MODAL_HEADER_CLASS = "modalibModalHeaderClass";
 const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold text-center mb-2 modalibModalTitleClass";
-const MODALIB_MODAL_BODY_CLASS = "1-text-gray-600 text-center mb-6 modalibModalBodyClass";
+const MODALIB_MODAL_BODY_CLASS = "text-center mb-6 max-h-80 overflow-auto modalibModalBodyClass";
 const MODALIB_MODAL_FOOTER_CLASS = "flex mt-4 modalibModalFooterClass";
 const MODALIB_MODAL_FOOTER_WIDE_CLASS = "flex-row space-x-4 modalibModalFooterWideClass";
 const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
@@ -7010,9 +7010,13 @@ const HomePage = _ref => {
 
 const defaultAppLogo = "app_logo_square.svg";
 const LoginPage = props => {
-
-  // const [performLogin, setPerformLogin] = useState(false);
-  const [redirectUrl, setRedirectUrl] = useState("/");
+  const getRedirect = () => {
+    const urlParams = getUrlParams(props);
+    if (typeof urlParams.redirect === 'undefined') {
+      return getLastUrl();
+    }
+    return urlParams.redirect;
+  };
   const {
     currentUser,
     registerUser,
@@ -7023,6 +7027,8 @@ const LoginPage = props => {
     theme
   } = useAppContext();
 
+  // const [performLogin, setPerformLogin] = useState(false);
+  // const [redirectUrl, setRedirectUrl] = useState("/");
   // useEffect(() => {
   //     if (currentUser && performLogin) {
   //         unRegisterUser();
@@ -7067,9 +7073,14 @@ const LoginPage = props => {
   //     // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [props]);
 
+  // if (!performLogin) {
+  //     return WaitAnimation();
+  // }
+
   const handleSubmit = (username, password, setStatus, setSubmitting) => {
     setStatus();
     authenticationService.login(username, password).then(user => {
+      const redirectUrl = getRedirect();
       // To avoid stay in login page with the wait animation
       setSubmitting(false);
       registerUser(user);
@@ -7087,11 +7098,6 @@ const LoginPage = props => {
       setStatus(getErrorMessage(error));
     });
   };
-
-  // if (!performLogin) {
-  //     return WaitAnimation();
-  // }
-
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Formik, {
     initialValues: {
       username: '',

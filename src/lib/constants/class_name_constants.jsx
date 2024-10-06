@@ -268,7 +268,7 @@ export const POPUP_TOP_MARGIN_CLASS="pt-4 popupTopMarginClass";
 
 // export const MODALIB_MODAL_DIV_1_CLASS="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
 export const MODALIB_MODAL_DIV_1_CLASS="z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-export const MODALIB_MODAL_DIV_2_CLASS="1-bg-white rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+export const MODALIB_MODAL_DIV_2_CLASS="rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
 export const MODALIB_MODAL_DIV_3_CLASS="p-6 modalibModalDiv3Class";
 
 export const MODALIB_MODAL_ICON_1_CLASS = "flex justify-center mb-4 modalibModalIcon1Class";
@@ -276,7 +276,7 @@ export const MODALIB_MODAL_ICON_2_CLASS = "rounded-full p-2 modalibModalIcon2Cla
 export const MODALIB_MODAL_ICON_3_CLASS = "w-6 h-6 modalibModalIcon3Class";
 export const MODALIB_MODAL_HEADER_CLASS = "modalibModalHeaderClass";
 export const MODALIB_MODAL_TITLE_CLASS = "text-xl font-semibold text-center mb-2 modalibModalTitleClass";
-export const MODALIB_MODAL_BODY_CLASS = "1-text-gray-600 text-center mb-6 modalibModalBodyClass";
+export const MODALIB_MODAL_BODY_CLASS = "text-center mb-6 max-h-80 overflow-auto modalibModalBodyClass";
 export const MODALIB_MODAL_FOOTER_CLASS = "flex mt-4 modalibModalFooterClass";
 export const MODALIB_MODAL_FOOTER_WIDE_CLASS = "flex-row space-x-4 modalibModalFooterWideClass";
 export const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";

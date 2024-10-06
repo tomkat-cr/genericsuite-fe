@@ -47,12 +47,11 @@ export const LoginPage = (props) => {
         return urlParams.redirect;
     }
 
-    // const [performLogin, setPerformLogin] = useState(false);
-    const [redirectUrl, setRedirectUrl] = useState("/");
-
     const { currentUser, registerUser, unRegisterUser } = useUser();
     const { appLogo, theme } = useAppContext();
 
+    // const [performLogin, setPerformLogin] = useState(false);
+    // const [redirectUrl, setRedirectUrl] = useState("/");
     // useEffect(() => {
     //     if (currentUser && performLogin) {
     //         unRegisterUser();
@@ -97,11 +96,16 @@ export const LoginPage = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [props]);
 
+    // if (!performLogin) {
+    //     return WaitAnimation();
+    // }
+
     const handleSubmit = (username, password, setStatus, setSubmitting) => {
         setStatus();
         authenticationService.login(username, password)
             .then(
                 user => {
+                    const redirectUrl = getRedirect();
                     // To avoid stay in login page with the wait animation
                     setSubmitting(false);
                     // Set user data to <App/>
@@ -123,10 +127,6 @@ export const LoginPage = (props) => {
                 }
             );
     };
-
-    // if (!performLogin) {
-    //     return WaitAnimation();
-    // }
 
     return (
         <>
@@ -154,8 +154,6 @@ export const LoginPage = (props) => {
                                 className={LOGIN_PAGE_APP_LOGO_CLASS}
                                 alt="App Logo"
                             />
-                            {/* <MadeByLogoSquare alt="Madeby Logo" width="20" height="20" className={LOGIN_PAGE_APP_LOGO_CLASS} /> */}
-                            {/* <MadeByLogoCircle alt="Madeby Logo" width="20" height="20" className={LOGIN_PAGE_APP_LOGO_CLASS} /> */}
                             <div
                                 className={FORM_GROUP_CLASS}
                             >
