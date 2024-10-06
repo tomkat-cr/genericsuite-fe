@@ -263,6 +263,8 @@ const PutOneFormfield = ({
     }
 
     const addCalculation = (htmlElement) => {
+        // To test formulas and see an example, check "genericsuite-fe/src/lib/components/SuperAdminOptions/GeneralConfig.jsx"
+        if (debug) console_debug_log(`addCalculation | htmlElement.name: ${htmlElement.name} | htmlElement.formula: ${htmlElement.formula}`);
         if (defaultValue(htmlElement, "formula") !== '') {
             calcFields[htmlElement.name] = htmlElement.formula;
         }
@@ -670,6 +672,8 @@ const EditFormFormikFinal = ({
             e.preventDefault();
         }
     }
+
+    console_debug_log(`FormPage | editor.fieldElements:`, editor.fieldElements);
 
     return (
         <Formik
