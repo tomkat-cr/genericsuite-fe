@@ -668,6 +668,7 @@ declare var history$2: Readonly<{
     __proto__: null;
     getLastUrl: () => string;
     getPrefix: typeof getPrefix;
+    getUrlForRouter: (url: any) => string;
     hasHashRouter: string | true;
     history: any;
     removeLastUrl: () => void;

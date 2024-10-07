@@ -1722,8 +1722,8 @@ const NavDropdown = _ref14 => {
     theme,
     isWide
   } = useAppContext();
-  const [fullId, setFullId] = useState("".concat(id, "_").concat(type));
   const [dropDownOpen, setDropDownOpen] = useState(false);
+  const fullId = "".concat(id, "_").concat(type);
   const toggledropDownOpen = () => {
     const elementId = "".concat(fullId, "_dropDown");
     const element = document.getElementById(elementId);
@@ -1791,7 +1791,8 @@ const NavDropdown = _ref14 => {
   const variantStyleInnerDiv = variantsInnerDiv[type] || '';
   const variantStyleButton = variantsButton[type] || '';
   const variantStyleSubmenuImage = variantsSubmenuImage[type] || '';
-  const variantOnClick = variantsOptionClick[type] || (() => '');
+  // const variantOnClick = variantsOptionClick[type] || (() => (''));
+  const variantOnClick = variantsOptionClick[type] || toggleSubmenu;
   return /*#__PURE__*/React.createElement("div", {
     className: variantStyleTopDiv
   }, /*#__PURE__*/React.createElement("button", {
@@ -2156,13 +2157,18 @@ const getItemFromLocalStorage = lsItemName => {
 var _process$env$REACT_AP;
 const history$1 = createBrowserHistory();
 const hasHashRouter = (_process$env$REACT_AP = process.env.REACT_APP_HASH_ROUTER) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : true;
+const getUrlForRouter = url => {
+  if (!url.startsWith('/')) {
+    url = '/' + url;
+  }
+  return "".concat(hasHashRouter ? '/#' : '').concat(getPrefix()).concat(url);
+};
 function getPrefix() {
   let hardPrefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   if (hardPrefix) {
     var _process$env$REACT_AP2;
     const prefix = (_process$env$REACT_AP2 = process.env.REACT_APP_URI_PREFIX) !== null && _process$env$REACT_AP2 !== void 0 ? _process$env$REACT_AP2 : '';
-    // return '/#'+prefix;
-    return prefix;
+    return "/".concat(prefix);
   }
   return '';
 }
@@ -2191,6 +2197,7 @@ var history$2 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   getLastUrl: getLastUrl,
   getPrefix: getPrefix,
+  getUrlForRouter: getUrlForRouter,
   hasHashRouter: hasHashRouter,
   history: history$1,
   removeLastUrl: removeLastUrl,
@@ -2288,7 +2295,7 @@ const LogoutNavigate = _ref3 => {
     return /*#__PURE__*/React.createElement("a", {
       variant: variant,
       className: BUTTON_PRIMARY_CLASS,
-      href: getPrefix() + '/login'
+      href: getUrlForRouter('/login')
     }, children);
   }
   // Aria reference:
@@ -2311,7 +2318,7 @@ var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
 const About = () => {
   return /*#__PURE__*/React.createElement(ModalPopUp, {
     title: "About",
-    link: "".concat(window.location.origin, "/").concat(hasHashRouter ? '#/' : '', "about_body?menu=0")
+    link: "".concat(window.location.origin).concat(hasHashRouter ? '/#' : '', "/about_body?menu=0")
   });
 };
 const AboutBody = _ref => {
@@ -3235,10 +3242,10 @@ var authentication_service = /*#__PURE__*/Object.freeze({
 });
 
 function logoutHander() {
-  const loginUrl = window.location.origin + getPrefix() + '/login';
+  "".concat(window.location.origin).concat(getUrlForRouter('/login'));
   authenticationService.logout();
   {
-    window.location.href = loginUrl;
+    window.location.reload(true);
   }
 }
 function refreshPage() {
@@ -3434,7 +3441,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
       if (match) {
         const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
         if (woOptions) {
-          const windowOpenFn = woOptions => window.open("".concat(window.location.origin, "/").concat(hasHashRouter ? '#/' : '').concat(woOptions.url), woOptions.name, woOptions.options);
+          const windowOpenFn = woOptions => window.open("".concat(window.location.origin).concat(getUrlForRouter("/" + woOptions.url)), woOptions.name, woOptions.options);
           if (setExpanded) {
             resutlFunction = () => {
               setExpanded();
@@ -7029,7 +7036,7 @@ const LoginPage = props => {
       registerUser(user);
       // Redirect to previous page
       removeLastUrl();
-      if (redirectUrl == getPrefix() + '/login') {
+      if (redirectUrl.indexOf('/login') > 0) {
         redirectUrl = '/';
       }
       // return <Navigate to={redirectUrl} replace={true}/>

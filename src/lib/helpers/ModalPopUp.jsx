@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Modal } from './ModalLib.jsx';
 
-import { getPrefix } from '../helpers/history.jsx';
+import { getPrefix, getUrlForRouter } from '../helpers/history.jsx';
 import { console_debug_log } from '../services/logging.service.jsx';
 
 import { BUTTON_PRIMARY_CLASS } from '../constants/class_name_constants.jsx';
@@ -159,7 +159,7 @@ export const LogoutNavigate = ({
             <a
                 variant={variant}
                 className={BUTTON_PRIMARY_CLASS}
-                href={getPrefix()+'/login'}
+                href={getUrlForRouter('/login')}
             >
                 {children}
             </a>

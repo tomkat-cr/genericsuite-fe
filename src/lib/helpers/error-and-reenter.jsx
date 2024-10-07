@@ -17,15 +17,15 @@ import {
     console_debug_log,
     get_debug_flag,
 } from '../services/logging.service.jsx';
-import { history, getPrefix, setLastUrl } from './history.jsx';
+import { history, getPrefix, setLastUrl, hasHashRouter, getUrlForRouter } from './history.jsx';
 import { ModalPopUp } from './ModalPopUp.jsx'
 
 const debug = false;
 
-const hardLogin = true;
+const hardLogin = false;
 
 export function logoutHander() {
-    const loginUrl = window.location.origin+getPrefix()+'/login';
+    const loginUrl = `${window.location.origin}${getUrlForRouter('/login')}`;
     authenticationService.logout();
     if (hardLogin) {
         if (debug) console_debug_log(`logoutHander | window.location.href = ${loginUrl}`);

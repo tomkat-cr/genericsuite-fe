@@ -7,7 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { useAppContext } from '../helpers/AppContext.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
-import { history, getPrefix, hasHashRouter } from '../helpers/history.jsx';
+import { history, getPrefix, hasHashRouter, getUrlForRouter } from '../helpers/history.jsx';
 import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
 import {
     dbApiService,
@@ -70,7 +70,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
             if (match) {
                 const woOptions = (typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null);
                 if (woOptions) {
-                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}/${hasHashRouter ? '#/' : ''}${woOptions.url}`, woOptions.name, woOptions.options));
+                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}${getUrlForRouter("/"+woOptions.url)}`, woOptions.name, woOptions.options));
                     if (setExpanded) {
                         resutlFunction = () => { setExpanded(); windowOpenFn(woOptions); return window.location.href; };
                     } else {

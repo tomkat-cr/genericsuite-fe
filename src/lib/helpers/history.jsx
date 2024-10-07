@@ -10,11 +10,17 @@ export const history = createBrowserHistory();
 
 export const hasHashRouter = process.env.REACT_APP_HASH_ROUTER ?? true;
 
+export const getUrlForRouter = (url) => {
+    if (!url.startsWith('/')) {
+        url = '/' + url;
+    }
+    return `${hasHashRouter ? '/#' : ''}${getPrefix()}${url}`;
+}
+
 export function getPrefix(hardPrefix=false) {
     if (hardPrefix) {
         const prefix = process.env.REACT_APP_URI_PREFIX ?? '';
-        // return '/#'+prefix;
-        return prefix;
+        return `/${prefix}`;
     }
     return '';
 }

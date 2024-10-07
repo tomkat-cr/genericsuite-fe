@@ -12,7 +12,7 @@ export const About = () => {
     return (
         <ModalPopUp
             title='About'
-            link={`${window.location.origin}/${hasHashRouter ? '#/' : ''}about_body?menu=0`}
+            link={`${window.location.origin}${hasHashRouter ? '/#' : ''}/about_body?menu=0`}
         />
     )
 }

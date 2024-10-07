@@ -63,7 +63,7 @@ export const LoginPage = (props) => {
                     registerUser(user);
                     // Redirect to previous page
                     removeLastUrl();
-                    if (redirectUrl == getPrefix()+'/login') {
+                    if (redirectUrl.indexOf('/login') > 0) {
                         redirectUrl = '/';
                     }
                     // return <Navigate to={redirectUrl} replace={true}/>

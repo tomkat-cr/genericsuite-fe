@@ -389,8 +389,9 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode }) => {
     const { expandedMenus, toggleSubmenu, theme, isWide } = useAppContext();
 
-    const [fullId, setFullId] = useState(`${id}_${type}`);
     const [dropDownOpen, setDropDownOpen] = useState(false);
+
+    const fullId = `${id}_${type}`;
 
     if (debug) console_debug_log(`||||| NavDropdown | id: ${id} | fullId: ${fullId}`, children);
 
@@ -469,7 +470,8 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
     const variantStyleInnerDiv = variantsInnerDiv[type] || '';
     const variantStyleButton = variantsButton[type] || '';
     const variantStyleSubmenuImage = variantsSubmenuImage[type] || '';
-    const variantOnClick = variantsOptionClick[type] || (() => (''));
+    // const variantOnClick = variantsOptionClick[type] || (() => (''));
+    const variantOnClick = variantsOptionClick[type] || toggleSubmenu;
 
     return (
         <div
