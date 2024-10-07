@@ -2004,12 +2004,11 @@ const ToggleSideBar = _ref17 => {
   }));
 };
 const GsButton = _ref18 => {
+  var _props$type;
   let {
     variant = 'primary',
     className = '',
     as = null,
-    onClick = null,
-    type = null,
     ...props
   } = _ref18;
   const variants = {
@@ -2021,21 +2020,14 @@ const GsButton = _ref18 => {
     var _ref19, _props$to;
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
     const As = as;
-    // console.log(`||||| GsButton | As:`, As, ' | props:', props);
-    return /*#__PURE__*/React.createElement(As
-    // role="button"
-    , _extends({
-      to: (_ref19 = (_props$to = props.to) !== null && _props$to !== void 0 ? _props$to : props.href) !== null && _ref19 !== void 0 ? _ref19 : null
-      // type={type ?? "button"}
-      ,
-      className: "".concat(variantStyle, " ").concat(className),
-      onClick: onClick !== null && onClick !== void 0 ? onClick : null
+    return /*#__PURE__*/React.createElement(As, _extends({
+      to: (_ref19 = (_props$to = props.to) !== null && _props$to !== void 0 ? _props$to : props.href) !== null && _ref19 !== void 0 ? _ref19 : null,
+      className: "".concat(variantStyle, " ").concat(className)
     }, props));
   }
   return /*#__PURE__*/React.createElement("button", _extends({
-    type: type !== null && type !== void 0 ? type : "button",
-    className: "".concat(variantStyle, " ").concat(className),
-    onClick: onClick
+    type: (_props$type = props.type) !== null && _props$type !== void 0 ? _props$type : "button",
+    className: "".concat(variantStyle, " ").concat(className)
   }, props));
 };
 
@@ -2182,13 +2174,16 @@ const getItemFromLocalStorage = lsItemName => {
   return JSON.parse(getRawItemFromLocalStorage(lsItemName));
 };
 
+var _process$env$REACT_AP;
 const history$1 = history$3.createBrowserHistory();
+const hasHashRouter = (_process$env$REACT_AP = process.env.REACT_APP_HASH_ROUTER) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : true;
 function getPrefix() {
   let hardPrefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   if (hardPrefix) {
-    var _process$env$REACT_AP;
-    const prefix = (_process$env$REACT_AP = process.env.REACT_APP_URI_PREFIX) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : '';
-    return '/#' + prefix;
+    var _process$env$REACT_AP2;
+    const prefix = (_process$env$REACT_AP2 = process.env.REACT_APP_URI_PREFIX) !== null && _process$env$REACT_AP2 !== void 0 ? _process$env$REACT_AP2 : '';
+    // return '/#'+prefix;
+    return prefix;
   }
   return '';
 }
@@ -2198,7 +2193,6 @@ const setLastUrl = function () {
     lastURL = window.location.href;
   }
   if (lastURL.indexOf('/login') === -1) {
-    // localStorage.setItem('lastURL', lastURL);
     saveRawItemToLocalStorage('lastURL', lastURL);
   }
 };
@@ -2209,7 +2203,6 @@ const removeLastUrl = () => {
 const getLastUrl = () => {
   let lastUrl = getRawItemFromLocalStorage('lastURL');
   if (lastUrl === null || lastUrl === '' || lastUrl === "null") {
-    // lastUrl = getPrefix(true)+'/';
     lastUrl = '/';
   }
   return lastUrl;
@@ -2219,6 +2212,7 @@ var history$2 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   getLastUrl: getLastUrl,
   getPrefix: getPrefix,
+  hasHashRouter: hasHashRouter,
   history: history$1,
   removeLastUrl: removeLastUrl,
   setLastUrl: setLastUrl
@@ -2314,10 +2308,8 @@ const LogoutNavigate = _ref3 => {
   if (asAhref) {
     return /*#__PURE__*/React.createElement("a", {
       variant: variant,
-      className: BUTTON_PRIMARY_CLASS
-      // href={getPrefix(true)+'/login'}
-      ,
-      href: '/#/login'
+      className: BUTTON_PRIMARY_CLASS,
+      href: getPrefix() + '/login'
     }, children);
   }
   // Aria reference:
@@ -2326,7 +2318,7 @@ const LogoutNavigate = _ref3 => {
     "aria-details": "ModalLib | LogoutNavigate",
     as: reactRouterDom.Link,
     variant: variant,
-    to: '/login'
+    to: getPrefix() + '/login'
   }, children);
 };
 
@@ -2340,7 +2332,7 @@ var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
 const About = () => {
   return /*#__PURE__*/React.createElement(ModalPopUp, {
     title: "About",
-    link: window.location.origin + '/#/about_body'
+    link: "".concat(window.location.origin, "/").concat(hasHashRouter ? '#/' : '', "about_body?menu=0")
   });
 };
 const AboutBody = _ref => {
@@ -3264,7 +3256,7 @@ var authentication_service = /*#__PURE__*/Object.freeze({
 });
 
 function logoutHander() {
-  const loginUrl = window.location.origin + '/login';
+  const loginUrl = window.location.origin + getPrefix() + '/login';
   authenticationService.logout();
   {
     window.location.href = loginUrl;
@@ -3463,8 +3455,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
       if (match) {
         const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
         if (woOptions) {
-          // const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}/#/${woOptions.url}`, woOptions.name, woOptions.options));
-          const windowOpenFn = woOptions => window.open("".concat(window.location.origin, "/").concat(woOptions.url), woOptions.name, woOptions.options);
+          const windowOpenFn = woOptions => window.open("".concat(window.location.origin, "/").concat(hasHashRouter ? '#/' : '').concat(woOptions.url), woOptions.name, woOptions.options);
           if (setExpanded) {
             resutlFunction = () => {
               setExpanded();
@@ -3506,12 +3497,12 @@ const getElementObj = (componentMap, item) => {
 const getItemDefaults = function (componentMap, setExpanded, item) {
   let topTitle = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
   const hard_prefix = defaultValue(item, "hard_prefix", false);
-  const get_prefix = defaultValue(item, "get_prefix", true);
+  const get_prefix = defaultValue(item, "get_prefix", false);
   const reload = defaultValue(item, "reload", false);
   const template = defaultValue(item, "template", null);
   const element_obj = getElementObj(componentMap, item);
   let path = defaultValue(item, "path", null);
-  if (get_prefix && path) {
+  if (get_prefix && path && path !== "/") {
     path = getPrefix(hard_prefix) + path;
   }
   if (!path) {
@@ -3532,17 +3523,22 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
     "template": template
   };
 };
-const putRoutes = routes => /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
-  id: "menuOptionsRoutes",
-  history: history$1
-}, routes.map(item => {
-  return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
-    key: item.key,
-    path: item.path,
-    exact: item.exact,
-    element: item.element_obj
-  });
-}));
+const GetHashRoutes = _ref => {
+  let {
+    routes
+  } = _ref;
+  return /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
+    id: "menuOptionsRoutes",
+    history: history$1
+  }, routes.map(item => {
+    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+      key: item.key,
+      path: item.path,
+      exact: item.exact,
+      element: item.element
+    });
+  }));
+};
 const editorRoute = (editor, itemDefs) => {
   var _editor$exact;
   return {
@@ -3570,7 +3566,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
             indexRoute = routes.length - 1;
           }
           break;
-        case "/login":
+        case getPrefix() + "/login":
           if (loginRoute == -1) {
             routes.push(resultRoute);
             loginRoute = routes.length - 1;
@@ -3628,7 +3624,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   });
   routes = routes.map(route => {
     let error = null;
-    if (route.path === '/login') {
+    if (route.path === getPrefix() + '/login') {
       RouteTemplateComponent = AppMainInnerUnauthenticated;
     } else if (route.template) {
       if (typeof componentMap[route.template] === "undefined") {
@@ -3664,22 +3660,16 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   }
   return routes;
 };
-const getRoutes = function (currentUser, menuOptions, componentMap, setExpanded) {
-  let returnType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "routes";
+const getRoutes = (currentUser, menuOptions, componentMap, setExpanded) => {
   const menuOptionsFinal = [...menuOptions, ...getDefaultRoutesRaw(componentMap)];
   const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
-  if (returnType === "array") {
-    return routes;
-  }
-  return putRoutes(routes);
+  return routes;
 };
 const isTopMenuAlternativeType = itemType => Object.values(['side_menu', 'mobile_menu']).some(element => itemType === element);
 const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap, setExpanded) => {
   return /*#__PURE__*/React.createElement(NavDropdown.Item, {
     key: editor.title,
-    as: reactRouterDom.Link
-    // to={getPrefix()+'/'+editor.baseUrl}
-    ,
+    as: reactRouterDom.Link,
     to: '/' + editor.baseUrl,
     onClick: getOnClickObject(null, componentMap, setExpanded),
     type: itemType,
@@ -3709,21 +3699,22 @@ const DefaultRoutes = () => {
     componentMap,
     setExpanded
   } = useAppContext();
-  return getDefaultRoutes(currentUser, componentMap, setExpanded, "routes");
+  const routes = getDefaultRoutes(currentUser, componentMap, setExpanded);
+  return /*#__PURE__*/React.createElement(GetHashRoutes, {
+    routes: routes
+  });
 };
-const getDefaultRoutes = function (currentUser, componentMap, setExpanded) {
-  let returnType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "routes";
+
+// export const getDefaultRoutes = (currentUser, componentMap, setExpanded, returnType = "routes") => {
+const getDefaultRoutes = (currentUser, componentMap, setExpanded) => {
   const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
   const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
-  if (returnType === "array") {
-    return routes;
-  }
-  return putRoutes(routes);
+  return routes;
 };
-const InvalidElement = _ref => {
+const InvalidElement = _ref2 => {
   let {
     children
-  } = _ref;
+  } = _ref2;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
   }, /*#__PURE__*/React.createElement("div", {
@@ -3751,13 +3742,13 @@ const getMenuFromApi = (state, setState, setMenuOptions) => {
     }
   });
 };
-const GenericMenuBuilder = _ref2 => {
+const GenericMenuBuilder = _ref3 => {
   let {
     icon,
     title,
     itemType,
     mobileMenuMode
-  } = _ref2;
+  } = _ref3;
   const {
     currentUser
   } = useUser();
@@ -3777,7 +3768,9 @@ const GenericMenuBuilder = _ref2 => {
         // Items in main menu, not belonging to any NavDropdown
         return /*#__PURE__*/React.createElement(Nav.Link, {
           key: item.title,
-          as: reactRouterDom.Link,
+          as: reactRouterDom.Link
+          // to={getPrefix()+itemDefs["path"]}
+          ,
           to: itemDefs["path"],
           onClick: itemDefs["on_click"],
           reloadDocument: itemDefs["reload"],
@@ -3845,6 +3838,7 @@ var generic_menu_service = /*#__PURE__*/Object.freeze({
   __proto__: null,
   DefaultRoutes: DefaultRoutes,
   GenericMenuBuilder: GenericMenuBuilder,
+  GetHashRoutes: GetHashRoutes,
   editorMenuOption: editorMenuOption,
   editorRoute: editorRoute,
   getDefaultRoutes: getDefaultRoutes,
@@ -6811,7 +6805,6 @@ const GenericSinglePageEditorMain = props => {
     console_debug_log(msg);
   };
   const handleCancel = () => {
-    // window.location.href = getPrefix(true) + '/';
     window.location.href = '/';
   };
   if (!editor) {
@@ -7048,57 +7041,6 @@ const LoginPage = props => {
     appLogo,
     theme
   } = useAppContext();
-
-  // const [performLogin, setPerformLogin] = useState(false);
-  // const [redirectUrl, setRedirectUrl] = useState("/");
-  // useEffect(() => {
-  //     if (currentUser && performLogin) {
-  //         unRegisterUser();
-  //     }
-  // }, [currentUser]);
-
-  // useEffect(() => {
-  //     const urlParams = getUrlParams(props)
-  //     let redirect;
-  //     if (typeof urlParams.redirect === 'undefined') {
-  //         redirect = getLastUrl();
-  //     } else {
-  //         redirect = urlParams.redirect;
-  //     }
-  //     // Redirect to home OR redirect URL if already logged in
-  //     if (debug) console_debug_log("LoginPage | authenticationService:", authenticationService);
-  //     if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
-  //         removeLastUrl();
-  //         // window.location.href = redirectUrl;
-  //         getCurrentUserData()
-  //             .then( 
-  //                 userData => {
-  //                     if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
-  //                     if (userData.error) {
-  //                         if (debug) console.error('userData.error_message:', userData.error_message);
-  //                         setPerformLogin(true);
-  //                     } else {
-  //                         registerUser(getUserLocalData(userData));
-  //                         return <Navigate to={redirectUrl} replace={true}/>
-  //                     }
-  //                 },
-  //                 error => {
-  //                     console.error(error.errorMsg);
-  //                     setPerformLogin(true);
-  //                 }
-  //             );
-  //     } else {
-  //         setRedirectUrl(redirect);
-  //         setPerformLogin(true);
-  //     }
-  //     // Avoid need to add redirectUrl to dependency array
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [props]);
-
-  // if (!performLogin) {
-  //     return WaitAnimation();
-  // }
-
   const handleSubmit = (username, password, setStatus, setSubmitting) => {
     setStatus();
     authenticationService.login(username, password).then(user => {
@@ -7108,7 +7050,7 @@ const LoginPage = props => {
       registerUser(user);
       // Redirect to previous page
       removeLastUrl();
-      if (redirectUrl == '/login') {
+      if (redirectUrl == getPrefix() + '/login') {
         redirectUrl = '/';
       }
       // return <Navigate to={redirectUrl} replace={true}/>
@@ -7382,7 +7324,6 @@ const AppMainInner = _ref6 => {
   let {
     children
   } = _ref6;
-  // const debug = true;
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
 
@@ -7460,18 +7401,16 @@ const AppMainComponent = _ref7 => {
     return errorAndReEnter(state, null, true, null, stateHandler, false, false);
   }
   if (!menuOptions) {
-    // return WaitAnimation();
     return /*#__PURE__*/React.createElement("div", {
       className: LOGIN_BUTTON_IN_APP_COMPONENT_CLASS
     }, /*#__PURE__*/React.createElement(GsButton, {
       as: reactRouterDom.Link,
-      to: "/login"
+      to: getPrefix() + '/login'
     }, "Login"));
   }
   return children;
 };
 const AppMain = () => {
-  // const debug = true;
   const {
     currentUser,
     registerUser
@@ -7484,7 +7423,7 @@ const AppMain = () => {
     componentMap,
     setExpanded
   } = useAppContext();
-  const [router, setRouter] = React.useState(getDefaultRoutes(currentUser, componentMap, setExpanded, 'array'));
+  const [router, setRouter] = React.useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
   React.useEffect(() => {
     verifyCurrentUser(registerUser);
   }, []);
@@ -7496,9 +7435,14 @@ const AppMain = () => {
   }, [currentUser, state]);
   React.useEffect(() => {
     if (menuOptions) {
-      setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded, 'array'));
+      setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
     }
   }, [menuOptions]);
+  if (hasHashRouter) {
+    return /*#__PURE__*/React.createElement(reactRouterDom.HashRouter, null, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GetHashRoutes, {
+      routes: router
+    })));
+  }
   return /*#__PURE__*/React.createElement(reactRouterDom.RouterProvider, {
     router: reactRouterDom.createBrowserRouter(router),
     history: history
@@ -7689,8 +7633,6 @@ var media = /*#__PURE__*/Object.freeze({
   mediaSupported: mediaSupported
 });
 
-// import { getPrefix } from './history.jsx';
-
 const PrivateRoute = _ref => {
   let {
     component: Component,
@@ -7703,11 +7645,10 @@ const PrivateRoute = _ref => {
       } = useUser();
       if (!currentUser) {
         console_debug_log('PrivateRoute Not Authorized...');
-        // not logged in so redirect to login page with the return url
-        // return <Navigate to={{ pathname: getPrefix(true)+'/login', state: { from: props.location } }} />
+        // Not logged in so redirect to login page with the return url
         return /*#__PURE__*/React.createElement(reactRouterDom.Navigate, {
           to: {
-            pathname: '/login',
+            pathname: getPrefix() + '/login',
             state: {
               from: props.location
             }

@@ -11,7 +11,7 @@ import {
     authenticationService,
 } from '../../services/authentication.service.jsx';
 import { getUrlParams } from '../../helpers/url-params.jsx';
-import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
+import { getLastUrl, getPrefix, removeLastUrl } from '../../helpers/history.jsx';
 import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 import { imageDirectory } from '../../constants/general_constants.jsx';
@@ -50,56 +50,6 @@ export const LoginPage = (props) => {
     const { currentUser, registerUser, unRegisterUser } = useUser();
     const { appLogo, theme } = useAppContext();
 
-    // const [performLogin, setPerformLogin] = useState(false);
-    // const [redirectUrl, setRedirectUrl] = useState("/");
-    // useEffect(() => {
-    //     if (currentUser && performLogin) {
-    //         unRegisterUser();
-    //     }
-    // }, [currentUser]);
-
-    // useEffect(() => {
-    //     const urlParams = getUrlParams(props)
-    //     let redirect;
-    //     if (typeof urlParams.redirect === 'undefined') {
-    //         redirect = getLastUrl();
-    //     } else {
-    //         redirect = urlParams.redirect;
-    //     }
-    //     // Redirect to home OR redirect URL if already logged in
-    //     if (debug) console_debug_log("LoginPage | authenticationService:", authenticationService);
-    //     if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
-    //         removeLastUrl();
-    //         // window.location.href = redirectUrl;
-    //         getCurrentUserData()
-    //             .then( 
-    //                 userData => {
-    //                     if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
-    //                     if (userData.error) {
-    //                         if (debug) console.error('userData.error_message:', userData.error_message);
-    //                         setPerformLogin(true);
-    //                     } else {
-    //                         registerUser(getUserLocalData(userData));
-    //                         return <Navigate to={redirectUrl} replace={true}/>
-    //                     }
-    //                 },
-    //                 error => {
-    //                     console.error(error.errorMsg);
-    //                     setPerformLogin(true);
-    //                 }
-    //             );
-    //     } else {
-    //         setRedirectUrl(redirect);
-    //         setPerformLogin(true);
-    //     }
-    //     // Avoid need to add redirectUrl to dependency array
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [props]);
-
-    // if (!performLogin) {
-    //     return WaitAnimation();
-    // }
-
     const handleSubmit = (username, password, setStatus, setSubmitting) => {
         setStatus();
         authenticationService.login(username, password)
@@ -113,7 +63,7 @@ export const LoginPage = (props) => {
                     registerUser(user);
                     // Redirect to previous page
                     removeLastUrl();
-                    if (redirectUrl == '/login') {
+                    if (redirectUrl == getPrefix()+'/login') {
                         redirectUrl = '/';
                     }
                     // return <Navigate to={redirectUrl} replace={true}/>

@@ -7,7 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { useAppContext } from '../helpers/AppContext.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
-import { history, getPrefix } from '../helpers/history.jsx';
+import { history, getPrefix, hasHashRouter } from '../helpers/history.jsx';
 import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
 import {
     dbApiService,
@@ -70,8 +70,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
             if (match) {
                 const woOptions = (typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null);
                 if (woOptions) {
-                    // const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}/#/${woOptions.url}`, woOptions.name, woOptions.options));
-                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}/${woOptions.url}`, woOptions.name, woOptions.options));
+                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}/${hasHashRouter ? '#/' : ''}${woOptions.url}`, woOptions.name, woOptions.options));
                     if (setExpanded) {
                         resutlFunction = () => { setExpanded(); windowOpenFn(woOptions); return window.location.href; };
                     } else {
@@ -103,12 +102,12 @@ const getElementObj = (componentMap, item) => {
 
 const getItemDefaults = (componentMap, setExpanded, item, topTitle = null) => {
     const hard_prefix = defaultValue(item, "hard_prefix", false);
-    const get_prefix = defaultValue(item, "get_prefix", true);
+    const get_prefix = defaultValue(item, "get_prefix", false);
     const reload = defaultValue(item, "reload", false);
     const template = defaultValue(item, "template", null);
     const element_obj = getElementObj(componentMap, item);
     let path = defaultValue(item, "path", null);
-    if (get_prefix && path) {
+    if (get_prefix && path && path !== "/") {
         path = getPrefix(hard_prefix) + path
     }
     if (!path) {
@@ -133,18 +132,20 @@ const getItemDefaults = (componentMap, setExpanded, item, topTitle = null) => {
     }
 }
 
-const putRoutes = (routes) => (
+export const GetHashRoutes = ({ routes }) => (
     <Routes
         id="menuOptionsRoutes"
         history={history}
     >
         {routes.map(item => {
-            return <Route
-                key={item.key}
-                path={item.path}
-                exact={item.exact}
-                element={item.element_obj}
-            />
+            return (
+                <Route
+                    key={item.key}
+                    path={item.path}
+                    exact={item.exact}
+                    element={item.element}
+                />
+            )
         })}
     </Routes>
 );
@@ -161,7 +162,6 @@ export const editorRoute = (editor, itemDefs) => (
 );
 
 export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
-    // const debug = true;
     if (debug) console_debug_log("getRoutesRaw: menuOptions:", menuOptions);
 
     const AppMainInner = componentMap["AppMainInner"];
@@ -182,7 +182,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                         indexRoute = routes.length - 1;
                     }
                     break;
-                case "/login":
+                case getPrefix()+"/login":
                     if (loginRoute == -1) {
                         routes.push(resultRoute);
                         loginRoute = routes.length - 1;
@@ -253,7 +253,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
             route.path = route.path.replace(/\//, "");
         }
         if (debug) console_debug_log('getRoutesRaw | route.path:', route.path, '| route: ', );
-        if (route.path === '/login') {
+        if (route.path === getPrefix()+'/login') {
             RouteTemplateComponent = AppMainInnerUnauthenticated;
         } else if (route.template) {
             if (typeof componentMap[route.template] === "undefined") {
@@ -307,14 +307,14 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
             }
         }
     }
-    if (debug) console_debug_log("getRoutesRaw2 | finalRoutes:", finalRoutes, "indexRoute:", indexRoute, "loginRoute:", loginRoute, "currentUser:", currentUser);
+    if (debug) console_debug_log("getRoutesRaw2 | routes", routes, " | finalRoutes:", finalRoutes, " | indexRoute:", indexRoute, " | loginRoute:", loginRoute, " | currentUser:", currentUser);
     if (nestedRoutes) {
         return [finalRoutes];
     }
     return routes;
 }
 
-export const getRoutes = (currentUser, menuOptions, componentMap, setExpanded, returnType = "routes") => {
+export const getRoutes = (currentUser, menuOptions, componentMap, setExpanded) => {
     if (debug) {
         console_debug_log("GenericMenuBuilder: getRoutes | menuOptions:", menuOptions, "componentMap:", componentMap);
     }
@@ -323,10 +323,7 @@ export const getRoutes = (currentUser, menuOptions, componentMap, setExpanded, r
         console_debug_log("GenericMenuBuilder: getRoutes | menuOptionsFinal", menuOptionsFinal);
     }
     const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
-    if (returnType === "array") {
-        return routes;
-    }
-    return putRoutes(routes);
+    return routes;
 }
 
 const isTopMenuAlternativeType = (itemType) => (
@@ -338,7 +335,6 @@ export const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap,
         <NavDropdown.Item
             key={editor.title}
             as={RouterLink}
-            // to={getPrefix()+'/'+editor.baseUrl}
             to={'/'+editor.baseUrl}
             onClick={getOnClickObject(null, componentMap, setExpanded)}
             type={itemType}
@@ -350,7 +346,6 @@ export const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap,
 }
 
 export const getDefaultRoutesRaw = (componentMap) => {
-    // const debug = true;
     if (debug) console_debug_log('getDefaultRoutesRaw | componentMap:', componentMap);
     const LoginPage = componentMap["LoginPage"];
     const HomePage = componentMap["HomePage"];
@@ -373,17 +368,20 @@ export const getDefaultRoutesRaw = (componentMap) => {
 export const DefaultRoutes = () => {
     const { currentUser } = useUser();
     const { componentMap, setExpanded } = useAppContext();
-    return getDefaultRoutes(currentUser, componentMap, setExpanded, "routes");
+    const routes = getDefaultRoutes(currentUser, componentMap, setExpanded);
+    return (
+        <GetHashRoutes
+            routes={routes}
+        />
+    );
 }
 
-export const getDefaultRoutes = (currentUser, componentMap, setExpanded, returnType = "routes") => {
+// export const getDefaultRoutes = (currentUser, componentMap, setExpanded, returnType = "routes") => {
+export const getDefaultRoutes = (currentUser, componentMap, setExpanded) => {
     const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
     const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
-    if (returnType === "array") {
-        if (debug) console_debug_log('getDefaultRoutes | returnType: array');
-        return routes;
-    }
-    return putRoutes(routes);
+    if (debug) console_debug_log('getDefaultRoutes | returnType: array');
+    return routes;
 }
 
 const InvalidElement = ({ children }) => {
@@ -480,6 +478,7 @@ export const GenericMenuBuilder = (
                         <Nav.Link
                             key={item.title}
                             as={RouterLink}
+                            // to={getPrefix()+itemDefs["path"]}
                             to={itemDefs["path"]}
                             onClick={itemDefs["on_click"]}
                             reloadDocument={itemDefs["reload"]}

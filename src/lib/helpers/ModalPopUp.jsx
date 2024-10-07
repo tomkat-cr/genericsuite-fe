@@ -159,8 +159,7 @@ export const LogoutNavigate = ({
             <a
                 variant={variant}
                 className={BUTTON_PRIMARY_CLASS}
-                // href={getPrefix(true)+'/login'}
-                href={'/#/login'}
+                href={getPrefix()+'/login'}
             >
                 {children}
             </a>
@@ -173,7 +172,7 @@ export const LogoutNavigate = ({
             aria-details="ModalLib | LogoutNavigate"
             as={Link}
             variant={variant}
-            to={'/login'}
+            to={getPrefix()+'/login'}
         >
             {children}
         </Button>

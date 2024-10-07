@@ -3,6 +3,7 @@ import {
     Link as RouterLink,
     createBrowserRouter,
     RouterProvider,
+    HashRouter,
     Navigate,
     Link,
 } from "react-router-dom";
@@ -11,9 +12,9 @@ import {
 import {
     GenericMenuBuilder,
     getMenuFromApi,
-    // DefaultRoutes,
     getDefaultRoutes,
     getRoutes,
+    GetHashRoutes,
 } from '../../services/generic.menu.service.jsx';
 import {
     console_debug_log,
@@ -87,6 +88,10 @@ import {
     // ToggleSideBar,
     GsButton,
 } from '../../helpers/NavLib.jsx';
+import {
+    getPrefix,
+    hasHashRouter,
+} from '../../helpers/history.jsx';
 import {
     defaultTheme,
     ALERT_DANGER_CLASS,
@@ -180,16 +185,16 @@ const TopRightMenu = ({ showContentOnly }) => {
 const NoDesignComponent = ({ children, errorMessage }) => {
     return (
         <>
-                {errorMessage && (
-                    <div
-                        className={ALERT_DANGER_CLASS}
-                        role="alert"
-                    >
-                        {errorMessage}
-                    </div>
-                )}
-                {children}
-            </>
+            {errorMessage && (
+                <div
+                    className={ALERT_DANGER_CLASS}
+                    role="alert"
+                >
+                    {errorMessage}
+                </div>
+            )}
+            {children}
+        </>
     );
 }
 
@@ -212,7 +217,6 @@ const AppMainInnerUnauthenticated = ({ children }) => {
 }
 
 const AppMainInner = ({ children }) => {
-    // const debug = true;
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
 
@@ -359,23 +363,23 @@ const AppMainComponent = ({
     }
     if (!menuOptions) {
         if (debug) console_debug_log("AppMainComponent | WaitAnimation");
-        // return WaitAnimation();
-        return (<div 
-            className={LOGIN_BUTTON_IN_APP_COMPONENT_CLASS}
-        >
-            <GsButton
-                as={Link}
-                to='/login'
+        return (
+            <div 
+                className={LOGIN_BUTTON_IN_APP_COMPONENT_CLASS}
+            >
+                <GsButton
+                    as={RouterLink}
+                    to={getPrefix()+'/login'}
                 >
-                Login
-            </GsButton>
-        </div>)
+                    Login
+                </GsButton>
+            </div>
+        )
     }
     return (children);
 }
 
 const AppMain = () => {
-    // const debug = true;
     const { currentUser, registerUser } = useUser();
 
     const {
@@ -385,7 +389,7 @@ const AppMain = () => {
         setExpanded,
     } = useAppContext();
 
-    const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded, 'array'));
+    const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
 
     useEffect(() => {
         verifyCurrentUser(registerUser);
@@ -400,11 +404,23 @@ const AppMain = () => {
 
     useEffect(() => {
         if (menuOptions) {
-            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded, 'array'));
+            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
         }
     }, [menuOptions])
 
     if (debug) console_debug_log("App | router:", router, "menuOptions:", menuOptions, "currentUser:", currentUser);
+
+    if (hasHashRouter) {
+        return (
+            <HashRouter>
+                <>
+                    <GetHashRoutes
+                        routes={router}
+                    />
+                </>
+            </HashRouter>
+        );
+    }
 
     return (
         <RouterProvider

@@ -629,12 +629,9 @@ declare var generic_editor_utilities: Readonly<{
 }>;
 declare var generic_menu_service: Readonly<{
     __proto__: null;
-    DefaultRoutes: () => {
-        key: string;
-        path: string;
-        element: () => React.FunctionComponentElement<any>;
-    }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
-    GenericMenuBuilder: (_ref2: any) => any;
+    DefaultRoutes: () => React.FunctionComponentElement<any>;
+    GenericMenuBuilder: (_ref3: any) => any;
+    GetHashRoutes: (_ref: any) => React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     editorMenuOption: (editor: any, itemType: any, mobileMenuMode: any, componentMap: any, setExpanded: any) => React.FunctionComponentElement<any>;
     editorRoute: (editor: any, itemDefs: any) => {
         key: any;
@@ -644,11 +641,11 @@ declare var generic_menu_service: Readonly<{
         template: any;
         on_click_string: any;
     };
-    getDefaultRoutes: (currentUser: any, componentMap: any, setExpanded: any, ...args: any[]) => {
+    getDefaultRoutes: (currentUser: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
         element: () => React.FunctionComponentElement<any>;
-    }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    }[];
     getDefaultRoutesRaw: (componentMap: any) => {
         title: string;
         path: string;
@@ -656,11 +653,11 @@ declare var generic_menu_service: Readonly<{
         type: string;
     }[];
     getMenuFromApi: (state: any, setState: any, setMenuOptions: any) => void;
-    getRoutes: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any, ...args: any[]) => {
+    getRoutes: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
         element: () => React.FunctionComponentElement<any>;
-    }[] | React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    }[];
     getRoutesRaw: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
@@ -671,6 +668,7 @@ declare var history$2: Readonly<{
     __proto__: null;
     getLastUrl: () => string;
     getPrefix: typeof getPrefix;
+    hasHashRouter: string | true;
     history: any;
     removeLastUrl: () => void;
     setLastUrl: (...args: any[]) => void;

@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { ModalPopUp } from '../../helpers/ModalPopUp.jsx'
+import { hasHashRouter } from '../../helpers/history.jsx'
 import {
     ALERT_DANGER_CLASS,
     ALERT_SUCCESS_CLASS,
@@ -10,7 +12,7 @@ export const About = () => {
     return (
         <ModalPopUp
             title='About'
-            link={window.location.origin + '/#/about_body'}
+            link={`${window.location.origin}/${hasHashRouter ? '#/' : ''}about_body?menu=0`}
         />
     )
 }

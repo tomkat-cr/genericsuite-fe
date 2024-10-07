@@ -681,7 +681,7 @@ export const ToggleSideBar = ({ onClick, ...props }) => {
     );
 }
 
-export const GsButton = ({ variant = 'primary', className = '', as = null, onClick = null, type = null, ...props }) => {
+export const GsButton = ({ variant = 'primary', className = '', as = null, ...props }) => {
     if (debug) console_debug_log(`||||| GsButton | variant: ${variant} | className: ${className}`, 'props:', props);
     const variants = {
         primary: BUTTON_PRIMARY_CLASS,
@@ -691,23 +691,19 @@ export const GsButton = ({ variant = 'primary', className = '', as = null, onCli
     if (as) {
         // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
         const As = as;
-        // console.log(`||||| GsButton | As:`, As, ' | props:', props);
+        if (debug) console.log(`||||| GsButton | As:`, As, ' | props:', props);
         return (
             <As
-                // role="button"
                 to={props.to ?? props.href ?? null}
-                // type={type ?? "button"}
                 className={`${variantStyle} ${className}`}
-                onClick={onClick ?? null}
                 {...props}
             />
         );
     }
     return (
         <button
-            type={type ?? "button"}
+            type={props.type ?? "button"}
             className={`${variantStyle} ${className}`}
-            onClick={onClick}
             {...props}
         />
     );

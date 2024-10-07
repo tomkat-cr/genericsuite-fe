@@ -25,7 +25,7 @@ const debug = false;
 const hardLogin = true;
 
 export function logoutHander() {
-    const loginUrl = window.location.origin+'/login';
+    const loginUrl = window.location.origin+getPrefix()+'/login';
     authenticationService.logout();
     if (hardLogin) {
         if (debug) console_debug_log(`logoutHander | window.location.href = ${loginUrl}`);
