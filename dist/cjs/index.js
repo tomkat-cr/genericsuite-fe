@@ -1394,8 +1394,14 @@ const AppProvider = _ref => {
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const toggleSideMenu = () => setSideMenu(!sideMenu);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const toggleSubmenu = menuName => {
-    setExpandedMenus(prev => prev.includes(menuName) ? prev.filter(item => item !== menuName) : [...prev, menuName]);
+  // const toggleSubmenu = (menuName) => {
+  const toggleSubmenu = (menuName, menuVisible) => {
+    console_debug_log("<<<< AppContext | toggleSubmenu | menuName: ".concat(menuName, " | menuVisible: ").concat(menuVisible));
+    setExpandedMenus(prev =>
+    // prev.includes(menuName)
+    // ? prev.filter(item => item !== menuName)
+    // : [...prev, menuName]
+    menuVisible ? [...prev, menuName] : prev.filter(item => item !== menuName));
   };
   const isComponent = componentObj => {
     return String(componentObj).includes('component:');
@@ -1753,6 +1759,7 @@ const NavDropdown = _ref14 => {
     } else {
       element.classList.remove('hidden');
     }
+    console_debug_log(">>--> NavDropdown | toggledropDownOpen | elementId: ".concat(elementId, " | previous dropDownOpen: ").concat(dropDownOpen));
     setDropDownOpen(!dropDownOpen);
   };
   const variantsDirectionImage = {
@@ -1787,14 +1794,22 @@ const NavDropdown = _ref14 => {
     side_menu: NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
     mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS
   };
-  const variantsOptionClick = {
-    top_menu: toggleSubmenu,
-    hamburger: toggleSubmenu,
-    side_menu: toggleSubmenu,
-    mobile_menu: toggleSubmenu
-  };
+
+  // const variantsOptionClick = {
+  //     top_menu: toggleSubmenu,
+  //     hamburger: toggleSubmenu,
+  //     side_menu: toggleSubmenu,
+  //     mobile_menu: toggleSubmenu,
+  // };
+
+  // useEffect(() => {
+  //     variantOnClick(fullId);
+  // }, []);
+
   React.useEffect(() => {
-    variantOnClick(fullId);
+    console_debug_log("SideMenu | useEffect | dropDownOpen: ".concat(dropDownOpen));
+    // variantOnClick(fullId);
+    toggleSubmenu(fullId, dropDownOpen);
   }, [dropDownOpen, fullId]);
   React.useEffect(() => {
     const elementId = "".concat(fullId, "_submenu_image");
@@ -1813,7 +1828,8 @@ const NavDropdown = _ref14 => {
   const variantStyleButton = variantsButton[type] || '';
   const variantStyleSubmenuImage = variantsSubmenuImage[type] || '';
   // const variantOnClick = variantsOptionClick[type] || (() => (''));
-  const variantOnClick = variantsOptionClick[type] || toggleSubmenu;
+  // const variantOnClick = variantsOptionClick[type] || toggleSubmenu;
+
   return /*#__PURE__*/React.createElement("div", {
     className: variantStyleTopDiv
   }, /*#__PURE__*/React.createElement("button", {

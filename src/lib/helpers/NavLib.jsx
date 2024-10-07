@@ -388,14 +388,13 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 
 export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode }) => {
     const { expandedMenus, toggleSubmenu, theme, isWide } = useAppContext();
-
     const [dropDownOpen, setDropDownOpen] = useState(false);
-
     const fullId = `${id}_${type}`;
 
     if (debug) console_debug_log(`||||| NavDropdown | id: ${id} | fullId: ${fullId}`, children);
 
     const toggledropDownOpen = () => {
+        const debug = true;
         const elementId = `${fullId}_dropDown`;
         const element = document.getElementById(elementId);
         if (dropDownOpen) {
@@ -442,15 +441,22 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
         mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS,
     };
 
-    const variantsOptionClick = {
-        top_menu: toggleSubmenu,
-        hamburger: toggleSubmenu,
-        side_menu: toggleSubmenu,
-        mobile_menu: toggleSubmenu,
-    };
+    // const variantsOptionClick = {
+    //     top_menu: toggleSubmenu,
+    //     hamburger: toggleSubmenu,
+    //     side_menu: toggleSubmenu,
+    //     mobile_menu: toggleSubmenu,
+    // };
+
+    // useEffect(() => {
+    //     variantOnClick(fullId);
+    // }, []);
 
     useEffect(() => {
-        variantOnClick(fullId);
+        const debug = true;
+        if (debug) console_debug_log(`SideMenu | useEffect | dropDownOpen: ${dropDownOpen}`);
+        // variantOnClick(fullId);
+        toggleSubmenu(fullId, dropDownOpen);
     }, [dropDownOpen, fullId]);
 
     useEffect(() => {
@@ -471,7 +477,7 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
     const variantStyleButton = variantsButton[type] || '';
     const variantStyleSubmenuImage = variantsSubmenuImage[type] || '';
     // const variantOnClick = variantsOptionClick[type] || (() => (''));
-    const variantOnClick = variantsOptionClick[type] || toggleSubmenu;
+    // const variantOnClick = variantsOptionClick[type] || toggleSubmenu;
 
     return (
         <div

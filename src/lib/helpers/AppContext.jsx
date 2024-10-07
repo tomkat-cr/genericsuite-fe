@@ -25,11 +25,17 @@ export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppL
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
     const toggleSideMenu = () => setSideMenu(!sideMenu);
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-    const toggleSubmenu = (menuName) => {
+    // const toggleSubmenu = (menuName) => {
+    const toggleSubmenu = (menuName, menuVisible) => {
+        const debug = true;
+        if (debug) console_debug_log(`<<<< AppContext | toggleSubmenu | menuName: ${menuName} | menuVisible: ${menuVisible}`);
         setExpandedMenus(prev => (
-            prev.includes(menuName)
-            ? prev.filter(item => item !== menuName)
-            : [...prev, menuName]
+            // prev.includes(menuName)
+            // ? prev.filter(item => item !== menuName)
+            // : [...prev, menuName]
+            menuVisible
+            ? [...prev, menuName]
+            : prev.filter(item => item !== menuName)
         ));
     }
 
