@@ -63,6 +63,7 @@ export const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS='space-y-2 navbarTopCenterMenu
 
 export const NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS = "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
 export const NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS = "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
+export const NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS = "mr-2 navbarTopRightMenuUnauthenticatedMarginRightClass";
 
 export const NAVBAR_MOBILE_MENU_DIV_1_CLASS = "fixed inset-0 bg-black bg-opacity-50 z-50 navbarMobileMenuDiv1Class";
 export const NAVBAR_MOBILE_MENU_DIV_2_CLASS = "fixed inset-y-0 left-0 w-64 p-4 overflow-y-auto navbarMobileMenuDiv2Class";

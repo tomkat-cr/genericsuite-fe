@@ -98,9 +98,9 @@ declare var NavLib: Readonly<{
         TopCenterMenu: (_ref8: any) => React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement>;
-        TopRightMenu: (_ref9: any) => React.DetailedReactHTMLElement<{
-            className: string;
-        }, HTMLElement>;
+        TopRightMenu: (_ref9: any) => React.FunctionComponentElement<{
+            children?: React.ReactNode | undefined;
+        }>;
         MobileMenu: (_ref11: any) => React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement> | null;
@@ -328,6 +328,7 @@ declare var class_name_constants: Readonly<{
     NAVBAR_TOP_FOR_SIDE_MENU_CLASS: "flex items-center justify-between p-1 text-white navbarTopForSideMenuClass";
     NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS: "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
     NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS: "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
+    NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS: "mr-2 navbarTopRightMenuUnauthenticatedMarginRightClass";
     NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS: "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
     NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonMobileMenuClass";
     NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonSideMenuClass";

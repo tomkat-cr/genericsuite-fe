@@ -119,6 +119,7 @@ const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS = "flex space-x-4 navbarTopCenterMenuO
 const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS = 'space-y-2 navbarTopCenterMenuOnLeftClass';
 const NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS = "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
 const NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS = "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
+const NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS = "mr-2 navbarTopRightMenuUnauthenticatedMarginRightClass";
 const NAVBAR_MOBILE_MENU_DIV_1_CLASS = "fixed inset-0 bg-black bg-opacity-50 z-50 navbarMobileMenuDiv1Class";
 const NAVBAR_MOBILE_MENU_DIV_2_CLASS = "fixed inset-y-0 left-0 w-64 p-4 overflow-y-auto navbarMobileMenuDiv2Class";
 const NAVBAR_MOBILE_MENU_DIV_3_CLASS = "flex justify-between items-center mb-4 navbarMobileMenuDiv3Class";
@@ -477,6 +478,7 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   NAVBAR_TOP_FOR_SIDE_MENU_CLASS: NAVBAR_TOP_FOR_SIDE_MENU_CLASS,
   NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS: NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS,
   NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS: NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS,
+  NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS: NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS,
   NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS: NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS,
   NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS: NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS,
   NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS: NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS,
@@ -1459,6 +1461,36 @@ var AppContext$1 = /*#__PURE__*/Object.freeze({
   useAppContext: useAppContext
 });
 
+const UserContext = /*#__PURE__*/createContext();
+const UserProvider = _ref => {
+  let {
+    children
+  } = _ref;
+  const [currentUser, setCurrentUser] = useState(null);
+  const registerUser = userData => {
+    setCurrentUser(userData);
+  };
+  const unRegisterUser = () => {
+    setCurrentUser(null);
+  };
+  return /*#__PURE__*/React.createElement(UserContext.Provider, {
+    value: {
+      currentUser,
+      registerUser,
+      unRegisterUser
+    }
+  }, children);
+};
+const useUser = () => {
+  return useContext(UserContext);
+};
+
+var UserContext$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  UserProvider: UserProvider,
+  useUser: useUser
+});
+
 const MainContainer = _ref => {
   let {
     children
@@ -1620,11 +1652,14 @@ const NavbarTopRightMenu = _ref9 => {
     children
   } = _ref9;
   const {
+    currentUser
+  } = useUser();
+  const {
     sideMenu
   } = useAppContext();
-  return /*#__PURE__*/React.createElement("div", {
-    className: sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS
-  }, children);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: (sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!currentUser ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")
+  }, children));
 };
 const MobileMenuCloseButton = _ref10 => {
   let {
@@ -2348,36 +2383,6 @@ const AboutBody = _ref => {
     className: APP_GENERAL_MARGINS_CLASS
   }, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, modalPopUpTest );
 };
-
-const UserContext = /*#__PURE__*/createContext();
-const UserProvider = _ref => {
-  let {
-    children
-  } = _ref;
-  const [currentUser, setCurrentUser] = useState(null);
-  const registerUser = userData => {
-    setCurrentUser(userData);
-  };
-  const unRegisterUser = () => {
-    setCurrentUser(null);
-  };
-  return /*#__PURE__*/React.createElement(UserContext.Provider, {
-    value: {
-      currentUser,
-      registerUser,
-      unRegisterUser
-    }
-  }, children);
-};
-const useUser = () => {
-  return useContext(UserContext);
-};
-
-var UserContext$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  UserProvider: UserProvider,
-  useUser: useUser
-});
 
 // export function getConfigsJsonFile(jsonFileName) {
 //     // const basePath = process.env.REACT_APP_JSON_CONFIG_PATH || '../src/configs';
@@ -7252,6 +7257,11 @@ const AppFooter = _ref => {
   }, appNameData) : appNameData, ". ", rightsData, "."), otherLine && /*#__PURE__*/React.createElement("p", null, otherLine));
 };
 
+const getShowContentOnly = () => {
+  const urlParams = getUrlParams();
+  const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
+  return showContentOnly;
+};
 const CloseButton = _ref => {
   let {
     children
@@ -7320,18 +7330,22 @@ const AppMainInnerUnauthenticated = _ref5 => {
   let {
     children
   } = _ref5;
-  return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null))), /*#__PURE__*/React.createElement(AppSectionContainer, null, children), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
+  const {
+    sideMenu
+  } = useAppContext();
+  const showContentOnly = getShowContentOnly();
+  return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, !sideMenu && /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
+    showContentOnly: showContentOnly
+  }))), /*#__PURE__*/React.createElement(AppSectionContainer, null, !sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, children), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
+    showContentOnly: showContentOnly
+  })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(React.Fragment, null, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)))), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
 const AppMainInner = _ref6 => {
   let {
     children
   } = _ref6;
-  const urlParams = getUrlParams();
-  const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
-
   // const location = useLocation();
   // if (debug) console_debug_log("App | location:", location);
-
   const {
     currentUser
   } = useUser();
@@ -7345,6 +7359,7 @@ const AppMainInner = _ref6 => {
     isMobileMenuOpen,
     componentMap
   } = useAppContext();
+  const showContentOnly = getShowContentOnly();
   const stateHandler = () => {
     logoutHander();
   };

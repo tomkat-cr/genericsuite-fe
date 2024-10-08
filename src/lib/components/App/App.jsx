@@ -105,6 +105,12 @@ import {
 
 const debug = false;
 
+const getShowContentOnly = () => {
+    const urlParams = getUrlParams();
+    const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
+    return showContentOnly;
+}
+
 const CloseButton = ({children}) => {
     return (
         <>
@@ -199,30 +205,51 @@ const NoDesignComponent = ({ children, errorMessage }) => {
 }
 
 const AppMainInnerUnauthenticated = ({ children }) => {
+    const { sideMenu } = useAppContext();
+    const showContentOnly = getShowContentOnly();
     return (
         <MainContainer>
             <AppNavBar>
-                <Navbar.TopRightMenu>
-                    <DarkModeButton/>
-                </Navbar.TopRightMenu>
+                {!sideMenu && (
+                    <Navbar.TopRightMenu>
+                        <TopRightMenu
+                            showContentOnly={showContentOnly}
+                        />
+                    </Navbar.TopRightMenu>
+                )}
             </AppNavBar>
             <AppSectionContainer>
-                {children}
+                {!sideMenu && (
+                    <>{children}</>
+                )}
+                {sideMenu && (
+                    <>
+                        <Navbar.TopForSideMenu>
+                            <TopRightMenu
+                                showContentOnly={showContentOnly}
+                            />
+                        </Navbar.TopForSideMenu>
+                        <AppSectionContainer.ForSideMenu>
+                            <>{children}</>
+                        </AppSectionContainer.ForSideMenu>
+                        <AppFooterContainer>
+                            <AppFooter/>
+                        </AppFooterContainer>
+                    </>
+                )}
             </AppSectionContainer>
-            <AppFooterContainer>
-                <AppFooter/>
-            </AppFooterContainer>
+            {!sideMenu && (
+                <AppFooterContainer>
+                    <AppFooter/>
+                </AppFooterContainer>
+            )}
         </MainContainer>
     );
 }
 
 const AppMainInner = ({ children }) => {
-    const urlParams = getUrlParams();
-    const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
-
     // const location = useLocation();
     // if (debug) console_debug_log("App | location:", location);
-
     const { currentUser } = useUser();
     const {
         state, setState,
@@ -231,6 +258,8 @@ const AppMainInner = ({ children }) => {
         isMobileMenuOpen,
         componentMap,
     } = useAppContext();
+
+    const showContentOnly = getShowContentOnly();
 
     if (debug) {
         console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly);
@@ -257,31 +286,26 @@ const AppMainInner = ({ children }) => {
 
     return (
         <MainContainer>
-            {/* {showContentOnly && (
-                <AppNavBar/>
-            )} */}
-            {/* {!showContentOnly && ( */}
-                <AppNavBar>
-                    <Navbar.TopCenterMenu>
+            <AppNavBar>
+                <Navbar.TopCenterMenu>
+                    <GenericMenuBuilder
+                        itemType={sideMenu ? "side_menu" : "top_menu"}
+                    />
+                    {sideMenu && isMobileMenuOpen && currentUser && (
                         <GenericMenuBuilder
-                            itemType={sideMenu ? "side_menu" : "top_menu"}
-                        />
-                        {sideMenu && isMobileMenuOpen && currentUser && (
-                            <GenericMenuBuilder
-                                title={currentUser.firstName}
-                                itemType="hamburger"
-                                showContentOnly={showContentOnly}
-                                mobileMenuMode={true}
-                            />
-                        )}
-                    </Navbar.TopCenterMenu>
-                    {!sideMenu && (
-                        <TopRightMenu
+                            title={currentUser.firstName}
+                            itemType="hamburger"
                             showContentOnly={showContentOnly}
+                            mobileMenuMode={true}
                         />
                     )}
-                </AppNavBar>
-            {/* )} */}
+                </Navbar.TopCenterMenu>
+                {!sideMenu && (
+                    <TopRightMenu
+                        showContentOnly={showContentOnly}
+                    />
+                )}
+            </AppNavBar>
             <AppSectionContainer>
                 <>
                     {!sideMenu && (
@@ -294,13 +318,11 @@ const AppMainInner = ({ children }) => {
                     )}
                     {sideMenu && (
                         <>
-                            {/* {!showContentOnly && ( */}
-                                <Navbar.TopForSideMenu>
-                                    <TopRightMenu
-                                        showContentOnly={showContentOnly}
-                                    />
-                                </Navbar.TopForSideMenu>
-                            {/* )} */}
+                            <Navbar.TopForSideMenu>
+                                <TopRightMenu
+                                    showContentOnly={showContentOnly}
+                                />
+                            </Navbar.TopForSideMenu>
                             <AppSectionContainer.ForSideMenu>
                                 {/* <ToggleSideBar
                                     onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}

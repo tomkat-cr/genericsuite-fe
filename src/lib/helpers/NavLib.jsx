@@ -72,9 +72,11 @@ import {
     VERTICALLY_CENTERED_CLASS,
     TOP0_Z50_CLASS,
     HIDDEN_CLASS,
+    NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { GsIcons } from './IconsLib.jsx';
 import { useAppContext } from './AppContext.jsx';
+import { useUser } from './UserContext.jsx';
 
 // Containers
 
@@ -274,13 +276,16 @@ const NavbarTopCenterMenu = ({ children }) => {
 const NavbarTopRightMenu = ({ children }) => {
     /* Header top menu (right side, for buttons like dark mode, menu place, hamburger menu) */
     if (debug) console_debug_log("||||| NavbarTopRightMenu", children);
+    const { currentUser } = useUser();
     const { sideMenu } = useAppContext();
     return (
-        <div
-            className={sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS}
-        >
-            {children}
-        </div>
+        <>
+            <div
+                className={(sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!currentUser ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")}
+            >
+                {children}
+            </div>
+        </>
     );
 }
 
