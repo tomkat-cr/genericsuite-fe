@@ -9,6 +9,10 @@ help:
 install:
 	npm install
 
+update:
+	npm update
+	npm audit fix
+
 lock:
 	npm install --package-lock-only
 

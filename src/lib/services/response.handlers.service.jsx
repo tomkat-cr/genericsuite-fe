@@ -104,10 +104,10 @@ export async function handleFetchError(error) {
         possibleCORS = (error.statusText.includes('CORS'));
 
         reasonDetail = await error.text().then(text => {
-            console_debug_log('Error body:', text);
+            if (debug) console_debug_log('Error body:', text);
             return text;
         }).catch(e => {
-            console_debug_log('Error reading body:', e);
+            if (debug) console_debug_log('Error reading body:', e);
             return `HTTP ${error.status}`;
         });
 

@@ -7,6 +7,7 @@ import { GeneralConfig_EditorData, GeneralConfig } from './components/SuperAdmin
 import { Users_EditorData, Users, UsersValidations, UsersDbListPreRead, UsersPasswordValidations, UsersDbPreWrite } from './components/SuperAdminOptions/Users.jsx';
 import { UsersProfile_EditorData, UserProfileEditor } from './components/UsersMenu/UserProfile.jsx';
 import { UsersConfig_EditorData, UsersConfig } from './components/UsersMenu/UsersConfig.jsx';
+import { AppFooter } from './components/AppFooter/AppFooter.jsx';
 // Constants
 import * as appConstants from './constants/app_constants.jsx';
 import * as classNameConstants from './constants/class_name_constants.jsx';
@@ -24,6 +25,12 @@ import * as ModalPopUp from './helpers/ModalPopUp.jsx';
 import * as PrivateRoute from './helpers/PrivateRoute.jsx';
 import * as ui from './helpers/ui.jsx';
 import * as urlParams from './helpers/url-params.jsx';
+import * as IconsLib from './helpers/IconsLib.jsx';
+import * as UserContext from './helpers/UserContext.jsx';
+import * as AppContext from './helpers/AppContext.jsx';
+import * as NavLib from './helpers/NavLib.jsx';
+// Test Helpers
+import * as testHelpersMocks from './test-helpers/mocks';
 // Services
 import * as authenticationService from './services/authentication.service.jsx';
 import * as blobFilesUtilities from './services/blob.files.utilities.jsx';
@@ -48,16 +55,16 @@ import * as ramdomize from './services/ramdomize.jsx';
 import * as responseHandlersService from './services/response.handlers.service.jsx';
 import * as waitAnimationUtility from './services/wait.animation.utility.jsx';
 // Images
-const appLogoEmblem = 'app_log_emblem.svg';
+// const appLogoEmblem = 'app_log_emblem.svg';
 const appLogoCircle = 'app_logo_circle.svg';
-const appLogoHorizontal = 'app_logo_horizontal.svg';
-const appLogoSquare = 'app_logo_square.svg';
-const arrowsRotateSolid = 'arrows_rotate_solid.svg';
-const clip = 'clip.svg';
-const googleLogo = 'google_logo.svg';
-const madebyLogoEmblem = 'madeby_logo_emblem.svg';
-const madebyLogoSquare = 'madeby_logo_square.svg';
-const spark = 'spark.svg';
+const appLogoLandscape = 'app_logo_landscape.svg';
+// const appLogoSquare = 'app_logo_square.svg';
+// const arrowsRotateSolid = 'arrows_rotate_solid.svg';
+// const clip = 'clip.svg';
+// const googleLogo = 'google_logo.svg';
+// const madebyLogoEmblem = 'madeby_logo_emblem.svg';
+// const madebyLogoSquare = 'madeby_logo_square.svg';
+// const spark = 'spark.svg';
 
 export {
     // Components
@@ -69,6 +76,7 @@ export {
     Users_EditorData, Users, UsersValidations, UsersDbListPreRead, UsersPasswordValidations, UsersDbPreWrite,
     UsersProfile_EditorData, UserProfileEditor,
     UsersConfig_EditorData, UsersConfig,
+    AppFooter,
     appConstants,
     classNameConstants,
     generalConstants,
@@ -85,6 +93,12 @@ export {
     PrivateRoute,
     ui,
     urlParams,
+    IconsLib,
+    UserContext,
+    AppContext,
+    NavLib,
+    // Test Helpers
+    testHelpersMocks,
     // Services
     authenticationService,
     blobFilesUtilities,
@@ -110,14 +124,14 @@ export {
     responseHandlersService,
     waitAnimationUtility,
     // Images
-    appLogoEmblem,
+    // appLogoEmblem,
     appLogoCircle,
-    appLogoHorizontal,
-    appLogoSquare,
-    arrowsRotateSolid,
-    clip,
-    googleLogo,
-    madebyLogoEmblem,
-    madebyLogoSquare,
-    spark,
+    appLogoLandscape,
+    // appLogoSquare,
+    // arrowsRotateSolid,
+    // clip,
+    // googleLogo,
+    // madebyLogoEmblem,
+    // madebyLogoSquare,
+    // spark,
 }

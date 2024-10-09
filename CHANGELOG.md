@@ -16,7 +16,49 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.22 (2024-10-07)
+---
+
+### New
+Add Darkmode [GS-63].
+Add Configurable sidebar menu [GS-114].
+Add localstorage generic functions [GS-112].
+Add Save darkmode and side menu set to localstorage [GS-112].
+New "GsIcons" library replaces FontAwesome [GS-115].
+Add landscape logo to the App header [GS-63].
+Add the optional "template" attribute to app_main_menu.json entries to customize the menu option design [GS-112] [GS-129].
+Add the <NoDesignComponent>> to have menu options with no GS FE Core design [GS-112] [GS-129].
+Add testHelpersMocks export [GS-129].
+
+### Changes
+Replace react-bootstrap entirely and use only Tailwind CSS [GS-63].
+Delete local storage PII [GS-2]
+Change the behavior of actions so that they appear when clicking on the line in the GCE_RFC (generic CRUD editor) listing page [GS-112].
+Change the color when hovering over the line in the GCE_RFC listing page [GS-112].
+Change lines with different colors if they are even/odd in the GCE_RFC listing page [GS-112].
+Improve data page layout by implementing Tailwind constants in the GCE_RFC [GS-112].
+Change Search input box size too small in the GCE_RFC listing page [GS-112].
+<HashRouter> was replaced by <RouterProvider> and createBrowserRouter() [GS-112].
+"/login" replaced by "/logout" in the Log Out option [GS-112].
+Add "openai_api_key" and "openai_model" fields  to user and user_profile json default configs [FA-200] [FA-201].
+<PrivateRoute/> avoid use getPrefix(true) [GS-112].
+Rename "test-helpers/mock-fetch.ts" to "test-helpers/mocks.js" to make it more generic and change the ".ts" extension by ".js" to fix the "Parameter 'data' implicitly has an 'any' type | export function mockFetch(data)..." error during the "make publish" [GS-129].
+
+### Fixes
+Fix missing classes in the new output.css of Tailwind v3.4.9 [GS-63].
+Fix the row values in index page not shown issue [GS-108].
+Fix the %PUBLIC_URL% issue in public/index.html file running the app with webpack [GS-116].
+Fix show WaitAnimation() in iterateChildComponents() and EditFormFormik() to make the data loading evident in the User Profile menu option [GS-112].
+
+### Breaks
+Bootstrap CSS is not longer used [GS-63].
+FontAwesome is not longer used [GS-115].
+SVG images removed and included in the "GsIcons" library [GS-115].
+Get rid of eval() in the GS FrontEnd [GS-127].
+
+
 ## 1.0.21 (2024-07-27)
+---
 
 ### New
 Add ".nvmrc" file to set the repo default node version.
@@ -336,6 +378,7 @@ FE: bash script to deploy ReactJs app with AWS Cloudfront and S3 [FA-100].
 
 
 ## 0.0.17 (2023-11-01)
+---
 
 ### New
 Add SuggestionDropdown component (and autocomplete) as a field type in GCE_RFC [FA-120].
@@ -346,6 +389,7 @@ Add dishes and dish ingredients in json definitions [FA-135].
 
 
 ## 0.0.16 (2023-07-29)
+---
 
 ### Fixes
 Fix deployment to AWS Cloudfront because npm build does not allow function.name. Funcions names passed to GetFormData() passed as string.

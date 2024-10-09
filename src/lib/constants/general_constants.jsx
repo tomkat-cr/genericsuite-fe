@@ -57,6 +57,8 @@ export const MSG_DONE_CREATED = 'Item has been created';
 export const MSG_DONE_UPDATED = 'Item has been updated';
 export const MSG_ACTIONS = 'Actions';
 export const MSG_SEARCH = 'Search';
+export const MSG_RELOAD = 'Reload';
+export const MSG_MORE = 'More';
 
 export const MSG_IS_REQUIRED = 'is required';
 export const MSG_MUST_BE = 'must be';

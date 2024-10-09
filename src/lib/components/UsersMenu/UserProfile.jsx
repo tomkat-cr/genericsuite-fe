@@ -4,9 +4,7 @@ import {
     GetFormData,
 } from '../../services/generic.editor.rfc.service.jsx';
 import { GenericSinglePageEditor } from '../../services/generic.editor.singlepage.jsx';
-import {
-    authenticationService,
-} from '../../services/authentication.service.jsx';
+import { useUser } from '../../helpers/UserContext.jsx';
 
 import {
     BILLING_PLANS,
@@ -45,11 +43,11 @@ export function UsersProfile_EditorData() {
 }
 
 export const UserProfileEditor = (props) => {
-    const { currentUserValue } = authenticationService;
+    const { currentUser } = useUser();
     return (
         <>
             <GenericSinglePageEditor
-                id={currentUserValue.id}
+                id={currentUser.id}
                 editorConfig={UsersProfile_EditorData()}
             />
         </>

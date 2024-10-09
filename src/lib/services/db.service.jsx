@@ -78,7 +78,7 @@ export class dbApiService {
                                         return { headers, text, response };
                                     },
                                     (error) => {
-                                        console_debug_log('||| getFetch | fixBlob | error:', error);
+                                        if (this.debug) console_debug_log('||| getFetch | fixBlob | error:', error);
                                         return Promise.reject(response);
                                     }
                                 );
@@ -106,7 +106,7 @@ export class dbApiService {
             }
         }
         catch (e) {
-            console_debug_log('|| FETCH Error:', e);
+            if (this.debug) console_debug_log('|| FETCH Error:', e);
             response = Promise.resolve(handleFetchError(e));
         };
         return response;

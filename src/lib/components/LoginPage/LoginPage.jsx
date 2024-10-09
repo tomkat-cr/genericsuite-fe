@@ -1,56 +1,75 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { authenticationService } from '../../services/authentication.service.jsx';
+import { useUser } from '../../helpers/UserContext.jsx';
+import { useAppContext } from '../../helpers/AppContext.jsx';
+
+import {
+    authenticationService,
+} from '../../services/authentication.service.jsx';
 import { getUrlParams } from '../../helpers/url-params.jsx';
-import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
+import { getLastUrl, getPrefix, removeLastUrl } from '../../helpers/history.jsx';
 import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 import { imageDirectory } from '../../constants/general_constants.jsx';
+import {
+    ERROR_MSG_CLASS,
+    FORM_GROUP_CLASS,
+    FORM_CONTROL_CLASS,
+    INVALID_FEEDBACK_CLASS,
+    BUTTON_PRIMARY_CLASS,
+    IS_INVALID_CLASS,
+    POPUP_TOP_MARGIN_CLASS,
+    LOGIN_PAGE_APP_LOGO_CLASS,
+} from '../../constants/class_name_constants.jsx';
+import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
+import { console_debug_log } from '../../services/logging.service.jsx';
 
 // This way to import the .svg files doesn't work on prod environents...
 // import DefaultAppLogo from '../../images/app_logo_square.svg';
 // import MadeByLogoSquare from '../../images/madeby_logo_square.svg';
 // import MadeByLogoCircle from '../../images/madeby_logo_emblem.svg';
 
+const debug = false;
+
 const defaultAppLogo = "app_logo_square.svg";
 
 export const LoginPage = (props) => {
-    const [redirectUrl, setRedirectUrl] = useState(null);
-    let appLogo = props.appLogo;
 
-    useEffect(() => {
+    const getRedirect = () => {
         const urlParams = getUrlParams(props)
-        let redirect;
         if (typeof urlParams.redirect === 'undefined') {
-            redirect = getLastUrl();
-        } else {
-            redirect = urlParams.redirect;
+            return getLastUrl();
         }
-        // Redirect to home OR redirect URL if already logged in
-        if (authenticationService.currentUserValue) {
-            removeLastUrl();
-            window.location.href = redirectUrl;
-        } else {
-            setRedirectUrl(redirect);
-        }
-        // Avoid need to add redirectUrl to dependency array
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props]);
+        return urlParams.redirect;
+    }
+
+    const { currentUser, registerUser, unRegisterUser } = useUser();
+    const { appLogo, theme } = useAppContext();
 
     const handleSubmit = (username, password, setStatus, setSubmitting) => {
         setStatus();
         authenticationService.login(username, password)
             .then(
                 user => {
+                    const redirectUrl = getRedirect();
                     // To avoid stay in login page with the wait animation
                     setSubmitting(false);
+                    // Set user data to <App/>
+                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 2:", user);
+                    registerUser(user);
                     // Redirect to previous page
                     removeLastUrl();
+                    if (redirectUrl.indexOf('/login') > 0) {
+                        redirectUrl = '/';
+                    }
+                    // return <Navigate to={redirectUrl} replace={true}/>
                     window.location.href = redirectUrl;
                     // To handle menu access rights changes
-                    window.location.reload(true);
+                    // window.location.reload(true);
                 },
                 error => {
                     setSubmitting(false);
@@ -74,51 +93,67 @@ export const LoginPage = (props) => {
                     handleSubmit(username, password, setStatus, setSubmitting);
                 }}
             >{({ errors, status, touched, isSubmitting }) => (
-                <div className="flex justify-center items-center min-h-screen mt-1 mb-1">
-                    <div className="bg-white rounded border mt-4 mb-1 pt-3 pb-2 pl-4 pr-4" style={{ width: '400px', margin: 'auto' }}>
+                <div
+                    className={POPUP_TOP_MARGIN_CLASS}
+                >
+                    <CenteredBoxContainer>
                         <Form>
                             <img src={imageDirectory + (appLogo || defaultAppLogo)}
                                 width="150"
                                 height="150"
-                                className="mx-auto my-0"
+                                className={LOGIN_PAGE_APP_LOGO_CLASS}
                                 alt="App Logo"
                             />
-                            {/* <MadeByLogoSquare alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
-                            {/* <MadeByLogoCircle alt="Madeby Logo" width="20" height="20" className="mx-auto my-0" /> */}
-                            <div className="form-group">
-                                <label htmlFor="username">Username</label>
+                            <div
+                                className={FORM_GROUP_CLASS}
+                            >
+                                <label
+                                    htmlFor="username"
+                                    className={theme.label}
+                                >
+                                    Username
+                                </label>
                                 <Field
                                     name="username"
                                     type="text"
-                                    className={'form-control' + (
-                                        errors.username && touched.username ? ' is-invalid' : ''
+                                    className={FORM_CONTROL_CLASS + ' ' + (
+                                        errors.username && touched.username ? IS_INVALID_CLASS : theme.input
                                     )}
                                 />
                                 <ErrorMessage
                                     name="username"
                                     component="div"
-                                    className="invalid-feedback"
+                                    className={INVALID_FEEDBACK_CLASS}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
+                            <div
+                                className={FORM_GROUP_CLASS}
+                            >
+                                <label
+                                    htmlFor="password"
+                                    className={theme.label}
+                                >
+                                    Password
+                                </label>
                                 <Field
                                     name="password"
                                     type="password"
-                                    className={'form-control' + (
-                                        errors.password && touched.password ? ' is-invalid' : ''
+                                    className={FORM_CONTROL_CLASS + ' ' + (
+                                        errors.password && touched.password ? IS_INVALID_CLASS : theme.input
                                     )}
-                                />
+                                    />
                                 <ErrorMessage
                                     name="password"
                                     component="div"
-                                    className="invalid-feedback"
+                                    className={INVALID_FEEDBACK_CLASS}
                                 />
                             </div>
-                            <div className="form-group">
+                            <div
+                                className={FORM_GROUP_CLASS}
+                            >
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className={BUTTON_PRIMARY_CLASS}
                                     disabled={isSubmitting}
                                 >
                                     Login
@@ -128,16 +163,22 @@ export const LoginPage = (props) => {
                                 }
                             </div>
                             {status && ! includesAppValidLinks(status) && 
-                                <div className={'alert alert-danger'}>{status}</div>
+                                <div
+                                    className={ERROR_MSG_CLASS}
+                                >
+                                    {status}
+                                </div>
                             }
                             {status && includesAppValidLinks(status) &&
                                 <div
-                                    className={'alert alert-danger'}
-                                    dangerouslySetInnerHTML={{ __html: status }}
-                                />
+                                    className={ERROR_MSG_CLASS}
+                                    // dangerouslySetInnerHTML={{ __html: status }}
+                                >
+                                    {status}
+                                </div>
                             }
                         </Form>
-                    </div>
+                    </CenteredBoxContainer>
                 </div>
             )}
             </Formik>

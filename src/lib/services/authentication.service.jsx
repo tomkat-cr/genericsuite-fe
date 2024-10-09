@@ -6,6 +6,10 @@ import { logout, currentUserSubject } from './logout.service.jsx';
 import { dbApiService } from './db.service.jsx';
 import { handleResponse, handleFetchError } from './response.handlers.service.jsx';
 import { console_debug_log } from './logging.service.jsx';
+import { getLocalConfig } from '../helpers/local-config.jsx';
+import { saveItemToLocalStorage } from '../helpers/localstorage-manager.jsx';
+
+const debug = false;
 
 export const authenticationService = {
     login,
@@ -35,17 +39,14 @@ function login(username, password) {
                 return Promise.reject(res.message);
             }
             let user = {
-                id: userService.convertId(res.resultset._id),
-                username: res.resultset.username,
-                // email: res.resultset.email,
-                firstName: res.resultset.firstname,
-                lastName: res.resultset.lastname,
                 token: res.resultset.token
             };
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            // Store the JWT token only in local storage to keep user logged in between page refreshes
+            // localStorage.setItem('currentUser', JSON.stringify(user));
+            saveItemToLocalStorage('currentUser', user);
             currentUserSubject.next(user);
-            return user;
+            // Return user details and JWT token
+            return getUserLocalData(res);
         });
 }
 
@@ -55,7 +56,7 @@ export const getUserData = (userId) => {
         .then(
             data => (data),
             error => {
-                console_debug_log(`ERROR: getUserData(${userId}:)`)
+                console_debug_log(`ERROR: getUserData(${userId}):`)
                 console.error(error);
                 return {
                     error: true,
@@ -63,4 +64,57 @@ export const getUserData = (userId) => {
                 };
             },
         );
+}
+
+export const getUserLocalData = (res) => {
+    const userService = new dbApiService({url: 'users'})
+    const data = res.resultset;
+    const localConfig = getLocalConfig();
+    return {
+        id: userService.convertId(data._id),
+        // username: data.username,
+        // email: data.email,
+        firstName: data.firstname,
+        // lastName: data.lastname,
+        // token: data.token
+        pref_side_menu: (data.pref_side_menu ?? localConfig.pref_side_menu),
+        pref_dark_mode: (data.pref_dark_mode ?? localConfig.pref_dark_mode),
+    };
+}
+
+export const getCurrentUserData = () => {
+    const dbApi = new dbApiService({ url: 'users/current_user_d' });
+    return dbApi.getOne({})
+        .then(
+            data => (data),
+            error => {
+                if (debug) {
+                    console_debug_log(`ERROR: getCurrentUserData():`)
+                    console.error(error);
+                }
+                return {
+                    error: true,
+                    errorMsg: error,
+                };
+            },
+        );
+}
+
+export const verifyCurrentUser = (registerUser) => {
+    if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
+        getCurrentUserData()
+            .then( 
+                userData => {
+                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
+                    if (userData.error) {
+                        if (debug) console.error('userData.error_message:', userData.error_message);
+                    } else {
+                        registerUser(getUserLocalData(userData));
+                    }
+                },
+                error => {
+                    console.error(error.errorMsg);
+                }
+            );
+    }
 }

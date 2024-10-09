@@ -6,7 +6,6 @@ import {
 } from '../../services/generic.editor.rfc.service.jsx';
 import { genericFuncArrayDefaultValue } from '../../services/generic.editor.rfc.specific.func.jsx';
 import {
-    authenticationService,
     getUserData,
 } from '../../services/authentication.service.jsx';
 import { dbApiService } from '../../services/db.service.jsx';
@@ -56,12 +55,11 @@ export const Users = () => (
  * System Admin
  */
 
-export const UsersValidations = (data, editor, action) => {
+export const UsersValidations = (data, editor, action, currentUser) => {
     // Users pre-deletion/update validations
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
-        const { currentUserValue } = authenticationService;
-        getUserData(currentUserValue.id)
+        getUserData(currentUser.id)
             .then( 
                 userData => {
                     if (typeof data !== 'undefined' && typeof data['_id'] !== 'undefined') {
@@ -74,12 +72,12 @@ export const UsersValidations = (data, editor, action) => {
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'Super users can be deleted only by other Super users.';
                             }
-                            if (data['id'] === currentUserValue.id) {
+                            if (data['id'] === currentUser.id) {
                                 resp.error = true;
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'You cannot delete yourself';
                             }
-                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUserValue.id) {
+                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUser.id) {
                                 resp.error = true;
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'You cannot delete other\'s records';
@@ -93,7 +91,7 @@ export const UsersValidations = (data, editor, action) => {
                             }
                             break;
                         case ACTION_UPDATE:
-                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUserValue.id) {
+                            if (userData.resultset['superuser'] === '0' && data['id'] !== currentUser.id) {
                                 resp.error = true;
                                 resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
                                     'You cannot modify other\'s records';
@@ -116,12 +114,11 @@ export const UsersValidations = (data, editor, action) => {
     });
 }
 
-export const UsersDbListPreRead = (data, editor, action) => {
+export const UsersDbListPreRead = (data, editor, action, currentUser) => {
     // Users pre-deletion/update validations
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
-        const { currentUserValue } = authenticationService;
-        getUserData(currentUserValue.id)
+        getUserData(currentUser.id)
             .then( 
                 currentUserData => {
                     if (currentUserData.error) {
@@ -130,7 +127,7 @@ export const UsersDbListPreRead = (data, editor, action) => {
                     } else {
                         // Set a filter to retrieve only the current user
                         if (currentUserData.resultset['superuser'] === '0') {
-                            resp.fieldValues['_id'] = currentUserValue.id
+                            resp.fieldValues['_id'] = currentUser.id
                         }    
                     }
                     if (resp.error) {

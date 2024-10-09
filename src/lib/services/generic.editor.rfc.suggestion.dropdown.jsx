@@ -16,6 +16,12 @@ import {
 import { 
     console_debug_log,
 } from "./logging.service.jsx";
+import { useUser } from '../helpers/UserContext.jsx';
+import { useAppContext } from '../helpers/AppContext.jsx';
+import {
+    INVALID_FEEDBACK_CLASS,
+    SUGGESTION_DROPDOWN_CLASS,
+} from '../constants/class_name_constants.jsx';
 
 const debug = false;
 
@@ -30,6 +36,8 @@ export const SuggestionDropdown = ({
     const { setFieldValue } = useFormikContext();
     const [inputValue, setInputValue] = useState(value);
     const [suggestions, setSuggestions] = useState([]);
+    const { currentUser } = useUser();
+    const { theme } = useAppContext();
 
     // This component's input field must be different to the external input field to enable value sync
     const nameInternal = `${name}_sdd`;
@@ -63,7 +71,7 @@ export const SuggestionDropdown = ({
             // Get suggestions from external surce
             const dbService = new dbApiService({ url: filter_api_url })
             let urlParams = {}
-            let bodyData = replaceSpecialVars(filter_search_other_param);
+            let bodyData = replaceSpecialVars(filter_search_other_param, currentUser);
             bodyData[filter_search_param_name] = inputValue;
             if (debug) {
                 console_debug_log(`SuggestionDropdow 2: ${filter_api_url} | useEffect | bodyData:`);
@@ -141,7 +149,7 @@ export const SuggestionDropdown = ({
     return (
         <>
             <div
-                className="align-middle flex"
+                className={`${SUGGESTION_DROPDOWN_CLASS} ${theme.input}`}
             >
                 <Downshift
                     inputValue={inputValue}
@@ -195,7 +203,7 @@ export const SuggestionDropdown = ({
             </div>
             {inputValue && suggestions.length === 0 && (
                 <div
-                    className="invalid-feedback"
+                    className={INVALID_FEEDBACK_CLASS}
                 >
                     Error: No suggestions found.
                 </div>

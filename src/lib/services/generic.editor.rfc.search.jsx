@@ -4,22 +4,20 @@ import React, { useState } from "react"
 
 import { console_debug_log } from "./logging.service.jsx";
 import { processDateToTimestamp } from "../helpers/date-timestamp.jsx";
+import { GsIcons } from "../helpers/IconsLib.jsx";
+import { useAppContext } from "../helpers/AppContext.jsx";
     
 import {
     MSG_SEARCH,
 } from "../constants/general_constants.jsx";
 import {
     BUTTON_LISTING_CLASS,
+    APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS,
+    // APP_LISTING_SEARCH_BOX_LABEL_CLASS,
+    APP_LISTING_SEARCH_BOX_INPUT_CLASS,
+    APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS,
+    APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS,
 } from "../constants/class_name_constants.jsx";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import fontawesome from "@fortawesome/fontawesome";
-import {
-    faGreaterThan,
-} from "@fortawesome/fontawesome-free-solid";
-fontawesome.library.add(
-    faGreaterThan,
-);
 
 const debug = false;
 
@@ -29,9 +27,8 @@ export const CrudEditorSearch = ({
     handleCancel,
     value="",
 }) => {
+    const { theme } = useAppContext();
     const [searchText, setSearchText] = useState(value);
-
-    const searchTextId = () => (`searchText_${id}`)
 
     const getDateRange = (searchValue) => {
         const dateRange = searchValue.split(',');
@@ -101,29 +98,35 @@ export const CrudEditorSearch = ({
     }
 
     return (
-        <div className="mt-2 flex items-center">
-            <label
-                htmlFor={searchTextId()}
-                className="ml-3 mr-2 text-sm"
+        <div
+            className={APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS}
+        >
+            {/* <label
+                htmlFor={id}
+                className={APP_LISTING_SEARCH_BOX_LABEL_CLASS}
             >
                 {MSG_SEARCH}:
-            </label>
+            </label> */}
             <input
-                id={searchTextId()}
+                id={id}
                 // type="text"
-                className="mb-2 w-6 h-6 px-2 text-sm"
+                className={APP_LISTING_SEARCH_BOX_INPUT_CLASS + " " + theme.input}
+                placeholder={`${MSG_SEARCH}...`}
                 value={searchText || ''}
                 onChange={handleTextChange}
             />
             <button
-                className={`${BUTTON_LISTING_CLASS} mb-2 ml-2 mr-2 text-xs`}
+                className={APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS}
                 onClick={handleSubmit}
             >
-                <FontAwesomeIcon icon="greater-than" />
+                <GsIcons
+                    icon="search"
+                    alt={MSG_SEARCH}
+                />
             </button>
             {searchText !== '' &&
                 <button
-                    className={`${BUTTON_LISTING_CLASS} mb-2 mr-2 text-xs`}
+                    className={APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS}
                     onClick={handleCancelSearch}
                 >
                     X

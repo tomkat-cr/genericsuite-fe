@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
-
-import { Link as RouterLink } from 'react-router-dom';
+import {
+    Link as RouterLink,
+    createBrowserRouter,
+    RouterProvider,
+    HashRouter,
+    Navigate,
+    Link,
+} from "react-router-dom";
+// import { useLocation } from 'react-router-dom';
 
 import {
     GenericMenuBuilder,
     getMenuFromApi,
-    DefaultRoutes,
+    getDefaultRoutes,
+    getRoutes,
+    GetHashRoutes,
 } from '../../services/generic.menu.service.jsx';
-import {
-    authenticationService,
-} from '../../services/authentication.service.jsx';
 import {
     console_debug_log,
 } from '../../services/logging.service.jsx';
+import {
+    verifyCurrentUser
+} from '../../services/authentication.service.jsx';
 import {
     errorAndReEnter,
     logoutHander,
@@ -24,8 +33,24 @@ import {
 import {
     mergeDicts,
 } from '../../helpers/dict-utilities.jsx';
+import {
+    UserProvider,
+    useUser
+} from '../../helpers/UserContext.jsx';
+import {
+    AppProvider,
+    useAppContext,
+} from '../../helpers/AppContext.jsx';
+
+import {
+    getLocalConfig,
+    saveLocalConfig
+} from '../../helpers/local-config.jsx';
+import { imageDirectory } from '../../constants/general_constants.jsx';
 
 import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
+import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
+import { MenuModeButton } from '../../helpers/MenuModeButton.jsx';
 
 // Specific imports
 
@@ -36,8 +61,10 @@ import { HomePage } from '../HomePage/HomePage.jsx';
 import { LoginPage } from '../LoginPage/LoginPage.jsx';
 import { About, AboutBody } from '../About/About.jsx';
 import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx';
+import { AppFooter } from '../AppFooter/AppFooter.jsx';
 
-import './App.css';
+// Component specific CSS:
+// import './App.css';
 
 // Not accepted this way:
 // import Container from 'react-bootstrap/Container';
@@ -49,189 +76,55 @@ import './App.css';
 // const Nav = require('react-bootstrap').Nav;
 // const Navbar = require('react-bootstrap').Navbar;
 
-import Container from 'react-bootstrap/cjs/Container.js';
-import Nav from 'react-bootstrap/cjs/Nav.js';
-import Navbar from 'react-bootstrap/cjs/Navbar.js';
+// 2024-08-11
+// import Container from 'react-bootstrap/cjs/Container.js';
+// import Nav from 'react-bootstrap/cjs/Nav.js';
+// import Navbar from 'react-bootstrap/cjs/Navbar.js';
+import {
+    MainContainer,
+    AppSectionContainer,
+    AppFooterContainer,
+    Navbar,
+    // ToggleSideBar,
+    GsButton,
+} from '../../helpers/NavLib.jsx';
+import {
+    getPrefix,
+    hasHashRouter,
+} from '../../helpers/history.jsx';
+import {
+    defaultTheme,
+    ALERT_DANGER_CLASS,
+    BUTTON_PRIMARY_CLASS,
+    NAVBAR_BRAND_APP_LOGO_CLASS,
+    NAVBAR_BRAND_NAME_CLASS,
+    NAVBAR_BRAND_APP_VERSION_CLASS,
+    APP_GENERAL_MARGINS_CLASS,
+    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS,
+} from '../../constants/class_name_constants.jsx';
 
 const debug = false;
 
-const defaultComponentMap = {
-    "Users_EditorData": Users_EditorData,
-    "GeneralConfig_EditorData": GeneralConfig_EditorData,
-    "UserProfileEditor": UserProfileEditor,
-    // "Chatbot": ChatBot,
-    "HomePage": HomePage,
-    "LoginPage": LoginPage,
-    "About": About,
-    "AboutBody": AboutBody,
-    "logout": logoutHander,
-};
-
-const isComponent = (componentObj) => {
-    return (String(componentObj).includes('component:'));
-}
-
-function setExpanded(componentObj) {
-    if (document.getElementById("navbar-main-toggle") &&
-        !document.getElementById("navbar-main-toggle").classList.contains("collapsed")) {
-        document.getElementById("navbar-main-toggle").click();
-    }
-    if (componentObj) {
-        if (debug) console_debug_log(`>> setExpanded [1] | isComponent: ${isComponent(componentObj)} | componentObj:`, componentObj);
-        if (isComponent(componentObj)){
-            try {
-                return <componentObj/>;
-            } catch (error) {
-                console_debug_log('[ASE-E010] componentObj:', componentObj);
-                console_debug_log(error);
-                return null;
-            }
-        } else {
-            try {
-                return componentObj();
-            } catch (error) {
-                console_debug_log('[ASE-E020] componentObj:', componentObj);
-                console_debug_log(error);
-                return null;
-            }
-        }
-    }
-    if (debug) console_debug_log(">> setExpanded [2]");
-    return '';
-}
-
-export const App = ({componentMap = {}, appLogo = null}) => {
-    
-    const [currentUser, setCurrentUser] = useState(null);
-    const [state, setState] = useState("");
-    const [login, setLogin] = useState(false);
-    const [menuOptions, setMenuOptions] = useState(null);
-
+const getShowContentOnly = () => {
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
-    const version = process.env.REACT_APP_VERSION;
-    const appName = process.env.REACT_APP_APP_NAME;
-    const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
-
-    if (debug) {
-        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly, 'componentMapFinal:', componentMapFinal, 'appLogo:', appLogo);
-    }
-
-    useEffect(() => {
-        if (authenticationService.currentUser) {
-            const subscription = authenticationService.currentUser.subscribe(
-                x => setCurrentUser(x)
-            );
-            return () => subscription.unsubscribe();
-        }
-    }, []);
-
-    useEffect(() => {
-        if ( !(login || window.location.href.includes("/login")) ) {
-            getMenuFromApi(state, setState, setMenuOptions);
-        }
-    }, [state, login]);
-
-    const stateHandler = () => {
-        setLogin(true);
-        logoutHander();
-    }
-
-    return (
-        <>
-            {!showContentOnly && (<div className="w-screen">
-                    <Navbar
-                        id="navbar-main"
-                        collapseOnSelect
-                        expand="lg"
-                        className="bg-body-tertiary navbar-dark bg-dark"
-                    >
-                        <Container>
-                            <Navbar.Brand
-                                as={RouterLink}
-                                to={(currentUser ? '/' : '/#/login')}
-                                // to={(currentUser ? window.location.origin + '/#' : '/#/login')}
-                                onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
-                            >
-                                {appName} <span style={{fontSize: '60%'}}>{version}</span>
-                            </Navbar.Brand>
-                            {currentUser && <>
-                                <Navbar.Toggle
-                                    id="navbar-main-toggle"
-                                    aria-controls="responsive-navbar-nav"
-                                />
-                                <Navbar.Collapse
-                                    id="basic-navbar-nav"
-                                >
-                                    <Nav
-                                        className="me-auto"
-                                    >
-                                        <GenericMenuBuilder
-                                            componentMapping={componentMapFinal}
-                                            itemType="top_menu"
-                                            menuOptions={menuOptions}
-                                            status={state}
-                                            setExpanded={setExpanded}
-                                        />
-                                    </Nav>
-                                </Navbar.Collapse>
-                                <Navbar.Collapse
-                                    id="current-user-navbar-nav"
-                                    className="justify-content-end"
-                                >
-                                    <Navbar.Text>
-                                        Signed in as:
-                                    </Navbar.Text>
-                                    <GenericMenuBuilder
-                                        title={currentUser.firstName}
-                                        componentMapping={componentMapFinal}
-                                        itemType="hamburger"
-                                        menuOptions={menuOptions}
-                                        status={state}
-                                        showContentOnly={showContentOnly}
-                                        setExpanded={setExpanded}
-                                    />
-                                </Navbar.Collapse>
-                            </>}
-                        </Container>
-                    </Navbar>
-            </div>)}
-            <div 
-                className="w-screen bg-gray-300 fyn_jumbotron"
-                style={{ minHeight: '88vh' }}
-            >
-                <div className="p-2">
-                    <AppMainComponent
-                        login={login}
-                        state={state}
-                        stateHandler={stateHandler}
-                        menuOptions={menuOptions}
-                        componentMap={componentMapFinal}
-                        setExpanded={setExpanded}
-                        showContentOnly={showContentOnly}
-                        appLogo={appLogo}
-                    />
-                </div>
-            </div>
-            {state !== '' && (
-                <DefaultRoutes/>
-            )}
-        </>
-    );
-};
+    return showContentOnly;
+}
 
 const CloseButton = ({children}) => {
     return (
         <>
             {children && (
-                <div className="alert alert-danger" role="alert">
+                <div
+                    className={ALERT_DANGER_CLASS} role="alert"
+                >
                     {children}
                 </div>
             )}
             <button
                 type="button"
                 onClick={() => window.close()}
-                className="ml-2 mb-1 bg-blue-500 text-white p-0 rounded close"
+                className={BUTTON_PRIMARY_CLASS}
             >
                 Close
             </button>
@@ -239,27 +132,250 @@ const CloseButton = ({children}) => {
     );
 }
 
-const AppMainComponent = ({
-    login,
-    state,
-    stateHandler,
-    menuOptions,
-    componentMap,
-    showContentOnly,
-    setExpanded,
-    appLogo = null,
-}) => {
-    if (login || window.location.href.includes("/login")) {
-        if (debug) console_debug_log("AppMainComponent | login");
-        if (showContentOnly) {
-            return (
-                <CloseButton>
-                    Re-login is required...
-                </CloseButton>
-            );
-        }
-        return (<LoginPage appLogo={appLogo}/>);
+const AppNavBar = ({ children }) => {
+    const { currentUser } = useUser();
+    const { setExpanded, appLogoHeader } = useAppContext();
+    const version = process.env.REACT_APP_VERSION;
+    const appName = (
+        appLogoHeader ? 
+            <img
+                src={imageDirectory + appLogoHeader}
+                className={NAVBAR_BRAND_APP_LOGO_CLASS}
+                alt="App Logo"
+            />
+                :
+            process.env.REACT_APP_APP_NAME
+    );
+    return (
+        <Navbar
+            id="navbar-main"
+        >
+            <Navbar.Brand
+                as={RouterLink}
+                to='/'
+                // onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+            >
+                <div
+                    className={NAVBAR_BRAND_NAME_CLASS}
+                >
+                    {appName}
+                </div>
+                <div
+                    className={NAVBAR_BRAND_APP_VERSION_CLASS}
+                >{version}</div>
+            </Navbar.Brand>
+            {children}
+        </Navbar>
+    );
+}
+
+const TopRightMenu = ({ showContentOnly, authenticated = true }) => {
+    const { currentUser } = useUser();
+    return (
+        <Navbar.TopRightMenu
+            authenticated={authenticated}
+        >
+            <DarkModeButton />
+            <MenuModeButton />
+            <Navbar.Toggle />
+            {currentUser && authenticated && (
+                <GenericMenuBuilder
+                    icon="place-holder-circle"
+                    title={currentUser.firstName}
+                    itemType="hamburger"
+                    showContentOnly={showContentOnly}
+                />
+            )}
+        </Navbar.TopRightMenu>
+    );
+}
+
+const NoDesignComponent = ({ children, errorMessage }) => {
+    return (
+        <>
+            {errorMessage && (
+                <div
+                    className={ALERT_DANGER_CLASS}
+                    role="alert"
+                >
+                    {errorMessage}
+                </div>
+            )}
+            {children}
+        </>
+    );
+}
+
+const AppMainInnerUnauthenticated = ({ children }) => {
+    const { sideMenu } = useAppContext();
+    const showContentOnly = getShowContentOnly();
+    return (
+        <MainContainer>
+            <AppNavBar>
+                {!sideMenu && (
+                    <Navbar.TopRightMenu>
+                        <TopRightMenu
+                            showContentOnly={showContentOnly}
+                            authenticated={false}
+                        />
+                    </Navbar.TopRightMenu>
+                )}
+            </AppNavBar>
+            <AppSectionContainer>
+                {!sideMenu && (
+                    <>{children}</>
+                )}
+                {sideMenu && (
+                    <>
+                        <Navbar.TopForSideMenu>
+                            <TopRightMenu
+                                showContentOnly={showContentOnly}
+                                authenticated={false}
+                            />
+                        </Navbar.TopForSideMenu>
+                        <AppSectionContainer.ForSideMenu>
+                            <>{children}</>
+                        </AppSectionContainer.ForSideMenu>
+                        <AppFooterContainer>
+                            <AppFooter/>
+                        </AppFooterContainer>
+                    </>
+                )}
+            </AppSectionContainer>
+            {!sideMenu && (
+                <AppFooterContainer>
+                    <AppFooter/>
+                </AppFooterContainer>
+            )}
+        </MainContainer>
+    );
+}
+
+const AppMainInner = ({ children }) => {
+    // const location = useLocation();
+    // if (debug) console_debug_log("App | location:", location);
+    const { currentUser } = useUser();
+    const {
+        state, setState,
+        menuOptions, setMenuOptions,
+        sideMenu, setSideMenu,
+        isMobileMenuOpen,
+        componentMap,
+    } = useAppContext();
+
+    const showContentOnly = getShowContentOnly();
+
+    if (debug) {
+        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly);
     }
+
+    const stateHandler = () => {
+        logoutHander();
+    }
+
+    useEffect(() => {
+        // Load menus from JSON configurations
+        if (currentUser) {
+            getMenuFromApi(state, setState, setMenuOptions);
+        }
+    }, [currentUser, state]);
+
+    if (showContentOnly) {
+        return (
+            <AppMainInnerUnauthenticated>
+                {children}
+            </AppMainInnerUnauthenticated>
+        );
+    }
+
+    return (
+        <MainContainer>
+            <AppNavBar>
+                <Navbar.TopCenterMenu>
+                    <GenericMenuBuilder
+                        itemType={sideMenu ? "side_menu" : "top_menu"}
+                    />
+                    {sideMenu && isMobileMenuOpen && currentUser && (
+                        <GenericMenuBuilder
+                            title={currentUser.firstName}
+                            itemType="hamburger"
+                            showContentOnly={showContentOnly}
+                            mobileMenuMode={true}
+                        />
+                    )}
+                </Navbar.TopCenterMenu>
+                {!sideMenu && (
+                    <TopRightMenu
+                        showContentOnly={showContentOnly}
+                    />
+                )}
+            </AppNavBar>
+            <AppSectionContainer>
+                <>
+                    {!sideMenu && (
+                        <AppMainComponent
+                            stateHandler={stateHandler}
+                            showContentOnly={showContentOnly}
+                        >
+                            {children}
+                        </AppMainComponent>
+                    )}
+                    {sideMenu && (
+                        <>
+                            <Navbar.TopForSideMenu>
+                                <TopRightMenu
+                                    showContentOnly={showContentOnly}
+                                />
+                            </Navbar.TopForSideMenu>
+                            <AppSectionContainer.ForSideMenu>
+                                {/* <ToggleSideBar
+                                    onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
+                                /> */}
+                                <AppMainComponent
+                                    stateHandler={stateHandler}
+                                    showContentOnly={showContentOnly}
+                                >
+                                    {children}
+                                </AppMainComponent>
+                            </AppSectionContainer.ForSideMenu>
+                            <AppFooterContainer>
+                                <AppFooter/>
+                            </AppFooterContainer>
+                        </>
+                    )}
+                </>
+            </AppSectionContainer>
+            <Navbar.MobileMenu>
+                <GenericMenuBuilder
+                    itemType="mobile_menu"
+                />
+                {currentUser && (
+                    <GenericMenuBuilder
+                        title={currentUser.firstName}
+                        itemType="hamburger"
+                        showContentOnly={showContentOnly}
+                        mobileMenuMode={true}
+                    />
+                )}
+            </Navbar.MobileMenu>
+            {!sideMenu && (
+                <AppFooterContainer>
+                    <AppFooter/>
+                </AppFooterContainer>
+            )}
+        </MainContainer>
+    );
+};
+
+const AppMainComponent = ({
+    stateHandler,
+    showContentOnly,
+    children,
+}) => {
+    // const location = useLocation();
+    // if (debug) console_debug_log("AppMainComponent | location:", location);
+    const { state, menuOptions, currentUser } = useAppContext();
+
     if (state !== "") {
         if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
         if (showContentOnly) {
@@ -273,17 +389,101 @@ const AppMainComponent = ({
     }
     if (!menuOptions) {
         if (debug) console_debug_log("AppMainComponent | WaitAnimation");
-        return WaitAnimation();
+        return (
+            <div 
+                className={LOGIN_BUTTON_IN_APP_COMPONENT_CLASS}
+            >
+                <GsButton
+                    as={RouterLink}
+                    to={getPrefix()+'/login'}
+                >
+                    Login
+                </GsButton>
+            </div>
+        )
     }
-    if (debug) console_debug_log("AppMainComponent | GenericMenuBuilder");
+    return (children);
+}
+
+const AppMain = () => {
+    const { currentUser, registerUser } = useUser();
+
+    const {
+        state, setState,
+        menuOptions, setMenuOptions,
+        componentMap,
+        setExpanded,
+    } = useAppContext();
+
+    const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
+
+    useEffect(() => {
+        verifyCurrentUser(registerUser);
+    }, []);
+
+    useEffect(() => {
+        // Load menus from JSON configurations
+        if (currentUser) {
+            getMenuFromApi(state, setState, setMenuOptions);
+        }
+    }, [currentUser, state]);
+
+    useEffect(() => {
+        if (menuOptions) {
+            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
+        }
+    }, [menuOptions])
+
+    if (debug) console_debug_log("App | router:", router, "menuOptions:", menuOptions, "currentUser:", currentUser);
+
+    if (hasHashRouter) {
+        return (
+            <HashRouter>
+                <>
+                    <GetHashRoutes
+                        routes={router}
+                    />
+                </>
+            </HashRouter>
+        );
+    }
+
     return (
-        <GenericMenuBuilder
-            componentMapping={componentMap}
-            itemType="routes"
-            menuOptions={menuOptions}
-            status={state}
-            setExpanded={setExpanded}
-            appLogo={appLogo}
+        <RouterProvider
+            router={createBrowserRouter(router)}
+            history={history}
         />
-    )
+    );
+}
+
+const defaultComponentMap = {
+    "Users_EditorData": Users_EditorData,
+    "GeneralConfig_EditorData": GeneralConfig_EditorData,
+    "UserProfileEditor": UserProfileEditor,
+    // "Chatbot": ChatBot,
+    "HomePage": HomePage,
+    "LoginPage": LoginPage,
+    "About": About,
+    "AboutBody": AboutBody,
+    "AppFooter": AppFooter,
+    "AppMainInner": AppMainInner,
+    "AppMainInnerUnauthenticated": AppMainInnerUnauthenticated,
+    "NoDesignComponent": NoDesignComponent,
+    "logout": logoutHander,
+    "defaultTheme": defaultTheme,
+};
+
+export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
+    const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+    return (
+        <UserProvider>
+            <AppProvider
+                globalComponentMap={componentMapFinal}
+                globalAppLogo={appLogo}
+                globalAppLogoHeader={appLogoHeader}
+            >
+                <AppMain/>
+            </AppProvider>
+        </UserProvider>
+      );
 }

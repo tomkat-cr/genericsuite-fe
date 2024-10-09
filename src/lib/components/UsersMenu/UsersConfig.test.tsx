@@ -1,12 +1,16 @@
 import React from "react";
 import { render } from "@testing-library/react";
+
 import { MemoryRouter } from "react-router-dom";
 
 // Fix the "ReferenceError: Response is not defined" message
 // $ npm install whatwg-fetch --save-dev
 import 'whatwg-fetch';
 
-import { mockFetch } from '../../test-helpers/mock-fetch'
+import { mockDefaultComponentMap, mockFetch } from '../../test-helpers/mocks'
+
+import { UserProvider } from "../../helpers/UserContext";
+import { AppProvider } from "../../helpers/AppContext";
 
 import { UsersConfigComponent } from "./UsersConfig";
 
@@ -17,9 +21,15 @@ describe("UsersConfigComponent", () => {
         React.act(() => {
             render(
                 <MemoryRouter>
-                    <UsersConfigComponent
-                        parentData={{}}
-                    />
+                    <UserProvider>
+                        <AppProvider
+                            globalComponentMap={mockDefaultComponentMap()}
+                        >
+                            <UsersConfigComponent
+                                parentData={{}}
+                            />
+                        </AppProvider>
+                    </UserProvider>
                 </MemoryRouter>
             );
         })

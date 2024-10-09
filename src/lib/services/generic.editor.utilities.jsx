@@ -1,7 +1,5 @@
 // GenericCrudEditor general utilities
 
-import { authenticationService } from "./authentication.service.jsx";
-
 export const defaultValue = (dictObj, elementName, defaultValue = '') => {
     if (typeof dictObj[elementName] !== 'undefined') {
         return dictObj[elementName];
@@ -9,11 +7,10 @@ export const defaultValue = (dictObj, elementName, defaultValue = '') => {
     return defaultValue;
 }
 
-export const replaceSpecialVars = (params) => {
-    const { currentUserValue } = authenticationService;
+export const replaceSpecialVars = (params, currentUser) => {
     Object.keys(params).forEach(key => {
         if (params[key] === "{CurrentUserId}") {
-            params[key] = currentUserValue.id;
+            params[key] = currentUser.id;
         }
     });
     return params;

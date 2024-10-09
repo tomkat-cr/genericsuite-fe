@@ -14,8 +14,30 @@ export function GeneralConfig_EditorData() {
     const registry = {
         "GeneralConfig": GeneralConfig, 
         "TRUE_FALSE": TRUE_FALSE,
+        // "testFormula": () => (alert("This is a Formula")),
     }
-    // return GetFormData('general_config', registry, 'GeneralConfig_EditorData');
+    /*
+     * To test the formula:
+    *
+     * Uncomment the above "testFormula" function:
+     *     "testFormula": () => (alert("This is a Formula")),
+     *
+     * Add the following definition item to "general_config.json"
+     * {
+     *    "name": "formula_test",
+     *    "label": "FORMULA TEST",
+     *    "type": "text",
+     *    "readonly": false,
+     *    "listing": true,
+     *    "formula": "testFormula"
+     * }
+     * 
+     * Then go to the "Admin > Configuration Parameters"
+     * 
+     * Click on the Edit button on any row
+     * 
+     * Go to the "Formula Test", click on it and press Tab
+     */
     return GetFormData(general_config, registry, 'GeneralConfig_EditorData');
 }
 

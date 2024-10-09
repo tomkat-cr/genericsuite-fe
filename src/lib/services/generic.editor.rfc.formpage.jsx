@@ -1,8 +1,5 @@
 // GenericCrudEditor data form functions
 
-// To avoid the warning [eslint] eval can be harmful  no-eval
-/* eslint no-eval: 0 */
-
 import React, { useEffect, useState, useContext } from 'react';
 
 import { Formik, Field, Form, ErrorMessage, useFormikContext } from 'formik';
@@ -25,6 +22,9 @@ import {
     timestampToDate,
 } from '../helpers/date-timestamp.jsx';
 import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
+import { useUser } from '../helpers/UserContext.jsx';
+import { useAppContext } from '../helpers/AppContext.jsx';
+import { GsButton } from '../helpers/NavLib.jsx';
 
 import {
     ACTION_CREATE,
@@ -52,7 +52,23 @@ import {
     BUTTON_SECONDARY_CLASS,
     ERROR_MSG_CLASS,
     INFO_MSG_CLASS,
+    APP_TOP_DIV_CLASS,
+    APP_TITLE_H1_CLASS,
+    // APP_FORMPAGE_LEVEL1_DIV_CLASS,
+    // APP_FORMPAGE_LEVEL2_DIV_CLASS,
+    INVALID_FEEDBACK_CLASS,
+    APP_FORMPAGE_FORM_BUTTON_BAR_CLASS,
+    APP_FORMPAGE_LABEL_CLASS,
+    APP_FORMPAGE_LABEL_REQUIRED_CLASS,
+    APP_FORMPAGE_FIELD_CLASS,
+    APP_FORMPAGE_FIELD_BASE_CLASS,
+    APP_FORMPAGE_FIELD_GOOD_CLASS,
+    APP_FORMPAGE_FIELD_INVALID_CLASS,
+    APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS,
+    APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS,
 } from "../constants/class_name_constants.jsx";
+
+const debug = false;
 
 let calcFields = {};
 
@@ -71,7 +87,8 @@ export const FormPage = ({
     const [refresh, setRefresh] = useState(0);
     const [formMsg, setFormMsg] = useState({message: message, messageType: messageType});
 
-    const debug = false;
+    const { currentUser } = useUser();
+    const { theme } = useAppContext();
 
     const {
         debugCache,
@@ -84,7 +101,7 @@ export const FormPage = ({
     useEffect(() => {
         if (mode === ACTION_CREATE) {
             // To assign specific default values in creation...
-            processGenericFuncArray(editor, 'dbPreRead', {}, mode).then(
+            processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(
                 funcResponse => setFormData(funcResponse.fieldValues),
                 error => setStatus(errorAndReEnter(error,'[GCE-FD-010]'))
             )
@@ -96,7 +113,7 @@ export const FormPage = ({
         ) {
             let accessKeysDataScreen = {}
             accessKeysDataScreen[editor.primaryKeyName] = id;
-            processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode).then(
+            processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(
                 funcResponse => {
                     accessKeysDataScreen = Object.assign(
                         funcResponse.fieldValues, editor.parentFilter,
@@ -105,7 +122,7 @@ export const FormPage = ({
                         .then(
                             data => {
                                 // To assign specific default values in update, read or delete...
-                                processGenericFuncArray(editor, 'dbPostRead', data, mode).then(
+                                processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(
                                     funcResponse => setFormData(funcResponse.fieldValues),
                                     error => setStatus(errorAndReEnter(error, '[GCE-FD-020]'))
                                 );
@@ -149,39 +166,61 @@ export const FormPage = ({
                     : MSG_ACTION_DELETE;
 
     return (
-        // <div className="container mx-auto px-4">
         <div 
-            className="w-screen bg-gray-300 fyn_jumbotron"
+            className={`${APP_TOP_DIV_CLASS} ${theme.contentBg}`}
         >
-            <h1 className="text-2xl font-semibold mb-4">
-                {editor.title + " - " + actionTitle}
-            </h1>
-            {status && (
-                <div className={ERROR_MSG_CLASS}>
-                    {status}
-                </div>
-            )}
-            {!status && formData &&
-                <EditFormFormik
-                    editor={editor}
-                    parenHandleCancel={onCancel_par}
-                    setInfoMsg={setInfoMsg_par}
-                    action={mode}
-                    dataset={formData.resultset}
-                    message={formMsg['message']}
-                    messageType={formMsg['messageType']}
-                    handleFormPageActions={handleFormPageActions}
+            {/* <div 
+                className={APP_FORMPAGE_LEVEL1_DIV_CLASS}
+            > */}
+                <CrudEditorFormPageTitle
+                    baseUrl={editor.baseUrl}
+                    title={editor.title}
+                    actionTitle={actionTitle}
                 />
-            }
-            {!status &&
-                formData &&
-                !editorFlags.isCreate &&
-                iterateChildComponents(editor, formData.resultset, handleFormPageActions)
-            }
-            {(debug ? debugCache("FormPage") : '')}
-        </div>
+                {/* <div
+                    className={APP_FORMPAGE_LEVEL2_DIV_CLASS}
+                > */}
+                    {status && (
+                        <div className={ERROR_MSG_CLASS}>
+                            {status}
+                        </div>
+                    )}
+                    {!status && formData &&
+                        <EditFormFormik
+                            editor={editor}
+                            parenHandleCancel={onCancel_par}
+                            setInfoMsg={setInfoMsg_par}
+                            action={mode}
+                            dataset={formData.resultset}
+                            message={formMsg['message']}
+                            messageType={formMsg['messageType']}
+                            handleFormPageActions={handleFormPageActions}
+                            theme={theme}
+                            currentUser={currentUser}
+                        />
+                    }
+                    {!status &&
+                        formData &&
+                        !editorFlags.isCreate &&
+                        iterateChildComponents(editor, formData.resultset, handleFormPageActions)
+                    }
+                    {(debug ? debugCache("FormPage") : '')}
+                </div>
+            // </div>
+        // </div>
     );
 };
+
+const CrudEditorFormPageTitle = ({ baseUrl, title, actionTitle }) => {
+    return (
+        <h2
+            key={`${baseUrl}_title`}
+            className={APP_TITLE_H1_CLASS}
+        >
+            {title + " - " + actionTitle}
+        </h2>
+    );
+}
 
 const PutOneFormfield = ({
     currentObjArray,
@@ -190,18 +229,16 @@ const PutOneFormfield = ({
     errors,
     touched,
     initialValue,
+    theme,
 }) => {
     const { setFieldValue } = useFormikContext();
 
     let currentObj = currentObjArray[1];
 
-    const labelClass = "font-medium text-gray-700";
-    const labelClassRequiredFld = "font-medium text-red-700";
-    const divclass = "flex flex-col form-group";
-    const fieldClass =
-        "form-control" +
-        (errors[currentObj.name] && touched[currentObj.name] ? " is-invalid" : "") +
-        " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+    const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
+    const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
+    const divFieldClass = APP_FORMPAGE_FIELD_CLASS + " " + theme.label;
+    const fieldClass = (errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input);
 
     const readOnlyfield =
         editorFlags.isReadOnly ||
@@ -226,13 +263,14 @@ const PutOneFormfield = ({
     }
 
     const addCalculation = (htmlElement) => {
+        // To test formulas and see an example, check "genericsuite-fe/src/lib/components/SuperAdminOptions/GeneralConfig.jsx"
+        if (debug) console_debug_log(`addCalculation | htmlElement.name: ${htmlElement.name} | htmlElement.formula: ${htmlElement.formula}`);
         if (defaultValue(htmlElement, "formula") !== '') {
             calcFields[htmlElement.name] = htmlElement.formula;
         }
     }
     
     const runCalculation = (e) => {
-        const debug = false;
         for (const key in calcFields) {
             const formula = calcFields[key];
             if (debug) {
@@ -240,13 +278,13 @@ const PutOneFormfield = ({
                 console_debug_log(`Formula: ${formula} `);
                 console_debug_log(`e.target.name: ${e.target.name} `);
             }
-            if (formula.includes(e.target.name)) {
+            // if (formula.includes(e.target.name)) {
                 const inputs = document.getElementsByName(key);
                 if (inputs.length > 0) {
-                    // const input = inputs[0];
                     let calculatedValue = null;
                     try {
-                        calculatedValue = eval(formula);
+                        // calculatedValue = eval(formula);
+                        calculatedValue = formula(inputs);
                     } catch (error) {
                         console.error('Error calculating value:', error);
                     }
@@ -255,17 +293,17 @@ const PutOneFormfield = ({
                     }
                     if (!isNaN(calculatedValue)) {
                         if (debug) {
-                            console_debug_log(`Antes de setFieldValue(${key}, ${calculatedValue})`);
+                            console_debug_log(`Before setFieldValue(${key}, ${calculatedValue})`);
                         }
                         setFieldValue(key, calculatedValue);
                         if (debug) {
-                            console_debug_log(`Despues de setFieldValue(${key}, ${calculatedValue})`);
+                            console_debug_log(`After setFieldValue(${key}, ${calculatedValue})`);
                         }
                     } else {
                         console.error('calculatedValue is:', calculatedValue);
                     }
                 }
-            }
+            // }
         }
     }
     
@@ -298,7 +336,7 @@ const PutOneFormfield = ({
         <ErrorMessage
             name={idName}
             component="div"
-            className="invalid-feedback"
+            className={INVALID_FEEDBACK_CLASS}
         />
     );
     
@@ -368,7 +406,9 @@ const PutOneFormfield = ({
             elementError = '';
             elementInput =  (
                 <div key={idName}>
-                    <label className={divclass}>
+                    <label
+                        className={divFieldClass}
+                    >
                         {currentObj.label}
                     </label>
                 </div>
@@ -434,7 +474,7 @@ const PutOneFormfield = ({
     if (chatbot_popup || google_popup) {
         elementInput = (
             <div
-                className="align-middle flex"
+                className={APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS}
             >
                 {elementInput}
                 {chatbot_popup && currentObj.aux_component !== null && (
@@ -452,8 +492,16 @@ const PutOneFormfield = ({
             </div>
         );
     }
+
+    if (debug) {
+        console_debug_log(`PutOneFormfield | Field (key): ${currentObj.name} | className: ${divFieldClass} | elementLabel: ${elementLabel}`);
+    }
+
     return (
-        <div key={currentObj.name} className={divclass}>
+        <div
+            key={currentObj.name}
+            className={divFieldClass}
+        >
             {elementLabel}
             {elementInput}
             {elementError}
@@ -471,9 +519,10 @@ const EditFormFormik = (
         message = "",
         messageType = "",
         handleFormPageActions,
+        theme,
+        currentUser,
     }
 ) => {
-
     const [formData, setFormData] = useState({
         readyToShow: false,
         dataset: null,
@@ -481,6 +530,7 @@ const EditFormFormik = (
         message: null,
         messageType: null,
     });
+    // const { currentUser } = useUser();
 
     useEffect(() => {
         const editorFlags = getEditorFlags(action);
@@ -497,7 +547,7 @@ const EditFormFormik = (
         } else {
             // Validate data before show the Data Form
             processGenericFuncArray(
-                editor, 'dbPreValidations', dataset, action
+                editor, 'dbPreValidations', dataset, action, currentUser
             ).then(
                 funcResponse => {
                     setFormData(
@@ -532,7 +582,10 @@ const EditFormFormik = (
     );
 
     if (!formData['readyToShow']) {
-        return '';
+        // return '';
+        return (
+            WaitAnimation()
+        );
     }
 
     if (!formData['canCommit'] === null) {
@@ -556,6 +609,8 @@ const EditFormFormik = (
             message: formData['message'],
             messageType: formData['messageType'],
             handleFormPageActions: handleFormPageActions,
+            theme: theme,
+            currentUser: currentUser,
         })
     )
 }
@@ -570,8 +625,10 @@ const EditFormFormikFinal = ({
     message,
     messageType,
     handleFormPageActions,
+    theme,
+    currentUser,
 }) => {
-    const debug = false;
+    // const { currentUser } = useUser();
 
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);
@@ -616,6 +673,8 @@ const EditFormFormikFinal = ({
         }
     }
 
+    console_debug_log(`FormPage | editor.fieldElements:`, editor.fieldElements);
+
     return (
         <Formik
             key={editor.name}
@@ -654,14 +713,14 @@ const EditFormFormikFinal = ({
                         console_debug_log('BEFORE validations');
                     }
                     processGenericFuncArray(
-                        editor, 'validations', submitedtElements, action
+                        editor, 'validations', submitedtElements, action, currentUser
                     ).then(
                         funcResponse => {
                             if (debug) {
                                 console_debug_log('BEFORE dbPreWrite');
                             }
                             processGenericFuncArray(
-                                editor, 'dbPreWrite', submitedtElements, action
+                                editor, 'dbPreWrite', submitedtElements, action, currentUser
                             ).then(
                                 funcResponse => {
                                     // Save the row to Database
@@ -693,7 +752,7 @@ const EditFormFormikFinal = ({
                                                     console_debug_log('BEFORE dbPostWrite | submitedtElements:', submitedtElements);
                                                 }
                                                 processGenericFuncArray(
-                                                    editor, 'dbPostWrite', submitedtElements, action
+                                                    editor, 'dbPostWrite', submitedtElements, action, currentUser
                                                 ).then(
                                                     funcResponse => {
                                                         if (debug) {
@@ -765,50 +824,45 @@ const EditFormFormikFinal = ({
                             errors={errors}
                             touched={touched}
                             initialValue={initialFieldValues[htmlElement[1].name]}
+                            theme={theme}
                         />
                     })}
-                    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <tbody>
-                            <tr>
-                                {!editorFlags.isRead && canCommit && (
-                                    <td align="left">
-                                        <button
-                                            key="SubmitButton"
-                                            type="submit"
-                                            className={BUTTON_PRIMARY_CLASS}
-                                            disabled={isSubmitting}
-                                        >
-                                            {editorFlags.isCreate
-                                                ? MSG_ACTION_CREATE
-                                                : editorFlags.isDelete
-                                                    ? MSG_ACTION_DELETE
-                                                    : MSG_ACTION_UPDATE}
-                                        </button>
-                                        {isSubmitting && (
-                                            WaitAnimation()
-                                        )}
-                                    </td>
+                    <div
+                        className={APP_FORMPAGE_FORM_BUTTON_BAR_CLASS}
+                    >
+                        {!editorFlags.isRead && canCommit && (
+                            <>
+                                <GsButton
+                                    key="SubmitButton"
+                                    type="submit"
+                                    className={BUTTON_PRIMARY_CLASS}
+                                    disabled={isSubmitting}
+                                >
+                                    {editorFlags.isCreate
+                                        ? MSG_ACTION_CREATE
+                                        : editorFlags.isDelete
+                                            ? MSG_ACTION_DELETE
+                                            : MSG_ACTION_UPDATE}
+                                </GsButton>
+                                {isSubmitting && (
+                                    WaitAnimation()
                                 )}
-                                <td align="left">
-                                    <button
-                                        key="CancelButton"
-                                        type="button"
-                                        className={BUTTON_SECONDARY_CLASS}
-                                        disabled={isSubmitting}
-                                        onClick={handleCancel}
-                                    >
-                                        {MSG_ACTION_CANCEL}
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </>
+                        )}
+                        <GsButton
+                            key="CancelButton"
+                            variant="secondary"
+                            disabled={isSubmitting}
+                            onClick={handleCancel}
+                        >
+                            {MSG_ACTION_CANCEL}
+                        </GsButton>
+                    </div>
                     {status &&
                         <div className={ERROR_MSG_CLASS}>
                             {status}
                         </div>
                     }
-                    <div />
                 </Form>
             )}
         </Formik>
@@ -816,11 +870,13 @@ const EditFormFormikFinal = ({
 };
 
 const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
-    const debug = false;
     let initialFieldValues = getFieldElementsDbValues(editor, dataset);
     if (initialFieldValues[editor.primaryKeyName] === 0) {
         // Dataset is stil not ready...
-        return ('');
+        // return ('');
+        return (
+            WaitAnimation()
+        );
     }
     return Object.entries(editor.childComponents).map(function (
         htmlElement
@@ -841,7 +897,7 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
         return (
             <div
                 key={'ChildElement_' + htmlElement[0]}
-                className="mt-6"
+                className={APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS}
             >
                 <ChildElement
                     parentData={initialFieldValues}
@@ -886,24 +942,6 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
     // Save the row to Database
     const dbService = new dbApiService({ url: editor.dbApiUrl });
     return dbService.createUpdateDelete(action, rowId, rowToSave);
-};
-
-export const getSelectFieldsOptions = (fieldElements) => {
-    return Object.entries(fieldElements)
-        .filter(function (key) {
-            let currentObj = key[1];
-            return (
-                currentObj.type === 'select_component' &&
-                typeof currentObj.dataPopulator !== "undefined"
-            );
-        })
-        .map(function (key) {
-            let currentObj = key[1];
-            return {
-                name: currentObj.name,
-                promiseResult: currentObj.dataPopulator()
-            };
-        });
 };
 
 const setDefaultFieldValue = (currentObj) => {
