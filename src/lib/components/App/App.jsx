@@ -172,7 +172,9 @@ const AppNavBar = ({ children }) => {
 const TopRightMenu = ({ showContentOnly, authenticated = true }) => {
     const { currentUser } = useUser();
     return (
-        <Navbar.TopRightMenu>
+        <Navbar.TopRightMenu
+            authenticated={authenticated}
+        >
             <DarkModeButton />
             <MenuModeButton />
             <Navbar.Toggle />

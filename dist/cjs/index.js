@@ -1670,7 +1670,8 @@ const NavbarTopCenterMenu = _ref8 => {
 };
 const NavbarTopRightMenu = _ref9 => {
   let {
-    children
+    children,
+    authenticated = true
   } = _ref9;
   const {
     currentUser
@@ -1679,7 +1680,7 @@ const NavbarTopRightMenu = _ref9 => {
     sideMenu
   } = useAppContext();
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: (sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!currentUser ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")
+    className: (sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!(currentUser && authenticated) ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")
   }, children));
 };
 const MobileMenuCloseButton = _ref10 => {
@@ -7331,7 +7332,9 @@ const TopRightMenu = _ref3 => {
   const {
     currentUser
   } = useUser();
-  return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), currentUser && authenticated && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, {
+    authenticated: authenticated
+  }, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), currentUser && authenticated && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     icon: "place-holder-circle",
     title: currentUser.firstName,
     itemType: "hamburger",
