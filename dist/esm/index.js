@@ -7304,12 +7304,13 @@ const AppNavBar = _ref2 => {
 };
 const TopRightMenu = _ref3 => {
   let {
-    showContentOnly
+    showContentOnly,
+    authenticated = true
   } = _ref3;
   const {
     currentUser
   } = useUser();
-  return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), currentUser && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
+  return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), currentUser && authenticated && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     icon: "place-holder-circle",
     title: currentUser.firstName,
     itemType: "hamburger",
@@ -7335,9 +7336,11 @@ const AppMainInnerUnauthenticated = _ref5 => {
   } = useAppContext();
   const showContentOnly = getShowContentOnly();
   return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, !sideMenu && /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
-    showContentOnly: showContentOnly
+    showContentOnly: showContentOnly,
+    authenticated: false
   }))), /*#__PURE__*/React.createElement(AppSectionContainer, null, !sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, children), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
-    showContentOnly: showContentOnly
+    showContentOnly: showContentOnly,
+    authenticated: false
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(React.Fragment, null, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)))), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
 const AppMainInner = _ref6 => {
