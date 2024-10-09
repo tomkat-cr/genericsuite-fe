@@ -169,14 +169,14 @@ const AppNavBar = ({ children }) => {
     );
 }
 
-const TopRightMenu = ({ showContentOnly }) => {
+const TopRightMenu = ({ showContentOnly, authenticated = true }) => {
     const { currentUser } = useUser();
     return (
         <Navbar.TopRightMenu>
             <DarkModeButton />
             <MenuModeButton />
             <Navbar.Toggle />
-            {currentUser && (
+            {currentUser && authenticated && (
                 <GenericMenuBuilder
                     icon="place-holder-circle"
                     title={currentUser.firstName}
@@ -214,6 +214,7 @@ const AppMainInnerUnauthenticated = ({ children }) => {
                     <Navbar.TopRightMenu>
                         <TopRightMenu
                             showContentOnly={showContentOnly}
+                            authenticated={false}
                         />
                     </Navbar.TopRightMenu>
                 )}
@@ -227,6 +228,7 @@ const AppMainInnerUnauthenticated = ({ children }) => {
                         <Navbar.TopForSideMenu>
                             <TopRightMenu
                                 showContentOnly={showContentOnly}
+                                authenticated={false}
                             />
                         </Navbar.TopForSideMenu>
                         <AppSectionContainer.ForSideMenu>
