@@ -1,8 +1,9 @@
 'use strict';
 
 var React = require('react');
+var ReactMarkdown = require('react-markdown');
 var reactRouterDom = require('react-router-dom');
-var history$3 = require('history');
+var history$2 = require('history');
 var buffer = require('buffer');
 var rxjs = require('rxjs');
 var formik = require('formik');
@@ -194,15 +195,15 @@ const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 
 // Alert messages and message boxes
 
 const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded alertBaseClass";
-const ALERT_DANGER_CLASS = "".concat(ALERT_BASE_CLASS, " text-red-800 bg-red-100 border-red-200 alertDangerClass");
-const ALERT_WARNING_CLASS = "".concat(ALERT_BASE_CLASS, " text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass");
-const ALERT_INFO_CLASS = "".concat(ALERT_BASE_CLASS, " text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass");
-const ALERT_SUCCESS_CLASS = "".concat(ALERT_BASE_CLASS, " text-green-800 bg-green-100 border-green-200 alertSuccessClass");
-const ERROR_MSG_CLASS = "".concat(ALERT_DANGER_CLASS, " mt-4 p-2 rounded-md errorMsgClass");
-const WARNING_MSG_CLASS = "".concat(ALERT_WARNING_CLASS, " mt-4 p-2 rounded-md warningMsgClass");
-const INFO_MSG_CLASS = "".concat(ALERT_INFO_CLASS, " mt-4 p-2 rounded-md infoMsgClass");
-const SUCCESS_MSG_CLASS = "".concat(ALERT_SUCCESS_CLASS, " mt-4 p-2 rounded-md successMsgClass");
-const GRAY_BOX_MSG_CLASS = "".concat(ALERT_BASE_CLASS, " text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass");
+const ALERT_DANGER_CLASS = `${ALERT_BASE_CLASS} text-red-800 bg-red-100 border-red-200 alertDangerClass`;
+const ALERT_WARNING_CLASS = `${ALERT_BASE_CLASS} text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass`;
+const ALERT_INFO_CLASS = `${ALERT_BASE_CLASS} text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass`;
+const ALERT_SUCCESS_CLASS = `${ALERT_BASE_CLASS} text-green-800 bg-green-100 border-green-200 alertSuccessClass`;
+const ERROR_MSG_CLASS = `${ALERT_DANGER_CLASS} mt-4 p-2 rounded-md errorMsgClass`;
+const WARNING_MSG_CLASS = `${ALERT_WARNING_CLASS} mt-4 p-2 rounded-md warningMsgClass`;
+const INFO_MSG_CLASS = `${ALERT_INFO_CLASS} mt-4 p-2 rounded-md infoMsgClass`;
+const SUCCESS_MSG_CLASS = `${ALERT_SUCCESS_CLASS} mt-4 p-2 rounded-md successMsgClass`;
+const GRAY_BOX_MSG_CLASS = `${ALERT_BASE_CLASS} text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass`;
 
 // Forms
 
@@ -241,16 +242,16 @@ const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDar
 // Listing page buttons (GCE_RFC)
 
 const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
-const BUTTON_LISTING_DISABLED_CLASS = "".concat(BUTTON_LISTING_CLASS, " opacity-50 buttonListingDisabledClass");
-const BUTTON_LISTING_NEW_CLASS = "".concat(BUTTON_LISTING_CLASS, " buttonListingNewClass");
-const BUTTON_LISTING_REFRESH_CLASS = "".concat(BUTTON_LISTING_CLASS, " text-xs buttonListingRefreshClass");
+const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
+const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
+const BUTTON_LISTING_REFRESH_CLASS = `${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
 
 // General app section (GCE_RFC)
 
 const APP_GENERAL_MARGINS_CLASS = 'mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass';
 
 // export const APP_TOP_DIV_CLASS = 'mb-4 p-4 rounded-lg appTopDivClass';
-const APP_TOP_DIV_CLASS = "".concat(APP_GENERAL_MARGINS_CLASS, " rounded-lg appTopDivClass");
+const APP_TOP_DIV_CLASS = `${APP_GENERAL_MARGINS_CLASS} rounded-lg appTopDivClass`;
 const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
 // export const APP_TITLE_H1_CLASS = 'text-2xl font-bold mb-4 appTitleH1Class';
 const APP_TITLE_H1_CLASS = 'text-xl font-bold mb-4 appTitleH1Class';
@@ -268,25 +269,25 @@ const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTabl
 const APP_LISTING_TABLE_HDR_TR_CLASS = "border-b appListingTableHdrTrClass";
 const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
 const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
-const APP_LISTING_TABLE_BODY_TBODY_CLASS = "appListingTableBodyTbodyClass";
+const APP_LISTING_TABLE_BODY_TBODY_CLASS = `appListingTableBodyTbodyClass`;
 const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrOddClass';
 const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrEvenClass';
 const APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS = 'appListingTableBodyTrActionsOddClass';
 const APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS = 'appListingTableBodyTrActionsEvenClass';
 const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS = "p-2 appListingTableBodyTdBaseOddClass";
 const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS = "p-2 appListingTableBodyTdBaseEvenClass";
-const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " break-words appListingTableBodyTdOddClass");
-const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " break-words appListingTableBodyTdEvenClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass");
+const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words appListingTableBodyTdOddClass`;
+const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words appListingTableBodyTdEvenClass`;
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass`;
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass`;
 
 // Listing page search box (GCE_RFC)
 
 const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
 const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
 const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
-const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass");
-const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " mr-2 text-xs appListingSearchBoxStopButtonClass");
+const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
+const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
@@ -306,10 +307,10 @@ const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToo
 const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
 const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
-const APP_FORMPAGE_FIELD_CLASS = "flex flex-col ".concat(FORM_GROUP_CLASS, " appFormPageFieldClass");
-const APP_FORMPAGE_FIELD_BASE_CLASS = "".concat(FORM_CONTROL_CLASS, " border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass");
-const APP_FORMPAGE_FIELD_GOOD_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " appFormPageFieldGoodClass");
-const APP_FORMPAGE_FIELD_INVALID_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " is-invalid appFormPageFieldInvalidClass");
+const APP_FORMPAGE_FIELD_CLASS = `flex flex-col ${FORM_GROUP_CLASS} appFormPageFieldClass`;
+const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
+const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} appFormPageFieldGoodClass`;
+const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid appFormPageFieldInvalidClass`;
 const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS = "align-middle flex appFormPageSpecialButtonDivClass";
 const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChildComponentsTopDivClass";
 
@@ -340,8 +341,8 @@ const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center moda
 
 // export const MODALIB_BUTTON_PRIMARY_CLASS = 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700 focus:ring-indigo-500 modalibButtonPrimaryClass';
 // export const MODALIB_BUTTON_SECONDARY_CLASS = 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 modalibButtonSecondaryClass';
-const MODALIB_BUTTON_PRIMARY_CLASS = "".concat(BUTTON_PRIMARY_CLASS, " modalibButtonPrimaryClass");
-const MODALIB_BUTTON_SECONDARY_CLASS = "".concat(BUTTON_SECONDARY_CLASS, " modalibButtonSecondaryClass");
+const MODALIB_BUTTON_PRIMARY_CLASS = `${BUTTON_PRIMARY_CLASS} modalibButtonPrimaryClass`;
+const MODALIB_BUTTON_SECONDARY_CLASS = `${BUTTON_SECONDARY_CLASS} modalibButtonSecondaryClass`;
 const MODALIB_BUTTON_SUCCESS_CLASS = 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass';
 const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass';
 
@@ -351,7 +352,7 @@ const LOGIN_PAGE_APP_LOGO_CLASS = "mx-auto my-0 loginPageAppLogoClass";
 
 // Login button
 
-const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = "".concat(HORIZONTALLY_CENTERED_CLASS, " p-4 loginButtonInAppComponentClass");
+const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = `${HORIZONTALLY_CENTERED_CLASS} p-4 loginButtonInAppComponentClass`;
 
 // Components
 
@@ -361,6 +362,13 @@ const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
 
 const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 showHidePageAnimationEnabledClass";
 const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
+
+// Markdown formatting (check renderMarkdownContent())
+
+const MARKDOWN_P_CLASS = "my-2 markdown-p-class";
+const MARKDOWN_BOLD_CLASS = "font-bold markdown-bold-class";
+const MARKDOWN_ITALIC_CLASS = "italic markdown-italic-class";
+const MARKDOWN_UNDERLINE_CLASS = "underline markdown-underline-class";
 
 // AI Assistant and conversation pages
 
@@ -454,6 +462,10 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   LOGIN_PAGE_APP_LOGO_CLASS: LOGIN_PAGE_APP_LOGO_CLASS,
   MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
   MAIN_CONTAINER_FOR_TOP_MENU_CLASS: MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
+  MARKDOWN_BOLD_CLASS: MARKDOWN_BOLD_CLASS,
+  MARKDOWN_ITALIC_CLASS: MARKDOWN_ITALIC_CLASS,
+  MARKDOWN_P_CLASS: MARKDOWN_P_CLASS,
+  MARKDOWN_UNDERLINE_CLASS: MARKDOWN_UNDERLINE_CLASS,
   MENU_MODE_BUTTON_TOP_DIV_CLASS: MENU_MODE_BUTTON_TOP_DIV_CLASS,
   ML2_ICON_CLASS: ML2_ICON_CLASS,
   MODALIB_BUTTON_BASESTYLE_CLASS: MODALIB_BUTTON_BASESTYLE_CLASS,
@@ -551,7 +563,6 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
 
 // IconsLib
 const GsIcons = _ref => {
-  var _size, _selectedSvg$props$cl;
   let {
     icon,
     size = null,
@@ -664,10 +675,10 @@ const GsIcons = _ref => {
       "height": "160"
     }
   };
-  size = (_size = size) !== null && _size !== void 0 ? _size : 'sm';
+  size = size ?? 'sm';
   if (typeof sizeData[size] === "undefined") {
-    console.error("Invalid \"size\" *".concat(size, "*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x"));
-    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid \"size\" *".concat(size, "*"));
+    console.error(`Invalid "size" *${size}*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x`);
+    return /*#__PURE__*/React.createElement(React.Fragment, null, `Invalid "size" *${size}*`);
   }
   const currentWidth = sizeData[size].width;
   const currentHeight = sizeData[size].height;
@@ -677,7 +688,7 @@ const GsIcons = _ref => {
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
         width: "6",
         height: "3",
-        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: ML2_ICON_CLASS + (className ?? '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L6 0",
         fill: "none",
@@ -690,7 +701,7 @@ const GsIcons = _ref => {
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
         width: "3",
         height: "6",
-        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: ML2_ICON_CLASS + (className ?? '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L0 6",
         fill: "none",
@@ -849,7 +860,7 @@ const GsIcons = _ref => {
       break;
     case 'place-holder-circle':
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
-        className: ROUNDED_ICON_CLASS + (className !== null && className !== void 0 ? className : ''),
+        className: ROUNDED_ICON_CLASS + (className ?? ''),
         fill: "none"
       }, /*#__PURE__*/React.createElement("rect", {
         width: currentWidth,
@@ -1114,7 +1125,7 @@ const GsIcons = _ref => {
       break;
     case 'vertical-slider':
       selectedSvg = /*#__PURE__*/React.createElement("div", {
-        className: VERTICAL_SLIDER_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: VERTICAL_SLIDER_ICON_CLASS + (className ?? '')
       });
       break;
     case 'warning-sign':
@@ -1170,22 +1181,21 @@ const GsIcons = _ref => {
       }
   }
   if (!selectedSvg) {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid Icon *".concat(icon, "*"));
+    return /*#__PURE__*/React.createElement(React.Fragment, null, `Invalid Icon *${icon}*`);
   }
   let iconProps = {
     'data-icon': icon.toLowerCase(),
     'id': id,
-    'className': (_selectedSvg$props$cl = selectedSvg.props.className) !== null && _selectedSvg$props$cl !== void 0 ? _selectedSvg$props$cl : className
+    'className': selectedSvg.props.className ?? className
   };
   if (selectedSvg.type === "svg") {
-    var _selectedSvg$props$xm, _selectedSvg$props$wi, _selectedSvg$props$he, _selectedSvg$props$ro, _selectedSvg$props$al, _selectedSvg$props$ti;
     // iconProps['viewBox'] = "0 0 " + currentWidth + " " + currentHeight;
-    iconProps['xmlns'] = (_selectedSvg$props$xm = selectedSvg.props.xmlns) !== null && _selectedSvg$props$xm !== void 0 ? _selectedSvg$props$xm : "http://www.w3.org/2000/svg";
-    iconProps['width'] = (_selectedSvg$props$wi = selectedSvg.props.width) !== null && _selectedSvg$props$wi !== void 0 ? _selectedSvg$props$wi : currentWidth;
-    iconProps['height'] = (_selectedSvg$props$he = selectedSvg.props.height) !== null && _selectedSvg$props$he !== void 0 ? _selectedSvg$props$he : currentHeight;
-    iconProps['role'] = (_selectedSvg$props$ro = selectedSvg.props.role) !== null && _selectedSvg$props$ro !== void 0 ? _selectedSvg$props$ro : role;
-    iconProps['alt'] = (_selectedSvg$props$al = selectedSvg.props.alt) !== null && _selectedSvg$props$al !== void 0 ? _selectedSvg$props$al : alt;
-    iconProps['title'] = (_selectedSvg$props$ti = selectedSvg.props.title) !== null && _selectedSvg$props$ti !== void 0 ? _selectedSvg$props$ti : alt;
+    iconProps['xmlns'] = selectedSvg.props.xmlns ?? "http://www.w3.org/2000/svg";
+    iconProps['width'] = selectedSvg.props.width ?? currentWidth;
+    iconProps['height'] = selectedSvg.props.height ?? currentHeight;
+    iconProps['role'] = selectedSvg.props.role ?? role;
+    iconProps['alt'] = selectedSvg.props.alt ?? alt;
+    iconProps['title'] = selectedSvg.props.title ?? alt;
   }
   selectedSvg = /*#__PURE__*/React.cloneElement(selectedSvg, iconProps);
   return selectedSvg;
@@ -1235,12 +1245,12 @@ const growUpTextAreaInner = function (textAreaId, conversationBlockId, sectionVi
     const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
     // Ensure the textarea does not exceed its max-height...
     if (textarea.scrollHeight > maxOffsetHeight) {
-      textarea.style.height = "".concat(maxOffsetHeight, "px");
+      textarea.style.height = `${maxOffsetHeight}px`;
     }
     // Set conversation height to make textarea to scroll up according its height
     const sectionViewportHeightInPx = sectionViewportHeight / 100 * viewportHeight;
     const conversationHeight = sectionViewportHeightInPx - textarea.clientHeight + textareaMinHeight;
-    conversationObj.style.height = "".concat(conversationHeight, "px");
+    conversationObj.style.height = `${conversationHeight}px`;
   }
 };
 const growUpTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
@@ -1295,10 +1305,92 @@ const LinkifyText = _ref => {
     });
   }));
 };
-const CopyButton = _ref2 => {
+const renderMarkdownContent = text => {
+  return /*#__PURE__*/React.createElement(ReactMarkdown, {
+    components: {
+      p: _ref2 => {
+        let {
+          children
+        } = _ref2;
+        return /*#__PURE__*/React.createElement("p", {
+          className: MARKDOWN_P_CLASS
+        }, children);
+      },
+      strong: _ref3 => {
+        let {
+          children
+        } = _ref3;
+        return /*#__PURE__*/React.createElement("strong", {
+          className: MARKDOWN_BOLD_CLASS
+        }, children);
+      },
+      em: _ref4 => {
+        let {
+          children
+        } = _ref4;
+        return /*#__PURE__*/React.createElement("em", {
+          className: MARKDOWN_ITALIC_CLASS
+        }, children);
+      },
+      a: _ref5 => {
+        let {
+          children,
+          href
+        } = _ref5;
+        return /*#__PURE__*/React.createElement("a", {
+          href: href,
+          target: "_blank",
+          className: MARKDOWN_UNDERLINE_CLASS
+        }, children);
+      }
+      // Add more markdown components as needed
+    }
+  }, text);
+};
+const CopyButton = _ref6 => {
   let {
     text
-  } = _ref2;
+  } = _ref6;
+  const showCopiedMessage = e => {
+    const copiedMessage = document.createElement('div');
+    copiedMessage.textContent = 'Copied!';
+    copiedMessage.style.position = 'absolute';
+    copiedMessage.style.bottom = '-40px'; // Position under the button
+    copiedMessage.style.left = '-20px'; // Align with the button's left edge
+    copiedMessage.style.padding = '5px';
+    copiedMessage.style.borderRadius = '5px';
+    copiedMessage.style.border = 'none';
+    copiedMessage.style.background = 'grey';
+    copiedMessage.style.color = 'white';
+    copiedMessage.style.fontSize = '0.75rem';
+    copiedMessage.style.zIndex = '1000';
+    copiedMessage.style.opacity = '0';
+    copiedMessage.style.transition = 'opacity 0.3s';
+    e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
+    setTimeout(() => {
+      copiedMessage.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+      copiedMessage.style.opacity = '0';
+      setTimeout(() => copiedMessage.remove(), 2000);
+    }, 2000);
+  };
+  const securedCopyToClipboard = text => {
+    navigator.clipboard.writeText(text);
+  };
+  const unsecuredCopyToClipboard = text => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+    document.body.removeChild(textArea);
+  };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
     id: "copyButton",
     style: {
@@ -1314,29 +1406,12 @@ const CopyButton = _ref2 => {
       fontSize: '12px'
     },
     onClick: e => {
-      navigator.clipboard.writeText(text);
-      const copiedMessage = document.createElement('div');
-      copiedMessage.textContent = 'Copied!';
-      copiedMessage.style.position = 'absolute';
-      copiedMessage.style.bottom = '-40px'; // Position under the button
-      copiedMessage.style.left = '-20px'; // Align with the button's left edge
-      copiedMessage.style.padding = '5px';
-      copiedMessage.style.borderRadius = '5px';
-      copiedMessage.style.border = 'none';
-      copiedMessage.style.background = 'grey';
-      copiedMessage.style.color = 'white';
-      copiedMessage.style.fontSize = '0.75rem';
-      copiedMessage.style.zIndex = '1000';
-      copiedMessage.style.opacity = '0';
-      copiedMessage.style.transition = 'opacity 0.3s';
-      e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
-      setTimeout(() => {
-        copiedMessage.style.opacity = '1';
-      }, 100);
-      setTimeout(() => {
-        copiedMessage.style.opacity = '0';
-        setTimeout(() => copiedMessage.remove(), 2000);
-      }, 2000);
+      if (window.isSecureContext && navigator.clipboard) {
+        securedCopyToClipboard(text);
+      } else {
+        unsecuredCopyToClipboard(text);
+      }
+      showCopiedMessage(e);
     }
   }, "Copy"));
 };
@@ -1369,6 +1444,7 @@ var ui = /*#__PURE__*/Object.freeze({
   growUpTextAreaInner: growUpTextAreaInner,
   isMobileDevice: isMobileDevice,
   isWindowWide: isWindowWide,
+  renderMarkdownContent: renderMarkdownContent,
   resetTextArea: resetTextArea,
   resizeManager: resizeManager,
   toggleIdVisibility: toggleIdVisibility
@@ -1398,7 +1474,7 @@ const AppProvider = _ref => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   // const toggleSubmenu = (menuName) => {
   const toggleSubmenu = (menuName, menuVisible) => {
-    console_debug_log("<<<< AppContext | toggleSubmenu | menuName: ".concat(menuName, " | menuVisible: ").concat(menuVisible));
+    console_debug_log(`<<<< AppContext | toggleSubmenu | menuName: ${menuName} | menuVisible: ${menuVisible}`);
     setExpandedMenus(prev =>
     // prev.includes(menuName)
     // ? prev.filter(item => item !== menuName)
@@ -1521,7 +1597,7 @@ const MainContainer = _ref => {
     sideMenu
   } = useAppContext();
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+    className: `${sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS} ${theme.background} ${theme.text}`
   }, children);
 };
 const AppSectionContainer = _ref2 => {
@@ -1558,7 +1634,7 @@ const AppFooterContainer = _ref4 => {
     theme
   } = useAppContext();
   return /*#__PURE__*/React.createElement("footer", {
-    className: "".concat(APP_FOOTER_CONTAINER_CLASS, " ").concat(theme.primary)
+    className: `${APP_FOOTER_CONTAINER_CLASS} ${theme.primary}`
   }, children);
 };
 const CenteredBoxContainer = _ref5 => {
@@ -1572,7 +1648,7 @@ const CenteredBoxContainer = _ref5 => {
   return /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(CENTERED_BOX_CONTAINER_DIV_2_CLASS, " ").concat(theme.contentBg)
+    className: `${CENTERED_BOX_CONTAINER_DIV_2_CLASS} ${theme.contentBg}`
   }, /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_3_CLASS
   }, children)));
@@ -1596,13 +1672,13 @@ const Navbar = _ref6 => {
     if (isMobileMenuOpen) {
       return /*#__PURE__*/React.createElement("nav", {
         id: "navbar-side-menu",
-        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+        className: `${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`
       }, children);
     }
     if (isWide) {
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("nav", {
         id: "navbar-side-menu",
-        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+        className: `${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`
       }, children), /*#__PURE__*/React.createElement(ToggleSideBar, {
         onClick: () => document.getElementById('navbar-side-menu').classList.toggle('hidden')
       }));
@@ -1610,7 +1686,7 @@ const Navbar = _ref6 => {
     return null;
   }
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(NAVBAR_HEADER_FOR_TOP_MENU_CLASS, " ").concat(theme.primary)
+    className: `${NAVBAR_HEADER_FOR_TOP_MENU_CLASS} ${theme.primary}`
   }, children);
 };
 const NavbarBrand = _ref7 => {
@@ -1693,7 +1769,7 @@ const MobileMenuCloseButton = _ref10 => {
   } = useAppContext();
   return /*#__PURE__*/React.createElement("button", {
     onClick: toggleMobileMenu,
-    className: className !== null && className !== void 0 ? className : '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
+    className: className ?? '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "x",
     size: "sm",
@@ -1715,7 +1791,7 @@ const NavbarMobileMenu = _ref11 => {
   return /*#__PURE__*/React.createElement("div", {
     className: NAVBAR_MOBILE_MENU_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(NAVBAR_MOBILE_MENU_DIV_2_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+    className: `${NAVBAR_MOBILE_MENU_DIV_2_CLASS} ${theme.background} ${theme.text}`
   }, /*#__PURE__*/React.createElement("div", {
     className: NAVBAR_MOBILE_MENU_DIV_3_CLASS
   }, /*#__PURE__*/React.createElement("h2", {
@@ -1745,7 +1821,7 @@ const NavbarText = _ref12 => {
     className
   } = _ref12;
   return /*#__PURE__*/React.createElement("div", {
-    className: className !== null && className !== void 0 ? className : NAVBAR_TEXT_CLASS
+    className: className ?? NAVBAR_TEXT_CLASS
   }, children);
 };
 const NavbarTopForSideMenu = _ref13 => {
@@ -1757,7 +1833,7 @@ const NavbarTopForSideMenu = _ref13 => {
     theme
   } = useAppContext();
   return /*#__PURE__*/React.createElement("header", {
-    className: "".concat(NAVBAR_TOP_FOR_SIDE_MENU_CLASS, " ").concat(theme.primary)
+    className: `${NAVBAR_TOP_FOR_SIDE_MENU_CLASS} ${theme.primary}`
   }, children);
 };
 Navbar.Brand = NavbarBrand;
@@ -1786,16 +1862,16 @@ const NavDropdown = _ref14 => {
     isWide
   } = useAppContext();
   const [dropDownOpen, setDropDownOpen] = React.useState(false);
-  const fullId = "".concat(id, "_").concat(type);
+  const fullId = `${id}_${type}`;
   const toggledropDownOpen = () => {
-    const elementId = "".concat(fullId, "_dropDown");
+    const elementId = `${fullId}_dropDown`;
     const element = document.getElementById(elementId);
     if (dropDownOpen) {
       element.classList.add('hidden');
     } else {
       element.classList.remove('hidden');
     }
-    console_debug_log(">>--> NavDropdown | toggledropDownOpen | elementId: ".concat(elementId, " | previous dropDownOpen: ").concat(dropDownOpen));
+    console_debug_log(`>>--> NavDropdown | toggledropDownOpen | elementId: ${elementId} | previous dropDownOpen: ${dropDownOpen}`);
     setDropDownOpen(!dropDownOpen);
   };
   const variantsDirectionImage = {
@@ -1819,10 +1895,10 @@ const NavDropdown = _ref14 => {
     mobile_menu: NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTop),
-    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
-    side_menu: "".concat(NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+    top_menu: `${NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTop}`,
+    hamburger: `${mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
+    side_menu: `${NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`
   };
   const variantsSubmenuImage = {
     top_menu: NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
@@ -1843,12 +1919,12 @@ const NavDropdown = _ref14 => {
   // }, []);
 
   React.useEffect(() => {
-    console_debug_log("SideMenu | useEffect | dropDownOpen: ".concat(dropDownOpen));
+    console_debug_log(`SideMenu | useEffect | dropDownOpen: ${dropDownOpen}`);
     // variantOnClick(fullId);
     toggleSubmenu(fullId, dropDownOpen);
   }, [dropDownOpen, fullId]);
   React.useEffect(() => {
-    const elementId = "".concat(fullId, "_submenu_image");
+    const elementId = `${fullId}_submenu_image`;
     const element = document.getElementById(elementId);
     if (element) {
       if (expandedMenus.includes(fullId)) {
@@ -1870,20 +1946,20 @@ const NavDropdown = _ref14 => {
     className: variantStyleTopDiv
   }, /*#__PURE__*/React.createElement("button", {
     className: variantStyleButton,
-    id: "".concat(fullId, "_button"),
+    id: `${fullId}_button`,
     type: "button",
     onClick: toggledropDownOpen
   }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-    icon: icon !== null && icon !== void 0 ? icon : '',
+    icon: icon ?? '',
     size: "2xl",
     className: NAV_LINK_ICON_CLASS
   }) : title, /*#__PURE__*/React.createElement(GsIcons, {
-    id: "".concat(fullId, "_submenu_image"),
+    id: `${fullId}_submenu_image`,
     icon: directionImage,
     className: variantStyleSubmenuImage
   })), /*#__PURE__*/React.createElement("div", {
     className: variantStyleInnerDiv,
-    id: "".concat(fullId, "_dropDown")
+    id: `${fullId}_dropDown`
   }, expandedMenus.includes(fullId) && React.Children.map(children, child => /*#__PURE__*/React.cloneElement(child, {
     closeParent: () => toggledropDownOpen()
   }))));
@@ -1910,10 +1986,10 @@ const NavDropdownItem = _ref15 => {
     mobile_menu: NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTopSubMenu),
-    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu),
-    side_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+    top_menu: `${NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTopSubMenu}`,
+    hamburger: `${mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu}`,
+    side_menu: `${NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`
   };
   const variantStyleTopDiv = variantsTopDiv[type] || '';
   const variantStyleButton = variantsButton[type] || '';
@@ -2022,10 +2098,10 @@ const NavLink = _ref16 => {
     mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_LINK_BUTTON_TOP_MENU_CLASS, "  ").concat(theme.textHoverTop),
-    hamburger: "".concat(mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
-    side_menu: "".concat(NAV_LINK_BUTTON_SIDE_MENU_CLASS, "  ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_LINK_BUTTON_MOBILE_MENU_CLASS, "  ").concat(theme.textHoverSide)
+    top_menu: `${NAV_LINK_BUTTON_TOP_MENU_CLASS}  ${theme.textHoverTop}`,
+    hamburger: `${mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
+    side_menu: `${NAV_LINK_BUTTON_SIDE_MENU_CLASS}  ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_LINK_BUTTON_MOBILE_MENU_CLASS}  ${theme.textHoverSide}`
   };
   const variantStyleLi = variantsLi[type] || '';
   const variantStyleButton = variantsButton[type] || '';
@@ -2044,12 +2120,11 @@ Nav.Link = NavLink;
 // Buttons
 
 const ToggleSideBar = _ref17 => {
-  var _props$className;
   let {
     onClick,
     ...props
   } = _ref17;
-  props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + ((_props$className = props.className) !== null && _props$className !== void 0 ? _props$className : '');
+  props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + (props.className ?? '');
   return /*#__PURE__*/React.createElement("div", _extends({
     onClick: onClick
   }, props), /*#__PURE__*/React.createElement(GsIcons, {
@@ -2057,7 +2132,6 @@ const ToggleSideBar = _ref17 => {
   }));
 };
 const GsButton = _ref18 => {
-  var _props$type;
   let {
     variant = 'primary',
     className = '',
@@ -2070,17 +2144,16 @@ const GsButton = _ref18 => {
   };
   const variantStyle = variants[variant] || '';
   if (as) {
-    var _ref19, _props$to;
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
     const As = as;
     return /*#__PURE__*/React.createElement(As, _extends({
-      to: (_ref19 = (_props$to = props.to) !== null && _props$to !== void 0 ? _props$to : props.href) !== null && _ref19 !== void 0 ? _ref19 : null,
-      className: "".concat(variantStyle, " ").concat(className)
+      to: props.to ?? props.href ?? null,
+      className: `${variantStyle} ${className}`
     }, props));
   }
   return /*#__PURE__*/React.createElement("button", _extends({
-    type: (_props$type = props.type) !== null && _props$type !== void 0 ? _props$type : "button",
-    className: "".concat(variantStyle, " ").concat(className)
+    type: props.type ?? "button",
+    className: `${variantStyle} ${className}`
   }, props));
 };
 
@@ -2115,7 +2188,7 @@ const Button = _ref => {
   const variantStyle = variants[variant] || variants.primary;
   return /*#__PURE__*/React.createElement(GsButton, _extends({
     variant: "",
-    className: "".concat(baseStyle, " ").concat(variantStyle, " ").concat(className)
+    className: `${baseStyle} ${variantStyle} ${className}`
   }, props));
 };
 const Modal = _ref2 => {
@@ -2145,7 +2218,7 @@ const Modal = _ref2 => {
     role: "dialog",
     "aria-modal": "true"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(MODALIB_MODAL_DIV_2_CLASS, " ").concat(theme.contentBg, " ").concat(theme.text)
+    className: `${MODALIB_MODAL_DIV_2_CLASS} ${theme.contentBg} ${theme.text}`
   }, /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_DIV_3_CLASS
   }, children)));
@@ -2173,7 +2246,7 @@ const ModalIcon = _ref4 => {
   return /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_ICON_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: (iconClassName !== null && iconClassName !== void 0 ? iconClassName : '') + " " + MODALIB_MODAL_ICON_2_CLASS
+    className: (iconClassName ?? '') + " " + MODALIB_MODAL_ICON_2_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: iconClassName === ALERT_DANGER_CLASS ? "warning-sign" : "checked-sign",
     className: MODALIB_MODAL_ICON_3_CLASS
@@ -2201,7 +2274,7 @@ const ModalFooter = _ref7 => {
     isWide
   } = _ref7;
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(MODALIB_MODAL_FOOTER_CLASS, " ").concat(isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS)
+    className: `${MODALIB_MODAL_FOOTER_CLASS} ${isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS}`
   }, children);
 };
 Modal.Header = ModalHeader;
@@ -2227,21 +2300,19 @@ const getItemFromLocalStorage = lsItemName => {
   return JSON.parse(getRawItemFromLocalStorage(lsItemName));
 };
 
-var _process$env$REACT_AP;
-const history$1 = history$3.createBrowserHistory();
-const hasHashRouter = (_process$env$REACT_AP = process.env.REACT_APP_HASH_ROUTER) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : true;
+const history = history$2.createBrowserHistory();
+const hasHashRouter = process.env.REACT_APP_HASH_ROUTER ?? true;
 const getUrlForRouter = url => {
   if (!url.startsWith('/')) {
     url = '/' + url;
   }
-  return "".concat(hasHashRouter ? '/#' : '').concat(getPrefix()).concat(url);
+  return `${hasHashRouter ? '/#' : ''}${getPrefix()}${url}`;
 };
 function getPrefix() {
   let hardPrefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   if (hardPrefix) {
-    var _process$env$REACT_AP2;
-    const prefix = (_process$env$REACT_AP2 = process.env.REACT_APP_URI_PREFIX) !== null && _process$env$REACT_AP2 !== void 0 ? _process$env$REACT_AP2 : '';
-    return "/".concat(prefix);
+    const prefix = process.env.REACT_APP_URI_PREFIX ?? '';
+    return `/${prefix}`;
   }
   return '';
 }
@@ -2266,13 +2337,13 @@ const getLastUrl = () => {
   return lastUrl;
 };
 
-var history$2 = /*#__PURE__*/Object.freeze({
+var history$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   getLastUrl: getLastUrl,
   getPrefix: getPrefix,
   getUrlForRouter: getUrlForRouter,
   hasHashRouter: hasHashRouter,
-  history: history$1,
+  history: history,
   removeLastUrl: removeLastUrl,
   setLastUrl: setLastUrl
 });
@@ -2391,19 +2462,54 @@ var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
 const About = () => {
   return /*#__PURE__*/React.createElement(ModalPopUp, {
     title: "About",
-    link: "".concat(window.location.origin).concat(hasHashRouter ? '/#' : '', "/about_body?menu=0")
+    link: `${window.location.origin}${hasHashRouter ? '/#' : ''}/about_body?menu=0`
   });
 };
 const AboutBody = _ref => {
   let {
     children
   } = _ref;
-  const modalPopUpTest = false;
+  // const modalPopUpTest = false;
   const version = process.env.REACT_APP_VERSION;
   const appName = process.env.REACT_APP_APP_NAME;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
-  }, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, modalPopUpTest );
+  }, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, /*#__PURE__*/React.createElement(ModalPopUp, {
+    title: "Test ModalPopUp",
+    showTitle: true
+    // iconClassName={ALERT_DANGER_CLASS}
+    ,
+    iconClassName: ALERT_SUCCESS_CLASS,
+    primaryButtonMessage: "Login Again",
+    primaryButtonAction: null,
+    secondButtonMessage: "Retry",
+    secondButtonAction: null,
+    logoutButton: true
+  }, "This is a test test test in ", /*#__PURE__*/React.createElement("i", null, "Italic"), ", ", /*#__PURE__*/React.createElement("u", null, "Underline"), " and ", /*#__PURE__*/React.createElement("b", null, "Boldface"), ".", /*#__PURE__*/React.createElement(ReactMarkdown, {
+    components: {
+      li: _ref2 => {
+        let {
+          children
+        } = _ref2;
+        return /*#__PURE__*/React.createElement("li", {
+          className: MARKDOWN_P_CLASS
+        }, "* ", children);
+      }
+    }
+  }, "- This is a bullet point with _Italic_ and **Boldface** with markdown syntax."), /*#__PURE__*/React.createElement(ReactMarkdown, {
+    components: {
+      li: _ref3 => {
+        let {
+          children
+        } = _ref3;
+        return /*#__PURE__*/React.createElement("li", {
+          className: MARKDOWN_P_CLASS
+        }, "* ", children);
+      }
+    }
+  }, "- This is another bullet point."), /*#__PURE__*/React.createElement(ReactMarkdown, null, "``` print(\"Hello GenericSuite! This is a code block example\") ```"), /*#__PURE__*/React.createElement(CopyButton, {
+    text: "Content copied!!!"
+  }), renderMarkdownContent("This is a __underline__ test using the renderMarkdownContent() function")));
 };
 
 // export function getConfigsJsonFile(jsonFileName) {
@@ -2645,7 +2751,7 @@ function authHeader() {
   try {
     currentUser = getCurrentUserFromLocalStorage();
   } catch (error) {
-    console_debug_log("authHeader | ERROR: ".concat(error));
+    console_debug_log(`authHeader | ERROR: ${error}`);
   }
   if (currentUser && currentUser.token) {
     if (process.env.REACT_APP_X_TOKEN) {
@@ -2654,7 +2760,7 @@ function authHeader() {
       };
     } else {
       return {
-        Authorization: "Bearer ".concat(currentUser.token)
+        Authorization: `Bearer ${currentUser.token}`
       };
     }
   } else {
@@ -2737,7 +2843,7 @@ async function handleFetchError(error) {
     reasonDetail = await error.text().then(text => {
       return text;
     }).catch(e => {
-      return "HTTP ".concat(error.status);
+      return `HTTP ${error.status}`;
     });
     if (error.status === 401) {
       errorMsg = MSG_ERROR_SESSION_EXPIRED;
@@ -2746,7 +2852,7 @@ async function handleFetchError(error) {
     }
   } else {
     possibleCORS = error instanceof TypeError && error.message.includes('Failed to fetch');
-    errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? " (".concat(MSG_ERROR_POSSIBLE_CORS, ")") : '');
+    errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
     reasonDetail = error;
   }
   return Promise.reject({
@@ -3045,9 +3151,9 @@ class dbApiService {
       requestOptions['signal'] = options['signal'];
     }
     const urlQuery = this.paramsToUrlQuery(params);
-    const url = "".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery);
+    const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
     if (this.debug) {
-      console_debug_log("###===> getAll() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> getAll() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
     return this.getFetch(url, requestOptions);
   }
@@ -3060,9 +3166,9 @@ class dbApiService {
     };
     const urlQuery = this.paramsToUrlQuery(params);
     if (this.debug) {
-      console_debug_log("###===> getOne() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> getOne() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const url = "".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery);
+    const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
     return this.getFetch(url, requestOptions);
   }
   createUpdateDelete(action, id, data) {
@@ -3087,9 +3193,9 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> createRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> createRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions).then(handleResponse).catch(handleFetchError);
+    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
     return response;
   }
   updateRow(id, data) {
@@ -3104,16 +3210,16 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> updateRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> updateRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions).then(handleResponse).catch(handleFetchError);
+    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
     return response;
   }
   deleteRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     let urlQuery = this.paramsToUrlQuery(queryParams);
     if (id !== null) {
-      urlQuery += (urlQuery === '' ? '?' : "&") + "id=".concat(id);
+      urlQuery += (urlQuery === '' ? '?' : "&") + `id=${id}`;
     }
     const requestOptions = {
       method: 'DELETE',
@@ -3121,9 +3227,9 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> deleteRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> deleteRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions).then(handleResponse).catch(handleFetchError);
+    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
     return response;
   }
   convertId(id) {
@@ -3146,7 +3252,6 @@ const defaultItemName = function () {
   return lsItemName ? lsItemName : 'currentConfig';
 };
 const buildConfigData = function () {
-  var _lsDataDict;
   let lsDataDict = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   const defaultConfigData = {
     "pref_dark_mode": "1",
@@ -3155,7 +3260,7 @@ const buildConfigData = function () {
     "currency": "USD",
     "timezone": "America/New_York"
   };
-  lsDataDict = (_lsDataDict = lsDataDict) !== null && _lsDataDict !== void 0 ? _lsDataDict : {};
+  lsDataDict = lsDataDict ?? {};
   // Merge defaultConfigData with lsDataDict
   return {
     ...defaultConfigData,
@@ -3204,7 +3309,7 @@ function login(username, password) {
   new dbApiService({
     url: 'users'
   });
-  return fetch("".concat(config.apiUrl, "/users/login"), requestOptions).then(handleResponse, handleFetchError).then(res => {
+  return fetch(`${config.apiUrl}/users/login`, requestOptions).then(handleResponse, handleFetchError).then(res => {
     if (res.error) {
       return Promise.reject(res.message);
     }
@@ -3226,7 +3331,7 @@ const getUserData = userId => {
   return dbApi.getOne({
     id: userId
   }).then(data => data, error => {
-    console_debug_log("ERROR: getUserData(".concat(userId, "):"));
+    console_debug_log(`ERROR: getUserData(${userId}):`);
     console.error(error);
     return {
       error: true,
@@ -3235,7 +3340,6 @@ const getUserData = userId => {
   });
 };
 const getUserLocalData = res => {
-  var _data$pref_side_menu, _data$pref_dark_mode;
   const userService = new dbApiService({
     url: 'users'
   });
@@ -3248,8 +3352,8 @@ const getUserLocalData = res => {
     firstName: data.firstname,
     // lastName: data.lastname,
     // token: data.token
-    pref_side_menu: (_data$pref_side_menu = data.pref_side_menu) !== null && _data$pref_side_menu !== void 0 ? _data$pref_side_menu : localConfig.pref_side_menu,
-    pref_dark_mode: (_data$pref_dark_mode = data.pref_dark_mode) !== null && _data$pref_dark_mode !== void 0 ? _data$pref_dark_mode : localConfig.pref_dark_mode
+    pref_side_menu: data.pref_side_menu ?? localConfig.pref_side_menu,
+    pref_dark_mode: data.pref_dark_mode ?? localConfig.pref_dark_mode
   };
 };
 const getCurrentUserData = () => {
@@ -3285,7 +3389,7 @@ var authentication_service = /*#__PURE__*/Object.freeze({
 });
 
 function logoutHander() {
-  "".concat(window.location.origin).concat(getUrlForRouter('/login'));
+  `${window.location.origin}${getUrlForRouter('/login')}`;
   authenticationService.logout();
   {
     window.location.reload(true);
@@ -3329,7 +3433,7 @@ function errorAndReEnter(error) {
   let parentLogoutHandler = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
   let logoutButton = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
   let closeButton = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : true;
-  const errorMessage = getErrorMessage(error) + (errorCode ? " ".concat(errorCode) : '');
+  const errorMessage = getErrorMessage(error) + (errorCode ? ` ${errorCode}` : '');
   if (forceLogin === null) {
     forceLogin = false;
   }
@@ -3484,7 +3588,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
       if (match) {
         const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
         if (woOptions) {
-          const windowOpenFn = woOptions => window.open("".concat(window.location.origin).concat(getUrlForRouter("/" + woOptions.url)), woOptions.name, woOptions.options);
+          const windowOpenFn = woOptions => window.open(`${window.location.origin}${getUrlForRouter("/" + woOptions.url)}`, woOptions.name, woOptions.options);
           if (setExpanded) {
             resutlFunction = () => {
               setExpanded();
@@ -3499,7 +3603,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
           }
         } else {
           resutlFunction = () => {
-            alert("ERROR: invalid onClick: ".concat(onClickString));
+            alert(`ERROR: invalid onClick: ${onClickString}`);
             return window.location.href;
           };
         }
@@ -3539,7 +3643,7 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
   }
   const on_click_string = defaultValue(item, "on_click", null);
   const on_click = getOnClickObject(on_click_string, componentMap, setExpanded);
-  const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
+  const title = topTitle == null ? item.title : `[${topTitle}]`;
   return {
     "hard_prefix": hard_prefix,
     "get_prefix": get_prefix,
@@ -3558,7 +3662,7 @@ const GetHashRoutes = _ref => {
   } = _ref;
   return /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
     id: "menuOptionsRoutes",
-    history: history$1
+    history: history
   }, routes.map(item => {
     return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
       key: item.key,
@@ -3568,17 +3672,14 @@ const GetHashRoutes = _ref => {
     });
   }));
 };
-const editorRoute = (editor, itemDefs) => {
-  var _editor$exact;
-  return {
-    key: itemDefs.title,
-    exact: (_editor$exact = editor.exact) !== null && _editor$exact !== void 0 ? _editor$exact : routeExact,
-    path: '/' + editor.baseUrl,
-    element: editor.component,
-    template: itemDefs.template,
-    on_click_string: itemDefs.on_click_string
-  };
-};
+const editorRoute = (editor, itemDefs) => ({
+  key: itemDefs.title,
+  exact: editor.exact ?? routeExact,
+  path: '/' + editor.baseUrl,
+  element: editor.component,
+  template: itemDefs.template,
+  on_click_string: itemDefs.on_click_string
+});
 const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   const AppMainInner = componentMap["AppMainInner"];
   const AppMainInnerUnauthenticated = componentMap["AppMainInnerUnauthenticated"];
@@ -3610,10 +3711,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
     const itemDefs = getItemDefaults(componentMap, setExpanded, item);
     let resultRoute = null;
     if (item.type === "nav_link") {
-      var _item$exact;
       resultRoute = {
         key: itemDefs["title"],
-        exact: (_item$exact = item["exact"]) !== null && _item$exact !== void 0 ? _item$exact : routeExact,
+        exact: item["exact"] ?? routeExact,
         path: itemDefs["path"],
         element: itemDefs["element_obj"],
         template: itemDefs.template,
@@ -3632,10 +3732,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
             console_debug_log(error);
           }
         } else {
-          var _item$exact2;
           resultRoute = {
             key: itemDefs["title"],
-            exact: (_item$exact2 = item["exact"]) !== null && _item$exact2 !== void 0 ? _item$exact2 : routeExact,
+            exact: item["exact"] ?? routeExact,
             path: itemDefs["path"],
             element: itemDefs["element_obj"],
             template: itemDefs.template,
@@ -3657,7 +3756,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
       RouteTemplateComponent = AppMainInnerUnauthenticated;
     } else if (route.template) {
       if (typeof componentMap[route.template] === "undefined") {
-        error = "[GMB-GR-E030] ERROR - template not registered in \"componentMap\" | route.template: ".concat(route.template);
+        error = `[GMB-GR-E030] ERROR - template not registered in "componentMap" | route.template: ${route.template}`;
         console_debug_log(error);
         RouteTemplateComponent = componentMap["NoDesignComponent"];
       } else {
@@ -3747,7 +3846,7 @@ const InvalidElement = _ref2 => {
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(ALERT_DANGER_CLASS, " ").concat(HORIZONTALLY_CENTERED_CLASS),
+    className: `${ALERT_DANGER_CLASS} ${HORIZONTALLY_CENTERED_CLASS}`,
     role: "alert"
   }, children));
 };
@@ -3806,13 +3905,13 @@ const GenericMenuBuilder = _ref3 => {
           type: itemType,
           mobileMenuMode: mobileMenuMode
         }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-          icon: icon !== null && icon !== void 0 ? icon : '',
+          icon: icon ?? '',
           size: "2xl",
           className: NAV_LINK_ICON_CLASS
         }) : itemDefs["title"]);
       }
       // Navigation dropdown (main menu item with sub-menus)
-      const navDropdownId = "basic-nav-dropdown-".concat(item.title.replace(/ /g, '_'));
+      const navDropdownId = `basic-nav-dropdown-${item.title.replace(/ /g, '_')}`;
       return /*#__PURE__*/React.createElement(NavDropdown, {
         key: item.title,
         title: itemDefs["title"],
@@ -3826,7 +3925,7 @@ const GenericMenuBuilder = _ref3 => {
           try {
             return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode, componentMap, setExpanded);
           } catch (error) {
-            console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
+            console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
             console_debug_log(error);
             return null;
           }
@@ -3912,7 +4011,7 @@ function getUrlParams() {
       }
     }
   } catch (error) {
-    console.log("getUrlParams ERROR | ".concat(props));
+    console.log(`getUrlParams ERROR | ${props}`);
     console.error(error);
   }
   return urlParams;
@@ -4164,7 +4263,7 @@ const MainSectionProvider = _ref => {
   };
   const debugCache = function () {
     let description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'debugCache';
-    console_debug_log(">>>>--->> listCache [".concat(description, "]:"), listCache());
+    console_debug_log(`>>>>--->> listCache [${description}]:`, listCache());
     return '';
   };
   return /*#__PURE__*/React.createElement(MainSectionContext.Provider, {
@@ -4315,7 +4414,7 @@ var generic_editor_rfc_specific_func = /*#__PURE__*/Object.freeze({
 });
 
 const GMT_TAIL = '.000Z'; // '.000-0000'
-const DATE_TIME_TAIL = "T00:00:00".concat(GMT_TAIL);
+const DATE_TIME_TAIL = `T00:00:00${GMT_TAIL}`;
 const timestampToDate = function (timestamp) {
   let fullDateTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   let separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -4350,7 +4449,7 @@ const fixDateWithTz = dateTimeString => {
       dateTimeString += DATE_TIME_TAIL;
       break;
     case 16:
-      dateTimeString += ":00".concat(GMT_TAIL);
+      dateTimeString += `:00${GMT_TAIL}`;
       break;
     default:
       dateTimeString = addMissingTz(dateTimeString);
@@ -4658,7 +4757,7 @@ const verifyEditorObj = editorObj => {
     // Unauthorized
     error = formatCaughtError(error);
     gfd_response.error = true;
-    gfd_response.errorMsg = "GetFormData: ".concat(error.message, " [GCE-GFD-020]");
+    gfd_response.errorMsg = `GetFormData: ${error.message} [GCE-GFD-020]`;
     return gfd_response;
   });
 };
@@ -4939,7 +5038,7 @@ const SuggestionDropdown = _ref => {
   } = useAppContext();
 
   // This component's input field must be different to the external input field to enable value sync
-  const nameInternal = "".concat(name, "_sdd");
+  const nameInternal = `${name}_sdd`;
   const filter_api_url = defaultValue(config, 'filter_api_url'); // Ex. "fda_food_query"
   const filter_api_request_method = defaultValue(config, "filter_api_request_method", "POST"); // Ex. true or false
   const filter_search_param_name = defaultValue(config, 'filter_search_param_name'); // Ex. "food_name"
@@ -4987,7 +5086,7 @@ const SuggestionDropdown = _ref => {
     setInputValue(newInputValue);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(SUGGESTION_DROPDOWN_CLASS, " ").concat(theme.input)
+    className: `${SUGGESTION_DROPDOWN_CLASS} ${theme.input}`
   }, /*#__PURE__*/React.createElement(Downshift, {
     inputValue: inputValue,
     onChange: handleSuggestionSelected
@@ -5045,7 +5144,7 @@ const SearchEngineButton = _ref => {
     e.preventDefault();
     const inputValue = document.getElementById(valueElement).value;
     if (inputValue !== "") {
-      const googleSearchUrl = "https://www.google.com/search?q=".concat(encodeURIComponent(setPrompt(google_prompt, inputValue)));
+      const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(setPrompt(google_prompt, inputValue))}`;
       window.open(googleSearchUrl, '_blank');
     }
   };
@@ -5109,7 +5208,7 @@ const FormPage = _ref => {
           // To assign specific default values in update, read or delete...
           processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
         }, error => {
-          console_debug_log("ERROR - GCE-FD-030");
+          console_debug_log(`ERROR - GCE-FD-030`);
           console.error(error);
           setStatus(errorAndReEnter(error, '[GCE-FD-030]'));
         });
@@ -5133,7 +5232,7 @@ const FormPage = _ref => {
   const editorFlags = getEditorFlags(mode);
   const actionTitle = mode === ACTION_CREATE ? MSG_ACTION_CREATE : mode === ACTION_UPDATE ? MSG_ACTION_UPDATE : mode === ACTION_READ ? MSG_ACTION_READ : MSG_ACTION_DELETE;
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+    className: `${APP_TOP_DIV_CLASS} ${theme.contentBg}`
   }, /*#__PURE__*/React.createElement(CrudEditorFormPageTitle, {
     baseUrl: editor.baseUrl,
     title: editor.title,
@@ -5163,7 +5262,7 @@ const CrudEditorFormPageTitle = _ref2 => {
     actionTitle
   } = _ref2;
   return /*#__PURE__*/React.createElement("h2", {
-    key: "".concat(baseUrl, "_title"),
+    key: `${baseUrl}_title`,
     className: APP_TITLE_H1_CLASS
   }, title + " - " + actionTitle);
 };
@@ -5285,7 +5384,7 @@ const PutOneFormfield = _ref3 => {
       });
       break;
     case 'suggestion_dropdown':
-      idName = "".concat(currentObj.name, "-input");
+      idName = `${currentObj.name}-input`;
       elementInput = /*#__PURE__*/React.createElement(SuggestionDropdown, {
         name: currentObj.name,
         id: currentObj.name,
@@ -5491,7 +5590,7 @@ const EditFormFormikFinal = _ref5 => {
       e.preventDefault();
     }
   };
-  console_debug_log("FormPage | editor.fieldElements:", editor.fieldElements);
+  console_debug_log(`FormPage | editor.fieldElements:`, editor.fieldElements);
   return /*#__PURE__*/React.createElement(formik.Formik, {
     key: editor.name,
     enableReinitialize: true,
@@ -5776,23 +5875,23 @@ const getFieldElementsYupValidations = (editor, editorFlags) => {
     let responseObj = Yup__namespace; // https://github.com/jquense/yup
     switch (currentObj.type) {
       case 'number':
-        responseObj = responseObj.number("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_NUMBER));
+        responseObj = responseObj.number(`${currentObj.label} ${MSG_MUST_BE} ${MSG_VALID_NUMBER}`);
         break;
       case 'integer':
-        responseObj = responseObj.number().integer("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_INTEGER));
+        responseObj = responseObj.number().integer(`${currentObj.label} ${MSG_MUST_BE} ${MSG_VALID_INTEGER}`);
         break;
       case 'date':
-        responseObj = responseObj.date("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_DATE));
+        responseObj = responseObj.date(`${currentObj.label} ${MSG_MUST_BE} ${MSG_VALID_DATE}`);
         break;
       case 'email':
-        responseObj = responseObj.string().email("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_EMAIL));
+        responseObj = responseObj.string().email(`${currentObj.label} ${MSG_MUST_BE} ${MSG_VALID_EMAIL}`);
         break;
       case 'text':
       default:
         responseObj = responseObj.string();
     }
     if (currentObj.required) {
-      responseObj = responseObj.required("".concat(currentObj.label, " ").concat(MSG_IS_REQUIRED));
+      responseObj = responseObj.required(`${currentObj.label} ${MSG_IS_REQUIRED}`);
     }
     acc[currentObj.name] = responseObj;
     return {
@@ -5879,7 +5978,7 @@ const CrudEditorSearch = _ref => {
     // type="text"
     ,
     className: APP_LISTING_SEARCH_BOX_INPUT_CLASS + " " + theme.input,
-    placeholder: "".concat(MSG_SEARCH, "..."),
+    placeholder: `${MSG_SEARCH}...`,
     value: searchText || '',
     onChange: handleTextChange
   }), /*#__PURE__*/React.createElement("button", {
@@ -5974,13 +6073,13 @@ const GenericCrudEditorMain = props => {
           // dbListPostRead: To fix Listing fields
           processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, null)));
         }, error => {
-          console_debug_log("GenericCrudEditor / Listing - ERROR:");
+          console_debug_log(`GenericCrudEditor / Listing - ERROR:`);
           console.error(error);
           ShowHidePageAnimation(false, animationElementId);
           setStatus(errorAndReEnter(error, null));
         });
       }, error => {
-        console_debug_log("GenericCrudEditor / dbListPreRead - ERROR:");
+        console_debug_log(`GenericCrudEditor / dbListPreRead - ERROR:`);
         console.error(error);
         setStatus(errorAndReEnter(error, null));
       });
@@ -6031,9 +6130,9 @@ const GenericCrudEditorMain = props => {
     return response;
   };
   const actionsHandler = (mode, row) => {
-    const element = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls"));
-    document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(row), "_magicButton"));
-    const rowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(row), "_row"));
+    const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
+    document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
+    const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
     if (mode === 'show') {
       // Highlight row
@@ -6058,7 +6157,7 @@ const GenericCrudEditorMain = props => {
     if (mode === 'toggle') {
       // Turn off previous opened controls
       rows.resultset.map(thisRow => {
-        const thisRowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(thisRow), "_controls"));
+        const thisRowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(thisRow)}_controls`);
         if (!thisRowElement.classList.contains('hidden')) {
           thisRowElement.classList.add('hidden');
         }
@@ -6080,7 +6179,7 @@ const GenericCrudEditorMain = props => {
   };
   if (!editor) {
     if (status) {
-      return /*#__PURE__*/React.createElement("div", null, status, debug$1 );
+      return /*#__PURE__*/React.createElement("div", null, status, debug$1);
     }
     return WaitAnimation();
   }
@@ -6088,7 +6187,7 @@ const GenericCrudEditorMain = props => {
     return WaitAnimation();
   }
   if (status) {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, status, debug$1 );
+    return /*#__PURE__*/React.createElement(React.Fragment, null, status, debug$1);
   }
   if (rows && typeof rows['totalPages'] !== 'undefined' && rows['totalPages'] == null) {
     return 'Rows ok but not totalPages - ERROR # 3';
@@ -6106,33 +6205,33 @@ const GenericCrudEditorMain = props => {
     }));
   }
   return /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_top_div"),
-    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+    key: `${editor.baseUrl}_top_div`,
+    className: `${APP_TOP_DIV_CLASS} ${theme.contentBg}`
   }, infoMsg && /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_info_msg"),
+    key: `${editor.baseUrl}_info_msg`,
     className: INFO_MSG_CLASS
   }, infoMsg), rows && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(CrudEditorListingTitle, {
     baseUrl: editor.baseUrl,
     title: editor.title,
     handleRefresh: handleRefresh
   }), /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_level2_div"),
+    key: `${editor.baseUrl}_level2_div`,
     className: APP_LEVEL2_DIV_CLASS
   }, /*#__PURE__*/React.createElement("table", {
-    key: "".concat(editor.baseUrl, "_table"),
+    key: `${editor.baseUrl}_table`,
     className: APP_LISTING_TABLE_CLASS
   }, /*#__PURE__*/React.createElement("thead", {
-    key: "".concat(editor.baseUrl, "_thead"),
+    key: `${editor.baseUrl}_thead`,
     className: APP_LISTING_TABLE_HDR_THEAD_CLASS
   }, /*#__PURE__*/React.createElement("tr", {
-    key: "".concat(editor.baseUrl, "_thead_tr"),
+    key: `${editor.baseUrl}_thead_tr`,
     className: APP_LISTING_TABLE_HDR_TR_CLASS
   }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
     // scope="col"
-    key: "".concat(editor.baseUrl, "_").concat(key, "_thead_th"),
+    key: `${editor.baseUrl}_${key}_thead_th`,
     className: APP_LISTING_TABLE_HDR_TH_CLASS
-  }, editor.fieldElements[key].label)), actionsHandlerAllowsMagicButton )), /*#__PURE__*/React.createElement("tbody", {
-    key: "".concat(editor.baseUrl, "_tbody"),
+  }, editor.fieldElements[key].label)), actionsHandlerAllowsMagicButton)), /*#__PURE__*/React.createElement("tbody", {
+    key: `${editor.baseUrl}_tbody`,
     className: APP_LISTING_TABLE_BODY_TBODY_CLASS
   }, rows && typeof rows.resultset !== 'undefined' && rows.resultset.map((row, index) =>
   /*#__PURE__*/
@@ -6141,11 +6240,11 @@ const GenericCrudEditorMain = props => {
   // "Warning: Each child in a list should have a unique "key" prop."
   // we use <React.Fragment> instead
   React.createElement(React.Fragment, {
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_tr_enclosure")
+    key: `${editor.baseUrl}_row_${rowId(row)}_tr_enclosure`
   }, /*#__PURE__*/React.createElement("tr", {
-    id: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_row"),
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_row"),
-    className: index % 2 ? "".concat(APP_LISTING_TABLE_BODY_TR_ODD_CLASS) : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_EVEN_CLASS),
+    id: `${editor.baseUrl}_row_${rowId(row)}_row`,
+    key: `${editor.baseUrl}_row_${rowId(row)}_row`,
+    className: index % 2 ? `${APP_LISTING_TABLE_BODY_TR_ODD_CLASS}` : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}`,
     onMouseOver: () => {
       actionsHandler('show', row);
     },
@@ -6156,13 +6255,13 @@ const GenericCrudEditorMain = props => {
       actionsHandler('hide', row);
     }
   }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_").concat(key, "_td"),
+    key: `${editor.baseUrl}_row_${rowId(row)}_${key}_td`,
     className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS
   }, getSelectDescription(editor.fieldElements[key], row) // Show column value or select description
-  )), actionsHandlerAllowsMagicButton ), /*#__PURE__*/React.createElement("tr", {
-    id: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls"),
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls"),
-    className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS)) + " " + HIDDEN_CLASS,
+  )), actionsHandlerAllowsMagicButton), /*#__PURE__*/React.createElement("tr", {
+    id: `${editor.baseUrl}_row_${rowId(row)}_controls`,
+    key: `${editor.baseUrl}_row_${rowId(row)}_controls`,
+    className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS,
     onMouseOver: () => {
       actionsHandler('show', row);
     },
@@ -6174,36 +6273,36 @@ const GenericCrudEditorMain = props => {
     }
   }, /*#__PURE__*/React.createElement("td", {
     // Action buttons
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_td"),
+    key: `${editor.baseUrl}_row_${rowId(row)}_controls_td`,
     colSpan: Object.keys(editor.fieldElements).length + 1,
     className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
   }, /*#__PURE__*/React.createElement("button", {
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_eye"),
+    key: `${editor.baseUrl}_row_${rowId(row)}_controls_eye`,
     onClick: () => handleView(rowId(row))
     // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
     ,
-    className: "".concat(BUTTON_LISTING_CLASS)
+    className: `${BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "eye",
     alt: MSG_ACTION_READ
   })), /*#__PURE__*/React.createElement("button", {
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_edit"),
+    key: `${editor.baseUrl}_row_${rowId(row)}_controls_edit`,
     onClick: () => handleModify(rowId(row))
     // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
     ,
-    className: "".concat(BUTTON_LISTING_CLASS)
+    className: `${BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "edit",
     alt: MSG_ACTION_EDIT
   })), /*#__PURE__*/React.createElement("button", {
-    key: "".concat(editor.baseUrl, "_row_").concat(rowId(row), "_controls_trash"),
+    key: `${editor.baseUrl}_row_${rowId(row)}_controls_trash`,
     onClick: () => handleDelete(rowId(row)),
-    className: "".concat(BUTTON_LISTING_CLASS)
+    className: `${BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "trash",
     alt: MSG_ACTION_DELETE
   }))))))))), /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_toolbar"),
+    key: `${editor.baseUrl}_toolbar`,
     className: APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS : APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)
   }, /*#__PURE__*/React.createElement(CrudEditorPagination, {
     id: editor.baseUrl + "_pagination",
@@ -6222,7 +6321,7 @@ const GenericCrudEditorMain = props => {
   }), /*#__PURE__*/React.createElement(CrudEditorNewButton, {
     id: editor.baseUrl + "_newButton",
     handleNew: handleNew
-  })), status && /*#__PURE__*/React.createElement("div", null, status, debug$1 )), '');
+  })), status && /*#__PURE__*/React.createElement("div", null, status, debug$1)), '');
 };
 const ConvertToComponents = (editorDataObj, registry) => {
   /*
@@ -6330,7 +6429,7 @@ const CrudEditorPagination = _ref3 => {
   }, /*#__PURE__*/React.createElement("button", {
     disabled: currentPage === 1,
     onClick: () => goToNewPage(currentPage - 1),
-    className: "".concat(currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+    className: `${currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "less-than",
     alt: MSG_PREVIOUS
@@ -6339,7 +6438,7 @@ const CrudEditorPagination = _ref3 => {
   }, MSG_PAGE, " ", currentPage, " ", MSG_OF, " ", totalPages), /*#__PURE__*/React.createElement("button", {
     disabled: currentPage === totalPages,
     onClick: () => goToNewPage(currentPage + 1),
-    className: "".concat(currentPage === totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+    className: `${currentPage === totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "greater-than",
     alt: MSG_NEXT
@@ -6371,7 +6470,7 @@ const CrudEditorListingTitle = _ref5 => {
     handleRefresh
   } = _ref5;
   return /*#__PURE__*/React.createElement("h2", {
-    key: "".concat(baseUrl, "_title"),
+    key: `${baseUrl}_title`,
     className: APP_TITLE_H1_CLASS
   }, title + " - " + MSG_ACTION_LIST, /*#__PURE__*/React.createElement("span", {
     className: APP_TITLE_RECYCLE_BUTTON_CLASS
@@ -6845,7 +6944,7 @@ const GenericSinglePageEditorMain = props => {
   if (status) {
     return /*#__PURE__*/React.createElement("div", {
       className: ERROR_MSG_CLASS
-    }, status, debug );
+    }, status, debug);
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(FormPage, {
     mode_par: formMode[0],
@@ -7270,9 +7369,9 @@ const AppFooter = _ref => {
     rights = null,
     otherLine = null
   } = _ref;
-  const appNameData = appName !== null && appName !== void 0 ? appName : process.env.REACT_APP_APP_NAME;
-  const yearData = year !== null && year !== void 0 ? year : new Date().getFullYear();
-  const rightsData = rights !== null && rights !== void 0 ? rights : "All rights reserved";
+  const appNameData = appName ?? process.env.REACT_APP_APP_NAME;
+  const yearData = year ?? new Date().getFullYear();
+  const rightsData = rights ?? "All rights reserved";
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, "\xA9 ", yearData, " ", url ? /*#__PURE__*/React.createElement("a", {
     href: url,
     target: "_blank"
@@ -7547,7 +7646,7 @@ const convertHeight = (height, height_unit, target_unit) => {
   if (height_unit === 'cm' && target_unit === 'i') {
     return height / 2.54;
   }
-  throw new Error("Unsupported conversion from \"".concat(height_unit, "\" to \"").concat(target_unit, "\""));
+  throw new Error(`Unsupported conversion from "${height_unit}" to "${target_unit}"`);
 };
 const convertWeight = (weight, weight_unit, target_unit) => {
   if (weight_unit === null || weight_unit === '' || weight_unit === MSG_SELECT_AN_OPTION || target_unit === null || target_unit === '' || target_unit === MSG_SELECT_AN_OPTION) {
@@ -7562,7 +7661,7 @@ const convertWeight = (weight, weight_unit, target_unit) => {
   if (weight_unit === 'lb' && target_unit === 'kg') {
     return weight / 2.20462;
   }
-  throw new Error("Unsupported conversion from ".concat(weight_unit, " to ").concat(target_unit));
+  throw new Error(`Unsupported conversion from ${weight_unit} to ${target_unit}`);
 };
 const interpretString = str => {
   /*
@@ -7798,7 +7897,7 @@ const ShowAsDisabledField = _ref => {
     children
   } = _ref;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(backgroundColor !== null && backgroundColor !== void 0 ? backgroundColor : DISABLE_FIELD_BACKGROUND_COLOR_CLASS, " ").concat(className)
+    className: `${backgroundColor ?? DISABLE_FIELD_BACKGROUND_COLOR_CLASS} ${className}`
   }, children));
 };
 
@@ -7864,7 +7963,7 @@ exports.genericEditorRfcUi = generic_editor_rfc_ui;
 exports.genericEditorSinglepage = generic_editor_singlepage;
 exports.genericEditorUtilities = generic_editor_utilities;
 exports.genericMenuService = generic_menu_service;
-exports.history = history$2;
+exports.history = history$1;
 exports.jsonUtilities = jsonUtilities;
 exports.loggingService = logging_service;
 exports.logoutService = logout_service;

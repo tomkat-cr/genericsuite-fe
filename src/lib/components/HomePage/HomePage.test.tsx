@@ -4,6 +4,11 @@ import renderer from 'react-test-renderer';
 
 import { mockFetch, mockAuthService, mockUserData } from '../../test-helpers/mocks'
 
+jest.mock('react-markdown', () => ({
+    __esModule: true,
+    default: jest.fn(() => null)
+}));
+
 import { App } from "../App/App.jsx";
 import { HomePage } from "./HomePage.jsx";
 

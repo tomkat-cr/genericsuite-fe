@@ -311,6 +311,13 @@ export const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
 export const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS="ml-3 mr-3 showHidePageAnimationEnabledClass";
 export const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS="ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
 
+// Markdown formatting (check renderMarkdownContent())
+
+export const MARKDOWN_P_CLASS = "my-2 markdown-p-class";
+export const MARKDOWN_BOLD_CLASS = "font-bold markdown-bold-class";
+export const MARKDOWN_ITALIC_CLASS = "italic markdown-italic-class";
+export const MARKDOWN_UNDERLINE_CLASS = "underline markdown-underline-class";
+
 // AI Assistant and conversation pages
 
 // Flexible input type text that grows according to its content (e.g. for the AI Assistant conversation)

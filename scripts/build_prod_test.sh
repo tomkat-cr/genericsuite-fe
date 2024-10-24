@@ -4,7 +4,7 @@
 # Run:
 #   source scripts/build_prod_test.sh test|restore|build
 #
-# IMPORTANT: run with "source" because ir generates the environmet variables needed to restore package.json and tsconfig.json.
+# IMPORTANT: run with "source" because it generates the environmet variables needed to restore package.json and tsconfig.json.
 #
 # Options (Defaults to "test"):
 #   "test": prepares tsconfig.json and package.json for local build test and runs: npm run build-dev && npm run start

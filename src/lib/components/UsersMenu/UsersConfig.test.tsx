@@ -9,6 +9,11 @@ import 'whatwg-fetch';
 
 import { mockDefaultComponentMap, mockFetch } from '../../test-helpers/mocks'
 
+jest.mock('react-markdown', () => ({
+    __esModule: true,
+    default: jest.fn(() => null)
+}));
+
 import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";
 
