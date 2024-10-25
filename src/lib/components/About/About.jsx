@@ -29,9 +29,8 @@ export const About = () => {
 
 export const AboutBody = ({
     children,
+    modalPopUpTest = true,
 }) => {
-    const modalPopUpTest = true;
-    // const modalPopUpTest = false;
     const version = process.env.REACT_APP_VERSION;
     const appName = process.env.REACT_APP_APP_NAME;
     return (

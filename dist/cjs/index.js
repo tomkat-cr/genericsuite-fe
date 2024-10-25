@@ -2467,14 +2467,14 @@ const About = () => {
 };
 const AboutBody = _ref => {
   let {
-    children
+    children,
+    modalPopUpTest = true
   } = _ref;
-  // const modalPopUpTest = false;
   const version = process.env.REACT_APP_VERSION;
   const appName = process.env.REACT_APP_APP_NAME;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
-  }, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, /*#__PURE__*/React.createElement(ModalPopUp, {
+  }, /*#__PURE__*/React.createElement("h1", null, "About ", appName), /*#__PURE__*/React.createElement("p", null, "(Version: ", version && version !== '' ? version : "N/A", ")"), /*#__PURE__*/React.createElement("br", null), children, modalPopUpTest && /*#__PURE__*/React.createElement(ModalPopUp, {
     title: "Test ModalPopUp",
     showTitle: true
     // iconClassName={ALERT_DANGER_CLASS}
