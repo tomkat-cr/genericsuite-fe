@@ -3412,6 +3412,7 @@ function errorAndReEnter(error) {
   let parentLogoutHandler = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
   let logoutButton = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
   let closeButton = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : true;
+  let closeHandler = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
   const errorMessage = getErrorMessage(error) + (errorCode ? ` ${errorCode}` : '');
   if (forceLogin === null) {
     forceLogin = false;
@@ -3442,10 +3443,9 @@ function errorAndReEnter(error) {
     primaryButtonMessage: loginButton,
     primaryButtonAction: parentLogoutHandler,
     logoutButton: logoutButton,
-    htmlContent: msgContainsHtml ? retryMessage : null
-    // htmlContentClass={ALERT_DANGER_CLASS}
-    ,
-    iconClassName: ALERT_DANGER_CLASS
+    htmlContent: msgContainsHtml ? retryMessage : null,
+    iconClassName: ALERT_DANGER_CLASS,
+    closeButtonAction: closeHandler
   }, msgContainsHtml ? null : retryMessage);
 }
 function errorAndReEnterNonModal(error) {
