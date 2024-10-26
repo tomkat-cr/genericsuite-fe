@@ -91,6 +91,7 @@ import {
 import {
     getPrefix,
     hasHashRouter,
+    history,
 } from '../../helpers/history.jsx';
 import {
     defaultTheme,
@@ -266,7 +267,7 @@ const AppMainInner = ({ children }) => {
     const showContentOnly = getShowContentOnly();
 
     if (debug) {
-        console_debug_log("App enters... | window.location:", window.location, "urlParams:", urlParams, "showContentOnly:", showContentOnly);
+        console_debug_log("App enters... | window.location:", window.location, "showContentOnly:", showContentOnly);
     }
 
     const stateHandler = () => {

@@ -16,6 +16,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.23 (2024-10-25)
+---
+
+### New
+Add "closeHandler" parameter to errorAndReEnter().
+
+### Fixes
+Fix markdown formatting in AI Assistant conversation [GS-145].
+Fix copy button in non-secure http connection [GS-144].
+
+
 ## 1.0.22 (2024-10-07)
 ---
 
@@ -49,6 +60,7 @@ Fix missing classes in the new output.css of Tailwind v3.4.9 [GS-63].
 Fix the row values in index page not shown issue [GS-108].
 Fix the %PUBLIC_URL% issue in public/index.html file running the app with webpack [GS-116].
 Fix show WaitAnimation() in iterateChildComponents() and EditFormFormik() to make the data loading evident in the User Profile menu option [GS-112].
+Formik version fixed to 2.4.5 in package.json to avoid GCE_RFC warning when the +New button is clicked [GS-25] [GS-112].
 
 ### Breaks
 Bootstrap CSS is not longer used [GS-63].

@@ -33,6 +33,7 @@ export default [
             "react-dom",
             "react-error-overlay",
             "react-icons",
+            "react-markdown",
             "react-router-dom",
             "react-syntax-highlighter",
             "rxjs",

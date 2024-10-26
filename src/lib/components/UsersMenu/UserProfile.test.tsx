@@ -1,10 +1,14 @@
 import React from "react";
-// import { render } from "@testing-library/react";
 import renderer from 'react-test-renderer';
-import { MemoryRouter } from "react-router-dom";
+// import { MemoryRouter } from "react-router-dom";
 
 import { App } from "../App/App.jsx";
 import { mockFetch, mockAuthService, mockUserData } from '../../test-helpers/mocks'
+
+jest.mock('react-markdown', () => ({
+    __esModule: true,
+    default: jest.fn(() => null)
+}));
 
 import { UserProfileEditor } from "./UserProfile";
 

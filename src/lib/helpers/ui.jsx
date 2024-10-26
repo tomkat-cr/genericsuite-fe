@@ -1,7 +1,16 @@
 import React from 'react';
 
+import ReactMarkdown from 'react-markdown';
+
 import { console_debug_log } from '../services/logging.service.jsx';
 import { randomKey } from '../services/ramdomize.jsx';
+
+import {
+    MARKDOWN_BOLD_CLASS,
+    MARKDOWN_ITALIC_CLASS,
+    MARKDOWN_P_CLASS,
+    MARKDOWN_UNDERLINE_CLASS
+} from '../constants/class_name_constants.jsx';
 
 const debug = false;
 
@@ -15,7 +24,6 @@ export const toggleIdVisibility = (onOff, ids) => {
         }
     });
 };
-
 
 export const getElementWithErrorHandling = (elementId) => {
     try {
@@ -142,7 +150,67 @@ export const LinkifyText = ({ children }) => {
     );
 };
 
+export const renderMarkdownContent = (text) => {
+    return (
+        <ReactMarkdown
+            components={{
+                p: ({ children }) => <p className={MARKDOWN_P_CLASS}>{children}</p>,
+                strong: ({ children }) => <strong className={MARKDOWN_BOLD_CLASS}>{children}</strong>,
+                em: ({ children }) => <em className={MARKDOWN_ITALIC_CLASS}>{children}</em>,
+                a: ({ children, href }) => <a href={href} target="_blank" className={MARKDOWN_UNDERLINE_CLASS}>{children}</a>,
+                // Add more markdown components as needed
+            }}
+        >
+            {text}
+        </ReactMarkdown>
+    );
+};
+
 export const CopyButton = ({ text }) => {
+    
+    const showCopiedMessage = (e) => {
+        const copiedMessage = document.createElement('div');
+        copiedMessage.textContent = 'Copied!';
+        copiedMessage.style.position = 'absolute';
+        copiedMessage.style.bottom = '-40px'; // Position under the button
+        copiedMessage.style.left = '-20px'; // Align with the button's left edge
+        copiedMessage.style.padding = '5px';
+        copiedMessage.style.borderRadius = '5px';
+        copiedMessage.style.border = 'none';
+        copiedMessage.style.background = 'grey';
+        copiedMessage.style.color = 'white';
+        copiedMessage.style.fontSize = '0.75rem';
+        copiedMessage.style.zIndex = '1000';
+        copiedMessage.style.opacity = '0';
+        copiedMessage.style.transition = 'opacity 0.3s';
+        e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
+        setTimeout(() => {
+            copiedMessage.style.opacity = '1';
+        }, 100);
+        setTimeout(() => {
+            copiedMessage.style.opacity = '0';
+            setTimeout(() => copiedMessage.remove(), 2000);
+        }, 2000);
+    }
+
+    const securedCopyToClipboard = (text) => {
+        navigator.clipboard.writeText(text);
+    }
+
+    const unsecuredCopyToClipboard = (text) => {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          console.error('Unable to copy to clipboard', err);
+        }
+        document.body.removeChild(textArea);
+    }
+
     return (
         <>
             <button
@@ -160,29 +228,12 @@ export const CopyButton = ({ text }) => {
                     fontSize: '12px'
                 }}
                 onClick={(e) => {
-                    navigator.clipboard.writeText(text);
-                    const copiedMessage = document.createElement('div');
-                    copiedMessage.textContent = 'Copied!';
-                    copiedMessage.style.position = 'absolute';
-                    copiedMessage.style.bottom = '-40px'; // Position under the button
-                    copiedMessage.style.left = '-20px'; // Align with the button's left edge
-                    copiedMessage.style.padding = '5px';
-                    copiedMessage.style.borderRadius = '5px';
-                    copiedMessage.style.border = 'none';
-                    copiedMessage.style.background = 'grey';
-                    copiedMessage.style.color = 'white';
-                    copiedMessage.style.fontSize = '0.75rem';
-                    copiedMessage.style.zIndex = '1000';
-                    copiedMessage.style.opacity = '0';
-                    copiedMessage.style.transition = 'opacity 0.3s';
-                    e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
-                    setTimeout(() => {
-                        copiedMessage.style.opacity = '1';
-                    }, 100);
-                    setTimeout(() => {
-                        copiedMessage.style.opacity = '0';
-                        setTimeout(() => copiedMessage.remove(), 2000);
-                    }, 2000);
+                    if (window.isSecureContext && navigator.clipboard) {
+                        securedCopyToClipboard(text);
+                    } else {
+                        unsecuredCopyToClipboard(text);
+                    }
+                    showCopiedMessage(e);
                 }}
             >
                 Copy

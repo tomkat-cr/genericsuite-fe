@@ -89,6 +89,7 @@ export function errorAndReEnter(
     parentLogoutHandler = null,
     logoutButton = false,
     closeButton = true,
+    closeHandler = null,
 ) {
     if (debug) {
         console_debug_log(`errorAndReEnter | errorCode: ${errorCode} | forceLogin: ${forceLogin} | error:`, error);
@@ -133,8 +134,8 @@ export function errorAndReEnter(
             primaryButtonAction={parentLogoutHandler}
             logoutButton={logoutButton}
             htmlContent={msgContainsHtml ? retryMessage : null}
-            // htmlContentClass={ALERT_DANGER_CLASS}
             iconClassName={ALERT_DANGER_CLASS}
+            closeButtonAction={closeHandler}
         >
             {/* {msgContainsHtml ? null : errorMessageDiv(retryMessage)} */}
             {msgContainsHtml ? null : retryMessage}

@@ -4,6 +4,11 @@ import { MemoryRouter } from "react-router-dom";
 
 import { mockAuthService, mockDefaultComponentMap, mockUserData } from '../../test-helpers/mocks'
 
+jest.mock('react-markdown', () => ({
+    __esModule: true,
+    default: jest.fn(() => null)
+}));
+
 import { Users } from "./Users";
 import { UserProvider } from "../../helpers/UserContext.jsx";
 import { AppProvider } from "../../helpers/AppContext";
