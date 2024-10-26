@@ -1474,7 +1474,6 @@ const AppProvider = _ref => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   // const toggleSubmenu = (menuName) => {
   const toggleSubmenu = (menuName, menuVisible) => {
-    console_debug_log(`<<<< AppContext | toggleSubmenu | menuName: ${menuName} | menuVisible: ${menuVisible}`);
     setExpandedMenus(prev =>
     // prev.includes(menuName)
     // ? prev.filter(item => item !== menuName)
@@ -1864,6 +1863,7 @@ const NavDropdown = _ref14 => {
   const [dropDownOpen, setDropDownOpen] = React.useState(false);
   const fullId = `${id}_${type}`;
   const toggledropDownOpen = () => {
+    // const debug = true;
     const elementId = `${fullId}_dropDown`;
     const element = document.getElementById(elementId);
     if (dropDownOpen) {
@@ -1871,7 +1871,6 @@ const NavDropdown = _ref14 => {
     } else {
       element.classList.remove('hidden');
     }
-    console_debug_log(`>>--> NavDropdown | toggledropDownOpen | elementId: ${elementId} | previous dropDownOpen: ${dropDownOpen}`);
     setDropDownOpen(!dropDownOpen);
   };
   const variantsDirectionImage = {
@@ -1919,7 +1918,6 @@ const NavDropdown = _ref14 => {
   // }, []);
 
   React.useEffect(() => {
-    console_debug_log(`SideMenu | useEffect | dropDownOpen: ${dropDownOpen}`);
     // variantOnClick(fullId);
     toggleSubmenu(fullId, dropDownOpen);
   }, [dropDownOpen, fullId]);

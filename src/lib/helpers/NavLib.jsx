@@ -399,7 +399,7 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
     if (debug) console_debug_log(`||||| NavDropdown | id: ${id} | fullId: ${fullId}`, children);
 
     const toggledropDownOpen = () => {
-        const debug = true;
+        // const debug = true;
         const elementId = `${fullId}_dropDown`;
         const element = document.getElementById(elementId);
         if (dropDownOpen) {
@@ -458,7 +458,7 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
     // }, []);
 
     useEffect(() => {
-        const debug = true;
+        // const debug = true;
         if (debug) console_debug_log(`SideMenu | useEffect | dropDownOpen: ${dropDownOpen}`);
         // variantOnClick(fullId);
         toggleSubmenu(fullId, dropDownOpen);
