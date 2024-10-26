@@ -23,7 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 Add "closeHandler" parameter to errorAndReEnter().
 
 ### Fixes
-Fix markdown display in AI Assistant conversation [GS-145].
+Fix markdown formatting in AI Assistant conversation [GS-145].
 Fix copy button in non-secure http connection [GS-144].
 
 
