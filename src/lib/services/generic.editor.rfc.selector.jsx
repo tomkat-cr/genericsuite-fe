@@ -100,12 +100,19 @@ export const GenericSelectGenerator = (props) => {
     return state.toString();
   }
 
+  const { filter, show_description, description_fields } = config;
+
+  selectAnOptionItem = {}
+  selectAnOptionItem['_id'] = null;
+  selectAnOptionItem[config.description_fields[0]] = MSG_SELECT_AN_OPTION;
+  for (let i = 1; i < config.description_fields.length; i++) {
+    selectAnOptionItem[config.description_fields[i]] = '';
+  }
+
   const selectOptions = [
-    ...[{ _id: null, name: MSG_SELECT_AN_OPTION }],
+    ...[...[selectAnOptionItem]],
     ...rows.resultset,
   ];
-
-  const { filter, show_description, description_fields } = config;
 
   if (debug) {
     debugCache("GenericSelectGenerator");
