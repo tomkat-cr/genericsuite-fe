@@ -4852,6 +4852,7 @@ const GenericSelectGenerator = props => {
       filter: typeof props.filter !== 'undefined' ? props.filter : null,
       dbFilter: typeof props.dbFilter !== 'undefined' ? props.dbFilter : null,
       show_description: typeof props.show_description !== 'undefined' ? props.show_description : false,
+      description_fields: typeof props.description_fields !== 'undefined' ? props.description_fields : ["name"],
       editor: editor,
       select_name: editor.name
     };
@@ -4870,19 +4871,24 @@ const GenericSelectGenerator = props => {
   }], ...rows.resultset];
   const {
     filter,
-    show_description
+    show_description,
+    description_fields
   } = config;
+  const buildDescription = (option, fieldArray) => {
+    let description = '';
+    fieldArray.forEach(field => {
+      description += option[field] + ' ';
+    });
+    return description;
+  };
   return selectOptions.filter(option => filter === null ? true : config.dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
-      if (show_description === true) {
-        return option.name;
-      }
-      return option[show_description];
+      return buildDescription(option, description_fields);
     }
     return /*#__PURE__*/React.createElement("option", {
       key: config.dbService.convertId(option._id),
       value: config.dbService.convertId(option._id)
-    }, option.name);
+    }, buildDescription(option, description_fields));
   });
 };
 const GenericSelectDataPopulator = props => {

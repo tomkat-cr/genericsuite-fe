@@ -81,6 +81,10 @@ export const GenericSelectGenerator = (props) => {
         typeof props.show_description !== 'undefined'
           ? props.show_description
           : false,
+      description_fields:
+        typeof props.description_fields !== 'undefined'
+          ? props.description_fields
+          : ["name"],
       editor: editor,
       select_name: editor.name,
     };
@@ -101,10 +105,18 @@ export const GenericSelectGenerator = (props) => {
     ...rows.resultset,
   ];
 
-  const { filter, show_description } = config;
+  const { filter, show_description, description_fields } = config;
 
   if (debug) {
     debugCache("GenericSelectGenerator");
+  }
+
+  const buildDescription = (option, fieldArray) => {
+    let description = '';
+    fieldArray.forEach((field) => {
+      description += option[field] + ' ';
+    });
+    return description;
   }
 
   return selectOptions
@@ -113,17 +125,14 @@ export const GenericSelectGenerator = (props) => {
     )
     .map((option) => {
       if (show_description) {
-        if (show_description === true) {
-          return option.name;
-        }
-        return option[show_description];
+        return buildDescription(option, description_fields);
       }
       return (
         <option
           key={config.dbService.convertId(option._id)}
           value={config.dbService.convertId(option._id)}
         >
-          {option.name}
+          {buildDescription(option, description_fields)}
         </option>
       );
     });

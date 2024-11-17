@@ -20,7 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ---
 
 ### Changes
-In selectOptions(), the parameter "show_description" now can have the attribute/column name of the description. If true, use "name" (as it was before) [GS-155].
+In selectOptions(), add the parameter "description_fields" have the attribute/column name(s) for the description. If not specified, use ["name"] (as it was before) [GS-155].
 
 ### Fixes
 Fix the undefined passcode error in user update calling the backend after creating a user leaving the password empty (UsersPasswordValidations) [GS-155].
