@@ -4870,7 +4870,7 @@ const GenericSelectGenerator = props => {
     show_description,
     description_fields
   } = config;
-  selectAnOptionItem = {};
+  let selectAnOptionItem = {};
   selectAnOptionItem['_id'] = null;
   selectAnOptionItem[config.description_fields[0]] = MSG_SELECT_AN_OPTION;
   for (let i = 1; i < config.description_fields.length; i++) {
