@@ -4853,7 +4853,10 @@ const GenericSelectGenerator = props => {
   } = config;
   return selectOptions.filter(option => filter === null ? true : config.dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
-      return option.name;
+      if (show_description === true) {
+        return option.name;
+      }
+      return option[show_description];
     }
     return /*#__PURE__*/React.createElement("option", {
       key: config.dbService.convertId(option._id),
@@ -6832,6 +6835,11 @@ const UsersPasswordValidations = (data, editor, action) => {
     let resp = genericFuncArrayDefaultValue(data);
     switch (action) {
       case ACTION_CREATE:
+        if (!data['passcode']) {
+          resp.error = true;
+          resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'User needs a password';
+          break;
+        }
       case ACTION_UPDATE:
         if (data['passcode']) {
           if (data['passcode'] !== data['passcode_repeat']) {

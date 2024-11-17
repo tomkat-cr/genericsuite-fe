@@ -108,12 +108,15 @@ export const GenericSelectGenerator = (props) => {
   }
 
   return selectOptions
-    .filter((option) =>
+    .filter((option) => 
       filter === null ? true : config.dbService.convertId(option._id) === filter
     )
     .map((option) => {
       if (show_description) {
-        return option.name;
+        if (show_description === true) {
+          return option.name;
+        }
+        return option[show_description];
       }
       return (
         <option

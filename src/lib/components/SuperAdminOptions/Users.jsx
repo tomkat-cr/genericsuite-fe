@@ -151,6 +151,12 @@ export const UsersPasswordValidations = (data, editor, action) => {
         let resp = genericFuncArrayDefaultValue(data);
         switch(action) {
             case ACTION_CREATE:
+                if (!data['passcode']) {
+                    resp.error = true;
+                    resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 
+                        'User needs a password';
+                        break;
+                }
             case ACTION_UPDATE:
                 if (data['passcode']) {
                     if (data['passcode'] !== data['passcode_repeat']) {
