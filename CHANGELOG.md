@@ -16,6 +16,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## Unreleased
+## 1.0.25 (2024-12-30)
+---
+
+### New
+Implement API keys to GS BE Core [GS-159].
+
+### Fixes
+Fix a bug calling the specific functions assigning the "fieldValues" object, because genericFuncArrayDefaultValue() was assigning it an infinite recursive "resultset" attribute, preventing the default values assignment in "dbPreRead" call (creation).
+
+
 ## 1.0.24 (2024-11-17)
 ---
 

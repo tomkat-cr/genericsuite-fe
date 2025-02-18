@@ -25,6 +25,7 @@ import {
 } from '../../constants/general_constants.jsx';
 
 import { UsersConfig } from '../UsersMenu/UsersConfig.jsx';
+import { UsersApiKey } from '../UsersMenu/UsersApiKey.jsx';
 
 import users from "../../../configs/frontend/users.json";
 
@@ -42,6 +43,7 @@ export function Users_EditorData(calleeName='Users_EditorData') {
         "UsersDbPreWrite": UsersDbPreWrite,
         "UsersValidations": UsersValidations,
         "UsersPasswordValidations": UsersPasswordValidations,
+        "UsersApiKey": UsersApiKey,
     }
     // return GetFormData('users', registry, calleeName);
     return GetFormData(users, registry, calleeName);
@@ -146,7 +148,7 @@ export const UsersDbListPreRead = (data, editor, action, currentUser) => {
 }
 
 export const UsersPasswordValidations = (data, editor, action) => {
-    // Users validations
+    // Users password validations
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
         switch(action) {
@@ -177,7 +179,7 @@ export const UsersPasswordValidations = (data, editor, action) => {
 }
 
 export const UsersDbPreWrite = (data, editor, action) => {
-    // Users validations
+    // Users database pre-write actions
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
         // Avoid passing an empty password to the backend

@@ -4269,7 +4269,9 @@ const genericFuncArrayDefaultValue = function () {
     'error': false,
     'errorMsg': '',
     'fieldMsg': {},
-    'fieldValues': data,
+    'fieldValues': {
+      ...data
+    },
     'fieldsToDelete': [],
     'otherData': {}
   };
@@ -5186,7 +5188,9 @@ const FormPage = _ref => {
   useEffect(() => {
     if (mode === ACTION_CREATE) {
       // To assign specific default values in creation...
-      processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-010]')));
+      processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(funcResponse => {
+        setFormData(funcResponse.fieldValues);
+      }, error => setStatus(errorAndReEnter(error, '[GCE-FD-010]')));
     }
     if (mode === ACTION_UPDATE || mode === ACTION_READ || mode === ACTION_DELETE) {
       let accessKeysDataScreen = {};
@@ -5195,7 +5199,9 @@ const FormPage = _ref => {
         accessKeysDataScreen = Object.assign(funcResponse.fieldValues, editor.parentFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
-          processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
+          processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => {
+            setFormData(funcResponse.fieldValues);
+          }, error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
         }, error => {
           console_debug_log(`ERROR - GCE-FD-030`);
           console.error(error);
@@ -5477,8 +5483,6 @@ const EditFormFormik = _ref4 => {
     message: null,
     messageType: null
   });
-  // const { currentUser } = useUser();
-
   useEffect(() => {
     const editorFlags = getEditorFlags(action);
     if (editorFlags.isRead) {
@@ -5490,6 +5494,7 @@ const EditFormFormik = _ref4 => {
         messageType: null
       });
     } else {
+
       // Validate data before show the Data Form
       processGenericFuncArray(editor, 'dbPreValidations', dataset, action, currentUser).then(funcResponse => {
         setFormData({
@@ -5552,6 +5557,7 @@ const EditFormFormikFinal = _ref5 => {
     currentUser
   } = _ref5;
   // const { currentUser } = useUser();
+  // const debug = true;
 
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
@@ -5579,7 +5585,6 @@ const EditFormFormikFinal = _ref5 => {
       e.preventDefault();
     }
   };
-  console_debug_log(`FormPage | editor.fieldElements:`, editor.fieldElements);
   return /*#__PURE__*/React.createElement(Formik, {
     key: editor.name,
     enableReinitialize: true,
@@ -5796,6 +5801,7 @@ const setDefaultFieldValue = currentObj => {
 };
 const getFieldElementsDbValues = function (editor, datasetRaw) {
   let defaultValues = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  // const debug = true;
   // console_debug_log(`getFieldElementsDbValues | defaultValues: ${defaultValues} | datasetRaw:`, datasetRaw);
   let dataset = {};
   if (typeof datasetRaw !== 'undefined') {
@@ -5805,9 +5811,6 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
   //   dataset = Object.assign({}, datasetRaw);
   // } else {
   if (editor.subType === "array") {
-    // Get the 1st element only because it's only an element when
-    // the action over the child object is Read, Modify or Delete
-    // if (typeof datasetRaw !== 'undefined') {
     if (typeof datasetRaw[0] !== 'undefined') {
       dataset = Object.assign({}, datasetRaw[0]);
     }
@@ -6479,24 +6482,24 @@ var generic_editor_rfc_service = /*#__PURE__*/Object.freeze({
   GetFormData: GetFormData
 });
 
-var baseUrl$3 = "users_config";
-var title$3 = "User Configurations";
-var name$3 = "User's Configuration";
-var dbApiUrl$3 = "users_config";
-var component$3 = "UsersConfig";
-var type = "child_listing";
-var subType = "array";
-var array_name = "users_config";
-var parentKeyNames = [
+var baseUrl$4 = "users_config";
+var title$4 = "User Configurations";
+var name$4 = "User's Configuration";
+var dbApiUrl$4 = "users_config";
+var component$4 = "UsersConfig";
+var type$1 = "child_listing";
+var subType$1 = "array";
+var array_name$1 = "users_config";
+var parentKeyNames$1 = [
 	{
 		parameterName: "user_id",
 		parentUrl: "users",
 		parentElementName: "id"
 	}
 ];
-var primaryKeyName = "id";
-var defaultOrder$1 = "config_name";
-var fieldElements$3 = [
+var primaryKeyName$1 = "id";
+var defaultOrder$2 = "config_name";
+var fieldElements$4 = [
 	{
 		name: "id",
 		required: false,
@@ -6525,18 +6528,18 @@ var fieldElements$3 = [
 	}
 ];
 var users_config = {
-	baseUrl: baseUrl$3,
-	title: title$3,
-	name: name$3,
-	dbApiUrl: dbApiUrl$3,
-	component: component$3,
-	type: type,
-	subType: subType,
-	array_name: array_name,
-	parentKeyNames: parentKeyNames,
-	primaryKeyName: primaryKeyName,
-	defaultOrder: defaultOrder$1,
-	fieldElements: fieldElements$3
+	baseUrl: baseUrl$4,
+	title: title$4,
+	name: name$4,
+	dbApiUrl: dbApiUrl$4,
+	component: component$4,
+	type: type$1,
+	subType: subType$1,
+	array_name: array_name$1,
+	parentKeyNames: parentKeyNames$1,
+	primaryKeyName: primaryKeyName$1,
+	defaultOrder: defaultOrder$2,
+	fieldElements: fieldElements$4
 };
 
 function UsersConfig_EditorData() {
@@ -6560,6 +6563,123 @@ const UsersConfigComponent = _ref => {
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersConfig_EditorData(),
     parentData: parentData
+  });
+};
+
+var baseUrl$3 = "users_api_keys";
+var title$3 = "User API Keys";
+var name$3 = "User's API Key";
+var dbApiUrl$3 = "users_api_keys";
+var component$3 = "UsersApiKey";
+var type = "child_listing";
+var subType = "array";
+var array_name = "users_api_keys";
+var parentKeyNames = [
+	{
+		parameterName: "user_id",
+		parentUrl: "users",
+		parentElementName: "id"
+	}
+];
+var primaryKeyName = "id";
+var defaultOrder$1 = "access_token";
+var fieldElements$3 = [
+	{
+		name: "id",
+		required: false,
+		label: "ID",
+		type: "text",
+		readonly: true,
+		hidden: true,
+		listing: false,
+		uuid_generator: true
+	},
+	{
+		name: "access_token",
+		required: true,
+		label: "Access Token",
+		type: "text",
+		readonly: false,
+		listing: true
+	},
+	{
+		name: "active",
+		required: true,
+		label: "Active",
+		type: "select",
+		select_elements: "TRUE_FALSE",
+		default_value: "1",
+		readonly: false,
+		listing: true
+	}
+];
+var dbPreRead = [
+	"UsersApiKeyDbPreRead"
+];
+var users_api_keys = {
+	baseUrl: baseUrl$3,
+	title: title$3,
+	name: name$3,
+	dbApiUrl: dbApiUrl$3,
+	component: component$3,
+	type: type,
+	subType: subType,
+	array_name: array_name,
+	parentKeyNames: parentKeyNames,
+	primaryKeyName: primaryKeyName,
+	defaultOrder: defaultOrder$1,
+	fieldElements: fieldElements$3,
+	dbPreRead: dbPreRead
+};
+
+// const crypto = require('crypto');
+// import crypto from crypto;
+
+function UsersApiKey_EditorData() {
+  // console_debug_log("UsersApiKey_EditorData");
+  const registry = {
+    "UsersApiKey": UsersApiKey,
+    "TRUE_FALSE": TRUE_FALSE,
+    "UsersApiKeyDbPreRead": UsersApiKeyDbPreRead
+  };
+  return GetFormData(users_api_keys, registry, false);
+}
+function UsersApiKey() {
+  return {
+    editorConfig: UsersApiKey_EditorData(),
+    component: UsersApiKeyComponent
+  };
+}
+const UsersApiKeyComponent = _ref => {
+  let {
+    parentData
+  } = _ref;
+  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
+    editorConfig: UsersApiKey_EditorData(),
+    parentData: parentData
+  });
+};
+const generateAccessToken = function () {
+  let length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 64;
+  // Generate a long access token
+  // return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  // return crypto.randomBytes(length).toString('hex');
+  const array = new Uint8Array(length);
+  window.crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+};
+const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
+  return new Promise((resolve, reject) => {
+    let resp = genericFuncArrayDefaultValue(data);
+    switch (action) {
+      case ACTION_CREATE:
+        const access_token = generateAccessToken();
+        resp.fieldValues = Object.assign(data, {
+          'access_token': access_token
+        });
+        break;
+    }
+    resolve(resp);
   });
 };
 
@@ -6711,7 +6831,8 @@ var fieldElements$2 = [
 	}
 ];
 var childComponents = [
-	"UsersConfig"
+	"UsersConfig",
+	"UsersApiKey"
 ];
 var dbListPreRead$1 = [
 	"UsersDbListPreRead"
@@ -6751,7 +6872,8 @@ function Users_EditorData() {
     "UsersDbListPreRead": UsersDbListPreRead,
     "UsersDbPreWrite": UsersDbPreWrite,
     "UsersValidations": UsersValidations,
-    "UsersPasswordValidations": UsersPasswordValidations
+    "UsersPasswordValidations": UsersPasswordValidations,
+    "UsersApiKey": UsersApiKey
   };
   // return GetFormData('users', registry, calleeName);
   return GetFormData(users, registry, calleeName);
@@ -6839,7 +6961,7 @@ const UsersDbListPreRead = (data, editor, action, currentUser) => {
   });
 };
 const UsersPasswordValidations = (data, editor, action) => {
-  // Users validations
+  // Users password validations
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     switch (action) {
@@ -6866,7 +6988,7 @@ const UsersPasswordValidations = (data, editor, action) => {
   });
 };
 const UsersDbPreWrite = (data, editor, action) => {
-  // Users validations
+  // Users database pre-write actions
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     // Avoid passing an empty password to the backend
