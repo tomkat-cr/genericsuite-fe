@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### New
 Implement API keys to GS BE Core [GS-159].
+Add new features and fix things discovered during the IBM Watson X implementation [GS-155]
 Add the parameter "description_fields" In selectOptions() to have a compound attribute/column name(s) for the drop-down menu descriptions. If not specified, it'll use ["name"] (as it was before) [GS-155].
 
 ### Fixes
