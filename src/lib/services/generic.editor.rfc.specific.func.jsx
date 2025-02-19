@@ -10,7 +10,7 @@ export const genericFuncArrayDefaultValue = (data = []) => {
         'error': false,
         'errorMsg': '',
         'fieldMsg': {},
-        'fieldValues': data,
+        'fieldValues': { ...data },
         'fieldsToDelete': [],
         'otherData': {},
     }

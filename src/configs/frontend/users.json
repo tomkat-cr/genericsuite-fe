@@ -89,7 +89,7 @@
             "select_elements": "LANGUAGES",
             "readonly": false,
             "listing": false
-        },
+        }, 
         {
             "name": "openai_api_key",
             "required": false,
@@ -147,7 +147,8 @@
         }
     ],
     "childComponents": [
-        "UsersConfig"
+        "UsersConfig",
+        "UsersApiKey"
     ],
     "dbListPreRead": [
         "UsersDbListPreRead"

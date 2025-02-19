@@ -102,7 +102,10 @@ export const FormPage = ({
         if (mode === ACTION_CREATE) {
             // To assign specific default values in creation...
             processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(
-                funcResponse => setFormData(funcResponse.fieldValues),
+                funcResponse => {
+                    if (debug) console_debug_log(`>> FormPage | dbPreRead # 1 > funcResponse:`, funcResponse, 'editor', editor);
+                    setFormData(funcResponse.fieldValues)
+                },
                 error => setStatus(errorAndReEnter(error,'[GCE-FD-010]'))
             )
         }
@@ -121,9 +124,13 @@ export const FormPage = ({
                     editor.db.getOne(accessKeysDataScreen)
                         .then(
                             data => {
+                                if (debug) console_debug_log(`>> FormPage | BEFORE dbPostRead > DATA:`, data, 'editor', editor);
                                 // To assign specific default values in update, read or delete...
                                 processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(
-                                    funcResponse => setFormData(funcResponse.fieldValues),
+                                    funcResponse => {
+                                        if (debug) console_debug_log(`>> FormPage | dbPostRead > funcResponse:`, funcResponse.fieldValues, 'editor', editor);
+                                        setFormData(funcResponse.fieldValues)
+                                    },
                                     error => setStatus(errorAndReEnter(error, '[GCE-FD-020]'))
                                 );
                             },
@@ -530,7 +537,7 @@ const EditFormFormik = (
         message: null,
         messageType: null,
     });
-    // const { currentUser } = useUser();
+    if (debug) console_debug_log(`>> 1 >> EditFormFormik | dataset:`, dataset, 'editor:', editor, 'action:', action);
 
     useEffect(() => {
         const editorFlags = getEditorFlags(action);
@@ -545,11 +552,14 @@ const EditFormFormik = (
                 }
             );
         } else {
+            if (debug) console_debug_log(`>> 2 >> EditFormFormik | AFTER dbPreValidations > dataset:`, dataset);
+
             // Validate data before show the Data Form
             processGenericFuncArray(
                 editor, 'dbPreValidations', dataset, action, currentUser
             ).then(
                 funcResponse => {
+                    if (debug) console_debug_log(`>> 2 >> EditFormFormik | BEFORE dbPreValidations > funcResponse:`, funcResponse);
                     setFormData(
                         {
                             readyToShow: true,
@@ -628,8 +638,6 @@ const EditFormFormikFinal = ({
     theme,
     currentUser,
 }) => {
-    // const { currentUser } = useUser();
-
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);
     const rowId = initialFieldValues[editor.primaryKeyName];
@@ -673,7 +681,7 @@ const EditFormFormikFinal = ({
         }
     }
 
-    console_debug_log(`FormPage | editor.fieldElements:`, editor.fieldElements);
+    if (debug) console_debug_log(`FormPage | editor.fieldElements:`, editor.fieldElements);
 
     return (
         <Formik
@@ -984,24 +992,19 @@ const setDefaultFieldValue = (currentObj) => {
 }
 
 const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
-// console_debug_log(`getFieldElementsDbValues | defaultValues: ${defaultValues} | datasetRaw:`, datasetRaw);
     let dataset = {};
     if (typeof datasetRaw !== 'undefined') {
         dataset = Object.assign({}, datasetRaw);
     }
-    // if (editor.type !== "child_listing") {
-    //   dataset = Object.assign({}, datasetRaw);
-    // } else {
     if (editor.subType === "array") {
         // Get the 1st element only because it's only an element when
         // the action over the child object is Read, Modify or Delete
         // if (typeof datasetRaw !== 'undefined') {
+        if (debug) console_debug_log(`getFieldElementsDbValues | datasetRaw:`, datasetRaw, 'editor:', editor);
         if (typeof datasetRaw[0] !== 'undefined') {
             dataset = Object.assign({}, datasetRaw[0]);
         }
-        // }
     }
-    // }
 
     const dbService = new dbApiService({ url: editor.dbApiUrl });
 

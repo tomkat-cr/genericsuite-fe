@@ -81,6 +81,10 @@ export const GenericSelectGenerator = (props) => {
         typeof props.show_description !== 'undefined'
           ? props.show_description
           : false,
+      description_fields:
+        typeof props.description_fields !== 'undefined'
+          ? props.description_fields
+          : ["name"],
       editor: editor,
       select_name: editor.name,
     };
@@ -96,31 +100,46 @@ export const GenericSelectGenerator = (props) => {
     return state.toString();
   }
 
+  const { filter, show_description, description_fields } = config;
+
+  let selectAnOptionItem = {}
+  selectAnOptionItem['_id'] = null;
+  selectAnOptionItem[config.description_fields[0]] = MSG_SELECT_AN_OPTION;
+  for (let i = 1; i < config.description_fields.length; i++) {
+    selectAnOptionItem[config.description_fields[i]] = '';
+  }
+
   const selectOptions = [
-    ...[{ _id: null, name: MSG_SELECT_AN_OPTION }],
+    ...[...[selectAnOptionItem]],
     ...rows.resultset,
   ];
-
-  const { filter, show_description } = config;
 
   if (debug) {
     debugCache("GenericSelectGenerator");
   }
 
+  const buildDescription = (option, fieldArray) => {
+    let description = '';
+    fieldArray.forEach((field) => {
+      description += option[field] + ' ';
+    });
+    return description;
+  }
+
   return selectOptions
-    .filter((option) =>
+    .filter((option) => 
       filter === null ? true : config.dbService.convertId(option._id) === filter
     )
     .map((option) => {
       if (show_description) {
-        return option.name;
+        return buildDescription(option, description_fields);
       }
       return (
         <option
           key={config.dbService.convertId(option._id)}
           value={config.dbService.convertId(option._id)}
         >
-          {option.name}
+          {buildDescription(option, description_fields)}
         </option>
       );
     });

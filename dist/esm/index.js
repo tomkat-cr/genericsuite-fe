@@ -1842,7 +1842,6 @@ const NavDropdown = _ref14 => {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const fullId = `${id}_${type}`;
   const toggledropDownOpen = () => {
-    // const debug = true;
     const elementId = `${fullId}_dropDown`;
     const element = document.getElementById(elementId);
     if (dropDownOpen) {
@@ -1884,18 +1883,6 @@ const NavDropdown = _ref14 => {
     side_menu: NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
     mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS
   };
-
-  // const variantsOptionClick = {
-  //     top_menu: toggleSubmenu,
-  //     hamburger: toggleSubmenu,
-  //     side_menu: toggleSubmenu,
-  //     mobile_menu: toggleSubmenu,
-  // };
-
-  // useEffect(() => {
-  //     variantOnClick(fullId);
-  // }, []);
-
   useEffect(() => {
     // variantOnClick(fullId);
     toggleSubmenu(fullId, dropDownOpen);
@@ -4269,7 +4256,9 @@ const genericFuncArrayDefaultValue = function () {
     'error': false,
     'errorMsg': '',
     'fieldMsg': {},
-    'fieldValues': data,
+    'fieldValues': {
+      ...data
+    },
     'fieldsToDelete': [],
     'otherData': {}
   };
@@ -4831,6 +4820,7 @@ const GenericSelectGenerator = props => {
       filter: typeof props.filter !== 'undefined' ? props.filter : null,
       dbFilter: typeof props.dbFilter !== 'undefined' ? props.dbFilter : null,
       show_description: typeof props.show_description !== 'undefined' ? props.show_description : false,
+      description_fields: typeof props.description_fields !== 'undefined' ? props.description_fields : ["name"],
       editor: editor,
       select_name: editor.name
     };
@@ -4843,22 +4833,33 @@ const GenericSelectGenerator = props => {
     // Some error happens
     return state.toString();
   }
-  const selectOptions = [...[{
-    _id: null,
-    name: MSG_SELECT_AN_OPTION
-  }], ...rows.resultset];
   const {
     filter,
-    show_description
+    show_description,
+    description_fields
   } = config;
+  let selectAnOptionItem = {};
+  selectAnOptionItem['_id'] = null;
+  selectAnOptionItem[config.description_fields[0]] = MSG_SELECT_AN_OPTION;
+  for (let i = 1; i < config.description_fields.length; i++) {
+    selectAnOptionItem[config.description_fields[i]] = '';
+  }
+  const selectOptions = [...[...[selectAnOptionItem]], ...rows.resultset];
+  const buildDescription = (option, fieldArray) => {
+    let description = '';
+    fieldArray.forEach(field => {
+      description += option[field] + ' ';
+    });
+    return description;
+  };
   return selectOptions.filter(option => filter === null ? true : config.dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
-      return option.name;
+      return buildDescription(option, description_fields);
     }
     return /*#__PURE__*/React.createElement("option", {
       key: config.dbService.convertId(option._id),
       value: config.dbService.convertId(option._id)
-    }, option.name);
+    }, buildDescription(option, description_fields));
   });
 };
 const GenericSelectDataPopulator = props => {
@@ -5174,7 +5175,9 @@ const FormPage = _ref => {
   useEffect(() => {
     if (mode === ACTION_CREATE) {
       // To assign specific default values in creation...
-      processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-010]')));
+      processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(funcResponse => {
+        setFormData(funcResponse.fieldValues);
+      }, error => setStatus(errorAndReEnter(error, '[GCE-FD-010]')));
     }
     if (mode === ACTION_UPDATE || mode === ACTION_READ || mode === ACTION_DELETE) {
       let accessKeysDataScreen = {};
@@ -5183,7 +5186,9 @@ const FormPage = _ref => {
         accessKeysDataScreen = Object.assign(funcResponse.fieldValues, editor.parentFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
-          processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => setFormData(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
+          processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => {
+            setFormData(funcResponse.fieldValues);
+          }, error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
         }, error => {
           console_debug_log(`ERROR - GCE-FD-030`);
           console.error(error);
@@ -5465,8 +5470,6 @@ const EditFormFormik = _ref4 => {
     message: null,
     messageType: null
   });
-  // const { currentUser } = useUser();
-
   useEffect(() => {
     const editorFlags = getEditorFlags(action);
     if (editorFlags.isRead) {
@@ -5478,6 +5481,7 @@ const EditFormFormik = _ref4 => {
         messageType: null
       });
     } else {
+
       // Validate data before show the Data Form
       processGenericFuncArray(editor, 'dbPreValidations', dataset, action, currentUser).then(funcResponse => {
         setFormData({
@@ -5539,8 +5543,6 @@ const EditFormFormikFinal = _ref5 => {
     theme,
     currentUser
   } = _ref5;
-  // const { currentUser } = useUser();
-
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -5567,7 +5569,6 @@ const EditFormFormikFinal = _ref5 => {
       e.preventDefault();
     }
   };
-  console_debug_log(`FormPage | editor.fieldElements:`, editor.fieldElements);
   return /*#__PURE__*/React.createElement(Formik, {
     key: editor.name,
     enableReinitialize: true,
@@ -5784,25 +5785,15 @@ const setDefaultFieldValue = currentObj => {
 };
 const getFieldElementsDbValues = function (editor, datasetRaw) {
   let defaultValues = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  // console_debug_log(`getFieldElementsDbValues | defaultValues: ${defaultValues} | datasetRaw:`, datasetRaw);
   let dataset = {};
   if (typeof datasetRaw !== 'undefined') {
     dataset = Object.assign({}, datasetRaw);
   }
-  // if (editor.type !== "child_listing") {
-  //   dataset = Object.assign({}, datasetRaw);
-  // } else {
   if (editor.subType === "array") {
-    // Get the 1st element only because it's only an element when
-    // the action over the child object is Read, Modify or Delete
-    // if (typeof datasetRaw !== 'undefined') {
     if (typeof datasetRaw[0] !== 'undefined') {
       dataset = Object.assign({}, datasetRaw[0]);
     }
-    // }
   }
-  // }
-
   const dbService = new dbApiService({
     url: editor.dbApiUrl
   });
@@ -6467,24 +6458,24 @@ var generic_editor_rfc_service = /*#__PURE__*/Object.freeze({
   GetFormData: GetFormData
 });
 
-var baseUrl$3 = "users_config";
-var title$3 = "User Configurations";
-var name$3 = "User's Configuration";
-var dbApiUrl$3 = "users_config";
-var component$3 = "UsersConfig";
-var type = "child_listing";
-var subType = "array";
-var array_name = "users_config";
-var parentKeyNames = [
+var baseUrl$4 = "users_config";
+var title$4 = "User Configurations";
+var name$4 = "User's Configuration";
+var dbApiUrl$4 = "users_config";
+var component$4 = "UsersConfig";
+var type$1 = "child_listing";
+var subType$1 = "array";
+var array_name$1 = "users_config";
+var parentKeyNames$1 = [
 	{
 		parameterName: "user_id",
 		parentUrl: "users",
 		parentElementName: "id"
 	}
 ];
-var primaryKeyName = "id";
-var defaultOrder$1 = "config_name";
-var fieldElements$3 = [
+var primaryKeyName$1 = "id";
+var defaultOrder$2 = "config_name";
+var fieldElements$4 = [
 	{
 		name: "id",
 		required: false,
@@ -6513,18 +6504,18 @@ var fieldElements$3 = [
 	}
 ];
 var users_config = {
-	baseUrl: baseUrl$3,
-	title: title$3,
-	name: name$3,
-	dbApiUrl: dbApiUrl$3,
-	component: component$3,
-	type: type,
-	subType: subType,
-	array_name: array_name,
-	parentKeyNames: parentKeyNames,
-	primaryKeyName: primaryKeyName,
-	defaultOrder: defaultOrder$1,
-	fieldElements: fieldElements$3
+	baseUrl: baseUrl$4,
+	title: title$4,
+	name: name$4,
+	dbApiUrl: dbApiUrl$4,
+	component: component$4,
+	type: type$1,
+	subType: subType$1,
+	array_name: array_name$1,
+	parentKeyNames: parentKeyNames$1,
+	primaryKeyName: primaryKeyName$1,
+	defaultOrder: defaultOrder$2,
+	fieldElements: fieldElements$4
 };
 
 function UsersConfig_EditorData() {
@@ -6548,6 +6539,123 @@ const UsersConfigComponent = _ref => {
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersConfig_EditorData(),
     parentData: parentData
+  });
+};
+
+var baseUrl$3 = "users_api_keys";
+var title$3 = "User API Keys";
+var name$3 = "User's API Key";
+var dbApiUrl$3 = "users_api_keys";
+var component$3 = "UsersApiKey";
+var type = "child_listing";
+var subType = "array";
+var array_name = "users_api_keys";
+var parentKeyNames = [
+	{
+		parameterName: "user_id",
+		parentUrl: "users",
+		parentElementName: "id"
+	}
+];
+var primaryKeyName = "id";
+var defaultOrder$1 = "access_token";
+var fieldElements$3 = [
+	{
+		name: "id",
+		required: false,
+		label: "ID",
+		type: "text",
+		readonly: true,
+		hidden: true,
+		listing: false,
+		uuid_generator: true
+	},
+	{
+		name: "access_token",
+		required: true,
+		label: "Access Token",
+		type: "text",
+		readonly: false,
+		listing: true
+	},
+	{
+		name: "active",
+		required: true,
+		label: "Active",
+		type: "select",
+		select_elements: "TRUE_FALSE",
+		default_value: "1",
+		readonly: false,
+		listing: true
+	}
+];
+var dbPreRead = [
+	"UsersApiKeyDbPreRead"
+];
+var users_api_keys = {
+	baseUrl: baseUrl$3,
+	title: title$3,
+	name: name$3,
+	dbApiUrl: dbApiUrl$3,
+	component: component$3,
+	type: type,
+	subType: subType,
+	array_name: array_name,
+	parentKeyNames: parentKeyNames,
+	primaryKeyName: primaryKeyName,
+	defaultOrder: defaultOrder$1,
+	fieldElements: fieldElements$3,
+	dbPreRead: dbPreRead
+};
+
+// const crypto = require('crypto');
+// import crypto from crypto;
+
+function UsersApiKey_EditorData() {
+  // console_debug_log("UsersApiKey_EditorData");
+  const registry = {
+    "UsersApiKey": UsersApiKey,
+    "TRUE_FALSE": TRUE_FALSE,
+    "UsersApiKeyDbPreRead": UsersApiKeyDbPreRead
+  };
+  return GetFormData(users_api_keys, registry, false);
+}
+function UsersApiKey() {
+  return {
+    editorConfig: UsersApiKey_EditorData(),
+    component: UsersApiKeyComponent
+  };
+}
+const UsersApiKeyComponent = _ref => {
+  let {
+    parentData
+  } = _ref;
+  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
+    editorConfig: UsersApiKey_EditorData(),
+    parentData: parentData
+  });
+};
+const generateAccessToken = function () {
+  let length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 64;
+  // Generate a long access token
+  // return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  // return crypto.randomBytes(length).toString('hex');
+  const array = new Uint8Array(length);
+  window.crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+};
+const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
+  return new Promise((resolve, reject) => {
+    let resp = genericFuncArrayDefaultValue(data);
+    switch (action) {
+      case ACTION_CREATE:
+        const access_token = generateAccessToken();
+        resp.fieldValues = Object.assign(data, {
+          'access_token': access_token
+        });
+        break;
+    }
+    resolve(resp);
   });
 };
 
@@ -6699,7 +6807,8 @@ var fieldElements$2 = [
 	}
 ];
 var childComponents = [
-	"UsersConfig"
+	"UsersConfig",
+	"UsersApiKey"
 ];
 var dbListPreRead$1 = [
 	"UsersDbListPreRead"
@@ -6739,7 +6848,8 @@ function Users_EditorData() {
     "UsersDbListPreRead": UsersDbListPreRead,
     "UsersDbPreWrite": UsersDbPreWrite,
     "UsersValidations": UsersValidations,
-    "UsersPasswordValidations": UsersPasswordValidations
+    "UsersPasswordValidations": UsersPasswordValidations,
+    "UsersApiKey": UsersApiKey
   };
   // return GetFormData('users', registry, calleeName);
   return GetFormData(users, registry, calleeName);
@@ -6827,11 +6937,16 @@ const UsersDbListPreRead = (data, editor, action, currentUser) => {
   });
 };
 const UsersPasswordValidations = (data, editor, action) => {
-  // Users validations
+  // Users password validations
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     switch (action) {
       case ACTION_CREATE:
+        if (!data['passcode']) {
+          resp.error = true;
+          resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'User needs a password';
+          break;
+        }
       case ACTION_UPDATE:
         if (data['passcode']) {
           if (data['passcode'] !== data['passcode_repeat']) {
@@ -6849,7 +6964,7 @@ const UsersPasswordValidations = (data, editor, action) => {
   });
 };
 const UsersDbPreWrite = (data, editor, action) => {
-  // Users validations
+  // Users database pre-write actions
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     // Avoid passing an empty password to the backend
@@ -7889,5 +8004,5 @@ var generic_editor_rfc_ui = /*#__PURE__*/Object.freeze({
 const appLogoCircle = 'app_logo_circle.svg';
 const appLogoLandscape = 'app_logo_landscape.svg';
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };
 //# sourceMappingURL=index.js.map

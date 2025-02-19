@@ -16,6 +16,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## 1.0.24 (2025-02-19)
+---
+
+### New
+Implement API keys to GS BE Core [GS-159].
+Add new features and fix things discovered during the IBM Watson X implementation [GS-155]
+Add the parameter "description_fields" In selectOptions() to have a compound attribute/column name(s) for the drop-down menu descriptions. If not specified, it'll use ["name"] (as it was before) [GS-155].
+
+### Fixes
+Fix the undefined passcode error in user update calling the backend after creating a user leaving the password empty (UsersPasswordValidations) [GS-155].
+Fix a bug calling the specific functions assigning the "fieldValues" object, because genericFuncArrayDefaultValue() was assigning it an infinite recursive "resultset" attribute, preventing the default values assignment in "dbPreRead" call (creation).
+
+
 ## 1.0.23 (2024-10-25)
 ---
 
