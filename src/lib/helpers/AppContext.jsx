@@ -27,7 +27,6 @@ export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppL
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
     // const toggleSubmenu = (menuName) => {
     const toggleSubmenu = (menuName, menuVisible) => {
-        // const debug = true;
         if (debug) console_debug_log(`<<<< AppContext | toggleSubmenu | menuName: ${menuName} | menuVisible: ${menuVisible}`);
         setExpandedMenus(prev => (
             // prev.includes(menuName)

@@ -32,7 +32,6 @@ const reduceAllResponses = (responses, data) => {
 };
 
 export const processGenericFuncArray = (editor, funcArrayName, data, action, currentUser) => {
-    // const debug = true;
     if (debug) {
         console_debug_log('** PROCESS GENERIC FUNC ARRAY ** funcArrayName: ' + funcArrayName);
         console_debug_log('processGenericFuncArray | action: ' + action);

@@ -1863,7 +1863,6 @@ const NavDropdown = _ref14 => {
   const [dropDownOpen, setDropDownOpen] = React.useState(false);
   const fullId = `${id}_${type}`;
   const toggledropDownOpen = () => {
-    // const debug = true;
     const elementId = `${fullId}_dropDown`;
     const element = document.getElementById(elementId);
     if (dropDownOpen) {
@@ -1905,18 +1904,6 @@ const NavDropdown = _ref14 => {
     side_menu: NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
     mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS
   };
-
-  // const variantsOptionClick = {
-  //     top_menu: toggleSubmenu,
-  //     hamburger: toggleSubmenu,
-  //     side_menu: toggleSubmenu,
-  //     mobile_menu: toggleSubmenu,
-  // };
-
-  // useEffect(() => {
-  //     variantOnClick(fullId);
-  // }, []);
-
   React.useEffect(() => {
     // variantOnClick(fullId);
     toggleSubmenu(fullId, dropDownOpen);
@@ -5577,9 +5564,6 @@ const EditFormFormikFinal = _ref5 => {
     theme,
     currentUser
   } = _ref5;
-  // const { currentUser } = useUser();
-  // const debug = true;
-
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -5822,23 +5806,15 @@ const setDefaultFieldValue = currentObj => {
 };
 const getFieldElementsDbValues = function (editor, datasetRaw) {
   let defaultValues = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  // const debug = true;
-  // console_debug_log(`getFieldElementsDbValues | defaultValues: ${defaultValues} | datasetRaw:`, datasetRaw);
   let dataset = {};
   if (typeof datasetRaw !== 'undefined') {
     dataset = Object.assign({}, datasetRaw);
   }
-  // if (editor.type !== "child_listing") {
-  //   dataset = Object.assign({}, datasetRaw);
-  // } else {
   if (editor.subType === "array") {
     if (typeof datasetRaw[0] !== 'undefined') {
       dataset = Object.assign({}, datasetRaw[0]);
     }
-    // }
   }
-  // }
-
   const dbService = new dbApiService({
     url: editor.dbApiUrl
   });

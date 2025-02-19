@@ -537,9 +537,6 @@ const EditFormFormik = (
         message: null,
         messageType: null,
     });
-    // const { currentUser } = useUser();
-    // const debug = true;
-
     if (debug) console_debug_log(`>> 1 >> EditFormFormik | dataset:`, dataset, 'editor:', editor, 'action:', action);
 
     useEffect(() => {
@@ -641,9 +638,6 @@ const EditFormFormikFinal = ({
     theme,
     currentUser,
 }) => {
-    // const { currentUser } = useUser();
-    // const debug = true;
-
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);
     const rowId = initialFieldValues[editor.primaryKeyName];
@@ -998,15 +992,10 @@ const setDefaultFieldValue = (currentObj) => {
 }
 
 const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
-    // const debug = true;
-    // console_debug_log(`getFieldElementsDbValues | defaultValues: ${defaultValues} | datasetRaw:`, datasetRaw);
     let dataset = {};
     if (typeof datasetRaw !== 'undefined') {
         dataset = Object.assign({}, datasetRaw);
     }
-    // if (editor.type !== "child_listing") {
-    //   dataset = Object.assign({}, datasetRaw);
-    // } else {
     if (editor.subType === "array") {
         // Get the 1st element only because it's only an element when
         // the action over the child object is Read, Modify or Delete
@@ -1015,9 +1004,7 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
         if (typeof datasetRaw[0] !== 'undefined') {
             dataset = Object.assign({}, datasetRaw[0]);
         }
-        // }
     }
-    // }
 
     const dbService = new dbApiService({ url: editor.dbApiUrl });
 
