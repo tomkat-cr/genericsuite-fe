@@ -26,6 +26,8 @@ export class dbApiService {
                 // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
                 // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
                 // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
+                // [GS-15] This one should work...
+                'Access-Control-Expose-Headers': 'Content-Disposition',
             }, 
             this.props.authHeader
         );
