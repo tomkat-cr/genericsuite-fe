@@ -3016,7 +3016,8 @@ class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
     _defineProperty(this, "apiUrl", process.env.REACT_APP_API_URL);
-    _defineProperty(this, "debug", false);
+    // debug = false;
+    _defineProperty(this, "debug", true);
     this.props = props;
     this.props.authHeader = authHeader();
     this.props.authAndJsonHeader = Object.assign({
@@ -3042,6 +3043,7 @@ class dbApiService {
     return urlQuery;
   }
   getFetch(url, requestOptions) {
+    if (this.debug) console_debug_log('GETFETCH | url:', url, '\n | requestOptions:', requestOptions);
     let response;
     try {
       if (usePlainFetch) ; else {
