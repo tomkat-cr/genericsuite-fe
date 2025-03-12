@@ -31,6 +31,7 @@ import {
 import {
   console_debug_log,
 } from './logging.service.jsx';
+import { getLocalConfigItem, saveLocalConfig } from '../helpers/local-config.jsx';
 import {
   imageDirectory,
   MSG_ACTION_DELETE,
@@ -48,7 +49,6 @@ import {
 import {
   BUTTON_LISTING_CLASS,
   BUTTON_LISTING_DISABLED_CLASS,
-  // BUTTON_RIGHT_SPACE_CLASS,
   BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS,
   BUTTON_COMPOSED_LABEL_CLASS,
@@ -56,13 +56,9 @@ import {
   HIDDEN_CLASS,
   VISIBLE_CLASS,
   APP_TOP_DIV_CLASS,
-  // APP_LEVEL1_DIV_CLASS,
   APP_TITLE_H1_CLASS,
   APP_TITLE_RECYCLE_BUTTON_CLASS,
   APP_LEVEL2_DIV_CLASS,
-  // APP_LISTING_LEVEL2_DIV_CLASS,
-  // APP_LISTING_LEVEL3_DIV_CLASS,
-  // APP_LISTING_LEVEL4_DIV_CLASS,
   APP_LISTING_TABLE_CLASS,
   APP_LISTING_TABLE_HDR_THEAD_CLASS,
   APP_LISTING_TABLE_HDR_TR_CLASS,
@@ -99,7 +95,6 @@ import {
   MSG_NEXT,
   MSG_PAGE,
   MSG_OF,
-  ROWS_PER_PAGE,
   MSG_ACTIONS,
   MSG_ROWS_PER_PAGE,
 } from "../constants/general_constants.jsx";
@@ -120,22 +115,13 @@ export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActi
   );
 }
 
-const getDefaultRowsPerPage = () => {
-  // Get value from localStorage
-  const rowsPerPage = localStorage.getItem('rowsPerPage');
-  return rowsPerPage ? parseInt(rowsPerPage) : ROWS_PER_PAGE;
-};
-
-const setDefaultRowsPerPage = (rowsPerPage) => {
-  // Set value in localStorage
-  localStorage.setItem('rowsPerPage', rowsPerPage);
-};
-
 const GenericCrudEditorMain = (props) => {
   const [editor, setEditor] = useState(null);
   const [rows, setRows] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(getDefaultRowsPerPage());
+  const [rowsPerPage, setRowsPerPage] = useState(
+    parseInt(getLocalConfigItem("gce_rows_per_page"))
+  );
   const [formMode, setFormMode] = useState([ACTION_LIST, null]);
   const [status, setStatus] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
@@ -149,8 +135,8 @@ const GenericCrudEditorMain = (props) => {
   const { currentUser } = useUser();
   const { theme, isWide } = useAppContext();
 
-  const actionsHandlerAllowsMouseOver = (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0") == "1";
-  const actionsHandlerAllowsMagicButton = (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1") == "1";
+  const actionsHandlerAllowsMouseOver = getLocalConfigItem("gce_actions_allows_mouse_over") == '1';
+  const actionsHandlerAllowsMagicButton = getLocalConfigItem("gce_actions_allows_magic_button") == '1';
 
   useEffect(() => {
     setEditorParameters(props).then(
@@ -184,7 +170,6 @@ const GenericCrudEditorMain = (props) => {
   }, [props]);
 
   useEffect(() => {
-    // if (editor && !status) {
     if (editor) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation"
       ShowHidePageAnimation(true, animationElementId);
@@ -197,8 +182,6 @@ const GenericCrudEditorMain = (props) => {
         editor, 'dbListPreRead', accessKeysListing, formMode, currentUser
       ).then(
         funcResponse => {
-          // console_debug_log(`GenericCrudEditor / dbListPreRead - funcResponse:`)
-          // console_debug_log(funcResponse);
           accessKeysListing = Object.assign(
             accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues
           );
@@ -284,7 +267,7 @@ const GenericCrudEditorMain = (props) => {
     if (!event.target.value) {
       return;
     }
-    setDefaultRowsPerPage(event.target.value);
+    saveLocalConfig({"gce_rows_per_page": event.target.value});
     setInfoMsg('');
     setRowsPerPage(event.target.value);
   }
@@ -561,7 +544,6 @@ const GenericCrudEditorMain = (props) => {
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_eye`}
                             onClick={() => handleView(rowId(row))}
-                            // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -572,7 +554,6 @@ const GenericCrudEditorMain = (props) => {
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
                             onClick={() => handleModify(rowId(row))}
-                            // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -753,12 +734,6 @@ const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange }) => 
         onChange={handleRowsPerPageChange}
         defaultValue={rowsPerPage}
       >
-        <option
-          key={ROWS_PER_PAGE}
-          value={ROWS_PER_PAGE}
-        >
-          {ROWS_PER_PAGE}
-        </option>
         {Array.from({ length: 10 }, (_, i) => (i + 1) * 10).map(value => (
           <option
             key={value}

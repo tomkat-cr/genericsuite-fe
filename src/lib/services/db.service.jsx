@@ -14,6 +14,8 @@ import { convertId } from './id.service.jsx';
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
 export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data'};
 
+const useExposeHeaders = (process.env.REACT_APP_USE_EXPOSE_HEADERS || "0") == "1";
+
 export class dbApiService {
     
     constructor(props) {
@@ -29,7 +31,7 @@ export class dbApiService {
                 // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
                 // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
             },
-            additionalHeaders,
+            // additionalHeaders,
             this.props.authHeader
         );
         if (this.debug) {
@@ -40,14 +42,16 @@ export class dbApiService {
 
     props = null;
     apiUrl = process.env.REACT_APP_API_URL;
+
     // debug = false;
     debug = true;
 
     getAdditionalHeaders() {
-        const headers = {
-            // [GS-15] This one should work...
-            'Access-Control-Expose-Headers': 'Content-Disposition',
-        };
+        const headers = {};
+        if (useExposeHeaders) {
+            // [GS-15] This one should work to allow receive the headers sent by the Flask backend
+            headers['Access-Control-Expose-Headers'] = 'Content-Disposition';
+        }
         return headers;
     }
 

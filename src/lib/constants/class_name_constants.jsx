@@ -163,7 +163,6 @@ export const TOP0_Z50_CLASS = "top-0 z-50 top0z50Class";
 
 export const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
 export const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
-// export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 
 // Special buttons
 
@@ -199,10 +198,6 @@ export const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycle
 export const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
 
 // Listing page (GCE_RFC)
-
-// export const APP_LISTING_LEVEL2_DIV_CLASS = 'appListingLevel2DivClass';
-// export const APP_LISTING_LEVEL3_DIV_CLASS = "appListingLevel3DivClass";
-// export const APP_LISTING_LEVEL4_DIV_CLASS = "appListingLevel4DivClass";
 
 export const APP_LISTING_TABLE_CLASS = "w-full text-sm appListingTableClass";
 export const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTableHdrTheadClass";

@@ -227,7 +227,6 @@ const TOP0_Z50_CLASS = "top-0 z-50 top0z50Class";
 
 const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
 const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
-// export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
 
 // Special buttons
 
@@ -260,10 +259,6 @@ const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonC
 const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
 
 // Listing page (GCE_RFC)
-
-// export const APP_LISTING_LEVEL2_DIV_CLASS = 'appListingLevel2DivClass';
-// export const APP_LISTING_LEVEL3_DIV_CLASS = "appListingLevel3DivClass";
-// export const APP_LISTING_LEVEL4_DIV_CLASS = "appListingLevel4DivClass";
 
 const APP_LISTING_TABLE_CLASS = "w-full text-sm appListingTableClass";
 const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTableHdrTheadClass";
@@ -3171,6 +3166,7 @@ const convertId = id => {
 const MULTIPART_FORM_DATA_HEADER = {
   'Content-Type': 'multipart/form-data'
 };
+const useExposeHeaders = (process.env.REACT_APP_USE_EXPOSE_HEADERS || "0") == "1";
 class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
@@ -3178,7 +3174,7 @@ class dbApiService {
     // debug = false;
     _defineProperty(this, "debug", true);
     this.props = props;
-    const additionalHeaders = this.getAdditionalHeaders();
+    this.getAdditionalHeaders();
     this.props.authHeader = authHeader();
     this.props.authAndJsonHeader = Object.assign({
       'Content-Type': 'application/json',
@@ -3186,17 +3182,20 @@ class dbApiService {
       // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
       // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
       // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
-    }, additionalHeaders, this.props.authHeader);
+    },
+    // additionalHeaders,
+    this.props.authHeader);
     if (this.debug) {
       console_debug_log('###===> dbApiService() | this.props:');
       console_debug_log(this.props);
     }
   }
   getAdditionalHeaders() {
-    const headers = {
-      // [GS-15] This one should work...
-      'Access-Control-Expose-Headers': 'Content-Disposition'
-    };
+    const headers = {};
+    if (useExposeHeaders) {
+      // [GS-15] This one should work to allow receive the headers sent by the Flask backend
+      headers['Access-Control-Expose-Headers'] = 'Content-Disposition';
+    }
     return headers;
   }
   paramsToUrlQuery(params) {
@@ -3339,7 +3338,10 @@ const buildConfigData = function () {
     "pref_side_menu": "1",
     "language": "en",
     "currency": "USD",
-    "timezone": "America/New_York"
+    "timezone": "America/New_York",
+    "gce_rows_per_page": ROWS_PER_PAGE,
+    "gce_actions_allows_mouse_over": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0",
+    "gce_actions_allows_magic_button": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1"
   };
   lsDataDict = lsDataDict ?? {};
   // Merge defaultConfigData with lsDataDict
@@ -3364,6 +3366,10 @@ const getLocalConfig = function () {
   lsItemName = defaultItemName(lsItemName);
   const lsDataDict = getItemFromLocalStorage(lsItemName);
   return buildConfigData(lsDataDict);
+};
+const getLocalConfigItem = lsItemName => {
+  const localConfig = getLocalConfig();
+  return localConfig[lsItemName];
 };
 
 // Authentication service
@@ -6101,20 +6107,11 @@ const GenericCrudEditor = _ref => {
     handleFormPageActions: handleFormPageActions
   })));
 };
-const getDefaultRowsPerPage = () => {
-  // Get value from localStorage
-  const rowsPerPage = localStorage.getItem('rowsPerPage');
-  return rowsPerPage ? parseInt(rowsPerPage) : ROWS_PER_PAGE;
-};
-const setDefaultRowsPerPage = rowsPerPage => {
-  // Set value in localStorage
-  localStorage.setItem('rowsPerPage', rowsPerPage);
-};
 const GenericCrudEditorMain = props => {
   const [editor, setEditor] = React.useState(null);
   const [rows, setRows] = React.useState(null);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(getDefaultRowsPerPage());
+  const [rowsPerPage, setRowsPerPage] = React.useState(parseInt(getLocalConfigItem("gce_rows_per_page")));
   const [formMode, setFormMode] = React.useState([ACTION_LIST, null]);
   const [status, setStatus] = React.useState("");
   const [infoMsg, setInfoMsg] = React.useState("");
@@ -6131,8 +6128,8 @@ const GenericCrudEditorMain = props => {
     theme,
     isWide
   } = useAppContext();
-  const actionsHandlerAllowsMouseOver = (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0") == "1";
-  const actionsHandlerAllowsMagicButton = (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1") == "1";
+  const actionsHandlerAllowsMouseOver = getLocalConfigItem("gce_actions_allows_mouse_over") == '1';
+  const actionsHandlerAllowsMagicButton = getLocalConfigItem("gce_actions_allows_magic_button") == '1';
   React.useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -6153,7 +6150,6 @@ const GenericCrudEditorMain = props => {
     });
   }, [props]);
   React.useEffect(() => {
-    // if (editor && !status) {
     if (editor) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation";
       ShowHidePageAnimation(true, animationElementId);
@@ -6163,8 +6159,6 @@ const GenericCrudEditorMain = props => {
       };
       // dbListPreRead: To set a Listing filters, assign funcResponse.fieldValues[db_field]=filter_value
       processGenericFuncArray(editor, 'dbListPreRead', accessKeysListing, formMode, currentUser).then(funcResponse => {
-        // console_debug_log(`GenericCrudEditor / dbListPreRead - funcResponse:`)
-        // console_debug_log(funcResponse);
         accessKeysListing = Object.assign(accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
         editor.db.getAll(accessKeysListing).then(data => {
           ShowHidePageAnimation(false, animationElementId);
@@ -6215,7 +6209,9 @@ const GenericCrudEditorMain = props => {
     if (!event.target.value) {
       return;
     }
-    setDefaultRowsPerPage(event.target.value);
+    saveLocalConfig({
+      "gce_rows_per_page": event.target.value
+    });
     setInfoMsg('');
     setRowsPerPage(event.target.value);
   };
@@ -6410,18 +6406,14 @@ const GenericCrudEditorMain = props => {
     className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
   }, /*#__PURE__*/React.createElement("button", {
     key: `${editor.baseUrl}_row_${rowId(row)}_controls_eye`,
-    onClick: () => handleView(rowId(row))
-    // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
-    ,
+    onClick: () => handleView(rowId(row)),
     className: `${BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "eye",
     alt: MSG_ACTION_READ
   })), /*#__PURE__*/React.createElement("button", {
     key: `${editor.baseUrl}_row_${rowId(row)}_controls_edit`,
-    onClick: () => handleModify(rowId(row))
-    // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
-    ,
+    onClick: () => handleModify(rowId(row)),
     className: `${BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "edit",
@@ -6535,10 +6527,7 @@ const CrudEditorRowsPerPage = _ref2 => {
     className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS + " " + theme.input,
     onChange: handleRowsPerPageChange,
     defaultValue: rowsPerPage
-  }, /*#__PURE__*/React.createElement("option", {
-    key: ROWS_PER_PAGE,
-    value: ROWS_PER_PAGE
-  }, ROWS_PER_PAGE), Array.from({
+  }, Array.from({
     length: 10
   }, (_, i) => (i + 1) * 10).map(value => /*#__PURE__*/React.createElement("option", {
     key: value,
