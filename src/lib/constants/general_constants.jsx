@@ -71,7 +71,7 @@ export const MSG_ROWS_PER_PAGE = "Rows per page";
 
 // Generic editor : default values
 
-export const ROWS_PER_PAGE=5
+export const ROWS_PER_PAGE = 30
 
 // Generic editor : general select options
 

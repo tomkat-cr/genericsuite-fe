@@ -6,32 +6,38 @@ import {
 } from '../constants/general_constants.jsx';
 import { console_debug_log } from './logging.service.jsx';
 
-const debug = false;
+const debug = true;
 
 export const usePlainFetch = false;
 
 export function handleResponse(response) {
-    if (response.headers && response.response) {
-        if (debug) console_debug_log('Response contains headers and response:', response.headers, response.response);
-        return handleResponseText(response, response.response, response.headers);
-    } else {
-        if (debug) console_debug_log('Response does not contain headers and response:', response);
-        return response.text().then(
-            text => {
-                return handleResponseText(response, text, {});
-            },
-            reason => {
-                if (debug) console_debug_log('handleResponse ERROR - reason:');
-                console.error(reason);
-            }
-        );
+    if (debug) console_debug_log('>> handleResponse: response:', response);
+    if (response.headers && typeof response.data !== 'undefined') {
+        if (debug) console_debug_log('handleResponse: Response contains headers and response.data:', response.headers, response.response);
+        return handleResponseText(response, response.data, response.headers);
     }
+    if (response.headers && response.response) {
+        if (debug) console_debug_log('handleResponse: Response contains headers and response:', response.headers, response.response);
+        return handleResponseText(response, response.response, response.headers);
+    }
+    if (debug) console_debug_log('handleResponse: Response does not contain headers and response:', response);
+    return response.text().then(
+        text => {
+            return handleResponseText(response, text, {});
+        },
+        reason => {
+            if (debug) console_debug_log('handleResponse ERROR - reason:');
+            console.error(reason);
+        }
+    );
 }
 
 export function handleResponseText(response, text, headers) {
     let data = {};
     if (IsJsonString(text)) {
         data = text && JSON.parse(text);
+    } else {
+        data = text;
     }
     if (!response.ok) {
         let specificErrorMsg = (data && data.message) || text || response.statusText || '';
@@ -136,6 +142,9 @@ export async function handleFetchError(error) {
 }
 
 export function IsJsonString(str) {
+    if (typeof str !== 'string') {
+        return false;
+    }
     try {
         JSON.parse(str);
     } catch (e) {

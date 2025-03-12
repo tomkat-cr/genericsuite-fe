@@ -437,7 +437,6 @@ declare var db_service: Readonly<{
     MULTIPART_FORM_DATA_HEADER: {
         'Content-Type': string;
     };
-    convertId: (id: any) => any;
     dbApiService: typeof dbApiService;
 }>;
 declare var dictUtilities: Readonly<{
@@ -514,7 +513,7 @@ declare var general_constants: Readonly<{
     MSG_VALID_EMAIL: "a valid email address";
     MSG_VALID_INTEGER: "an integer number";
     MSG_VALID_NUMBER: "a number";
-    ROWS_PER_PAGE: 5;
+    ROWS_PER_PAGE: 30;
     TRUE_FALSE: {
         title: any;
         value: string;
@@ -773,14 +772,16 @@ declare function authHeader(): {
 declare class dbApiService {
     constructor(props: any);
     props: any;
+    getAdditionalHeaders(): {
+        'Access-Control-Expose-Headers': string;
+    };
     paramsToUrlQuery(params: any): string;
-    getFetch(url: any, requestOptions: any): Promise<any> | undefined;
     getAll(...args: any[]): Promise<any> | undefined;
     getOne(params: any, ...args: any[]): Promise<any> | undefined;
-    createUpdateDelete(action: any, id: any, data: any, ...args: any[]): Promise<any>;
-    createRow(data: any, ...args: any[]): Promise<any>;
-    updateRow(id: any, data: any, ...args: any[]): Promise<any>;
-    deleteRow(id: any, data: any, ...args: any[]): Promise<any>;
+    createUpdateDelete(action: any, id: any, data: any, ...args: any[]): Promise<any> | undefined;
+    createRow(data: any, ...args: any[]): Promise<any> | undefined;
+    updateRow(id: any, data: any, ...args: any[]): Promise<any> | undefined;
+    deleteRow(id: any, data: any, ...args: any[]): Promise<any> | undefined;
     convertId(id: any): any;
 }
 declare function errorAndReEnter(error: any, ...args: any[]): React.FunctionComponentElement<any>;

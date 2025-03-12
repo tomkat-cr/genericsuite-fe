@@ -5,10 +5,8 @@ import Downshift from 'downshift';
 import { useFormikContext } from 'formik';
 // import { debounce } from 'lodash';
 
-import {
-    dbApiService,
-    convertId,
-} from './db.service.jsx';
+import { dbApiService } from './db.service.jsx';
+import { convertId } from './id.service.jsx';
 import {
     defaultValue,
     replaceSpecialVars,

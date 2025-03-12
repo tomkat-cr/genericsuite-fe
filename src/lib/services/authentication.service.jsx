@@ -4,12 +4,13 @@ import { Buffer } from 'buffer'
 
 import { logout, currentUserSubject } from './logout.service.jsx';
 import { dbApiService } from './db.service.jsx';
-import { handleResponse, handleFetchError } from './response.handlers.service.jsx';
+import { gsFetch } from './fetch.utilities.jsx';
+import { convertId } from './id.service.jsx';
 import { console_debug_log } from './logging.service.jsx';
 import { getLocalConfig } from '../helpers/local-config.jsx';
 import { saveItemToLocalStorage } from '../helpers/localstorage-manager.jsx';
 
-const debug = false;
+const debug = true;
 
 export const authenticationService = {
     login,
@@ -31,9 +32,7 @@ function login(username, password) {
             ).toString('base64')
         },
     };
-    let userService = new dbApiService({url: 'users'})
-    return fetch(`${config.apiUrl}/users/login`, requestOptions)
-        .then(handleResponse, handleFetchError)
+    return gsFetch(`${config.apiUrl}/users/login`, requestOptions)
         .then(res => {
             if(res.error) {
                 return Promise.reject(res.message);
@@ -67,11 +66,12 @@ export const getUserData = (userId) => {
 }
 
 export const getUserLocalData = (res) => {
-    const userService = new dbApiService({url: 'users'})
+    if (debug) console_debug_log('getUserLocalData() | res:', res);
     const data = res.resultset;
+    if (debug) console_debug_log('getUserLocalData() | data:', data);
     const localConfig = getLocalConfig();
     return {
-        id: userService.convertId(data._id),
+        id: convertId(data._id),
         // username: data.username,
         // email: data.email,
         firstName: data.firstname,
@@ -105,7 +105,7 @@ export const verifyCurrentUser = (registerUser) => {
         getCurrentUserData()
             .then( 
                 userData => {
-                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 1:", userData);
+                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' userData # 1:", userData);
                     if (userData.error) {
                         if (debug) console.error('userData.error_message:', userData.error_message);
                     } else {

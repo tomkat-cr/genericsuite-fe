@@ -4,6 +4,7 @@ import { Link, Routes, Route, HashRouter, RouterProvider, createBrowserRouter, N
 import { createBrowserHistory } from 'history';
 import { Buffer } from 'buffer';
 import { BehaviorSubject } from 'rxjs';
+import axios from 'axios';
 import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Downshift from 'downshift';
@@ -784,7 +785,8 @@ const GsIcons = _ref => {
         x: "-256",
         y: "-64"
       }), /*#__PURE__*/React.createElement("g", {
-        id: "vertical-menu",
+        // id="vertical-menu"
+        id: "menu-dots-more",
         fill: "currentColor"
       }, /*#__PURE__*/React.createElement("circle", {
         cx: "32.026",
@@ -2586,7 +2588,7 @@ const MSG_ROWS_PER_PAGE = "Rows per page";
 
 // Generic editor : default values
 
-const ROWS_PER_PAGE = 5;
+const ROWS_PER_PAGE = 30;
 
 // Generic editor : general select options
 
@@ -2739,20 +2741,29 @@ var authHeader$1 = /*#__PURE__*/Object.freeze({
 
 const usePlainFetch = false;
 function handleResponse(response) {
-  if (response.headers && response.response) {
-    return handleResponseText(response, response.response, response.headers);
-  } else {
-    return response.text().then(text => {
-      return handleResponseText(response, text, {});
-    }, reason => {
-      console.error(reason);
-    });
+  console_debug_log('>> handleResponse: response:', response);
+  if (response.headers && typeof response.data !== 'undefined') {
+    console_debug_log('handleResponse: Response contains headers and response.data:', response.headers, response.response);
+    return handleResponseText(response, response.data, response.headers);
   }
+  if (response.headers && response.response) {
+    console_debug_log('handleResponse: Response contains headers and response:', response.headers, response.response);
+    return handleResponseText(response, response.response, response.headers);
+  }
+  console_debug_log('handleResponse: Response does not contain headers and response:', response);
+  return response.text().then(text => {
+    return handleResponseText(response, text, {});
+  }, reason => {
+    console_debug_log('handleResponse ERROR - reason:');
+    console.error(reason);
+  });
 }
 function handleResponseText(response, text, headers) {
   let data = {};
   if (IsJsonString(text)) {
     data = text && JSON.parse(text);
+  } else {
+    data = text;
   }
   if (!response.ok) {
     let specificErrorMsg = data && data.message || text || response.statusText || '';
@@ -2765,10 +2776,16 @@ function handleResponseText(response, text, headers) {
       }
     }
     const errorMsg = specificErrorMsg || data && data.message || text || response.statusText;
+    {
+      console_debug_log('handleResponse | !response.ok | data:', data, 'response:', response, 'specificErrorMsg:', specificErrorMsg, 'text:', text);
+    }
     return Promise.reject(errorMsg);
   } else {
     data.headers = headers;
     if (!IsJsonString(text)) {
+      {
+        console_debug_log('handleResponse | !IsJsonString(text) | data:', data, 'response:', response, 'text:', text);
+      }
       data.file = text;
       if (!data.headers.get('content-type')) {
         data.headers.set('content-type', 'application/octet-stream');
@@ -2784,6 +2801,9 @@ function handleResponseText(response, text, headers) {
       // When the data.resultset has an array of records (objects) instead of a sigle object, it comes as an encapsulated string
       data.resultset = JSON.parse(data.resultset);
     }
+  }
+  {
+    console_debug_log('||| handleResponse data:', data, 'text:', text);
   }
   return data;
 }
@@ -2805,8 +2825,10 @@ async function handleFetchError(error) {
     */
     possibleCORS = error.statusText.includes('CORS');
     reasonDetail = await error.text().then(text => {
+      console_debug_log('Error body:', text);
       return text;
     }).catch(e => {
+      console_debug_log('Error reading body:', e);
       return `HTTP ${error.status}`;
     });
     if (error.status === 401) {
@@ -2819,6 +2841,9 @@ async function handleFetchError(error) {
     errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
     reasonDetail = error;
   }
+  {
+    console_debug_log('handleFetchError | error:', error, 'errorMsg:', errorMsg, 'reasonDetail:', reasonDetail);
+  }
   return Promise.reject({
     error: true,
     message: errorMsg,
@@ -2826,6 +2851,9 @@ async function handleFetchError(error) {
   });
 }
 function IsJsonString(str) {
+  if (typeof str !== 'string') {
+    return false;
+  }
   try {
     JSON.parse(str);
   } catch (e) {
@@ -2987,6 +3015,137 @@ var blob_files_utilities = /*#__PURE__*/Object.freeze({
   responseHasFile: responseHasFile
 });
 
+// Fetch/Axios utilities
+const debug$3 = true;
+const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
+const getAxios = (url, requestOptions) => {
+  console_debug_log('GETAXIOS | url:', url, '\n | requestOptions:', requestOptions);
+  let response;
+  const {
+    method,
+    body,
+    headers
+  } = requestOptions;
+  try {
+    response = axios({
+      url: url,
+      method: method,
+      data: body,
+      headers: headers
+    }).then(response => {
+      if (debug$3) console_debug_log('||| getAxios | Phase 1 | response:', response);
+      if (response.status !== 200) {
+        return Promise.reject(response);
+      }
+      const headers = response.headers;
+      if (debug$3) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
+      if (responseHasFile(headers)) {
+        const filename = getFilenameFromContentDisposition(headers);
+        return fixBlob(response.data, filename);
+      }
+      const text = response.data;
+      if (typeof text.resultset !== 'undefined' && IsJsonString(text.resultset)) {
+        text.resultset = JSON.parse(text.resultset);
+      }
+      const new_response = Object.assign({}, response, text);
+      new_response.ok = response.status === 200;
+      new_response.text = text;
+      delete new_response.data;
+      if (debug$3) console_debug_log('||| getAxios | Phase 2 | new_response:', new_response);
+      return new_response;
+    }).catch(error => {
+      return handleFetchError(error);
+    });
+  } catch (error) {
+    console.error('Error in getAxios:', error);
+    throw error;
+  }
+  return response;
+};
+const getFetch = (url, requestOptions) => {
+  console_debug_log('GETFETCH | url:', url, '\n | requestOptions:', requestOptions);
+  let response;
+  try {
+    if (usePlainFetch) ; else {
+      response = fetch(url, requestOptions).then(response => {
+        if (debug$3) console_debug_log('||| getFetch | Phase 1 | response:', response);
+        if (!response.ok) {
+          // throw new Error('Network response was not ok');
+          return Promise.reject(response);
+        }
+        const headers = response.headers;
+        // Process blob
+        if (responseHasFile(headers)) {
+          // Get file name and extension
+          const filename = getFilenameFromContentDisposition(headers);
+          return response.blob().then(blob => {
+            // Create a link to download the file (from blob)
+            // Verifying if it's a binary encoded as Base64 string
+            return fixBlob(blob, filename).then(text => {
+              // "text" contains the blob URL...
+              if (debug$3) console_debug_log('||| getFetch | Phase 1.5 | blob:', blob, 'text:', text, 'filename:', filename);
+              return {
+                headers,
+                text,
+                response
+              };
+            }, error => {
+              if (debug$3) console_debug_log('||| getFetch | fixBlob | error:', error);
+              return Promise.reject(response);
+            });
+          });
+        } else {
+          // Process headers if needed here and the response text body
+          return response.text().then(text => {
+            if (debug$3) console_debug_log('||| getFetch | Phase 3 | { headers, text, response }:', {
+              headers,
+              text,
+              response
+            });
+            return {
+              headers,
+              text,
+              response
+            };
+          });
+        }
+      }).then(_ref => {
+        let {
+          headers,
+          text,
+          response
+        } = _ref;
+        if (debug$3) console_debug_log('||| getFetch | Phase 2 | headers:', headers, 'text', text, 'response:', response);
+        const data = {
+          response: text,
+          headers: headers,
+          // Attach headers to the data object
+          ok: response.ok,
+          status: response.status,
+          statusText: response.statusText
+        };
+        return data;
+      }).then(handleResponse).catch(handleFetchError);
+    }
+  } catch (e) {
+    console_debug_log('|| FETCH Error:', e);
+    response = Promise.resolve(handleFetchError(e));
+  }
+  return response;
+};
+const gsFetch = (url, requestOptions) => {
+  if (useAxios) {
+    return getAxios(url, requestOptions);
+  }
+  return getFetch(url, requestOptions);
+};
+
+// ID Service
+
+const convertId = id => {
+  return id === null || id === '' || typeof id === 'string' ? id : id.$oid;
+};
+
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
 const MULTIPART_FORM_DATA_HEADER = {
   'Content-Type': 'multipart/form-data'
@@ -2998,20 +3157,26 @@ class dbApiService {
     // debug = false;
     _defineProperty(this, "debug", true);
     this.props = props;
+    const additionalHeaders = this.getAdditionalHeaders();
     this.props.authHeader = authHeader();
     this.props.authAndJsonHeader = Object.assign({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
       // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
       // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
       // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
-      // [GS-15] This one should work...
-      'Access-Control-Expose-Headers': 'Content-Disposition'
-    }, this.props.authHeader);
+    }, additionalHeaders, this.props.authHeader);
     if (this.debug) {
       console_debug_log('###===> dbApiService() | this.props:');
       console_debug_log(this.props);
     }
+  }
+  getAdditionalHeaders() {
+    const headers = {
+      // [GS-15] This one should work...
+      'Access-Control-Expose-Headers': 'Content-Disposition'
+    };
+    return headers;
   }
   paramsToUrlQuery(params) {
     let urlQuery = '';
@@ -3020,72 +3185,6 @@ class dbApiService {
       return urlQuery += (urlQuery === '' ? '?' : '&') + key + '=' + value;
     });
     return urlQuery;
-  }
-  getFetch(url, requestOptions) {
-    if (this.debug) console_debug_log('GETFETCH | url:', url, '\n | requestOptions:', requestOptions);
-    let response;
-    try {
-      if (usePlainFetch) ; else {
-        response = fetch(url, requestOptions).then(response => {
-          if (this.debug) console_debug_log('||| getFetch | Phase 1 | response:', response);
-          if (!response.ok) {
-            // throw new Error('Network response was not ok');
-            return Promise.reject(response);
-          }
-          const headers = response.headers;
-          // Process blob
-          if (responseHasFile(headers)) {
-            // Get file name and extension
-            const filename = getFilenameFromContentDisposition(headers);
-            return response.blob().then(blob => {
-              // Create a link to download the file (from blob)
-              // Verifying if it's a binary encoded as Base64 string
-              return fixBlob(blob, filename).then(text => {
-                // "text" contains the blob URL...
-                if (this.debug) console_debug_log('||| getFetch | Phase 1.5 | blob:', blob, 'text:', text, 'filename:', filename);
-                return {
-                  headers,
-                  text,
-                  response
-                };
-              }, error => {
-                if (this.debug) console_debug_log('||| getFetch | fixBlob | error:', error);
-                return Promise.reject(response);
-              });
-            });
-          } else {
-            // Process headers if needed here and the response text body
-            return response.text().then(text => {
-              return {
-                headers,
-                text,
-                response
-              };
-            });
-          }
-        }).then(_ref2 => {
-          let {
-            headers,
-            text,
-            response
-          } = _ref2;
-          if (this.debug) console_debug_log('||| getFetch | Phase 2 | headers:', headers, 'text', text, 'response:', response);
-          const data = {
-            response: text,
-            headers: headers,
-            // Attach headers to the data object
-            ok: response.ok,
-            status: response.status,
-            statusText: response.statusText
-          };
-          return data;
-        }).then(handleResponse).catch(handleFetchError);
-      }
-    } catch (e) {
-      if (this.debug) console_debug_log('|| FETCH Error:', e);
-      response = Promise.resolve(handleFetchError(e));
-    }
-    return response;
   }
   getAll() {
     let params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -3123,7 +3222,7 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> getAll() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return this.getFetch(url, requestOptions);
+    return gsFetch(url, requestOptions);
   }
   getOne(params) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -3137,7 +3236,7 @@ class dbApiService {
       console_debug_log(`###===> getOne() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
     const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
-    return this.getFetch(url, requestOptions);
+    return gsFetch(url, requestOptions);
   }
   createUpdateDelete(action, id, data) {
     let queryParams = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
@@ -3163,8 +3262,7 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> createRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
-    return response;
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   updateRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -3180,8 +3278,7 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> updateRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
-    return response;
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   deleteRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -3197,21 +3294,16 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> deleteRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
-    return response;
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   convertId(id) {
     return convertId(id);
   }
 }
-const convertId = id => {
-  return id === null || id === '' || typeof id === 'string' ? id : id.$oid;
-};
 
 var db_service = /*#__PURE__*/Object.freeze({
   __proto__: null,
   MULTIPART_FORM_DATA_HEADER: MULTIPART_FORM_DATA_HEADER,
-  convertId: convertId,
   dbApiService: dbApiService
 });
 
@@ -3274,10 +3366,7 @@ function login(username, password) {
       "Authorization": "Basic " + Buffer.from(username + ":" + password).toString('base64')
     }
   };
-  new dbApiService({
-    url: 'users'
-  });
-  return fetch(`${config.apiUrl}/users/login`, requestOptions).then(handleResponse, handleFetchError).then(res => {
+  return gsFetch(`${config.apiUrl}/users/login`, requestOptions).then(res => {
     if (res.error) {
       return Promise.reject(res.message);
     }
@@ -3308,13 +3397,12 @@ const getUserData = userId => {
   });
 };
 const getUserLocalData = res => {
-  const userService = new dbApiService({
-    url: 'users'
-  });
+  console_debug_log('getUserLocalData() | res:', res);
   const data = res.resultset;
+  console_debug_log('getUserLocalData() | data:', data);
   const localConfig = getLocalConfig();
   return {
-    id: userService.convertId(data._id),
+    id: convertId(data._id),
     // username: data.username,
     // email: data.email,
     firstName: data.firstname,
@@ -3329,6 +3417,10 @@ const getCurrentUserData = () => {
     url: 'users/current_user_d'
   });
   return dbApi.getOne({}).then(data => data, error => {
+    {
+      console_debug_log(`ERROR: getCurrentUserData():`);
+      console.error(error);
+    }
     return {
       error: true,
       errorMsg: error
@@ -3338,7 +3430,10 @@ const getCurrentUserData = () => {
 const verifyCurrentUser = registerUser => {
   if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
     getCurrentUserData().then(userData => {
-      if (userData.error) ; else {
+      console_debug_log("LoginPage | call to setCurrentUser with 'user' userData # 1:", userData);
+      if (userData.error) {
+        console.error('userData.error_message:', userData.error_message);
+      } else {
         registerUser(getUserLocalData(userData));
       }
     }, error => {
@@ -5985,11 +6080,20 @@ const GenericCrudEditor = _ref => {
     handleFormPageActions: handleFormPageActions
   })));
 };
+const getDefaultRowsPerPage = () => {
+  // Get value from localStorage
+  const rowsPerPage = localStorage.getItem('rowsPerPage');
+  return rowsPerPage ? parseInt(rowsPerPage) : ROWS_PER_PAGE;
+};
+const setDefaultRowsPerPage = rowsPerPage => {
+  // Set value in localStorage
+  localStorage.setItem('rowsPerPage', rowsPerPage);
+};
 const GenericCrudEditorMain = props => {
   const [editor, setEditor] = useState(null);
   const [rows, setRows] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE);
+  const [rowsPerPage, setRowsPerPage] = useState(getDefaultRowsPerPage());
   const [formMode, setFormMode] = useState([ACTION_LIST, null]);
   const [status, setStatus] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
@@ -6006,7 +6110,8 @@ const GenericCrudEditorMain = props => {
     theme,
     isWide
   } = useAppContext();
-  const actionsHandlerAllowsMagicButton = false;
+  const actionsHandlerAllowsMouseOver = (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0") == "1";
+  const actionsHandlerAllowsMagicButton = (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1") == "1";
   useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -6089,6 +6194,7 @@ const GenericCrudEditorMain = props => {
     if (!event.target.value) {
       return;
     }
+    setDefaultRowsPerPage(event.target.value);
     setInfoMsg('');
     setRowsPerPage(event.target.value);
   };
@@ -6103,7 +6209,8 @@ const GenericCrudEditorMain = props => {
   };
   const actionsHandler = (mode, row) => {
     const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
-    document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
+    const currRowWasHidden = element.classList.contains('hidden');
+    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
     const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
     if (mode === 'show') {
@@ -6112,7 +6219,10 @@ const GenericCrudEditorMain = props => {
         rowElement.classList.add(key);
       });
       // If mouse over allowed, show controls
-      {
+      if (actionsHandlerAllowsMouseOver) {
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.add('hidden');
+        }
         element.classList.remove('hidden');
       }
     }
@@ -6122,7 +6232,10 @@ const GenericCrudEditorMain = props => {
         rowElement.classList.remove(key);
       });
       // If mouse over allowed, hide controls
-      {
+      if (actionsHandlerAllowsMouseOver) {
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.remove('hidden');
+        }
         element.classList.add('hidden');
       }
     }
@@ -6134,17 +6247,23 @@ const GenericCrudEditorMain = props => {
           thisRowElement.classList.add('hidden');
         }
       });
-      if (element.classList.contains('hidden')) {
+      if (currRowWasHidden) {
         // Controls hidden in this row
         bgColorStype.map(key => {
           rowElement.classList.add(key);
         });
+        // if (actionsHandlerAllowsMagicButton) {
+        //   magicButtonElement.classList.add('hidden');
+        // }
         element.classList.remove('hidden');
       } else {
         // Controls activated in this row
         bgColorStype.map(key => {
           rowElement.classList.remove(key);
         });
+        // if (actionsHandlerAllowsMagicButton) {
+        //   magicButtonElement.classList.remove('hidden');
+        // }
         element.classList.add('hidden');
       }
     }
@@ -6198,11 +6317,18 @@ const GenericCrudEditorMain = props => {
   }, /*#__PURE__*/React.createElement("tr", {
     key: `${editor.baseUrl}_thead_tr`,
     className: APP_LISTING_TABLE_HDR_TR_CLASS
-  }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
+  }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("th", {
+    // scope="col"
+    key: `${editor.baseUrl}_actions`,
+    className: APP_LISTING_TABLE_HDR_TH_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    key: `${editor.baseUrl}_actions_div`,
+    className: APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS
+  }, " ")), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
     // scope="col"
     key: `${editor.baseUrl}_${key}_thead_th`,
     className: APP_LISTING_TABLE_HDR_TH_CLASS
-  }, editor.fieldElements[key].label)), actionsHandlerAllowsMagicButton)), /*#__PURE__*/React.createElement("tbody", {
+  }, editor.fieldElements[key].label)))), /*#__PURE__*/React.createElement("tbody", {
     key: `${editor.baseUrl}_tbody`,
     className: APP_LISTING_TABLE_BODY_TBODY_CLASS
   }, rows && typeof rows.resultset !== 'undefined' && rows.resultset.map((row, index) =>
@@ -6226,11 +6352,24 @@ const GenericCrudEditorMain = props => {
     onMouseLeave: () => {
       actionsHandler('hide', row);
     }
-  }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
+  }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("td", {
+    // Action buttons
+    key: `${editor.baseUrl}_row_${rowId(row)}_magicButton_td`
+    // colSpan={Object.keys(editor.fieldElements).length + 1}
+    ,
+    className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    id: `${editor.baseUrl}_row_${rowId(row)}_magicButton`,
+    key: `${editor.baseUrl}_row_${rowId(row)}_magicButton`,
+    className: VISIBLE_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "menu-dots-more",
+    alt: MSG_MORE
+  }))), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
     key: `${editor.baseUrl}_row_${rowId(row)}_${key}_td`,
     className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS
   }, getSelectDescription(editor.fieldElements[key], row) // Show column value or select description
-  )), actionsHandlerAllowsMagicButton), /*#__PURE__*/React.createElement("tr", {
+  ))), /*#__PURE__*/React.createElement("tr", {
     id: `${editor.baseUrl}_row_${rowId(row)}_controls`,
     key: `${editor.baseUrl}_row_${rowId(row)}_controls`,
     className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS,

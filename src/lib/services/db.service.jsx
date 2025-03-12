@@ -6,9 +6,10 @@ import {
     ACTION_UPDATE, 
     ACTION_DELETE, 
 } from '../constants/general_constants.jsx';
-import { handleResponse, handleFetchError, usePlainFetch } from './response.handlers.service.jsx';
-import { fixBlob, getFilenameFromContentDisposition, responseHasFile } from './blob.files.utilities.jsx';
+import { handleFetchError } from './response.handlers.service.jsx';
 import { console_debug_log } from './logging.service.jsx';
+import { gsFetch } from './fetch.utilities.jsx';
+import { convertId } from './id.service.jsx';
 
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
 export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data'};
@@ -18,6 +19,7 @@ export class dbApiService {
     constructor(props) {
         this.props = props;
      
+        const additionalHeaders = this.getAdditionalHeaders();
         this.props.authHeader = authHeader();
         this.props.authAndJsonHeader = Object.assign(
             { 
@@ -26,9 +28,8 @@ export class dbApiService {
                 // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
                 // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
                 // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
-                // [GS-15] This one should work...
-                'Access-Control-Expose-Headers': 'Content-Disposition',
-            }, 
+            },
+            additionalHeaders,
             this.props.authHeader
         );
         if (this.debug) {
@@ -42,78 +43,20 @@ export class dbApiService {
     // debug = false;
     debug = true;
 
+    getAdditionalHeaders() {
+        const headers = {
+            // [GS-15] This one should work...
+            'Access-Control-Expose-Headers': 'Content-Disposition',
+        };
+        return headers;
+    }
+
     paramsToUrlQuery(params) {
         let urlQuery = '';
         Object.entries(params).map(([key, value]) => (
             urlQuery += ((urlQuery === '' ? '?' : '&') + key + '=' + value)
         ));
         return urlQuery;
-    }
-
-    getFetch(url, requestOptions) {
-        if (this.debug) console_debug_log('GETFETCH | url:', url, '\n | requestOptions:', requestOptions);
-        let response;
-        try {
-            if (usePlainFetch) {
-                response = fetch(url, requestOptions)
-                    .then(handleResponse)
-                    .catch(handleFetchError);
-            } else {
-                response = fetch(url, requestOptions)
-                    .then(response => {
-                        if (this.debug) console_debug_log('||| getFetch | Phase 1 | response:', response);
-                        if (!response.ok) {
-                            // throw new Error('Network response was not ok');
-                            return Promise.reject(response);
-                        }
-                        const headers = response.headers;
-                        // Process blob
-                        if (responseHasFile(headers)) {
-                            // Get file name and extension
-                            const filename = getFilenameFromContentDisposition(headers);
-                            return response.blob().then(blob => {
-                                // Create a link to download the file (from blob)
-                                // Verifying if it's a binary encoded as Base64 string
-                                return fixBlob(blob, filename)
-                                .then(
-                                    (text) => {
-                                        // "text" contains the blob URL...
-                                        if (this.debug) console_debug_log('||| getFetch | Phase 1.5 | blob:', blob, 'text:', text, 'filename:', filename);
-                                        return { headers, text, response };
-                                    },
-                                    (error) => {
-                                        if (this.debug) console_debug_log('||| getFetch | fixBlob | error:', error);
-                                        return Promise.reject(response);
-                                    }
-                                );
-                            });
-                        } else {
-                            // Process headers if needed here and the response text body
-                            return response.text().then(text => {
-                                return { headers, text, response };
-                            });
-                        }
-                    })
-                    .then(({ headers, text, response }) => {
-                        if (this.debug) console_debug_log('||| getFetch | Phase 2 | headers:', headers, 'text', text, 'response:', response);
-                        const data = {
-                            response: text,
-                            headers: headers, // Attach headers to the data object
-                            ok: response.ok,
-                            status: response.status,
-                            statusText: response.statusText,
-                        };
-                        return data;
-                    })
-                    .then(handleResponse)
-                    .catch(handleFetchError);
-            }
-        }
-        catch (e) {
-            if (this.debug) console_debug_log('|| FETCH Error:', e);
-            response = Promise.resolve(handleFetchError(e));
-        };
-        return response;
     }
 
     getAll(params={}, data={}, method='GET', options={}) {
@@ -152,7 +95,7 @@ export class dbApiService {
         if (this.debug) {
             console_debug_log(`###===> getAll() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
         }
-        return this.getFetch(url, requestOptions);
+        return gsFetch(url, requestOptions);
     }
 
     getOne(params, options={}) {
@@ -162,7 +105,7 @@ export class dbApiService {
             console_debug_log(`###===> getOne() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
         }
         const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
-        return this.getFetch(url, requestOptions);
+        return gsFetch(url, requestOptions);
     }
 
     createUpdateDelete(action, id, data, queryParams={}) {
@@ -188,10 +131,7 @@ export class dbApiService {
         if (this.debug) {
             console_debug_log(`###===> createRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
         }
-        const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions)
-            .then(handleResponse)
-            .catch(handleFetchError);
-        return response;
+        return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
     }
 
     updateRow(id, data, queryParams={}) {
@@ -207,10 +147,7 @@ export class dbApiService {
         if (this.debug) {
             console_debug_log(`###===> updateRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
         }
-        const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions)
-            .then(handleResponse)
-            .catch(handleFetchError);
-        return response;
+        return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
     }
 
     deleteRow(id, data, queryParams={}) {
@@ -226,17 +163,10 @@ export class dbApiService {
         if (this.debug) {
             console_debug_log(`###===> deleteRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
         }
-        const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions)
-            .then(handleResponse)
-            .catch(handleFetchError);
-        return response;
+        return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
     }
 
     convertId(id) {
         return convertId(id);
     }
-}
-
-export const convertId = (id) => {
-    return (id === null || id ==='' || typeof id === 'string' ? id : id.$oid);
 }

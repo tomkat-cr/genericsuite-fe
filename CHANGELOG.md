@@ -16,6 +16,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
+## Unreleased
+## 1.0.25 (2025-03-10)
+---
+
+### New
+Save GCE_RFC rows per page in LocalStorage, restore it when the page is loaded, defaulting to 30 (previous default was 5).
+Implement axios as alternative to fetch [GS-15].
+Add getAdditionalHeaders() in the dbApiService class to send the 'Access-Control-Expose-Headers': 'Content-Disposition' header and receive file names from the backend [GS-15].
+Add envvar REACT_APP_USE_AXIOS to use axios instead of fetch by default.
+Add envvar REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER to allow MouseOver in GCE_RFC actions.
+Add envvar REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON to allow the Magic Button (3-dots) in GCE_RFC actions.
+
+
 ## 1.0.24 (2025-02-19)
 ---
 
