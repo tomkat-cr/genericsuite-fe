@@ -9,7 +9,7 @@ import {
 import { handleFetchError } from './response.handlers.service.jsx';
 import { console_debug_log } from './logging.service.jsx';
 import { gsFetch } from './fetch.utilities.jsx';
-import { convertId } from './id.service.jsx';
+import { convertId } from './id.utilities.jsx';
 
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
 export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data'};

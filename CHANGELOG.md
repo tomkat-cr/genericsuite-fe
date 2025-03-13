@@ -33,6 +33,7 @@ Add envvar REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON to allow the Magic Button (3
 
 ### Changes
 GCE_RFC and class_name_constants code cleanup.
+convertId() function moved from db.service.jsx to id.utilities.jsx [GS-185].
 
 
 ## 1.0.24 (2025-02-19)

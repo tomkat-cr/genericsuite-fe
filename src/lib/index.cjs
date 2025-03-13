@@ -55,6 +55,8 @@ import * as logoutService from './services/logout.service.jsx';
 import * as ramdomize from './services/ramdomize.jsx';
 import * as responseHandlersService from './services/response.handlers.service.jsx';
 import * as waitAnimationUtility from './services/wait.animation.utility.jsx';
+import * as idUtilities from './services/id.utilities.jsx';
+import * as fetchUtilities from './services/fetch.utilities.jsx';
 // Images
 // const appLogoEmblem = 'app_log_emblem.svg';
 const appLogoCircle = 'app_logo_circle.svg';
@@ -125,6 +127,8 @@ export {
     ramdomize,
     responseHandlersService,
     waitAnimationUtility,
+    idUtilities,
+    fetchUtilities,
     // Images
     // appLogoEmblem,
     appLogoCircle,

@@ -3156,11 +3156,23 @@ const gsFetch = (url, requestOptions) => {
   return getFetch(url, requestOptions);
 };
 
+var fetch_utilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  getAxios: getAxios,
+  getFetch: getFetch,
+  gsFetch: gsFetch
+});
+
 // ID Service
 
 const convertId = id => {
   return id === null || id === '' || typeof id === 'string' ? id : id.$oid;
 };
+
+var id_utilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  convertId: convertId
+});
 
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
 const MULTIPART_FORM_DATA_HEADER = {
@@ -8196,6 +8208,7 @@ exports.dateTimestamp = dateTimestamp;
 exports.dbService = db_service;
 exports.dictUtilities = dictUtilities;
 exports.errorAndReenter = errorAndReenter;
+exports.fetchUtilities = fetch_utilities;
 exports.generalConstants = general_constants;
 exports.genericEditorRfcCommon = generic_editor_rfc_common;
 exports.genericEditorRfcFormpage = generic_editor_rfc_formpage;
@@ -8212,6 +8225,7 @@ exports.genericEditorSinglepage = generic_editor_singlepage;
 exports.genericEditorUtilities = generic_editor_utilities;
 exports.genericMenuService = generic_menu_service;
 exports.history = history$1;
+exports.idUtilities = id_utilities;
 exports.jsonUtilities = jsonUtilities;
 exports.loggingService = logging_service;
 exports.logoutService = logout_service;

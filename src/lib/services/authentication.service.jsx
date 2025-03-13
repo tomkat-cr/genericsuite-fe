@@ -5,7 +5,7 @@ import { Buffer } from 'buffer'
 import { logout, currentUserSubject } from './logout.service.jsx';
 import { dbApiService } from './db.service.jsx';
 import { gsFetch } from './fetch.utilities.jsx';
-import { convertId } from './id.service.jsx';
+import { convertId } from './id.utilities.jsx';
 import { console_debug_log } from './logging.service.jsx';
 import { getLocalConfig } from '../helpers/local-config.jsx';
 import { saveItemToLocalStorage } from '../helpers/localstorage-manager.jsx';
