@@ -2984,18 +2984,30 @@ const decodeBlob = function (base64String, filename) {
 };
 const fixBlob = async function (blobObj, filename) {
   let headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  {
+    console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
+  }
   const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+  let blobUrl = null;
   try {
-    let blobUrl = URL.createObjectURL(blobObj);
+    blobUrl = URL.createObjectURL(blobObj);
   } catch (e) {
+    console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 1 | Error:', e);
     if (!e.message.includes('Overload resolution failed')) {
       return Promise.reject(e);
     }
-    var binaryData = [];
-    binaryData.push(blobObj);
-    blobUrl = URL.createObjectURL(new Blob(binaryData, {
-      type: contentType
-    }));
+  }
+  if (blobUrl === null) {
+    try {
+      const binaryData = [];
+      binaryData.push(blobObj);
+      blobUrl = URL.createObjectURL(new Blob(binaryData, {
+        type: contentType
+      }));
+    } catch (e) {
+      console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 2 | Error:', e);
+      return Promise.reject(e);
+    }
   }
   if (!isBinaryFileType(filename)) {
     return new Promise((resolve, _) => {

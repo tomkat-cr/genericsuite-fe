@@ -1,6 +1,6 @@
 // ID Service
 
-// Ensure to install the crypto library with: npm install crypto
+// Ensure to install the crypto library with: npm install --save-peer --strict-peer-deps crypto
 import crypto from 'crypto';
 
 export const convertId = (id) => {

@@ -7,7 +7,7 @@ import {
     ROWS_PER_PAGE,
 } from "../constants/general_constants.jsx";
 
-const debug = true;
+const debug = false;
 
 const defaultItemName = (lsItemName = null) => {
     return lsItemName ? lsItemName : 'currentConfig';

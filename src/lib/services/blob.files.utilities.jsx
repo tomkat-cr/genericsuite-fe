@@ -146,20 +146,29 @@ export const fixBlob = async (blobObj, filename, headers = null) => {
     // Verify if the blob is a binary encoded as Base64 string
     // If so, decode it and return a new blob URL with the decoded content...
     // Else, just return the blob URL...
+const debug = true;
     if (debug) {
         console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
     const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+    let blobUrl = null;
     try {
-        let blobUrl = URL.createObjectURL(blobObj);
+        blobUrl = URL.createObjectURL(blobObj);
     } catch (e) {
-        if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL | Error:', e);
+        if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 1 | Error:', e);
         if (!e.message.includes('Overload resolution failed')) {
             return Promise.reject(e);
         }
-        var binaryData = [];
-        binaryData.push(blobObj);
-        blobUrl = URL.createObjectURL(new Blob(binaryData, {type: contentType}));
+    }
+    if (blobUrl === null) {
+        try {
+            const binaryData = [];
+            binaryData.push(blobObj);
+            blobUrl = URL.createObjectURL(new Blob(binaryData, {type: contentType}));
+        } catch (e) {
+            if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 2 | Error:', e);
+            return Promise.reject(e);
+        }
     }
     if (!isBinaryFileType(filename)) {
         return new Promise((resolve, _) => {
