@@ -38,6 +38,8 @@ Add getContentTypeFromHeadersOrFilename() function to get the content type from 
 GCE_RFC and class_name_constants code cleanup.
 convertId() function moved from db.service.jsx to id.utilities.jsx [GS-185].
 fixBlob() receives headers parameter to get the content type from the headers, performs a try-catch to handle errors in URL.createObjectURL(), if the error is 'Overload resolution failed', try it using binaryData.push(blobObj) [GS-15].
+isBinaryFileType() receives additional contentType parameter to get the content type from the headers or filename [GS-15].
+getFilenameFromContentDisposition() verifies if the content disposition header contains a filename with or without quotes [GS-15].
 
 
 ## 1.0.24 (2025-02-19)

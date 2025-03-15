@@ -54,7 +54,10 @@ export const getContentTypeFromHeadersOrFilename = (headers, filename) => {
 export const getFilenameFromContentDisposition = (headers) => {
     // Example: attachment; filename="dccbd8f2900a4c7eb1035add851da72f.wav"
     const contentDisposition = headers.get('content-disposition');
-    const filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+    let filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+    if (!filenameMatch) {
+        filenameMatch = contentDisposition && contentDisposition.match(/filename=([^"]+)/);
+    }
     const filename = filenameMatch ? filenameMatch[1] : null;
     if (debug) {
         console_debug_log('|||| Content-Disposition:', contentDisposition);
@@ -94,8 +97,15 @@ export const responseHasFile = (headers) => {
     ;                
 }
 
-export const isBinaryFileType = (filename) => {
-    const contentType = getContentType(filename);
+export const isBinaryFileType = (filename, contentType = null) => {
+    if (!contentType) {
+        if (filename) {
+            contentType = getContentType(filename);
+        } else {
+            console.error('isBinaryFileType | filename and contentType are null');
+            return false;
+        }
+    }
     return contentType === 'application/octet-stream'
         || contentType.includes('audio/')
         || contentType.includes('image/')
@@ -171,7 +181,7 @@ const debug = true;
             return Promise.reject(e);
         }
     }
-    if (!isBinaryFileType(filename)) {
+    if (!isBinaryFileType(filename, contentType)) {
         return new Promise((resolve, _) => {
             resolve(blobUrl);
         });

@@ -2910,7 +2910,10 @@ const getContentTypeFromHeadersOrFilename = (headers, filename) => {
 const getFilenameFromContentDisposition = headers => {
   // Example: attachment; filename="dccbd8f2900a4c7eb1035add851da72f.wav"
   const contentDisposition = headers.get('content-disposition');
-  const filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+  let filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+  if (!filenameMatch) {
+    filenameMatch = contentDisposition && contentDisposition.match(/filename=([^"]+)/);
+  }
   const filename = filenameMatch ? filenameMatch[1] : null;
   return filename;
 };
@@ -2939,8 +2942,16 @@ const responseHasFile = headers => {
   return contentType === 'application/octet-stream' || contentType.includes('audio/') || contentType.includes('image/') || contentType.includes('video/') || contentType.includes('text/csv') || contentType.includes('text/text') // TODO: only to simulate AWS API Gateway
   ;
 };
-const isBinaryFileType = filename => {
-  const contentType = getContentType(filename);
+const isBinaryFileType = function (filename) {
+  let contentType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  if (!contentType) {
+    if (filename) {
+      contentType = getContentType(filename);
+    } else {
+      console.error('isBinaryFileType | filename and contentType are null');
+      return false;
+    }
+  }
   return contentType === 'application/octet-stream' || contentType.includes('audio/') || contentType.includes('image/') || contentType.includes('video/');
 };
 const decodeBlob = function (base64String, filename) {
@@ -3010,7 +3021,7 @@ const fixBlob = async function (blobObj, filename) {
       return Promise.reject(e);
     }
   }
-  if (!isBinaryFileType(filename)) {
+  if (!isBinaryFileType(filename, contentType)) {
     return new Promise((resolve, _) => {
       resolve(blobUrl);
     });

@@ -201,7 +201,7 @@ declare var blob_files_utilities: Readonly<{
     getFileExtension: (filename: any) => any;
     getFilenameFromContentDisposition: (headers: any) => any;
     getHeadersContentType: (headers: any) => any;
-    isBinaryFileType: (filename: any) => boolean;
+    isBinaryFileType: (filename: any, ...args: any[]) => any;
     performDownload: (fileUrl: any, ...args: any[]) => true | HTMLAnchorElement;
     responseHasFile: (headers: any) => any;
 }>;
