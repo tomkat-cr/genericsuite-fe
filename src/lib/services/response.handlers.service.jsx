@@ -126,7 +126,7 @@ export async function handleFetchError(error) {
         possibleCORS = (error instanceof TypeError && error.message.includes('Failed to fetch'));
         errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
         reasonDetail = error;
-   }
+    }
     if (debug) {
         console_debug_log(
             'handleFetchError | error:', error,

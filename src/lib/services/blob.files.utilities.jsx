@@ -42,7 +42,15 @@ export const getContentType = (filename, forceAlternative = false) => {
     }
     return contentType;
 }
- 
+
+export const getContentTypeFromHeadersOrFilename = (headers, filename) => {
+    const contentType = getHeadersContentType(headers);
+    if (!contentType) {
+        return getContentType(filename);
+    }
+    return contentType;
+}
+
 export const getFilenameFromContentDisposition = (headers) => {
     // Example: attachment; filename="dccbd8f2900a4c7eb1035add851da72f.wav"
     const contentDisposition = headers.get('content-disposition');
@@ -69,6 +77,9 @@ export const performDownload = (fileUrl, filename=null, performIt=true) => {
 }
 
 export const getHeadersContentType = (headers) => {
+    if (!headers || !headers.get || typeof headers.get('content-type') === 'undefined') {
+        return null;
+    }
     return headers.get('content-type');
 }
 
@@ -131,14 +142,25 @@ export const decodeBlob = (base64String, filename, oldUrl = null) => {
     return url;
 }
 
-export const fixBlob = async (blobObj, filename) => {
+export const fixBlob = async (blobObj, filename, headers = null) => {
     // Verify if the blob is a binary encoded as Base64 string
     // If so, decode it and return a new blob URL with the decoded content...
     // Else, just return the blob URL...
     if (debug) {
         console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
-    let blobUrl = URL.createObjectURL(blobObj);
+    const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+    try {
+        let blobUrl = URL.createObjectURL(blobObj);
+    } catch (e) {
+        if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL | Error:', e);
+        if (!e.message.includes('Overload resolution failed')) {
+            return Promise.reject(e);
+        }
+        var binaryData = [];
+        binaryData.push(blobObj);
+        blobUrl = URL.createObjectURL(new Blob(binaryData, {type: contentType}));
+    }
     if (!isBinaryFileType(filename)) {
         return new Promise((resolve, _) => {
             resolve(blobUrl);

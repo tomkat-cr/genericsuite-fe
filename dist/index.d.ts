@@ -195,8 +195,9 @@ declare var blob_files_utilities: Readonly<{
     __proto__: null;
     decodeBlob: (base64String: any, filename: any, ...args: any[]) => any;
     defaultFilenametoDownload: "audio.wav";
-    fixBlob: (blobObj: any, filename: any) => Promise<any>;
+    fixBlob: (blobObj: any, filename: any, ...args: any[]) => Promise<any>;
     getContentType: (filename: any, ...args: any[]) => string;
+    getContentTypeFromHeadersOrFilename: (headers: any, filename: any) => any;
     getFileExtension: (filename: any) => any;
     getFilenameFromContentDisposition: (headers: any) => any;
     getHeadersContentType: (headers: any) => any;
@@ -454,6 +455,7 @@ declare var errorAndReenter: Readonly<{
         error: boolean;
         message: any;
     };
+    getErrorDetail: (errorRaw: any) => any;
     getErrorMessage: (error: any) => any;
     includesAppValidLinks: (message: any) => boolean;
     isSessionExpired: (errorMessage: any) => boolean;
@@ -694,6 +696,7 @@ declare var history$1: Readonly<{
 declare var id_utilities: Readonly<{
     __proto__: null;
     convertId: (id: any) => any;
+    getUuidV4: () => `${string}-${string}-${string}-${string}-${string}`;
 }>;
 declare var jsonUtilities: Readonly<{
     __proto__: null;

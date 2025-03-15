@@ -30,10 +30,14 @@ Add GCE_RFC configurations to local-config's buildConfigData() [GS-185].
 Add new "getLocalConfigItem" function to local-config to get a configuration item from the local storage config variable [GS-185].
 Add envvar REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER to allow MouseOver in GCE_RFC actions [GS-185].
 Add envvar REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON to allow the Magic Button (3-dots) in GCE_RFC actions [GS-185].
+Add getErrorDetail() function to get the error details from the error object [GS-15].
+Add getUuidV4() function to generate a UUID v4 [GS-15].
+Add getContentTypeFromHeadersOrFilename() function to get the content type from the headers or filename [GS-15].
 
 ### Changes
 GCE_RFC and class_name_constants code cleanup.
 convertId() function moved from db.service.jsx to id.utilities.jsx [GS-185].
+fixBlob() receives headers parameter to get the content type from the headers, performs a try-catch to handle errors in URL.createObjectURL(), if the error is 'Overload resolution failed', try it using binaryData.push(blobObj) [GS-15].
 
 
 ## 1.0.24 (2025-02-19)

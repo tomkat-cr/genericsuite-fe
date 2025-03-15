@@ -7,6 +7,7 @@ var history$2 = require('history');
 var buffer = require('buffer');
 var rxjs = require('rxjs');
 var axios = require('axios');
+var crypto = require('crypto');
 var formik = require('formik');
 var Yup = require('yup');
 var Downshift = require('downshift');
@@ -2920,6 +2921,13 @@ const getContentType = function (filename) {
   }
   return contentType;
 };
+const getContentTypeFromHeadersOrFilename = (headers, filename) => {
+  const contentType = getHeadersContentType(headers);
+  if (!contentType) {
+    return getContentType(filename);
+  }
+  return contentType;
+};
 const getFilenameFromContentDisposition = headers => {
   // Example: attachment; filename="dccbd8f2900a4c7eb1035add851da72f.wav"
   const contentDisposition = headers.get('content-disposition');
@@ -2942,6 +2950,9 @@ const performDownload = function (fileUrl) {
   return link;
 };
 const getHeadersContentType = headers => {
+  if (!headers || !headers.get || typeof headers.get('content-type') === 'undefined') {
+    return null;
+  }
   return headers.get('content-type');
 };
 const responseHasFile = headers => {
@@ -2992,8 +3003,21 @@ const decodeBlob = function (base64String, filename) {
   const url = URL.createObjectURL(blob);
   return url;
 };
-const fixBlob = async (blobObj, filename) => {
-  let blobUrl = URL.createObjectURL(blobObj);
+const fixBlob = async function (blobObj, filename) {
+  let headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+  try {
+    let blobUrl = URL.createObjectURL(blobObj);
+  } catch (e) {
+    if (!e.message.includes('Overload resolution failed')) {
+      return Promise.reject(e);
+    }
+    var binaryData = [];
+    binaryData.push(blobObj);
+    blobUrl = URL.createObjectURL(new Blob(binaryData, {
+      type: contentType
+    }));
+  }
   if (!isBinaryFileType(filename)) {
     return new Promise((resolve, _) => {
       resolve(blobUrl);
@@ -3023,6 +3047,7 @@ var blob_files_utilities = /*#__PURE__*/Object.freeze({
   defaultFilenametoDownload: defaultFilenametoDownload,
   fixBlob: fixBlob,
   getContentType: getContentType,
+  getContentTypeFromHeadersOrFilename: getContentTypeFromHeadersOrFilename,
   getFileExtension: getFileExtension,
   getFilenameFromContentDisposition: getFilenameFromContentDisposition,
   getHeadersContentType: getHeadersContentType,
@@ -3057,7 +3082,7 @@ const getAxios = (url, requestOptions) => {
       if (debug$3) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
       if (responseHasFile(headers)) {
         const filename = getFilenameFromContentDisposition(headers);
-        return fixBlob(response.data, filename);
+        return fixBlob(response.data, filename, headers);
       }
       const text = response.data;
       if (typeof text.resultset !== 'undefined' && IsJsonString(text.resultset)) {
@@ -3097,7 +3122,7 @@ const getFetch = (url, requestOptions) => {
           return response.blob().then(blob => {
             // Create a link to download the file (from blob)
             // Verifying if it's a binary encoded as Base64 string
-            return fixBlob(blob, filename).then(text => {
+            return fixBlob(blob, filename, headers).then(text => {
               // "text" contains the blob URL...
               if (debug$3) console_debug_log('||| getFetch | Phase 1.5 | blob:', blob, 'text:', text, 'filename:', filename);
               return {
@@ -3168,10 +3193,14 @@ var fetch_utilities = /*#__PURE__*/Object.freeze({
 const convertId = id => {
   return id === null || id === '' || typeof id === 'string' ? id : id.$oid;
 };
+const getUuidV4 = () => {
+  return crypto.randomUUID();
+};
 
 var id_utilities = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  convertId: convertId
+  convertId: convertId,
+  getUuidV4: getUuidV4
 });
 
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
@@ -3622,6 +3651,13 @@ const formatCaughtError = error => {
   };
   return response;
 };
+const getErrorDetail = errorRaw => {
+  let errorDetails = null;
+  if (typeof errorRaw["reason"] !== "undefined" && typeof errorRaw["reason"]["response"] !== "undefined" && typeof errorRaw["reason"]["response"]["data"] !== "undefined") {
+    errorDetails = errorRaw["reason"]["response"]["data"];
+  }
+  return errorDetails;
+};
 
 var errorAndReenter = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -3631,6 +3667,7 @@ var errorAndReenter = /*#__PURE__*/Object.freeze({
   errorLoginAgain: errorLoginAgain,
   errorMessageDiv: errorMessageDiv,
   formatCaughtError: formatCaughtError,
+  getErrorDetail: getErrorDetail,
   getErrorMessage: getErrorMessage,
   includesAppValidLinks: includesAppValidLinks,
   isSessionExpired: isSessionExpired,

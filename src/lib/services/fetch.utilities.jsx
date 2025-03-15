@@ -28,7 +28,7 @@ export const getAxios = (url, requestOptions) => {
             if (debug) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
             if (responseHasFile(headers)) {
                 const filename = getFilenameFromContentDisposition(headers);
-                return fixBlob(response.data, filename);
+                return fixBlob(response.data, filename, headers);
             }
             const text = response.data;                
             if (typeof text.resultset !== 'undefined' && IsJsonString(text.resultset)) {
@@ -75,7 +75,7 @@ export const getFetch = (url, requestOptions) => {
                         return response.blob().then(blob => {
                             // Create a link to download the file (from blob)
                             // Verifying if it's a binary encoded as Base64 string
-                            return fixBlob(blob, filename)
+                            return fixBlob(blob, filename, headers)
                             .then(
                                 (text) => {
                                     // "text" contains the blob URL...
