@@ -96,6 +96,7 @@ module.exports = {
                 REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
                 REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || ''),
                 REACT_APP_APP_NAME: JSON.stringify(process.env.REACT_APP_APP_NAME || 'exampleapp'),
+                REACT_APP_USE_AXIOS: JSON.stringify(process.env.REACT_APP_USE_AXIOS || '1'),
             }
         }),
         new webpack.ProvidePlugin({

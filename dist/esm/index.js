@@ -2759,7 +2759,10 @@ function handleResponseText(response, text, headers) {
   if (IsJsonString(text)) {
     data = text && JSON.parse(text);
   } else {
-    data = text;
+    if (typeof text === 'object') {
+      // axios response is already a dict
+      data = Object.assign({}, text);
+    }
   }
   if (!response.ok) {
     let specificErrorMsg = data && data.message || text || response.statusText || '';
@@ -2778,7 +2781,8 @@ function handleResponseText(response, text, headers) {
     return Promise.reject(errorMsg);
   } else {
     data.headers = headers;
-    if (!IsJsonString(text)) {
+    if (typeof text === 'string') {
+      // Text is a string with the blob URL
       {
         console_debug_log('handleResponse | !IsJsonString(text) | data:', data, 'response:', response, 'text:', text);
       }
@@ -3004,6 +3008,7 @@ const fixBlob = async function (blobObj, filename) {
     blobUrl = URL.createObjectURL(blobObj);
   } catch (e) {
     console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 1 | Error:', e);
+    // 'Overload resolution failed' happens when axios is used (not with fetch)
     if (!e.message.includes('Overload resolution failed')) {
       return Promise.reject(e);
     }
@@ -3077,42 +3082,57 @@ const getAxios = (url, requestOptions) => {
       data: body,
       headers: headers
     }).then(response => {
+      let new_response;
+      new_response = Object.assign({}, response);
+      new_response.ok = response.status === 200;
       if (debug$3) console_debug_log('||| getAxios | Phase 1 | response:', response);
       if (response.status !== 200) {
-        return Promise.reject(response);
+        return Promise.reject(new_response);
       }
       const headers = response.headers;
-      let new_response;
       if (debug$3) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
       if (responseHasFile(headers)) {
         const filename = getFilenameFromContentDisposition(headers);
-        new_response = Object.assign({}, response);
-        new_response.ok = response.status === 200;
-        return fixBlob(response.data, filename, headers).then(url => {
-          new_response.file = url;
+        return fixBlob(response.data, filename, headers).then(text => {
           if (debug$3) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
-          return new_response;
+          return {
+            headers,
+            text,
+            new_response
+          };
         }, error => {
           if (debug$3) console_debug_log('||| getAxios | fixBlob | error:', error);
-          return Promise.reject(response);
+          return Promise.reject(new_response);
         });
+      } else {
+        const text = response.data;
+        if (debug$3) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
+        return {
+          headers,
+          text,
+          new_response
+        };
       }
-      const text = response.data;
-      if (typeof text.resultset !== 'undefined' && IsJsonString(text.resultset)) {
-        text.resultset = JSON.parse(text.resultset);
-      }
-      new_response = Object.assign({}, response, text);
-      new_response.ok = response.status === 200;
-      new_response.text = text;
-      delete new_response.data;
-      if (debug$3) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
-      return new_response;
-    }).catch(error => {
-      return handleFetchError(error);
-    });
+    }).then(_ref => {
+      let {
+        headers,
+        text,
+        new_response
+      } = _ref;
+      if (debug$3) console_debug_log('||| getAxios | Phase 2 | headers:', headers, 'text', text, 'new_response:', new_response);
+      const data = {
+        response: text,
+        headers: headers,
+        // Attach headers to the data object
+        ok: new_response.ok,
+        status: new_response.status,
+        statusText: new_response.statusText
+      };
+      return data;
+    }).then(handleResponse).catch(handleFetchError);
   } catch (error) {
-    console.error('Error in getAxios:', error);
-    throw error;
+    console.error('|| getAxios | Error:', error);
+    response = Promise.resolve(handleFetchError(error));
   }
   return response;
 };
@@ -3163,12 +3183,12 @@ const getFetch = (url, requestOptions) => {
             };
           });
         }
-      }).then(_ref => {
+      }).then(_ref2 => {
         let {
           headers,
           text,
           response
-        } = _ref;
+        } = _ref2;
         if (debug$3) console_debug_log('||| getFetch | Phase 2 | headers:', headers, 'text', text, 'response:', response);
         const data = {
           response: text,
@@ -3198,7 +3218,8 @@ var fetch_utilities = /*#__PURE__*/Object.freeze({
   __proto__: null,
   getAxios: getAxios,
   getFetch: getFetch,
-  gsFetch: gsFetch
+  gsFetch: gsFetch,
+  useAxios: useAxios
 });
 
 // ID Service

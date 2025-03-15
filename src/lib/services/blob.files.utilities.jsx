@@ -166,6 +166,7 @@ const debug = true;
         blobUrl = URL.createObjectURL(blobObj);
     } catch (e) {
         if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 1 | Error:', e);
+        // 'Overload resolution failed' happens when axios is used (not with fetch)
         if (!e.message.includes('Overload resolution failed')) {
             return Promise.reject(e);
         }

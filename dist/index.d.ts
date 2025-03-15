@@ -467,6 +467,7 @@ declare var fetch_utilities: Readonly<{
     getAxios: (url: any, requestOptions: any) => Promise<any>;
     getFetch: (url: any, requestOptions: any) => Promise<any> | undefined;
     gsFetch: (url: any, requestOptions: any) => Promise<any> | undefined;
+    useAxios: boolean;
 }>;
 declare var general_constants: Readonly<{
     __proto__: null;
@@ -819,7 +820,7 @@ declare function handleFetchError(error: any): Promise<never>;
 declare function handleResponse(response: any): any;
 declare function handleResponseText(response: any, text: any, headers: any): Promise<never> | {
     headers: any;
-    file: any;
+    file: string;
     error: boolean;
     message: any;
     resultset: any;

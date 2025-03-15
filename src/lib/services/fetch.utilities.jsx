@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const debug = true;
 
-const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
+export const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
 
 export const getAxios = (url, requestOptions) => {
     if (debug) console_debug_log('GETAXIOS | url:', url, '\n | requestOptions:', requestOptions);
@@ -20,47 +20,50 @@ export const getAxios = (url, requestOptions) => {
             headers: headers,
         })
         .then(response => {
+            let new_response;
+            new_response = Object.assign({}, response);
+            new_response.ok = response.status === 200;
             if (debug) console_debug_log('||| getAxios | Phase 1 | response:', response);
             if (response.status !== 200) {
-                return Promise.reject(response);
+                return Promise.reject(new_response);
             }
             const headers = response.headers;
-            let new_response;
             if (debug) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
             if (responseHasFile(headers)) {
                 const filename = getFilenameFromContentDisposition(headers);
-                new_response = Object.assign({}, response);
-                new_response.ok = response.status === 200;
                 return fixBlob(response.data, filename, headers)
                     .then(
-                        (url) => {
-                            new_response.file = url;
+                        (text) => {
                             if (debug) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
-                            return new_response;
+                            return { headers, text, new_response };
                         },
                         (error) => {
                             if (debug) console_debug_log('||| getAxios | fixBlob | error:', error);
-                            return Promise.reject(response);
+                            return Promise.reject(new_response);
                         }
                     );
+            } else {
+                const text = response.data;                
+                if (debug) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
+                return { headers, text, new_response };
             }
-            const text = response.data;                
-            if (typeof text.resultset !== 'undefined' && IsJsonString(text.resultset)) {
-                text.resultset = JSON.parse(text.resultset);
-            }
-            new_response = Object.assign({}, response, text);
-            new_response.ok = response.status === 200;
-            new_response.text = text;
-            delete new_response.data;
-            if (debug) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
-            return new_response;
         })
-        .catch(error => {
-            return handleFetchError(error);
-        });
+        .then(({ headers, text, new_response }) => {
+            if (debug) console_debug_log('||| getAxios | Phase 2 | headers:', headers, 'text', text, 'new_response:', new_response);
+            const data = {
+                response: text,
+                headers: headers, // Attach headers to the data object
+                ok: new_response.ok,
+                status: new_response.status,
+                statusText: new_response.statusText,
+            };
+            return data;
+        })
+        .then(handleResponse)
+        .catch(handleFetchError);
     } catch (error) {
-        console.error('Error in getAxios:', error);
-        throw error;
+        console.error('|| getAxios | Error:', error);
+        response = Promise.resolve(handleFetchError(error));
     }
     return response;
 }

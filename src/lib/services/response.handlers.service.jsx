@@ -37,7 +37,10 @@ export function handleResponseText(response, text, headers) {
     if (IsJsonString(text)) {
         data = text && JSON.parse(text);
     } else {
-        data = text;
+        if (typeof text === 'object') {
+            // axios response is already a dict
+            data = Object.assign({}, text);
+        }
     }
     if (!response.ok) {
         let specificErrorMsg = (data && data.message) || text || response.statusText || '';
@@ -61,7 +64,8 @@ export function handleResponseText(response, text, headers) {
         return Promise.reject(errorMsg);
     } else {
         data.headers = headers;
-        if (!IsJsonString(text)) {
+        if (typeof text === 'string') {
+            // Text is a string with the blob URL
             if (debug) {
                 console_debug_log(
                     'handleResponse | !IsJsonString(text) | data:', data,
