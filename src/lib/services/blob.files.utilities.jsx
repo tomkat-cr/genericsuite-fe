@@ -164,7 +164,8 @@ const debug = true;
         try {
             const binaryData = [];
             binaryData.push(blobObj);
-            blobUrl = URL.createObjectURL(new Blob(binaryData, {type: contentType}));
+            blobObj = new Blob(binaryData, {type: contentType})
+            blobUrl = URL.createObjectURL(blobObj);
         } catch (e) {
             if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 2 | Error:', e);
             return Promise.reject(e);
