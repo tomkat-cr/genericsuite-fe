@@ -3109,9 +3109,14 @@ const getAxios = (url, requestOptions) => {
         const filename = getFilenameFromContentDisposition(headers);
         new_response = Object.assign({}, response);
         new_response.ok = response.status === 200;
-        new_response.file = fixBlob(response.data, filename, headers);
-        if (debug$3) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
-        return new_response;
+        return fixBlob(response.data, filename, headers).then(url => {
+          new_response.file = url;
+          if (debug$3) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
+          return new_response;
+        }, error => {
+          if (debug$3) console_debug_log('||| getAxios | fixBlob | error:', error);
+          return Promise.reject(response);
+        });
       }
       const text = response.data;
       if (typeof text.resultset !== 'undefined' && IsJsonString(text.resultset)) {
