@@ -88,13 +88,13 @@ export const getHeadersContentType = (headers) => {
 
 export const responseHasFile = (headers) => {
     const contentType = getHeadersContentType(headers);
-    return contentType === 'application/octet-stream'
+    return contentType && (contentType === 'application/octet-stream'
         || contentType.includes('audio/')
         || contentType.includes('image/')
         || contentType.includes('video/')
         || contentType.includes('text/csv')
         || contentType.includes('text/text')    // TODO: only to simulate AWS API Gateway
-    ;                
+    );                
 }
 
 export const isBinaryFileType = (filename, contentType = null) => {

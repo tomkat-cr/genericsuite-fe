@@ -2960,8 +2960,8 @@ const getHeadersContentType = headers => {
 };
 const responseHasFile = headers => {
   const contentType = getHeadersContentType(headers);
-  return contentType === 'application/octet-stream' || contentType.includes('audio/') || contentType.includes('image/') || contentType.includes('video/') || contentType.includes('text/csv') || contentType.includes('text/text') // TODO: only to simulate AWS API Gateway
-  ;
+  return contentType && (contentType === 'application/octet-stream' || contentType.includes('audio/') || contentType.includes('image/') || contentType.includes('video/') || contentType.includes('text/csv') || contentType.includes('text/text') // TODO: only to simulate AWS API Gateway
+  );
 };
 const isBinaryFileType = function (filename) {
   let contentType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -3103,20 +3103,25 @@ const getAxios = (url, requestOptions) => {
         return Promise.reject(response);
       }
       const headers = response.headers;
+      let new_response;
       if (debug$3) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
       if (responseHasFile(headers)) {
         const filename = getFilenameFromContentDisposition(headers);
-        return fixBlob(response.data, filename, headers);
+        new_response = Object.assign({}, response);
+        new_response.ok = response.status === 200;
+        new_response.file = fixBlob(response.data, filename, headers);
+        if (debug$3) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
+        return new_response;
       }
       const text = response.data;
       if (typeof text.resultset !== 'undefined' && IsJsonString(text.resultset)) {
         text.resultset = JSON.parse(text.resultset);
       }
-      const new_response = Object.assign({}, response, text);
+      new_response = Object.assign({}, response, text);
       new_response.ok = response.status === 200;
       new_response.text = text;
       delete new_response.data;
-      if (debug$3) console_debug_log('||| getAxios | Phase 2 | new_response:', new_response);
+      if (debug$3) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
       return new_response;
     }).catch(error => {
       return handleFetchError(error);
