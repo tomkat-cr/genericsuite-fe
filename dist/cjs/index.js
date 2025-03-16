@@ -3019,7 +3019,6 @@ const decodeBlob = function (base64String, filename) {
   return url;
 };
 const fixBlob = async function (blobObj, filename) {
-  let headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   // Verify if the blob is a binary encoded as Base64 string
   // If so, decode it and return a new blob URL with the decoded content...
   // Else, just return the blob URL...
@@ -3027,7 +3026,8 @@ const fixBlob = async function (blobObj, filename) {
   {
     console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
   }
-  const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+  // const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+  const contentType = getContentType(filename);
   console_debug_log('|||| fixBlob v2 | contentType:', contentType);
   let blobUrl = null;
   try {
@@ -3055,7 +3055,8 @@ const fixBlob = async function (blobObj, filename) {
       return Promise.reject(e);
     }
   }
-  if (!isBinaryFileType(filename, contentType)) {
+  // if (!isBinaryFileType(filename, contentType)) {
+  if (!isBinaryFileType(filename)) {
     console_debug_log('|||| fixBlob v2 #3 | Not a binary file type');
     return new Promise((resolve, _) => {
       resolve(blobUrl);

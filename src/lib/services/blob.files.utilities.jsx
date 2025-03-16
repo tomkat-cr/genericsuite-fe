@@ -160,7 +160,8 @@ const debug = true;
     if (debug) {
         console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
-    const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+    // const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+    const contentType = getContentType(filename);
     if (debug) console_debug_log('|||| fixBlob v2 | contentType:', contentType);
     let blobUrl = null;
     try {
@@ -186,7 +187,8 @@ const debug = true;
             return Promise.reject(e);
         }
     }
-    if (!isBinaryFileType(filename, contentType)) {
+    // if (!isBinaryFileType(filename, contentType)) {
+    if (!isBinaryFileType(filename)) {
         if (debug) console_debug_log('|||| fixBlob v2 #3 | Not a binary file type');
         return new Promise((resolve, _) => {
             resolve(blobUrl);
