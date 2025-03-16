@@ -2999,15 +2999,21 @@ const decodeBlob = function (base64String, filename) {
 };
 const fixBlob = async function (blobObj, filename) {
   let headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  // Verify if the blob is a binary encoded as Base64 string
+  // If so, decode it and return a new blob URL with the decoded content...
+  // Else, just return the blob URL...
+  const debug = true;
   {
     console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
   }
   const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+  console_debug_log('|||| fixBlob v2 | contentType:', contentType);
   let blobUrl = null;
   try {
     blobUrl = URL.createObjectURL(blobObj);
+    if (debug) console_debug_log('|||| fixBlob v2 #1 | blobUrl:', blobUrl);
   } catch (e) {
-    console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 1 | Error:', e);
+    console_debug_log('|||| fixBlob v2 #1 | URL.createObjectURL | Error:', e);
     // 'Overload resolution failed' happens when axios is used (not with fetch)
     if (!e.message.includes('Overload resolution failed')) {
       return Promise.reject(e);
@@ -3020,13 +3026,16 @@ const fixBlob = async function (blobObj, filename) {
       blobObj = new Blob(binaryData, {
         type: contentType
       });
+      if (debug) console_debug_log('|||| fixBlob v2 #2 | blobObj:', blobObj);
       blobUrl = URL.createObjectURL(blobObj);
+      if (debug) console_debug_log('|||| fixBlob v2 #2 | blobUrl:', blobUrl);
     } catch (e) {
-      console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 2 | Error:', e);
+      console_debug_log('|||| fixBlob v2 #2 | URL.createObjectURL | Error:', e);
       return Promise.reject(e);
     }
   }
   if (!isBinaryFileType(filename, contentType)) {
+    console_debug_log('|||| fixBlob v2 #3 | Not a binary file type');
     return new Promise((resolve, _) => {
       resolve(blobUrl);
     });
@@ -3034,11 +3043,13 @@ const fixBlob = async function (blobObj, filename) {
   const reader = new FileReader();
   // reader.readAsDataURL(blob);  // Convert to data:audio/mpeg;base64,Ly9Qa3h...
   reader.readAsText(blobObj); // No convertion at all... just get what it receives...
+  console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
   return new Promise((resolve, reject) => {
     reader.onloadend = function () {
       if (typeof reader.result !== 'string') {
         resolve(blobUrl);
       } else {
+        console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
         blobUrl = decodeBlob(reader.result, filename);
         resolve(blobUrl);
       }
@@ -3249,7 +3260,7 @@ class dbApiService {
     // debug = false;
     _defineProperty(this, "debug", true);
     this.props = props;
-    this.getAdditionalHeaders();
+    const additionalHeaders = this.getAdditionalHeaders();
     this.props.authHeader = authHeader();
     this.props.authAndJsonHeader = Object.assign({
       'Content-Type': 'application/json',
@@ -3257,9 +3268,7 @@ class dbApiService {
       // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
       // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
       // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
-    },
-    // additionalHeaders,
-    this.props.authHeader);
+    }, additionalHeaders, this.props.authHeader);
     if (this.debug) {
       console_debug_log('###===> dbApiService() | this.props:');
       console_debug_log(this.props);
@@ -6309,7 +6318,7 @@ const GenericCrudEditorMain = props => {
   };
   const actionsHandler = (mode, row) => {
     const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
-    const currRowWasHidden = element.classList.contains('hidden');
+    const currRowHadHiddenClass = element.classList.contains('hidden');
     const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
     const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
@@ -6347,23 +6356,17 @@ const GenericCrudEditorMain = props => {
           thisRowElement.classList.add('hidden');
         }
       });
-      if (currRowWasHidden) {
+      if (currRowHadHiddenClass) {
         // Controls hidden in this row
         bgColorStype.map(key => {
           rowElement.classList.add(key);
         });
-        // if (actionsHandlerAllowsMagicButton) {
-        //   magicButtonElement.classList.add('hidden');
-        // }
         element.classList.remove('hidden');
       } else {
         // Controls activated in this row
         bgColorStype.map(key => {
           rowElement.classList.remove(key);
         });
-        // if (actionsHandlerAllowsMagicButton) {
-        //   magicButtonElement.classList.remove('hidden');
-        // }
         element.classList.add('hidden');
       }
     }

@@ -31,7 +31,7 @@ export class dbApiService {
                 // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
                 // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
             },
-            // additionalHeaders,
+            additionalHeaders,
             this.props.authHeader
         );
         if (this.debug) {

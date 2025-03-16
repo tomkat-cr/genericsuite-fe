@@ -288,7 +288,7 @@ const GenericCrudEditorMain = (props) => {
 
   const actionsHandler = (mode, row) => {
     const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
-    const currRowWasHidden = element.classList.contains('hidden');
+    const currRowHadHiddenClass = element.classList.contains('hidden');
     const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
     const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
@@ -322,19 +322,13 @@ const GenericCrudEditorMain = (props) => {
           thisRowElement.classList.add('hidden');
         }
       });
-      if (currRowWasHidden) {
+      if (currRowHadHiddenClass) {
         // Controls hidden in this row
         bgColorStype.map((key) => { rowElement.classList.add(key) });
-        // if (actionsHandlerAllowsMagicButton) {
-        //   magicButtonElement.classList.add('hidden');
-        // }
         element.classList.remove('hidden');
       } else {
         // Controls activated in this row
         bgColorStype.map((key) => { rowElement.classList.remove(key) });
-        // if (actionsHandlerAllowsMagicButton) {
-        //   magicButtonElement.classList.remove('hidden');
-        // }
         element.classList.add('hidden');
       }
     }
@@ -441,7 +435,7 @@ const GenericCrudEditorMain = (props) => {
                         key={`${editor.baseUrl}_actions_div`}
                         className={APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS}
                       >
-                          {" " || MSG_ACTIONS}
+                        {" "}
                       </div>
                     </th>
                   )}

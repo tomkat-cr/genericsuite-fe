@@ -161,11 +161,13 @@ const debug = true;
         console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
     const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+    if (debug) console_debug_log('|||| fixBlob v2 | contentType:', contentType);
     let blobUrl = null;
     try {
         blobUrl = URL.createObjectURL(blobObj);
+        if (debug) console_debug_log('|||| fixBlob v2 #1 | blobUrl:', blobUrl);
     } catch (e) {
-        if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 1 | Error:', e);
+        if (debug) console_debug_log('|||| fixBlob v2 #1 | URL.createObjectURL | Error:', e);
         // 'Overload resolution failed' happens when axios is used (not with fetch)
         if (!e.message.includes('Overload resolution failed')) {
             return Promise.reject(e);
@@ -176,13 +178,16 @@ const debug = true;
             const binaryData = [];
             binaryData.push(blobObj);
             blobObj = new Blob(binaryData, {type: contentType})
+            if (debug) console_debug_log('|||| fixBlob v2 #2 | blobObj:', blobObj);
             blobUrl = URL.createObjectURL(blobObj);
+            if (debug) console_debug_log('|||| fixBlob v2 #2 | blobUrl:', blobUrl);
         } catch (e) {
-            if (debug) console_debug_log('|||| fixBlob v2 | URL.createObjectURL # 2 | Error:', e);
+            if (debug) console_debug_log('|||| fixBlob v2 #2 | URL.createObjectURL | Error:', e);
             return Promise.reject(e);
         }
     }
     if (!isBinaryFileType(filename, contentType)) {
+        if (debug) console_debug_log('|||| fixBlob v2 #3 | Not a binary file type');
         return new Promise((resolve, _) => {
             resolve(blobUrl);
         });
@@ -190,11 +195,13 @@ const debug = true;
     const reader = new FileReader();
     // reader.readAsDataURL(blob);  // Convert to data:audio/mpeg;base64,Ly9Qa3h...
     reader.readAsText(blobObj);  // No convertion at all... just get what it receives...
+    if (debug) console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
     return new Promise((resolve, reject) => {
         reader.onloadend = function () {
             if (typeof reader.result !== 'string') {
                 resolve(blobUrl);
             } else {
+                if (debug) console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
                 blobUrl = decodeBlob(reader.result, filename);
                 resolve(blobUrl);
             }
