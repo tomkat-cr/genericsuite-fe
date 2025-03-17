@@ -3013,15 +3013,16 @@ const decodeBlob = function (base64String, filename) {
   return url;
 };
 const fixBlob = async function (blobObj, filename) {
+  let headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   // Verify if the blob is a binary encoded as Base64 string
   // If so, decode it and return a new blob URL with the decoded content...
   // Else, just return the blob URL...
   {
     console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
   }
-  // const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+  const headerContentType = getContentTypeFromHeadersOrFilename(headers, filename);
   const contentType = getContentType(filename);
-  console_debug_log('|||| fixBlob v2 | contentType:', contentType);
+  console_debug_log('|||| fixBlob v2 | contentType:', contentType, ' | headerContentType:', headerContentType);
   let blobUrl = null;
   try {
     blobUrl = URL.createObjectURL(blobObj);
@@ -3061,7 +3062,7 @@ const fixBlob = async function (blobObj, filename) {
   console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
   return new Promise((resolve, reject) => {
     reader.onloadend = function () {
-      if (typeof reader.result !== 'string' || isBinaryFileType(filename, contentType)) {
+      if (typeof reader.result !== 'string' || isBinaryFileType(filename, headerContentType)) {
         console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
         resolve(blobUrl);
       } else {

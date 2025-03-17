@@ -159,9 +159,9 @@ export const fixBlob = async (blobObj, filename, headers = null) => {
     if (debug) {
         console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
-    // const contentType = getContentTypeFromHeadersOrFilename(headers, filename);
+    const headerContentType = getContentTypeFromHeadersOrFilename(headers, filename);
     const contentType = getContentType(filename);
-    if (debug) console_debug_log('|||| fixBlob v2 | contentType:', contentType);
+    if (debug) console_debug_log('|||| fixBlob v2 | contentType:', contentType, ' | headerContentType:', headerContentType);
     let blobUrl = null;
     try {
         blobUrl = URL.createObjectURL(blobObj);
@@ -199,7 +199,7 @@ export const fixBlob = async (blobObj, filename, headers = null) => {
     if (debug) console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
     return new Promise((resolve, reject) => {
         reader.onloadend = function () {
-            if (typeof reader.result !== 'string' || isBinaryFileType(filename, contentType)) {
+            if (typeof reader.result !== 'string' || isBinaryFileType(filename, headerContentType)) {
                 if (debug) console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
                 resolve(blobUrl);
             } else {

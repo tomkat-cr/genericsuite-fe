@@ -195,7 +195,7 @@ declare var blob_files_utilities: Readonly<{
     __proto__: null;
     decodeBlob: (base64String: any, filename: any, ...args: any[]) => any;
     defaultFilenametoDownload: "audio.wav";
-    fixBlob: (blobObj: any, filename: any) => Promise<any>;
+    fixBlob: (blobObj: any, filename: any, ...args: any[]) => Promise<any>;
     getContentType: (filename: any, ...args: any[]) => string;
     getContentTypeFromHeadersOrFilename: (headers: any, filename: any) => any;
     getFileExtension: (filename: any) => any;
