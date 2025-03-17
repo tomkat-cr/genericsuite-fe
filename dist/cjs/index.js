@@ -2894,9 +2894,13 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 
 // Blob files utilities
 
+const debug$4 = true;
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
   const fileExtension = filename ? filename.split('.').pop() : null;
+  {
+    console_debug_log(`|||| getFileExtension | filename: ${filename} | fileExtension: ${fileExtension}`);
+  }
   return fileExtension;
 };
 const getContentType = function (filename) {
@@ -2923,6 +2927,9 @@ const getContentType = function (filename) {
     default:
       contentType = 'application/octet-stream';
   }
+  {
+    console_debug_log(`|||| getContentType | filename: ${filename} | contentType: ${contentType}`);
+  }
   return contentType;
 };
 const getContentTypeFromHeadersOrFilename = (headers, filename) => {
@@ -2940,6 +2947,10 @@ const getFilenameFromContentDisposition = headers => {
     filenameMatch = contentDisposition && contentDisposition.match(/filename=([^"]+)/);
   }
   const filename = filenameMatch ? filenameMatch[1] : null;
+  {
+    console_debug_log('|||| Content-Disposition:', contentDisposition);
+    console_debug_log('|||| Content-Disposition filename:', filename);
+  }
   return filename;
 };
 const performDownload = function (fileUrl) {
@@ -2982,6 +2993,7 @@ const isBinaryFileType = function (filename) {
 const decodeBlob = function (base64String, filename) {
   let oldUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   const blobType = getContentType(filename);
+  console_debug_log('decodeBlob | base64String:', base64String);
   if (typeof base64String !== 'string') {
     if (oldUrl === null) {
       throw new Error('Expected a string');
@@ -3007,6 +3019,7 @@ const decodeBlob = function (base64String, filename) {
     for (let i = 0; i < len; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
+    console_debug_log('decodeBlob v2 | bytes:', bytes);
     blob = new Blob([bytes], {
       type: blobType
     });
@@ -3015,14 +3028,15 @@ const decodeBlob = function (base64String, filename) {
       type: blobType
     });
   }
+  console_debug_log('decodeBlob v2 | blob:', blob);
   const url = URL.createObjectURL(blob);
+  console_debug_log('decodeBlob v2 | new url:', url);
   return url;
 };
 const fixBlob = async function (blobObj, filename) {
   // Verify if the blob is a binary encoded as Base64 string
   // If so, decode it and return a new blob URL with the decoded content...
   // Else, just return the blob URL...
-  const debug = true;
   {
     console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
   }
@@ -3032,7 +3046,7 @@ const fixBlob = async function (blobObj, filename) {
   let blobUrl = null;
   try {
     blobUrl = URL.createObjectURL(blobObj);
-    if (debug) console_debug_log('|||| fixBlob v2 #1 | blobUrl:', blobUrl);
+    if (debug$4) console_debug_log('|||| fixBlob v2 #1 | blobUrl:', blobUrl);
   } catch (e) {
     console_debug_log('|||| fixBlob v2 #1 | URL.createObjectURL | Error:', e);
     // 'Overload resolution failed' happens when axios is used (not with fetch)
@@ -3047,9 +3061,9 @@ const fixBlob = async function (blobObj, filename) {
       blobObj = new Blob(binaryData, {
         type: contentType
       });
-      if (debug) console_debug_log('|||| fixBlob v2 #2 | blobObj:', blobObj);
+      if (debug$4) console_debug_log('|||| fixBlob v2 #2 | blobObj:', blobObj);
       blobUrl = URL.createObjectURL(blobObj);
-      if (debug) console_debug_log('|||| fixBlob v2 #2 | blobUrl:', blobUrl);
+      if (debug$4) console_debug_log('|||| fixBlob v2 #2 | blobUrl:', blobUrl);
     } catch (e) {
       console_debug_log('|||| fixBlob v2 #2 | URL.createObjectURL | Error:', e);
       return Promise.reject(e);
@@ -3068,15 +3082,17 @@ const fixBlob = async function (blobObj, filename) {
   console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
   return new Promise((resolve, reject) => {
     reader.onloadend = function () {
-      if (typeof reader.result !== 'string') {
+      if (typeof reader.result !== 'string' || isBinaryFileType(filename, contentType)) {
+        console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
         resolve(blobUrl);
       } else {
-        console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
+        console_debug_log('|||| fixBlob v2 #6 | reader.result:', reader.result);
         blobUrl = decodeBlob(reader.result, filename);
         resolve(blobUrl);
       }
     };
     reader.onerror = function (error) {
+      console_debug_log('|||| fixBlob v2 #7 | reader.onerror | Error:', error);
       reject(error);
     };
   });

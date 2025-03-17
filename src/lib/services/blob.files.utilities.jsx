@@ -2,7 +2,7 @@
 
 import { console_debug_log } from './logging.service.jsx';
 
-const debug = false;
+const debug = true;
 
 export const defaultFilenametoDownload = 'audio.wav';
 
@@ -156,7 +156,6 @@ export const fixBlob = async (blobObj, filename, headers = null) => {
     // Verify if the blob is a binary encoded as Base64 string
     // If so, decode it and return a new blob URL with the decoded content...
     // Else, just return the blob URL...
-const debug = true;
     if (debug) {
         console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
@@ -200,15 +199,17 @@ const debug = true;
     if (debug) console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
     return new Promise((resolve, reject) => {
         reader.onloadend = function () {
-            if (typeof reader.result !== 'string') {
+            if (typeof reader.result !== 'string' || isBinaryFileType(filename, contentType)) {
+                if (debug) console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
                 resolve(blobUrl);
             } else {
-                if (debug) console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
+                if (debug) console_debug_log('|||| fixBlob v2 #6 | reader.result:', reader.result);
                 blobUrl = decodeBlob(reader.result, filename);
                 resolve(blobUrl);
             }
         };
         reader.onerror = function (error) {
+            if (debug) console_debug_log('|||| fixBlob v2 #7 | reader.onerror | Error:', error);
             reject(error);
         };
     });
