@@ -27,6 +27,9 @@ if [ "${STAGE}" = "dev" ]; then
         echo "Please enter 1 or 2"
         read choice
     done
+    if [ "${FRONTEND_LOCAL_PORT}" = "" ]; then
+        FRONTEND_LOCAL_PORT="3000"
+    fi
     if [ "${BACKEND_LOCAL_PORT}" = "" ]; then
         BACKEND_LOCAL_PORT="5000"
     fi
@@ -44,6 +47,7 @@ if [ "${STAGE}" = "dev" ]; then
         http_method="https"
     fi
     echo "Run by: ${http_method}"
+    echo "* Backend:"
     export APP_API_URL_DEV="${http_method}://${APP_LOCAL_DOMAIN_NAME}:${BACKEND_LOCAL_PORT}"
     export REACT_APP_API_URL="${APP_API_URL_DEV}"
     echo ">>--> New APP_API_URL_DEV = ${APP_API_URL_DEV}"
@@ -71,7 +75,12 @@ if [ ! -L "./public/static" ]; then
     fi
 fi
 
+echo ""
+echo "* Frontend:"
+echo "${http_method}://${APP_LOCAL_DOMAIN_NAME}:${FRONTEND_LOCAL_PORT}"
+
 export REACT_APP_VERSION=$(cat version.txt)
+echo ""
 echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
 
 if [ "${STAGE}" = "dev" ]; then
