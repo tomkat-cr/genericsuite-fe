@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 Implement axios as alternative to fetch [GS-15].
 Add envvar REACT_APP_USE_AXIOS to use axios instead of fetch by default.
+Add Vite as alternative to webpack [GS-195].
 Add getAdditionalHeaders() in the dbApiService class to send the 'Access-Control-Expose-Headers': 'Content-Disposition' header and receive file names from the backend [GS-15].
 Add envvar REACT_APP_USE_EXPOSE_HEADERS to add the 'Access-Control-Expose-Headers' header calling the backend (defaults to be off) [GS-15].
 Configure lines per page in the CRUD editor: save and restore it from the LocalStorage. Defaults to 30 (previous was 5) [GS-185].
@@ -33,6 +34,7 @@ Add envvar REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON to allow the Magic Button (3
 Add getErrorDetail() function to get the error details from the error object [GS-15].
 Add getUuidV4() function to generate a UUID v4 [GS-15].
 Add getContentTypeFromHeadersOrFilename() function to get the content type from the headers or filename [GS-15].
+
 
 ### Changes
 GCE_RFC and class_name_constants code cleanup.

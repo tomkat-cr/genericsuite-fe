@@ -7,6 +7,22 @@ cd "`dirname "$0"`" ;
 SCRIPTS_DIR="`pwd`" ;
 cd "${REPO_BASEDIR}"
 
+turn_off_module() {
+    sh "${SCRIPTS_DIR}/run_change_module_setting.sh" off
+}
+
+turn_on_module() {
+    sh "${SCRIPTS_DIR}/run_change_module_setting.sh" on
+}
+
+create_symlinks() {
+    sh "${SCRIPTS_DIR}/run_symlinks_handler.sh" create
+}
+
+remove_symlinks() {
+    sh "${SCRIPTS_DIR}/run_symlinks_handler.sh" remove
+}
+
 # Defaults
 RUN_METHOD="react-scripts"
 # RUN_METHOD="webpack"
@@ -63,17 +79,7 @@ then
 fi
 
 # Create Symlink to build/static/media for the local runtime
-if [ ! -L "./public/static" ]; then
-    echo ""
-    echo "Creating symlink: ./public/static/media"
-    echo ""
-    if ! ln -s "$(pwd)/build/static" "$(pwd)/public/static"
-    then
-        echo ""
-        echo "ERROR running: ln -s \"$(pwd)/build/static\" \"$(pwd)/public/static\""
-        exit 1
-    fi
-fi
+create_symlinks
 
 echo ""
 echo "* Frontend:"
@@ -85,13 +91,24 @@ echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
 
 if [ "${STAGE}" = "dev" ]; then
     if [ "${RUN_METHOD}" = "webpack" ]; then
-        perl -i -pe"s|\"type\": \"module\"|\"type1\": \"module\"|g" package.json
-        # perl -i -pe"s|\%PUBLIC_URL\%||g" public/index.html
-        npm run start-dev-webpack
-        # cp public/index-template.html public/index.html
-        perl -i -pe"s|\"type1\": \"module\"|\"type\": \"module\"|g" package.json
+        turn_off_module
+        if ! npm run start-dev-webpack
+        then
+            npx webpack-dev-server --config webpack.config.js
+        fi
+        turn_on_module
+    elif [ "${RUN_METHOD}" = "vite" ]; then
+        turn_off_module
+        if ! npm run start-dev-vite
+        then
+            VITE_CJS_TRACE=true npx vite dev
+        fi
+        turn_on_module
     else
-        npm run start-dev
+        if ! npm run start-dev
+        then
+            react-app-rewired start
+        fi
     fi
 fi
 
@@ -103,14 +120,5 @@ if [ "${STAGE}" = "prod" ]; then
 	npm start
 fi
 
-if [ -L "$(pwd)/public/static" ]; then
-    echo ""
-    echo "Removing symlink: $(pwd)/public/static"
-    echo ""
-    if ! rm "$(pwd)/public/static"
-    then
-        echo ""
-        echo "ERROR removing symlink: ./public/static"
-        exit 1
-    fi
-fi
+remove_symlinks
+

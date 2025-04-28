@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link, Routes, Route, HashRouter, RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Buffer } from 'buffer';
 import { BehaviorSubject } from 'rxjs';
 import axios from 'axios';
-import crypto from 'crypto';
 import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Downshift from 'downshift';
@@ -13,9 +12,9 @@ import Downshift from 'downshift';
 function _defineProperty(e, r, t) {
   return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
     value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
+    enumerable: true,
+    configurable: true,
+    writable: true
   }) : e[r] = t, e;
 }
 function _extends() {
@@ -31,7 +30,7 @@ function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
-    var i = e.call(t, r || "default");
+    var i = e.call(t, r);
     if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
@@ -3256,8 +3255,18 @@ var fetch_utilities = /*#__PURE__*/Object.freeze({
 const convertId = id => {
   return id === null || id === '' || typeof id === 'string' ? id : id.$oid;
 };
+function generateUUID() {
+  /*
+   * To resemble crypto.randomUUID() using Node.js's native crypto module, using crypto.randomBytes()
+   */
+  const bytes = crypto.randomBytes(16);
+  bytes[6] = bytes[6] & 0x0f | 0x40;
+  bytes[8] = bytes[8] & 0x3f | 0x80;
+  const uuid = bytes.toString('hex').match(/([0-9a-f]{8})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{12})/).slice(1).join('-');
+  return uuid;
+}
 const getUuidV4 = () => {
-  return crypto.randomUUID();
+  return generateUUID();
 };
 
 var id_utilities = /*#__PURE__*/Object.freeze({
@@ -5404,7 +5413,9 @@ const FormPage = _ref => {
   const {
     theme
   } = useAppContext();
-  useContext(MainSectionContext);
+  const {
+    debugCache
+  } = useContext(MainSectionContext);
   const editor = editor_par;
   const mode = mode_par;
   const id = id_par;
@@ -7253,7 +7264,9 @@ const GenericSinglePageEditorMain = props => {
   const [editor, setEditor] = useState(null);
   const [formMode, setFormMode] = useState(null);
   const [status, setStatus] = useState("");
-  useContext(MainSectionContext);
+  const {
+    initCache
+  } = useContext(MainSectionContext);
   useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -7521,7 +7534,7 @@ const LoginPage = props => {
   const handleSubmit = (username, password, setStatus, setSubmitting) => {
     setStatus();
     authenticationService.login(username, password).then(user => {
-      const redirectUrl = getRedirect();
+      let redirectUrl = getRedirect();
       // To avoid stay in login page with the wait animation
       setSubmitting(false);
       registerUser(user);
@@ -7749,7 +7762,9 @@ const AppNavBar = _ref2 => {
   let {
     children
   } = _ref2;
-  useUser();
+  const {
+    currentUser
+  } = useUser();
   const {
     setExpanded,
     appLogoHeader
@@ -7963,6 +7978,7 @@ const App = _ref8 => {
     appLogoHeader = ""
   } = _ref8;
   const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+  console.log("App | componentMapFinal:", componentMapFinal);
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
     globalComponentMap: componentMapFinal,
     globalAppLogo: appLogo,

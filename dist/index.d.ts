@@ -697,7 +697,7 @@ declare var history$1: Readonly<{
 declare var id_utilities: Readonly<{
     __proto__: null;
     convertId: (id: any) => any;
-    getUuidV4: () => `${string}-${string}-${string}-${string}-${string}`;
+    getUuidV4: () => any;
 }>;
 declare var jsonUtilities: Readonly<{
     __proto__: null;

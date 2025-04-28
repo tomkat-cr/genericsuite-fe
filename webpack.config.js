@@ -1,9 +1,19 @@
+/* webpack.config.js | Webpack */
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
+
+/*
+https://webpack.js.org/
+
+npm install --save-dev webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
+            or
+npm install --save-peer --strict-peer-deps webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
+*/
 
 let devServerConfig = {
     historyApiFallback: true,

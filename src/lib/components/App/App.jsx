@@ -476,6 +476,7 @@ const defaultComponentMap = {
 
 export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
     const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+console.log("App | componentMapFinal:", componentMapFinal);
     return (
         <UserProvider>
             <AppProvider

@@ -18,6 +18,14 @@ show_date_time() {
   TZ="${APP_TZ}" date
 }
 
+turn_on_module() {
+    sh "${SCRIPTS_DIR}/run_change_module_setting.sh" on
+}
+
+destroy_symlinks() {
+    sh "${SCRIPTS_DIR}/run_symlinks_handler.sh" remove
+}
+
 REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`" ;
 SCRIPTS_DIR="`pwd`" ;
@@ -27,6 +35,11 @@ ACTION="$1"
 if [ -z "${ACTION}" ]; then
   ACTION="pre-publish"
 fi
+
+# Make sure module is on (no module1 or type1 changed during last eventually cancelled run)
+# and destroy symlinks (e.g. /public/static)
+turn_on_module
+destroy_symlinks
 
 export PACKAGE_NAME=$(perl -ne 'print $1 if /"name":\s*"([^"]*)"/' package.json)
 if [ "${PACKAGE_NAME}" = "" ]; then
