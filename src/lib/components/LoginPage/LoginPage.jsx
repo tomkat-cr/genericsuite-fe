@@ -55,7 +55,7 @@ export const LoginPage = (props) => {
         authenticationService.login(username, password)
             .then(
                 user => {
-                    const redirectUrl = getRedirect();
+                    let redirectUrl = getRedirect();
                     // To avoid stay in login page with the wait animation
                     setSubmitting(false);
                     // Set user data to <App/>
