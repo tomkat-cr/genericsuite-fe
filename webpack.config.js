@@ -11,8 +11,6 @@ const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
 https://webpack.js.org/
 
 npm install --save-dev webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
-            or
-npm install --save-peer --strict-peer-deps webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
 */
 
 let devServerConfig = {
@@ -23,20 +21,39 @@ let devServerConfig = {
     allowedHosts: [appLocalDomainName], // To avoid "Invalid Host header" error
 };
 
+console.log('** WebPack options **');
+console.log('');
+
 if (process.env.REACT_APP_API_URL.includes("https://")) {
     devServerConfig.server = {
         // Enable HTTPS
         type: 'https',
         options: {
             key: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.key`)),
-            cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.chain.crt`)),
-            // ca_cert: fs.readFileSync(path.resolve(__dirname, 'ca.crt')),
-            // passphrase: 'password',
+            cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.crt`)),
+            ca: fs.readFileSync(path.resolve(__dirname, 'ca.crt')),
+            // passphrase: process.env.SSL_PASSPHRASE || 'password',
         },
     };
 }
 
+const process_env = {
+    // PUBLIC_URL: JSON.stringify(`https://${appLocalDomainName}`),
+    REACT_APP_VERSION: JSON.stringify(process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
+    REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || `https://${appLocalDomainName}`),
+    REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || '0'),
+    REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
+    REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || ''),
+    REACT_APP_APP_NAME: JSON.stringify(process.env.REACT_APP_APP_NAME || 'exampleapp'),
+    REACT_APP_USE_AXIOS: JSON.stringify(process.env.REACT_APP_USE_AXIOS || '1'),
+    NODE_TLS_REJECT_UNAUTHORIZED: (process.env.NODE_TLS_REJECT_UNAUTHORIZED ||
+        (process.env.REACT_APP_API_URL.includes("local") && process.env.REACT_APP_API_URL.includes("https://") ? '0' : '1')
+    ),
+}
+
 console.log('devServerConfig:', devServerConfig);
+console.log('process_env:', process_env);
+console.log('');
 
 module.exports = {
     mode: 'development',
@@ -86,6 +103,8 @@ module.exports = {
             "vm": require.resolve("vm-browserify"),
             "tty": require.resolve("tty-browserify"),
             "constants": require.resolve("constants-browserify"),
+            // "http": require.resolve("stream-http"),
+            // "https": require.resolve("https-browserify"),
         }
     },
     plugins: [
@@ -98,16 +117,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             // Environment variables
-            'process.env': {
-                // PUBLIC_URL: JSON.stringify(`https://${appLocalDomainName}`),
-                REACT_APP_VERSION: JSON.stringify(process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
-                REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || `https://${appLocalDomainName}`),
-                REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || '0'),
-                REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
-                REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || ''),
-                REACT_APP_APP_NAME: JSON.stringify(process.env.REACT_APP_APP_NAME || 'exampleapp'),
-                REACT_APP_USE_AXIOS: JSON.stringify(process.env.REACT_APP_USE_AXIOS || '1'),
-            }
+            'process.env': process_env
         }),
         new webpack.ProvidePlugin({
             process: 'process/browser',
@@ -116,6 +126,49 @@ module.exports = {
         new InterpolateHtmlPlugin({
             PUBLIC_URL: '',
         }),
+        // Patch for "process/browser" not found in some modules (e.g., react-router@6+ ESM builds)
+        // See: https://github.com/remix-run/react-router/issues/10238
+        new webpack.NormalModuleReplacementPlugin(
+            /process\/browser/,
+            require.resolve('process/browser')
+        ),
+        // new webpack.NormalModuleReplacementPlugin(/node:/, (resource) => {
+        //     const mod = resource.request.replace(/^node:/, '')
+        //     switch (mod) {
+        //       case 'net':
+        //         resource.request = 'net'
+        //         break
+        //       case 'util':
+        //         resource.request = 'util'
+        //         break
+        //       case 'path':
+        //         resource.request = 'path'
+        //         break
+        //       case 'http':
+        //         resource.request = 'stream-http'
+        //         break
+        //       case 'https':
+        //         resource.request = 'https-browserify'
+        //         break
+        //       case 'zlib':
+        //         resource.request = 'browserify-zlib'
+        //         break
+        //       case 'url':
+        //         resource.request = 'url'
+        //         break
+        //       case 'fs':
+        //         resource.request = 'fs'
+        //         break
+        //       case 'buffer':
+        //         resource.request = 'buffer'
+        //         break
+        //       case 'stream':
+        //         resource.request = 'readable-stream'
+        //         break
+        //       default:
+        //         throw new Error(`Not found ${mod}`)
+        //     }
+        // }),
     ],
     devServer: devServerConfig,
     output: {
@@ -125,5 +178,3 @@ module.exports = {
         clean: true,
     },
 }
-
-

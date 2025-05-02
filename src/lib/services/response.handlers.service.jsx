@@ -6,7 +6,7 @@ import {
 } from '../constants/general_constants.jsx';
 import { console_debug_log } from './logging.service.jsx';
 
-const debug = true;
+const debug = false;
 
 export const usePlainFetch = false;
 

@@ -8,9 +8,7 @@ const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
 /*
 https://github.com/timarney/react-app-rewired
 
-npm install --save-dev react-app-rewired
-    or
-npm install --save-peer --strict-peer-deps react-app-rewired
+npm install --save-dev react-app-rewired react-scripts
 */
 
 module.exports = {
@@ -59,7 +57,7 @@ module.exports = {
           // set the file paths & passphrase.
           config.https = {
             key: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.key`), 'utf8'),
-            cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.chain.crt`), 'utf8'),
+            cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.crt`), 'utf8'),
             ca: fs.readFileSync(path.resolve(__dirname, 'ca.crt'), 'utf8'),
             passphrase: process.env.REACT_HTTPS_PASS
           };

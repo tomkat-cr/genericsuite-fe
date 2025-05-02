@@ -1,5 +1,5 @@
-import React, { act } from "react";
-import { render } from "@testing-library/react";
+import React from "react";
+import renderer from 'react-test-renderer';
 import { MemoryRouter } from "react-router-dom";
 
 import { mockDefaultComponentMap } from "../../test-helpers/mocks";
@@ -14,21 +14,18 @@ import { AppProvider } from "../../helpers/AppContext";
 
 import { AboutBodyGsFe } from "./AboutBodyGsFe";
 
-
-describe("AboutBodyGsFe", () => {
-    test("renders the AboutBodyGsFe component", () =>
-        React.act(() => {
-            render(
-                <MemoryRouter>
-                    <UserProvider>
-                        <AppProvider
-                            globalComponentMap={mockDefaultComponentMap()}
-                        >
-                            <AboutBodyGsFe />
-                        </AppProvider>
-                    </UserProvider>
-                </MemoryRouter>
-            );
-        })
-    )
+it("renders the AboutBodyGsFe component", () => {
+    const component = renderer.create(
+        <MemoryRouter>
+            <UserProvider>
+                <AppProvider
+                    globalComponentMap={mockDefaultComponentMap()}
+                >
+                    <AboutBodyGsFe />
+                </AppProvider>
+            </UserProvider>
+        </MemoryRouter>
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
 });

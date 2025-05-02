@@ -1755,10 +1755,10 @@ const NavbarTopRightMenu = _ref9 => {
     className: (sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!(currentUser && authenticated) ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")
   }, children));
 };
-const MobileMenuCloseButton = _ref10 => {
+const MobileMenuCloseButton = _ref0 => {
   let {
     className
-  } = _ref10;
+  } = _ref0;
   /* Mobile menu close button */
   const {
     toggleMobileMenu
@@ -1772,10 +1772,10 @@ const MobileMenuCloseButton = _ref10 => {
     className: NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS
   }));
 };
-const NavbarMobileMenu = _ref11 => {
+const NavbarMobileMenu = _ref1 => {
   let {
     children
-  } = _ref11;
+  } = _ref1;
   const {
     theme,
     isMobileMenuOpen,
@@ -1811,20 +1811,20 @@ const NavbarToggle = () => {
     className: NAVBAR_TOGGLE_IMAGE_CLASS
   }));
 };
-const NavbarText = _ref12 => {
+const NavbarText = _ref10 => {
   let {
     children,
     className
-  } = _ref12;
+  } = _ref10;
   return /*#__PURE__*/React.createElement("div", {
     className: className ?? NAVBAR_TEXT_CLASS
   }, children);
 };
-const NavbarTopForSideMenu = _ref13 => {
+const NavbarTopForSideMenu = _ref11 => {
   let {
     children,
     className
-  } = _ref13;
+  } = _ref11;
   const {
     theme
   } = useAppContext();
@@ -1842,7 +1842,7 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 
 // NavDropdown
 
-const NavDropdown = _ref14 => {
+const NavDropdown = _ref12 => {
   let {
     children,
     title,
@@ -1850,7 +1850,7 @@ const NavDropdown = _ref14 => {
     type,
     icon,
     mobileMenuMode
-  } = _ref14;
+  } = _ref12;
   const {
     expandedMenus,
     toggleSubmenu,
@@ -1946,7 +1946,7 @@ const NavDropdown = _ref14 => {
     closeParent: () => toggledropDownOpen()
   }))));
 };
-const NavDropdownItem = _ref15 => {
+const NavDropdownItem = _ref13 => {
   let {
     children,
     as,
@@ -1956,7 +1956,7 @@ const NavDropdownItem = _ref15 => {
     type,
     closeParent,
     mobileMenuMode
-  } = _ref15;
+  } = _ref13;
   const {
     theme
   } = useAppContext();
@@ -2058,7 +2058,7 @@ NavDropdown.Item = NavDropdownItem;
 //     );
 // }
 
-const NavLink = _ref16 => {
+const NavLink = _ref14 => {
   let {
     children,
     as,
@@ -2067,7 +2067,7 @@ const NavLink = _ref16 => {
     reloadDocument,
     type,
     mobileMenuMode
-  } = _ref16;
+  } = _ref14;
   const {
     theme,
     isWide
@@ -2101,11 +2101,11 @@ Nav.Link = NavLink;
 
 // Buttons
 
-const ToggleSideBar = _ref17 => {
+const ToggleSideBar = _ref15 => {
   let {
     onClick,
     ...props
-  } = _ref17;
+  } = _ref15;
   props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + (props.className ?? '');
   return /*#__PURE__*/React.createElement("div", _extends({
     onClick: onClick
@@ -2113,13 +2113,13 @@ const ToggleSideBar = _ref17 => {
     icon: "vertical-slider"
   }));
 };
-const GsButton = _ref18 => {
+const GsButton = _ref16 => {
   let {
     variant = 'primary',
     className = '',
     as = null,
     ...props
-  } = _ref18;
+  } = _ref16;
   const variants = {
     primary: BUTTON_PRIMARY_CLASS,
     secondary: BUTTON_SECONDARY_CLASS
@@ -2757,20 +2757,15 @@ var authHeader$1 = /*#__PURE__*/Object.freeze({
 
 const usePlainFetch = false;
 function handleResponse(response) {
-  console_debug_log('>> handleResponse: response:', response);
   if (response.headers && typeof response.data !== 'undefined') {
-    console_debug_log('handleResponse: Response contains headers and response.data:', response.headers, response.response);
     return handleResponseText(response, response.data, response.headers);
   }
   if (response.headers && response.response) {
-    console_debug_log('handleResponse: Response contains headers and response:', response.headers, response.response);
     return handleResponseText(response, response.response, response.headers);
   }
-  console_debug_log('handleResponse: Response does not contain headers and response:', response);
   return response.text().then(text => {
     return handleResponseText(response, text, {});
   }, reason => {
-    console_debug_log('handleResponse ERROR - reason:');
     console.error(reason);
   });
 }
@@ -2795,17 +2790,10 @@ function handleResponseText(response, text, headers) {
       }
     }
     const errorMsg = specificErrorMsg || data && data.message || text || response.statusText;
-    {
-      console_debug_log('handleResponse | !response.ok | data:', data, 'response:', response, 'specificErrorMsg:', specificErrorMsg, 'text:', text);
-    }
     return Promise.reject(errorMsg);
   } else {
     data.headers = headers;
     if (typeof text === 'string') {
-      // Text is a string with the blob URL
-      {
-        console_debug_log('handleResponse | !IsJsonString(text) | data:', data, 'response:', response, 'text:', text);
-      }
       data.file = text;
       if (!data.headers.get('content-type')) {
         data.headers.set('content-type', 'application/octet-stream');
@@ -2821,9 +2809,6 @@ function handleResponseText(response, text, headers) {
       // When the data.resultset has an array of records (objects) instead of a sigle object, it comes as an encapsulated string
       data.resultset = JSON.parse(data.resultset);
     }
-  }
-  {
-    console_debug_log('||| handleResponse data:', data, 'text:', text);
   }
   return data;
 }
@@ -2845,10 +2830,8 @@ async function handleFetchError(error) {
     */
     possibleCORS = error.statusText.includes('CORS');
     reasonDetail = await error.text().then(text => {
-      console_debug_log('Error body:', text);
       return text;
     }).catch(e => {
-      console_debug_log('Error reading body:', e);
       return `HTTP ${error.status}`;
     });
     if (error.status === 401) {
@@ -2860,9 +2843,6 @@ async function handleFetchError(error) {
     possibleCORS = error instanceof TypeError && error.message.includes('Failed to fetch');
     errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
     reasonDetail = error;
-  }
-  {
-    console_debug_log('handleFetchError | error:', error, 'errorMsg:', errorMsg, 'reasonDetail:', reasonDetail);
   }
   return Promise.reject({
     error: true,
@@ -2893,13 +2873,10 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 
 // Blob files utilities
 
-const debug$4 = true;
+const debug$4 = false;
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
   const fileExtension = filename ? filename.split('.').pop() : null;
-  {
-    console_debug_log(`|||| getFileExtension | filename: ${filename} | fileExtension: ${fileExtension}`);
-  }
   return fileExtension;
 };
 const getContentType = function (filename) {
@@ -2926,9 +2903,6 @@ const getContentType = function (filename) {
     default:
       contentType = 'application/octet-stream';
   }
-  {
-    console_debug_log(`|||| getContentType | filename: ${filename} | contentType: ${contentType}`);
-  }
   return contentType;
 };
 const getContentTypeFromHeadersOrFilename = (headers, filename) => {
@@ -2946,10 +2920,6 @@ const getFilenameFromContentDisposition = headers => {
     filenameMatch = contentDisposition && contentDisposition.match(/filename=([^"]+)/);
   }
   const filename = filenameMatch ? filenameMatch[1] : null;
-  {
-    console_debug_log('|||| Content-Disposition:', contentDisposition);
-    console_debug_log('|||| Content-Disposition filename:', filename);
-  }
   return filename;
 };
 const performDownload = function (fileUrl) {
@@ -2992,7 +2962,6 @@ const isBinaryFileType = function (filename) {
 const decodeBlob = function (base64String, filename) {
   let oldUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   const blobType = getContentType(filename);
-  console_debug_log('decodeBlob | base64String:', base64String);
   if (typeof base64String !== 'string') {
     if (oldUrl === null) {
       throw new Error('Expected a string');
@@ -3018,7 +2987,6 @@ const decodeBlob = function (base64String, filename) {
     for (let i = 0; i < len; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
-    console_debug_log('decodeBlob v2 | bytes:', bytes);
     blob = new Blob([bytes], {
       type: blobType
     });
@@ -3027,28 +2995,18 @@ const decodeBlob = function (base64String, filename) {
       type: blobType
     });
   }
-  console_debug_log('decodeBlob v2 | blob:', blob);
   const url = URL.createObjectURL(blob);
-  console_debug_log('decodeBlob v2 | new url:', url);
   return url;
 };
 const fixBlob = async function (blobObj, filename) {
   let headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  // Verify if the blob is a binary encoded as Base64 string
-  // If so, decode it and return a new blob URL with the decoded content...
-  // Else, just return the blob URL...
-  {
-    console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
-  }
   const headerContentType = getContentTypeFromHeadersOrFilename(headers, filename);
   const contentType = getContentType(filename);
-  console_debug_log('|||| fixBlob v2 | contentType:', contentType, ' | headerContentType:', headerContentType);
   let blobUrl = null;
   try {
     blobUrl = URL.createObjectURL(blobObj);
-    if (debug$4) console_debug_log('|||| fixBlob v2 #1 | blobUrl:', blobUrl);
+    if (debug$4) ;
   } catch (e) {
-    console_debug_log('|||| fixBlob v2 #1 | URL.createObjectURL | Error:', e);
     // 'Overload resolution failed' happens when axios is used (not with fetch)
     if (!e.message.includes('Overload resolution failed')) {
       return Promise.reject(e);
@@ -3061,17 +3019,15 @@ const fixBlob = async function (blobObj, filename) {
       blobObj = new Blob(binaryData, {
         type: contentType
       });
-      if (debug$4) console_debug_log('|||| fixBlob v2 #2 | blobObj:', blobObj);
+      if (debug$4) ;
       blobUrl = URL.createObjectURL(blobObj);
-      if (debug$4) console_debug_log('|||| fixBlob v2 #2 | blobUrl:', blobUrl);
+      if (debug$4) ;
     } catch (e) {
-      console_debug_log('|||| fixBlob v2 #2 | URL.createObjectURL | Error:', e);
       return Promise.reject(e);
     }
   }
   // if (!isBinaryFileType(filename, contentType)) {
   if (!isBinaryFileType(filename)) {
-    console_debug_log('|||| fixBlob v2 #3 | Not a binary file type');
     return new Promise((resolve, _) => {
       resolve(blobUrl);
     });
@@ -3079,20 +3035,16 @@ const fixBlob = async function (blobObj, filename) {
   const reader = new FileReader();
   // reader.readAsDataURL(blob);  // Convert to data:audio/mpeg;base64,Ly9Qa3h...
   reader.readAsText(blobObj); // No convertion at all... just get what it receives...
-  console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
   return new Promise((resolve, reject) => {
     reader.onloadend = function () {
       if (typeof reader.result !== 'string' || isBinaryFileType(filename, headerContentType)) {
-        console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
         resolve(blobUrl);
       } else {
-        console_debug_log('|||| fixBlob v2 #6 | reader.result:', reader.result);
         blobUrl = decodeBlob(reader.result, filename);
         resolve(blobUrl);
       }
     };
     reader.onerror = function (error) {
-      console_debug_log('|||| fixBlob v2 #7 | reader.onerror | Error:', error);
       reject(error);
     };
   });
@@ -3114,48 +3066,59 @@ var blob_files_utilities = /*#__PURE__*/Object.freeze({
 });
 
 // Fetch/Axios utilities
-const debug$3 = true;
+
+// const https = require('https');
+
+const debug$3 = false;
 const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
 const getAxios = (url, requestOptions) => {
-  console_debug_log('GETAXIOS | url:', url, '\n | requestOptions:', requestOptions);
   let response;
   const {
     method,
     body,
     headers
   } = requestOptions;
+  // const api_url = process.env.REACT_APP_API_URL || "";
+  // const https_dev_env = api_url.includes("local") && api_url.includes("https");
+  let axios_config = {
+    url: url,
+    method: method,
+    data: body,
+    headers: headers
+  };
+  // if (https_dev_env) {
+  //     axios_config.httpsAgent = new https.Agent({
+  //         rejectUnauthorized: false,
+  //     });
+  //     console.log('>> axios_config with https.Agent.rejectUnauthorized:', axios_config);
+  // }
   try {
-    response = axios({
-      url: url,
-      method: method,
-      data: body,
-      headers: headers
-    }).then(response => {
+    response = axios(axios_config).then(response => {
       let new_response;
       new_response = Object.assign({}, response);
       new_response.ok = response.status === 200;
-      if (debug$3) console_debug_log('||| getAxios | Phase 1 | response:', response);
+      if (debug$3) ;
       if (response.status !== 200) {
         return Promise.reject(new_response);
       }
       const headers = response.headers;
-      if (debug$3) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
+      if (debug$3) ;
       if (responseHasFile(headers)) {
         const filename = getFilenameFromContentDisposition(headers);
         return fixBlob(response.data, filename, headers).then(text => {
-          if (debug$3) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
+          if (debug$3) ;
           return {
             headers,
             text,
             new_response
           };
         }, error => {
-          if (debug$3) console_debug_log('||| getAxios | fixBlob | error:', error);
+          if (debug$3) ;
           return Promise.reject(new_response);
         });
       } else {
         const text = response.data;
-        if (debug$3) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
+        if (debug$3) ;
         return {
           headers,
           text,
@@ -3168,7 +3131,7 @@ const getAxios = (url, requestOptions) => {
         text,
         new_response
       } = _ref;
-      if (debug$3) console_debug_log('||| getAxios | Phase 2 | headers:', headers, 'text', text, 'new_response:', new_response);
+      if (debug$3) ;
       const data = {
         response: text,
         headers: headers,
@@ -3186,12 +3149,11 @@ const getAxios = (url, requestOptions) => {
   return response;
 };
 const getFetch = (url, requestOptions) => {
-  console_debug_log('GETFETCH | url:', url, '\n | requestOptions:', requestOptions);
   let response;
   try {
     if (usePlainFetch) ; else {
       response = fetch(url, requestOptions).then(response => {
-        if (debug$3) console_debug_log('||| getFetch | Phase 1 | response:', response);
+        if (debug$3) ;
         if (!response.ok) {
           // throw new Error('Network response was not ok');
           return Promise.reject(response);
@@ -3206,25 +3168,21 @@ const getFetch = (url, requestOptions) => {
             // Verifying if it's a binary encoded as Base64 string
             return fixBlob(blob, filename, headers).then(text => {
               // "text" contains the blob URL...
-              if (debug$3) console_debug_log('||| getFetch | Phase 1.5 | blob:', blob, 'text:', text, 'filename:', filename);
+              if (debug$3) ;
               return {
                 headers,
                 text,
                 response
               };
             }, error => {
-              if (debug$3) console_debug_log('||| getFetch | fixBlob | error:', error);
+              if (debug$3) ;
               return Promise.reject(response);
             });
           });
         } else {
           // Process headers if needed here and the response text body
           return response.text().then(text => {
-            if (debug$3) console_debug_log('||| getFetch | Phase 3 | { headers, text, response }:', {
-              headers,
-              text,
-              response
-            });
+            if (debug$3) ;
             return {
               headers,
               text,
@@ -3238,7 +3196,7 @@ const getFetch = (url, requestOptions) => {
           text,
           response
         } = _ref2;
-        if (debug$3) console_debug_log('||| getFetch | Phase 2 | headers:', headers, 'text', text, 'response:', response);
+        if (debug$3) ;
         const data = {
           response: text,
           headers: headers,
@@ -3251,7 +3209,6 @@ const getFetch = (url, requestOptions) => {
       }).then(handleResponse).catch(handleFetchError);
     }
   } catch (e) {
-    console_debug_log('|| FETCH Error:', e);
     response = Promise.resolve(handleFetchError(e));
   }
   return response;
@@ -3305,8 +3262,7 @@ class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
     _defineProperty(this, "apiUrl", process.env.REACT_APP_API_URL);
-    // debug = false;
-    _defineProperty(this, "debug", true);
+    _defineProperty(this, "debug", false);
     this.props = props;
     const additionalHeaders = this.getAdditionalHeaders();
     this.props.authHeader = authHeader();
@@ -3556,9 +3512,7 @@ const getUserData = userId => {
   });
 };
 const getUserLocalData = res => {
-  console_debug_log('getUserLocalData() | res:', res);
   const data = res.resultset;
-  console_debug_log('getUserLocalData() | data:', data);
   const localConfig = getLocalConfig();
   return {
     id: convertId(data._id),
@@ -3576,10 +3530,6 @@ const getCurrentUserData = () => {
     url: 'users/current_user_d'
   });
   return dbApi.getOne({}).then(data => data, error => {
-    {
-      console_debug_log(`ERROR: getCurrentUserData():`);
-      console.error(error);
-    }
     return {
       error: true,
       errorMsg: error
@@ -3589,10 +3539,7 @@ const getCurrentUserData = () => {
 const verifyCurrentUser = registerUser => {
   if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
     getCurrentUserData().then(userData => {
-      console_debug_log("LoginPage | call to setCurrentUser with 'user' userData # 1:", userData);
-      if (userData.error) {
-        console.error('userData.error_message:', userData.error_message);
-      } else {
+      if (userData.error) ; else {
         registerUser(getUserLocalData(userData));
       }
     }, error => {
@@ -7939,6 +7886,9 @@ const AppMainComponent = _ref7 => {
   return children;
 };
 const AppMain = () => {
+  const routerFutureFlags = {
+    v7_relativeSplatPath: true
+  };
   const {
     currentUser,
     registerUser
@@ -7967,12 +7917,17 @@ const AppMain = () => {
     }
   }, [menuOptions]);
   if (hasHashRouter) {
-    return /*#__PURE__*/React.createElement(reactRouterDom.HashRouter, null, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GetHashRoutes, {
+    return /*#__PURE__*/React.createElement(reactRouterDom.HashRouter, {
+      history: history,
+      future: routerFutureFlags
+    }, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GetHashRoutes, {
       routes: router
     })));
   }
   return /*#__PURE__*/React.createElement(reactRouterDom.RouterProvider, {
-    router: reactRouterDom.createBrowserRouter(router),
+    router: reactRouterDom.createBrowserRouter(router, {
+      future: routerFutureFlags
+    }),
     history: history
   });
 };
@@ -7999,7 +7954,6 @@ const App = _ref8 => {
     appLogoHeader = ""
   } = _ref8;
   const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
-  console.log("App | componentMapFinal:", componentMapFinal);
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
     globalComponentMap: componentMapFinal,
     globalAppLogo: appLogo,

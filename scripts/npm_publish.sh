@@ -50,11 +50,13 @@ if [ "${PACKAGE_VERSION}" = "" ]; then
     PACKAGE_VERSION="N/A"
 fi
 
-export REACT_APP_REWIRED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
-if [ "${REACT_APP_REWIRED}" != "" ]; then
+echo ""
+echo "Checking react-app-rewired installation..."
+export REACT_APP_REWIRED_INSTALLED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
+if [ "${REACT_APP_REWIRED_INSTALLED}" != "" ]; then
     echo ""
-    echo "It's highly recommended to uninstall react-app-rewired."
-    echo "(current installed version: ${REACT_APP_REWIRED})"
+    echo "It's highly recommended to remove react-app-rewired."
+    echo "(current installed version: ${REACT_APP_REWIRED_INSTALLED})"
     echo "Do you want to proceed (y/n)?"
     read answer
     while [[ ! $answer =~ ^[YyNn]$ ]]; do
@@ -62,12 +64,60 @@ if [ "${REACT_APP_REWIRED}" != "" ]; then
         read answer
     done
     if [[ $answer =~ ^[Yy]$ ]]; then
-        echo "Reoving react-app-rewired..."
-        if npm uninstall --save-dev react-app-rewired
+        echo "Removing react-app-rewired..."
+        if npm uninstall react-app-rewired react-scripts
         then
-            echo "react-app-rewired uninstalled."
+            echo "react-app-rewired removed."
         else
-            echo "ERROR: react-app-rewired not uninstalled."
+            echo "ERROR: react-app-rewired not removed."
+        fi
+    fi
+fi
+
+echo ""
+echo "Checking vite installation..."
+export VITE_INSTALLED=$(perl -ne 'print $1 if /"vite":\s*"([^"]*)"/' package.json)
+if [ "${VITE_INSTALLED}" != "" ]; then
+    echo ""
+    echo "It's highly recommended to remove the vite bundler."
+    echo "(current installed version: ${VITE_INSTALLED})"
+    echo "Do you want to proceed (y/n)?"
+    read answer
+    while [[ ! $answer =~ ^[YyNn]$ ]]; do
+        echo "Please enter Y or N"
+        read answer
+    done
+    if [[ $answer =~ ^[Yy]$ ]]; then
+        echo "Removing vite bundler..."
+        if npm uninstall vite @vitejs/plugin-react vite-plugin-require
+        then
+            echo "vite bundler removed."
+        else
+            echo "ERROR: vite bundler not removed."
+        fi
+    fi
+fi
+
+echo ""
+echo "Checking webpack installation..."
+export WEBPACK_INSTALLED=$(perl -ne 'print $1 if /"webpack-dev-server":\s*"([^"]*)"/' package.json)
+if [ "${WEBPACK_INSTALLED}" != "" ]; then
+    echo ""
+    echo "It's highly recommended to remove the webpack bundler."
+    echo "(current installed version: ${WEBPACK_INSTALLED})"
+    echo "Do you want to proceed (y/n)?"
+    read answer
+    while [[ ! $answer =~ ^[YyNn]$ ]]; do
+        echo "Please enter Y or N"
+        read answer
+    done
+    if [[ $answer =~ ^[Yy]$ ]]; then
+        echo "Removing webpack bundler..."
+        if npm uninstall webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
+        then
+            echo "webpack bundler removed."
+        else
+            echo "ERROR: webpack bundler not removed."
         fi
     fi
 fi

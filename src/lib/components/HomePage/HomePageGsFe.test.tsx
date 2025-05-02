@@ -1,6 +1,6 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import renderer from 'react-test-renderer';
+// import { MemoryRouter } from "react-router-dom";
 
 jest.mock('react-markdown', () => ({
     __esModule: true,
@@ -11,16 +11,14 @@ import { UserProvider } from "../../helpers/UserContext";
 
 import { HomePageGsFe } from "./HomePageGsFe";
 
-describe("HomePageGsFe", () => {
-    test("renders the HomePageGsFe component", () =>
-        React.act(() => {
-            render(
-                <MemoryRouter>
-                    <UserProvider>
-                        <HomePageGsFe />
-                    </UserProvider>
-                </MemoryRouter>
-            );
-        })
-    )
+it("renders the HomePageGsFe component", () => {
+    const component = renderer.create(
+        // <MemoryRouter>
+            <UserProvider>
+                <HomePageGsFe />
+            </UserProvider>
+        // </MemoryRouter>
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
 });

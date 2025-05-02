@@ -24,12 +24,16 @@ remove_symlinks() {
 }
 
 # Defaults
-RUN_METHOD="react-scripts"
-# RUN_METHOD="webpack"
+if [ "${RUN_METHOD}" = "" ]; then
+    RUN_METHOD="vite"
+    # RUN_METHOD="webpack"
+    # RUN_METHOD="react-scripts"
+fi
 
 set -o allexport; source ".env" ; set +o allexport ;
 
 STAGE="$1"
+RUN_LIB="$2"
 
 echo ""
 echo "Stage = ${STAGE}"
@@ -61,6 +65,7 @@ if [ "${STAGE}" = "dev" ]; then
         http_method="http"
     else
         http_method="https"
+        make copy_ssl_certs
     fi
     echo "Run by: ${http_method}"
     echo "* Backend:"
@@ -89,31 +94,97 @@ export REACT_APP_VERSION=$(cat version.txt)
 echo ""
 echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
 
-if [ "${STAGE}" = "dev" ]; then
-    if [ "${RUN_METHOD}" = "webpack" ]; then
-        turn_off_module
-        if ! npm run start-dev-webpack
-        then
-            npx webpack-dev-server --config webpack.config.js
-        fi
-        turn_on_module
-    elif [ "${RUN_METHOD}" = "vite" ]; then
-        turn_off_module
-        if ! npm run start-dev-vite
-        then
-            VITE_CJS_TRACE=true npx vite dev
-        fi
-        turn_on_module
+run_app() {
+    run_command="$1"
+    if [ "${RUN_LIB}" = "" ]; then
+        INSTALL_OPTIONS="--save-dev"
     else
-        if ! npm run start-dev
+        INSTALL_OPTIONS="--save-peer --strict-peer-deps"
+    fi
+
+    if [ "${RUN_METHOD}" = "webpack" ]; then
+
+        export WEBPACK_INSTALLED=$(perl -ne 'print $1 if /"webpack-dev-server":\s*"([^"]*)"/' package.json)
+        if [ "${WEBPACK_INSTALLED}" = "" ]; then
+            echo ""
+            echo "Installing the webpack bundler..."
+            if npm install ${INSTALL_OPTIONS} webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
+            then
+                echo "webpack bundler installed."
+            else
+                echo "ERROR: webpack bundler could not be installed."
+            fi
+        fi
+        turn_off_module
+        if [ "${run_command}" = "" ]; then
+            run_command="npm run start-dev-webpack"
+            run_command="npx webpack-dev-server --config webpack.config.js"
+        fi
+        if ! ${run_command}
         then
-            react-app-rewired start
+            echo "ERROR running: ${run_command}"
+            turn_on_module
+            exit 1
+        fi
+        turn_on_module
+
+    elif [ "${RUN_METHOD}" = "vite" ]; then
+
+        export VITE_INSTALLED=$(perl -ne 'print $1 if /"vite":\s*"([^"]*)"/' package.json)
+        if [ "${VITE_INSTALLED}" = "" ]; then
+            echo ""
+            echo "Installing the vite bundler..."
+            if npm install ${INSTALL_OPTIONS} vite @vitejs/plugin-react vite-plugin-require
+            then
+                echo "vite bundler installed."
+            else
+                echo "ERROR: vite bundler could not be installed."
+            fi
+        fi
+        if [ "${run_command}" = "" ]; then
+            # run_command="npm run start-dev-vite"
+            run_command="npx vite dev"
+        fi
+        turn_off_module
+        if ! VITE_CJS_TRACE=true ${run_command}
+        then
+            echo "ERROR running: ${run_command}"            
+            turn_on_module
+            exit 1
+        fi
+        turn_on_module
+
+    else
+
+        export REACT_APP_REWIRED_INSTALLED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
+        if [ "${REACT_APP_REWIRED_INSTALLED}" = "" ]; then
+            echo ""
+            echo "Installing react-app-rewired."
+            if npm install ${INSTALL_OPTIONS} --legacy-peer-deps react-app-rewired react-scripts
+            then
+                echo "react-app-rewired installed."
+            else
+                echo "ERROR: react-app-rewired could not be installed."
+            fi
+        fi
+        if [ "${run_command}" = "" ]; then
+            run_command="npm run start-dev"
+            # run_command="npx react-app-rewired start"
+        fi
+        if ! ${run_command}
+        then
+            echo "ERROR running: react-app-rewired start"
+            exit 1
         fi
     fi
+}
+
+if [ "${STAGE}" = "dev" ]; then
+    run_app ""
 fi
 
 if [ "${STAGE}" = "qa" ]; then
-    npm run start-dev
+    run_app ""
 fi
 
 if [ "${STAGE}" = "prod" ]; then

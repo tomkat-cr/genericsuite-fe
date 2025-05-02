@@ -407,15 +407,16 @@ const AppMainComponent = ({
 }
 
 const AppMain = () => {
+    const routerFutureFlags = {
+        v7_relativeSplatPath: true
+    }
     const { currentUser, registerUser } = useUser();
-
     const {
         state, setState,
         menuOptions, setMenuOptions,
         componentMap,
         setExpanded,
     } = useAppContext();
-
     const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
 
     useEffect(() => {
@@ -439,7 +440,10 @@ const AppMain = () => {
 
     if (hasHashRouter) {
         return (
-            <HashRouter>
+            <HashRouter
+                history={history}
+                future={routerFutureFlags}
+            >
                 <>
                     <GetHashRoutes
                         routes={router}
@@ -451,7 +455,9 @@ const AppMain = () => {
 
     return (
         <RouterProvider
-            router={createBrowserRouter(router)}
+            router={createBrowserRouter(router, {
+                future: routerFutureFlags
+            })}
             history={history}
         />
     );
@@ -476,7 +482,6 @@ const defaultComponentMap = {
 
 export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
     const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
-console.log("App | componentMapFinal:", componentMapFinal);
     return (
         <UserProvider>
             <AppProvider

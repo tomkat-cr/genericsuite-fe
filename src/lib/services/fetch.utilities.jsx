@@ -4,7 +4,9 @@ import { fixBlob, getFilenameFromContentDisposition, responseHasFile } from './b
 import { console_debug_log } from './logging.service.jsx';
 import axios from 'axios';
 
-const debug = true;
+// const https = require('https');
+
+const debug = false;
 
 export const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
 
@@ -12,13 +14,22 @@ export const getAxios = (url, requestOptions) => {
     if (debug) console_debug_log('GETAXIOS | url:', url, '\n | requestOptions:', requestOptions);
     let response;
     const { method, body, headers } = requestOptions;
+    // const api_url = process.env.REACT_APP_API_URL || "";
+    // const https_dev_env = api_url.includes("local") && api_url.includes("https");
+    let axios_config = {
+        url: url,
+        method: method,
+        data: body,
+        headers: headers,
+    };
+    // if (https_dev_env) {
+    //     axios_config.httpsAgent = new https.Agent({
+    //         rejectUnauthorized: false,
+    //     });
+    //     console.log('>> axios_config with https.Agent.rejectUnauthorized:', axios_config);
+    // }
     try {
-        response = axios({
-            url: url,
-            method: method,
-            data: body,
-            headers: headers,
-        })
+        response = axios(axios_config)
         .then(response => {
             let new_response;
             new_response = Object.assign({}, response);

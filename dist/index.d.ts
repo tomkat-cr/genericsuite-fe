@@ -66,7 +66,7 @@ declare var NavLib: Readonly<{
     CenteredBoxContainer: (_ref5: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
-    GsButton: (_ref18: any) => React.CElement<any, React.Component<any, any, any>> | React.DetailedReactHTMLElement<any, HTMLElement>;
+    GsButton: (_ref16: any) => React.CElement<any, React.Component<any, any, any>> | React.DetailedReactHTMLElement<any, HTMLElement>;
     MainContainer: (_ref: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
@@ -74,10 +74,10 @@ declare var NavLib: Readonly<{
         className: string;
     }, HTMLElement>;
     NavDropdown: {
-        (_ref14: any): React.DetailedReactHTMLElement<{
+        (_ref12: any): React.DetailedReactHTMLElement<{
             className: any;
         }, HTMLElement>;
-        Item: (_ref15: any) => React.DetailedReactHTMLElement<{
+        Item: (_ref13: any) => React.DetailedReactHTMLElement<{
             className: any;
         }, HTMLElement>;
     };
@@ -102,7 +102,7 @@ declare var NavLib: Readonly<{
         TopRightMenu: (_ref9: any) => React.FunctionComponentElement<{
             children?: React.ReactNode | undefined;
         }>;
-        MobileMenu: (_ref11: any) => React.DetailedReactHTMLElement<{
+        MobileMenu: (_ref1: any) => React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement> | null;
         Toggle: () => React.DetailedReactHTMLElement<{
@@ -110,14 +110,14 @@ declare var NavLib: Readonly<{
             onClick: any;
             className: string;
         }, HTMLElement>;
-        Text: (_ref12: any) => React.DetailedReactHTMLElement<{
+        Text: (_ref10: any) => React.DetailedReactHTMLElement<{
             className: any;
         }, HTMLElement>;
-        TopForSideMenu: (_ref13: any) => React.DetailedReactHTMLElement<{
+        TopForSideMenu: (_ref11: any) => React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement>;
     };
-    ToggleSideBar: (_ref17: any) => React.DetailedReactHTMLElement<any, HTMLElement>;
+    ToggleSideBar: (_ref15: any) => React.DetailedReactHTMLElement<any, HTMLElement>;
 }>;
 declare var PrivateRoute$1: Readonly<{
     __proto__: null;

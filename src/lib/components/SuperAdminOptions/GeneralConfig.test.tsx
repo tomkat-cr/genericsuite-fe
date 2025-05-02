@@ -1,6 +1,6 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import renderer from 'react-test-renderer';
+// import { MemoryRouter } from "react-router-dom";
 
 import { mockDefaultComponentMap, mockFetch } from '../../test-helpers/mocks'
 
@@ -14,22 +14,21 @@ import { AppProvider } from "../../helpers/AppContext";
 
 import { GeneralConfig } from "./GeneralConfig";
 
-describe("GeneralConfig", () => {
+it("renders the GeneralConfig component", () => {
     const mockFetchResponse = [{}];
     window.fetch = mockFetch(mockFetchResponse);
-    test("renders the GeneralConfig component", () =>
-        React.act(() => {
-            render(
-                <MemoryRouter>
-                    <UserProvider>
-                        <AppProvider
-                            globalComponentMap={mockDefaultComponentMap()}
-                        >
-                            <GeneralConfig />
-                        </AppProvider>
-                    </UserProvider>
-                </MemoryRouter>
-            );
-        })
-    )
+    
+    const component = renderer.create(
+        // <MemoryRouter>
+            <UserProvider>
+                <AppProvider
+                    globalComponentMap={mockDefaultComponentMap()}
+                >
+                    <GeneralConfig />
+                </AppProvider>
+            </UserProvider>
+        // </MemoryRouter>
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
 });

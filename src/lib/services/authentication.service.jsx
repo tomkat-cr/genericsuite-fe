@@ -10,7 +10,7 @@ import { console_debug_log } from './logging.service.jsx';
 import { getLocalConfig } from '../helpers/local-config.jsx';
 import { saveItemToLocalStorage } from '../helpers/localstorage-manager.jsx';
 
-const debug = true;
+const debug = false;
 
 export const authenticationService = {
     login,

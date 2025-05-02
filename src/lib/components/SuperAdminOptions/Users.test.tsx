@@ -1,6 +1,6 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import renderer from 'react-test-renderer';
+// import { MemoryRouter } from "react-router-dom";
 
 import { mockAuthService, mockDefaultComponentMap, mockUserData } from '../../test-helpers/mocks'
 
@@ -25,20 +25,18 @@ for (let i = 0; i < mockJestObjects.length; i++) {
     jest.mock('../../' + mockJestObjects[i].codeFile, () => (mockObj));
 }
 
-describe("Users", () => {
-    test("renders the Users component", () =>
-        React.act(() => {
-            render(
-                <MemoryRouter>
-                    <UserProvider>
-                        <AppProvider
-                            globalComponentMap={mockDefaultComponentMap()}
-                        >
-                            <Users />
-                        </AppProvider>
-                    </UserProvider>
-                </MemoryRouter>
-            );
-        })
-    )
+it("renders the Users component", () => {
+    const component = renderer.create(
+        // <MemoryRouter>
+            <UserProvider>
+                <AppProvider
+                    globalComponentMap={mockDefaultComponentMap()}
+                >
+                    <Users />
+                </AppProvider>
+            </UserProvider>
+        // </MemoryRouter>
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
 });

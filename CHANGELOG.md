@@ -34,7 +34,7 @@ Add envvar REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON to allow the Magic Button (3
 Add getErrorDetail() function to get the error details from the error object [GS-15].
 Add getUuidV4() function to generate a UUID v4 [GS-15].
 Add getContentTypeFromHeadersOrFilename() function to get the content type from the headers or filename [GS-15].
-
+Add copy_ssl_certs Makefile target to copy the SSL certificates generated in the backend to the frontend [GS-198].
 
 ### Changes
 GCE_RFC and class_name_constants code cleanup.
@@ -42,6 +42,14 @@ convertId() function moved from db.service.jsx to id.utilities.jsx [GS-185].
 fixBlob() receives headers parameter to get the content type from the headers, performs a try-catch to handle errors in URL.createObjectURL(), if the error is 'Overload resolution failed', try it using binaryData.push(blobObj) [GS-15].
 isBinaryFileType() receives additional contentType parameter to get the content type from the headers or filename [GS-15].
 getFilenameFromContentDisposition() verifies if the content disposition header contains a filename with or without quotes [GS-15].
+Install vite, webpack or react-app-rewired dependencies running run_app_frontend.sh according to the RUN_METHOD env var [GS-198].
+Remove vite, webpack and react-app-rewired dependencies running npm_publish.sh [GS-198].
+All debugging flags turned off.
+
+### Fixes
+Fix the net:ERR_CERT_AUTHORITY_INVALID error in GenericSuite FE/BE using the https protocol [GS-198].
+Fix the create_ssl_certs Makefile target to effectively call the backend self-signed SSL certificates creation [GS-198].
+Fix the React Router v7 Future Flag Warning by upgrading "react-router-dom" to v7 [GS-199].
 
 
 ## 1.0.24 (2025-02-19)
