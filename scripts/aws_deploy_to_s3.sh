@@ -28,6 +28,14 @@ cd "`dirname "$0"`" ;
 SCRIPTS_DIR="`pwd`" ;
 cd "${REPO_BASEDIR}"
 
+# Defaults
+
+if [ "${RUN_METHOD}" = "" ]; then
+    RUN_METHOD="vite"
+    # RUN_METHOD="webpack"
+    # RUN_METHOD="react-scripts"
+fi
+
 UPDATE_BUILD="1"
 
 ENV_FILESPEC=""
@@ -398,20 +406,39 @@ fi
 # Build the ReactJS project
 if [ "${ERROR_MSG}" = "" ]; then
     if [ "${UPDATE_BUILD}" = "1" ]; then
-        echo "Building React app..."
+
+        echo "Building React app... (${RUN_METHOD})"
+
         if [ "$1" = "prod" ]; then
             echo "Building for production..."
-            if ! npm run build-prod
+            if [ "${RUN_METHOD}" = "webpack" ]; then
+                run_command="webpack --mode production"
+            elif [ "${RUN_METHOD}" = "vite" ]; then
+                run_command="vite build"
+            else
+                run_command="react-app-rewired build"
+            fi
+            # if ! npm run build-prod
+            if ! ${run_command}
             then
-                ERROR_MSG="ERROR running npm run build-prod"
+                ERROR_MSG="ERROR-010 running ${run_command}"
             fi
         else
-            echo "Building for development..."
-            if ! npm run build-dev
+            echo "Building for development ($1)..."
+            if [ "${RUN_METHOD}" = "webpack" ]; then
+                run_command="webpack --mode development"
+            elif [ "${RUN_METHOD}" = "vite" ]; then
+                run_command="vite build"
+            else
+                run_command="react-app-rewired build"
+            fi
+            # if ! npm run build-dev
+            if ! ${run_command}
             then
-                ERROR_MSG="ERROR running npm run build"
+                ERROR_MSG="ERROR-020 running ${run_command}"
             fi
         fi
+
         if [ "${ERROR_MSG}" = "" ]; then
             # Copy images to build/static/media directory
             if ! source ${SCRIPTS_DIR}/build_copy_images.sh

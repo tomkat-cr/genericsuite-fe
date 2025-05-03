@@ -117,7 +117,7 @@ run_app() {
         fi
         turn_off_module
         if [ "${run_command}" = "" ]; then
-            run_command="npm run start-dev-webpack"
+            # run_command="npm run start-dev-webpack"
             run_command="npx webpack-dev-server --config webpack.config.js"
         fi
         if ! ${run_command}
