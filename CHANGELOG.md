@@ -48,6 +48,9 @@ Install vite, webpack or react-app-rewired dependencies running run_app_frontend
 Remove vite, webpack and react-app-rewired dependencies running npm_publish.sh [GS-198].
 All debugging flags turned off.
 Implement RUN_METHOD in aws_deploy_to_s3.sh, so it use vite, webpack or react-app-rewired [GS-199].
+React Router updated from "^v6.18.0" to "^v7.5.3" [GS-199].
+Default node version upgraded to 20 in ".nvmrc" [GS-199].
+Tailwind CSS updated from "^v3.4.9" to "^v4.1.5" [GS-112].
 
 ### Fixes
 Fix the net:ERR_CERT_AUTHORITY_INVALID error in GenericSuite FE/BE using the https protocol [GS-198].

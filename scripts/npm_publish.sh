@@ -89,7 +89,7 @@ if [ "${VITE_INSTALLED}" != "" ]; then
     done
     if [[ $answer =~ ^[Yy]$ ]]; then
         echo "Removing vite bundler..."
-        if npm uninstall vite @vitejs/plugin-react vite-plugin-require
+        if npm uninstall vite @vitejs/plugin-react vite-plugin-require @tailwindcss/vite
         then
             echo "vite bundler removed."
         else

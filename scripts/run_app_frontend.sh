@@ -134,7 +134,7 @@ run_app() {
         if [ "${VITE_INSTALLED}" = "" ]; then
             echo ""
             echo "Installing the vite bundler..."
-            if npm install ${INSTALL_OPTIONS} vite @vitejs/plugin-react vite-plugin-require
+            if npm install ${INSTALL_OPTIONS} vite @vitejs/plugin-react vite-plugin-require @tailwindcss/vite
             then
                 echo "vite bundler installed."
             else

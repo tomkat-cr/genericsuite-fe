@@ -95,10 +95,10 @@ const defaultTheme = {
 
 const MAIN_CONTAINER_FOR_TOP_MENU_CLASS = "flex flex-col min-h-screen mainContainerForTopMenuClass";
 const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContainerForSideMenuClass";
-const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow 1-p-4 appSectionContainerForTopMenuClass";
-// export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
-const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col appSectionContainerForSideMenuClass";
-const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow appSectionContainerForSideMenuMainClass";
+const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "grow 1-p-4 appSectionContainerForTopMenuClass";
+// export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
+const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "grow flex flex-col appSectionContainerForSideMenuClass";
+const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "grow appSectionContainerForSideMenuMainClass";
 const APP_FOOTER_CONTAINER_CLASS = "p-1 text-white text-center appFooterContainerClass";
 const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto centeredBoxContainerDiv1Class";
 const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
@@ -136,10 +136,10 @@ const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClas
 const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "block relative group navLinkTopDivHamburgerClass";
 const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
 const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
-const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
+const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded-sm p-1 flex items-center navLinkButtonsTopMenuClass";
 const NAV_LINK_BUTTON_HAMBURGER_CLASS = "block py-1 navLinkButtonsHamburgerClass";
-const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded navLinkButtonsSideMenuClass";
-const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
+const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded-sm navLinkButtonsSideMenuClass";
+const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded-sm navLinkButtonsMobileMenuClass";
 const NAV_LINK_ICON_CLASS = "w-8 h-8 navLinkIconClass";
 const ROUNDED_ICON_CLASS = "rounded-full roundedIconClass";
 const ML2_ICON_CLASS = "ml-2 overflow-visible";
@@ -150,31 +150,31 @@ const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "block relative group navDropdownTo
 const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
 const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
 
-// export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
-const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
-const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
+// export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivTopMenuClass";
+const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden z-50 bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivTopMenuClass";
+const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivHamburgerClass";
 const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
 const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
-const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navDropdownButtonTopMenuClass";
-const NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS = "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
-const NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonSideMenuClass";
-const NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonMobileMenuClass";
+const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded-sm p-1 flex items-center navDropdownButtonTopMenuClass";
+const NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS = "rounded-sm p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
+const NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded-sm navDropdownButtonSideMenuClass";
+const NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded-sm navDropdownButtonMobileMenuClass";
 const NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS = "navDropdownImageTopMenuClass";
 const NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS = "navDropdownImageHamburgerClass";
 const NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS = "navDropdownImageSideMenuClass";
 const NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS = "h-4 w-4 transform transition-transform navDropdownImageMobileMenuClass";
 const NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS = "block py-1 navDropdownItemTopDivTopMenuClass";
 const NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS = "block py-1 navDropdownItemTopDivHamburgerClass";
-const NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS = "block rounded navDropdownItemTopDivSideMenuClass";
-const NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS = "block rounded navDropdownItemTopDivMobileMenuClass";
-const NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS = "rounded px-2 flex items-center navDropDownItemButtonsTopMenuClass";
-const NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS = "rounded block px-2 navDropDownItemButtonsHamburgerClass";
-const NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS = "rounded px-2 py-2 navDropDownItemButtonsSideMenuClass";
-const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded py-2 px-2 navDropDownItemButtonsMobileMenuClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS = "block rounded-sm navDropdownItemTopDivSideMenuClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS = "block rounded-sm navDropdownItemTopDivMobileMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS = "rounded-sm px-2 flex items-center navDropDownItemButtonsTopMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS = "rounded-sm block px-2 navDropDownItemButtonsHamburgerClass";
+const NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS = "rounded-sm px-2 py-2 navDropDownItemButtonsSideMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded-sm py-2 px-2 navDropDownItemButtonsMobileMenuClass";
 
 // Alert messages and message boxes
 
-const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded alertBaseClass";
+const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded-sm alertBaseClass";
 const ALERT_DANGER_CLASS = `${ALERT_BASE_CLASS} text-red-800 bg-red-100 border-red-200 alertDangerClass`;
 const ALERT_WARNING_CLASS = `${ALERT_BASE_CLASS} text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass`;
 const ALERT_INFO_CLASS = `${ALERT_BASE_CLASS} text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass`;
@@ -188,7 +188,7 @@ const GRAY_BOX_MSG_CLASS = `${ALERT_BASE_CLASS} text-black bg-gray-200 mt-4 p-2 
 // Forms
 
 const FORM_GROUP_CLASS = "mb-4 formGroupClass";
-const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass";
+const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 formControlClass";
 const INVALID_FEEDBACK_CLASS = "text-red-800 text-sm mt-1 invalidFeedbackClass";
 const IS_INVALID_CLASS = "border-red-500 isInvalidClass";
 const DISABLE_FIELD_BACKGROUND_COLOR_CLASS = 'bg-gray-200 disableFieldBackgroundColorClass';
@@ -204,8 +204,8 @@ const TOP0_Z50_CLASS = "top-0 z-50 top0z50Class";
 
 // Buttons
 
-const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
-const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-hidden focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
+const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-hidden focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
 
 // Special buttons
 
@@ -220,7 +220,7 @@ const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDar
 
 // Listing page buttons (GCE_RFC)
 
-const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
+const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass";
 const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
 const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
 const BUTTON_LISTING_REFRESH_CLASS = `${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
@@ -260,7 +260,7 @@ const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_T
 
 const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
 const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
-const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
+const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded-sm border w-40 text-sm appListingSearchBoxInputClass";
 const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
 const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
@@ -274,7 +274,7 @@ const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS = "text-sm flex items-center 
 const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center appListingToolbarPageNumSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS = "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
-const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded border appListingToolbarRowPerPageInputClass";
+const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded-sm border appListingToolbarRowPerPageInputClass";
 const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
 
 // Data page (GCE_RFC)
@@ -283,7 +283,7 @@ const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
 const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
 const APP_FORMPAGE_FIELD_CLASS = `flex flex-col ${FORM_GROUP_CLASS} appFormPageFieldClass`;
-const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
+const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
 const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} appFormPageFieldGoodClass`;
 const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid appFormPageFieldInvalidClass`;
 const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS = "align-middle flex appFormPageSpecialButtonDivClass";
@@ -310,7 +310,7 @@ const MODALIB_MODAL_BODY_CLASS = "text-center mb-6 max-h-80 overflow-auto modali
 const MODALIB_MODAL_FOOTER_CLASS = "flex mt-4 modalibModalFooterClass";
 const MODALIB_MODAL_FOOTER_WIDE_CLASS = "flex-row space-x-4 modalibModalFooterWideClass";
 const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
-const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
+const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-md text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
 const MODALIB_BUTTON_BASESTYLE_WIDE_CLASS = 'flex-1 modalibButtonBaseStyleWideClass';
 const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center modalibButtonBaseStyleNotWideClass';
 
@@ -348,7 +348,7 @@ const MARKDOWN_UNDERLINE_CLASS = "underline markdown-underline-class";
 // AI Assistant and conversation pages
 
 // Flexible input type text that grows according to its content (e.g. for the AI Assistant conversation)
-const INPUT_FLEXIBLE_CLASS = "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
+const INPUT_FLEXIBLE_CLASS = "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
 // export const INPUT_FLEXIBLE_CLASS = "m-0 w-full resize-none border-0 rounded-md border py-[10px] pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:py-4 md:pr-12 gizmo:md:py-3.5 gizmo:placeholder-black/50 gizmo:dark:placeholder-white/50 pl-12 gizmo:pl-10 md:pl-[46px] gizmo:md:pl-[55px]";
 
 var class_name_constants = /*#__PURE__*/Object.freeze({

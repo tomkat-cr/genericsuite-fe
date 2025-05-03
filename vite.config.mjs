@@ -3,6 +3,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import vitePluginRequire from 'vite-plugin-require';
+import tailwindcss from "@tailwindcss/vite";
 import { resolve } from 'path';
 import fs from 'node:fs';
 // import history from 'connect-history-api-fallback';
@@ -10,7 +11,7 @@ import fs from 'node:fs';
 /*
 https://vite.dev/guide/
 
-npm install --save-dev vite @vitejs/plugin-react vite-plugin-require
+npm install --save-dev vite @vitejs/plugin-react vite-plugin-require @tailwindcss/vite
 */
 
 export default defineConfig(({ mode }) => {
@@ -68,7 +69,8 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            vitePluginRequire()
+            vitePluginRequire,
+            tailwindcss(),
         ],
         server: serverConfig,
         resolve: {
