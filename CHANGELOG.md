@@ -35,6 +35,8 @@ Add getErrorDetail() function to get the error details from the error object [GS
 Add getUuidV4() function to generate a UUID v4 [GS-15].
 Add getContentTypeFromHeadersOrFilename() function to get the content type from the headers or filename [GS-15].
 Add copy_ssl_certs Makefile target to copy the SSL certificates generated in the backend to the frontend [GS-198].
+Add setupTests.js to fix jest test with "react-router-dom" to v7 [GS-199].
+Add setupTests.js and jest.config.cjs to the package.json "files" entry, so they'll be available in node_modules [GS-199].
 
 ### Changes
 GCE_RFC and class_name_constants code cleanup.

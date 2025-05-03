@@ -16,6 +16,8 @@
     "config-overrides.js",
     "vite.config.js",
     "index.html",
+    "jest.config.cjs",
+    "setupTests.js",
     ".env.example",
     "CHANGELOG.md",
     "public/gs_core.css",
