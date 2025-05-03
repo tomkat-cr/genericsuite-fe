@@ -47,6 +47,7 @@ getFilenameFromContentDisposition() verifies if the content disposition header c
 Install vite, webpack or react-app-rewired dependencies running run_app_frontend.sh according to the RUN_METHOD env var [GS-198].
 Remove vite, webpack and react-app-rewired dependencies running npm_publish.sh [GS-198].
 All debugging flags turned off.
+Implement RUN_METHOD in aws_deploy_to_s3.sh, so it use vite, webpack or react-app-rewired [GS-199].
 
 ### Fixes
 Fix the net:ERR_CERT_AUTHORITY_INVALID error in GenericSuite FE/BE using the https protocol [GS-198].
