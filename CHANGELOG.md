@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 Implement axios as alternative to fetch [GS-15].
 Add envvar REACT_APP_USE_AXIOS to use axios instead of fetch by default.
 Add Vite as alternative to webpack [GS-195].
+Add: "run_method_dependency_manager.sh" to unify the run method dependency install or uninstall [GS-195].
 Add getAdditionalHeaders() in the dbApiService class to send the 'Access-Control-Expose-Headers': 'Content-Disposition' header and receive file names from the backend [GS-15].
 Add envvar REACT_APP_USE_EXPOSE_HEADERS to add the 'Access-Control-Expose-Headers' header calling the backend (defaults to be off) [GS-15].
 Configure lines per page in the CRUD editor: save and restore it from the LocalStorage. Defaults to 30 (previous was 5) [GS-185].
@@ -37,6 +38,7 @@ Add getContentTypeFromHeadersOrFilename() function to get the content type from 
 Add copy_ssl_certs Makefile target to copy the SSL certificates generated in the backend to the frontend [GS-198].
 Add setupTests.js to fix jest test with "react-router-dom" to v7 [GS-199].
 Add setupTests.js and jest.config.cjs to the package.json "files" entry, so they'll be available in node_modules [GS-199].
+Add "@types/node" to resolve paths without error using "@/" prefix [GS-112].
 
 ### Changes
 GCE_RFC and class_name_constants code cleanup.
@@ -46,16 +48,19 @@ isBinaryFileType() receives additional contentType parameter to get the content 
 getFilenameFromContentDisposition() verifies if the content disposition header contains a filename with or without quotes [GS-15].
 Install vite, webpack or react-app-rewired dependencies running run_app_frontend.sh according to the RUN_METHOD env var [GS-198].
 Remove vite, webpack and react-app-rewired dependencies running npm_publish.sh [GS-198].
-All debugging flags turned off.
-Implement RUN_METHOD in aws_deploy_to_s3.sh, so it use vite, webpack or react-app-rewired [GS-199].
+Implement RUN_METHOD in aws_deploy_to_s3.sh and build_prod_test.sh, so it use vite, webpack or react-app-rewired [GS-199].
 React Router updated from "^v6.18.0" to "^v7.5.3" [GS-199].
 Default node version upgraded to 20 in ".nvmrc" [GS-199].
 Tailwind CSS updated from "^v3.4.9" to "^v4.1.5" [GS-112].
+Add *.ts, *.tsx and ./index.html files to tailwind.config.js [GS-112].
+All debugging flags turned off.
 
 ### Fixes
 Fix the net:ERR_CERT_AUTHORITY_INVALID error in GenericSuite FE/BE using the https protocol [GS-198].
 Fix the create_ssl_certs Makefile target to effectively call the backend self-signed SSL certificates creation [GS-198].
 Fix the React Router v7 Future Flag Warning by upgrading "react-router-dom" to v7 [GS-199].
+Fix the "'assert' is deprecated in import statements and support will be removed in a future version; use 'with' instead" running "make publish" and rollup.connfig.mjs.
+Fix: Tailwind 4 input and texarea background color issue by adding the gs_core.css to index.html [GS-112].
 
 
 ## 1.0.24 (2025-02-19)

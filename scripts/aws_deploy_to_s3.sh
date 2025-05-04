@@ -23,9 +23,12 @@ get_ssl_cert_arn() {
     fi
 }
 
+remove_symlinks() {
+    sh "${SCRIPTS_DIR}/run_symlinks_handler.sh" remove
+}
+
 REPO_BASEDIR="`pwd`"
-cd "`dirname "$0"`" ;
-SCRIPTS_DIR="`pwd`" ;
+SCRIPTS_DIR="$( cd -- "$(dirname "$BASH_SOURCE")" >/dev/null 2>&1 ; pwd -P )"
 cd "${REPO_BASEDIR}"
 
 # Defaults
@@ -367,16 +370,10 @@ fi
 
 if [ "${ERROR_MSG}" = "" ]; then
 
-    export REACT_APP_REWIRED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
-    echo "package.json REACT_APP_REWIRED is: ${REACT_APP_REWIRED}"
+    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_METHOD}
 
     export TSCONFIG_BASE_URL=$(perl -ne 'print $1 if /"baseUrl":\s*"([^"]*)"/' tsconfig.json)
     echo "tsconfig.json TSCONFIG_BASE_URL was: ${TSCONFIG_BASE_URL}"
-
-    if [ "${REACT_APP_REWIRED}" = "" ]; then
-        echo "Installing react-app-rewired ..."
-        npm install --save-dev --force react-app-rewired
-    fi
 
     if [ "${TSCONFIG_BASE_URL}" = "./src/lib" ]; then
         echo "Preparing tsconfig.json for local build test..."
@@ -407,16 +404,20 @@ fi
 if [ "${ERROR_MSG}" = "" ]; then
     if [ "${UPDATE_BUILD}" = "1" ]; then
 
+        # To avoid error message: "ENOENT: no such file or directory, stat './public/static'"
+        # during the build process, because the 'static' is a symlink, not a directory
+        remove_symlinks
+
         echo "Building React app... (${RUN_METHOD})"
 
         if [ "$1" = "prod" ]; then
             echo "Building for production..."
             if [ "${RUN_METHOD}" = "webpack" ]; then
-                run_command="webpack --mode production"
+                run_command="npx webpack --mode production"
             elif [ "${RUN_METHOD}" = "vite" ]; then
-                run_command="vite build"
+                run_command="npx vite build"
             else
-                run_command="react-app-rewired build"
+                run_command="npx react-app-rewired build"
             fi
             # if ! npm run build-prod
             if ! ${run_command}
@@ -426,11 +427,11 @@ if [ "${ERROR_MSG}" = "" ]; then
         else
             echo "Building for development ($1)..."
             if [ "${RUN_METHOD}" = "webpack" ]; then
-                run_command="webpack --mode development"
+                run_command="npx webpack --mode development"
             elif [ "${RUN_METHOD}" = "vite" ]; then
-                run_command="vite build"
+                run_command="npx vite build"
             else
-                run_command="react-app-rewired build"
+                run_command="npx react-app-rewired build"
             fi
             # if ! npm run build-dev
             if ! ${run_command}

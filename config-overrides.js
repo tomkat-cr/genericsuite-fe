@@ -90,7 +90,7 @@ module.exports = {
             "url": require.resolve("url"),
             "crypto": require.resolve("crypto-browserify"),
             "stream": require.resolve("stream-browserify"),
-            "assert": require.resolve("assert"),
+            "with": require.resolve("with"),
             "vm": require.resolve("vm-browserify"),
             "tty": require.resolve("tty-browserify"),
             "fs": false

@@ -31,6 +31,14 @@ cd "`dirname "$0"`" ;
 SCRIPTS_DIR="`pwd`" ;
 cd "${REPO_BASEDIR}"
 
+# Defaults
+
+if [ "${RUN_METHOD}" = "" ]; then
+    RUN_METHOD="vite"
+    # RUN_METHOD="webpack"
+    # RUN_METHOD="react-scripts"
+fi
+
 ACTION="$1"
 if [ -z "${ACTION}" ]; then
   ACTION="pre-publish"
@@ -50,77 +58,33 @@ if [ "${PACKAGE_VERSION}" = "" ]; then
     PACKAGE_VERSION="N/A"
 fi
 
-echo ""
-echo "Checking react-app-rewired installation..."
+check_one_bundle() {
+    bundle_installed="$1"
+    bundle_name="$2"
+    echo ""
+    echo "Checking ${bundle_name} installation..."
+    if [ "${bundle_installed}" != "" ]; then
+        echo ""
+        echo "It's highly recommended to remove ${bundle_name}."
+        echo "(current installed version: ${bundle_installed})"
+        echo "Do you want to proceed (y/n)?"
+        read answer
+        while [[ ! $answer =~ ^[YyNn]$ ]]; do
+            echo "Please enter Y or N"
+            read answer
+        done
+        if [[ $answer =~ ^[Yy]$ ]]; then
+            sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" uninstall ${bundle_name}
+        fi
+    fi
+}
+
 export REACT_APP_REWIRED_INSTALLED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
-if [ "${REACT_APP_REWIRED_INSTALLED}" != "" ]; then
-    echo ""
-    echo "It's highly recommended to remove react-app-rewired."
-    echo "(current installed version: ${REACT_APP_REWIRED_INSTALLED})"
-    echo "Do you want to proceed (y/n)?"
-    read answer
-    while [[ ! $answer =~ ^[YyNn]$ ]]; do
-        echo "Please enter Y or N"
-        read answer
-    done
-    if [[ $answer =~ ^[Yy]$ ]]; then
-        echo "Removing react-app-rewired..."
-        if npm uninstall react-app-rewired react-scripts
-        then
-            echo "react-app-rewired removed."
-        else
-            echo "ERROR: react-app-rewired not removed."
-        fi
-    fi
-fi
-
-echo ""
-echo "Checking vite installation..."
 export VITE_INSTALLED=$(perl -ne 'print $1 if /"vite":\s*"([^"]*)"/' package.json)
-if [ "${VITE_INSTALLED}" != "" ]; then
-    echo ""
-    echo "It's highly recommended to remove the vite bundler."
-    echo "(current installed version: ${VITE_INSTALLED})"
-    echo "Do you want to proceed (y/n)?"
-    read answer
-    while [[ ! $answer =~ ^[YyNn]$ ]]; do
-        echo "Please enter Y or N"
-        read answer
-    done
-    if [[ $answer =~ ^[Yy]$ ]]; then
-        echo "Removing vite bundler..."
-        if npm uninstall vite @vitejs/plugin-react vite-plugin-require @tailwindcss/vite
-        then
-            echo "vite bundler removed."
-        else
-            echo "ERROR: vite bundler not removed."
-        fi
-    fi
-fi
-
-echo ""
-echo "Checking webpack installation..."
 export WEBPACK_INSTALLED=$(perl -ne 'print $1 if /"webpack-dev-server":\s*"([^"]*)"/' package.json)
-if [ "${WEBPACK_INSTALLED}" != "" ]; then
-    echo ""
-    echo "It's highly recommended to remove the webpack bundler."
-    echo "(current installed version: ${WEBPACK_INSTALLED})"
-    echo "Do you want to proceed (y/n)?"
-    read answer
-    while [[ ! $answer =~ ^[YyNn]$ ]]; do
-        echo "Please enter Y or N"
-        read answer
-    done
-    if [[ $answer =~ ^[Yy]$ ]]; then
-        echo "Removing webpack bundler..."
-        if npm uninstall webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
-        then
-            echo "webpack bundler removed."
-        else
-            echo "ERROR: webpack bundler not removed."
-        fi
-    fi
-fi
+check_one_bundle "${REACT_APP_REWIRED_INSTALLED}" "react-app-rewired"
+check_one_bundle "${VITE_INSTALLED}" "vite"
+check_one_bundle "${WEBPACK_INSTALLED}" "webpack"
 
 echo "Testing app..."
 if ! npm run test

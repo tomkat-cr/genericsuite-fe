@@ -14,9 +14,31 @@
 # 2024-03-15 | CR
 #
 REPO_BASEDIR="`pwd`"
-cd "`dirname "$0"`" ;
-SCRIPTS_DIR="`pwd`" ;
+
+# cd "`dirname "$0"`" ;
+# SCRIPTS_DIR="`pwd`" ;
+# Get the real script directory
+SCRIPTS_DIR="$( cd -- "$(dirname "$BASH_SOURCE")" >/dev/null 2>&1 ; pwd -P )"
+
 cd "${REPO_BASEDIR}"
+
+echo ""
+echo "\$0: $0"
+echo "REPO_BASEDIR: ${REPO_BASEDIR}"
+echo "SCRIPTS_DIR: ${SCRIPTS_DIR}"
+echo ""
+
+remove_symlinks() {
+    sh "${SCRIPTS_DIR}/run_symlinks_handler.sh" remove
+}
+
+# Defaults
+
+if [ "${RUN_METHOD}" = "" ]; then
+    RUN_METHOD="vite"
+    # RUN_METHOD="webpack"
+    # RUN_METHOD="react-scripts"
+fi
 
 RUN_MODE="$1"
 if [ "${RUN_MODE}" = "" ]; then
@@ -39,19 +61,13 @@ fi
 echo ""
 
 if [ "${RUN_MODE}" = "test" ]; then
-    export REACT_APP_REWIRED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
-    echo "package.json REACT_APP_REWIRED is: ${REACT_APP_REWIRED}"
-
     export PACKAGE_JSON_HOMEPAGE=$(perl -ne 'print $1 if /"homepage":\s*"([^"]*)"/' package.json)
     echo "package.json PACKAGE_JSON_HOMEPAGE was: ${PACKAGE_JSON_HOMEPAGE}"
 
     export TSCONFIG_BASE_URL=$(perl -ne 'print $1 if /"baseUrl":\s*"([^"]*)"/' tsconfig.json)
     echo "tsconfig.json TSCONFIG_BASE_URL was: ${TSCONFIG_BASE_URL}"
 
-    if [ "${REACT_APP_REWIRED}" = "" ]; then
-        echo "Installing react-app-rewired ..."
-        npm install --save-dev --force react-app-rewired
-    fi
+    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_METHOD}
 
     if [ "${TSCONFIG_BASE_URL}" = "./src/lib" ]; then
         echo "Preparing tsconfig.json for local build test..."
@@ -74,7 +90,28 @@ if [ "${RUN_MODE}" != "restore" ]; then
     echo "REACT_APP_API_URL after: ${REACT_APP_API_URL}"
     perl -pi -e 's|^(REACT_APP_API_URL=).*|$1$ENV{REACT_APP_API_URL}|' .env
 
-    npm run build-dev
+    # To avoid error message: "ENOENT: no such file or directory, stat './public/static'"
+    # during the build process, because the 'static' is a symlink, not a directory
+    remove_symlinks
+
+    # npm run build-dev
+    if [ "${RUN_METHOD}" = "webpack" ]; then
+        run_command="npx webpack --mode production"
+    elif [ "${RUN_METHOD}" = "vite" ]; then
+        run_command="npx vite build"
+    else
+        # run_command="npx react-app-rewired build"
+        run_command="npm run build-dev"
+    fi
+
+    echo ""
+    echo ">>--> Running: ${run_command}"
+    echo ""
+    if ! ${run_command}
+    then
+        echo "ERROR running: ${run_command}"
+        exit 1
+    fi
 
     REACT_APP_API_URL=$(echo $REACT_APP_API_URL | perl -i -pe 's|http:|https:|')
     # REACT_APP_API_URL=$(echo $REACT_APP_API_URL | perl -i -pe 's|:5002|:5001|')

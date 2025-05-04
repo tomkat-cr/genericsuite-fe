@@ -83,6 +83,7 @@
     "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^29.5.12",
+    "@types/node": "^22.15.3",
     "@types/react": "^18.2.63",
     "autoprefixer": "^10.4.16",
     "babel-jest": "^29.7.0",
@@ -110,7 +111,6 @@
     "whatwg-fetch": "^3.6.20"
   },
   "peerDependencies": {
-    "assert": "^2.1.0",
     "axios": "^1.8.2",
     "buffer": "^6.0.3",
     "constants-browserify": "^1.0.0",
@@ -135,6 +135,7 @@
     "url": "^0.11.3",
     "vm-browserify": "^1.1.2",
     "web-vitals": "^2.1.4",
+    "with": "^7.0.2",
     "yup": "^0.32.11"
   },
   "peerDependenciesMeta": {

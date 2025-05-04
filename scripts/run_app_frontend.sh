@@ -33,7 +33,6 @@ fi
 set -o allexport; source ".env" ; set +o allexport ;
 
 STAGE="$1"
-RUN_LIB="$2"
 
 echo ""
 echo "Stage = ${STAGE}"
@@ -95,31 +94,14 @@ echo ""
 echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
 
 run_app() {
-    run_command="$1"
-    if [ "${RUN_LIB}" = "" ]; then
-        INSTALL_OPTIONS="--save-dev"
-    else
-        INSTALL_OPTIONS="--save-peer --strict-peer-deps"
-    fi
+    # Check if dependencies are installed
+    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_METHOD}
 
+    # Run app dependending on the run method
     if [ "${RUN_METHOD}" = "webpack" ]; then
-
-        export WEBPACK_INSTALLED=$(perl -ne 'print $1 if /"webpack-dev-server":\s*"([^"]*)"/' package.json)
-        if [ "${WEBPACK_INSTALLED}" = "" ]; then
-            echo ""
-            echo "Installing the webpack bundler..."
-            if npm install ${INSTALL_OPTIONS} webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
-            then
-                echo "webpack bundler installed."
-            else
-                echo "ERROR: webpack bundler could not be installed."
-            fi
-        fi
         turn_off_module
-        if [ "${run_command}" = "" ]; then
-            # run_command="npm run start-dev-webpack"
-            run_command="npx webpack-dev-server --config webpack.config.js"
-        fi
+        # run_command="npm run start-dev-webpack"
+        run_command="npx webpack-dev-server --config webpack.config.js"
         if ! ${run_command}
         then
             echo "ERROR running: ${run_command}"
@@ -129,22 +111,8 @@ run_app() {
         turn_on_module
 
     elif [ "${RUN_METHOD}" = "vite" ]; then
-
-        export VITE_INSTALLED=$(perl -ne 'print $1 if /"vite":\s*"([^"]*)"/' package.json)
-        if [ "${VITE_INSTALLED}" = "" ]; then
-            echo ""
-            echo "Installing the vite bundler..."
-            if npm install ${INSTALL_OPTIONS} vite @vitejs/plugin-react vite-plugin-require @tailwindcss/vite
-            then
-                echo "vite bundler installed."
-            else
-                echo "ERROR: vite bundler could not be installed."
-            fi
-        fi
-        if [ "${run_command}" = "" ]; then
-            # run_command="npm run start-dev-vite"
-            run_command="npx vite dev"
-        fi
+        # run_command="npm run start-dev-vite"
+        run_command="npx vite dev"
         turn_off_module
         if ! VITE_CJS_TRACE=true ${run_command}
         then
@@ -155,36 +123,23 @@ run_app() {
         turn_on_module
 
     else
-
-        export REACT_APP_REWIRED_INSTALLED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
-        if [ "${REACT_APP_REWIRED_INSTALLED}" = "" ]; then
-            echo ""
-            echo "Installing react-app-rewired."
-            if npm install ${INSTALL_OPTIONS} --legacy-peer-deps react-app-rewired react-scripts
-            then
-                echo "react-app-rewired installed."
-            else
-                echo "ERROR: react-app-rewired could not be installed."
-            fi
-        fi
-        if [ "${run_command}" = "" ]; then
-            run_command="npm run start-dev"
-            # run_command="npx react-app-rewired start"
-        fi
+        run_command="npm run start-dev"
+        # This does not work... the package.json "start-dev" script must be used
+        # run_command="npx react-app-rewired start"
         if ! ${run_command}
         then
-            echo "ERROR running: react-app-rewired start"
+            echo "ERROR running: react-app-rewired (${run_command})"
             exit 1
         fi
     fi
 }
 
 if [ "${STAGE}" = "dev" ]; then
-    run_app ""
+    run_app
 fi
 
 if [ "${STAGE}" = "qa" ]; then
-    run_app ""
+    run_app
 fi
 
 if [ "${STAGE}" = "prod" ]; then

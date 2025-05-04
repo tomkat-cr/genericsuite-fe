@@ -10,14 +10,14 @@ import svg from 'rollup-plugin-svg'
 import json from '@rollup/plugin-json';
 
 // const packageJson = require("./package.json");
-import packageJson from "./package.json" assert { type: "json" };
+import packageJson from "./package.json" with { type: "json" };
 
 export default [
     {
         input: "./src/lib/index.cjs",
         // external: [...Object.keys(packageJson.peerDependencies || {})],
         external: [
-            "assert",
+            "with",
             "axios",
             "buffer",
             "constants-browserify",

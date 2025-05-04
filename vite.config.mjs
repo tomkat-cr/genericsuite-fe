@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
     };
 
     // Add HTTPS if needed
-    if (process.env.REACT_APP_API_URL?.includes("https://")) {
+    if (process.env.REACT_APP_API_URL.includes("https://")) {
         serverConfig.https = {
             key: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.key`)),
             cert: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.crt`)),
@@ -83,10 +83,8 @@ export default defineConfig(({ mode }) => {
             'process.env': process_env
         },
         build: {
-            outDir: 'dist',
-            assetsDir: 'assets',
-            // outDir: 'build',
-            // assetsDir: 'static',
+            outDir: 'build',
+            assetsDir: 'static',
             emptyOutDir: true,
             sourcemap: true,
             rollupOptions: {
