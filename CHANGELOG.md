@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ---
 
 ### New
-Implement axios as alternative to fetch [GS-15].
+Implement axios as alternative to fetch [GS-202] [GS-15].
 Add envvar REACT_APP_USE_AXIOS to use axios instead of fetch by default.
 Add Vite as alternative to webpack [GS-195].
 Add: "run_method_dependency_manager.sh" to unify the run method dependency install or uninstall [GS-195].
