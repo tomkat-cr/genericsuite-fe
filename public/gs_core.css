@@ -1,3 +1,5 @@
+/* To fix the input background color issue in the Tailwind CSS v4 upgrade [GS-201] */
+/*
 @layer base {
   input::placeholder,
   textarea::placeholder {
@@ -8,3 +10,4 @@
 input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"], input[type="search"], input[type="tel"], input[type="url"], textarea {
   background-color: var(--color-gray-100);
 }
+*/

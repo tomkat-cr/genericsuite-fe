@@ -14,7 +14,7 @@
     "Makefile",
     "webpack.config.js",
     "config-overrides.js",
-    "vite.config.js",
+    "vite.config.mjs",
     "index.html",
     "jest.config.cjs",
     "setupTests.js",
