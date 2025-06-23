@@ -214,10 +214,10 @@ declare var class_name_constants: Readonly<{
     ALERT_WARNING_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass";
     APP_FOOTER_CONTAINER_CLASS: "p-1 text-white text-center appFooterContainerClass";
     APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS: "mt-6 appFormPageChildComponentsTopDivClass";
-    APP_FORMPAGE_FIELD_BASE_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass";
+    APP_FORMPAGE_FIELD_BASE_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass";
     APP_FORMPAGE_FIELD_CLASS: "flex flex-col mb-4 formGroupClass appFormPageFieldClass";
-    APP_FORMPAGE_FIELD_GOOD_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass appFormPageFieldGoodClass";
-    APP_FORMPAGE_FIELD_INVALID_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass is-invalid appFormPageFieldInvalidClass";
+    APP_FORMPAGE_FIELD_GOOD_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass appFormPageFieldGoodClass";
+    APP_FORMPAGE_FIELD_INVALID_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass is-invalid appFormPageFieldInvalidClass";
     APP_FORMPAGE_FORM_BUTTON_BAR_CLASS: "flex align-middle space-x-4 appFormPageFormButtonBarClass";
     APP_FORMPAGE_LABEL_CLASS: "font-medium appFormPageLabelClass";
     APP_FORMPAGE_LABEL_REQUIRED_CLASS: "font-medium text-red-700 appFormPageLabelRequiredClass";
@@ -277,7 +277,7 @@ declare var class_name_constants: Readonly<{
     DARK_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 darkModeButtonTopDivClass";
     DISABLE_FIELD_BACKGROUND_COLOR_CLASS: "bg-gray-200 disableFieldBackgroundColorClass";
     ERROR_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-red-800 bg-red-100 border-red-200 alertDangerClass mt-4 p-2 rounded-md errorMsgClass";
-    FORM_CONTROL_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 formControlClass";
+    FORM_CONTROL_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass";
     FORM_GROUP_CLASS: "mb-4 formGroupClass";
     GRAY_BOX_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass";
     HIDDEN_CLASS: "hidden hiddenClass";
