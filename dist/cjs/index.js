@@ -262,7 +262,7 @@ const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgCol
 
 const APP_LISTING_TABLE_CLASS = "w-full text-sm appListingTableClass";
 const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTableHdrTheadClass";
-const APP_LISTING_TABLE_HDR_TR_CLASS = "border-b appListingTableHdrTrClass";
+const APP_LISTING_TABLE_HDR_TR_CLASS = "appListingTableHdrTrClass";
 const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
 const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
 const APP_LISTING_TABLE_BODY_TBODY_CLASS = `appListingTableBodyTbodyClass`;
@@ -281,7 +281,7 @@ const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_T
 
 const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
 const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
-const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded-sm border w-40 text-sm appListingSearchBoxInputClass";
+const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded-sm border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
 const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
 const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
@@ -295,7 +295,7 @@ const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS = "text-sm flex items-center 
 const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center appListingToolbarPageNumSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS = "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
-const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded-sm border appListingToolbarRowPerPageInputClass";
+const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded-sm border border-gray-300 bg-white appListingToolbarRowPerPageInputClass";
 const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
 
 // Data page (GCE_RFC)

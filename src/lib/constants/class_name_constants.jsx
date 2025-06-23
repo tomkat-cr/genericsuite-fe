@@ -201,7 +201,7 @@ export const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMe
 
 export const APP_LISTING_TABLE_CLASS = "w-full text-sm appListingTableClass";
 export const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTableHdrTheadClass";
-export const APP_LISTING_TABLE_HDR_TR_CLASS = "border-b appListingTableHdrTrClass";
+export const APP_LISTING_TABLE_HDR_TR_CLASS = "appListingTableHdrTrClass";
 export const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
 export const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
 export const APP_LISTING_TABLE_BODY_TBODY_CLASS = `appListingTableBodyTbodyClass`;
@@ -221,7 +221,7 @@ export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS=`${APP_LISTING_TABLE_B
 
 export const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS="flex items-center space-x-2 appListingSearchBoxTopDivClass";
 export const APP_LISTING_SEARCH_BOX_LABEL_CLASS="mr-2 text-sm appListingSearchBoxLabelClass";
-export const APP_LISTING_SEARCH_BOX_INPUT_CLASS="p-2 rounded-sm border w-40 text-sm appListingSearchBoxInputClass";
+export const APP_LISTING_SEARCH_BOX_INPUT_CLASS="p-2 rounded-sm border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
 export const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS=`${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
 export const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS=`${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 export const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS='ml-2 searchEngineButtonTopDivClass';
@@ -238,7 +238,7 @@ export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS="text-sm flex items-cent
 
 export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS="text-sm flex items-center appListingToolbarRowPerPageSectionClass";
 export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS="mr-2 text-sm appListingToolbarRowPerPageLabelClass";
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS="p-2 rounded-sm border appListingToolbarRowPerPageInputClass";
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS="p-2 rounded-sm border border-gray-300 bg-white appListingToolbarRowPerPageInputClass";
 
 export const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS="ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
 

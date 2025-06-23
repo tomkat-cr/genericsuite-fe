@@ -224,7 +224,7 @@ declare var class_name_constants: Readonly<{
     APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: "align-middle flex appFormPageSpecialButtonDivClass";
     APP_GENERAL_MARGINS_CLASS: "mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass";
     APP_LEVEL2_DIV_CLASS: "overflow-x-auto appLevel2DivClass";
-    APP_LISTING_SEARCH_BOX_INPUT_CLASS: "p-2 rounded-sm border w-40 text-sm appListingSearchBoxInputClass";
+    APP_LISTING_SEARCH_BOX_INPUT_CLASS: "p-2 rounded-sm border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
     APP_LISTING_SEARCH_BOX_LABEL_CLASS: "mr-2 text-sm appListingSearchBoxLabelClass";
     APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass mr-2 text-xs appListingSearchBoxStopButtonClass";
     APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass";
@@ -243,11 +243,11 @@ declare var class_name_constants: Readonly<{
     APP_LISTING_TABLE_CLASS: "w-full text-sm appListingTableClass";
     APP_LISTING_TABLE_HDR_THEAD_CLASS: "bg-white dark:bg-black appListingTableHdrTheadClass";
     APP_LISTING_TABLE_HDR_TH_CLASS: "text-left p-2 appListingTableHdrThClass";
-    APP_LISTING_TABLE_HDR_TR_CLASS: "border-b appListingTableHdrTrClass";
+    APP_LISTING_TABLE_HDR_TR_CLASS: "appListingTableHdrTrClass";
     APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS: "appListingTableHrdActionsColClass";
     APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS: "text-sm flex items-center appListingToolbarPageNumSectionClass";
     APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS: "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
-    APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: "p-2 rounded-sm border appListingToolbarRowPerPageInputClass";
+    APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: "p-2 rounded-sm border border-gray-300 bg-white appListingToolbarRowPerPageInputClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS: "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
     APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex items-center mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
