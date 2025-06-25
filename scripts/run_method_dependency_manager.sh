@@ -39,19 +39,22 @@ uninstall_one_bundle() {
 }
 
 install_one_bundle() {
-    bundle_name="$1"
-    bundle_packages="$2"
-    additional_options="$3"
-    echo ""
-    echo "Installing ${bundle_name} bundle..."
-    echo "npm install ${INSTALL_OPTIONS} ${additional_options} ${bundle_packages}"
-    echo ""
-    if npm install ${INSTALL_OPTIONS} ${additional_options} ${bundle_packages}
-    then
-        echo "${bundle_name} installed."
-    else
-        echo "ERROR: ${bundle_name} not installed."
-        exit 1
+    bundle_installed="$1"
+    bundle_name="$2"
+    bundle_packages="$3"
+    additional_options="$4"
+    if [ "${bundle_installed}" = "" ]; then
+        echo ""
+        echo "Installing ${bundle_name} bundle..."
+        echo "npm install ${INSTALL_OPTIONS} ${additional_options} ${bundle_packages}"
+        echo ""
+        if npm install ${INSTALL_OPTIONS} ${additional_options} ${bundle_packages}
+        then
+            echo "${bundle_name} installed."
+        else
+            echo "ERROR: ${bundle_name} not installed."
+            exit 1
+        fi
     fi
 }
 
@@ -71,15 +74,15 @@ install() {
     if [ "${RUN_METHOD}" = "vite" ]; then
         uninstall_webpack
         uninstall_react_app_rewired
-        install_one_bundle "Vite" "${VITE_PACKAGES}"
+        install_one_bundle "${VITE_INSTALLED}" "Vite" "${VITE_PACKAGES}"
     elif [ "${RUN_METHOD}" = "webpack" ]; then
         uninstall_react_app_rewired
         uninstall_vite
-        install_one_bundle "Webpack" "${WEBPACK_PACKAGES}"
+        install_one_bundle "${WEBPACK_INSTALLED}" "Webpack" "${WEBPACK_PACKAGES}"
     else
         uninstall_webpack
         uninstall_vite
-        install_one_bundle "React App Rewired" "${REACT_APP_REWIRED_PACKAGES}" "--legacy-peer-deps"
+        install_one_bundle "${REACT_APP_REWIRED_INSTALLED}" "React App Rewired" "${REACT_APP_REWIRED_PACKAGES}" "--legacy-peer-deps"
     fi
 }
 
