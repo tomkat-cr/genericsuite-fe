@@ -442,7 +442,7 @@ if [ "${ERROR_MSG}" = "" ]; then
 
         if [ "${ERROR_MSG}" = "" ]; then
             # Copy images to build/static/media directory
-            if ! source ${SCRIPTS_DIR}/build_copy_images.sh
+            if ! source ${SCRIPTS_DIR}/build_copy_images.sh "" ""
             then
                 ERROR_MSG="ERROR running: source ${SCRIPTS_DIR}/build_copy_images.sh"
             fi

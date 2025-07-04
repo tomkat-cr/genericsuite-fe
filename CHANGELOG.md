@@ -39,6 +39,9 @@ Add copy_ssl_certs Makefile target to copy the SSL certificates generated in the
 Add setupTests.js to fix jest test with "react-router-dom" to v7 [GS-199].
 Add setupTests.js and jest.config.cjs to the package.json "files" entry, so they'll be available in node_modules [GS-199].
 Add "@types/node" to resolve paths without error using "@/" prefix [GS-112].
+Implement RUN_PROTOCOL envvar to have the http/https protocol automatically on app local running, no user intervention, as part of the Turborepo initiative [GS-188].
+Add the "TARGET_DIR" (defaults to "public") and "BASE_DIR" (defaults to ".") parameters to the "build_copy_images.sh" script to copy the images to the "public" directory [GS-188].
+Add the "run_method_build.sh" script to run the build process using the specified run method [GS-188].
 
 ### Changes
 GCE_RFC and class_name_constants code cleanup.

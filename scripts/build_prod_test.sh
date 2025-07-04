@@ -1,5 +1,6 @@
 #!/bin/bash
 # File: scripts/build_prod_test.sh
+# Preview the QA/Staging/Prod live environments behavior.
 #
 # Run:
 #   source scripts/build_prod_test.sh test|restore|build
@@ -118,7 +119,7 @@ if [ "${RUN_MODE}" != "restore" ]; then
     perl -pi -e 's|^(REACT_APP_API_URL=).*|$1$ENV{REACT_APP_API_URL}|' .env
 
     if [ "${COPY_IMAGES}" = "1" ]; then
-        if ! source ${SCRIPTS_DIR}/build_copy_images.sh
+        if ! source ${SCRIPTS_DIR}/build_copy_images.sh "" ""
         then
             echo "ERROR running: source ${SCRIPTS_DIR}/build_copy_images.sh"
             exit 1

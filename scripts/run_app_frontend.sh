@@ -38,14 +38,26 @@ echo ""
 echo "Stage = ${STAGE}"
 echo "APP_API_URL_DEV = ${APP_API_URL_DEV}"
 echo "RUN_METHOD = ${RUN_METHOD}"
+echo "RUN_PROTOCOL = ${RUN_PROTOCOL}"
 echo ""
 if [ "${STAGE}" = "dev" ]; then
-    echo "Do you want to run: 1) http, 2) https ?"
-    read choice
-    while [[ ! $choice =~ ^[12]$ ]]; do
-        echo "Please enter 1 or 2"
+    if [ "${RUN_PROTOCOL}" != "" ]; then
+        if [ "${RUN_PROTOCOL}" = "http" ]; then
+            choice="1"
+        elif [ "${RUN_PROTOCOL}" = "https" ]; then
+            choice="2"
+        else
+            echo "ERROR: Invalid run protocol: ${RUN_PROTOCOL}"
+            exit 1
+        fi
+    else
+        echo "Do you want to run: 1) http, 2) https ?"
         read choice
-    done
+        while [[ ! $choice =~ ^[12]$ ]]; do
+            echo "Please enter 1 or 2"
+            read choice
+        done
+    fi
     if [ "${FRONTEND_LOCAL_PORT}" = "" ]; then
         FRONTEND_LOCAL_PORT="3000"
     fi
@@ -75,7 +87,7 @@ if [ "${STAGE}" = "dev" ]; then
 fi
 
 # Copy images to build/static/media
-if ! source ${SCRIPTS_DIR}/build_copy_images.sh
+if ! source ${SCRIPTS_DIR}/build_copy_images.sh "" ""
 then
     echo ""
     echo "ERROR running: source ${SCRIPTS_DIR}/build_copy_images.sh"
