@@ -16,8 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## Unreleased
-## 1.0.25 (2025-03-10)
+## 1.0.25 (2025-07-05)
 ---
 
 ### New
@@ -99,7 +98,7 @@ Add Configurable sidebar menu [GS-114].
 Add localstorage generic functions [GS-112].
 Add Save darkmode and side menu set to localstorage [GS-112].
 New "GsIcons" library replaces FontAwesome [GS-115].
-Add landscape logo to the App header [GS-63].
+Add landscape logo to the App header (appLogoHeader) [GS-63].
 Add the optional "template" attribute to app_main_menu.json entries to customize the menu option design [GS-112] [GS-129].
 Add the <NoDesignComponent>> to have menu options with no GS FE Core design [GS-112] [GS-129].
 Add testHelpersMocks export [GS-129].
