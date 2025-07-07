@@ -100,13 +100,13 @@ export const GenericSelectGenerator = (props) => {
     return state.toString();
   }
 
-  const { filter, show_description, description_fields } = config;
+  const { filter, show_description, description_fields, dbService } = config;
 
   let selectAnOptionItem = {}
   selectAnOptionItem['_id'] = null;
-  selectAnOptionItem[config.description_fields[0]] = MSG_SELECT_AN_OPTION;
-  for (let i = 1; i < config.description_fields.length; i++) {
-    selectAnOptionItem[config.description_fields[i]] = '';
+  selectAnOptionItem[description_fields[0]] = MSG_SELECT_AN_OPTION;
+  for (let i = 1; i < description_fields.length; i++) {
+    selectAnOptionItem[description_fields[i]] = '';
   }
 
   const selectOptions = [
@@ -123,12 +123,12 @@ export const GenericSelectGenerator = (props) => {
     fieldArray.forEach((field) => {
       description += option[field] + ' ';
     });
-    return description;
+    return description.trim();
   }
 
   return selectOptions
     .filter((option) => 
-      filter === null ? true : config.dbService.convertId(option._id) === filter
+      filter === null ? true : dbService.convertId(option._id) === filter
     )
     .map((option) => {
       if (show_description) {
@@ -136,8 +136,8 @@ export const GenericSelectGenerator = (props) => {
       }
       return (
         <option
-          key={config.dbService.convertId(option._id)}
-          value={config.dbService.convertId(option._id)}
+          key={dbService.convertId(option._id)}
+          value={dbService.convertId(option._id)}
         >
           {buildDescription(option, description_fields)}
         </option>

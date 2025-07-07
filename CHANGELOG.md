@@ -62,7 +62,8 @@ Fix the net:ERR_CERT_AUTHORITY_INVALID error in GenericSuite FE/BE using the htt
 Fix the create_ssl_certs Makefile target to effectively call the backend self-signed SSL certificates creation [GS-198].
 Fix the React Router v7 Future Flag Warning by upgrading "react-router-dom" to v7 [GS-199].
 Fix the "'assert' is deprecated in import statements and support will be removed in a future version; use 'with' instead" running "make publish" and rollup.connfig.mjs.
-Fix: Tailwind 4 input and texarea background color issue by adding the gs_core.css to index.html [GS-112].
+Fix Tailwind 4 input and texarea background color issue by adding the gs_core.css to index.html [GS-112].
+Fix prevent object mutation in Object.assign calls by adding empty object as first parameter
 
 
 ## 1.0.24 (2025-02-19)

@@ -77,7 +77,7 @@ export const SuggestionDropdown = ({
             }
             if (filter_api_request_method === "GET") {
                 urlParams = Object.assign({}, bodyData);
-                bodyData = Object.assign({});
+                bodyData = {};
             }
             dbService.getAll(urlParams, bodyData, filter_api_request_method)
                 .then(response => {

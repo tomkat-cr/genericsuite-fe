@@ -24,6 +24,7 @@ export class dbApiService {
         const additionalHeaders = this.getAdditionalHeaders();
         this.props.authHeader = authHeader();
         this.props.authAndJsonHeader = Object.assign(
+            {},
             { 
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',

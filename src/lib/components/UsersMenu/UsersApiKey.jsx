@@ -61,9 +61,7 @@ export const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
             case ACTION_CREATE:
                 const access_token = generateAccessToken();
                 if (debug) console_debug_log(`>>> UsersApiKeyGenerate | access_token:`, access_token);
-                resp.fieldValues =  Object.assign(
-                    data, { 'access_token': access_token }
-                );
+                resp.fieldValues = Object.assign({}, data, { 'access_token': access_token });
                 break;
         }
         if (debug) console_debug_log(`>>> UsersApiKeyGenerate | resp:`, resp, 'data:', data, "action:", action);

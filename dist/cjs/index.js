@@ -1469,13 +1469,8 @@ const AppProvider = _ref => {
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const toggleSideMenu = () => setSideMenu(!sideMenu);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  // const toggleSubmenu = (menuName) => {
   const toggleSubmenu = (menuName, menuVisible) => {
-    setExpandedMenus(prev =>
-    // prev.includes(menuName)
-    // ? prev.filter(item => item !== menuName)
-    // : [...prev, menuName]
-    menuVisible ? [...prev, menuName] : prev.filter(item => item !== menuName));
+    setExpandedMenus(prev => menuVisible ? [...prev, menuName] : prev.filter(item => item !== menuName));
   };
   const isComponent = componentObj => {
     return String(componentObj).includes('component:');
@@ -3266,7 +3261,7 @@ class dbApiService {
     this.props = props;
     const additionalHeaders = this.getAdditionalHeaders();
     this.props.authHeader = authHeader();
-    this.props.authAndJsonHeader = Object.assign({
+    this.props.authAndJsonHeader = Object.assign({}, {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
       // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
@@ -4577,7 +4572,7 @@ const mandatoryFiltersDbPreRead = (data, editor, action, currentUser) => {
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     if (typeof editor.mandatoryFilters !== 'undefined') {
-      resp.fieldValues.resultset = Object.assign(data, replaceSpecialVars(editor.mandatoryFilters, currentUser));
+      resp.fieldValues.resultset = Object.assign({}, data, replaceSpecialVars(editor.mandatoryFilters, currentUser));
     }
     // console_debug_log(`>>> mandatoryFiltersDbPreRead | resp:`, resp, 'data:', data);
     resolve(resp);
@@ -5049,13 +5044,14 @@ const GenericSelectGenerator = props => {
   const {
     filter,
     show_description,
-    description_fields
+    description_fields,
+    dbService
   } = config;
   let selectAnOptionItem = {};
   selectAnOptionItem['_id'] = null;
-  selectAnOptionItem[config.description_fields[0]] = MSG_SELECT_AN_OPTION;
-  for (let i = 1; i < config.description_fields.length; i++) {
-    selectAnOptionItem[config.description_fields[i]] = '';
+  selectAnOptionItem[description_fields[0]] = MSG_SELECT_AN_OPTION;
+  for (let i = 1; i < description_fields.length; i++) {
+    selectAnOptionItem[description_fields[i]] = '';
   }
   const selectOptions = [...[...[selectAnOptionItem]], ...rows.resultset];
   const buildDescription = (option, fieldArray) => {
@@ -5063,15 +5059,15 @@ const GenericSelectGenerator = props => {
     fieldArray.forEach(field => {
       description += option[field] + ' ';
     });
-    return description;
+    return description.trim();
   };
-  return selectOptions.filter(option => filter === null ? true : config.dbService.convertId(option._id) === filter).map(option => {
+  return selectOptions.filter(option => filter === null ? true : dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
       return buildDescription(option, description_fields);
     }
     return /*#__PURE__*/React.createElement("option", {
-      key: config.dbService.convertId(option._id),
-      value: config.dbService.convertId(option._id)
+      key: dbService.convertId(option._id),
+      value: dbService.convertId(option._id)
     }, buildDescription(option, description_fields));
   });
 };
@@ -5249,7 +5245,7 @@ const SuggestionDropdown = _ref => {
       bodyData[filter_search_param_name] = inputValue;
       if (filter_api_request_method === "GET") {
         urlParams = Object.assign({}, bodyData);
-        bodyData = Object.assign({});
+        bodyData = {};
       }
       dbService.getAll(urlParams, bodyData, filter_api_request_method).then(response => {
         if (typeof response.resultset == "string") {
@@ -5398,7 +5394,7 @@ const FormPage = _ref => {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
       processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
-        accessKeysDataScreen = Object.assign(funcResponse.fieldValues, editor.parentFilter);
+        accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.parentFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
           processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => {
@@ -6248,7 +6244,7 @@ const GenericCrudEditorMain = props => {
       };
       // dbListPreRead: To set a Listing filters, assign funcResponse.fieldValues[db_field]=filter_value
       processGenericFuncArray(editor, 'dbListPreRead', accessKeysListing, formMode, currentUser).then(funcResponse => {
-        accessKeysListing = Object.assign(accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
+        accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
         editor.db.getAll(accessKeysListing).then(data => {
           ShowHidePageAnimation(false, animationElementId);
           // dbListPostRead: To fix Listing fields
@@ -6886,7 +6882,7 @@ const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
     switch (action) {
       case ACTION_CREATE:
         const access_token = generateAccessToken();
-        resp.fieldValues = Object.assign(data, {
+        resp.fieldValues = Object.assign({}, data, {
           'access_token': access_token
         });
         break;
@@ -7183,6 +7179,7 @@ const UsersPasswordValidations = (data, editor, action) => {
           resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'User needs a password';
           break;
         }
+        break;
       case ACTION_UPDATE:
         if (data['passcode']) {
           if (data['passcode'] !== data['passcode_repeat']) {
