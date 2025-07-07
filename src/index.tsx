@@ -1,14 +1,10 @@
 import React from 'react';
-
+import reactDomClient from 'react-dom/client';
 // import { HashRouter } from 'react-router-dom';
 
 import { HomePageGsFe as HomePage} from './lib/components/HomePage/HomePageGsFe.jsx';
 import { AboutBodyGsFe as AboutBody } from './lib/components/About/AboutBodyGsFe.jsx';
-
-const reactDomClient = require('react-dom/client');
-
-const app = require('./lib/components/App/App');
-const App = app.App;
+import { App } from './lib/components/App/App.jsx';
 
 // This way to import the .svg files doesn't work on prod environents:
 // const GsLogoCircle = require('./lib/images/gs_logo_circle.svg');
@@ -25,7 +21,7 @@ const componentMap = {
   "HomePage": HomePage,
 };
 
-const root = reactDomClient.createRoot(document.getElementById('root'));
+const root = reactDomClient.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
