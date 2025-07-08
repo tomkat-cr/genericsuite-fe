@@ -221,3 +221,14 @@ export const formatCaughtError = (error) => {
     let response = { "error": true, "message": getErrorMessage(error) };
     return response;
 }
+
+export const getErrorDetail = (errorRaw) => {
+    let errorDetails = null;
+    if (typeof errorRaw["reason"] !== "undefined" &&
+        typeof errorRaw["reason"]["response"] !== "undefined" &&
+        typeof errorRaw["reason"]["response"]["data"] !== "undefined"
+    ) {
+        errorDetails = errorRaw["reason"]["response"]["data"];
+    }
+    return errorDetails;
+}

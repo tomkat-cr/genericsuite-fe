@@ -5,6 +5,12 @@ const fs = require('fs');
 const path = require('path');
 const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
 
+/*
+https://github.com/timarney/react-app-rewired
+
+npm install --save-dev react-app-rewired react-scripts
+*/
+
 module.exports = {
     // The Webpack config to use when compiling your react app for development or production.
     webpack: function(config, env) {
@@ -51,7 +57,7 @@ module.exports = {
           // set the file paths & passphrase.
           config.https = {
             key: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.key`), 'utf8'),
-            cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.chain.crt`), 'utf8'),
+            cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.crt`), 'utf8'),
             ca: fs.readFileSync(path.resolve(__dirname, 'ca.crt'), 'utf8'),
             passphrase: process.env.REACT_HTTPS_PASS
           };
@@ -84,7 +90,7 @@ module.exports = {
             "url": require.resolve("url"),
             "crypto": require.resolve("crypto-browserify"),
             "stream": require.resolve("stream-browserify"),
-            "assert": require.resolve("assert"),
+            "with": require.resolve("with"),
             "vm": require.resolve("vm-browserify"),
             "tty": require.resolve("tty-browserify"),
             "fs": false

@@ -1,7 +1,6 @@
 import React from "react";
-import { render } from "@testing-library/react";
-
-import { MemoryRouter } from "react-router-dom";
+import renderer from 'react-test-renderer';
+// import { MemoryRouter } from "react-router-dom";
 
 // Fix the "ReferenceError: Response is not defined" message
 // $ npm install whatwg-fetch --save-dev
@@ -19,24 +18,23 @@ import { AppProvider } from "../../helpers/AppContext";
 
 import { UsersConfigComponent } from "./UsersConfig";
 
-describe("UsersConfigComponent", () => {
+it("renders the UsersConfigComponent component", () => {
     const mockFetchResponse = [{}];
     window.fetch = mockFetch(mockFetchResponse);
-    test("renders the UsersConfigComponent component", () =>
-        React.act(() => {
-            render(
-                <MemoryRouter>
-                    <UserProvider>
-                        <AppProvider
-                            globalComponentMap={mockDefaultComponentMap()}
-                        >
-                            <UsersConfigComponent
-                                parentData={{}}
-                            />
-                        </AppProvider>
-                    </UserProvider>
-                </MemoryRouter>
-            );
-        })
-    )
+    
+    const component = renderer.create(
+        // <MemoryRouter>
+            <UserProvider>
+                <AppProvider
+                    globalComponentMap={mockDefaultComponentMap()}
+                >
+                    <UsersConfigComponent
+                        parentData={{}}
+                    />
+                </AppProvider>
+            </UserProvider>
+        // </MemoryRouter>
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
 });

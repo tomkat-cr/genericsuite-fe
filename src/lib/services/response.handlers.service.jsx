@@ -11,27 +11,36 @@ const debug = false;
 export const usePlainFetch = false;
 
 export function handleResponse(response) {
-    if (response.headers && response.response) {
-        if (debug) console_debug_log('Response contains headers and response:', response.headers, response.response);
-        return handleResponseText(response, response.response, response.headers);
-    } else {
-        if (debug) console_debug_log('Response does not contain headers and response:', response);
-        return response.text().then(
-            text => {
-                return handleResponseText(response, text, {});
-            },
-            reason => {
-                if (debug) console_debug_log('handleResponse ERROR - reason:');
-                console.error(reason);
-            }
-        );
+    if (debug) console_debug_log('>> handleResponse: response:', response);
+    if (response.headers && typeof response.data !== 'undefined') {
+        if (debug) console_debug_log('handleResponse: Response contains headers and response.data:', response.headers, response.response);
+        return handleResponseText(response, response.data, response.headers);
     }
+    if (response.headers && response.response) {
+        if (debug) console_debug_log('handleResponse: Response contains headers and response:', response.headers, response.response);
+        return handleResponseText(response, response.response, response.headers);
+    }
+    if (debug) console_debug_log('handleResponse: Response does not contain headers and response:', response);
+    return response.text().then(
+        text => {
+            return handleResponseText(response, text, {});
+        },
+        reason => {
+            if (debug) console_debug_log('handleResponse ERROR - reason:');
+            console.error(reason);
+        }
+    );
 }
 
 export function handleResponseText(response, text, headers) {
     let data = {};
     if (IsJsonString(text)) {
         data = text && JSON.parse(text);
+    } else {
+        if (typeof text === 'object') {
+            // axios response is already a dict
+            data = Object.assign({}, text);
+        }
     }
     if (!response.ok) {
         let specificErrorMsg = (data && data.message) || text || response.statusText || '';
@@ -55,7 +64,8 @@ export function handleResponseText(response, text, headers) {
         return Promise.reject(errorMsg);
     } else {
         data.headers = headers;
-        if (!IsJsonString(text)) {
+        if (typeof text === 'string') {
+            // Text is a string with the blob URL
             if (debug) {
                 console_debug_log(
                     'handleResponse | !IsJsonString(text) | data:', data,
@@ -120,7 +130,7 @@ export async function handleFetchError(error) {
         possibleCORS = (error instanceof TypeError && error.message.includes('Failed to fetch'));
         errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
         reasonDetail = error;
-   }
+    }
     if (debug) {
         console_debug_log(
             'handleFetchError | error:', error,
@@ -136,6 +146,9 @@ export async function handleFetchError(error) {
 }
 
 export function IsJsonString(str) {
+    if (typeof str !== 'string') {
+        return false;
+    }
     try {
         JSON.parse(str);
     } catch (e) {

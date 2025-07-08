@@ -318,7 +318,8 @@ fa-10x	10em    160px
                         y="-64"
                     />
                         <g
-                            id="vertical-menu"
+                            // id="vertical-menu"
+                            id="menu-dots-more"
                             fill="currentColor"
                         >
                             <circle cx="32.026" cy="12.028" r="4" />

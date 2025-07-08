@@ -42,11 +42,22 @@ export const getContentType = (filename, forceAlternative = false) => {
     }
     return contentType;
 }
- 
+
+export const getContentTypeFromHeadersOrFilename = (headers, filename) => {
+    const contentType = getHeadersContentType(headers);
+    if (!contentType) {
+        return getContentType(filename);
+    }
+    return contentType;
+}
+
 export const getFilenameFromContentDisposition = (headers) => {
     // Example: attachment; filename="dccbd8f2900a4c7eb1035add851da72f.wav"
     const contentDisposition = headers.get('content-disposition');
-    const filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+    let filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+    if (!filenameMatch) {
+        filenameMatch = contentDisposition && contentDisposition.match(/filename=([^"]+)/);
+    }
     const filename = filenameMatch ? filenameMatch[1] : null;
     if (debug) {
         console_debug_log('|||| Content-Disposition:', contentDisposition);
@@ -69,22 +80,32 @@ export const performDownload = (fileUrl, filename=null, performIt=true) => {
 }
 
 export const getHeadersContentType = (headers) => {
+    if (!headers || !headers.get || typeof headers.get('content-type') === 'undefined') {
+        return null;
+    }
     return headers.get('content-type');
 }
 
 export const responseHasFile = (headers) => {
     const contentType = getHeadersContentType(headers);
-    return contentType === 'application/octet-stream'
+    return contentType && (contentType === 'application/octet-stream'
         || contentType.includes('audio/')
         || contentType.includes('image/')
         || contentType.includes('video/')
         || contentType.includes('text/csv')
         || contentType.includes('text/text')    // TODO: only to simulate AWS API Gateway
-    ;                
+    );                
 }
 
-export const isBinaryFileType = (filename) => {
-    const contentType = getContentType(filename);
+export const isBinaryFileType = (filename, contentType = null) => {
+    if (!contentType) {
+        if (filename) {
+            contentType = getContentType(filename);
+        } else {
+            console.error('isBinaryFileType | filename and contentType are null');
+            return false;
+        }
+    }
     return contentType === 'application/octet-stream'
         || contentType.includes('audio/')
         || contentType.includes('image/')
@@ -131,15 +152,43 @@ export const decodeBlob = (base64String, filename, oldUrl = null) => {
     return url;
 }
 
-export const fixBlob = async (blobObj, filename) => {
+export const fixBlob = async (blobObj, filename, headers = null) => {
     // Verify if the blob is a binary encoded as Base64 string
     // If so, decode it and return a new blob URL with the decoded content...
     // Else, just return the blob URL...
     if (debug) {
         console_debug_log(`|||| fixBlob v2 | filename: ${filename}`);
     }
-    let blobUrl = URL.createObjectURL(blobObj);
+    const headerContentType = getContentTypeFromHeadersOrFilename(headers, filename);
+    const contentType = getContentType(filename);
+    if (debug) console_debug_log('|||| fixBlob v2 | contentType:', contentType, ' | headerContentType:', headerContentType);
+    let blobUrl = null;
+    try {
+        blobUrl = URL.createObjectURL(blobObj);
+        if (debug) console_debug_log('|||| fixBlob v2 #1 | blobUrl:', blobUrl);
+    } catch (e) {
+        if (debug) console_debug_log('|||| fixBlob v2 #1 | URL.createObjectURL | Error:', e);
+        // 'Overload resolution failed' happens when axios is used (not with fetch)
+        if (!e.message.includes('Overload resolution failed')) {
+            return Promise.reject(e);
+        }
+    }
+    if (blobUrl === null) {
+        try {
+            const binaryData = [];
+            binaryData.push(blobObj);
+            blobObj = new Blob(binaryData, {type: contentType})
+            if (debug) console_debug_log('|||| fixBlob v2 #2 | blobObj:', blobObj);
+            blobUrl = URL.createObjectURL(blobObj);
+            if (debug) console_debug_log('|||| fixBlob v2 #2 | blobUrl:', blobUrl);
+        } catch (e) {
+            if (debug) console_debug_log('|||| fixBlob v2 #2 | URL.createObjectURL | Error:', e);
+            return Promise.reject(e);
+        }
+    }
+    // if (!isBinaryFileType(filename, contentType)) {
     if (!isBinaryFileType(filename)) {
+        if (debug) console_debug_log('|||| fixBlob v2 #3 | Not a binary file type');
         return new Promise((resolve, _) => {
             resolve(blobUrl);
         });
@@ -147,16 +196,20 @@ export const fixBlob = async (blobObj, filename) => {
     const reader = new FileReader();
     // reader.readAsDataURL(blob);  // Convert to data:audio/mpeg;base64,Ly9Qa3h...
     reader.readAsText(blobObj);  // No convertion at all... just get what it receives...
+    if (debug) console_debug_log('|||| fixBlob v2 #4 | reader.readAsText(blobObj)');
     return new Promise((resolve, reject) => {
         reader.onloadend = function () {
-            if (typeof reader.result !== 'string') {
+            if (typeof reader.result !== 'string' || isBinaryFileType(filename, headerContentType)) {
+                if (debug) console_debug_log('|||| fixBlob v2 #5 | reader.result:', reader.result);
                 resolve(blobUrl);
             } else {
+                if (debug) console_debug_log('|||| fixBlob v2 #6 | reader.result:', reader.result);
                 blobUrl = decodeBlob(reader.result, filename);
                 resolve(blobUrl);
             }
         };
         reader.onerror = function (error) {
+            if (debug) console_debug_log('|||| fixBlob v2 #7 | reader.onerror | Error:', error);
             reject(error);
         };
     });

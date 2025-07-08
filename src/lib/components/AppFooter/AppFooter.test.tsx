@@ -1,6 +1,6 @@
-import React, { act } from "react";
-import { render } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import React from "react";
+import renderer from 'react-test-renderer';
+// import { MemoryRouter } from "react-router-dom";
 
 import { mockDefaultComponentMap } from "../../test-helpers/mocks";
 
@@ -14,20 +14,18 @@ import { AppProvider } from "../../helpers/AppContext";
 import { AppFooter } from "./AppFooter";
 
 
-describe("AppFooter", () => {
-    test("renders the AppFooter component", () =>
-        React.act(() => {
-            render(
-                <MemoryRouter>
-                    <UserProvider>
-                        <AppProvider
-                            globalComponentMap={mockDefaultComponentMap()}
-                        >
-                            <AppFooter />
-                        </AppProvider>
-                    </UserProvider>
-                </MemoryRouter>
-            );
-        })
-    )
+it("renders the AppFooter component", () => {
+    const component = renderer.create(
+        // <MemoryRouter>
+            <UserProvider>
+                <AppProvider
+                    globalComponentMap={mockDefaultComponentMap()}
+                >
+                    <AppFooter />
+                </AppProvider>
+            </UserProvider>
+        // </MemoryRouter>
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
 });

@@ -82,14 +82,16 @@ run_prod: build-prod
 	npm start
 
 tailwind:
-	# npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
-	npx tailwindcss -i ./src/input.css -o ./public/output.css --watch
+	npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css --watch
 
 add_submodules:
 	sh node_modules/genericsuite/scripts/add_github_submodules.sh
 
 create_ssl_certs:
-	sh node_modules/genericsuite/scripts/create_ssl_certs.sh
+	if [ -f ./scripts/create_ssl_certs.sh ]; then sh ./scripts/create_ssl_certs.sh create; else sh node_modules/genericsuite/scripts/create_ssl_certs.sh create; fi
+
+copy_ssl_certs:
+	if [ -f ./scripts/create_ssl_certs.sh ]; then sh ./scripts/create_ssl_certs.sh copy; else sh node_modules/genericsuite/scripts/create_ssl_certs.sh copy; fi
 
 ## NPM scripts library
 

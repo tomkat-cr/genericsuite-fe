@@ -31,6 +31,7 @@ import {
 import {
   console_debug_log,
 } from './logging.service.jsx';
+import { getLocalConfigItem, saveLocalConfig } from '../helpers/local-config.jsx';
 import {
   imageDirectory,
   MSG_ACTION_DELETE,
@@ -48,7 +49,6 @@ import {
 import {
   BUTTON_LISTING_CLASS,
   BUTTON_LISTING_DISABLED_CLASS,
-  // BUTTON_RIGHT_SPACE_CLASS,
   BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS,
   BUTTON_COMPOSED_LABEL_CLASS,
@@ -56,13 +56,9 @@ import {
   HIDDEN_CLASS,
   VISIBLE_CLASS,
   APP_TOP_DIV_CLASS,
-  // APP_LEVEL1_DIV_CLASS,
   APP_TITLE_H1_CLASS,
   APP_TITLE_RECYCLE_BUTTON_CLASS,
   APP_LEVEL2_DIV_CLASS,
-  // APP_LISTING_LEVEL2_DIV_CLASS,
-  // APP_LISTING_LEVEL3_DIV_CLASS,
-  // APP_LISTING_LEVEL4_DIV_CLASS,
   APP_LISTING_TABLE_CLASS,
   APP_LISTING_TABLE_HDR_THEAD_CLASS,
   APP_LISTING_TABLE_HDR_TR_CLASS,
@@ -99,7 +95,6 @@ import {
   MSG_NEXT,
   MSG_PAGE,
   MSG_OF,
-  ROWS_PER_PAGE,
   MSG_ACTIONS,
   MSG_ROWS_PER_PAGE,
 } from "../constants/general_constants.jsx";
@@ -124,7 +119,9 @@ const GenericCrudEditorMain = (props) => {
   const [editor, setEditor] = useState(null);
   const [rows, setRows] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE);
+  const [rowsPerPage, setRowsPerPage] = useState(
+    parseInt(getLocalConfigItem("gce_rows_per_page"))
+  );
   const [formMode, setFormMode] = useState([ACTION_LIST, null]);
   const [status, setStatus] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
@@ -138,8 +135,8 @@ const GenericCrudEditorMain = (props) => {
   const { currentUser } = useUser();
   const { theme, isWide } = useAppContext();
 
-  const actionsHandlerAllowsMouseOver = true;
-  const actionsHandlerAllowsMagicButton = false;
+  const actionsHandlerAllowsMouseOver = getLocalConfigItem("gce_actions_allows_mouse_over") == '1';
+  const actionsHandlerAllowsMagicButton = getLocalConfigItem("gce_actions_allows_magic_button") == '1';
 
   useEffect(() => {
     setEditorParameters(props).then(
@@ -173,7 +170,6 @@ const GenericCrudEditorMain = (props) => {
   }, [props]);
 
   useEffect(() => {
-    // if (editor && !status) {
     if (editor) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation"
       ShowHidePageAnimation(true, animationElementId);
@@ -186,11 +182,7 @@ const GenericCrudEditorMain = (props) => {
         editor, 'dbListPreRead', accessKeysListing, formMode, currentUser
       ).then(
         funcResponse => {
-          // console_debug_log(`GenericCrudEditor / dbListPreRead - funcResponse:`)
-          // console_debug_log(funcResponse);
-          accessKeysListing = Object.assign(
-            accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues
-          );
+          accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
           editor.db.getAll(accessKeysListing).then(
             data => {
               ShowHidePageAnimation(false, animationElementId);
@@ -273,6 +265,7 @@ const GenericCrudEditorMain = (props) => {
     if (!event.target.value) {
       return;
     }
+    saveLocalConfig({"gce_rows_per_page": event.target.value});
     setInfoMsg('');
     setRowsPerPage(event.target.value);
   }
@@ -293,6 +286,7 @@ const GenericCrudEditorMain = (props) => {
 
   const actionsHandler = (mode, row) => {
     const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
+    const currRowHadHiddenClass = element.classList.contains('hidden');
     const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
     const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
@@ -326,19 +320,13 @@ const GenericCrudEditorMain = (props) => {
           thisRowElement.classList.add('hidden');
         }
       });
-      if (element.classList.contains('hidden')) {
+      if (currRowHadHiddenClass) {
         // Controls hidden in this row
         bgColorStype.map((key) => { rowElement.classList.add(key) });
-        if (actionsHandlerAllowsMagicButton) {
-          magicButtonElement.classList.add('hidden');
-        }
         element.classList.remove('hidden');
       } else {
         // Controls activated in this row
         bgColorStype.map((key) => { rowElement.classList.remove(key) });
-        if (actionsHandlerAllowsMagicButton) {
-          magicButtonElement.classList.remove('hidden');
-        }
         element.classList.add('hidden');
       }
     }
@@ -435,6 +423,20 @@ const GenericCrudEditorMain = (props) => {
                   key={`${editor.baseUrl}_thead_tr`}
                   className={APP_LISTING_TABLE_HDR_TR_CLASS}
                 >
+                  {actionsHandlerAllowsMagicButton && (
+                    <th
+                      // scope="col"
+                      key={`${editor.baseUrl}_actions`}
+                      className={APP_LISTING_TABLE_HDR_TH_CLASS}
+                    >
+                      <div
+                        key={`${editor.baseUrl}_actions_div`}
+                        className={APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS}
+                      >
+                        {" "}
+                      </div>
+                    </th>
+                  )}
                   {Object.keys(editor.fieldElements).map(
                     (key) =>
                       editor.fieldElements[key].listing && (
@@ -446,20 +448,6 @@ const GenericCrudEditorMain = (props) => {
                           {editor.fieldElements[key].label}
                         </th>
                       )
-                  )}
-                  {actionsHandlerAllowsMagicButton && (
-                    <th
-                      // scope="col"
-                      key={`${editor.baseUrl}_actions`}
-                      className={APP_LISTING_TABLE_HDR_TH_CLASS}
-                    >
-                      <div
-                        key={`${editor.baseUrl}_actions_div`}
-                        className={APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS}
-                      >
-                          {MSG_ACTIONS}
-                      </div>
-                    </th>
                   )}
                 </tr>
               </thead>
@@ -489,6 +477,25 @@ const GenericCrudEditorMain = (props) => {
                           actionsHandler('hide', row);
                         }}
                       >
+                        {actionsHandlerAllowsMagicButton && (
+                          <td
+                            // Action buttons
+                            key={`${editor.baseUrl}_row_${rowId(row)}_magicButton_td`}
+                            // colSpan={Object.keys(editor.fieldElements).length + 1}
+                            className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
+                          >
+                            <div
+                              id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
+                              key={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
+                              className={VISIBLE_CLASS}
+                            >
+                              <GsIcons
+                                icon="menu-dots-more"
+                                alt={MSG_MORE}
+                              />
+                            </div>
+                          </td>
+                        )}
                         {Object.keys(editor.fieldElements).map(
                           (key) =>
                             editor.fieldElements[key].listing && (
@@ -504,25 +511,6 @@ const GenericCrudEditorMain = (props) => {
                                 }
                               </td>
                             )
-                        )}
-                        {actionsHandlerAllowsMagicButton && (
-                          <td
-                            // Action buttons
-                            key={`${editor.baseUrl}_row_${rowId(row)}_magicButton_td`}
-                            colSpan={Object.keys(editor.fieldElements).length + 1}
-                            className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
-                          >
-                            <div
-                              id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
-                              key={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
-                              className={VISIBLE_CLASS}
-                            >
-                              <GsIcons
-                                icon="menu-dots-more"
-                                alt={MSG_MORE}
-                              />
-                            </div>
-                          </td>
                         )}
                       </tr>
                       <tr
@@ -548,7 +536,6 @@ const GenericCrudEditorMain = (props) => {
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_eye`}
                             onClick={() => handleView(rowId(row))}
-                            // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -559,7 +546,6 @@ const GenericCrudEditorMain = (props) => {
                           <button
                             key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
                             onClick={() => handleModify(rowId(row))}
-                            // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -740,12 +726,6 @@ const CrudEditorRowsPerPage = ({ id, rowsPerPage, handleRowsPerPageChange }) => 
         onChange={handleRowsPerPageChange}
         defaultValue={rowsPerPage}
       >
-        <option
-          key={ROWS_PER_PAGE}
-          value={ROWS_PER_PAGE}
-        >
-          {ROWS_PER_PAGE}
-        </option>
         {Array.from({ length: 10 }, (_, i) => (i + 1) * 10).map(value => (
           <option
             key={value}

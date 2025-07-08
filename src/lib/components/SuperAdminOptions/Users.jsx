@@ -159,6 +159,7 @@ export const UsersPasswordValidations = (data, editor, action) => {
                         'User needs a password';
                         break;
                 }
+                break;
             case ACTION_UPDATE:
                 if (data['passcode']) {
                     if (data['passcode'] !== data['passcode_repeat']) {

@@ -66,7 +66,7 @@ declare var NavLib: Readonly<{
     CenteredBoxContainer: (_ref5: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
-    GsButton: (_ref18: any) => React.CElement<any, React.Component<any, any, any>> | React.DetailedReactHTMLElement<any, HTMLElement>;
+    GsButton: (_ref16: any) => React.CElement<any, React.Component<any, any, any>> | React.DetailedReactHTMLElement<any, HTMLElement>;
     MainContainer: (_ref: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
@@ -74,10 +74,10 @@ declare var NavLib: Readonly<{
         className: string;
     }, HTMLElement>;
     NavDropdown: {
-        (_ref14: any): React.DetailedReactHTMLElement<{
+        (_ref12: any): React.DetailedReactHTMLElement<{
             className: any;
         }, HTMLElement>;
-        Item: (_ref15: any) => React.DetailedReactHTMLElement<{
+        Item: (_ref13: any) => React.DetailedReactHTMLElement<{
             className: any;
         }, HTMLElement>;
     };
@@ -102,7 +102,7 @@ declare var NavLib: Readonly<{
         TopRightMenu: (_ref9: any) => React.FunctionComponentElement<{
             children?: React.ReactNode | undefined;
         }>;
-        MobileMenu: (_ref11: any) => React.DetailedReactHTMLElement<{
+        MobileMenu: (_ref1: any) => React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement> | null;
         Toggle: () => React.DetailedReactHTMLElement<{
@@ -110,14 +110,14 @@ declare var NavLib: Readonly<{
             onClick: any;
             className: string;
         }, HTMLElement>;
-        Text: (_ref12: any) => React.DetailedReactHTMLElement<{
+        Text: (_ref10: any) => React.DetailedReactHTMLElement<{
             className: any;
         }, HTMLElement>;
-        TopForSideMenu: (_ref13: any) => React.DetailedReactHTMLElement<{
+        TopForSideMenu: (_ref11: any) => React.DetailedReactHTMLElement<{
             className: string;
         }, HTMLElement>;
     };
-    ToggleSideBar: (_ref17: any) => React.DetailedReactHTMLElement<any, HTMLElement>;
+    ToggleSideBar: (_ref15: any) => React.DetailedReactHTMLElement<any, HTMLElement>;
 }>;
 declare var PrivateRoute$1: Readonly<{
     __proto__: null;
@@ -195,38 +195,39 @@ declare var blob_files_utilities: Readonly<{
     __proto__: null;
     decodeBlob: (base64String: any, filename: any, ...args: any[]) => any;
     defaultFilenametoDownload: "audio.wav";
-    fixBlob: (blobObj: any, filename: any) => Promise<any>;
+    fixBlob: (blobObj: any, filename: any, ...args: any[]) => Promise<any>;
     getContentType: (filename: any, ...args: any[]) => string;
+    getContentTypeFromHeadersOrFilename: (headers: any, filename: any) => any;
     getFileExtension: (filename: any) => any;
     getFilenameFromContentDisposition: (headers: any) => any;
     getHeadersContentType: (headers: any) => any;
-    isBinaryFileType: (filename: any) => boolean;
+    isBinaryFileType: (filename: any, ...args: any[]) => any;
     performDownload: (fileUrl: any, ...args: any[]) => true | HTMLAnchorElement;
     responseHasFile: (headers: any) => any;
 }>;
 declare var class_name_constants: Readonly<{
     __proto__: null;
-    ALERT_BASE_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass";
-    ALERT_DANGER_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-red-800 bg-red-100 border-red-200 alertDangerClass";
-    ALERT_INFO_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass";
-    ALERT_SUCCESS_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-green-800 bg-green-100 border-green-200 alertSuccessClass";
-    ALERT_WARNING_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass";
+    ALERT_BASE_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass";
+    ALERT_DANGER_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-red-800 bg-red-100 border-red-200 alertDangerClass";
+    ALERT_INFO_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass";
+    ALERT_SUCCESS_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-green-800 bg-green-100 border-green-200 alertSuccessClass";
+    ALERT_WARNING_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass";
     APP_FOOTER_CONTAINER_CLASS: "p-1 text-white text-center appFooterContainerClass";
     APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS: "mt-6 appFormPageChildComponentsTopDivClass";
-    APP_FORMPAGE_FIELD_BASE_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass";
+    APP_FORMPAGE_FIELD_BASE_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass";
     APP_FORMPAGE_FIELD_CLASS: "flex flex-col mb-4 formGroupClass appFormPageFieldClass";
-    APP_FORMPAGE_FIELD_GOOD_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass appFormPageFieldGoodClass";
-    APP_FORMPAGE_FIELD_INVALID_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass is-invalid appFormPageFieldInvalidClass";
+    APP_FORMPAGE_FIELD_GOOD_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass appFormPageFieldGoodClass";
+    APP_FORMPAGE_FIELD_INVALID_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass is-invalid appFormPageFieldInvalidClass";
     APP_FORMPAGE_FORM_BUTTON_BAR_CLASS: "flex align-middle space-x-4 appFormPageFormButtonBarClass";
     APP_FORMPAGE_LABEL_CLASS: "font-medium appFormPageLabelClass";
     APP_FORMPAGE_LABEL_REQUIRED_CLASS: "font-medium text-red-700 appFormPageLabelRequiredClass";
     APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS: "align-middle flex appFormPageSpecialButtonDivClass";
     APP_GENERAL_MARGINS_CLASS: "mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass";
     APP_LEVEL2_DIV_CLASS: "overflow-x-auto appLevel2DivClass";
-    APP_LISTING_SEARCH_BOX_INPUT_CLASS: "p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
+    APP_LISTING_SEARCH_BOX_INPUT_CLASS: "p-2 rounded-sm border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
     APP_LISTING_SEARCH_BOX_LABEL_CLASS: "mr-2 text-sm appListingSearchBoxLabelClass";
-    APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass mr-2 text-xs appListingSearchBoxStopButtonClass";
-    APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass";
+    APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass mr-2 text-xs appListingSearchBoxStopButtonClass";
+    APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass";
     APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS: "flex items-center space-x-2 appListingSearchBoxTopDivClass";
     APP_LISTING_TABLE_BODY_TBODY_CLASS: "appListingTableBodyTbodyClass";
     APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS: "p-2 appListingTableBodyTdBaseEvenClass bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass";
@@ -242,31 +243,31 @@ declare var class_name_constants: Readonly<{
     APP_LISTING_TABLE_CLASS: "w-full text-sm appListingTableClass";
     APP_LISTING_TABLE_HDR_THEAD_CLASS: "bg-white dark:bg-black appListingTableHdrTheadClass";
     APP_LISTING_TABLE_HDR_TH_CLASS: "text-left p-2 appListingTableHdrThClass";
-    APP_LISTING_TABLE_HDR_TR_CLASS: "border-b appListingTableHdrTrClass";
+    APP_LISTING_TABLE_HDR_TR_CLASS: "appListingTableHdrTrClass";
     APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS: "appListingTableHrdActionsColClass";
     APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS: "text-sm flex items-center appListingToolbarPageNumSectionClass";
     APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS: "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
-    APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: "p-2 rounded border appListingToolbarRowPerPageInputClass";
+    APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS: "p-2 rounded-sm border border-gray-300 bg-white appListingToolbarRowPerPageInputClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS: "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
     APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS: "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
     APP_LISTING_TOOLBAR_TOP_DIV_CLASS: "flex items-center mt-4 space-x-4 1-sm:space-y-0 appListingToolbarTopDivClass";
     APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS: "flex-col appListingToolbarTopDivNotWideClass";
     APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS: "flex-row appListingToolbarTopDivWideClass";
     APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS: "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
-    APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "flex-grow flex flex-col appSectionContainerForSideMenuClass";
-    APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "flex-grow appSectionContainerForSideMenuMainClass";
-    APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: "flex-grow 1-p-4 appSectionContainerForTopMenuClass";
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS: "grow flex flex-col appSectionContainerForSideMenuClass";
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS: "grow appSectionContainerForSideMenuMainClass";
+    APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS: "grow 1-p-4 appSectionContainerForTopMenuClass";
     APP_SIDE_MENU_BG_COLOR_CLASS: "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
     APP_TITLE_H1_CLASS: "text-xl font-bold mb-4 appTitleH1Class";
     APP_TITLE_RECYCLE_BUTTON_CLASS: "pl-2 align-bottom appTitleRecycleButtonClass";
     APP_TOP_DIV_CLASS: "mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass rounded-lg appTopDivClass";
     BUTTON_COMPOSED_LABEL_CLASS: "flex items-center buttonComposedLabelClass";
-    BUTTON_LISTING_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
-    BUTTON_LISTING_DISABLED_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass opacity-50 buttonListingDisabledClass";
-    BUTTON_LISTING_NEW_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass buttonListingNewClass";
-    BUTTON_LISTING_REFRESH_CLASS: "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass text-xs buttonListingRefreshClass";
-    BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
-    BUTTON_SECONDARY_CLASS: "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
+    BUTTON_LISTING_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass";
+    BUTTON_LISTING_DISABLED_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass opacity-50 buttonListingDisabledClass";
+    BUTTON_LISTING_NEW_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass buttonListingNewClass";
+    BUTTON_LISTING_REFRESH_CLASS: "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass text-xs buttonListingRefreshClass";
+    BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-hidden focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
+    BUTTON_SECONDARY_CLASS: "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-hidden focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
     CENTERED_BOX_CONTAINER_DIV_1_CLASS: "z-50 overflow-auto centeredBoxContainerDiv1Class";
     CENTERED_BOX_CONTAINER_DIV_2_CLASS: "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
     CENTERED_BOX_CONTAINER_DIV_3_CLASS: "flex flex-col items-center pt-1 pb-4 p-6 centeredBoxContainerDiv3Class";
@@ -275,15 +276,15 @@ declare var class_name_constants: Readonly<{
     DARK_MODE_BUTTON_SVG_CLASS: "w-6 h-6 darkModeButtonSvgClass";
     DARK_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 darkModeButtonTopDivClass";
     DISABLE_FIELD_BACKGROUND_COLOR_CLASS: "bg-gray-200 disableFieldBackgroundColorClass";
-    ERROR_MSG_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-red-800 bg-red-100 border-red-200 alertDangerClass mt-4 p-2 rounded-md errorMsgClass";
-    FORM_CONTROL_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass";
+    ERROR_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-red-800 bg-red-100 border-red-200 alertDangerClass mt-4 p-2 rounded-md errorMsgClass";
+    FORM_CONTROL_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass";
     FORM_GROUP_CLASS: "mb-4 formGroupClass";
-    GRAY_BOX_MSG_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass";
+    GRAY_BOX_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass";
     HIDDEN_CLASS: "hidden hiddenClass";
     HORIZONTALLY_CENTERED_CLASS: "flex flex-col items-center horizontallyCenteredClass";
-    INFO_MSG_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass mt-4 p-2 rounded-md infoMsgClass";
+    INFO_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass mt-4 p-2 rounded-md infoMsgClass";
     INLINE_CLASS: "inline inlineClass";
-    INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
+    INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
     INVALID_FEEDBACK_CLASS: "text-red-800 text-sm mt-1 invalidFeedbackClass";
     IS_INVALID_CLASS: "border-red-500 isInvalidClass";
     LOGIN_BUTTON_IN_APP_COMPONENT_CLASS: "flex flex-col items-center horizontallyCenteredClass p-4 loginButtonInAppComponentClass";
@@ -296,12 +297,12 @@ declare var class_name_constants: Readonly<{
     MARKDOWN_UNDERLINE_CLASS: "underline markdown-underline-class";
     MENU_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 menuModeButtonTopDivClass";
     ML2_ICON_CLASS: "ml-2 overflow-visible";
-    MODALIB_BUTTON_BASESTYLE_CLASS: "px-4 py-2 border rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass";
+    MODALIB_BUTTON_BASESTYLE_CLASS: "px-4 py-2 border rounded-md text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass";
     MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS: "w-full flex justify-center modalibButtonBaseStyleNotWideClass";
     MODALIB_BUTTON_BASESTYLE_WIDE_CLASS: "flex-1 modalibButtonBaseStyleWideClass";
     MODALIB_BUTTON_DANGER_CLASS: "bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass";
-    MODALIB_BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass modalibButtonPrimaryClass";
-    MODALIB_BUTTON_SECONDARY_CLASS: "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass modalibButtonSecondaryClass";
+    MODALIB_BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-hidden focus:ring-2 focus:ring-blue-500 buttonPrimaryClass modalibButtonPrimaryClass";
+    MODALIB_BUTTON_SECONDARY_CLASS: "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-hidden focus:ring-2 focus:ring-gray-500 buttonSecondaryClass modalibButtonSecondaryClass";
     MODALIB_BUTTON_SUCCESS_CLASS: "bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass";
     MODALIB_MODAL_BODY_CLASS: "text-center mb-6 max-h-80 overflow-auto modalibModalBodyClass";
     MODALIB_MODAL_DIV_1_CLASS: "z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
@@ -340,34 +341,34 @@ declare var class_name_constants: Readonly<{
     NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS: "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
     NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS: "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
     NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS: "mr-2 navbarTopRightMenuUnauthenticatedMarginRightClass";
-    NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS: "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
-    NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonMobileMenuClass";
-    NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonSideMenuClass";
-    NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS: "rounded p-1 flex items-center navDropdownButtonTopMenuClass";
+    NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS: "rounded-sm p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
+    NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded-sm navDropdownButtonMobileMenuClass";
+    NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS: "1-w-full text-left flex justify-between items-center py-2 px-2 rounded-sm navDropdownButtonSideMenuClass";
+    NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS: "rounded-sm p-1 flex items-center navDropdownButtonTopMenuClass";
     NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS: "navDropdownImageHamburgerClass";
     NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS: "h-4 w-4 transform transition-transform navDropdownImageMobileMenuClass";
     NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS: "navDropdownImageSideMenuClass";
     NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS: "navDropdownImageTopMenuClass";
-    NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS: "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
+    NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS: "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivHamburgerClass";
     NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
     NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS: "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
-    NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS: "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
-    NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS: "rounded block px-2 navDropDownItemButtonsHamburgerClass";
-    NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded py-2 px-2 navDropDownItemButtonsMobileMenuClass";
-    NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS: "rounded px-2 py-2 navDropDownItemButtonsSideMenuClass";
-    NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS: "rounded px-2 flex items-center navDropDownItemButtonsTopMenuClass";
+    NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS: "absolute hidden z-50 bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivTopMenuClass";
+    NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS: "rounded-sm block px-2 navDropDownItemButtonsHamburgerClass";
+    NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded-sm py-2 px-2 navDropDownItemButtonsMobileMenuClass";
+    NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS: "rounded-sm px-2 py-2 navDropDownItemButtonsSideMenuClass";
+    NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS: "rounded-sm px-2 flex items-center navDropDownItemButtonsTopMenuClass";
     NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS: "block py-1 navDropdownItemTopDivHamburgerClass";
-    NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS: "block rounded navDropdownItemTopDivMobileMenuClass";
-    NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS: "block rounded navDropdownItemTopDivSideMenuClass";
+    NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS: "block rounded-sm navDropdownItemTopDivMobileMenuClass";
+    NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS: "block rounded-sm navDropdownItemTopDivSideMenuClass";
     NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS: "block py-1 navDropdownItemTopDivTopMenuClass";
     NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS: "block relative group navDropdownTopDivHamburgerClass";
     NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS: "1-space-y-2 navDropdownTopDivMobileMenuClass";
     NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS: "1-space-x-4 navDropdownTopDivSideMenuClass";
     NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS: "relative group navDropdownTopDivTopMenuClass";
     NAV_LINK_BUTTON_HAMBURGER_CLASS: "block py-1 navLinkButtonsHamburgerClass";
-    NAV_LINK_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
-    NAV_LINK_BUTTON_SIDE_MENU_CLASS: "py-2 px-2 rounded navLinkButtonsSideMenuClass";
-    NAV_LINK_BUTTON_TOP_MENU_CLASS: "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
+    NAV_LINK_BUTTON_MOBILE_MENU_CLASS: "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded-sm navLinkButtonsMobileMenuClass";
+    NAV_LINK_BUTTON_SIDE_MENU_CLASS: "py-2 px-2 rounded-sm navLinkButtonsSideMenuClass";
+    NAV_LINK_BUTTON_TOP_MENU_CLASS: "rounded-sm p-1 flex items-center navLinkButtonsTopMenuClass";
     NAV_LINK_ICON_CLASS: "w-8 h-8 navLinkIconClass";
     NAV_LINK_TOP_DIV_HAMBURGER_CLASS: "block relative group navLinkTopDivHamburgerClass";
     NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
@@ -379,13 +380,13 @@ declare var class_name_constants: Readonly<{
     SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
     SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: "ml-3 mr-3 showHidePageAnimationEnabledClass";
     STROKE_WHITE_ICON_CLASS: "stroke-white";
-    SUCCESS_MSG_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-green-800 bg-green-100 border-green-200 alertSuccessClass mt-4 p-2 rounded-md successMsgClass";
+    SUCCESS_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-green-800 bg-green-100 border-green-200 alertSuccessClass mt-4 p-2 rounded-md successMsgClass";
     SUGGESTION_DROPDOWN_CLASS: "align-middle flex";
     TOP0_Z50_CLASS: "top-0 z-50 top0z50Class";
     VERTICALLY_CENTERED_CLASS: "flex items-center justify-center verticallyCenteredClass";
     VERTICAL_SLIDER_ICON_CLASS: "h-8 w-1.5 rounded-full bg-slate-400";
     VISIBLE_CLASS: "visible visibleClass";
-    WARNING_MSG_CLASS: "1-relative p-3 border border-transparent rounded alertBaseClass text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass mt-4 p-2 rounded-md warningMsgClass";
+    WARNING_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass mt-4 p-2 rounded-md warningMsgClass";
     defaultTheme: {
         light: {
             primary: string;
@@ -437,7 +438,6 @@ declare var db_service: Readonly<{
     MULTIPART_FORM_DATA_HEADER: {
         'Content-Type': string;
     };
-    convertId: (id: any) => any;
     dbApiService: typeof dbApiService;
 }>;
 declare var dictUtilities: Readonly<{
@@ -455,11 +455,19 @@ declare var errorAndReenter: Readonly<{
         error: boolean;
         message: any;
     };
+    getErrorDetail: (errorRaw: any) => any;
     getErrorMessage: (error: any) => any;
     includesAppValidLinks: (message: any) => boolean;
     isSessionExpired: (errorMessage: any) => boolean;
     logoutHander: typeof logoutHander;
     refreshPage: typeof refreshPage;
+}>;
+declare var fetch_utilities: Readonly<{
+    __proto__: null;
+    getAxios: (url: any, requestOptions: any) => Promise<any>;
+    getFetch: (url: any, requestOptions: any) => Promise<any> | undefined;
+    gsFetch: (url: any, requestOptions: any) => Promise<any> | undefined;
+    useAxios: boolean;
 }>;
 declare var general_constants: Readonly<{
     __proto__: null;
@@ -514,7 +522,7 @@ declare var general_constants: Readonly<{
     MSG_VALID_EMAIL: "a valid email address";
     MSG_VALID_INTEGER: "an integer number";
     MSG_VALID_NUMBER: "a number";
-    ROWS_PER_PAGE: 5;
+    ROWS_PER_PAGE: 30;
     TRUE_FALSE: {
         title: any;
         value: string;
@@ -686,6 +694,11 @@ declare var history$1: Readonly<{
     removeLastUrl: () => void;
     setLastUrl: (...args: any[]) => void;
 }>;
+declare var id_utilities: Readonly<{
+    __proto__: null;
+    convertId: (id: any) => any;
+    getUuidV4: () => any;
+}>;
 declare var jsonUtilities: Readonly<{
     __proto__: null;
     buildConstant: (constants: any) => {
@@ -773,14 +786,16 @@ declare function authHeader(): {
 declare class dbApiService {
     constructor(props: any);
     props: any;
+    getAdditionalHeaders(): {
+        'Access-Control-Expose-Headers': string;
+    };
     paramsToUrlQuery(params: any): string;
-    getFetch(url: any, requestOptions: any): Promise<any> | undefined;
     getAll(...args: any[]): Promise<any> | undefined;
     getOne(params: any, ...args: any[]): Promise<any> | undefined;
-    createUpdateDelete(action: any, id: any, data: any, ...args: any[]): Promise<any>;
-    createRow(data: any, ...args: any[]): Promise<any>;
-    updateRow(id: any, data: any, ...args: any[]): Promise<any>;
-    deleteRow(id: any, data: any, ...args: any[]): Promise<any>;
+    createUpdateDelete(action: any, id: any, data: any, ...args: any[]): Promise<any> | undefined;
+    createRow(data: any, ...args: any[]): Promise<any> | undefined;
+    updateRow(id: any, data: any, ...args: any[]): Promise<any> | undefined;
+    deleteRow(id: any, data: any, ...args: any[]): Promise<any> | undefined;
     convertId(id: any): any;
 }
 declare function errorAndReEnter(error: any, ...args: any[]): React.FunctionComponentElement<any>;
@@ -805,7 +820,7 @@ declare function handleFetchError(error: any): Promise<never>;
 declare function handleResponse(response: any): any;
 declare function handleResponseText(response: any, text: any, headers: any): Promise<never> | {
     headers: any;
-    file: any;
+    file: string;
     error: boolean;
     message: any;
     resultset: any;
@@ -885,4 +900,4 @@ declare function mockUserData(): {
 };
 declare function getUrlParams(...args: any[]): {};
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };

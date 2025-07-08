@@ -13,4 +13,13 @@ if [ "${APP_LOCAL_DOMAIN_NAME}" = "" ]; then
     exit 1
 fi
 
-sh ${BACKEND_PATH}/scripts/create_local_ssl_certs.sh ${APP_LOCAL_DOMAIN_NAME}
+export APP_NAME="${REACT_APP_APP_NAME}"
+export FRONTEND_PATH="$(pwd)"
+if [ "$1" = "create" ]; then
+    sh ${BACKEND_PATH}/node_modules/genericsuite-be-scripts/scripts/local_ssl_certs_creation.sh ${APP_LOCAL_DOMAIN_NAME} ${BACKEND_PATH}
+elif [ "$1" = "copy" ]; then
+    sh ${BACKEND_PATH}/node_modules/genericsuite-be-scripts/scripts/local_ssl_certs_copy.sh ${APP_LOCAL_DOMAIN_NAME} ${FRONTEND_PATH} ${BACKEND_PATH}
+else
+    echo "Usage: ${0} [create|copy]"
+    exit 1
+fi

@@ -7,7 +7,13 @@ import constants from "../../configs/frontend/general_constants.json";
 
 // Security
 
-export const MSG_ERROR_INVALID_TOKEN = ['A valid token is missing', 'Token is invalid', 'Session expired', 'HTTP 401'];
+export const MSG_ERROR_INVALID_TOKEN = [
+    'A valid token is missing',
+    'Token is invalid',
+    'Session expired',
+    'HTTP 401',
+    'Request failed with status code 401'
+];
 export const MSG_ERROR_INVALID_CREDS = 'The username or password is incorrect. Please try again.';
 export const MSG_ERROR_SESSION_EXPIRED = 'Session expired.';
 export const MSG_ERROR_CLICK_TO_RELOGIN = 'Login again';
@@ -71,7 +77,7 @@ export const MSG_ROWS_PER_PAGE = "Rows per page";
 
 // Generic editor : default values
 
-export const ROWS_PER_PAGE=5
+export const ROWS_PER_PAGE = 30
 
 // Generic editor : general select options
 

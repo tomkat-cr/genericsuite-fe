@@ -23,10 +23,21 @@ get_ssl_cert_arn() {
     fi
 }
 
+remove_symlinks() {
+    sh "${SCRIPTS_DIR}/run_symlinks_handler.sh" remove
+}
+
 REPO_BASEDIR="`pwd`"
-cd "`dirname "$0"`" ;
-SCRIPTS_DIR="`pwd`" ;
+SCRIPTS_DIR="$( cd -- "$(dirname "$BASH_SOURCE")" >/dev/null 2>&1 ; pwd -P )"
 cd "${REPO_BASEDIR}"
+
+# Defaults
+
+if [ "${RUN_METHOD}" = "" ]; then
+    RUN_METHOD="vite"
+    # RUN_METHOD="webpack"
+    # RUN_METHOD="react-scripts"
+fi
 
 UPDATE_BUILD="1"
 
@@ -359,16 +370,10 @@ fi
 
 if [ "${ERROR_MSG}" = "" ]; then
 
-    export REACT_APP_REWIRED=$(perl -ne 'print $1 if /"react-app-rewired":\s*"([^"]*)"/' package.json)
-    echo "package.json REACT_APP_REWIRED is: ${REACT_APP_REWIRED}"
+    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_METHOD}
 
     export TSCONFIG_BASE_URL=$(perl -ne 'print $1 if /"baseUrl":\s*"([^"]*)"/' tsconfig.json)
     echo "tsconfig.json TSCONFIG_BASE_URL was: ${TSCONFIG_BASE_URL}"
-
-    if [ "${REACT_APP_REWIRED}" = "" ]; then
-        echo "Installing react-app-rewired ..."
-        npm install --save-dev --force react-app-rewired
-    fi
 
     if [ "${TSCONFIG_BASE_URL}" = "./src/lib" ]; then
         echo "Preparing tsconfig.json for local build test..."
@@ -398,23 +403,46 @@ fi
 # Build the ReactJS project
 if [ "${ERROR_MSG}" = "" ]; then
     if [ "${UPDATE_BUILD}" = "1" ]; then
-        echo "Building React app..."
+
+        # To avoid error message: "ENOENT: no such file or directory, stat './public/static'"
+        # during the build process, because the 'static' is a symlink, not a directory
+        remove_symlinks
+
+        echo "Building React app... (${RUN_METHOD})"
+
         if [ "$1" = "prod" ]; then
             echo "Building for production..."
-            if ! npm run build-prod
+            if [ "${RUN_METHOD}" = "webpack" ]; then
+                run_command="npx webpack --mode production"
+            elif [ "${RUN_METHOD}" = "vite" ]; then
+                run_command="npx vite build"
+            else
+                run_command="npx react-app-rewired build"
+            fi
+            # if ! npm run build-prod
+            if ! ${run_command}
             then
-                ERROR_MSG="ERROR running npm run build-prod"
+                ERROR_MSG="ERROR-010 running ${run_command}"
             fi
         else
-            echo "Building for development..."
-            if ! npm run build-dev
+            echo "Building for development ($1)..."
+            if [ "${RUN_METHOD}" = "webpack" ]; then
+                run_command="npx webpack --mode development"
+            elif [ "${RUN_METHOD}" = "vite" ]; then
+                run_command="npx vite build"
+            else
+                run_command="npx react-app-rewired build"
+            fi
+            # if ! npm run build-dev
+            if ! ${run_command}
             then
-                ERROR_MSG="ERROR running npm run build"
+                ERROR_MSG="ERROR-020 running ${run_command}"
             fi
         fi
+
         if [ "${ERROR_MSG}" = "" ]; then
             # Copy images to build/static/media directory
-            if ! source ${SCRIPTS_DIR}/build_copy_images.sh
+            if ! source ${SCRIPTS_DIR}/build_copy_images.sh "" ""
             then
                 ERROR_MSG="ERROR running: source ${SCRIPTS_DIR}/build_copy_images.sh"
             fi

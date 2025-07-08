@@ -3,6 +3,11 @@ import {
     getItemFromLocalStorage,
     removeItemFromLocalStorage
 } from "./localstorage-manager.jsx";
+import {
+    ROWS_PER_PAGE,
+} from "../constants/general_constants.jsx";
+
+const debug = false;
 
 const defaultItemName = (lsItemName = null) => {
     return lsItemName ? lsItemName : 'currentConfig';
@@ -15,6 +20,9 @@ const buildConfigData = (lsDataDict = null) => {
         "language": "en",
         "currency": "USD",
         "timezone": "America/New_York",
+        "gce_rows_per_page": ROWS_PER_PAGE,
+        "gce_actions_allows_mouse_over": (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0"),
+        "gce_actions_allows_magic_button": (process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1"),
     };
     lsDataDict = lsDataDict ?? {};
     // Merge defaultConfigData with lsDataDict
@@ -34,6 +42,11 @@ export const getLocalConfig = (lsItemName = null) => {
     const lsDataDict = getItemFromLocalStorage(lsItemName);
     return buildConfigData(lsDataDict);
 }
+
+export const getLocalConfigItem = (lsItemName) => {
+    const localConfig = getLocalConfig();
+    return localConfig[lsItemName];
+};
 
 export const removeLocalConfig = (lsItemName = null) => {
     lsItemName = defaultItemName(lsItemName);

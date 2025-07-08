@@ -5,10 +5,8 @@ import Downshift from 'downshift';
 import { useFormikContext } from 'formik';
 // import { debounce } from 'lodash';
 
-import {
-    dbApiService,
-    convertId,
-} from './db.service.jsx';
+import { dbApiService } from './db.service.jsx';
+import { convertId } from './id.utilities.jsx';
 import {
     defaultValue,
     replaceSpecialVars,
@@ -79,7 +77,7 @@ export const SuggestionDropdown = ({
             }
             if (filter_api_request_method === "GET") {
                 urlParams = Object.assign({}, bodyData);
-                bodyData = Object.assign({});
+                bodyData = {};
             }
             dbService.getAll(urlParams, bodyData, filter_api_request_method)
                 .then(response => {

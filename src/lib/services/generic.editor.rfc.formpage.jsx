@@ -118,9 +118,7 @@ export const FormPage = ({
             accessKeysDataScreen[editor.primaryKeyName] = id;
             processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(
                 funcResponse => {
-                    accessKeysDataScreen = Object.assign(
-                        funcResponse.fieldValues, editor.parentFilter,
-                    );
+                    accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.parentFilter);
                     editor.db.getOne(accessKeysDataScreen)
                         .then(
                             data => {

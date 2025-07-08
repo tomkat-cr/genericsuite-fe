@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link, Routes, Route, HashRouter, RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Buffer } from 'buffer';
 import { BehaviorSubject } from 'rxjs';
+import axios from 'axios';
 import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Downshift from 'downshift';
@@ -11,9 +12,9 @@ import Downshift from 'downshift';
 function _defineProperty(e, r, t) {
   return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
     value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
+    enumerable: true,
+    configurable: true,
+    writable: true
   }) : e[r] = t, e;
 }
 function _extends() {
@@ -29,7 +30,7 @@ function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
-    var i = e.call(t, r || "default");
+    var i = e.call(t, r);
     if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
@@ -94,10 +95,10 @@ const defaultTheme = {
 
 const MAIN_CONTAINER_FOR_TOP_MENU_CLASS = "flex flex-col min-h-screen mainContainerForTopMenuClass";
 const MAIN_CONTAINER_FOR_SIDE_MENU_CLASS = "flex min-h-screen mainContainerForSideMenuClass";
-const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "flex-grow 1-p-4 appSectionContainerForTopMenuClass";
-// export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
-const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "flex-grow flex flex-col appSectionContainerForSideMenuClass";
-const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "flex-grow appSectionContainerForSideMenuMainClass";
+const APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS = "grow 1-p-4 appSectionContainerForTopMenuClass";
+// export const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "grow flex flex-col 1-md:ml-64 lg:ml-64 appSectionContainerForSideMenuClass";
+const APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS = "grow flex flex-col appSectionContainerForSideMenuClass";
+const APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS = "grow appSectionContainerForSideMenuMainClass";
 const APP_FOOTER_CONTAINER_CLASS = "p-1 text-white text-center appFooterContainerClass";
 const CENTERED_BOX_CONTAINER_DIV_1_CLASS = "z-50 overflow-auto centeredBoxContainerDiv1Class";
 const CENTERED_BOX_CONTAINER_DIV_2_CLASS = "1-relative w-fit max-w-md m-auto flex-col flex rounded-lg centeredBoxContainerDiv2Class";
@@ -135,10 +136,10 @@ const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClas
 const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "block relative group navLinkTopDivHamburgerClass";
 const NAV_LINK_TOP_DIV_SIDE_MENU_CLASS = "navLinkTopDivSideMenuClass";
 const NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS = "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
-const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navLinkButtonsTopMenuClass";
+const NAV_LINK_BUTTON_TOP_MENU_CLASS = "rounded-sm p-1 flex items-center navLinkButtonsTopMenuClass";
 const NAV_LINK_BUTTON_HAMBURGER_CLASS = "block py-1 navLinkButtonsHamburgerClass";
-const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded navLinkButtonsSideMenuClass";
-const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded navLinkButtonsMobileMenuClass";
+const NAV_LINK_BUTTON_SIDE_MENU_CLASS = "py-2 px-2 rounded-sm navLinkButtonsSideMenuClass";
+const NAV_LINK_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center py-2 px-2 rounded-sm navLinkButtonsMobileMenuClass";
 const NAV_LINK_ICON_CLASS = "w-8 h-8 navLinkIconClass";
 const ROUNDED_ICON_CLASS = "rounded-full roundedIconClass";
 const ML2_ICON_CLASS = "ml-2 overflow-visible";
@@ -149,31 +150,31 @@ const NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS = "block relative group navDropdownTo
 const NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS = "1-space-x-4 navDropdownTopDivSideMenuClass";
 const NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS = "1-space-y-2 navDropdownTopDivMobileMenuClass";
 
-// export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
-const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden z-50 bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivTopMenuClass";
-const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded shadow-lg navDropdownInnerDivHamburgerClass";
+// export const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden 1-group-hover:block bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivTopMenuClass";
+const NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS = "absolute hidden z-50 bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivTopMenuClass";
+const NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS = "absolute right-0 hidden z-50 1-group-hover:block bg-white text-gray-800 p-2 rounded-sm shadow-lg navDropdownInnerDivHamburgerClass";
 const NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivSideMenuClass";
 const NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS = "ml-2 space-y-2 navDropdownInnerDivMobileMenuClass";
-const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded p-1 flex items-center navDropdownButtonTopMenuClass";
-const NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS = "rounded p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
-const NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonSideMenuClass";
-const NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded navDropdownButtonMobileMenuClass";
+const NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS = "rounded-sm p-1 flex items-center navDropdownButtonTopMenuClass";
+const NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS = "rounded-sm p-2 block py-1 flex items-center navDropdownButtonHamburgerClass";
+const NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded-sm navDropdownButtonSideMenuClass";
+const NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS = "1-w-full text-left flex justify-between items-center py-2 px-2 rounded-sm navDropdownButtonMobileMenuClass";
 const NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS = "navDropdownImageTopMenuClass";
 const NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS = "navDropdownImageHamburgerClass";
 const NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS = "navDropdownImageSideMenuClass";
 const NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS = "h-4 w-4 transform transition-transform navDropdownImageMobileMenuClass";
 const NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS = "block py-1 navDropdownItemTopDivTopMenuClass";
 const NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS = "block py-1 navDropdownItemTopDivHamburgerClass";
-const NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS = "block rounded navDropdownItemTopDivSideMenuClass";
-const NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS = "block rounded navDropdownItemTopDivMobileMenuClass";
-const NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS = "rounded px-2 flex items-center navDropDownItemButtonsTopMenuClass";
-const NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS = "rounded block px-2 navDropDownItemButtonsHamburgerClass";
-const NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS = "rounded px-2 py-2 navDropDownItemButtonsSideMenuClass";
-const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded py-2 px-2 navDropDownItemButtonsMobileMenuClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS = "block rounded-sm navDropdownItemTopDivSideMenuClass";
+const NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS = "block rounded-sm navDropdownItemTopDivMobileMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS = "rounded-sm px-2 flex items-center navDropDownItemButtonsTopMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS = "rounded-sm block px-2 navDropDownItemButtonsHamburgerClass";
+const NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS = "rounded-sm px-2 py-2 navDropDownItemButtonsSideMenuClass";
+const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 1-justify-between 1-items-center rounded-sm py-2 px-2 navDropDownItemButtonsMobileMenuClass";
 
 // Alert messages and message boxes
 
-const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded alertBaseClass";
+const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded-sm alertBaseClass";
 const ALERT_DANGER_CLASS = `${ALERT_BASE_CLASS} text-red-800 bg-red-100 border-red-200 alertDangerClass`;
 const ALERT_WARNING_CLASS = `${ALERT_BASE_CLASS} text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass`;
 const ALERT_INFO_CLASS = `${ALERT_BASE_CLASS} text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass`;
@@ -187,7 +188,7 @@ const GRAY_BOX_MSG_CLASS = `${ALERT_BASE_CLASS} text-black bg-gray-200 mt-4 p-2 
 // Forms
 
 const FORM_GROUP_CLASS = "mb-4 formGroupClass";
-const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 formControlClass";
+const FORM_CONTROL_CLASS = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass";
 const INVALID_FEEDBACK_CLASS = "text-red-800 text-sm mt-1 invalidFeedbackClass";
 const IS_INVALID_CLASS = "border-red-500 isInvalidClass";
 const DISABLE_FIELD_BACKGROUND_COLOR_CLASS = 'bg-gray-200 disableFieldBackgroundColorClass';
@@ -203,9 +204,8 @@ const TOP0_Z50_CLASS = "top-0 z-50 top0z50Class";
 
 // Buttons
 
-const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
-const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
-// export const BUTTON_RIGHT_SPACE_CLASS = 'mr-2 buttonRightSpaceClass';
+const BUTTON_PRIMARY_CLASS = "bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-hidden focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
+const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-hidden focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
 
 // Special buttons
 
@@ -220,7 +220,7 @@ const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDar
 
 // Listing page buttons (GCE_RFC)
 
-const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded text-sm buttonListingClass";
+const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass";
 const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
 const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
 const BUTTON_LISTING_REFRESH_CLASS = `${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
@@ -239,13 +239,9 @@ const APP_SIDE_MENU_BG_COLOR_CLASS = "bg-white dark:bg-gray-800 appSideMenuBgCol
 
 // Listing page (GCE_RFC)
 
-// export const APP_LISTING_LEVEL2_DIV_CLASS = 'appListingLevel2DivClass';
-// export const APP_LISTING_LEVEL3_DIV_CLASS = "appListingLevel3DivClass";
-// export const APP_LISTING_LEVEL4_DIV_CLASS = "appListingLevel4DivClass";
-
 const APP_LISTING_TABLE_CLASS = "w-full text-sm appListingTableClass";
 const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTableHdrTheadClass";
-const APP_LISTING_TABLE_HDR_TR_CLASS = "border-b appListingTableHdrTrClass";
+const APP_LISTING_TABLE_HDR_TR_CLASS = "appListingTableHdrTrClass";
 const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
 const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
 const APP_LISTING_TABLE_BODY_TBODY_CLASS = `appListingTableBodyTbodyClass`;
@@ -264,7 +260,7 @@ const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_T
 
 const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
 const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
-const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded border w-40 text-sm appListingSearchBoxInputClass";
+const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded-sm border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
 const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
 const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
@@ -278,7 +274,7 @@ const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS = "text-sm flex items-center 
 const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center appListingToolbarPageNumSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
 const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS = "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
-const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded border appListingToolbarRowPerPageInputClass";
+const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded-sm border border-gray-300 bg-white appListingToolbarRowPerPageInputClass";
 const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
 
 // Data page (GCE_RFC)
@@ -287,7 +283,7 @@ const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
 const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
 const APP_FORMPAGE_FIELD_CLASS = `flex flex-col ${FORM_GROUP_CLASS} appFormPageFieldClass`;
-const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
+const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
 const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} appFormPageFieldGoodClass`;
 const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid appFormPageFieldInvalidClass`;
 const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS = "align-middle flex appFormPageSpecialButtonDivClass";
@@ -314,7 +310,7 @@ const MODALIB_MODAL_BODY_CLASS = "text-center mb-6 max-h-80 overflow-auto modali
 const MODALIB_MODAL_FOOTER_CLASS = "flex mt-4 modalibModalFooterClass";
 const MODALIB_MODAL_FOOTER_WIDE_CLASS = "flex-row space-x-4 modalibModalFooterWideClass";
 const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-reverse modalibModalFooterNotWideClass";
-const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
+const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-md text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
 const MODALIB_BUTTON_BASESTYLE_WIDE_CLASS = 'flex-1 modalibButtonBaseStyleWideClass';
 const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center modalibButtonBaseStyleNotWideClass';
 
@@ -352,7 +348,7 @@ const MARKDOWN_UNDERLINE_CLASS = "underline markdown-underline-class";
 // AI Assistant and conversation pages
 
 // Flexible input type text that grows according to its content (e.g. for the AI Assistant conversation)
-const INPUT_FLEXIBLE_CLASS = "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
+const INPUT_FLEXIBLE_CLASS = "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
 // export const INPUT_FLEXIBLE_CLASS = "m-0 w-full resize-none border-0 rounded-md border py-[10px] pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:py-4 md:pr-12 gizmo:md:py-3.5 gizmo:placeholder-black/50 gizmo:dark:placeholder-white/50 pl-12 gizmo:pl-10 md:pl-[46px] gizmo:md:pl-[55px]";
 
 var class_name_constants = /*#__PURE__*/Object.freeze({
@@ -784,7 +780,8 @@ const GsIcons = _ref => {
         x: "-256",
         y: "-64"
       }), /*#__PURE__*/React.createElement("g", {
-        id: "vertical-menu",
+        // id="vertical-menu"
+        id: "menu-dots-more",
         fill: "currentColor"
       }, /*#__PURE__*/React.createElement("circle", {
         cx: "32.026",
@@ -1451,13 +1448,8 @@ const AppProvider = _ref => {
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const toggleSideMenu = () => setSideMenu(!sideMenu);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  // const toggleSubmenu = (menuName) => {
   const toggleSubmenu = (menuName, menuVisible) => {
-    setExpandedMenus(prev =>
-    // prev.includes(menuName)
-    // ? prev.filter(item => item !== menuName)
-    // : [...prev, menuName]
-    menuVisible ? [...prev, menuName] : prev.filter(item => item !== menuName));
+    setExpandedMenus(prev => menuVisible ? [...prev, menuName] : prev.filter(item => item !== menuName));
   };
   const isComponent = componentObj => {
     return String(componentObj).includes('component:');
@@ -1737,10 +1729,10 @@ const NavbarTopRightMenu = _ref9 => {
     className: (sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!(currentUser && authenticated) ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")
   }, children));
 };
-const MobileMenuCloseButton = _ref10 => {
+const MobileMenuCloseButton = _ref0 => {
   let {
     className
-  } = _ref10;
+  } = _ref0;
   /* Mobile menu close button */
   const {
     toggleMobileMenu
@@ -1754,10 +1746,10 @@ const MobileMenuCloseButton = _ref10 => {
     className: NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS
   }));
 };
-const NavbarMobileMenu = _ref11 => {
+const NavbarMobileMenu = _ref1 => {
   let {
     children
-  } = _ref11;
+  } = _ref1;
   const {
     theme,
     isMobileMenuOpen,
@@ -1793,20 +1785,20 @@ const NavbarToggle = () => {
     className: NAVBAR_TOGGLE_IMAGE_CLASS
   }));
 };
-const NavbarText = _ref12 => {
+const NavbarText = _ref10 => {
   let {
     children,
     className
-  } = _ref12;
+  } = _ref10;
   return /*#__PURE__*/React.createElement("div", {
     className: className ?? NAVBAR_TEXT_CLASS
   }, children);
 };
-const NavbarTopForSideMenu = _ref13 => {
+const NavbarTopForSideMenu = _ref11 => {
   let {
     children,
     className
-  } = _ref13;
+  } = _ref11;
   const {
     theme
   } = useAppContext();
@@ -1824,7 +1816,7 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 
 // NavDropdown
 
-const NavDropdown = _ref14 => {
+const NavDropdown = _ref12 => {
   let {
     children,
     title,
@@ -1832,7 +1824,7 @@ const NavDropdown = _ref14 => {
     type,
     icon,
     mobileMenuMode
-  } = _ref14;
+  } = _ref12;
   const {
     expandedMenus,
     toggleSubmenu,
@@ -1928,7 +1920,7 @@ const NavDropdown = _ref14 => {
     closeParent: () => toggledropDownOpen()
   }))));
 };
-const NavDropdownItem = _ref15 => {
+const NavDropdownItem = _ref13 => {
   let {
     children,
     as,
@@ -1938,7 +1930,7 @@ const NavDropdownItem = _ref15 => {
     type,
     closeParent,
     mobileMenuMode
-  } = _ref15;
+  } = _ref13;
   const {
     theme
   } = useAppContext();
@@ -2040,7 +2032,7 @@ NavDropdown.Item = NavDropdownItem;
 //     );
 // }
 
-const NavLink = _ref16 => {
+const NavLink = _ref14 => {
   let {
     children,
     as,
@@ -2049,7 +2041,7 @@ const NavLink = _ref16 => {
     reloadDocument,
     type,
     mobileMenuMode
-  } = _ref16;
+  } = _ref14;
   const {
     theme,
     isWide
@@ -2083,11 +2075,11 @@ Nav.Link = NavLink;
 
 // Buttons
 
-const ToggleSideBar = _ref17 => {
+const ToggleSideBar = _ref15 => {
   let {
     onClick,
     ...props
-  } = _ref17;
+  } = _ref15;
   props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + (props.className ?? '');
   return /*#__PURE__*/React.createElement("div", _extends({
     onClick: onClick
@@ -2095,13 +2087,13 @@ const ToggleSideBar = _ref17 => {
     icon: "vertical-slider"
   }));
 };
-const GsButton = _ref18 => {
+const GsButton = _ref16 => {
   let {
     variant = 'primary',
     className = '',
     as = null,
     ...props
-  } = _ref18;
+  } = _ref16;
   const variants = {
     primary: BUTTON_PRIMARY_CLASS,
     secondary: BUTTON_SECONDARY_CLASS
@@ -2524,7 +2516,7 @@ var constants$1 = {
 
 // Security
 
-const MSG_ERROR_INVALID_TOKEN = ['A valid token is missing', 'Token is invalid', 'Session expired', 'HTTP 401'];
+const MSG_ERROR_INVALID_TOKEN = ['A valid token is missing', 'Token is invalid', 'Session expired', 'HTTP 401', 'Request failed with status code 401'];
 const MSG_ERROR_INVALID_CREDS = 'The username or password is incorrect. Please try again.';
 const MSG_ERROR_SESSION_EXPIRED = 'Session expired.';
 const MSG_ERROR_CLICK_TO_RELOGIN = 'Login again';
@@ -2586,7 +2578,7 @@ const MSG_ROWS_PER_PAGE = "Rows per page";
 
 // Generic editor : default values
 
-const ROWS_PER_PAGE = 5;
+const ROWS_PER_PAGE = 30;
 
 // Generic editor : general select options
 
@@ -2739,20 +2731,27 @@ var authHeader$1 = /*#__PURE__*/Object.freeze({
 
 const usePlainFetch = false;
 function handleResponse(response) {
+  if (response.headers && typeof response.data !== 'undefined') {
+    return handleResponseText(response, response.data, response.headers);
+  }
   if (response.headers && response.response) {
     return handleResponseText(response, response.response, response.headers);
-  } else {
-    return response.text().then(text => {
-      return handleResponseText(response, text, {});
-    }, reason => {
-      console.error(reason);
-    });
   }
+  return response.text().then(text => {
+    return handleResponseText(response, text, {});
+  }, reason => {
+    console.error(reason);
+  });
 }
 function handleResponseText(response, text, headers) {
   let data = {};
   if (IsJsonString(text)) {
     data = text && JSON.parse(text);
+  } else {
+    if (typeof text === 'object') {
+      // axios response is already a dict
+      data = Object.assign({}, text);
+    }
   }
   if (!response.ok) {
     let specificErrorMsg = data && data.message || text || response.statusText || '';
@@ -2768,7 +2767,7 @@ function handleResponseText(response, text, headers) {
     return Promise.reject(errorMsg);
   } else {
     data.headers = headers;
-    if (!IsJsonString(text)) {
+    if (typeof text === 'string') {
       data.file = text;
       if (!data.headers.get('content-type')) {
         data.headers.set('content-type', 'application/octet-stream');
@@ -2826,6 +2825,9 @@ async function handleFetchError(error) {
   });
 }
 function IsJsonString(str) {
+  if (typeof str !== 'string') {
+    return false;
+  }
   try {
     JSON.parse(str);
   } catch (e) {
@@ -2845,6 +2847,7 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 
 // Blob files utilities
 
+const debug$4 = false;
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
   const fileExtension = filename ? filename.split('.').pop() : null;
@@ -2876,10 +2879,20 @@ const getContentType = function (filename) {
   }
   return contentType;
 };
+const getContentTypeFromHeadersOrFilename = (headers, filename) => {
+  const contentType = getHeadersContentType(headers);
+  if (!contentType) {
+    return getContentType(filename);
+  }
+  return contentType;
+};
 const getFilenameFromContentDisposition = headers => {
   // Example: attachment; filename="dccbd8f2900a4c7eb1035add851da72f.wav"
   const contentDisposition = headers.get('content-disposition');
-  const filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+  let filenameMatch = contentDisposition && contentDisposition.match(/filename="([^"]+)"/);
+  if (!filenameMatch) {
+    filenameMatch = contentDisposition && contentDisposition.match(/filename=([^"]+)/);
+  }
   const filename = filenameMatch ? filenameMatch[1] : null;
   return filename;
 };
@@ -2898,15 +2911,26 @@ const performDownload = function (fileUrl) {
   return link;
 };
 const getHeadersContentType = headers => {
+  if (!headers || !headers.get || typeof headers.get('content-type') === 'undefined') {
+    return null;
+  }
   return headers.get('content-type');
 };
 const responseHasFile = headers => {
   const contentType = getHeadersContentType(headers);
-  return contentType === 'application/octet-stream' || contentType.includes('audio/') || contentType.includes('image/') || contentType.includes('video/') || contentType.includes('text/csv') || contentType.includes('text/text') // TODO: only to simulate AWS API Gateway
-  ;
+  return contentType && (contentType === 'application/octet-stream' || contentType.includes('audio/') || contentType.includes('image/') || contentType.includes('video/') || contentType.includes('text/csv') || contentType.includes('text/text') // TODO: only to simulate AWS API Gateway
+  );
 };
-const isBinaryFileType = filename => {
-  const contentType = getContentType(filename);
+const isBinaryFileType = function (filename) {
+  let contentType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  if (!contentType) {
+    if (filename) {
+      contentType = getContentType(filename);
+    } else {
+      console.error('isBinaryFileType | filename and contentType are null');
+      return false;
+    }
+  }
   return contentType === 'application/octet-stream' || contentType.includes('audio/') || contentType.includes('image/') || contentType.includes('video/');
 };
 const decodeBlob = function (base64String, filename) {
@@ -2948,8 +2972,35 @@ const decodeBlob = function (base64String, filename) {
   const url = URL.createObjectURL(blob);
   return url;
 };
-const fixBlob = async (blobObj, filename) => {
-  let blobUrl = URL.createObjectURL(blobObj);
+const fixBlob = async function (blobObj, filename) {
+  let headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  const headerContentType = getContentTypeFromHeadersOrFilename(headers, filename);
+  const contentType = getContentType(filename);
+  let blobUrl = null;
+  try {
+    blobUrl = URL.createObjectURL(blobObj);
+    if (debug$4) ;
+  } catch (e) {
+    // 'Overload resolution failed' happens when axios is used (not with fetch)
+    if (!e.message.includes('Overload resolution failed')) {
+      return Promise.reject(e);
+    }
+  }
+  if (blobUrl === null) {
+    try {
+      const binaryData = [];
+      binaryData.push(blobObj);
+      blobObj = new Blob(binaryData, {
+        type: contentType
+      });
+      if (debug$4) ;
+      blobUrl = URL.createObjectURL(blobObj);
+      if (debug$4) ;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+  // if (!isBinaryFileType(filename, contentType)) {
   if (!isBinaryFileType(filename)) {
     return new Promise((resolve, _) => {
       resolve(blobUrl);
@@ -2960,7 +3011,7 @@ const fixBlob = async (blobObj, filename) => {
   reader.readAsText(blobObj); // No convertion at all... just get what it receives...
   return new Promise((resolve, reject) => {
     reader.onloadend = function () {
-      if (typeof reader.result !== 'string') {
+      if (typeof reader.result !== 'string' || isBinaryFileType(filename, headerContentType)) {
         resolve(blobUrl);
       } else {
         blobUrl = decodeBlob(reader.result, filename);
@@ -2979,6 +3030,7 @@ var blob_files_utilities = /*#__PURE__*/Object.freeze({
   defaultFilenametoDownload: defaultFilenametoDownload,
   fixBlob: fixBlob,
   getContentType: getContentType,
+  getContentTypeFromHeadersOrFilename: getContentTypeFromHeadersOrFilename,
   getFileExtension: getFileExtension,
   getFilenameFromContentDisposition: getFilenameFromContentDisposition,
   getHeadersContentType: getHeadersContentType,
@@ -2987,28 +3039,226 @@ var blob_files_utilities = /*#__PURE__*/Object.freeze({
   responseHasFile: responseHasFile
 });
 
+// Fetch/Axios utilities
+
+// const https = require('https');
+
+const debug$3 = false;
+const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
+const getAxios = (url, requestOptions) => {
+  let response;
+  const {
+    method,
+    body,
+    headers
+  } = requestOptions;
+  // const api_url = process.env.REACT_APP_API_URL || "";
+  // const https_dev_env = api_url.includes("local") && api_url.includes("https");
+  let axios_config = {
+    url: url,
+    method: method,
+    data: body,
+    headers: headers
+  };
+  // if (https_dev_env) {
+  //     axios_config.httpsAgent = new https.Agent({
+  //         rejectUnauthorized: false,
+  //     });
+  //     console.log('>> axios_config with https.Agent.rejectUnauthorized:', axios_config);
+  // }
+  try {
+    response = axios(axios_config).then(response => {
+      let new_response;
+      new_response = Object.assign({}, response);
+      new_response.ok = response.status === 200;
+      if (debug$3) ;
+      if (response.status !== 200) {
+        return Promise.reject(new_response);
+      }
+      const headers = response.headers;
+      if (debug$3) ;
+      if (responseHasFile(headers)) {
+        const filename = getFilenameFromContentDisposition(headers);
+        return fixBlob(response.data, filename, headers).then(text => {
+          if (debug$3) ;
+          return {
+            headers,
+            text,
+            new_response
+          };
+        }, error => {
+          if (debug$3) ;
+          return Promise.reject(new_response);
+        });
+      } else {
+        const text = response.data;
+        if (debug$3) ;
+        return {
+          headers,
+          text,
+          new_response
+        };
+      }
+    }).then(_ref => {
+      let {
+        headers,
+        text,
+        new_response
+      } = _ref;
+      if (debug$3) ;
+      const data = {
+        response: text,
+        headers: headers,
+        // Attach headers to the data object
+        ok: new_response.ok,
+        status: new_response.status,
+        statusText: new_response.statusText
+      };
+      return data;
+    }).then(handleResponse).catch(handleFetchError);
+  } catch (error) {
+    console.error('|| getAxios | Error:', error);
+    response = Promise.resolve(handleFetchError(error));
+  }
+  return response;
+};
+const getFetch = (url, requestOptions) => {
+  let response;
+  try {
+    if (usePlainFetch) ; else {
+      response = fetch(url, requestOptions).then(response => {
+        if (debug$3) ;
+        if (!response.ok) {
+          // throw new Error('Network response was not ok');
+          return Promise.reject(response);
+        }
+        const headers = response.headers;
+        // Process blob
+        if (responseHasFile(headers)) {
+          // Get file name and extension
+          const filename = getFilenameFromContentDisposition(headers);
+          return response.blob().then(blob => {
+            // Create a link to download the file (from blob)
+            // Verifying if it's a binary encoded as Base64 string
+            return fixBlob(blob, filename, headers).then(text => {
+              // "text" contains the blob URL...
+              if (debug$3) ;
+              return {
+                headers,
+                text,
+                response
+              };
+            }, error => {
+              if (debug$3) ;
+              return Promise.reject(response);
+            });
+          });
+        } else {
+          // Process headers if needed here and the response text body
+          return response.text().then(text => {
+            if (debug$3) ;
+            return {
+              headers,
+              text,
+              response
+            };
+          });
+        }
+      }).then(_ref2 => {
+        let {
+          headers,
+          text,
+          response
+        } = _ref2;
+        if (debug$3) ;
+        const data = {
+          response: text,
+          headers: headers,
+          // Attach headers to the data object
+          ok: response.ok,
+          status: response.status,
+          statusText: response.statusText
+        };
+        return data;
+      }).then(handleResponse).catch(handleFetchError);
+    }
+  } catch (e) {
+    response = Promise.resolve(handleFetchError(e));
+  }
+  return response;
+};
+const gsFetch = (url, requestOptions) => {
+  if (useAxios) {
+    return getAxios(url, requestOptions);
+  }
+  return getFetch(url, requestOptions);
+};
+
+var fetch_utilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  getAxios: getAxios,
+  getFetch: getFetch,
+  gsFetch: gsFetch,
+  useAxios: useAxios
+});
+
+// ID Service
+
+const convertId = id => {
+  return id === null || id === '' || typeof id === 'string' ? id : id.$oid;
+};
+function generateUUID() {
+  /*
+   * To resemble crypto.randomUUID() using Node.js's native crypto module, using crypto.randomBytes()
+   */
+  const bytes = crypto.randomBytes(16);
+  bytes[6] = bytes[6] & 0x0f | 0x40;
+  bytes[8] = bytes[8] & 0x3f | 0x80;
+  const uuid = bytes.toString('hex').match(/([0-9a-f]{8})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{12})/).slice(1).join('-');
+  return uuid;
+}
+const getUuidV4 = () => {
+  return generateUUID();
+};
+
+var id_utilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  convertId: convertId,
+  getUuidV4: getUuidV4
+});
+
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
 const MULTIPART_FORM_DATA_HEADER = {
   'Content-Type': 'multipart/form-data'
 };
+const useExposeHeaders = (process.env.REACT_APP_USE_EXPOSE_HEADERS || "0") == "1";
 class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
     _defineProperty(this, "apiUrl", process.env.REACT_APP_API_URL);
     _defineProperty(this, "debug", false);
     this.props = props;
+    const additionalHeaders = this.getAdditionalHeaders();
     this.props.authHeader = authHeader();
-    this.props.authAndJsonHeader = Object.assign({
+    this.props.authAndJsonHeader = Object.assign({}, {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
       // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
       // IMPORTANT: this makes the frontend unresponsive when it's deployed on the cloud (AWS)
       // 'Access-Control-Allow-Headers': 'Content-Type, Content-Disposition',
-    }, this.props.authHeader);
+    }, additionalHeaders, this.props.authHeader);
     if (this.debug) {
       console_debug_log('###===> dbApiService() | this.props:');
       console_debug_log(this.props);
     }
+  }
+  getAdditionalHeaders() {
+    const headers = {};
+    if (useExposeHeaders) {
+      // [GS-15] This one should work to allow receive the headers sent by the Flask backend
+      headers['Access-Control-Expose-Headers'] = 'Content-Disposition';
+    }
+    return headers;
   }
   paramsToUrlQuery(params) {
     let urlQuery = '';
@@ -3017,71 +3267,6 @@ class dbApiService {
       return urlQuery += (urlQuery === '' ? '?' : '&') + key + '=' + value;
     });
     return urlQuery;
-  }
-  getFetch(url, requestOptions) {
-    let response;
-    try {
-      if (usePlainFetch) ; else {
-        response = fetch(url, requestOptions).then(response => {
-          if (this.debug) console_debug_log('||| getFetch | Phase 1 | response:', response);
-          if (!response.ok) {
-            // throw new Error('Network response was not ok');
-            return Promise.reject(response);
-          }
-          const headers = response.headers;
-          // Process blob
-          if (responseHasFile(headers)) {
-            // Get file name and extension
-            const filename = getFilenameFromContentDisposition(headers);
-            return response.blob().then(blob => {
-              // Create a link to download the file (from blob)
-              // Verifying if it's a binary encoded as Base64 string
-              return fixBlob(blob, filename).then(text => {
-                // "text" contains the blob URL...
-                if (this.debug) console_debug_log('||| getFetch | Phase 1.5 | blob:', blob, 'text:', text, 'filename:', filename);
-                return {
-                  headers,
-                  text,
-                  response
-                };
-              }, error => {
-                if (this.debug) console_debug_log('||| getFetch | fixBlob | error:', error);
-                return Promise.reject(response);
-              });
-            });
-          } else {
-            // Process headers if needed here and the response text body
-            return response.text().then(text => {
-              return {
-                headers,
-                text,
-                response
-              };
-            });
-          }
-        }).then(_ref2 => {
-          let {
-            headers,
-            text,
-            response
-          } = _ref2;
-          if (this.debug) console_debug_log('||| getFetch | Phase 2 | headers:', headers, 'text', text, 'response:', response);
-          const data = {
-            response: text,
-            headers: headers,
-            // Attach headers to the data object
-            ok: response.ok,
-            status: response.status,
-            statusText: response.statusText
-          };
-          return data;
-        }).then(handleResponse).catch(handleFetchError);
-      }
-    } catch (e) {
-      if (this.debug) console_debug_log('|| FETCH Error:', e);
-      response = Promise.resolve(handleFetchError(e));
-    }
-    return response;
   }
   getAll() {
     let params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -3119,7 +3304,7 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> getAll() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return this.getFetch(url, requestOptions);
+    return gsFetch(url, requestOptions);
   }
   getOne(params) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -3133,7 +3318,7 @@ class dbApiService {
       console_debug_log(`###===> getOne() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
     const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
-    return this.getFetch(url, requestOptions);
+    return gsFetch(url, requestOptions);
   }
   createUpdateDelete(action, id, data) {
     let queryParams = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
@@ -3159,8 +3344,7 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> createRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
-    return response;
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   updateRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -3176,8 +3360,7 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> updateRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
-    return response;
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   deleteRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -3193,21 +3376,16 @@ class dbApiService {
     if (this.debug) {
       console_debug_log(`###===> deleteRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const response = fetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions).then(handleResponse).catch(handleFetchError);
-    return response;
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   convertId(id) {
     return convertId(id);
   }
 }
-const convertId = id => {
-  return id === null || id === '' || typeof id === 'string' ? id : id.$oid;
-};
 
 var db_service = /*#__PURE__*/Object.freeze({
   __proto__: null,
   MULTIPART_FORM_DATA_HEADER: MULTIPART_FORM_DATA_HEADER,
-  convertId: convertId,
   dbApiService: dbApiService
 });
 
@@ -3222,7 +3400,10 @@ const buildConfigData = function () {
     "pref_side_menu": "1",
     "language": "en",
     "currency": "USD",
-    "timezone": "America/New_York"
+    "timezone": "America/New_York",
+    "gce_rows_per_page": ROWS_PER_PAGE,
+    "gce_actions_allows_mouse_over": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0",
+    "gce_actions_allows_magic_button": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1"
   };
   lsDataDict = lsDataDict ?? {};
   // Merge defaultConfigData with lsDataDict
@@ -3248,6 +3429,10 @@ const getLocalConfig = function () {
   const lsDataDict = getItemFromLocalStorage(lsItemName);
   return buildConfigData(lsDataDict);
 };
+const getLocalConfigItem = lsItemName => {
+  const localConfig = getLocalConfig();
+  return localConfig[lsItemName];
+};
 
 // Authentication service
 
@@ -3270,10 +3455,7 @@ function login(username, password) {
       "Authorization": "Basic " + Buffer.from(username + ":" + password).toString('base64')
     }
   };
-  new dbApiService({
-    url: 'users'
-  });
-  return fetch(`${config.apiUrl}/users/login`, requestOptions).then(handleResponse, handleFetchError).then(res => {
+  return gsFetch(`${config.apiUrl}/users/login`, requestOptions).then(res => {
     if (res.error) {
       return Promise.reject(res.message);
     }
@@ -3304,13 +3486,10 @@ const getUserData = userId => {
   });
 };
 const getUserLocalData = res => {
-  const userService = new dbApiService({
-    url: 'users'
-  });
   const data = res.resultset;
   const localConfig = getLocalConfig();
   return {
-    id: userService.convertId(data._id),
+    id: convertId(data._id),
     // username: data.username,
     // email: data.email,
     firstName: data.firstname,
@@ -3484,6 +3663,13 @@ const formatCaughtError = error => {
   };
   return response;
 };
+const getErrorDetail = errorRaw => {
+  let errorDetails = null;
+  if (typeof errorRaw["reason"] !== "undefined" && typeof errorRaw["reason"]["response"] !== "undefined" && typeof errorRaw["reason"]["response"]["data"] !== "undefined") {
+    errorDetails = errorRaw["reason"]["response"]["data"];
+  }
+  return errorDetails;
+};
 
 var errorAndReenter = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -3493,6 +3679,7 @@ var errorAndReenter = /*#__PURE__*/Object.freeze({
   errorLoginAgain: errorLoginAgain,
   errorMessageDiv: errorMessageDiv,
   formatCaughtError: formatCaughtError,
+  getErrorDetail: getErrorDetail,
   getErrorMessage: getErrorMessage,
   includesAppValidLinks: includesAppValidLinks,
   isSessionExpired: isSessionExpired,
@@ -4364,7 +4551,7 @@ const mandatoryFiltersDbPreRead = (data, editor, action, currentUser) => {
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     if (typeof editor.mandatoryFilters !== 'undefined') {
-      resp.fieldValues.resultset = Object.assign(data, replaceSpecialVars(editor.mandatoryFilters, currentUser));
+      resp.fieldValues.resultset = Object.assign({}, data, replaceSpecialVars(editor.mandatoryFilters, currentUser));
     }
     // console_debug_log(`>>> mandatoryFiltersDbPreRead | resp:`, resp, 'data:', data);
     resolve(resp);
@@ -4836,13 +5023,14 @@ const GenericSelectGenerator = props => {
   const {
     filter,
     show_description,
-    description_fields
+    description_fields,
+    dbService
   } = config;
   let selectAnOptionItem = {};
   selectAnOptionItem['_id'] = null;
-  selectAnOptionItem[config.description_fields[0]] = MSG_SELECT_AN_OPTION;
-  for (let i = 1; i < config.description_fields.length; i++) {
-    selectAnOptionItem[config.description_fields[i]] = '';
+  selectAnOptionItem[description_fields[0]] = MSG_SELECT_AN_OPTION;
+  for (let i = 1; i < description_fields.length; i++) {
+    selectAnOptionItem[description_fields[i]] = '';
   }
   const selectOptions = [...[...[selectAnOptionItem]], ...rows.resultset];
   const buildDescription = (option, fieldArray) => {
@@ -4850,15 +5038,15 @@ const GenericSelectGenerator = props => {
     fieldArray.forEach(field => {
       description += option[field] + ' ';
     });
-    return description;
+    return description.trim();
   };
-  return selectOptions.filter(option => filter === null ? true : config.dbService.convertId(option._id) === filter).map(option => {
+  return selectOptions.filter(option => filter === null ? true : dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
       return buildDescription(option, description_fields);
     }
     return /*#__PURE__*/React.createElement("option", {
-      key: config.dbService.convertId(option._id),
-      value: config.dbService.convertId(option._id)
+      key: dbService.convertId(option._id),
+      value: dbService.convertId(option._id)
     }, buildDescription(option, description_fields));
   });
 };
@@ -5036,7 +5224,7 @@ const SuggestionDropdown = _ref => {
       bodyData[filter_search_param_name] = inputValue;
       if (filter_api_request_method === "GET") {
         urlParams = Object.assign({}, bodyData);
-        bodyData = Object.assign({});
+        bodyData = {};
       }
       dbService.getAll(urlParams, bodyData, filter_api_request_method).then(response => {
         if (typeof response.resultset == "string") {
@@ -5168,7 +5356,9 @@ const FormPage = _ref => {
   const {
     theme
   } = useAppContext();
-  useContext(MainSectionContext);
+  const {
+    debugCache
+  } = useContext(MainSectionContext);
   const editor = editor_par;
   const mode = mode_par;
   const id = id_par;
@@ -5183,7 +5373,7 @@ const FormPage = _ref => {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
       processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
-        accessKeysDataScreen = Object.assign(funcResponse.fieldValues, editor.parentFilter);
+        accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.parentFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
           processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => {
@@ -5985,7 +6175,7 @@ const GenericCrudEditorMain = props => {
   const [editor, setEditor] = useState(null);
   const [rows, setRows] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE);
+  const [rowsPerPage, setRowsPerPage] = useState(parseInt(getLocalConfigItem("gce_rows_per_page")));
   const [formMode, setFormMode] = useState([ACTION_LIST, null]);
   const [status, setStatus] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
@@ -6002,7 +6192,8 @@ const GenericCrudEditorMain = props => {
     theme,
     isWide
   } = useAppContext();
-  const actionsHandlerAllowsMagicButton = false;
+  const actionsHandlerAllowsMouseOver = getLocalConfigItem("gce_actions_allows_mouse_over") == '1';
+  const actionsHandlerAllowsMagicButton = getLocalConfigItem("gce_actions_allows_magic_button") == '1';
   useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -6023,7 +6214,6 @@ const GenericCrudEditorMain = props => {
     });
   }, [props]);
   useEffect(() => {
-    // if (editor && !status) {
     if (editor) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation";
       ShowHidePageAnimation(true, animationElementId);
@@ -6033,9 +6223,7 @@ const GenericCrudEditorMain = props => {
       };
       // dbListPreRead: To set a Listing filters, assign funcResponse.fieldValues[db_field]=filter_value
       processGenericFuncArray(editor, 'dbListPreRead', accessKeysListing, formMode, currentUser).then(funcResponse => {
-        // console_debug_log(`GenericCrudEditor / dbListPreRead - funcResponse:`)
-        // console_debug_log(funcResponse);
-        accessKeysListing = Object.assign(accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
+        accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
         editor.db.getAll(accessKeysListing).then(data => {
           ShowHidePageAnimation(false, animationElementId);
           // dbListPostRead: To fix Listing fields
@@ -6085,6 +6273,9 @@ const GenericCrudEditorMain = props => {
     if (!event.target.value) {
       return;
     }
+    saveLocalConfig({
+      "gce_rows_per_page": event.target.value
+    });
     setInfoMsg('');
     setRowsPerPage(event.target.value);
   };
@@ -6099,7 +6290,8 @@ const GenericCrudEditorMain = props => {
   };
   const actionsHandler = (mode, row) => {
     const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
-    document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
+    const currRowHadHiddenClass = element.classList.contains('hidden');
+    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
     const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
     if (mode === 'show') {
@@ -6108,7 +6300,10 @@ const GenericCrudEditorMain = props => {
         rowElement.classList.add(key);
       });
       // If mouse over allowed, show controls
-      {
+      if (actionsHandlerAllowsMouseOver) {
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.add('hidden');
+        }
         element.classList.remove('hidden');
       }
     }
@@ -6118,7 +6313,10 @@ const GenericCrudEditorMain = props => {
         rowElement.classList.remove(key);
       });
       // If mouse over allowed, hide controls
-      {
+      if (actionsHandlerAllowsMouseOver) {
+        if (actionsHandlerAllowsMagicButton) {
+          magicButtonElement.classList.remove('hidden');
+        }
         element.classList.add('hidden');
       }
     }
@@ -6130,7 +6328,7 @@ const GenericCrudEditorMain = props => {
           thisRowElement.classList.add('hidden');
         }
       });
-      if (element.classList.contains('hidden')) {
+      if (currRowHadHiddenClass) {
         // Controls hidden in this row
         bgColorStype.map(key => {
           rowElement.classList.add(key);
@@ -6194,11 +6392,18 @@ const GenericCrudEditorMain = props => {
   }, /*#__PURE__*/React.createElement("tr", {
     key: `${editor.baseUrl}_thead_tr`,
     className: APP_LISTING_TABLE_HDR_TR_CLASS
-  }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
+  }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("th", {
+    // scope="col"
+    key: `${editor.baseUrl}_actions`,
+    className: APP_LISTING_TABLE_HDR_TH_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    key: `${editor.baseUrl}_actions_div`,
+    className: APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS
+  }, " ")), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
     // scope="col"
     key: `${editor.baseUrl}_${key}_thead_th`,
     className: APP_LISTING_TABLE_HDR_TH_CLASS
-  }, editor.fieldElements[key].label)), actionsHandlerAllowsMagicButton)), /*#__PURE__*/React.createElement("tbody", {
+  }, editor.fieldElements[key].label)))), /*#__PURE__*/React.createElement("tbody", {
     key: `${editor.baseUrl}_tbody`,
     className: APP_LISTING_TABLE_BODY_TBODY_CLASS
   }, rows && typeof rows.resultset !== 'undefined' && rows.resultset.map((row, index) =>
@@ -6222,11 +6427,24 @@ const GenericCrudEditorMain = props => {
     onMouseLeave: () => {
       actionsHandler('hide', row);
     }
-  }, Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
+  }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("td", {
+    // Action buttons
+    key: `${editor.baseUrl}_row_${rowId(row)}_magicButton_td`
+    // colSpan={Object.keys(editor.fieldElements).length + 1}
+    ,
+    className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
+  }, /*#__PURE__*/React.createElement("div", {
+    id: `${editor.baseUrl}_row_${rowId(row)}_magicButton`,
+    key: `${editor.baseUrl}_row_${rowId(row)}_magicButton`,
+    className: VISIBLE_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "menu-dots-more",
+    alt: MSG_MORE
+  }))), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
     key: `${editor.baseUrl}_row_${rowId(row)}_${key}_td`,
     className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS
   }, getSelectDescription(editor.fieldElements[key], row) // Show column value or select description
-  )), actionsHandlerAllowsMagicButton), /*#__PURE__*/React.createElement("tr", {
+  ))), /*#__PURE__*/React.createElement("tr", {
     id: `${editor.baseUrl}_row_${rowId(row)}_controls`,
     key: `${editor.baseUrl}_row_${rowId(row)}_controls`,
     className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS,
@@ -6246,18 +6464,14 @@ const GenericCrudEditorMain = props => {
     className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
   }, /*#__PURE__*/React.createElement("button", {
     key: `${editor.baseUrl}_row_${rowId(row)}_controls_eye`,
-    onClick: () => handleView(rowId(row))
-    // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
-    ,
+    onClick: () => handleView(rowId(row)),
     className: `${BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "eye",
     alt: MSG_ACTION_READ
   })), /*#__PURE__*/React.createElement("button", {
     key: `${editor.baseUrl}_row_${rowId(row)}_controls_edit`,
-    onClick: () => handleModify(rowId(row))
-    // className={`${BUTTON_LISTING_CLASS} ${BUTTON_RIGHT_SPACE_CLASS}`}
-    ,
+    onClick: () => handleModify(rowId(row)),
     className: `${BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "edit",
@@ -6371,10 +6585,7 @@ const CrudEditorRowsPerPage = _ref2 => {
     className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS + " " + theme.input,
     onChange: handleRowsPerPageChange,
     defaultValue: rowsPerPage
-  }, /*#__PURE__*/React.createElement("option", {
-    key: ROWS_PER_PAGE,
-    value: ROWS_PER_PAGE
-  }, ROWS_PER_PAGE), Array.from({
+  }, Array.from({
     length: 10
   }, (_, i) => (i + 1) * 10).map(value => /*#__PURE__*/React.createElement("option", {
     key: value,
@@ -6650,7 +6861,7 @@ const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
     switch (action) {
       case ACTION_CREATE:
         const access_token = generateAccessToken();
-        resp.fieldValues = Object.assign(data, {
+        resp.fieldValues = Object.assign({}, data, {
           'access_token': access_token
         });
         break;
@@ -6947,6 +7158,7 @@ const UsersPasswordValidations = (data, editor, action) => {
           resp.errorMsg = (resp.errorMsg === '' ? '' : '<BR/>') + 'User needs a password';
           break;
         }
+        break;
       case ACTION_UPDATE:
         if (data['passcode']) {
           if (data['passcode'] !== data['passcode_repeat']) {
@@ -6996,7 +7208,9 @@ const GenericSinglePageEditorMain = props => {
   const [editor, setEditor] = useState(null);
   const [formMode, setFormMode] = useState(null);
   const [status, setStatus] = useState("");
-  useContext(MainSectionContext);
+  const {
+    initCache
+  } = useContext(MainSectionContext);
   useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -7264,7 +7478,7 @@ const LoginPage = props => {
   const handleSubmit = (username, password, setStatus, setSubmitting) => {
     setStatus();
     authenticationService.login(username, password).then(user => {
-      const redirectUrl = getRedirect();
+      let redirectUrl = getRedirect();
       // To avoid stay in login page with the wait animation
       setSubmitting(false);
       registerUser(user);
@@ -7492,7 +7706,9 @@ const AppNavBar = _ref2 => {
   let {
     children
   } = _ref2;
-  useUser();
+  const {
+    currentUser
+  } = useUser();
   const {
     setExpanded,
     appLogoHeader
@@ -7646,6 +7862,9 @@ const AppMainComponent = _ref7 => {
   return children;
 };
 const AppMain = () => {
+  const routerFutureFlags = {
+    v7_relativeSplatPath: true
+  };
   const {
     currentUser,
     registerUser
@@ -7674,12 +7893,17 @@ const AppMain = () => {
     }
   }, [menuOptions]);
   if (hasHashRouter) {
-    return /*#__PURE__*/React.createElement(HashRouter, null, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GetHashRoutes, {
+    return /*#__PURE__*/React.createElement(HashRouter, {
+      history: history,
+      future: routerFutureFlags
+    }, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GetHashRoutes, {
       routes: router
     })));
   }
   return /*#__PURE__*/React.createElement(RouterProvider, {
-    router: createBrowserRouter(router),
+    router: createBrowserRouter(router, {
+      future: routerFutureFlags
+    }),
     history: history
   });
 };
@@ -8004,5 +8228,5 @@ var generic_editor_rfc_ui = /*#__PURE__*/Object.freeze({
 const appLogoCircle = 'app_logo_circle.svg';
 const appLogoLandscape = 'app_logo_landscape.svg';
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };
 //# sourceMappingURL=index.js.map
