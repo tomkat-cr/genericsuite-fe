@@ -16,7 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 
-## 1.0.25 (2025-07-05)
+## 1.0.25 (2025-07-08)
 ---
 
 ### New
@@ -64,6 +64,7 @@ Fix the React Router v7 Future Flag Warning by upgrading "react-router-dom" to v
 Fix the "'assert' is deprecated in import statements and support will be removed in a future version; use 'with' instead" running "make publish" and rollup.connfig.mjs.
 Fix Tailwind 4 input and texarea background color issue by adding the gs_core.css to index.html [GS-112].
 Fix prevent object mutation in Object.assign calls by adding empty object as first parameter
+Update "webpack.config.js" to fix the error "Error: Can't resolve 'process/browser'" and remove NODE_TLS_REJECT_UNAUTHORIZED envvar [GS-199] [GS-198] [GS-195].
 
 
 ## 1.0.24 (2025-02-19)

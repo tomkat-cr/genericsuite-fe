@@ -46,9 +46,6 @@ const process_env = {
     REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || ''),
     REACT_APP_APP_NAME: JSON.stringify(process.env.REACT_APP_APP_NAME || 'exampleapp'),
     REACT_APP_USE_AXIOS: JSON.stringify(process.env.REACT_APP_USE_AXIOS || '1'),
-    NODE_TLS_REJECT_UNAUTHORIZED: (process.env.NODE_TLS_REJECT_UNAUTHORIZED ||
-        (process.env.REACT_APP_API_URL.includes("local") && process.env.REACT_APP_API_URL.includes("https://") ? '0' : '1')
-    ),
 }
 
 console.log('devServerConfig:', devServerConfig);
@@ -132,43 +129,6 @@ module.exports = {
             /process\/browser/,
             require.resolve('process/browser')
         ),
-        // new webpack.NormalModuleReplacementPlugin(/node:/, (resource) => {
-        //     const mod = resource.request.replace(/^node:/, '')
-        //     switch (mod) {
-        //       case 'net':
-        //         resource.request = 'net'
-        //         break
-        //       case 'util':
-        //         resource.request = 'util'
-        //         break
-        //       case 'path':
-        //         resource.request = 'path'
-        //         break
-        //       case 'http':
-        //         resource.request = 'stream-http'
-        //         break
-        //       case 'https':
-        //         resource.request = 'https-browserify'
-        //         break
-        //       case 'zlib':
-        //         resource.request = 'browserify-zlib'
-        //         break
-        //       case 'url':
-        //         resource.request = 'url'
-        //         break
-        //       case 'fs':
-        //         resource.request = 'fs'
-        //         break
-        //       case 'buffer':
-        //         resource.request = 'buffer'
-        //         break
-        //       case 'stream':
-        //         resource.request = 'readable-stream'
-        //         break
-        //       default:
-        //         throw new Error(`Not found ${mod}`)
-        //     }
-        // }),
     ],
     devServer: devServerConfig,
     output: {
