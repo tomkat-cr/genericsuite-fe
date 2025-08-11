@@ -1937,9 +1937,14 @@ const NavDropdown = _ref12 => {
   })), /*#__PURE__*/React.createElement("div", {
     className: variantStyleInnerDiv,
     id: `${fullId}_dropDown`
-  }, expandedMenus.includes(fullId) && React.Children.map(children, child => /*#__PURE__*/React.cloneElement(child, {
-    closeParent: () => toggledropDownOpen()
-  }))));
+  }, expandedMenus.includes(fullId) && React.Children.map(children, child => {
+    if (!child) {
+      return null;
+    }
+    return /*#__PURE__*/React.cloneElement(child, {
+      closeParent: () => toggledropDownOpen()
+    });
+  })));
 };
 const NavDropdownItem = _ref13 => {
   let {
@@ -4161,18 +4166,36 @@ function getUrlParams() {
           searchString = props.location.href;
         }
         if (searchString.startsWith('?')) {
-          searchString = searchString.split('?')[1];
+          // Remove only the leading '?', do not split by other '?' inside values
+          searchString = searchString.slice(1);
         }
         if (searchString === '') {
           return urlParams;
         }
         let keyPairs = searchString.split("&");
         if (Array.isArray(keyPairs)) {
-          keyPairs.map(keyPairString => {
-            let KeyValueArray = keyPairString.split('=');
-            urlParams[KeyValueArray[0]] = typeof KeyValueArray[1] === 'undefined' ? '' : KeyValueArray[1];
-            return null;
-          });
+          for (let i = 0; i < keyPairs.length; i++) {
+            const keyPairString = keyPairs[i];
+            const [rawKey, ...rest] = keyPairString.split('=');
+            let rawValue = rest.length > 0 ? rest.join('=') : '';
+            // If this is the redirect param and it contains a hash (#),
+            // treat the remainder of the query string as part of the value
+            if (rawValue.includes('#') && i < keyPairs.length - 1) {
+              const tail = keyPairs.slice(i + 1).join('&');
+              rawValue = `${rawValue}&${tail}`;
+              // We consumed the rest
+              i = keyPairs.length;
+            }
+            let key = rawKey;
+            let value = rawValue;
+            try {
+              key = decodeURIComponent(rawKey.replace(/\+/g, ' '));
+            } catch (_) {/* noop */}
+            try {
+              value = decodeURIComponent(rawValue.replace(/\+/g, ' '));
+            } catch (_) {/* noop */}
+            urlParams[key] = value;
+          }
         }
       }
     } else {
@@ -4484,10 +4507,23 @@ const reduceAllResponses = (responses, data) => {
       ...acc['fieldMsg'],
       ...response['fieldMsg']
     };
-    acc['fieldValues'] = {
-      ...acc['fieldValues'],
-      ...response['fieldValues']
+    // Merge fieldValues while preserving array values,
+    // to prevent data losing when following fieldValues has same key but empty.
+    // E.g. fieldValues["resultset"] may contains 'client_id' and 'client_secret' or another fields...
+    // and following response may contains fieldValues["resultset"] = {}
+    const mergedFieldValues = {
+      ...acc['fieldValues']
     };
+    for (const [key, value] of Object.entries(response['fieldValues'])) {
+      if (typeof mergedFieldValues[key] === 'object' && typeof value === 'object' && value !== null) {
+        for (const [key2, value2] of Object.entries(value)) {
+          mergedFieldValues[key][key2] = value2;
+        }
+        continue;
+      }
+      mergedFieldValues[key] = value;
+    }
+    acc['fieldValues'] = mergedFieldValues;
     acc['fieldsToDelete'] = [...acc['fieldsToDelete'], ...response['fieldsToDelete']];
     acc['otherData'] = {
       ...acc['otherData'],
@@ -6840,9 +6876,6 @@ var users_api_keys = {
 	dbPreRead: dbPreRead
 };
 
-// const crypto = require('crypto');
-// import crypto from crypto;
-
 function UsersApiKey_EditorData() {
   // console_debug_log("UsersApiKey_EditorData");
   const registry = {
@@ -6877,13 +6910,16 @@ const generateAccessToken = function () {
   return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
 };
 const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
+  // Users api keys pre-form data load default values (dbPreRead)
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     switch (action) {
       case ACTION_CREATE:
         const access_token = generateAccessToken();
         resp.fieldValues = Object.assign({}, data, {
-          'access_token': access_token
+          'resultset': {
+            'access_token': access_token
+          }
         });
         break;
     }
@@ -7480,12 +7516,39 @@ const HomePage = _ref => {
 
 const defaultAppLogo = "app_logo_square.svg";
 const LoginPage = props => {
+  const sanitizeRedirectUrl = inputUrl => {
+    if (!inputUrl) {
+      return '/';
+    }
+    let candidate = String(inputUrl).trim();
+    try {
+      candidate = decodeURIComponent(candidate);
+    } catch (_) {
+      // ignore decode errors, use raw candidate
+    }
+    try {
+      const parsed = new URL(candidate, window.location.origin);
+      // Only allow same-origin destinations
+      if (parsed.origin !== window.location.origin) {
+        return '/';
+      }
+      // Build a safe relative URL explicitly to preserve query and hash
+      const relative = `${parsed.pathname || '/'}${parsed.search || ''}${parsed.hash || ''}`;
+      // Disallow protocol-relative patterns like '//' at start of path
+      if (relative.startsWith('//')) {
+        return '/';
+      }
+      return relative || '/';
+    } catch (_) {
+      return '/';
+    }
+  };
   const getRedirect = () => {
     const urlParams = getUrlParams(props);
     if (typeof urlParams.redirect === 'undefined') {
-      return getLastUrl();
+      return sanitizeRedirectUrl(getLastUrl());
     }
-    return urlParams.redirect;
+    return sanitizeRedirectUrl(urlParams.redirect);
   };
   const {
     currentUser,
@@ -7508,8 +7571,10 @@ const LoginPage = props => {
       if (redirectUrl.indexOf('/login') > 0) {
         redirectUrl = '/';
       }
+
       // return <Navigate to={redirectUrl} replace={true}/>
-      window.location.href = redirectUrl;
+      window.location.href = sanitizeRedirectUrl(redirectUrl);
+
       // To handle menu access rights changes
       // window.location.reload(true);
     }, error => {

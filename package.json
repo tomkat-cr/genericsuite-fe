@@ -1,6 +1,6 @@
 {
   "name": "genericsuite",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "description": "The GenericSuite for ReactJS (frontend version)",
   "author": "Carlos J. Ramirez",
   "license": "MIT",
@@ -67,9 +67,9 @@
   "devDependencies": {
     "@babel/cli": "^7.23.0",
     "@babel/core": "^7.24.0",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.0-placeholder-for-preset-env.2",
     "@babel/plugin-syntax-jsx": "^7.23.3",
+    "@babel/plugin-transform-class-properties": "^7.27.1",
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-stage-0": "^7.8.3",
@@ -111,12 +111,13 @@
     "whatwg-fetch": "^3.6.20"
   },
   "peerDependencies": {
-    "axios": "^1.8.2",
+    "axios": "^1.11.0",
     "buffer": "^6.0.3",
     "constants-browserify": "^1.0.0",
-    "crypto-browserify": "^3.12.0",
+    "crypto-browserify": "^3.12.1",
     "downshift": "^8.2.3",
     "express": "^4.17.3",
+    "express-rate-limit": "^8.0.1",
     "formik": "2.4.5",
     "fs": "^0.0.2",
     "history": "^4.9.0",

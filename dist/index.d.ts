@@ -783,6 +783,13 @@ declare function authHeader(): {
     'x-access-tokens'?: undefined;
     Authorization?: undefined;
 };
+declare function login(username: any, password: any): Promise<{
+    id: any;
+    firstName: any;
+    pref_side_menu: any;
+    pref_dark_mode: any;
+}>;
+declare function logout(...args: any[]): void;
 declare class dbApiService {
     constructor(props: any);
     props: any;
@@ -814,7 +821,6 @@ declare function getPrefix(...args: any[]): string;
 declare function console_debug_log(debug_message: any, ...args: any[]): void;
 declare function get_debug_flag(): any;
 
-declare function logout(...args: any[]): void;
 declare function IsJsonString(str: any): boolean;
 declare function handleFetchError(error: any): Promise<never>;
 declare function handleResponse(response: any): any;

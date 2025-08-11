@@ -23,7 +23,21 @@ const reduceAllResponses = (responses, data) => {
         acc['error'] = acc['error'] || response['error'];
         acc['errorMsg'] += (acc['errorMsg'] !== '' && response['errorMsg'] !== '' ? ', ' : '') + response['errorMsg'];
         acc['fieldMsg'] = { ...acc['fieldMsg'], ...response['fieldMsg'] };
-        acc['fieldValues'] = { ...acc['fieldValues'], ...response['fieldValues'] };
+        // Merge fieldValues while preserving array values,
+        // to prevent data losing when following fieldValues has same key but empty.
+        // E.g. fieldValues["resultset"] may contains 'client_id' and 'client_secret' or another fields...
+        // and following response may contains fieldValues["resultset"] = {}
+        const mergedFieldValues = { ...acc['fieldValues'] };
+        for (const [key, value] of Object.entries(response['fieldValues'])) {
+            if (typeof mergedFieldValues[key] === 'object' && typeof value === 'object' && value !== null) {
+                for (const [key2, value2] of Object.entries(value)) {
+                    mergedFieldValues[key][key2] = value2;
+                }
+                continue;
+            }
+            mergedFieldValues[key] = value;
+        }
+        acc['fieldValues'] = mergedFieldValues;
         acc['fieldsToDelete'] = [...acc['fieldsToDelete'], ...response['fieldsToDelete']];
         acc['otherData'] = {...acc['otherData'], ...response['otherData']};
         return { ...acc };

@@ -15,19 +15,36 @@ export function getUrlParams(props = window) {
                     searchString = props.location.href;
                 }
                 if (searchString.startsWith('?')) {
-                    searchString = searchString.split('?')[1];
+                    // Remove only the leading '?', do not split by other '?' inside values
+                    searchString = searchString.slice(1);
                 }
                 if (searchString === '') {
                     return urlParams;
                 }
                 let keyPairs = searchString.split("&");
                 if(Array.isArray(keyPairs)) {
-                    keyPairs.map(keyPairString => {
-                        let KeyValueArray = keyPairString.split('=');
-                        urlParams[KeyValueArray[0]] = 
-                            (typeof KeyValueArray[1] === 'undefined' ? '' : KeyValueArray[1]);
-                        return null;
-                    });
+                    for (let i = 0; i < keyPairs.length; i++) {
+                        const keyPairString = keyPairs[i];
+                        const [rawKey, ...rest] = keyPairString.split('=');
+                        let rawValue = rest.length > 0 ? rest.join('=') : '';
+                        // If this is the redirect param and it contains a hash (#),
+                        // treat the remainder of the query string as part of the value
+                        if (rawValue.includes('#') && i < keyPairs.length - 1) {
+                            const tail = keyPairs.slice(i + 1).join('&');
+                            rawValue = `${rawValue}&${tail}`;
+                            // We consumed the rest
+                            i = keyPairs.length;
+                        }
+                        let key = rawKey;
+                        let value = rawValue;
+                        try {
+                            key = decodeURIComponent(rawKey.replace(/\+/g, ' '));
+                        } catch (_) { /* noop */ }
+                        try {
+                            value = decodeURIComponent(rawValue.replace(/\+/g, ' '));
+                        } catch (_) { /* noop */ }
+                        urlParams[key] = value;
+                    }
                 }
             }
         } else {
