@@ -27,9 +27,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Security
 - Update "axios" to ^1.11.0 to fix the "form-data" CWE-343, CVE-2025-7783, CVSS 9.4 security vulnerability [GS-219].
+- Fix "PostCSS line return parsing error" by updating "postcss" to "^8.5.6" [GS-219].
+- Basic rate limiting to mitigate DoS via expensive FS operations in "server.js" [GS-219].
 - Enhance LoginPage redirect handling with URL sanitization [GS-219].
 - Add test cases for redirect functionality in LoginPage component [GS-219].
-- Basic rate limiting to mitigate DoS via expensive FS operations in "server.js" [GS-219].
 
 
 ## [1.0.25] - 2025-07-08
