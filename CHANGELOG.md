@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [1.1.0] - 2025-08-07
+## [1.1.0] - 2025-08-11
 
 ### Changed
 - Update CHANGELOG format to be more semantic [GS-222].
@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix the merge of "resultset" when following values has same key but empty in the "fieldValues" object (GCE_RFC Specific Functions handling, reduceAllResponses function) [GS-159].
 - Replace class-properties plugin with transform-class-properties to fix the "npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead." warning [GS-219].
 - Fix the URL parameter parsing in getUrlParams() to handle the redirect parameter with a hash (#) in the value [GS-219].
+- Enhance webpack configuration to conditionally log options and environment variables based on local environment detection.
 
 ### Security
 - Update "axios" to ^1.11.0 to fix the "form-data" CWE-343, CVE-2025-7783, CVSS 9.4 security vulnerability [GS-219].
