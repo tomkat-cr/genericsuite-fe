@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
 
-## [Unreleased] (Date)
+## [Unreleased] - Date
 
 ### Added
 
@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [1.1.0] (2025-09-03)
+## [1.1.0] - 2025-09-04
 
 ### Changed
 - Update CHANGELOG format to be more semantic [GS-222].
@@ -34,7 +34,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add test cases for redirect functionality in LoginPage component [GS-219].
 
 
-## [1.0.25] (2025-07-08)
+## [1.0.25] - 2025-07-08
 
 ### Added
 - Implement axios as alternative to fetch [GS-202] [GS-15].
@@ -84,19 +84,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Update "webpack.config.js" to fix the error "Error: Can't resolve 'process/browser'" and remove NODE_TLS_REJECT_UNAUTHORIZED envvar [GS-199] [GS-198] [GS-195].
 
 
-## [1.0.24] (2025-02-19)
+## [1.0.24] - 2025-02-19
 
 ### Added
 - Implement API keys to GS BE Core [GS-159].
 - Add new features and fix things discovered during the IBM Watson X implementation [GS-155]
-- Add the parameter "description_fields" In selectOptions() to have a compound attribute/column name(s) for the drop-down menu descriptions. If not specified, it'll use ["name"] (as it was before) [GS-155].
+- Add the parameter "description_fields" In selectOptions() to have a compound attribute/column name(s) for the drop-down menu descriptions. If not specified, it'll use ["name"] - as it was before) [GS-155].
 
 ### Fixed
 - Fix the undefined passcode error in user update calling the backend after creating a user leaving the password empty (UsersPasswordValidations) [GS-155].
 - Fix a bug calling the specific functions assigning the "fieldValues" object, because genericFuncArrayDefaultValue() was assigning it an infinite recursive "resultset" attribute, preventing the default values assignment in "dbPreRead" call (creation).
 
 
-## [1.0.23] (2024-10-25)
+## [1.0.23] - 2024-10-25
 
 ### Added
 - Add "closeHandler" parameter to errorAndReEnter().
@@ -106,7 +106,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix copy button in non-secure http connection [GS-144].
 
 
-## [1.0.22] (2024-10-07)
+## [1.0.22] - 2024-10-07
 
 ### Added
 - Add Darkmode [GS-63].
@@ -147,7 +147,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Get rid of eval() in the GS FrontEnd [GS-127].
 
 
-## [1.0.21] (2024-07-27)
+## [1.0.21] - 2024-07-27
 
 ### Added
 - Add ".nvmrc" file to set the repo default node version.
@@ -165,7 +165,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "TypeError: (0 , _authenticationService.getUserData) is not a function" error in npm test.
 
 
-## [1.0.20] (2024-05-17)
+## [1.0.20] - 2024-05-17
 
 ### Added
 - Add AWS_SSL_CERTIFICATE_ARN env. var. for those cases where the SSL certificate cannot be found automatically in AWS certificate manager [FA-98].
@@ -180,7 +180,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "error-and-reenter.jsx" to log error in the JS console instead of showing "[object Object]" in the pop-up when "getErrorMessage" calls "extractErrorFromVariants" [FA-246].
 
 
-## [1.0.19] (2024-04-20)
+## [1.0.19] - 2024-04-20
 
 ### Added
 - Add FastAPI enhanced support [FA-246].
@@ -196,7 +196,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "Converting circular structure to JSON" error saving Child (array) sets with a "resultset" element in the "_old" value causing an infinite loop.
 
 
-## [1.0.18] (2024-04-06)
+## [1.0.18] - 2024-04-06
 
 ### Fixed
 - Fix the labels color for required fields in the "generic.editor.rfc.formpage.jsx" data form.
@@ -207,7 +207,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Change "EditFormFormikFinal" to add the new Item created "id" to submitedtElements (data passed to processGenericFuncArray) before calling DbPostWrite.
 
 
-## [1.0.17] (2024-04-01)
+## [1.0.17] - 2024-04-01
 
 ### Added
 - Add `make deploy_demo` and `make config_demo` to manage the "demo" stage.
@@ -229,7 +229,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - License changed to ISC [FA-244].
 
 
-## [1.0.16] (2024-03-21)
+## [1.0.16] - 2024-03-21
 
 ### Added
 - Add AboutBodyGsFe and HomePageGsFe components to customize genericsuite-fe test run with "index.tsx".
@@ -248,7 +248,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix the test error "Property 'props' is not extensible" by removing "props.appLogo = null" from <LoginPage/>
 
 
-## [1.0.15] (2024-03-20)
+## [1.0.15] - 2024-03-20
 
 ### Added
 - Add "react-test-renderer" and test for About and HomePage components.
@@ -264,7 +264,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "HomePage" component error when a children code is specified.
 
 
-## [1.0.14] (2024-03-18)
+## [1.0.14] - 2024-03-18
 
 ### Added
 - Add `make test-run-build` and `make test-run-build-restore` and the `scripts/build_prod_test.sh` bash script to preview the QA/Staging/Prod live environments behavior.
@@ -284,13 +284,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix the images load error in QA/Staging/Prod live environments: "DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/static/media/app_logo_square.cd60e8686a973f7c77e9d25313787676.svg') is not a valid name."
 
 
-## [1.0.12] (2024-03-13)
+## [1.0.12] - 2024-03-13
 
 ### Fixed
 - Fix "Uncaught ReferenceError: require is not defined in ./node_modules/genericsuite/dist/esm/index.js" replacing "require('react-bootstrap')" by import ... from 'react-bootstrap/cjs/...".
 
 
-## [1.0.11] (2024-03-13)
+## [1.0.11] - 2024-03-13
 
 ### Added
 - Add: library documentation in README.
@@ -303,7 +303,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix error "Can't resolve 'react-bootstrap/NavDropdown' in './genericsuite/dist/esm' Did you mean 'NavDropdown.js'?", as well as the same errors with "Nav" and 'Contyainer.
 
 
-## [1.0.10] (2024-03-11)
+## [1.0.10] - 2024-03-11
 
 ### Added
 - Add: debug log for mergeDicts().
@@ -312,7 +312,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - "package-lock.json" rebuilt.
 
 
-## [1.0.9] (2024-03-11)
+## [1.0.9] - 2024-03-11
 
 ### Added
 - Add mergeDicts() (helpers/dict-utilities.jsx).
@@ -324,19 +324,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Version sequence in CHANGELOG.
 
 
-## [1.0.8] (2024-03-11)
+## [1.0.8] - 2024-03-11
 
 ### Fixed
 - Fix remove "index" as namespace adding the "output.name" parameter in "rollup.config.mjs".
 
 
-## [1.0.7] (2024-03-11)
+## [1.0.7] - 2024-03-11
 
 ### Fixed
 - Fix "export default {" to be "export {" in "index.cjs".
 
 
-## [1.0.6] (2024-03-11)
+## [1.0.6] - 2024-03-11
 
 ### Added
 - Add ".env.example" and "CHANGELOG.md" to package.json included files.
@@ -364,7 +364,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
   - "types": "dist/index.d.ts",
 
 
-## [1.0.5] (2024-03-09)
+## [1.0.5] - 2024-03-09
 
 ### Added
 - Include all "src/*" in the package.json.
@@ -382,7 +382,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix: webpack rutime errors including the file extension .jsx to all code imports.
 
 
-## [1.0.4] (2024-03-08)
+## [1.0.4] - 2024-03-08
 
 ### Added
 - Add "build" option to Makefile.
@@ -397,7 +397,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - getConfigsJsonFile() removed because require() doesn't allow expresions. E.g. require(jsonFilePath).
 
 
-## [1.0.3] (2024-03-06)
+## [1.0.3] - 2024-03-06
 
 ### Added
 - Add "constants-browserify" to webpack resolve fallback.
@@ -413,26 +413,26 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file." in "return <componentObj/>;".
 
 
-## [1.0.2] (2024-03-06)
+## [1.0.2] - 2024-03-06
 
 ### Fixed
 - Fix include the "/src" and "/scripts" directories in the npm module.
 
 
-## [1.0.1] (2024-03-06)
+## [1.0.1] - 2024-03-06
 
 ### Fixed
 - Fix .babel, rollup.config.js, tsconfig.json, package.json, and index.tsx to generate the npm module and include the "/dist" files.
 
 
-## [1.0.0] (2024-03-05)
+## [1.0.0] - 2024-03-05
 
 ### Added
 - Separate FE Generic Suite to publish on NPM [FA-83].
 - Initial commit as an independent repository.
 
 
-## [0.0.18] (2024-02-18)
+## [0.0.18] - 2024-02-18
 
 ### Added
 - Dynamic centralized parameters (general and user's) [FA-173].
@@ -444,7 +444,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - FE: bash script to deploy ReactJs app with AWS Cloudfront and S3 [FA-100].
 
 
-## [0.0.17] (2023-11-01)
+## [0.0.17] - 2023-11-01
 
 ### Added
 - Add SuggestionDropdown component (and autocomplete) as a field type in GCE_RFC [FA-120].
@@ -454,7 +454,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add dishes and dish ingredients in json definitions [FA-135].
 
 
-## [0.0.16] (2023-07-29)
+## [0.0.16] - 2023-07-29
 
 ### Fixed
 - Fix deployment to AWS Cloudfront because npm build does not allow function.name. Funcions names passed to GetFormData() passed as string.
@@ -464,7 +464,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - `change_env_be_endpoint.sh` sets the AWS_S3_BUCKET_NAME in .env file.
 
 
-## [0.0.15] (2023-07-23)
+## [0.0.15] - 2023-07-23
 
 ### Changed
 - Divide the GenericCrudEditor [FA-95].
@@ -472,13 +472,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - GMB: menu_options getAll() moved from App.jsx to generic.menu.service, and getMenuFromApi created from it.
 
 
-## [0.0.14] (2023-07-22)
+## [0.0.14] - 2023-07-22
 
 ### Added
 - Add security for generic editor access, using the BE's /fda_food_query/element endpoint to compare the menu option's element "sec_group" vs user's groups [FA-45].
 
 
-## [0.0.13] (2023-07-19)
+## [0.0.13] - 2023-07-19
 
 ### Added
 - Make entries for config and config_qa to prepare the .env file chaging the REACT_APP_API_URL var.
@@ -488,13 +488,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add "#" in getPrefix when hardPrefix is on, to enable the AWS Cloudfront deployment [FA-97].
 
 
-## [0.0.12] (2023-07-17)
+## [0.0.12] - 2023-07-17
 
 ### Added
 - Add `aws_deploy_to_s3.sh` as an alternative to gh-pages [FA-90].
 
 
-## [0.0.11] (2023-07-15)
+## [0.0.11] - 2023-07-15
 
 ### Added
 - GMB: introducing the Generic Menu Builder. It reads all the menu Items from the app_main_menu.json and generates the top  and hamburger menus and its component or editor sub-options [FA-10].
@@ -504,25 +504,25 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - With the menu_options endpoint, the authorization token can be verified and handle timeouts on the main menu [FA-46].
 
 
-## [0.0.10] (2023-07-13)
+## [0.0.10] - 2023-07-13
 
 ### Added
 - GCE_RFC: The react components previously of type object are now of type text in the JSON, therefore the Generic Editor must convert them to object. [FA-86].
 
 
-## [0.0.9] (2023-07-12)
+## [0.0.9] - 2023-07-12
 
 ### Added
 - GCE_RFC: editor data definitions are in JSON files from an external git repository [FA-86].
 
 
-## [0.0.8] (2023-05-27)
+## [0.0.8] - 2023-05-27
 
 ### Added
 - Add: Specific funcions are now all Promises, so they can access backend API data.
 
 
-## [0.0.7] (2023-05-26)
+## [0.0.7] - 2023-05-26
 
 ### Added
 - Add: Password set/change in the User's FormData [FA-36].
@@ -535,7 +535,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add: GCE_RFC: new "force_value" to assign fixed values to certain fields. Examples: passcode and passcode_repeat, that must be blank always.
 
 
-## [0.0.6] (2023-05-23)
+## [0.0.6] - 2023-05-23
 
 ### Added
 - Add: New cache to speed up the Component Select field types, specially in the Listings.
@@ -549,20 +549,20 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - The "generic.editor.service" (Generic CRUD Editor with React Class Components) is not longer used.
 
 
-## [0.0.5] (2023-05-19)
+## [0.0.5] - 2023-05-19
 
 ### Added
 - Specific component functions (SCF) to perform a Pre and Post database operations and formData validations:
 - dbListPreRead, dbListPostRead, dbPreRead, dbPostRead, validations, dbPreWrite, dbPostWrite [FA-37].
 
 
-## [0.0.4] (2023-05-15)
+## [0.0.4] - 2023-05-15
 
 ### Added
 - GCE_RFC: Cache for <SELECT></SELECT> data [FA-71].
 
 
-## [0.0.3] (2023-04-10)
+## [0.0.3] - 2023-04-10
 
 ### Added
 - New GCE_RFC (Generic CRUD Editor based on React Functional Component) [FA-68].
@@ -570,7 +570,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Notice when a row has been updated, created or deleted [FA-44].
 
 
-## [0.0.2] (2022-03-16)
+## [0.0.2] - 2022-03-16
 
 ### Added
 - Generic CRUD Editor:
@@ -578,7 +578,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
   - Turn generic the select component [FA-61].
 
 
-## [0.0.1] (2022-03-10)
+## [0.0.1] - 2022-03-10
 
 ### Added
 - Start Generic CRUD Editor based on React Class Components development.
