@@ -15,7 +15,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [1.1.0] - 2025-09-04
+## [1.1.0] - 2025-11-03
+
+### Added
+- Add test cases for redirect functionality in LoginPage component [GS-219].
 
 ### Changed
 - Update CHANGELOG format to be more semantic [GS-222].
@@ -27,11 +30,20 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Enhance webpack configuration to conditionally log options and environment variables based on local environment detection.
 
 ### Security
-- Update "axios" to ^1.11.0 to fix the "form-data" CWE-343, CVE-2025-7783, CVSS 9.4 security vulnerability [GS-219].
+- Update "axios" to ^1.13.0 to fix the security vulnerability [GS-219]:
+  - "form-data" CWE-343, CVE-2025-7783, CVSS 9.4.
+  - "Axios is vulnerable to DoS attack through lack of data size check"
+  - "form-data uses unsafe random function in form-data for choosing boundary"
 - Fix "PostCSS line return parsing error" by updating "postcss" to "^8.5.6" [GS-219].
-- Basic rate limiting to mitigate DoS via expensive FS operations in "server.js" [GS-219].
+- Fix "Basic rate limiting to mitigate DoS via expensive FS operations" in "server.js" [GS-219].
 - Enhance LoginPage redirect handling with URL sanitization [GS-219].
-- Add test cases for redirect functionality in LoginPage component [GS-219].
+- The following security vulnerabilities were fixed by running "npm audit fix --force" [GS-219]:
+  - "PrismJS DOM Clobbering vulnerability"
+  - "Prototype Pollution in JSON5 via Parse Method"
+  - "pbkdf2 returns predictable uninitialized/zero-filled memory for non-normalized or unimplemented algos"
+  - "pbkdf2 silently disregards Uint8Array input, returning static keys"
+  - "Prototype pollution in webpack loader-utils"
+  - "sha.js is missing type checks leading to hash rewind and passing on crafted data"
 
 
 ## [1.0.25] - 2025-07-08
