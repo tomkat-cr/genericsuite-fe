@@ -30,6 +30,9 @@ const reduceAllResponses = (responses, data) => {
         const mergedFieldValues = { ...acc['fieldValues'] };
         for (const [key, value] of Object.entries(response['fieldValues'])) {
             if (typeof mergedFieldValues[key] === 'object' && typeof value === 'object' && value !== null) {
+                if (mergedFieldValues[key] === null) {
+                    mergedFieldValues[key] = {};
+                }
                 for (const [key2, value2] of Object.entries(value)) {
                     mergedFieldValues[key][key2] = value2;
                 }
@@ -39,7 +42,7 @@ const reduceAllResponses = (responses, data) => {
         }
         acc['fieldValues'] = mergedFieldValues;
         acc['fieldsToDelete'] = [...acc['fieldsToDelete'], ...response['fieldsToDelete']];
-        acc['otherData'] = {...acc['otherData'], ...response['otherData']};
+        acc['otherData'] = { ...acc['otherData'], ...response['otherData'] };
         return { ...acc };
     }, defaultValues);
     return responsesReduced;
@@ -152,7 +155,7 @@ export const mandatoryFiltersDbPreRead = (data, editor, action, currentUser) => 
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
         if (typeof editor.mandatoryFilters !== 'undefined') {
-            resp.fieldValues.resultset =  Object.assign({}, data, replaceSpecialVars(editor.mandatoryFilters, currentUser));
+            resp.fieldValues.resultset = Object.assign({}, data, replaceSpecialVars(editor.mandatoryFilters, currentUser));
         }
         // console_debug_log(`>>> mandatoryFiltersDbPreRead | resp:`, resp, 'data:', data);
         resolve(resp);

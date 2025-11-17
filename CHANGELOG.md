@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
 
-## [Unreleased] - Date
+## [Unreleased]
 
 ### Added
 
@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [1.1.0] - 2025-11-03
+## [1.1.0] - 2025-11-17
 
 ### Added
 - Add test cases for redirect functionality in LoginPage component [GS-219].
@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Replace class-properties plugin with transform-class-properties to fix the "npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead." warning [GS-219].
 - Fix the URL parameter parsing in getUrlParams() to handle the redirect parameter with a hash (#) in the value [GS-219].
 - Enhance webpack configuration to conditionally log options and environment variables based on local environment detection.
+- Fix: "generic.editor.rfc.specific.func.jsx" to prevent TypeError when merging fieldValues in the "reduceAllResponses" function [GS-230].
 
 ### Security
 - Update "axios" to ^1.13.0 to fix the security vulnerability [GS-219]:
@@ -37,8 +38,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "PostCSS line return parsing error" by updating "postcss" to "^8.5.6" [GS-219].
 - Fix "Basic rate limiting to mitigate DoS via expensive FS operations" in "server.js" [GS-219].
 - Enhance LoginPage redirect handling with URL sanitization [GS-219].
-- The following security vulnerabilities were fixed by running "npm audit fix --force" [GS-219]:
+- Update "react-syntax-highlighter" to "^16.1.0" to fix the security vulnerability [GS-219]:
   - "PrismJS DOM Clobbering vulnerability"
+- Bump babel-loader to ^10.0.0 to fix "@eslint/plugin-kit is vulnerable to Regular Expression Denial of Service attacks through ConfigCommentParser" [GS-219].
+- The following security vulnerabilities were fixed by running "npm audit fix --force" [GS-219]:
   - "Prototype Pollution in JSON5 via Parse Method"
   - "pbkdf2 returns predictable uninitialized/zero-filled memory for non-normalized or unimplemented algos"
   - "pbkdf2 silently disregards Uint8Array input, returning static keys"

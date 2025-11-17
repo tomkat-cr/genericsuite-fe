@@ -4525,6 +4525,9 @@ const reduceAllResponses = (responses, data) => {
     const mergedFieldValues = _objectSpread2({}, acc['fieldValues']);
     for (const [key, value] of Object.entries(response['fieldValues'])) {
       if (typeof mergedFieldValues[key] === 'object' && typeof value === 'object' && value !== null) {
+        if (mergedFieldValues[key] === null) {
+          mergedFieldValues[key] = {};
+        }
         for (const [key2, value2] of Object.entries(value)) {
           mergedFieldValues[key][key2] = value2;
         }
