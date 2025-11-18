@@ -493,10 +493,14 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
                 id={`${fullId}_dropDown`}
             >
                 {expandedMenus.includes(fullId) && (
-                    React.Children.map(children, child =>
-                        React.cloneElement(child, {
+                    React.Children.map(children, child => {
+                        if (!child) {
+                            return null;
+                        }
+                        return React.cloneElement(child, {
                             closeParent: () => toggledropDownOpen(),
-                        })
+                        });
+                    }
                     )
                 )}
             </div>

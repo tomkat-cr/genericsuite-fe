@@ -39,12 +39,40 @@ const defaultAppLogo = "app_logo_square.svg";
 
 export const LoginPage = (props) => {
 
+    const sanitizeRedirectUrl = (inputUrl) => {
+        if (!inputUrl) {
+            return '/';
+        }
+        let candidate = String(inputUrl).trim();
+        try {
+            candidate = decodeURIComponent(candidate);
+        } catch (_) {
+            // ignore decode errors, use raw candidate
+        }
+        try {
+            const parsed = new URL(candidate, window.location.origin);
+            // Only allow same-origin destinations
+            if (parsed.origin !== window.location.origin) {
+                return '/';
+            }
+            // Build a safe relative URL explicitly to preserve query and hash
+            const relative = `${parsed.pathname || '/'}${parsed.search || ''}${parsed.hash || ''}`;
+            // Disallow protocol-relative patterns like '//' at start of path
+            if (relative.startsWith('//')) {
+                return '/';
+            }
+            return relative || '/';
+        } catch (_) {
+            return '/';
+        }
+    }
+
     const getRedirect = () => {
         const urlParams = getUrlParams(props)
         if (typeof urlParams.redirect === 'undefined') {
-            return getLastUrl();
+            return sanitizeRedirectUrl(getLastUrl());
         }
-        return urlParams.redirect;
+        return sanitizeRedirectUrl(urlParams.redirect);
     }
 
     const { currentUser, registerUser, unRegisterUser } = useUser();
@@ -66,8 +94,10 @@ export const LoginPage = (props) => {
                     if (redirectUrl.indexOf('/login') > 0) {
                         redirectUrl = '/';
                     }
+
                     // return <Navigate to={redirectUrl} replace={true}/>
-                    window.location.href = redirectUrl;
+                    window.location.href = sanitizeRedirectUrl(redirectUrl);
+
                     // To handle menu access rights changes
                     // window.location.reload(true);
                 },

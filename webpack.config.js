@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
+const localEnvironment = process.env.REACT_APP_API_URL.includes("local") || ['development', 'dev', 'qa'].includes(process.env.NODE_ENV);
 
 /*
 https://webpack.js.org/
@@ -21,8 +22,10 @@ let devServerConfig = {
     allowedHosts: [appLocalDomainName], // To avoid "Invalid Host header" error
 };
 
-console.log('** WebPack options **');
-console.log('');
+if (localEnvironment) {
+    console.log('** WebPack options **');
+    console.log('');
+}
 
 if (process.env.REACT_APP_API_URL.includes("https://")) {
     devServerConfig.server = {
@@ -48,9 +51,11 @@ const process_env = {
     REACT_APP_USE_AXIOS: JSON.stringify(process.env.REACT_APP_USE_AXIOS || '1'),
 }
 
-console.log('devServerConfig:', devServerConfig);
-console.log('process_env:', process_env);
-console.log('');
+if (localEnvironment) {
+    console.log('devServerConfig:', devServerConfig);
+    console.log('process_env:', process_env);
+    console.log('');
+}
 
 module.exports = {
     mode: 'development',
@@ -69,7 +74,7 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-                        plugins: ['@babel/plugin-proposal-class-properties']
+                        plugins: ['@babel/plugin-transform-class-properties']
                     }
                 }
             },

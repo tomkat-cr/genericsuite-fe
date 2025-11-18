@@ -28,7 +28,7 @@ dev:
 	npm install --dev
 
 clean:
-	npm --rm
+	npm cache clean --force && rm -rf node_modules
 
 fresh: clean install
 

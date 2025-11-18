@@ -16,8 +16,7 @@ import {
 
 import users_api_keys from "../../../configs/frontend/users_api_keys.json";
 
-// const crypto = require('crypto');
-// import crypto from crypto;
+const debug = false;
 
 export function UsersApiKey_EditorData() {
     // console_debug_log("UsersApiKey_EditorData");
@@ -54,14 +53,17 @@ export const generateAccessToken = (length = 64) => {
 
 export const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
     // Users api keys pre-form data load default values (dbPreRead)
-    const debug = false;
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
         switch(action) {
             case ACTION_CREATE:
                 const access_token = generateAccessToken();
                 if (debug) console_debug_log(`>>> UsersApiKeyGenerate | access_token:`, access_token);
-                resp.fieldValues = Object.assign({}, data, { 'access_token': access_token });
+                resp.fieldValues = Object.assign({}, data, {
+                    'resultset': {
+                        'access_token': access_token
+                    }
+                });
                 break;
         }
         if (debug) console_debug_log(`>>> UsersApiKeyGenerate | resp:`, resp, 'data:', data, "action:", action);
