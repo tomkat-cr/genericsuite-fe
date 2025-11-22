@@ -33,10 +33,8 @@ cd "${REPO_BASEDIR}"
 
 # Defaults
 
-if [ "${RUN_METHOD}" = "" ]; then
-    RUN_METHOD="vite"
-    # RUN_METHOD="webpack"
-    # RUN_METHOD="react-scripts"
+if [ "${RUN_BUNDLER}" = "" ]; then
+    RUN_BUNDLER="vite"
 fi
 
 ACTION="$1"

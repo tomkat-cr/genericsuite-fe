@@ -35,10 +35,8 @@ remove_symlinks() {
 
 # Defaults
 
-if [ "${RUN_METHOD}" = "" ]; then
-    RUN_METHOD="vite"
-    # RUN_METHOD="webpack"
-    # RUN_METHOD="react-scripts"
+if [ "${RUN_BUNDLER}" = "" ]; then
+    RUN_BUNDLER="vite"
 fi
 
 RUN_MODE="$1"
@@ -68,7 +66,7 @@ if [ "${RUN_MODE}" = "test" ]; then
     export TSCONFIG_BASE_URL=$(perl -ne 'print $1 if /"baseUrl":\s*"([^"]*)"/' tsconfig.json)
     echo "tsconfig.json TSCONFIG_BASE_URL was: ${TSCONFIG_BASE_URL}"
 
-    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_METHOD}
+    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_BUNDLER}
 
     if [ "${TSCONFIG_BASE_URL}" = "./src/lib" ]; then
         echo "Preparing tsconfig.json for local build test..."
@@ -96,9 +94,9 @@ if [ "${RUN_MODE}" != "restore" ]; then
     remove_symlinks
 
     # npm run build-dev
-    if [ "${RUN_METHOD}" = "webpack" ]; then
+    if [ "${RUN_BUNDLER}" = "webpack" ]; then
         run_command="npx webpack --mode production"
-    elif [ "${RUN_METHOD}" = "vite" ]; then
+    elif [ "${RUN_BUNDLER}" = "vite" ]; then
         run_command="npx vite build"
     else
         # run_command="npx react-app-rewired build"

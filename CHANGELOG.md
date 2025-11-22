@@ -15,6 +15,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
+## [Unreleased]
+
+### Changed
+- Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
+
+
 ## [1.1.0] - 2025-11-17
 
 ### Added

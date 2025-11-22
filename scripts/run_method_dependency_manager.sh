@@ -71,11 +71,11 @@ uninstall_react_app_rewired() {
 }
 
 install() {
-    if [ "${RUN_METHOD}" = "vite" ]; then
+    if [ "${RUN_BUNDLER}" = "vite" ]; then
         uninstall_webpack
         uninstall_react_app_rewired
         install_one_bundle "${VITE_INSTALLED}" "Vite" "${VITE_PACKAGES}"
-    elif [ "${RUN_METHOD}" = "webpack" ]; then
+    elif [ "${RUN_BUNDLER}" = "webpack" ]; then
         uninstall_react_app_rewired
         uninstall_vite
         install_one_bundle "${WEBPACK_INSTALLED}" "Webpack" "${WEBPACK_PACKAGES}"
@@ -87,9 +87,9 @@ install() {
 }
 
 uninstall() {
-    if [ "${RUN_METHOD}" = "webpack" ]; then
+    if [ "${RUN_BUNDLER}" = "webpack" ]; then
         uninstall_webpack
-    elif [ "${RUN_METHOD}" = "vite" ]; then
+    elif [ "${RUN_BUNDLER}" = "vite" ]; then
         uninstall_vite
     else
         uninstall_react_app_rewired
@@ -103,8 +103,8 @@ if [ -z "${ACTION}" ]; then
     help
 fi
 
-RUN_METHOD="$2"
-if [ "${RUN_METHOD}" = "" ]; then
+RUN_BUNDLER="$2"
+if [ "${RUN_BUNDLER}" = "" ]; then
     help
 fi
 
@@ -131,7 +131,7 @@ echo ""
 echo "ACTION = ${ACTION}"
 echo "RUN_LIB = '${RUN_LIB}'"
 echo "INSTALL_OPTIONS = '${INSTALL_OPTIONS}'"
-echo "RUN_METHOD = ${RUN_METHOD}"
+echo "RUN_BUNDLER = ${RUN_BUNDLER}"
 echo ""
 echo "REACT_APP_REWIRED_INSTALLED = ${REACT_APP_REWIRED_INSTALLED}"
 echo "VITE_INSTALLED = ${VITE_INSTALLED}"
@@ -151,7 +151,7 @@ if [ "${ACTION}" = "uninstall" ]; then
 fi
 
 echo ""
-echo "Action: ${ACTION} | Run Method: ${RUN_METHOD} | Install Options: ${INSTALL_OPTIONS}"
+echo "Action: ${ACTION} | Run Method: ${RUN_BUNDLER} | Install Options: ${INSTALL_OPTIONS}"
 echo ""
 echo "Done!"
 echo ""

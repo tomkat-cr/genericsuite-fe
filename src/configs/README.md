@@ -117,9 +117,9 @@ To share the JSON files between the frontend and backend development repositorie
 └── frontend
 ```
 
-3. Define the `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` parametes in the frontend [.env](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.env.example) file.
+3. Define the `GIT_SUBMODULE_LOCAL_PATH_FRONTEND` and `GIT_SUBMODULE_URL` parametes in the frontend [.env](https://github.com/tomkat-cr/genericsuite-fe/blob/main/.env.example) file.
 
-4. Define the `GIT_SUBMODULE_LOCAL_PATH` and `GIT_SUBMODULE_URL` parametes in the backend [.env](https://github.com/tomkat-cr/genericsuite-be/blob/main/.env.example) file.
+4. Define the `GIT_SUBMODULE_LOCAL_PATH_FRONTEND` and `GIT_SUBMODULE_URL` parametes in the backend [.env](https://github.com/tomkat-cr/genericsuite-be/blob/main/.env.example) file.
 
 5. In the frontend directory run this to initialize the Git submodule:
 
@@ -1593,7 +1593,7 @@ mkdir -p .chalice
     "APP_SECRET_KEY": "APP_SECRET_KEY_placeholder",
     "APP_SUPERADMIN_EMAIL": "APP_SUPERADMIN_EMAIL_placeholder",
     "GIT_SUBMODULE_URL": "GIT_SUBMODULE_URL_placeholder",
-    "GIT_SUBMODULE_LOCAL_PATH": "GIT_SUBMODULE_LOCAL_PATH_placeholder",
+    "GIT_SUBMODULE_LOCAL_PATH_FRONTEND": "GIT_SUBMODULE_LOCAL_PATH_placeholder",
     "CURRENT_FRAMEWORK": "CURRENT_FRAMEWORK_placeholder",
     "DEFAULT_LANG": "DEFAULT_LANG_placeholder",
     "FDA_API_KEY": "FDA_API_KEY_placeholder",
@@ -2947,7 +2947,7 @@ Resources:
           CURRENT_FRAMEWORK: CURRENT_FRAMEWORK_placeholder
           DEFAULT_LANG: DEFAULT_LANG_placeholder
           GIT_SUBMODULE_URL: GIT_SUBMODULE_URL_placeholder
-          GIT_SUBMODULE_LOCAL_PATH: GIT_SUBMODULE_LOCAL_PATH_placeholder
+          GIT_SUBMODULE_LOCAL_PATH_FRONTEND: GIT_SUBMODULE_LOCAL_PATH_placeholder
           AWS_S3_CHATBOT_ATTACHMENTS_BUCKET: AWS_S3_CHATBOT_ATTACHMENTS_BUCKET_placeholder
           SMTP_SERVER: SMTP_SERVER_placeholder
           SMTP_PORT: SMTP_PORT_placeholder

@@ -24,10 +24,8 @@ remove_symlinks() {
 }
 
 # Defaults
-if [ "${RUN_METHOD}" = "" ]; then
-    RUN_METHOD="vite"
-    # RUN_METHOD="webpack"
-    # RUN_METHOD="react-scripts"
+if [ "${RUN_BUNDLER}" = "" ]; then
+    RUN_BUNDLER="vite"
 fi
 
 set -o allexport; source ".env" ; set +o allexport ;
@@ -37,7 +35,7 @@ STAGE="$1"
 echo ""
 echo "Stage = ${STAGE}"
 echo "APP_API_URL_DEV = ${APP_API_URL_DEV}"
-echo "RUN_METHOD = ${RUN_METHOD}"
+echo "RUN_BUNDLER = ${RUN_BUNDLER}"
 echo "RUN_PROTOCOL = ${RUN_PROTOCOL}"
 echo ""
 if [ "${STAGE}" = "dev" ]; then
@@ -107,10 +105,10 @@ echo "REACT_APP_VERSION = ${REACT_APP_VERSION}"
 
 run_app() {
     # Check if dependencies are installed
-    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_METHOD}
+    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_BUNDLER}
 
     # Run app dependending on the run method
-    if [ "${RUN_METHOD}" = "webpack" ]; then
+    if [ "${RUN_BUNDLER}" = "webpack" ]; then
         turn_off_module
         # run_command="npm run start-dev-webpack"
         run_command="npx webpack-dev-server --config webpack.config.js"
@@ -122,7 +120,7 @@ run_app() {
         fi
         turn_on_module
 
-    elif [ "${RUN_METHOD}" = "vite" ]; then
+    elif [ "${RUN_BUNDLER}" = "vite" ]; then
         # run_command="npm run start-dev-vite"
         run_command="npx vite dev"
         turn_off_module
