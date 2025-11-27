@@ -11,7 +11,25 @@ const localEnvironment = process.env.REACT_APP_API_URL.includes("local") || ['de
 /*
 https://webpack.js.org/
 
-npm install --save-dev webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin
+npm install --save-dev \
+   webpack \
+   webpack-cli \
+   webpack-dev-server \
+   html-webpack-plugin \
+   interpolate-html-plugin
+
+npm install --save-dev \
+   @babel/cli \
+   @babel/core \
+   @babel/plugin-proposal-private-property-in-object \
+   @babel/plugin-syntax-jsx \
+   @babel/plugin-transform-class-properties \
+   @babel/preset-env \
+   @babel/preset-react \
+   @babel/preset-stage-0 \
+   @babel/preset-typescript \
+   babel-loader \
+   babel-plugin-css-modules-transform
 */
 
 let devServerConfig = {
@@ -59,7 +77,7 @@ if (localEnvironment) {
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.tsx', 
+    entry: './src/index.tsx',
     // entry: './src/index.jsx', 
     target: 'web',
     module: {
@@ -96,7 +114,7 @@ module.exports = {
         alias: {
             '@': path.resolve(__dirname, 'src/'),
         },
-        fallback: { 
+        fallback: {
             "os": require.resolve("os-browserify/browser"),
             "url": require.resolve("url"),
             "crypto": require.resolve("crypto-browserify"),

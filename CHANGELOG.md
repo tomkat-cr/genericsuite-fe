@@ -20,6 +20,11 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
 
+### Fixed
+- Update "run_method_dependency_manager.sh" to use install/uninstall "babel" dependencies when webpack is used, because vite does not needed them, and fix the following warnings: [GS-219].
+  * npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+  * npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+
 
 ## [1.1.0] - 2025-11-17
 

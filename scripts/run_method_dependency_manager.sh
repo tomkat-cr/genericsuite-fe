@@ -120,7 +120,7 @@ VITE_INSTALLED=$(perl -ne 'print $1 if /"vite":\s*"([^"]*)"/' package.json)
 WEBPACK_INSTALLED=$(perl -ne 'print $1 if /"webpack-dev-server":\s*"([^"]*)"/' package.json)
 
 VITE_PACKAGES="vite @vitejs/plugin-react vite-plugin-require @tailwindcss/vite"
-WEBPACK_PACKAGES="webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin"
+WEBPACK_PACKAGES="webpack webpack-cli webpack-dev-server html-webpack-plugin interpolate-html-plugin @babel/cli @babel/core @babel/plugin-proposal-private-property-in-object @babel/plugin-syntax-jsx @babel/plugin-transform-class-properties @babel/preset-env @babel/preset-react @babel/preset-stage-0 @babel/preset-typescript babel-loader babel-plugin-css-modules-transform"
 REACT_APP_REWIRED_PACKAGES="react-app-rewired react-scripts"
 
 echo ""
