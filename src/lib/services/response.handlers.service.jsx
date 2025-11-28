@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import {
     MSG_ERROR_CONNECTION_FAIL,
     MSG_ERROR_INVALID_CREDS,
@@ -44,6 +45,7 @@ export function handleResponseText(response, text, headers) {
     }
     if (!response.ok) {
         let specificErrorMsg = (data && data.message) || text || response.statusText || '';
+        if (debug) console_debug_log('handleResponse | !response.ok | specificErrorMsg:', specificErrorMsg, 'data:', data, 'text:', text, 'response:', response);
         if ([401, 403].indexOf(response.status) !== -1) {
             // Auto logout if 401 Unauthorized or 403 Forbidden response returned from api
             if (response.status === 401) {
@@ -78,13 +80,13 @@ export function handleResponseText(response, text, headers) {
                 data.headers.set('content-type', 'application/octet-stream');
             }
         }
-        if(typeof data.error == 'undefined') {
+        if (typeof data.error == 'undefined') {
             data.error = false;
         }
-        if(typeof data.error_message != 'undefined') {
+        if (typeof data.error_message != 'undefined') {
             data.message = data.error_message;
         }
-        if(typeof data.resultset != 'undefined' && typeof data.resultset != 'object') {
+        if (typeof data.resultset != 'undefined' && typeof data.resultset != 'object') {
             // When the data.resultset has an array of records (objects) instead of a sigle object, it comes as an encapsulated string
             data.resultset = JSON.parse(data.resultset);
         }
@@ -94,6 +96,9 @@ export function handleResponseText(response, text, headers) {
     }
     return data;
 }
+
+const get401ErrorMessage = (statusText, reasonDetail) => statusText?.includes('Unauthorized') ? (reasonDetail ===
+    'Could not verify [L3]' ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED) : statusText;
 
 export async function handleFetchError(error) {
     let possibleCORS;
@@ -122,9 +127,28 @@ export async function handleFetchError(error) {
         });
 
         if (error.status === 401) {
-            errorMsg = MSG_ERROR_SESSION_EXPIRED;
+            errorMsg = get401ErrorMessage(error.statusText, reasonDetail);
         } else {
             errorMsg = error.statusText;
+        }
+    } else if (error instanceof AxiosError) {
+        /*
+            code: "ERR_BAD_REQUEST"
+            config: {transitional: {…}, adapter: Array(3), transformRequest: Array(1), transformResponse: Array(1), timeout: 0, …}
+            message: "Request failed with status code 401"
+            name: "AxiosError"
+            request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}
+            response: {data: 'Could not verify [L3]', status: 401, statusText: 'Unauthorized', headers: AxiosHeaders, config: {…}, …}
+            status: 401
+            stack: "AxiosError: Request failed with status code 401\n    at settle (http://example-domain.com/node_modules/.vite/deps/axios.js?v=1eba938e:1257:12)\n ..."
+        */
+        possibleCORS = (error.message.includes('CORS'));
+        if (error.status === 401) {
+            errorMsg = get401ErrorMessage(error.response?.statusText, error.response?.data);
+            reasonDetail = '';
+        } else {
+            errorMsg = error.message;
+            reasonDetail = error.response?.data;
         }
     } else {
         possibleCORS = (error instanceof TypeError && error.message.includes('Failed to fetch'));

@@ -143,7 +143,7 @@ const GenericCrudEditorMain = (props) => {
       editor_response => {
         if (!editor_response) {
           setEditor(null);
-        } else if(editor_response.error) {
+        } else if (editor_response.error) {
           console_debug_log("GCE-M-010:");
           console_debug_log(editor_response.errorMsg);
           setStatus(
@@ -167,7 +167,7 @@ const GenericCrudEditorMain = (props) => {
         );
       }
     );
-  }, [props]);
+  }, []);
 
   useEffect(() => {
     if (editor) {
@@ -205,8 +205,8 @@ const GenericCrudEditorMain = (props) => {
               setStatus(
                 errorAndReEnter(
                   error, (debug ? ' [GCE-M-040]' : null)
-                  )
-                );
+                )
+              );
             }
           );
         },
@@ -265,7 +265,7 @@ const GenericCrudEditorMain = (props) => {
     if (!event.target.value) {
       return;
     }
-    saveLocalConfig({"gce_rows_per_page": event.target.value});
+    saveLocalConfig({ "gce_rows_per_page": event.target.value });
     setInfoMsg('');
     setRowsPerPage(event.target.value);
   }
@@ -337,8 +337,8 @@ const GenericCrudEditorMain = (props) => {
     if (status) {
       return (
         <div>
-            {status}
-            {debug && "[GCEM-NES]"}
+          {status}
+          {debug && "[GCEM-NES]"}
         </div>
       );
     }
@@ -573,7 +573,7 @@ const GenericCrudEditorMain = (props) => {
           {/* Toolbar */}
           <div
             key={`${editor.baseUrl}_toolbar`}
-            className={APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS :  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)}
+            className={APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS : APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)}
           >
             <CrudEditorPagination
               id={editor.baseUrl + "_pagination"}
@@ -798,11 +798,11 @@ const CrudEditorNewButton = ({ id, handleNew }) => {
       <div
         className={BUTTON_COMPOSED_LABEL_CLASS}
       >
-          <GsIcons
-            icon="plus"
-            alt={MSG_ACTION_NEW}
-          />
-          &nbsp;{MSG_ACTION_NEW}
+        <GsIcons
+          icon="plus"
+          alt={MSG_ACTION_NEW}
+        />
+        &nbsp;{MSG_ACTION_NEW}
       </div>
     </button>
   );

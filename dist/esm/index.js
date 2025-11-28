@@ -4,7 +4,7 @@ import { Link, Routes, Route, HashRouter, RouterProvider, createBrowserRouter, N
 import { createBrowserHistory } from 'history';
 import { Buffer } from 'buffer';
 import { BehaviorSubject } from 'rxjs';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Downshift from 'downshift';
@@ -376,6 +376,7 @@ const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
 
 // Wait animation
 
+const PAGE_ANIMATION_CLASS = "mt-3 flex items-center justify-center pageAnimationClass";
 const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 showHidePageAnimationEnabledClass";
 const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
 
@@ -561,6 +562,7 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
   NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
   NAV_LINK_TOP_DIV_TOP_MENU_CLASS: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
+  PAGE_ANIMATION_CLASS: PAGE_ANIMATION_CLASS,
   POPUP_TOP_MARGIN_CLASS: POPUP_TOP_MARGIN_CLASS,
   ROUNDED_ICON_CLASS: ROUNDED_ICON_CLASS,
   SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS,
@@ -2573,7 +2575,7 @@ var constants$1 = {
 // Security
 
 const MSG_ERROR_INVALID_TOKEN = ['A valid token is missing', 'Token is invalid', 'Session expired', 'HTTP 401', 'Request failed with status code 401'];
-const MSG_ERROR_INVALID_CREDS = 'The username or password is incorrect. Please try again.';
+const MSG_ERROR_INVALID_CREDS = 'Invalid credentials. Please try again.';
 const MSG_ERROR_SESSION_EXPIRED = 'Session expired.';
 const MSG_ERROR_CLICK_TO_RELOGIN = 'Login again';
 const MSG_ERROR_CLICK_TO_RETRY = 'Retry';
@@ -2842,6 +2844,7 @@ function handleResponseText(response, text, headers) {
   }
   return data;
 }
+const get401ErrorMessage = (statusText, reasonDetail) => statusText !== null && statusText !== void 0 && statusText.includes('Unauthorized') ? reasonDetail === 'Could not verify [L3]' ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText;
 async function handleFetchError(error) {
   let possibleCORS;
   let errorMsg;
@@ -2865,9 +2868,30 @@ async function handleFetchError(error) {
       return "HTTP ".concat(error.status);
     });
     if (error.status === 401) {
-      errorMsg = MSG_ERROR_SESSION_EXPIRED;
+      errorMsg = get401ErrorMessage(error.statusText, reasonDetail);
     } else {
       errorMsg = error.statusText;
+    }
+  } else if (error instanceof AxiosError) {
+    /*
+        code: "ERR_BAD_REQUEST"
+        config: {transitional: {…}, adapter: Array(3), transformRequest: Array(1), transformResponse: Array(1), timeout: 0, …}
+        message: "Request failed with status code 401"
+        name: "AxiosError"
+        request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}
+        response: {data: 'Could not verify [L3]', status: 401, statusText: 'Unauthorized', headers: AxiosHeaders, config: {…}, …}
+        status: 401
+        stack: "AxiosError: Request failed with status code 401\n    at settle (http://example-domain.com/node_modules/.vite/deps/axios.js?v=1eba938e:1257:12)\n ..."
+    */
+    possibleCORS = error.message.includes('CORS');
+    if (error.status === 401) {
+      var _error$response, _error$response2;
+      errorMsg = get401ErrorMessage((_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.statusText, (_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data);
+      reasonDetail = '';
+    } else {
+      var _error$response3;
+      errorMsg = error.message;
+      reasonDetail = (_error$response3 = error.response) === null || _error$response3 === void 0 ? void 0 : _error$response3.data;
     }
   } else {
     possibleCORS = error instanceof TypeError && error.message.includes('Failed to fetch');
@@ -3108,20 +3132,12 @@ const getAxios = (url, requestOptions) => {
     body,
     headers
   } = requestOptions;
-  // const api_url = process.env.REACT_APP_API_URL || "";
-  // const https_dev_env = api_url.includes("local") && api_url.includes("https");
   let axios_config = {
     url: url,
     method: method,
     data: body,
     headers: headers
   };
-  // if (https_dev_env) {
-  //     axios_config.httpsAgent = new https.Agent({
-  //         rejectUnauthorized: false,
-  //     });
-  //     console.log('>> axios_config with https.Agent.rejectUnauthorized:', axios_config);
-  // }
   try {
     response = axios(axios_config).then(response => {
       let new_response;
@@ -3249,10 +3265,15 @@ const gsFetch = (url, requestOptions) => {
   }
   return getFetch(url, requestOptions);
 };
+const getBaseApiUrl = () => {
+  const apiVersion = process.env.REACT_APP_API_VERSION || 'v1';
+  return "".concat(process.env.REACT_APP_API_URL, "/").concat(apiVersion);
+};
 
 var fetch_utilities = /*#__PURE__*/Object.freeze({
   __proto__: null,
   getAxios: getAxios,
+  getBaseApiUrl: getBaseApiUrl,
   getFetch: getFetch,
   gsFetch: gsFetch,
   useAxios: useAxios
@@ -3291,7 +3312,7 @@ const useExposeHeaders = (process.env.REACT_APP_USE_EXPOSE_HEADERS || "0") == "1
 class dbApiService {
   constructor(props) {
     _defineProperty(this, "props", null);
-    _defineProperty(this, "apiUrl", process.env.REACT_APP_API_URL);
+    _defineProperty(this, "apiUrl", getBaseApiUrl());
     _defineProperty(this, "debug", false);
     this.props = props;
     const additionalHeaders = this.getAdditionalHeaders();
@@ -3495,7 +3516,7 @@ const authenticationService = {
 };
 function login(username, password) {
   const config = {
-    apiUrl: process.env.REACT_APP_API_URL
+    apiUrl: getBaseApiUrl()
   };
   // FA-62 - FE: Find a replacement for btoa()
   const requestOptions = {
@@ -3560,7 +3581,11 @@ const getCurrentUserData = () => {
     };
   });
 };
-const verifyCurrentUser = registerUser => {
+const verifyCurrentUser = (registerUser, currentUser) => {
+  if (currentUser) {
+    // Avoid multiple calls to setCurrentUser
+    return;
+  }
   if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
     getCurrentUserData().then(userData => {
       if (userData.error) ; else {
@@ -3604,7 +3629,7 @@ const getErrorMessage = error => {
     } else {
       errorMessage = error['message'];
     }
-    if (typeof error['reason'] !== 'undefined') {
+    if (typeof error['reason'] !== 'undefined' && error['reason']) {
       errorMessage += ': ' + (typeof error['reason']['message'] !== "undefined" ? error['reason']['message'] : typeof error['reason'] === 'string' ? error['reason'] : JSON.stringify(error['reason']));
     }
   }
@@ -3968,7 +3993,6 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
       }
     } else {
       RouteTemplateComponent = AppMainInner;
-      // RouteTemplateComponent = (({ children} ) => (<>{children}</>));
     }
     route.element = /*#__PURE__*/React.createElement(RouteTemplateComponent
     // componentMap={componentMap}
@@ -4036,8 +4060,6 @@ const DefaultRoutes = () => {
     routes: routes
   });
 };
-
-// export const getDefaultRoutes = (currentUser, componentMap, setExpanded, returnType = "routes") => {
 const getDefaultRoutes = (currentUser, componentMap, setExpanded) => {
   const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
   const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
@@ -4057,8 +4079,10 @@ const InvalidElement = _ref2 => {
 const InvalidRoute = () => {
   return /*#__PURE__*/React.createElement(InvalidElement, null, "URL not found...");
 };
-const getMenuFromApi = (state, setState, setMenuOptions) => {
-  if (state !== "") {
+
+// export const getMenuFromApi = (state, setState, setMenuOptions) => {
+const getMenuFromApi = (getState, setState, setMenuOptions) => {
+  if (getState() !== "") {
     return;
   }
   const endpoint = "menu_options";
@@ -4100,9 +4124,7 @@ const GenericMenuBuilder = _ref3 => {
         // Items in main menu, not belonging to any NavDropdown
         return /*#__PURE__*/React.createElement(Nav.Link, {
           key: item.title,
-          as: Link
-          // to={getPrefix()+itemDefs["path"]}
-          ,
+          as: Link,
           to: itemDefs["path"],
           onClick: itemDefs["on_click"],
           reloadDocument: itemDefs["reload"],
@@ -4262,10 +4284,12 @@ var dictUtilities = /*#__PURE__*/Object.freeze({
 });
 
 const WaitAnimation = () => {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("center", null, /*#__PURE__*/React.createElement("img", {
+  return /*#__PURE__*/React.createElement("div", {
+    className: PAGE_ANIMATION_CLASS
+  }, /*#__PURE__*/React.createElement("img", {
     src: WAIT_ANIMATION_IMG,
     alt: MSG_ALT_WAIT_ANIMATION
-  })));
+  }));
 };
 const ShowHidePageAnimation = function (showAnimation) {
   let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "nav_animation";
@@ -6243,7 +6267,7 @@ const GenericCrudEditorMain = props => {
       console_debug_log(error);
       setStatus(errorAndReEnter(error, null));
     });
-  }, [props]);
+  }, []);
   useEffect(() => {
     if (editor) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation";
@@ -7540,9 +7564,10 @@ const LoginPage = props => {
       // To avoid stay in login page with the wait animation
       setSubmitting(false);
       registerUser(user);
+
       // Redirect to previous page
       removeLastUrl();
-      if (redirectUrl.indexOf('/login') > 0) {
+      if (redirectUrl.includes('/login')) {
         redirectUrl = '/';
       }
 
@@ -7857,12 +7882,15 @@ const AppMainInner = _ref6 => {
   const stateHandler = () => {
     logoutHander();
   };
+  const getState = () => {
+    return state;
+  };
   useEffect(() => {
     // Load menus from JSON configurations
     if (currentUser) {
-      getMenuFromApi(state, setState, setMenuOptions);
+      getMenuFromApi(getState, setState, setMenuOptions);
     }
-  }, [currentUser, state]);
+  }, [currentUser]);
   if (showContentOnly) {
     return /*#__PURE__*/React.createElement(AppMainInnerUnauthenticated, null, children);
   }
@@ -7877,12 +7905,16 @@ const AppMainInner = _ref6 => {
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(React.Fragment, null, !sideMenu && /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
-    showContentOnly: showContentOnly
+    showContentOnly: showContentOnly,
+    menuOptions: menuOptions,
+    currentUser: currentUser
   }, children), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(AppMainComponent, {
     stateHandler: stateHandler,
-    showContentOnly: showContentOnly
+    showContentOnly: showContentOnly,
+    menuOptions: menuOptions,
+    currentUser: currentUser
   }, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     itemType: "mobile_menu"
   }), currentUser && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
@@ -7896,14 +7928,12 @@ const AppMainComponent = _ref7 => {
   let {
     stateHandler,
     showContentOnly,
+    menuOptions,
+    currentUser,
     children
   } = _ref7;
-  // const location = useLocation();
-  // if (debug) console_debug_log("AppMainComponent | location:", location);
   const {
-    state,
-    menuOptions,
-    currentUser
+    state
   } = useAppContext();
   if (state !== "") {
     if (showContentOnly) {
@@ -7912,6 +7942,9 @@ const AppMainComponent = _ref7 => {
     return errorAndReEnter(state, null, true, null, stateHandler, false, false);
   }
   if (!menuOptions) {
+    if (currentUser) {
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(WaitAnimation, null));
+    }
     return /*#__PURE__*/React.createElement("div", {
       className: LOGIN_BUTTON_IN_APP_COMPONENT_CLASS
     }, /*#__PURE__*/React.createElement(GsButton, {
@@ -7939,14 +7972,16 @@ const AppMain = () => {
   } = useAppContext();
   const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
   useEffect(() => {
-    verifyCurrentUser(registerUser);
+    verifyCurrentUser(registerUser, currentUser);
   }, []);
-  useEffect(() => {
-    // Load menus from JSON configurations
-    if (currentUser) {
-      getMenuFromApi(state, setState, setMenuOptions);
-    }
-  }, [currentUser, state]);
+
+  // useEffect(() => {
+  //     // Load menus from JSON configurations
+  //     if (currentUser) {
+  //         getMenuFromApi(state, setState, setMenuOptions);
+  //     }
+  // }, [currentUser, state]);
+
   useEffect(() => {
     if (menuOptions) {
       setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));

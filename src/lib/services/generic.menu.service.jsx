@@ -3,7 +3,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-// import { NavLink as RouterLink } from 'react-router-dom';
 
 import { useAppContext } from '../helpers/AppContext.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
@@ -70,7 +69,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
             if (match) {
                 const woOptions = (typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null);
                 if (woOptions) {
-                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}${getUrlForRouter("/"+woOptions.url)}`, woOptions.name, woOptions.options));
+                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}${getUrlForRouter("/" + woOptions.url)}`, woOptions.name, woOptions.options));
                     if (setExpanded) {
                         resutlFunction = () => { setExpanded(); windowOpenFn(woOptions); return window.location.href; };
                     } else {
@@ -154,7 +153,7 @@ export const editorRoute = (editor, itemDefs) => (
     {
         key: itemDefs.title,
         exact: (editor.exact ?? routeExact),
-        path: '/'+editor.baseUrl,
+        path: '/' + editor.baseUrl,
         element: editor.component,
         template: itemDefs.template,
         on_click_string: itemDefs.on_click_string,
@@ -182,7 +181,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                         indexRoute = routes.length - 1;
                     }
                     break;
-                case getPrefix()+"/login":
+                case getPrefix() + "/login":
                     if (loginRoute == -1) {
                         routes.push(resultRoute);
                         loginRoute = routes.length - 1;
@@ -219,7 +218,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                     console_debug_log("getRoutes - sub_menu_options: subItem / itemDefs");
                     console_debug_log(subItem);
                     console_debug_log(itemDefs);
-                }    
+                }
                 if (subItem.type === 'editor') {
                     try {
                         resultRoute = editorRoute(componentMap[subItem.element](), itemDefs)
@@ -252,8 +251,8 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
         if (nestedRoutes) {
             route.path = route.path.replace(/\//, "");
         }
-        if (debug) console_debug_log('getRoutesRaw | route.path:', route.path, '| route: ', );
-        if (route.path === getPrefix()+'/login') {
+        if (debug) console_debug_log('getRoutesRaw | route.path:', route.path, '| route: ',);
+        if (route.path === getPrefix() + '/login') {
             RouteTemplateComponent = AppMainInnerUnauthenticated;
         } else if (route.template) {
             if (typeof componentMap[route.template] === "undefined") {
@@ -265,7 +264,6 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
             }
         } else {
             RouteTemplateComponent = AppMainInner;
-            // RouteTemplateComponent = (({ children} ) => (<>{children}</>));
         }
         route.element = (
             <RouteTemplateComponent
@@ -273,7 +271,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
                 // currentUser={currentUser}
                 errorMessage={error}
             >
-                {route.element !== null && (<route.element/>)}
+                {route.element !== null && (<route.element />)}
                 {route.element === null && route.on_click_string !== null && (<p>Redirecting...</p>)}
                 {route.element === null && route.on_click_string === null && (<InvalidElement>{route.key} Not Implemented...</InvalidElement>)}
             </RouteTemplateComponent>
@@ -284,7 +282,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
     if (currentUser) {
         routes[indexRoute].path = "/";
         if (nestedRoutes) {
-            finalRoutes = {...routes[indexRoute]};
+            finalRoutes = { ...routes[indexRoute] };
             delete routes[indexRoute];
             finalRoutes.children = routes;
         } else {
@@ -298,7 +296,7 @@ export const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded
             finalRoutes.children = routes;
         } else {
             if (forcedLoginRoute) {
-                routes.push({...routes[loginRoute]});
+                routes.push({ ...routes[loginRoute] });
                 routes[loginRoute].index = true;
                 routes[loginRoute].path = "/";
                 routes[indexRoute].path = "index";
@@ -335,7 +333,7 @@ export const editorMenuOption = (editor, itemType, mobileMenuMode, componentMap,
         <NavDropdown.Item
             key={editor.title}
             as={RouterLink}
-            to={'/'+editor.baseUrl}
+            to={'/' + editor.baseUrl}
             onClick={getOnClickObject(null, componentMap, setExpanded)}
             type={itemType}
             mobileMenuMode={mobileMenuMode}
@@ -376,7 +374,6 @@ export const DefaultRoutes = () => {
     );
 }
 
-// export const getDefaultRoutes = (currentUser, componentMap, setExpanded, returnType = "routes") => {
 export const getDefaultRoutes = (currentUser, componentMap, setExpanded) => {
     const menuOptionsFinal = getDefaultRoutesRaw(componentMap);
     const routes = getRoutesRaw(currentUser, menuOptionsFinal, componentMap, setExpanded);
@@ -410,8 +407,9 @@ const InvalidRoute = () => {
     );
 }
 
-export const getMenuFromApi = (state, setState, setMenuOptions) => {
-    if (state !== "") {
+// export const getMenuFromApi = (state, setState, setMenuOptions) => {
+export const getMenuFromApi = (getState, setState, setMenuOptions) => {
+    if (getState() !== "") {
         return;
     }
     const endpoint = "menu_options";
@@ -464,82 +462,81 @@ export const GenericMenuBuilder = (
         }
         return (
             menuOptions
-            .filter(item => item.location === item_type_filter)
-            .map(item => {
-                const itemDefs = getItemDefaults(componentMap, setExpanded, item, topTitle);
-                if (debug) {
-                    console_debug_log("Nav & NavDropdown 1: subItem / itemDefs");
-                    console_debug_log(item);
-                    console_debug_log(itemDefs);
-                }
-                if (item.type === "nav_link") {
-                    // Items in main menu, not belonging to any NavDropdown
+                .filter(item => item.location === item_type_filter)
+                .map(item => {
+                    const itemDefs = getItemDefaults(componentMap, setExpanded, item, topTitle);
+                    if (debug) {
+                        console_debug_log("Nav & NavDropdown 1: subItem / itemDefs");
+                        console_debug_log(item);
+                        console_debug_log(itemDefs);
+                    }
+                    if (item.type === "nav_link") {
+                        // Items in main menu, not belonging to any NavDropdown
+                        return (
+                            <Nav.Link
+                                key={item.title}
+                                as={RouterLink}
+                                to={itemDefs["path"]}
+                                onClick={itemDefs["on_click"]}
+                                reloadDocument={itemDefs["reload"]}
+                                type={itemType}
+                                mobileMenuMode={mobileMenuMode}
+                            >
+                                {icon ? <GsIcons icon={icon ?? ''} size="2xl" className={NAV_LINK_ICON_CLASS} /> : itemDefs["title"]}
+                            </Nav.Link>
+                        );
+                    }
+                    // Navigation dropdown (main menu item with sub-menus)
+                    const navDropdownId = `basic-nav-dropdown-${item.title.replace(/ /g, '_')}`
                     return (
-                        <Nav.Link
+                        <NavDropdown
                             key={item.title}
-                            as={RouterLink}
-                            // to={getPrefix()+itemDefs["path"]}
-                            to={itemDefs["path"]}
-                            onClick={itemDefs["on_click"]}
-                            reloadDocument={itemDefs["reload"]}
+                            title={itemDefs["title"]}
+                            id={navDropdownId}
                             type={itemType}
+                            icon={icon}
                             mobileMenuMode={mobileMenuMode}
                         >
-                            {icon ? <GsIcons icon={icon ?? ''} size="2xl" className={NAV_LINK_ICON_CLASS} />: itemDefs["title"]}
-                        </Nav.Link>
-                    );
-                }
-                // Navigation dropdown (main menu item with sub-menus)
-                const navDropdownId = `basic-nav-dropdown-${item.title.replace(/ /g, '_')}`
-                return (
-                    <NavDropdown
-                        key={item.title}
-                        title={itemDefs["title"]}
-                        id={navDropdownId}
-                        type={itemType}
-                        icon={icon}
-                        mobileMenuMode={mobileMenuMode}
-                    >
-                    {
-                        item.sub_menu_options.map(subItem => {
-                            const itemDefs = getItemDefaults(componentMap, setExpanded, subItem);
-                            if (debug) {
-                                console_debug_log("NavDropdown.Item 2: subItem / itemDefs");
-                                console_debug_log(subItem);
-                                console_debug_log(itemDefs);
-                            }
-                            if (subItem.type === 'editor') {
-                                try {
-                                    return editorMenuOption(
-                                        componentMap[subItem.element](),
-                                        itemType,
-                                        mobileMenuMode,
-                                        componentMap, setExpanded
+                            {
+                                item.sub_menu_options.map(subItem => {
+                                    const itemDefs = getItemDefaults(componentMap, setExpanded, subItem);
+                                    if (debug) {
+                                        console_debug_log("NavDropdown.Item 2: subItem / itemDefs");
+                                        console_debug_log(subItem);
+                                        console_debug_log(itemDefs);
+                                    }
+                                    if (subItem.type === 'editor') {
+                                        try {
+                                            return editorMenuOption(
+                                                componentMap[subItem.element](),
+                                                itemType,
+                                                mobileMenuMode,
+                                                componentMap, setExpanded
+                                            );
+                                        } catch (error) {
+                                            console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
+                                            console_debug_log(error);
+                                            return null;
+                                        }
+                                    }
+                                    return (
+                                        <NavDropdown.Item
+                                            key={subItem.title}
+                                            as={RouterLink}
+                                            to={itemDefs["path"]}
+                                            onClick={itemDefs["on_click"]}
+                                            reloadDocument={itemDefs["reload"]}
+                                            type={itemType}
+                                            mobileMenuMode={mobileMenuMode}
+                                        >
+                                            {itemDefs["title"]}
+                                        </NavDropdown.Item>
                                     );
-                                } catch (error) {
-                                    console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
-                                    console_debug_log(error);
-                                    return null;
-                                }
+                                })
                             }
-                            return (
-                                <NavDropdown.Item
-                                    key={subItem.title}
-                                    as={RouterLink}
-                                    to={itemDefs["path"]}
-                                    onClick={itemDefs["on_click"]}
-                                    reloadDocument={itemDefs["reload"]}
-                                    type={itemType}
-                                    mobileMenuMode={mobileMenuMode}
-                                >
-                                    {itemDefs["title"]}
-                                </NavDropdown.Item>
-                            );
-                        })
-                    }
-                    </NavDropdown>
-                );
-            })
+                        </NavDropdown>
+                    );
+                })
         );
     }
 
@@ -557,13 +554,13 @@ export const GenericMenuBuilder = (
 
     if (state !== "" && itemType === "routes") {
         return (
-            <DefaultRoutes/>
+            <DefaultRoutes />
         );
     }
 
     if (state !== "") {
         return (
-            <DefaultRoutes/>
+            <DefaultRoutes />
         );
     }
 

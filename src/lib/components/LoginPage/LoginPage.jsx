@@ -86,12 +86,14 @@ export const LoginPage = (props) => {
                     let redirectUrl = getRedirect();
                     // To avoid stay in login page with the wait animation
                     setSubmitting(false);
+
                     // Set user data to <App/>
-                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' data # 2:", user);
+                    if (debug) console_debug_log("LoginPage | call to registerUser with 'user' data:", user);
                     registerUser(user);
+
                     // Redirect to previous page
                     removeLastUrl();
-                    if (redirectUrl.indexOf('/login') > 0) {
+                    if (redirectUrl.includes('/login')) {
                         redirectUrl = '/';
                     }
 
@@ -171,7 +173,7 @@ export const LoginPage = (props) => {
                                     className={FORM_CONTROL_CLASS + ' ' + (
                                         errors.password && touched.password ? IS_INVALID_CLASS : theme.input
                                     )}
-                                    />
+                                />
                                 <ErrorMessage
                                     name="password"
                                     component="div"
@@ -192,7 +194,7 @@ export const LoginPage = (props) => {
                                     WaitAnimation()
                                 }
                             </div>
-                            {status && ! includesAppValidLinks(status) && 
+                            {status && !includesAppValidLinks(status) &&
                                 <div
                                     className={ERROR_MSG_CLASS}
                                 >
@@ -202,7 +204,7 @@ export const LoginPage = (props) => {
                             {status && includesAppValidLinks(status) &&
                                 <div
                                     className={ERROR_MSG_CLASS}
-                                    // dangerouslySetInnerHTML={{ __html: status }}
+                                // dangerouslySetInnerHTML={{ __html: status }}
                                 >
                                     {status}
                                 </div>

@@ -112,7 +112,7 @@ const getShowContentOnly = () => {
     return showContentOnly;
 }
 
-const CloseButton = ({children}) => {
+const CloseButton = ({ children }) => {
     return (
         <>
             {children && (
@@ -138,13 +138,13 @@ const AppNavBar = ({ children }) => {
     const { setExpanded, appLogoHeader } = useAppContext();
     const version = process.env.REACT_APP_VERSION;
     const appName = (
-        appLogoHeader ? 
+        appLogoHeader ?
             <img
                 src={imageDirectory + appLogoHeader}
                 className={NAVBAR_BRAND_APP_LOGO_CLASS}
                 alt="App Logo"
             />
-                :
+            :
             process.env.REACT_APP_APP_NAME
     );
     return (
@@ -154,7 +154,7 @@ const AppNavBar = ({ children }) => {
             <Navbar.Brand
                 as={RouterLink}
                 to='/'
-                // onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+            // onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
             >
                 <div
                     className={NAVBAR_BRAND_NAME_CLASS}
@@ -238,14 +238,14 @@ const AppMainInnerUnauthenticated = ({ children }) => {
                             <>{children}</>
                         </AppSectionContainer.ForSideMenu>
                         <AppFooterContainer>
-                            <AppFooter/>
+                            <AppFooter />
                         </AppFooterContainer>
                     </>
                 )}
             </AppSectionContainer>
             {!sideMenu && (
                 <AppFooterContainer>
-                    <AppFooter/>
+                    <AppFooter />
                 </AppFooterContainer>
             )}
         </MainContainer>
@@ -274,12 +274,16 @@ const AppMainInner = ({ children }) => {
         logoutHander();
     }
 
+    const getState = () => {
+        return state;
+    }
+
     useEffect(() => {
         // Load menus from JSON configurations
         if (currentUser) {
-            getMenuFromApi(state, setState, setMenuOptions);
+            getMenuFromApi(getState, setState, setMenuOptions);
         }
-    }, [currentUser, state]);
+    }, [currentUser]);
 
     if (showContentOnly) {
         return (
@@ -317,6 +321,8 @@ const AppMainInner = ({ children }) => {
                         <AppMainComponent
                             stateHandler={stateHandler}
                             showContentOnly={showContentOnly}
+                            menuOptions={menuOptions}
+                            currentUser={currentUser}
                         >
                             {children}
                         </AppMainComponent>
@@ -335,12 +341,14 @@ const AppMainInner = ({ children }) => {
                                 <AppMainComponent
                                     stateHandler={stateHandler}
                                     showContentOnly={showContentOnly}
+                                    menuOptions={menuOptions}
+                                    currentUser={currentUser}
                                 >
                                     {children}
                                 </AppMainComponent>
                             </AppSectionContainer.ForSideMenu>
                             <AppFooterContainer>
-                                <AppFooter/>
+                                <AppFooter />
                             </AppFooterContainer>
                         </>
                     )}
@@ -361,7 +369,7 @@ const AppMainInner = ({ children }) => {
             </Navbar.MobileMenu>
             {!sideMenu && (
                 <AppFooterContainer>
-                    <AppFooter/>
+                    <AppFooter />
                 </AppFooterContainer>
             )}
         </MainContainer>
@@ -371,11 +379,11 @@ const AppMainInner = ({ children }) => {
 const AppMainComponent = ({
     stateHandler,
     showContentOnly,
+    menuOptions,
+    currentUser,
     children,
 }) => {
-    // const location = useLocation();
-    // if (debug) console_debug_log("AppMainComponent | location:", location);
-    const { state, menuOptions, currentUser } = useAppContext();
+    const { state } = useAppContext();
 
     if (state !== "") {
         if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
@@ -388,15 +396,24 @@ const AppMainComponent = ({
         }
         return errorAndReEnter(state, null, true, null, stateHandler, false, false);
     }
+
+    if (debug) console_debug_log("AppMainComponent | currentUser:", currentUser, "menuOptions:", menuOptions);
+
     if (!menuOptions) {
-        if (debug) console_debug_log("AppMainComponent | WaitAnimation");
+        if (currentUser) {
+            return (
+                <>
+                    <WaitAnimation />
+                </>
+            );
+        }
         return (
-            <div 
+            <div
                 className={LOGIN_BUTTON_IN_APP_COMPONENT_CLASS}
             >
                 <GsButton
                     as={RouterLink}
-                    to={getPrefix()+'/login'}
+                    to={getPrefix() + '/login'}
                 >
                     Login
                 </GsButton>
@@ -420,15 +437,15 @@ const AppMain = () => {
     const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
 
     useEffect(() => {
-        verifyCurrentUser(registerUser);
+        verifyCurrentUser(registerUser, currentUser);
     }, []);
 
-    useEffect(() => {
-        // Load menus from JSON configurations
-        if (currentUser) {
-            getMenuFromApi(state, setState, setMenuOptions);
-        }
-    }, [currentUser, state]);
+    // useEffect(() => {
+    //     // Load menus from JSON configurations
+    //     if (currentUser) {
+    //         getMenuFromApi(state, setState, setMenuOptions);
+    //     }
+    // }, [currentUser, state]);
 
     useEffect(() => {
         if (menuOptions) {
@@ -480,7 +497,7 @@ const defaultComponentMap = {
     "defaultTheme": defaultTheme,
 };
 
-export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
+export const App = ({ componentMap = {}, appLogo = "", appLogoHeader = "" }) => {
     const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
     return (
         <UserProvider>
@@ -489,8 +506,8 @@ export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
                 globalAppLogo={appLogo}
                 globalAppLogoHeader={appLogoHeader}
             >
-                <AppMain/>
+                <AppMain />
             </AppProvider>
         </UserProvider>
-      );
+    );
 }

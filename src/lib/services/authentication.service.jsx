@@ -4,7 +4,7 @@ import { Buffer } from 'buffer'
 
 import { logout, currentUserSubject } from './logout.service.jsx';
 import { dbApiService } from './db.service.jsx';
-import { gsFetch } from './fetch.utilities.jsx';
+import { gsFetch, getBaseApiUrl } from './fetch.utilities.jsx';
 import { convertId } from './id.utilities.jsx';
 import { console_debug_log } from './logging.service.jsx';
 import { getLocalConfig } from '../helpers/local-config.jsx';
@@ -16,25 +16,25 @@ export const authenticationService = {
     login,
     logout,
     currentUser: currentUserSubject.asObservable(),
-    get currentUserValue () { return currentUserSubject.value }
+    get currentUserValue() { return currentUserSubject.value }
 };
 
 function login(username, password) {
     const config = {
-        apiUrl: process.env.REACT_APP_API_URL
+        apiUrl: getBaseApiUrl()
     }
     // FA-62 - FE: Find a replacement for btoa()
     const requestOptions = {
         method: 'POST',
         headers: {
-            "Authorization":  "Basic " + Buffer.from(
+            "Authorization": "Basic " + Buffer.from(
                 username + ":" + password
             ).toString('base64')
         },
     };
     return gsFetch(`${config.apiUrl}/users/login`, requestOptions)
         .then(res => {
-            if(res.error) {
+            if (res.error) {
                 return Promise.reject(res.message);
             }
             let user = {
@@ -100,10 +100,14 @@ export const getCurrentUserData = () => {
         );
 }
 
-export const verifyCurrentUser = (registerUser) => {
+export const verifyCurrentUser = (registerUser, currentUser) => {
+    if (currentUser) {
+        // Avoid multiple calls to setCurrentUser
+        return;
+    }
     if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
         getCurrentUserData()
-            .then( 
+            .then(
                 userData => {
                     if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' userData # 1:", userData);
                     if (userData.error) {

@@ -17,19 +17,6 @@ npm install --save-dev \
    webpack-dev-server \
    html-webpack-plugin \
    interpolate-html-plugin
-
-npm install --save-dev \
-   @babel/cli \
-   @babel/core \
-   @babel/plugin-proposal-private-property-in-object \
-   @babel/plugin-syntax-jsx \
-   @babel/plugin-transform-class-properties \
-   @babel/preset-env \
-   @babel/preset-react \
-   @babel/preset-stage-0 \
-   @babel/preset-typescript \
-   babel-loader \
-   babel-plugin-css-modules-transform
 */
 
 let devServerConfig = {
@@ -62,6 +49,7 @@ const process_env = {
     // PUBLIC_URL: JSON.stringify(`https://${appLocalDomainName}`),
     REACT_APP_VERSION: JSON.stringify(process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
     REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || `https://${appLocalDomainName}`),
+    REACT_APP_API_VERSION: JSON.stringify(process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1'),
     REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || '0'),
     REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
     REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || ''),

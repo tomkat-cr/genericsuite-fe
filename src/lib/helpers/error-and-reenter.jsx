@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from './ModalLib.jsx';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { 
+import {
     MSG_ERROR_INVALID_TOKEN,
     MSG_ERROR_CLICK_TO_RELOGIN,
     MSG_ERROR_CLICK_TO_RETRY,
@@ -52,11 +52,11 @@ export const getErrorMessage = (error) => {
         } else {
             errorMessage = error['message'];
         }
-        if (typeof error['reason'] !== 'undefined') {
-            errorMessage += ': ' + 
+        if (typeof error['reason'] !== 'undefined' && error['reason']) {
+            errorMessage += ': ' +
                 (
                     typeof error['reason']['message'] !== "undefined" ?
-                        error['reason']['message'] : 
+                        error['reason']['message'] :
                         typeof error['reason'] === 'string' ?
                             error['reason'] : JSON.stringify(error['reason'])
                 )
@@ -77,7 +77,7 @@ export const isSessionExpired = (errorMessage) => {
 
 export const includesAppValidLinks = (message) => {
     return Object.values(APP_EMAILS).some(email => message.includes(email)) ||
-           Object.values(APP_VALID_URLS).some(url => message.includes(url))
+        Object.values(APP_VALID_URLS).some(url => message.includes(url))
 
 }
 
@@ -94,7 +94,7 @@ export function errorAndReEnter(
     if (debug) {
         console_debug_log(`errorAndReEnter | errorCode: ${errorCode} | forceLogin: ${forceLogin} | error:`, error);
     }
-    const errorMessage = getErrorMessage(error) + (errorCode ? ` ${errorCode}`: '');
+    const errorMessage = getErrorMessage(error) + (errorCode ? ` ${errorCode}` : '');
     if (forceLogin === null) {
         forceLogin = false;
     }
@@ -108,17 +108,17 @@ export function errorAndReEnter(
         parentLogoutHandler = logoutHander;
         logoutButton = true
     }
-    const retryMessage = 
+    const retryMessage =
         isSessionExpired(errorMessage)
-        ? MSG_ERROR_SESSION_EXPIRED
-        : errorMessage
-    ;
+            ? MSG_ERROR_SESSION_EXPIRED
+            : errorMessage
+        ;
     const msgContainsHtml = includesAppValidLinks(retryMessage);
     const retryButton = MSG_ERROR_CLICK_TO_RETRY;
     const loginButton = (
         forceLogin || isSessionExpired(errorMessage)
-        ? MSG_ERROR_CLICK_TO_RELOGIN
-        : null
+            ? MSG_ERROR_CLICK_TO_RELOGIN
+            : null
     );
     if (isSessionExpired(errorMessage)) {
         // If session is expired, clear current user in local storage
@@ -145,9 +145,9 @@ export function errorAndReEnter(
 
 export function errorAndReEnterNonModal(
     error,
-    forceLogin=false,
-    refreshHandler=null,
-    logoutHandler=null
+    forceLogin = false,
+    refreshHandler = null,
+    logoutHandler = null
 ) {
     let errorMessage = getErrorMessage(error);
     if (typeof error !== 'string') {
@@ -155,16 +155,16 @@ export function errorAndReEnterNonModal(
     }
     return (
         <div>
-            { errorAndRetry(errorMessage, refreshHandler) }
-            { errorLoginAgain(errorMessage, forceLogin, logoutHandler) }
+            {errorAndRetry(errorMessage, refreshHandler)}
+            {errorLoginAgain(errorMessage, forceLogin, logoutHandler)}
         </div>
     );
 }
 
 export function errorLoginAgain(
     errorMessage,
-    forceLogin=false,
-    parentLogoutHandler=null,
+    forceLogin = false,
+    parentLogoutHandler = null,
 ) {
     if (parentLogoutHandler === null) {
         parentLogoutHandler = logoutHander;
@@ -172,14 +172,14 @@ export function errorLoginAgain(
     if (debug) {
         console_debug_log('errorLoginAgain | errorMessage:', errorMessage);
     }
-    if(forceLogin || MSG_ERROR_INVALID_TOKEN.includes(errorMessage)) {
+    if (forceLogin || MSG_ERROR_INVALID_TOKEN.includes(errorMessage)) {
         setLastUrl();
         return (
             <div>
-                <br/>
+                <br />
                 <Button
                     // as={RouterLink}
-                    to={getPrefix()+'/login'}
+                    to={getPrefix() + '/login'}
                     onClick={parentLogoutHandler}>{MSG_ERROR_CLICK_TO_RELOGIN}
                 </Button>
             </div>
@@ -188,7 +188,7 @@ export function errorLoginAgain(
     return (<div></div>);
 }
 
-export function errorAndRetry(errorMessage, refreshHandler=null) {
+export function errorAndRetry(errorMessage, refreshHandler = null) {
     if (refreshHandler === null) {
         refreshHandler = refreshPage;
     }
@@ -197,11 +197,11 @@ export function errorAndRetry(errorMessage, refreshHandler=null) {
             {errorMessageDiv(
                 (
                     MSG_ERROR_INVALID_TOKEN.includes(errorMessage)
-                    ? MSG_ERROR_SESSION_EXPIRED
-                    : errorMessage
+                        ? MSG_ERROR_SESSION_EXPIRED
+                        : errorMessage
                 )
             )}
-            <br/>
+            <br />
             <Button
                 onClick={refreshHandler}
             >

@@ -189,7 +189,7 @@ declare var authentication_service: Readonly<{
         pref_side_menu: any;
         pref_dark_mode: any;
     };
-    verifyCurrentUser: (registerUser: any) => void;
+    verifyCurrentUser: (registerUser: any, currentUser: any) => void;
 }>;
 declare var blob_files_utilities: Readonly<{
     __proto__: null;
@@ -374,6 +374,7 @@ declare var class_name_constants: Readonly<{
     NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
     NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: "navLinkTopDivSideMenuClass";
     NAV_LINK_TOP_DIV_TOP_MENU_CLASS: "relative group navLinkTopDivTopMenuClass";
+    PAGE_ANIMATION_CLASS: "mt-3 flex items-center justify-center pageAnimationClass";
     POPUP_TOP_MARGIN_CLASS: "pt-4 popupTopMarginClass";
     ROUNDED_ICON_CLASS: "rounded-full roundedIconClass";
     SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: "ml-2 searchEngineButtonTopDivClass";
@@ -465,6 +466,7 @@ declare var errorAndReenter: Readonly<{
 declare var fetch_utilities: Readonly<{
     __proto__: null;
     getAxios: (url: any, requestOptions: any) => Promise<any>;
+    getBaseApiUrl: () => string;
     getFetch: (url: any, requestOptions: any) => Promise<any> | undefined;
     gsFetch: (url: any, requestOptions: any) => Promise<any> | undefined;
     useAxios: boolean;
@@ -502,7 +504,7 @@ declare var general_constants: Readonly<{
     MSG_ERROR_CLICK_TO_RETRY: "Retry";
     MSG_ERROR_CONNECTION_FAIL: "Connection failure";
     MSG_ERROR_ID_NOT_FOUND: "ID not found...";
-    MSG_ERROR_INVALID_CREDS: "The username or password is incorrect. Please try again.";
+    MSG_ERROR_INVALID_CREDS: "Invalid credentials. Please try again.";
     MSG_ERROR_INVALID_TOKEN: string[];
     MSG_ERROR_MISSING_ARRAY_NAME_PARAM: "Missing \"array_name\" parameter. It must be specified for subType \"array\".";
     MSG_ERROR_POSSIBLE_CORS: "Possible CORS";
@@ -559,7 +561,7 @@ declare var generic_editor_rfc_common: Readonly<{
 }>;
 declare var generic_editor_rfc_formpage: Readonly<{
     __proto__: null;
-    FormPage: (_ref: any) => React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement> | React.DetailedReactHTMLElement<{
+    FormPage: (_ref: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
     getFieldElementsYupValidations: (editor: any, editorFlags: any) => any;
@@ -638,7 +640,7 @@ declare var generic_editor_singlepage: Readonly<{
     }>;
     GenericSinglePageEditorMain: (props: any) => React.FunctionComponentElement<{
         children?: React.ReactNode | undefined;
-    }> | React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement> | React.DetailedReactHTMLElement<{
+    }> | React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
 }>;
@@ -672,7 +674,7 @@ declare var generic_menu_service: Readonly<{
         element: string;
         type: string;
     }[];
-    getMenuFromApi: (state: any, setState: any, setMenuOptions: any) => void;
+    getMenuFromApi: (getState: any, setState: any, setMenuOptions: any) => void;
     getRoutes: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
@@ -770,7 +772,9 @@ declare var urlParams: Readonly<{
 declare var wait_animation_utility: Readonly<{
     __proto__: null;
     ShowHidePageAnimation: (showAnimation: any, ...args: any[]) => void;
-    WaitAnimation: () => React.DetailedReactHTMLElement<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    WaitAnimation: () => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
 }>;
 
 declare function authHeader(): {

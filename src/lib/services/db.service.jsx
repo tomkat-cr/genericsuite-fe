@@ -2,30 +2,30 @@
 
 import { authHeader } from '../helpers/auth-header.jsx';
 import {
-    ACTION_CREATE, 
-    ACTION_UPDATE, 
-    ACTION_DELETE, 
+    ACTION_CREATE,
+    ACTION_UPDATE,
+    ACTION_DELETE,
 } from '../constants/general_constants.jsx';
 import { handleFetchError } from './response.handlers.service.jsx';
 import { console_debug_log } from './logging.service.jsx';
-import { gsFetch } from './fetch.utilities.jsx';
+import { gsFetch, getBaseApiUrl } from './fetch.utilities.jsx';
 import { convertId } from './id.utilities.jsx';
 
 // export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'};
-export const MULTIPART_FORM_DATA_HEADER = {'Content-Type': 'multipart/form-data'};
+export const MULTIPART_FORM_DATA_HEADER = { 'Content-Type': 'multipart/form-data' };
 
 const useExposeHeaders = (process.env.REACT_APP_USE_EXPOSE_HEADERS || "0") == "1";
 
 export class dbApiService {
-    
+
     constructor(props) {
         this.props = props;
-     
+
         const additionalHeaders = this.getAdditionalHeaders();
         this.props.authHeader = authHeader();
         this.props.authAndJsonHeader = Object.assign(
             {},
-            { 
+            {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 // https://stackoverflow.com/questions/43344819/reading-response-headers-with-fetch-api
@@ -42,7 +42,7 @@ export class dbApiService {
     }
 
     props = null;
-    apiUrl = process.env.REACT_APP_API_URL;
+    apiUrl = getBaseApiUrl();
 
     debug = false;
 
@@ -63,7 +63,7 @@ export class dbApiService {
         return urlQuery;
     }
 
-    getAll(params={}, data={}, method='GET', options={}) {
+    getAll(params = {}, data = {}, method = 'GET', options = {}) {
         let requestOptions = {};
         let body;
         let headers = {}
@@ -102,7 +102,7 @@ export class dbApiService {
         return gsFetch(url, requestOptions);
     }
 
-    getOne(params, options={}) {
+    getOne(params, options = {}) {
         const requestOptions = { ...options, method: 'GET', headers: this.props.authHeader };
         const urlQuery = this.paramsToUrlQuery(params);
         if (this.debug) {
@@ -112,8 +112,8 @@ export class dbApiService {
         return gsFetch(url, requestOptions);
     }
 
-    createUpdateDelete(action, id, data, queryParams={}) {
-        switch(action) {
+    createUpdateDelete(action, id, data, queryParams = {}) {
+        switch (action) {
             case ACTION_CREATE:
                 return this.createRow(data, queryParams);
             case ACTION_UPDATE:
@@ -121,13 +121,13 @@ export class dbApiService {
             case ACTION_DELETE:
                 return this.deleteRow(id, data, queryParams);
             default:
-                return handleFetchError('Error CUD-1 - Invalid action: '+action)
+                return handleFetchError('Error CUD-1 - Invalid action: ' + action)
         }
     }
 
-    createRow(data, queryParams={}) {
+    createRow(data, queryParams = {}) {
         const urlQuery = this.paramsToUrlQuery(queryParams);
-        const requestOptions = { 
+        const requestOptions = {
             method: 'POST',
             headers: this.props.authAndJsonHeader,
             body: JSON.stringify(data)
@@ -138,12 +138,12 @@ export class dbApiService {
         return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
     }
 
-    updateRow(id, data, queryParams={}) {
+    updateRow(id, data, queryParams = {}) {
         const urlQuery = this.paramsToUrlQuery(queryParams);
-        if(id !== null) {
+        if (id !== null) {
             data.id = id;
         }
-        const requestOptions = { 
+        const requestOptions = {
             method: 'PUT',
             headers: this.props.authAndJsonHeader,
             body: JSON.stringify(data)
@@ -154,12 +154,12 @@ export class dbApiService {
         return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
     }
 
-    deleteRow(id, data, queryParams={}) {
+    deleteRow(id, data, queryParams = {}) {
         let urlQuery = this.paramsToUrlQuery(queryParams);
-        if(id !== null) {
-            urlQuery += (urlQuery === '' ? '?' : "&")+`id=${id}`;
+        if (id !== null) {
+            urlQuery += (urlQuery === '' ? '?' : "&") + `id=${id}`;
         }
-        const requestOptions = { 
+        const requestOptions = {
             method: 'DELETE',
             headers: this.props.authAndJsonHeader,
             body: JSON.stringify(data)

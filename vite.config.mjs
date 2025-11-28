@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
 
     console.log('** Vite options **');
     console.log('');
-    
+
     // Server configuration
     const serverConfig = {
         port: process.env.FRONTEND_LOCAL_PORT || 3000,
@@ -55,6 +55,7 @@ export default defineConfig(({ mode }) => {
     const process_env = {
         REACT_APP_VERSION: (process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
         REACT_APP_API_URL: (process.env.REACT_APP_API_URL || `https://${appLocalDomainName}`),
+        REACT_APP_API_VERSION: (process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1'),
         REACT_APP_DEBUG: (process.env.REACT_APP_DEBUG || '0'),
         REACT_APP_URI_PREFIX: (process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
         REACT_APP_X_TOKEN: (process.env.REACT_APP_X_TOKEN || ''),

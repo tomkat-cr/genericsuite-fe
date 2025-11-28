@@ -14,7 +14,7 @@ export const MSG_ERROR_INVALID_TOKEN = [
     'HTTP 401',
     'Request failed with status code 401'
 ];
-export const MSG_ERROR_INVALID_CREDS = 'The username or password is incorrect. Please try again.';
+export const MSG_ERROR_INVALID_CREDS = 'Invalid credentials. Please try again.';
 export const MSG_ERROR_SESSION_EXPIRED = 'Session expired.';
 export const MSG_ERROR_CLICK_TO_RELOGIN = 'Login again';
 export const MSG_ERROR_CLICK_TO_RETRY = 'Retry';
@@ -34,7 +34,7 @@ export const imageDirectory = "static/media/";
 
 // Generic editor : general constants
 
-export const ACTION_CREATE =  'create';
+export const ACTION_CREATE = 'create';
 export const ACTION_READ = 'read';
 export const ACTION_UPDATE = 'update';
 export const ACTION_DELETE = 'delete';
@@ -45,8 +45,8 @@ export const ACTION_LIST = 'list';
 export const MSG_ERROR_MISSING_ARRAY_NAME_PARAM = 'Missing "array_name" parameter. It must be specified for subType "array".';
 export const MSG_ERROR_ID_NOT_FOUND = 'ID not found...';
 export const MSG_DELETE_CONFIRM = 'Are you sure to delete this element? Please confirm with the [Delete] button or [Cancel] this operation.';
-export const MSG_ACTION_CREATE =  'Create';
-export const MSG_ACTION_NEW =  'New';
+export const MSG_ACTION_CREATE = 'Create';
+export const MSG_ACTION_NEW = 'New';
 export const MSG_ACTION_READ = 'View';
 export const MSG_ACTION_EDIT = 'Edit';
 export const MSG_ACTION_UPDATE = 'Update';

@@ -49,17 +49,17 @@ export const NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS = 'navbarHeaderForSi
 
 export const NAVBAR_TOP_FOR_SIDE_MENU_CLASS = "flex items-center justify-between p-1 text-white navbarTopForSideMenuClass";
 
-export const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS="flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
-export const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS="flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
+export const NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS = "flex items-center space-x-2 navbarBrandElementsForTopMenuClass";
+export const NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS = "flex justify-between items-center mb-4 navbarBrandElementsForSideMenuClass";
 // export const NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN = "1-md:hidden lg:hidden navbarBrandHiddenIfLargeScreen";
 
-export const NAVBAR_BRAND_NAME_CLASS="text-2xl ml-2 font-bold navbarBrandNameClass";
-export const NAVBAR_BRAND_APP_VERSION_CLASS="text-xs navbarBrandAppVersionClass";
-export const NAVBAR_BRAND_APP_LOGO_CLASS="mx-auto my-0 navbarBrandAppLogoClass";
+export const NAVBAR_BRAND_NAME_CLASS = "text-2xl ml-2 font-bold navbarBrandNameClass";
+export const NAVBAR_BRAND_APP_VERSION_CLASS = "text-xs navbarBrandAppVersionClass";
+export const NAVBAR_BRAND_APP_LOGO_CLASS = "mx-auto my-0 navbarBrandAppLogoClass";
 
 // export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="hidden 1-md:flex lg:flex space-x-4 navbarTopCenterMenuOnTopClass";
-export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS="flex space-x-4 navbarTopCenterMenuOnTopClass";
-export const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS='space-y-2 navbarTopCenterMenuOnLeftClass';
+export const NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS = "flex space-x-4 navbarTopCenterMenuOnTopClass";
+export const NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS = 'space-y-2 navbarTopCenterMenuOnLeftClass';
 
 export const NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS = "flex items-center space-x-4 navbarTopRightMenuForTopMenuClass";
 export const NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS = "flex items-center space-x-4 ml-auto navbarTopRightMenuForSideMenuClass";
@@ -76,7 +76,7 @@ export const NAVBAR_MOBILE_NAV_CLASS = "flex flex-col space-y-2 navbarMobileNavC
 export const NAVBAR_TOGGLE_BUTTON_CLASS = "1-md:hidden 1-lg:hidden p-2 rounded-full hover:bg-opacity-80 navbarToggleButtonClass";
 export const NAVBAR_TOGGLE_IMAGE_CLASS = "h-6 w-6 navbarToggleImageClass";
 
-export const NAVBAR_TEXT_CLASS='flex items-center navbarTextClass';
+export const NAVBAR_TEXT_CLASS = 'flex items-center navbarTextClass';
 
 export const NAV_LINK_TOP_DIV_TOP_MENU_CLASS = "relative group navLinkTopDivTopMenuClass";
 export const NAV_LINK_TOP_DIV_HAMBURGER_CLASS = "block relative group navLinkTopDivHamburgerClass";
@@ -166,9 +166,9 @@ export const BUTTON_SECONDARY_CLASS = "bg-gray-200 text-gray-700 font-medium py-
 
 // Special buttons
 
-export const BUTTON_COMPOSED_LABEL_CLASS="flex items-center buttonComposedLabelClass";
+export const BUTTON_COMPOSED_LABEL_CLASS = "flex items-center buttonComposedLabelClass";
 
-export const MENU_MODE_BUTTON_TOP_DIV_CLASS="mt-1 menuModeButtonTopDivClass";
+export const MENU_MODE_BUTTON_TOP_DIV_CLASS = "mt-1 menuModeButtonTopDivClass";
 
 export const DARK_MODE_BUTTON_TOP_DIV_CLASS = "mt-1 darkModeButtonTopDivClass";
 export const DARK_MODE_BUTTON_SVG_CLASS = "w-6 h-6 darkModeButtonSvgClass";
@@ -182,7 +182,7 @@ export const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeBu
 export const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded-sm text-sm buttonListingClass";
 export const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
 export const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
-export const BUTTON_LISTING_REFRESH_CLASS=`${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
+export const BUTTON_LISTING_REFRESH_CLASS = `${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
 
 // General app section (GCE_RFC)
 
@@ -210,21 +210,21 @@ export const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'hover:bg-opacity-80 appList
 export const APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS = 'appListingTableBodyTrActionsOddClass';
 export const APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS = 'appListingTableBodyTrActionsEvenClass';
 
-export const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS="p-2 appListingTableBodyTdBaseOddClass";
-export const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS="p-2 appListingTableBodyTdBaseEvenClass";
-export const APP_LISTING_TABLE_BODY_TD_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words appListingTableBodyTdOddClass`;
-export const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words appListingTableBodyTdEvenClass`;
-export const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass`;
-export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS=`${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass`;
+export const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS = "p-2 appListingTableBodyTdBaseOddClass";
+export const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS = "p-2 appListingTableBodyTdBaseEvenClass";
+export const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words appListingTableBodyTdOddClass`;
+export const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words appListingTableBodyTdEvenClass`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass`;
+export const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass`;
 
 // Listing page search box (GCE_RFC)
 
-export const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS="flex items-center space-x-2 appListingSearchBoxTopDivClass";
-export const APP_LISTING_SEARCH_BOX_LABEL_CLASS="mr-2 text-sm appListingSearchBoxLabelClass";
-export const APP_LISTING_SEARCH_BOX_INPUT_CLASS="p-2 rounded-sm border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
-export const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS=`${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
-export const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS=`${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
-export const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS='ml-2 searchEngineButtonTopDivClass';
+export const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
+export const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
+export const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded-sm border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
+export const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
+export const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
+export const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
 
@@ -232,15 +232,15 @@ export const APP_LISTING_TOOLBAR_TOP_DIV_CLASS = "flex items-center mt-4 space-x
 export const APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS = "flex-row appListingToolbarTopDivWideClass";
 export const APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS = "flex-col appListingToolbarTopDivNotWideClass";
 
-export const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS="text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
+export const APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS = "text-sm flex items-center space-x-2 appListingToolbarPaginationSectionClass";
 
-export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS="text-sm flex items-center appListingToolbarPageNumSectionClass";
+export const APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS = "text-sm flex items-center appListingToolbarPageNumSectionClass";
 
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS="text-sm flex items-center appListingToolbarRowPerPageSectionClass";
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS="mr-2 text-sm appListingToolbarRowPerPageLabelClass";
-export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS="p-2 rounded-sm border border-gray-300 bg-white appListingToolbarRowPerPageInputClass";
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS = "text-sm flex items-center appListingToolbarRowPerPageSectionClass";
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS = "mr-2 text-sm appListingToolbarRowPerPageLabelClass";
+export const APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS = "p-2 rounded-sm border border-gray-300 bg-white appListingToolbarRowPerPageInputClass";
 
-export const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS="ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
+export const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToolbarWaitAnimationClass";
 
 // Data page (GCE_RFC)
 
@@ -251,21 +251,21 @@ export const APP_FORMPAGE_FIELD_CLASS = `flex flex-col ${FORM_GROUP_CLASS} appFo
 export const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
 export const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} appFormPageFieldGoodClass`;
 export const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid appFormPageFieldInvalidClass`;
-export const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS="align-middle flex appFormPageSpecialButtonDivClass";
+export const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS = "align-middle flex appFormPageSpecialButtonDivClass";
 export const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChildComponentsTopDivClass";
 
 // Generic CRUD editor (GCE_RFC) - END
 
 // Pop-ups
 
-export const POPUP_TOP_MARGIN_CLASS="pt-4 popupTopMarginClass";
+export const POPUP_TOP_MARGIN_CLASS = "pt-4 popupTopMarginClass";
 
 // ModalLib
 
 // export const MODALIB_MODAL_DIV_1_CLASS="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-export const MODALIB_MODAL_DIV_1_CLASS="z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
-export const MODALIB_MODAL_DIV_2_CLASS="rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
-export const MODALIB_MODAL_DIV_3_CLASS="p-6 modalibModalDiv3Class";
+export const MODALIB_MODAL_DIV_1_CLASS = "z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
+export const MODALIB_MODAL_DIV_2_CLASS = "rounded-lg shadow-xl w-full max-w-md modalibModalDiv2Class";
+export const MODALIB_MODAL_DIV_3_CLASS = "p-6 modalibModalDiv3Class";
 
 export const MODALIB_MODAL_ICON_1_CLASS = "flex justify-center mb-4 modalibModalIcon1Class";
 export const MODALIB_MODAL_ICON_2_CLASS = "rounded-full p-2 modalibModalIcon2Class";
@@ -291,7 +291,7 @@ export const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-whi
 
 // Login page
 
-export const LOGIN_PAGE_APP_LOGO_CLASS="mx-auto my-0 loginPageAppLogoClass";
+export const LOGIN_PAGE_APP_LOGO_CLASS = "mx-auto my-0 loginPageAppLogoClass";
 
 // Login button
 
@@ -303,8 +303,9 @@ export const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
 
 // Wait animation
 
-export const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS="ml-3 mr-3 showHidePageAnimationEnabledClass";
-export const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS="ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
+export const PAGE_ANIMATION_CLASS = "mt-3 flex items-center justify-center pageAnimationClass";
+export const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 showHidePageAnimationEnabledClass";
+export const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
 
 // Markdown formatting (check renderMarkdownContent())
 
