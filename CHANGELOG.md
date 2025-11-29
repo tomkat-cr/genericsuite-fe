@@ -20,10 +20,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Added
 - Add API_VERSION envvar to set the API version, default to "v1" [GS-245].
 - Add PAGE_ANIMATION_CLASS constant to add top margin to <WaitAnimation /> component [GS-246].
+- Add UPDATE_SNAPSHOTS envvar to "make publish" to run "npm test -- -u" instead of "npm run test"
 
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
 - Enhance error message in the login page [GS-246].
+- Update class_name_constants.jsx to make buttons more rounded and remove unused comments [GS-246].
 
 ### Fixed
 - Fix login button visible while menus are loading [GS-246].
