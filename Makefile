@@ -105,4 +105,12 @@ pre-publish:
 	sh scripts/npm_publish.sh pre-publish
 
 publish:
+	#
+	# To publish the package to NPMJS checking the test snapshots:
+	#    make publish
+	#
+	# To solve the test errors when there are changes in the UI
+	# not reflected in the test snapshots:
+	#    UPDATE_SNAPSHOTS=1 make publish
+	#
 	sh scripts/npm_publish.sh publish

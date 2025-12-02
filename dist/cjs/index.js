@@ -3148,9 +3148,9 @@ const getAxios = (url, requestOptions) => {
     response = axios(axios_config).then(response => {
       let new_response;
       new_response = Object.assign({}, response);
-      new_response.ok = response.status === 200;
+      new_response.ok = [200, 201, 202, 204].includes(response.status);
       if (debug$3) ;
-      if (response.status !== 200) {
+      if (!new_response.ok) {
         return Promise.reject(new_response);
       }
       const headers = response.headers;
