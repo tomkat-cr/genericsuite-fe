@@ -2848,7 +2848,7 @@ function handleResponseText(response, text, headers) {
   }
   return data;
 }
-const get401ErrorMessage = (statusText, reasonDetail) => statusText !== null && statusText !== void 0 && statusText.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || reasonDetail !== null && reasonDetail !== void 0 && reasonDetail.includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText;
+const get401ErrorMessage = (statusText, reasonDetail) => statusText !== null && statusText !== void 0 && statusText.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || (reasonDetail || '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText;
 async function handleFetchError(error) {
   let possibleCORS;
   let errorMsg;
@@ -5025,6 +5025,39 @@ var generic_editor_rfc_provider = /*#__PURE__*/Object.freeze({
   MainSectionProvider: MainSectionProvider
 });
 
+// Search Engine button
+
+const SearchEngineButton = _ref => {
+  let {
+    valueElement,
+    google_prompt
+  } = _ref;
+  const setPrompt = (prompt, valueToReplace) => {
+    return prompt.replace("%s", valueToReplace);
+  };
+  const handleGoogleClick = e => {
+    e.preventDefault();
+    const inputValue = document.getElementById(valueElement).value;
+    if (inputValue !== "") {
+      const googleSearchUrl = "https://www.google.com/search?q=".concat(encodeURIComponent(setPrompt(google_prompt, inputValue)));
+      window.open(googleSearchUrl, '_blank');
+    }
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleGoogleClick
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "google-logo",
+    alt: "Open Google Search"
+  }))));
+};
+
+var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  SearchEngineButton: SearchEngineButton
+});
+
 const debug$2 = false;
 const GenericSelectGenerator = props => {
   const [state, setState] = useState(null);
@@ -5355,39 +5388,6 @@ const SuggestionDropdown = _ref => {
 var generic_editor_rfc_suggestion_dropdown = /*#__PURE__*/Object.freeze({
   __proto__: null,
   SuggestionDropdown: SuggestionDropdown
-});
-
-// Search Engine button
-
-const SearchEngineButton = _ref => {
-  let {
-    valueElement,
-    google_prompt
-  } = _ref;
-  const setPrompt = (prompt, valueToReplace) => {
-    return prompt.replace("%s", valueToReplace);
-  };
-  const handleGoogleClick = e => {
-    e.preventDefault();
-    const inputValue = document.getElementById(valueElement).value;
-    if (inputValue !== "") {
-      const googleSearchUrl = "https://www.google.com/search?q=".concat(encodeURIComponent(setPrompt(google_prompt, inputValue)));
-      window.open(googleSearchUrl, '_blank');
-    }
-  };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: handleGoogleClick
-  }, /*#__PURE__*/React.createElement(GsIcons, {
-    icon: "google-logo",
-    alt: "Open Google Search"
-  }))));
-};
-
-var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  SearchEngineButton: SearchEngineButton
 });
 
 let calcFields = {};
@@ -5752,7 +5752,6 @@ const EditFormFormik = _ref4 => {
     }
   }, [editor, action, dataset]);
   if (!formData['readyToShow']) {
-    // return '';
     return WaitAnimation();
   }
   if (!formData['canCommit'] === null) {

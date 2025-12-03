@@ -1,72 +1,70 @@
 // GenericCrudEditor data form functions
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { Formik, Field, Form, ErrorMessage, useFormikContext } from 'formik';
+import { ErrorMessage, Field, Form, Formik, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
-import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
 import { getEditorFlags } from './generic.editor.rfc.common.jsx';
-import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
-import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
 import { SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
+import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
+import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
+import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
 // import { ChatBotButton } from './generic.editor.rfc.ai.button.jsx';
+import { dbApiService } from "./db.service.jsx";
 import { defaultValue } from './generic.editor.utilities.jsx';
 import { console_debug_log } from './logging.service.jsx';
-import { dbApiService } from "./db.service.jsx";
 import { WaitAnimation } from "./wait.animation.utility.jsx";
 
+import { useAppContext } from '../helpers/AppContext.jsx';
 import {
     nowToTimestap,
     timestampToDate,
 } from '../helpers/date-timestamp.jsx';
 import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
-import { useUser } from '../helpers/UserContext.jsx';
-import { useAppContext } from '../helpers/AppContext.jsx';
 import { GsButton } from '../helpers/NavLib.jsx';
+import { useUser } from '../helpers/UserContext.jsx';
 
 import {
-    ACTION_CREATE,
-    ACTION_READ,
-    ACTION_UPDATE,
-    ACTION_DELETE,
-    MSG_DELETE_CONFIRM,
-    MSG_ACTION_CREATE,
-    MSG_ACTION_READ,
-    MSG_ACTION_UPDATE,
-    MSG_ACTION_DELETE,
-    MSG_ACTION_CANCEL,
-    MSG_DONE_DELETED,
-    MSG_DONE_CREATED,
-    MSG_DONE_UPDATED,
-    MSG_IS_REQUIRED,
-    MSG_MUST_BE,
-    MSG_VALID_INTEGER,
-    MSG_VALID_NUMBER,
-    MSG_VALID_DATE,
-    MSG_VALID_EMAIL,
-} from "../constants/general_constants.jsx";
-import {
-    BUTTON_PRIMARY_CLASS,
-    BUTTON_SECONDARY_CLASS,
-    ERROR_MSG_CLASS,
-    INFO_MSG_CLASS,
-    APP_TOP_DIV_CLASS,
-    APP_TITLE_H1_CLASS,
-    // APP_FORMPAGE_LEVEL1_DIV_CLASS,
-    // APP_FORMPAGE_LEVEL2_DIV_CLASS,
-    INVALID_FEEDBACK_CLASS,
+    APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS,
+    APP_FORMPAGE_FIELD_CLASS,
+    APP_FORMPAGE_FIELD_GOOD_CLASS,
+    APP_FORMPAGE_FIELD_INVALID_CLASS,
     APP_FORMPAGE_FORM_BUTTON_BAR_CLASS,
     APP_FORMPAGE_LABEL_CLASS,
     APP_FORMPAGE_LABEL_REQUIRED_CLASS,
-    APP_FORMPAGE_FIELD_CLASS,
-    APP_FORMPAGE_FIELD_BASE_CLASS,
-    APP_FORMPAGE_FIELD_GOOD_CLASS,
-    APP_FORMPAGE_FIELD_INVALID_CLASS,
     APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS,
-    APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS,
+    APP_TITLE_H1_CLASS,
+    APP_TOP_DIV_CLASS,
+    BUTTON_PRIMARY_CLASS,
+    ERROR_MSG_CLASS,
+    INFO_MSG_CLASS,
+    // APP_FORMPAGE_LEVEL1_DIV_CLASS,
+    // APP_FORMPAGE_LEVEL2_DIV_CLASS,
+    INVALID_FEEDBACK_CLASS
 } from "../constants/class_name_constants.jsx";
+import {
+    ACTION_CREATE,
+    ACTION_DELETE,
+    ACTION_READ,
+    ACTION_UPDATE,
+    MSG_ACTION_CANCEL,
+    MSG_ACTION_CREATE,
+    MSG_ACTION_DELETE,
+    MSG_ACTION_READ,
+    MSG_ACTION_UPDATE,
+    MSG_DELETE_CONFIRM,
+    MSG_DONE_CREATED,
+    MSG_DONE_DELETED,
+    MSG_DONE_UPDATED,
+    MSG_IS_REQUIRED,
+    MSG_MUST_BE,
+    MSG_VALID_DATE,
+    MSG_VALID_EMAIL,
+    MSG_VALID_INTEGER,
+    MSG_VALID_NUMBER,
+} from "../constants/general_constants.jsx";
 
 const debug = false;
 
@@ -85,7 +83,7 @@ export const FormPage = ({
     const [formData, setFormData] = useState(null);
     const [status, setStatus] = useState("");
     const [refresh, setRefresh] = useState(0);
-    const [formMsg, setFormMsg] = useState({message: message, messageType: messageType});
+    const [formMsg, setFormMsg] = useState({ message: message, messageType: messageType });
 
     const { currentUser } = useUser();
     const { theme } = useAppContext();
@@ -106,7 +104,7 @@ export const FormPage = ({
                     if (debug) console_debug_log(`>> FormPage | dbPreRead # 1 > funcResponse:`, funcResponse, 'editor', editor);
                     setFormData(funcResponse.fieldValues)
                 },
-                error => setStatus(errorAndReEnter(error,'[GCE-FD-010]'))
+                error => setStatus(errorAndReEnter(error, '[GCE-FD-010]'))
             )
         }
         if (
@@ -150,8 +148,8 @@ export const FormPage = ({
                 console_debug_log(`FormPage / handleFormPageActions | funcResponse:`, funcResponse);
             }
             if (typeof funcResponse['otherData']['refresh'] != "undefined") {
-                setRefresh(refresh+1);
-                setFormMsg({message: '', messageType: ''})
+                setRefresh(refresh + 1);
+                setFormMsg({ message: '', messageType: '' })
             }
         }
     }
@@ -171,47 +169,47 @@ export const FormPage = ({
                     : MSG_ACTION_DELETE;
 
     return (
-        <div 
+        <div
             className={`${APP_TOP_DIV_CLASS} ${theme.contentBg}`}
         >
             {/* <div 
                 className={APP_FORMPAGE_LEVEL1_DIV_CLASS}
             > */}
-                <CrudEditorFormPageTitle
-                    baseUrl={editor.baseUrl}
-                    title={editor.title}
-                    actionTitle={actionTitle}
-                />
-                {/* <div
+            <CrudEditorFormPageTitle
+                baseUrl={editor.baseUrl}
+                title={editor.title}
+                actionTitle={actionTitle}
+            />
+            {/* <div
                     className={APP_FORMPAGE_LEVEL2_DIV_CLASS}
                 > */}
-                    {status && (
-                        <div className={ERROR_MSG_CLASS}>
-                            {status}
-                        </div>
-                    )}
-                    {!status && formData &&
-                        <EditFormFormik
-                            editor={editor}
-                            parenHandleCancel={onCancel_par}
-                            setInfoMsg={setInfoMsg_par}
-                            action={mode}
-                            dataset={formData.resultset}
-                            message={formMsg['message']}
-                            messageType={formMsg['messageType']}
-                            handleFormPageActions={handleFormPageActions}
-                            theme={theme}
-                            currentUser={currentUser}
-                        />
-                    }
-                    {!status &&
-                        formData &&
-                        !editorFlags.isCreate &&
-                        iterateChildComponents(editor, formData.resultset, handleFormPageActions)
-                    }
-                    {(debug ? debugCache("FormPage") : '')}
+            {status && (
+                <div className={ERROR_MSG_CLASS}>
+                    {status}
                 </div>
-            // </div>
+            )}
+            {!status && formData &&
+                <EditFormFormik
+                    editor={editor}
+                    parenHandleCancel={onCancel_par}
+                    setInfoMsg={setInfoMsg_par}
+                    action={mode}
+                    dataset={formData.resultset}
+                    message={formMsg['message']}
+                    messageType={formMsg['messageType']}
+                    handleFormPageActions={handleFormPageActions}
+                    theme={theme}
+                    currentUser={currentUser}
+                />
+            }
+            {!status &&
+                formData &&
+                !editorFlags.isCreate &&
+                iterateChildComponents(editor, formData.resultset, handleFormPageActions)
+            }
+            {(debug ? debugCache("FormPage") : '')}
+        </div>
+        // </div>
         // </div>
     );
 };
@@ -248,7 +246,7 @@ const PutOneFormfield = ({
     const readOnlyfield =
         editorFlags.isReadOnly ||
         (typeof currentObj.readonly !== "undefined" && currentObj.readonly);
-    
+
     if (typeof currentObj.hidden !== "undefined" && currentObj.hidden) {
         return (
             <Field
@@ -274,7 +272,7 @@ const PutOneFormfield = ({
             calcFields[htmlElement.name] = htmlElement.formula;
         }
     }
-    
+
     const runCalculation = (e) => {
         for (const key in calcFields) {
             const formula = calcFields[key];
@@ -284,38 +282,38 @@ const PutOneFormfield = ({
                 console_debug_log(`e.target.name: ${e.target.name} `);
             }
             // if (formula.includes(e.target.name)) {
-                const inputs = document.getElementsByName(key);
-                if (inputs.length > 0) {
-                    let calculatedValue = null;
-                    try {
-                        // calculatedValue = eval(formula);
-                        calculatedValue = formula(inputs);
-                    } catch (error) {
-                        console.error('Error calculating value:', error);
-                    }
-                    if (debug) {
-                        console_debug_log(`calculatedValue: ${calculatedValue} `);
-                    }
-                    if (!isNaN(calculatedValue)) {
-                        if (debug) {
-                            console_debug_log(`Before setFieldValue(${key}, ${calculatedValue})`);
-                        }
-                        setFieldValue(key, calculatedValue);
-                        if (debug) {
-                            console_debug_log(`After setFieldValue(${key}, ${calculatedValue})`);
-                        }
-                    } else {
-                        console.error('calculatedValue is:', calculatedValue);
-                    }
+            const inputs = document.getElementsByName(key);
+            if (inputs.length > 0) {
+                let calculatedValue = null;
+                try {
+                    // calculatedValue = eval(formula);
+                    calculatedValue = formula(inputs);
+                } catch (error) {
+                    console.error('Error calculating value:', error);
                 }
+                if (debug) {
+                    console_debug_log(`calculatedValue: ${calculatedValue} `);
+                }
+                if (!isNaN(calculatedValue)) {
+                    if (debug) {
+                        console_debug_log(`Before setFieldValue(${key}, ${calculatedValue})`);
+                    }
+                    setFieldValue(key, calculatedValue);
+                    if (debug) {
+                        console_debug_log(`After setFieldValue(${key}, ${calculatedValue})`);
+                    }
+                } else {
+                    console.error('calculatedValue is:', calculatedValue);
+                }
+            }
             // }
         }
     }
-    
+
     addCalculation(currentObj);
 
     const input_type = (
-        ['number', 'integer'].includes(currentObj.type) ? 
+        ['number', 'integer'].includes(currentObj.type) ?
             'number' : currentObj.type
     )
 
@@ -344,7 +342,7 @@ const PutOneFormfield = ({
             className={INVALID_FEEDBACK_CLASS}
         />
     );
-    
+
     switch (currentObj.type) {
         case 'select_component':
             elementInput = (
@@ -362,7 +360,7 @@ const PutOneFormfield = ({
             );
             break;
         case 'select':
-            elementInput =  (
+            elementInput = (
                 <Field
                     name={idName}
                     id={idName}
@@ -377,7 +375,7 @@ const PutOneFormfield = ({
             );
             break;
         case 'component':
-            elementInput =  (
+            elementInput = (
                 <currentObj.component
                     // dbRow={initialValue}
                     value={initialValue}
@@ -393,7 +391,7 @@ const PutOneFormfield = ({
             break;
         case 'suggestion_dropdown':
             idName = `${currentObj.name}-input`
-            elementInput =  (
+            elementInput = (
                 <SuggestionDropdown
                     name={currentObj.name}
                     id={currentObj.name}
@@ -409,7 +407,7 @@ const PutOneFormfield = ({
         case 'label':
             elementLabel = '';
             elementError = '';
-            elementInput =  (
+            elementInput = (
                 <div key={idName}>
                     <label
                         className={divFieldClass}
@@ -445,7 +443,7 @@ const PutOneFormfield = ({
             );
             if (typeof currentObj.component === 'undefined') {
                 // Normal input field
-                elementInput =  (
+                elementInput = (
                     <Field
                         key={idName}
                         name={idName}
@@ -459,7 +457,7 @@ const PutOneFormfield = ({
                 );
             } else {
                 // Component input field
-                elementInput =  (
+                elementInput = (
                     <currentObj.component
                         value={initialValue}
                         name={idName}
@@ -590,7 +588,6 @@ const EditFormFormik = (
     );
 
     if (!formData['readyToShow']) {
-        // return '';
         return (
             WaitAnimation()
         );
@@ -892,10 +889,10 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
         }
         let ChildElement = htmlElement[1];
         if (String(ChildElement).includes('component:')) {
-                if (debug) {
-                    console_debug_log("iterateChildComponents - ChildElement).includes('component:')");
-                }
-                ChildElement = htmlElement[1]().component;
+            if (debug) {
+                console_debug_log("iterateChildComponents - ChildElement).includes('component:')");
+            }
+            ChildElement = htmlElement[1]().component;
         }
         if (debug) {
             console_debug_log("iterateChildComponents - ChildElement with parentData (initialFieldValues):", initialFieldValues);
