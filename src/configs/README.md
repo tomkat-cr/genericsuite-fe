@@ -1496,7 +1496,7 @@ Using [Postman](https://www.postman.com/home) (or your favorite application to s
 
 ```json
 {
-  "body": "Could not verify [SAC2]",
+  "body": "Could not verify [L2]",
     "status_code": 400,
     "headers": {
       "WWW.Authentication": "Basic realm: \"login required\""

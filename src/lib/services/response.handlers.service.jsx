@@ -97,8 +97,14 @@ export function handleResponseText(response, text, headers) {
     return data;
 }
 
-const get401ErrorMessage = (statusText, reasonDetail) => statusText?.includes('Unauthorized') ? (reasonDetail ===
-    'Could not verify [L3]' ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED) : statusText;
+const get401ErrorMessage = (statusText, reasonDetail) => statusText?.includes('Unauthorized') ? (
+    [
+        'Could not verify [L3]',
+        'Could not verify [L2]',
+        'Inconsistency [L4]'
+    ].includes(reasonDetail) ||
+        reasonDetail?.includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED
+) : statusText;
 
 export async function handleFetchError(error) {
     let possibleCORS;
