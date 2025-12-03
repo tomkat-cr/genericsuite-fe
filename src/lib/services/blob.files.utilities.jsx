@@ -7,7 +7,8 @@ const debug = false;
 export const defaultFilenametoDownload = 'audio.wav';
 
 export const getFileExtension = (filename) => {
-    const fileExtension = filename ? filename.split('.').pop() : null;
+    const filenameWithoutQuery = filename ? filename.split('?')[0] : null;
+    const fileExtension = filenameWithoutQuery ? filenameWithoutQuery.split('.').pop() : null;
     if (debug) {
         console_debug_log(`|||| getFileExtension | filename: ${filename} | fileExtension: ${fileExtension}`);
     }
@@ -17,7 +18,7 @@ export const getFileExtension = (filename) => {
 export const getContentType = (filename, forceAlternative = false) => {
     const fileExtension = getFileExtension(filename);
     let contentType = null;
-    switch(fileExtension) {
+    switch (fileExtension) {
         case 'wav':
             contentType = 'audio/wav';
             break;
@@ -66,7 +67,7 @@ export const getFilenameFromContentDisposition = (headers) => {
     return filename;
 }
 
-export const performDownload = (fileUrl, filename=null, performIt=true) => {
+export const performDownload = (fileUrl, filename = null, performIt = true) => {
     const link = document.createElement('a');
     link.href = fileUrl;
     link.setAttribute('download', filename ? filename : defaultFilenametoDownload); // or any other extension
@@ -94,7 +95,7 @@ export const responseHasFile = (headers) => {
         || contentType.includes('video/')
         || contentType.includes('text/csv')
         || contentType.includes('text/text')    // TODO: only to simulate AWS API Gateway
-    );                
+    );
 }
 
 export const isBinaryFileType = (filename, contentType = null) => {
@@ -110,7 +111,7 @@ export const isBinaryFileType = (filename, contentType = null) => {
         || contentType.includes('audio/')
         || contentType.includes('image/')
         || contentType.includes('video/')
-    ;                
+        ;
 }
 
 export const decodeBlob = (base64String, filename, oldUrl = null) => {
@@ -177,7 +178,7 @@ export const fixBlob = async (blobObj, filename, headers = null) => {
         try {
             const binaryData = [];
             binaryData.push(blobObj);
-            blobObj = new Blob(binaryData, {type: contentType})
+            blobObj = new Blob(binaryData, { type: contentType })
             if (debug) console_debug_log('|||| fixBlob v2 #2 | blobObj:', blobObj);
             blobUrl = URL.createObjectURL(blobObj);
             if (debug) console_debug_log('|||| fixBlob v2 #2 | blobUrl:', blobUrl);

@@ -1,20 +1,35 @@
 // GenericCrudEditor (GCE) service main
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
-import { GsIcons } from "../helpers/IconsLib.jsx";
-import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
-import { useUser } from '../helpers/UserContext.jsx';
 import { useAppContext } from "../helpers/AppContext.jsx";
+import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
+import { GsIcons } from "../helpers/IconsLib.jsx";
+import { useUser } from '../helpers/UserContext.jsx';
 
+import {
+  MSG_ACTION_DELETE,
+  MSG_ACTION_EDIT,
+  MSG_ACTION_READ,
+  MSG_MORE,
+  MSG_RELOAD
+} from "../constants/general_constants.jsx";
+import { getLocalConfigItem, saveLocalConfig } from '../helpers/local-config.jsx';
+import {
+  getEditoObj,
+  setEditorParameters,
+} from './generic.editor.rfc.common.jsx';
+import {
+  FormPage,
+} from './generic.editor.rfc.formpage.jsx';
 import {
   MainSectionContext,
   MainSectionProvider,
 } from './generic.editor.rfc.provider.jsx';
 import {
-  FormPage,
-} from './generic.editor.rfc.formpage.jsx';
+  CrudEditorSearch,
+} from './generic.editor.rfc.search.jsx';
 import {
   getSelectDescription,
 } from './generic.editor.rfc.selector.jsx';
@@ -22,81 +37,65 @@ import {
   processGenericFuncArray,
 } from './generic.editor.rfc.specific.func.jsx';
 import {
-  setEditorParameters,
-  getEditoObj,
-} from './generic.editor.rfc.common.jsx';
-import {
-  CrudEditorSearch,
-} from './generic.editor.rfc.search.jsx';
-import {
   console_debug_log,
 } from './logging.service.jsx';
-import { getLocalConfigItem, saveLocalConfig } from '../helpers/local-config.jsx';
-import {
-  imageDirectory,
-  MSG_ACTION_DELETE,
-  MSG_ACTION_EDIT,
-  MSG_ACTION_READ,
-  MSG_MORE,
-  MSG_RELOAD,
-} from "../constants/general_constants.jsx";
 
 import {
-  ShowHidePageAnimation,
+  ShowHideWaitAnimation,
   WaitAnimation
 } from "./wait.animation.utility.jsx";
 
 import {
+  APP_LEVEL2_DIV_CLASS,
+  APP_LISTING_TABLE_BODY_TBODY_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TD_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TR_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ODD_CLASS,
+  APP_LISTING_TABLE_CLASS,
+  APP_LISTING_TABLE_HDR_TH_CLASS,
+  APP_LISTING_TABLE_HDR_THEAD_CLASS,
+  APP_LISTING_TABLE_HDR_TR_CLASS,
+  APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS,
+  APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS,
+  APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS,
+  APP_TITLE_H1_CLASS,
+  APP_TITLE_RECYCLE_BUTTON_CLASS,
+  APP_TOP_DIV_CLASS,
+  BUTTON_COMPOSED_LABEL_CLASS,
   BUTTON_LISTING_CLASS,
   BUTTON_LISTING_DISABLED_CLASS,
   BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS,
-  BUTTON_COMPOSED_LABEL_CLASS,
-  INFO_MSG_CLASS,
   HIDDEN_CLASS,
+  INFO_MSG_CLASS,
   VISIBLE_CLASS,
-  APP_TOP_DIV_CLASS,
-  APP_TITLE_H1_CLASS,
-  APP_TITLE_RECYCLE_BUTTON_CLASS,
-  APP_LEVEL2_DIV_CLASS,
-  APP_LISTING_TABLE_CLASS,
-  APP_LISTING_TABLE_HDR_THEAD_CLASS,
-  APP_LISTING_TABLE_HDR_TR_CLASS,
-  APP_LISTING_TABLE_HDR_TH_CLASS,
-  APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS,
-  APP_LISTING_TABLE_BODY_TBODY_CLASS,
-  APP_LISTING_TABLE_BODY_TR_ODD_CLASS,
-  APP_LISTING_TABLE_BODY_TR_EVEN_CLASS,
-  APP_LISTING_TABLE_BODY_TD_ODD_CLASS,
-  APP_LISTING_TABLE_BODY_TD_EVEN_CLASS,
-  APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS,
-  APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS,
-  APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
-  APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS,
-  APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
-  APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS,
-  APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
-  APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS,
-  APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS,
-  APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS,
-  APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS,
-  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS,
-  APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS,
+  WAIT_ANIMATION_MARGIN_TOP_CLASS,
 } from "../constants/class_name_constants.jsx";
 import {
   ACTION_CREATE,
-  ACTION_READ,
-  ACTION_UPDATE,
   ACTION_DELETE,
   ACTION_LIST,
-  MSG_ACTION_NEW,
+  ACTION_READ,
+  ACTION_UPDATE,
   MSG_ACTION_LIST,
-  MSG_PREVIOUS,
+  MSG_ACTION_NEW,
   MSG_NEXT,
-  MSG_PAGE,
   MSG_OF,
-  MSG_ACTIONS,
-  MSG_ROWS_PER_PAGE,
+  MSG_PAGE,
+  MSG_PREVIOUS,
+  MSG_ROWS_PER_PAGE
 } from "../constants/general_constants.jsx";
 
 const debug = false;
@@ -172,7 +171,7 @@ const GenericCrudEditorMain = (props) => {
   useEffect(() => {
     if (editor) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation"
-      ShowHidePageAnimation(true, animationElementId);
+      ShowHideWaitAnimation(true, animationElementId);
       let accessKeysListing = {
         page: currentPage,
         limit: rowsPerPage,
@@ -185,7 +184,7 @@ const GenericCrudEditorMain = (props) => {
           accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
           editor.db.getAll(accessKeysListing).then(
             data => {
-              ShowHidePageAnimation(false, animationElementId);
+              ShowHideWaitAnimation(false, animationElementId);
               // dbListPostRead: To fix Listing fields
               processGenericFuncArray(
                 editor, 'dbListPostRead', data, formMode, currentUser
@@ -201,7 +200,7 @@ const GenericCrudEditorMain = (props) => {
             error => {
               console_debug_log(`GenericCrudEditor / Listing - ERROR:`)
               console.error(error);
-              ShowHidePageAnimation(false, animationElementId);
+              ShowHideWaitAnimation(false, animationElementId);
               setStatus(
                 errorAndReEnter(
                   error, (debug ? ' [GCE-M-040]' : null)
@@ -343,13 +342,13 @@ const GenericCrudEditorMain = (props) => {
       );
     }
     return (
-      WaitAnimation()
+      WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
     );
   }
 
   if (!rows && !status) {
     return (
-      WaitAnimation()
+      WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
     );
   }
 

@@ -374,12 +374,9 @@ declare var class_name_constants: Readonly<{
     NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: "1-flex 1-flex-col 1-space-y-2 navLinkTopDivMobileMenuClass";
     NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: "navLinkTopDivSideMenuClass";
     NAV_LINK_TOP_DIV_TOP_MENU_CLASS: "relative group navLinkTopDivTopMenuClass";
-    PAGE_ANIMATION_CLASS: "mt-3 flex items-center justify-center pageAnimationClass";
     POPUP_TOP_MARGIN_CLASS: "pt-4 popupTopMarginClass";
     ROUNDED_ICON_CLASS: "rounded-full roundedIconClass";
     SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: "ml-2 searchEngineButtonTopDivClass";
-    SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
-    SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: "ml-3 mr-3 showHidePageAnimationEnabledClass";
     STROKE_WHITE_ICON_CLASS: "stroke-white";
     SUCCESS_MSG_CLASS: string;
     SUGGESTION_DROPDOWN_CLASS: "align-middle flex";
@@ -387,6 +384,10 @@ declare var class_name_constants: Readonly<{
     VERTICALLY_CENTERED_CLASS: "flex items-center justify-center verticallyCenteredClass";
     VERTICAL_SLIDER_ICON_CLASS: "h-8 w-1.5 rounded-full bg-slate-400";
     VISIBLE_CLASS: "visible visibleClass";
+    WAIT_ANIMATION_CLASS: "flex items-center justify-center waitAnimationClass";
+    WAIT_ANIMATION_DISABLED_CLASS: "ml-3 mr-3 hidden waitAnimationDisabledClass";
+    WAIT_ANIMATION_ENABLED_CLASS: "ml-3 mr-3 waitAnimationEnabledClass";
+    WAIT_ANIMATION_MARGIN_TOP_CLASS: "mt-3 waitAnimationWithMarginClass";
     WARNING_MSG_CLASS: string;
     defaultTheme: {
         light: {
@@ -771,8 +772,8 @@ declare var urlParams: Readonly<{
 }>;
 declare var wait_animation_utility: Readonly<{
     __proto__: null;
-    ShowHidePageAnimation: (showAnimation: any, ...args: any[]) => void;
-    WaitAnimation: () => React.DetailedReactHTMLElement<{
+    ShowHideWaitAnimation: (showAnimation: any, ...args: any[]) => void;
+    WaitAnimation: (...args: any[]) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
 }>;

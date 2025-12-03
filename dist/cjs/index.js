@@ -383,9 +383,10 @@ const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
 
 // Wait animation
 
-const PAGE_ANIMATION_CLASS = "mt-3 flex items-center justify-center pageAnimationClass";
-const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 showHidePageAnimationEnabledClass";
-const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
+const WAIT_ANIMATION_CLASS = "flex items-center justify-center waitAnimationClass";
+const WAIT_ANIMATION_MARGIN_TOP_CLASS = "mt-3 waitAnimationWithMarginClass";
+const WAIT_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 waitAnimationEnabledClass";
+const WAIT_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden waitAnimationDisabledClass";
 
 // Markdown formatting (check renderMarkdownContent())
 
@@ -568,12 +569,9 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
   NAV_LINK_TOP_DIV_SIDE_MENU_CLASS: NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
   NAV_LINK_TOP_DIV_TOP_MENU_CLASS: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
-  PAGE_ANIMATION_CLASS: PAGE_ANIMATION_CLASS,
   POPUP_TOP_MARGIN_CLASS: POPUP_TOP_MARGIN_CLASS,
   ROUNDED_ICON_CLASS: ROUNDED_ICON_CLASS,
   SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS,
-  SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS,
-  SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS: SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS,
   STROKE_WHITE_ICON_CLASS: STROKE_WHITE_ICON_CLASS,
   SUCCESS_MSG_CLASS: SUCCESS_MSG_CLASS,
   SUGGESTION_DROPDOWN_CLASS: SUGGESTION_DROPDOWN_CLASS,
@@ -581,6 +579,10 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   VERTICALLY_CENTERED_CLASS: VERTICALLY_CENTERED_CLASS,
   VERTICAL_SLIDER_ICON_CLASS: VERTICAL_SLIDER_ICON_CLASS,
   VISIBLE_CLASS: VISIBLE_CLASS,
+  WAIT_ANIMATION_CLASS: WAIT_ANIMATION_CLASS,
+  WAIT_ANIMATION_DISABLED_CLASS: WAIT_ANIMATION_DISABLED_CLASS,
+  WAIT_ANIMATION_ENABLED_CLASS: WAIT_ANIMATION_ENABLED_CLASS,
+  WAIT_ANIMATION_MARGIN_TOP_CLASS: WAIT_ANIMATION_MARGIN_TOP_CLASS,
   WARNING_MSG_CLASS: WARNING_MSG_CLASS,
   defaultTheme: defaultTheme
 });
@@ -2532,6 +2534,23 @@ const AboutBody = _ref => {
   }), renderMarkdownContent("This is a __underline__ test using the renderMarkdownContent() function")));
 };
 
+const mergeDicts = (dictToAdd, originDict) => {
+  if (!(typeof dictToAdd === 'object' && dictToAdd !== null)) {
+    dictToAdd = {};
+  }
+  const dictToAddFinal = Object.entries(dictToAdd).reduce((acc, _ref) => {
+    let [key, value] = _ref;
+    acc[key] = value;
+    return acc;
+  }, _objectSpread2({}, originDict));
+  return dictToAddFinal;
+};
+
+var dictUtilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  mergeDicts: mergeDicts
+});
+
 // export function getConfigsJsonFile(jsonFileName) {
 //     // const basePath = process.env.REACT_APP_JSON_CONFIG_PATH || '../src/configs';
 //     // const jsonFilePath = `${basePath}/frontend/${jsonFileName}.json`
@@ -2936,7 +2955,8 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 const debug$4 = false;
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
-  const fileExtension = filename ? filename.split('.').pop() : null;
+  const filenameWithoutQuery = filename ? filename.split('?')[0] : null;
+  const fileExtension = filenameWithoutQuery ? filenameWithoutQuery.split('.').pop() : null;
   return fileExtension;
 };
 const getContentType = function (filename) {
@@ -3768,6 +3788,70 @@ var errorAndReenter = /*#__PURE__*/Object.freeze({
   refreshPage: refreshPage
 });
 
+function getUrlParams() {
+  let props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window;
+  let urlParams = {};
+  let searchString;
+  try {
+    if (props.hasOwnProperty('location')) {
+      if (props.location.hasOwnProperty('search')) {
+        if (props.location.search !== '') {
+          searchString = props.location.search;
+        } else {
+          searchString = props.location.href;
+        }
+        if (searchString.startsWith('?')) {
+          // Remove only the leading '?', do not split by other '?' inside values
+          searchString = searchString.slice(1);
+        }
+        if (searchString === '') {
+          return urlParams;
+        }
+        let keyPairs = searchString.split("&");
+        if (Array.isArray(keyPairs)) {
+          for (let i = 0; i < keyPairs.length; i++) {
+            const keyPairString = keyPairs[i];
+            const [rawKey, ...rest] = keyPairString.split('=');
+            let rawValue = rest.length > 0 ? rest.join('=') : '';
+            // If this is the redirect param and it contains a hash (#),
+            // treat the remainder of the query string as part of the value
+            if (rawValue.includes('#') && i < keyPairs.length - 1) {
+              const tail = keyPairs.slice(i + 1).join('&');
+              rawValue = "".concat(rawValue, "&").concat(tail);
+              // We consumed the rest
+              i = keyPairs.length;
+            }
+            let key = rawKey;
+            let value = rawValue;
+            try {
+              key = decodeURIComponent(rawKey.replace(/\+/g, ' '));
+            } catch (_) {/* noop */}
+            try {
+              value = decodeURIComponent(rawValue.replace(/\+/g, ' '));
+            } catch (_) {/* noop */}
+            urlParams[key] = value;
+          }
+        }
+      }
+    } else {
+      if (props.hasOwnProperty('match')) {
+        if (props.match.hasOwnProperty('params')) {
+          urlParams = props.match.params;
+        }
+      }
+    }
+  } catch (error) {
+    console.log("getUrlParams ERROR | ".concat(props));
+    console.error(error);
+  }
+  return urlParams;
+}
+
+var urlParams = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  getUrlParams: getUrlParams
+});
+
 // GenericCrudEditor general utilities
 
 const defaultValue = function (dictObj, elementName) {
@@ -4208,109 +4292,6 @@ var generic_menu_service = /*#__PURE__*/Object.freeze({
   getRoutesRaw: getRoutesRaw
 });
 
-function getUrlParams() {
-  let props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window;
-  let urlParams = {};
-  let searchString;
-  try {
-    if (props.hasOwnProperty('location')) {
-      if (props.location.hasOwnProperty('search')) {
-        if (props.location.search !== '') {
-          searchString = props.location.search;
-        } else {
-          searchString = props.location.href;
-        }
-        if (searchString.startsWith('?')) {
-          // Remove only the leading '?', do not split by other '?' inside values
-          searchString = searchString.slice(1);
-        }
-        if (searchString === '') {
-          return urlParams;
-        }
-        let keyPairs = searchString.split("&");
-        if (Array.isArray(keyPairs)) {
-          for (let i = 0; i < keyPairs.length; i++) {
-            const keyPairString = keyPairs[i];
-            const [rawKey, ...rest] = keyPairString.split('=');
-            let rawValue = rest.length > 0 ? rest.join('=') : '';
-            // If this is the redirect param and it contains a hash (#),
-            // treat the remainder of the query string as part of the value
-            if (rawValue.includes('#') && i < keyPairs.length - 1) {
-              const tail = keyPairs.slice(i + 1).join('&');
-              rawValue = "".concat(rawValue, "&").concat(tail);
-              // We consumed the rest
-              i = keyPairs.length;
-            }
-            let key = rawKey;
-            let value = rawValue;
-            try {
-              key = decodeURIComponent(rawKey.replace(/\+/g, ' '));
-            } catch (_) {/* noop */}
-            try {
-              value = decodeURIComponent(rawValue.replace(/\+/g, ' '));
-            } catch (_) {/* noop */}
-            urlParams[key] = value;
-          }
-        }
-      }
-    } else {
-      if (props.hasOwnProperty('match')) {
-        if (props.match.hasOwnProperty('params')) {
-          urlParams = props.match.params;
-        }
-      }
-    }
-  } catch (error) {
-    console.log("getUrlParams ERROR | ".concat(props));
-    console.error(error);
-  }
-  return urlParams;
-}
-
-var urlParams = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  getUrlParams: getUrlParams
-});
-
-const mergeDicts = (dictToAdd, originDict) => {
-  if (!(typeof dictToAdd === 'object' && dictToAdd !== null)) {
-    dictToAdd = {};
-  }
-  const dictToAddFinal = Object.entries(dictToAdd).reduce((acc, _ref) => {
-    let [key, value] = _ref;
-    acc[key] = value;
-    return acc;
-  }, _objectSpread2({}, originDict));
-  return dictToAddFinal;
-};
-
-var dictUtilities = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  mergeDicts: mergeDicts
-});
-
-const WaitAnimation = () => {
-  return /*#__PURE__*/React.createElement("div", {
-    className: PAGE_ANIMATION_CLASS
-  }, /*#__PURE__*/React.createElement("img", {
-    src: WAIT_ANIMATION_IMG,
-    alt: MSG_ALT_WAIT_ANIMATION
-  }));
-};
-const ShowHidePageAnimation = function (showAnimation) {
-  let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "nav_animation";
-  let animationDiv = document.getElementById(elementId);
-  if (animationDiv) {
-    animationDiv.className = showAnimation ? SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS : SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS;
-  }
-};
-
-var wait_animation_utility = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  ShowHidePageAnimation: ShowHidePageAnimation,
-  WaitAnimation: WaitAnimation
-});
-
 const DarkModeButton = () => {
   const {
     currentUser
@@ -4481,53 +4462,105 @@ const MenuModeButton = () => {
   }))));
 };
 
-// Create a context to hold the function
-const MainSectionContext = /*#__PURE__*/React.createContext();
-
-// Provider Component
-const MainSectionProvider = _ref => {
-  let {
-    children
-  } = _ref;
-  const [cache, setCache] = React.useState({});
-  const initCache = () => {
-    setCache({});
-  };
-  const getCachedData = entryName => {
-    return cache[entryName];
-  };
-  const putCachedData = (entryName, data) => {
-    setCache(prevCache => _objectSpread2(_objectSpread2({}, prevCache), {}, {
-      [entryName]: data
-    }));
-  };
-  const typeofCachedData = entryName => {
-    return typeof cache[entryName];
-  };
-  const listCache = () => {
-    return cache;
-  };
-  const debugCache = function () {
-    let description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'debugCache';
-    console_debug_log(">>>>--->> listCache [".concat(description, "]:"), listCache());
-    return '';
-  };
-  return /*#__PURE__*/React.createElement(MainSectionContext.Provider, {
-    value: {
-      initCache,
-      getCachedData,
-      putCachedData,
-      typeofCachedData,
-      listCache,
-      debugCache
-    }
-  }, children);
+const WaitAnimation = function () {
+  let className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+  return /*#__PURE__*/React.createElement("div", {
+    className: WAIT_ANIMATION_CLASS + " " + className
+  }, /*#__PURE__*/React.createElement("img", {
+    src: WAIT_ANIMATION_IMG,
+    alt: MSG_ALT_WAIT_ANIMATION
+  }));
+};
+const ShowHideWaitAnimation = function (showAnimation) {
+  let elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "nav_animation";
+  let animationDiv = document.getElementById(elementId);
+  if (animationDiv) {
+    animationDiv.className = showAnimation ? WAIT_ANIMATION_ENABLED_CLASS : WAIT_ANIMATION_DISABLED_CLASS;
+  }
 };
 
-var generic_editor_rfc_provider = /*#__PURE__*/Object.freeze({
+var wait_animation_utility = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  MainSectionContext: MainSectionContext,
-  MainSectionProvider: MainSectionProvider
+  ShowHideWaitAnimation: ShowHideWaitAnimation,
+  WaitAnimation: WaitAnimation
+});
+
+const GMT_TAIL = '.000Z'; // '.000-0000'
+const DATE_TIME_TAIL = "T00:00:00".concat(GMT_TAIL);
+const timestampToDate = function (timestamp) {
+  let fullDateTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  let separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  let militaryTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+  const timestampUnixEpoch = timestamp * 1000;
+  const date = new Date(timestampUnixEpoch);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  // const formattedTime = hours % 12 + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
+  const formattedTime = (hours > 12 ? hours - 12 : hours) + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
+  if (fullDateTime) {
+    if (separator) {
+      if (!militaryTime) {
+        return date.toISOString().split("T")[0] + separator + formattedTime;
+      }
+      return date.toISOString().split("T").join(separator).slice(0, 19);
+    }
+    if (!militaryTime) {
+      return date.toISOString().split("T")[0] + 'T' + formattedTime;
+    }
+    return date.toISOString();
+  }
+  return date.toISOString().split("T")[0];
+};
+const addMissingTz = stringDate => stringDate + (stringDate.indexOf('.') > 0 ? '' : GMT_TAIL);
+const dateToTimestap = stringDate => new Date(addMissingTz(stringDate)).valueOf() / 1000;
+const nowToTimestap = () => new Date().valueOf() / 1000;
+const fixDateWithTz = dateTimeString => {
+  switch (dateTimeString.length) {
+    case 10:
+      dateTimeString += DATE_TIME_TAIL;
+      break;
+    case 16:
+      dateTimeString += ":00".concat(GMT_TAIL);
+      break;
+    default:
+      dateTimeString = addMissingTz(dateTimeString);
+  }
+  return dateTimeString;
+};
+const processTimestampToDate = (timestampMixed, fullDatetime, separator) => {
+  if (!timestampMixed) {
+    timestampMixed = 0; // nowToTimestap();
+  }
+  if (typeof timestampMixed === 'string') {
+    timestampMixed = fixDateWithTz(timestampMixed);
+    timestampMixed = dateToTimestap(timestampMixed);
+  }
+  return timestampToDate(timestampMixed, fullDatetime, separator);
+};
+const processDateToTimestamp = dateTime => {
+  dateTime = fixDateWithTz(dateTime);
+  return dateToTimestap(dateTime);
+};
+const addZeroTimeToDate = dateValue => {
+  const date = new Date(dateValue);
+  date.setHours(0);
+  date.setMinutes(0);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+  return date.toISOString().slice(0, 19).replace('T', ' ');
+};
+
+var dateTimestamp = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  addMissingTz: addMissingTz,
+  addZeroTimeToDate: addZeroTimeToDate,
+  dateToTimestap: dateToTimestap,
+  fixDateWithTz: fixDateWithTz,
+  nowToTimestap: nowToTimestap,
+  processDateToTimestamp: processDateToTimestamp,
+  processTimestampToDate: processTimestampToDate,
+  timestampToDate: timestampToDate
 });
 
 const genericFuncArrayDefaultValue = function () {
@@ -4658,84 +4691,6 @@ var generic_editor_rfc_specific_func = /*#__PURE__*/Object.freeze({
   mandatoryFiltersDbListPreRead: mandatoryFiltersDbListPreRead,
   mandatoryFiltersDbPreRead: mandatoryFiltersDbPreRead,
   processGenericFuncArray: processGenericFuncArray
-});
-
-const GMT_TAIL = '.000Z'; // '.000-0000'
-const DATE_TIME_TAIL = "T00:00:00".concat(GMT_TAIL);
-const timestampToDate = function (timestamp) {
-  let fullDateTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  let separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  let militaryTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  const timestampUnixEpoch = timestamp * 1000;
-  const date = new Date(timestampUnixEpoch);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  // const formattedTime = hours % 12 + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
-  const formattedTime = (hours > 12 ? hours - 12 : hours) + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
-  if (fullDateTime) {
-    if (separator) {
-      if (!militaryTime) {
-        return date.toISOString().split("T")[0] + separator + formattedTime;
-      }
-      return date.toISOString().split("T").join(separator).slice(0, 19);
-    }
-    if (!militaryTime) {
-      return date.toISOString().split("T")[0] + 'T' + formattedTime;
-    }
-    return date.toISOString();
-  }
-  return date.toISOString().split("T")[0];
-};
-const addMissingTz = stringDate => stringDate + (stringDate.indexOf('.') > 0 ? '' : GMT_TAIL);
-const dateToTimestap = stringDate => new Date(addMissingTz(stringDate)).valueOf() / 1000;
-const nowToTimestap = () => new Date().valueOf() / 1000;
-const fixDateWithTz = dateTimeString => {
-  switch (dateTimeString.length) {
-    case 10:
-      dateTimeString += DATE_TIME_TAIL;
-      break;
-    case 16:
-      dateTimeString += ":00".concat(GMT_TAIL);
-      break;
-    default:
-      dateTimeString = addMissingTz(dateTimeString);
-  }
-  return dateTimeString;
-};
-const processTimestampToDate = (timestampMixed, fullDatetime, separator) => {
-  if (!timestampMixed) {
-    timestampMixed = 0; // nowToTimestap();
-  }
-  if (typeof timestampMixed === 'string') {
-    timestampMixed = fixDateWithTz(timestampMixed);
-    timestampMixed = dateToTimestap(timestampMixed);
-  }
-  return timestampToDate(timestampMixed, fullDatetime, separator);
-};
-const processDateToTimestamp = dateTime => {
-  dateTime = fixDateWithTz(dateTime);
-  return dateToTimestap(dateTime);
-};
-const addZeroTimeToDate = dateValue => {
-  const date = new Date(dateValue);
-  date.setHours(0);
-  date.setMinutes(0);
-  date.setSeconds(0);
-  date.setMilliseconds(0);
-  return date.toISOString().slice(0, 19).replace('T', ' ');
-};
-
-var dateTimestamp = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  addMissingTz: addMissingTz,
-  addZeroTimeToDate: addZeroTimeToDate,
-  dateToTimestap: dateToTimestap,
-  fixDateWithTz: fixDateWithTz,
-  nowToTimestap: nowToTimestap,
-  processDateToTimestamp: processDateToTimestamp,
-  processTimestampToDate: processTimestampToDate,
-  timestampToDate: timestampToDate
 });
 
 const timestampDbListPostRead = (dataRead, editor, action) => {
@@ -5040,6 +4995,55 @@ var generic_editor_rfc_common = /*#__PURE__*/Object.freeze({
   getIsReadOnly: getIsReadOnly,
   getSelectFieldsOptions: getSelectFieldsOptions,
   setEditorParameters: setEditorParameters
+});
+
+// Create a context to hold the function
+const MainSectionContext = /*#__PURE__*/React.createContext();
+
+// Provider Component
+const MainSectionProvider = _ref => {
+  let {
+    children
+  } = _ref;
+  const [cache, setCache] = React.useState({});
+  const initCache = () => {
+    setCache({});
+  };
+  const getCachedData = entryName => {
+    return cache[entryName];
+  };
+  const putCachedData = (entryName, data) => {
+    setCache(prevCache => _objectSpread2(_objectSpread2({}, prevCache), {}, {
+      [entryName]: data
+    }));
+  };
+  const typeofCachedData = entryName => {
+    return typeof cache[entryName];
+  };
+  const listCache = () => {
+    return cache;
+  };
+  const debugCache = function () {
+    let description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'debugCache';
+    console_debug_log(">>>>--->> listCache [".concat(description, "]:"), listCache());
+    return '';
+  };
+  return /*#__PURE__*/React.createElement(MainSectionContext.Provider, {
+    value: {
+      initCache,
+      getCachedData,
+      putCachedData,
+      typeofCachedData,
+      listCache,
+      debugCache
+    }
+  }, children);
+};
+
+var generic_editor_rfc_provider = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  MainSectionContext: MainSectionContext,
+  MainSectionProvider: MainSectionProvider
 });
 
 const debug$2 = false;
@@ -6277,7 +6281,7 @@ const GenericCrudEditorMain = props => {
   React.useEffect(() => {
     if (editor) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation";
-      ShowHidePageAnimation(true, animationElementId);
+      ShowHideWaitAnimation(true, animationElementId);
       let accessKeysListing = {
         page: currentPage,
         limit: rowsPerPage
@@ -6286,13 +6290,13 @@ const GenericCrudEditorMain = props => {
       processGenericFuncArray(editor, 'dbListPreRead', accessKeysListing, formMode, currentUser).then(funcResponse => {
         accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
         editor.db.getAll(accessKeysListing).then(data => {
-          ShowHidePageAnimation(false, animationElementId);
+          ShowHideWaitAnimation(false, animationElementId);
           // dbListPostRead: To fix Listing fields
           processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, null)));
         }, error => {
           console_debug_log("GenericCrudEditor / Listing - ERROR:");
           console.error(error);
-          ShowHidePageAnimation(false, animationElementId);
+          ShowHideWaitAnimation(false, animationElementId);
           setStatus(errorAndReEnter(error, null));
         });
       }, error => {
@@ -6408,10 +6412,10 @@ const GenericCrudEditorMain = props => {
     if (status) {
       return /*#__PURE__*/React.createElement("div", null, status, debug$1);
     }
-    return WaitAnimation();
+    return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   if (!rows && !status) {
-    return WaitAnimation();
+    return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   if (status) {
     return /*#__PURE__*/React.createElement(React.Fragment, null, status, debug$1);
@@ -7509,6 +7513,23 @@ const UserProfileEditor = props => {
   }));
 };
 
+const AppFooter = _ref => {
+  let {
+    appName = null,
+    year = null,
+    url = null,
+    rights = null,
+    otherLine = null
+  } = _ref;
+  const appNameData = appName !== null && appName !== void 0 ? appName : process.env.REACT_APP_APP_NAME;
+  const yearData = year !== null && year !== void 0 ? year : new Date().getFullYear();
+  const rightsData = rights !== null && rights !== void 0 ? rights : "All rights reserved";
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, "\xA9 ", yearData, " ", url ? /*#__PURE__*/React.createElement("a", {
+    href: url,
+    target: "_blank"
+  }, appNameData) : appNameData, ". ", rightsData, "."), otherLine && /*#__PURE__*/React.createElement("p", null, otherLine));
+};
+
 const HomePage = _ref => {
   let {
     children
@@ -7758,23 +7779,6 @@ const GeneralConfig = () => /*#__PURE__*/React.createElement(GenericCrudEditor, 
   editorConfig: GeneralConfig_EditorData()
 });
 
-const AppFooter = _ref => {
-  let {
-    appName = null,
-    year = null,
-    url = null,
-    rights = null,
-    otherLine = null
-  } = _ref;
-  const appNameData = appName !== null && appName !== void 0 ? appName : process.env.REACT_APP_APP_NAME;
-  const yearData = year !== null && year !== void 0 ? year : new Date().getFullYear();
-  const rightsData = rights !== null && rights !== void 0 ? rights : "All rights reserved";
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, "\xA9 ", yearData, " ", url ? /*#__PURE__*/React.createElement("a", {
-    href: url,
-    target: "_blank"
-  }, appNameData) : appNameData, ". ", rightsData, "."), otherLine && /*#__PURE__*/React.createElement("p", null, otherLine));
-};
-
 const getShowContentOnly = () => {
   const urlParams = getUrlParams();
   const showContentOnly = urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0";
@@ -7949,7 +7953,7 @@ const AppMainComponent = _ref7 => {
   }
   if (!menuOptions) {
     if (currentUser) {
-      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(WaitAnimation, null));
+      return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
     }
     return /*#__PURE__*/React.createElement("div", {
       className: LOGIN_BUTTON_IN_APP_COMPONENT_CLASS

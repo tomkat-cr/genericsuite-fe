@@ -294,9 +294,10 @@ export const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
 
 // Wait animation
 
-export const PAGE_ANIMATION_CLASS = "mt-3 flex items-center justify-center pageAnimationClass";
-export const SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 showHidePageAnimationEnabledClass";
-export const SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden showHidePageAnimationDisabledClass";
+export const WAIT_ANIMATION_CLASS = "flex items-center justify-center waitAnimationClass";
+export const WAIT_ANIMATION_MARGIN_TOP_CLASS = "mt-3 waitAnimationWithMarginClass";
+export const WAIT_ANIMATION_ENABLED_CLASS = "ml-3 mr-3 waitAnimationEnabledClass";
+export const WAIT_ANIMATION_DISABLED_CLASS = "ml-3 mr-3 hidden waitAnimationDisabledClass";
 
 // Markdown formatting (check renderMarkdownContent())
 

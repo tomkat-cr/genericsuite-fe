@@ -1,67 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    Link as RouterLink,
     createBrowserRouter,
-    RouterProvider,
     HashRouter,
-    Navigate,
-    Link,
+    Link as RouterLink,
+    RouterProvider
 } from "react-router-dom";
 // import { useLocation } from 'react-router-dom';
 
 import {
-    GenericMenuBuilder,
-    getMenuFromApi,
-    getDefaultRoutes,
-    getRoutes,
-    GetHashRoutes,
-} from '../../services/generic.menu.service.jsx';
+    AppProvider,
+    useAppContext,
+} from '../../helpers/AppContext.jsx';
 import {
-    console_debug_log,
-} from '../../services/logging.service.jsx';
-import {
-    verifyCurrentUser
-} from '../../services/authentication.service.jsx';
+    mergeDicts,
+} from '../../helpers/dict-utilities.jsx';
 import {
     errorAndReEnter,
-    logoutHander,
     getErrorMessage,
+    logoutHander,
 } from '../../helpers/error-and-reenter.jsx';
 import {
     getUrlParams,
 } from '../../helpers/url-params.jsx';
 import {
-    mergeDicts,
-} from '../../helpers/dict-utilities.jsx';
-import {
     UserProvider,
     useUser
 } from '../../helpers/UserContext.jsx';
 import {
-    AppProvider,
-    useAppContext,
-} from '../../helpers/AppContext.jsx';
-
+    verifyCurrentUser
+} from '../../services/authentication.service.jsx';
 import {
-    getLocalConfig,
-    saveLocalConfig
-} from '../../helpers/local-config.jsx';
+    GenericMenuBuilder,
+    getDefaultRoutes,
+    GetHashRoutes,
+    getMenuFromApi,
+    getRoutes,
+} from '../../services/generic.menu.service.jsx';
+import {
+    console_debug_log,
+} from '../../services/logging.service.jsx';
+
 import { imageDirectory } from '../../constants/general_constants.jsx';
 
-import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
 import { MenuModeButton } from '../../helpers/MenuModeButton.jsx';
+import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 
 // Specific imports
 
 import { Users_EditorData } from '../SuperAdminOptions/Users.jsx';
 import { UserProfileEditor } from '../UsersMenu/UserProfile.jsx';
 // import { ChatBot } from '../ChatBot/ChatBot.jsx';
+import { About, AboutBody } from '../About/About.jsx';
+import { AppFooter } from '../AppFooter/AppFooter.jsx';
 import { HomePage } from '../HomePage/HomePage.jsx';
 import { LoginPage } from '../LoginPage/LoginPage.jsx';
-import { About, AboutBody } from '../About/About.jsx';
 import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx';
-import { AppFooter } from '../AppFooter/AppFooter.jsx';
 
 // Component specific CSS:
 // import './App.css';
@@ -81,28 +75,28 @@ import { AppFooter } from '../AppFooter/AppFooter.jsx';
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import Navbar from 'react-bootstrap/cjs/Navbar.js';
 import {
-    MainContainer,
-    AppSectionContainer,
-    AppFooterContainer,
-    Navbar,
-    // ToggleSideBar,
-    GsButton,
-} from '../../helpers/NavLib.jsx';
+    ALERT_DANGER_CLASS,
+    BUTTON_PRIMARY_CLASS,
+    defaultTheme,
+    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS,
+    NAVBAR_BRAND_APP_LOGO_CLASS,
+    NAVBAR_BRAND_APP_VERSION_CLASS,
+    NAVBAR_BRAND_NAME_CLASS,
+    WAIT_ANIMATION_MARGIN_TOP_CLASS,
+} from '../../constants/class_name_constants.jsx';
 import {
     getPrefix,
     hasHashRouter,
     history,
 } from '../../helpers/history.jsx';
 import {
-    defaultTheme,
-    ALERT_DANGER_CLASS,
-    BUTTON_PRIMARY_CLASS,
-    NAVBAR_BRAND_APP_LOGO_CLASS,
-    NAVBAR_BRAND_NAME_CLASS,
-    NAVBAR_BRAND_APP_VERSION_CLASS,
-    APP_GENERAL_MARGINS_CLASS,
-    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS,
-} from '../../constants/class_name_constants.jsx';
+    AppFooterContainer,
+    AppSectionContainer,
+    // ToggleSideBar,
+    GsButton,
+    MainContainer,
+    Navbar,
+} from '../../helpers/NavLib.jsx';
 
 const debug = false;
 
@@ -402,9 +396,7 @@ const AppMainComponent = ({
     if (!menuOptions) {
         if (currentUser) {
             return (
-                <>
-                    <WaitAnimation />
-                </>
+                WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
             );
         }
         return (

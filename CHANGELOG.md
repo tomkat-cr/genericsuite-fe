@@ -19,7 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Added
 - Add API_VERSION envvar to set the API version, default to "v1" [GS-245].
-- Add PAGE_ANIMATION_CLASS constant to add top margin to <WaitAnimation /> component [GS-246].
+- Add WAIT_ANIMATION_MARGIN_TOP_CLASS constant to add top margin to <WaitAnimation /> in the <App /> component [GS-246].
 - Add UPDATE_SNAPSHOTS envvar to "make publish" to run "npm test -- -u" instead of "npm run test".
 - Add "UPDATE_SNAPSHOTS=1 make publish" documentation on Makefile.
 
@@ -28,10 +28,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Enhance error message in the login page [GS-246].
 - Update class_name_constants.jsx to make buttons more rounded and remove unused comments [GS-246].
 - Update getFetch() to check if the response is ok using the [200, 201, 202, 204] status codes [GS-245].
+- Style class constants renamed: PAGE_ANIMATION_CLASS to WAIT_ANIMATION_CLASS, SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS to WAIT_ANIMATION_ENABLED_CLASS, SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS to WAIT_ANIMATION_DISABLED_CLASS [GS-246].
+- Component <ShowHidePageAnimation /> renamed to <ShowHideWaitAnimation /> [GS-246].
 
 ### Fixed
 - Fix login button visible while menus are loading [GS-246].
 - Fix the error message when using axios and the session expires or the user credentials are invalid [GS-246].
+- Fix getFileExtension() to remove the URL query parameters [GS-72].
 
 
 ## [1.1.0] - 2025-11-17
