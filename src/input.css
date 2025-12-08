@@ -1,3 +1,41 @@
 @import 'tailwindcss';
 
 @config '../tailwind.config.js';
+
+@layer base {
+    h1 {
+        font-size: var(--text-2xl);
+        line-height: var(--text-2xl--line-height);
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: var(--text-xl);
+        line-height: var(--text-xl--line-height);
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: var(--text-lg);
+        line-height: var(--text-lg--line-height);
+        font-weight: bold;
+    }
+
+    h4 {
+        font-size: var(--text-base);
+        line-height: var(--text-base--line-height);
+        font-weight: bold;
+    }
+
+    h5 {
+        font-size: var(--text-sm);
+        line-height: var(--text-sm--line-height);
+        font-weight: bold;
+    }
+
+    h6 {
+        font-size: var(--text-xs);
+        line-height: var(--text-xs--line-height);
+        font-weight: bold;
+    }
+}

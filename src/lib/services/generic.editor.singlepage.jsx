@@ -1,49 +1,49 @@
 // GenericCrudEditor single page editor
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { 
+import { errorAndReEnter } from '../helpers/error-and-reenter.jsx';
+import {
+    getEditoObj,
+    setEditorParameters,
+} from './generic.editor.rfc.common.jsx';
+import {
+    FormPage,
+} from './generic.editor.rfc.formpage.jsx';
+import {
     MainSectionContext,
     MainSectionProvider,
 } from './generic.editor.rfc.provider.jsx';
-import { 
-    FormPage,
-} from './generic.editor.rfc.formpage.jsx';
-import { 
-    setEditorParameters,
-    getEditoObj,
-} from './generic.editor.rfc.common.jsx';
-import { 
+import {
     console_debug_log,
 } from './logging.service.jsx';
-import { getPrefix } from '../helpers/history.jsx';
-import { errorAndReEnter } from '../helpers/error-and-reenter.jsx';
 
+import {
+    ERROR_MSG_CLASS,
+    WAIT_ANIMATION_MARGIN_TOP_CLASS,
+} from "../constants/class_name_constants.jsx";
 import {
     ACTION_UPDATE,
 } from "../constants/general_constants.jsx";
-import {
-    ERROR_MSG_CLASS,
-} from "../constants/class_name_constants.jsx";
 
 import { WaitAnimation } from "./wait.animation.utility.jsx";
 
 export const GenericSinglePageEditor = ({ editorConfig, id, parentData }) => {
     return (
-      <>
-        <MainSectionProvider>
-          <GenericSinglePageEditorMain
-            editorConfig={editorConfig}
-            id={id}
-            parentData={parentData}
-          />
-        </MainSectionProvider>
-      </>
+        <>
+            <MainSectionProvider>
+                <GenericSinglePageEditorMain
+                    editorConfig={editorConfig}
+                    id={id}
+                    parentData={parentData}
+                />
+            </MainSectionProvider>
+        </>
     );
-  }
+}
 
 const debug = false;
-  
+
 export const GenericSinglePageEditorMain = (props) => {
     const [editor, setEditor] = useState(null);
     const [formMode, setFormMode] = useState(null);
@@ -59,26 +59,26 @@ export const GenericSinglePageEditorMain = (props) => {
         }
         setEditorParameters(props).then(
             editor_response => {
-              if (!editor_response) {
-                setEditor(null);
-              } else if(editor_response.error) {
-                console_debug_log("GSPE-ERROR-010:");
-                console_debug_log(editor_response.errorMsg);
-                setStatus(errorAndReEnter(editor_response.errorMsg));
-              } else if (!editor_response.response) {
-                setEditor(null);
-              } else {
-                if (debug) {
-                    console_debug_log('GenericSinglePageEditor | $$$ editor_response:');
-                    console_debug_log(editor_response);
+                if (!editor_response) {
+                    setEditor(null);
+                } else if (editor_response.error) {
+                    console_debug_log("GSPE-ERROR-010:");
+                    console_debug_log(editor_response.errorMsg);
+                    setStatus(errorAndReEnter(editor_response.errorMsg));
+                } else if (!editor_response.response) {
+                    setEditor(null);
+                } else {
+                    if (debug) {
+                        console_debug_log('GenericSinglePageEditor | $$$ editor_response:');
+                        console_debug_log(editor_response);
+                    }
+                    setEditor(getEditoObj(props, editor_response));
                 }
-                setEditor(getEditoObj(props, editor_response));
-              }
             },
             error => {
-              console_debug_log("GSPE-ERROR-020:");
-              console_debug_log(error);
-              setStatus(errorAndReEnter(error));
+                console_debug_log("GSPE-ERROR-020:");
+                console_debug_log(error);
+                setStatus(errorAndReEnter(error));
             }
         );
     }, [props, debug]);
@@ -106,7 +106,7 @@ export const GenericSinglePageEditorMain = (props) => {
         initCache();
         window.location.reload(true);
     }
-    
+
     if (debug) {
         console_debug_log('UserProfileEditor | editor:');
         console_debug_log(editor);
@@ -122,7 +122,7 @@ export const GenericSinglePageEditorMain = (props) => {
             );
         }
         return (
-            WaitAnimation()
+            WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
         );
     }
     if (status) {
@@ -133,7 +133,7 @@ export const GenericSinglePageEditorMain = (props) => {
             </div>
         );
     }
-        
+
     return (
         <>
             <FormPage

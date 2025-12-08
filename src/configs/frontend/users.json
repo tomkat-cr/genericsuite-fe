@@ -53,7 +53,7 @@
             "select_elements": "BILLING_PLANS",
             "default_value": "1",
             "listing": true
-        }, 
+        },
         {
             "name": "superuser",
             "required": true,
@@ -89,13 +89,13 @@
             "select_elements": "LANGUAGES",
             "readonly": false,
             "listing": false
-        }, 
+        },
         {
             "name": "openai_api_key",
             "required": false,
             "label": "OpenAI API Key",
             "type": "text"
-        }, 
+        },
         {
             "name": "openai_model",
             "required": false,
@@ -129,7 +129,7 @@
         {
             "name": "label1",
             "label": "PASWORD CHANGE",
-            "type": "label"
+            "type": "h2"
         },
         {
             "name": "passcode",

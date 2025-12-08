@@ -42,7 +42,8 @@ import {
     INFO_MSG_CLASS,
     // APP_FORMPAGE_LEVEL1_DIV_CLASS,
     // APP_FORMPAGE_LEVEL2_DIV_CLASS,
-    INVALID_FEEDBACK_CLASS
+    INVALID_FEEDBACK_CLASS,
+    WAIT_ANIMATION_MARGIN_TOP_CLASS,
 } from "../constants/class_name_constants.jsx";
 import {
     ACTION_CREATE,
@@ -155,7 +156,7 @@ export const FormPage = ({
     }
 
     if (!editor || !formData) {
-        return WaitAnimation();
+        return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
     }
 
     const editorFlags = getEditorFlags(mode);
@@ -223,6 +224,15 @@ const CrudEditorFormPageTitle = ({ baseUrl, title, actionTitle }) => {
             {title + " - " + actionTitle}
         </h2>
     );
+}
+
+const GetHTag = ({ tag, children }) => {
+    return React.createElement(tag, { children });
+}
+
+const GetHTagForceTailwind = () => {
+    // To force the use of tailwindcss for the h1 to h6 tags
+    return (<><h1></h1><h2></h2><h3></h3><h4></h4><h5></h5><h6></h6></>)
 }
 
 const PutOneFormfield = ({
@@ -417,6 +427,23 @@ const PutOneFormfield = ({
                 </div>
             );
             break;
+        case 'h1':
+        case 'h2':
+        case 'h3':
+        case 'h4':
+        case 'h5':
+        case 'h6':
+            elementLabel = '';
+            elementError = '';
+            elementInput = (
+                <GetHTag
+                    tag={currentObj.type}
+                    key={idName}
+                >
+                    {currentObj.label}
+                </GetHTag>
+            );
+            break;
         case 'hr':
             elementLabel = '';
             elementError = '';
@@ -589,7 +616,7 @@ const EditFormFormik = (
 
     if (!formData['readyToShow']) {
         return (
-            WaitAnimation()
+            WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
         );
     }
 
@@ -848,7 +875,7 @@ const EditFormFormikFinal = ({
                                             : MSG_ACTION_UPDATE}
                                 </GsButton>
                                 {isSubmitting && (
-                                    WaitAnimation()
+                                    WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
                                 )}
                             </>
                         )}
@@ -1025,9 +1052,14 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
                 responseObj = currentObj['force_value'];
             }
             switch (currentObj.type) {
-                // case 'component':
                 case 'label':
                 case 'hr':
+                case 'h1':
+                case 'h2':
+                case 'h3':
+                case 'h4':
+                case 'h5':
+                case 'h6':
                     // Excluded types
                     break;
                 default:

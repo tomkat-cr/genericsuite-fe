@@ -53,6 +53,10 @@
     --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
+    --text-base: 1rem;
+    --text-base--line-height: calc(1.5 / 1);
+    --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
@@ -1024,6 +1028,38 @@
     &:where(.dark, .dark *) {
       stroke: var(--color-white);
     }
+  }
+}
+@layer base {
+  h1 {
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    font-weight: bold;
+  }
+  h2 {
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+    font-weight: bold;
+  }
+  h3 {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+    font-weight: bold;
+  }
+  h4 {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    font-weight: bold;
+  }
+  h5 {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    font-weight: bold;
+  }
+  h6 {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    font-weight: bold;
   }
 }
 @property --tw-translate-x {

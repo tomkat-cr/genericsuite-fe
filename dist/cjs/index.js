@@ -5479,7 +5479,7 @@ const FormPage = _ref => {
     };
   }
   if (!editor || !formData) {
-    return WaitAnimation();
+    return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   const editorFlags = getEditorFlags(mode);
   const actionTitle = mode === ACTION_CREATE ? MSG_ACTION_CREATE : mode === ACTION_UPDATE ? MSG_ACTION_UPDATE : mode === ACTION_READ ? MSG_ACTION_READ : MSG_ACTION_DELETE;
@@ -5518,7 +5518,16 @@ const CrudEditorFormPageTitle = _ref2 => {
     className: APP_TITLE_H1_CLASS
   }, title + " - " + actionTitle);
 };
-const PutOneFormfield = _ref3 => {
+const GetHTag = _ref3 => {
+  let {
+    tag,
+    children
+  } = _ref3;
+  return /*#__PURE__*/React.createElement(tag, {
+    children
+  });
+};
+const PutOneFormfield = _ref4 => {
   let {
     currentObjArray,
     componentSelectFieldsOptions,
@@ -5527,7 +5536,7 @@ const PutOneFormfield = _ref3 => {
     touched,
     initialValue,
     theme
-  } = _ref3;
+  } = _ref4;
   const {
     setFieldValue
   } = formik.useFormikContext();
@@ -5657,6 +5666,19 @@ const PutOneFormfield = _ref3 => {
         className: divFieldClass
       }, currentObj.label));
       break;
+    case 'h1':
+    case 'h2':
+    case 'h3':
+    case 'h4':
+    case 'h5':
+    case 'h6':
+      elementLabel = '';
+      elementError = '';
+      elementInput = /*#__PURE__*/React.createElement(GetHTag, {
+        tag: currentObj.type,
+        key: idName
+      }, currentObj.label);
+      break;
     case 'hr':
       elementLabel = '';
       elementError = '';
@@ -5720,7 +5742,7 @@ const PutOneFormfield = _ref3 => {
     className: divFieldClass
   }, elementLabel, elementInput, elementError);
 };
-const EditFormFormik = _ref4 => {
+const EditFormFormik = _ref5 => {
   let {
     editor,
     parenHandleCancel,
@@ -5732,7 +5754,7 @@ const EditFormFormik = _ref4 => {
     handleFormPageActions,
     theme,
     currentUser
-  } = _ref4;
+  } = _ref5;
   const [formData, setFormData] = React.useState({
     readyToShow: false,
     dataset: null,
@@ -5773,7 +5795,7 @@ const EditFormFormik = _ref4 => {
     }
   }, [editor, action, dataset]);
   if (!formData['readyToShow']) {
-    return WaitAnimation();
+    return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   if (!formData['canCommit'] === null) {
     formData['canCommit'] = false;
@@ -5798,7 +5820,7 @@ const EditFormFormik = _ref4 => {
     currentUser: currentUser
   });
 };
-const EditFormFormikFinal = _ref5 => {
+const EditFormFormikFinal = _ref6 => {
   let {
     editor,
     parenHandleCancel,
@@ -5811,7 +5833,7 @@ const EditFormFormikFinal = _ref5 => {
     handleFormPageActions,
     theme,
     currentUser
-  } = _ref5;
+  } = _ref6;
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -5848,11 +5870,11 @@ const EditFormFormikFinal = _ref5 => {
     //     getFieldElementsYupValidations(editor, editorFlags)
     // )}
     ,
-    onSubmit: (submitedtElements, _ref6) => {
+    onSubmit: (submitedtElements, _ref7) => {
       let {
         setStatus,
         setSubmitting
-      } = _ref6;
+      } = _ref7;
       if (!canCommit) {
         setSubmitting(false);
       } else {
@@ -5913,13 +5935,13 @@ const EditFormFormikFinal = _ref5 => {
         });
       }
     }
-  }, _ref7 => {
+  }, _ref8 => {
     let {
       errors,
       status,
       touched,
       isSubmitting
-    } = _ref7;
+    } = _ref8;
     return /*#__PURE__*/React.createElement(formik.Form, {
       onKeyDown: submitHandler
     }, message && /*#__PURE__*/React.createElement("div", {
@@ -5942,7 +5964,7 @@ const EditFormFormikFinal = _ref5 => {
       type: "submit",
       className: BUTTON_PRIMARY_CLASS,
       disabled: isSubmitting
-    }, editorFlags.isCreate ? MSG_ACTION_CREATE : editorFlags.isDelete ? MSG_ACTION_DELETE : MSG_ACTION_UPDATE), isSubmitting && WaitAnimation()), /*#__PURE__*/React.createElement(GsButton, {
+    }, editorFlags.isCreate ? MSG_ACTION_CREATE : editorFlags.isDelete ? MSG_ACTION_DELETE : MSG_ACTION_UPDATE), isSubmitting && WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)), /*#__PURE__*/React.createElement(GsButton, {
       key: "CancelButton",
       variant: "secondary",
       disabled: isSubmitting,
@@ -6082,9 +6104,14 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
       responseObj = currentObj['force_value'];
     }
     switch (currentObj.type) {
-      // case 'component':
       case 'label':
       case 'hr':
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
         // Excluded types
         break;
       default:
@@ -7064,7 +7091,7 @@ var fieldElements$2 = [
 	{
 		name: "label1",
 		label: "PASWORD CHANGE",
-		type: "label"
+		type: "h2"
 	},
 	{
 		name: "passcode",
@@ -7309,7 +7336,7 @@ const GenericSinglePageEditorMain = props => {
     if (status) {
       return /*#__PURE__*/React.createElement(React.Fragment, null, status, "[GSPE-NES]");
     }
-    return WaitAnimation();
+    return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   if (status) {
     return /*#__PURE__*/React.createElement("div", {
@@ -7443,7 +7470,7 @@ var fieldElements$1 = [
 	{
 		name: "label1",
 		label: "PASWORD CHANGE",
-		type: "label"
+		type: "h2"
 	},
 	{
 		name: "passcode",

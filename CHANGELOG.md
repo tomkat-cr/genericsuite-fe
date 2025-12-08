@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add WAIT_ANIMATION_MARGIN_TOP_CLASS constant to add top margin to <WaitAnimation /> in the <App /> component [GS-246].
 - Add UPDATE_SNAPSHOTS envvar to "make publish" to run "npm test -- -u" instead of "npm run test".
 - Add "UPDATE_SNAPSHOTS=1 make publish" documentation on Makefile.
+- Add field types h1 to h6 to JSON files [GS-250].
 
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
