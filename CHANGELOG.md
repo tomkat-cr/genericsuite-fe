@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add UPDATE_SNAPSHOTS envvar to "make publish" to run "npm test -- -u" instead of "npm run test".
 - Add "UPDATE_SNAPSHOTS=1 make publish" documentation on Makefile.
 - Add field types h1 to h6 to JSON files [GS-250].
+- Add horizontal rule separator before child elements in generic editor form pages [GS-250].
 
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
@@ -31,6 +32,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Update getFetch() to check if the response is ok using the [200, 201, 202, 204] status codes [GS-245].
 - Style class constants renamed: PAGE_ANIMATION_CLASS to WAIT_ANIMATION_CLASS, SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS to WAIT_ANIMATION_ENABLED_CLASS, SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS to WAIT_ANIMATION_DISABLED_CLASS [GS-246].
 - Component <ShowHidePageAnimation /> renamed to <ShowHideWaitAnimation /> [GS-246].
+- Horizontal rule separator <hr /> is now dashed [GS-250].
 
 ### Fixed
 - Fix login button visible while menus are loading [GS-246].

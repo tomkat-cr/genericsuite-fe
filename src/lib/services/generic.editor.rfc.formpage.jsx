@@ -929,6 +929,7 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
                 key={'ChildElement_' + htmlElement[0]}
                 className={APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS}
             >
+                <hr />
                 <ChildElement
                     parentData={initialFieldValues}
                     handleFormPageActions={handleFormPageActions}

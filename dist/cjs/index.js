@@ -5989,7 +5989,7 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
     return /*#__PURE__*/React.createElement("div", {
       key: 'ChildElement_' + htmlElement[0],
       className: APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS
-    }, /*#__PURE__*/React.createElement(ChildElement, {
+    }, /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(ChildElement, {
       parentData: initialFieldValues,
       handleFormPageActions: handleFormPageActions
     }));

@@ -1061,6 +1061,11 @@
     line-height: var(--text-xs--line-height);
     font-weight: bold;
   }
+  hr {
+    border-color: var(--border-gray-100);
+    border-width: 1px;
+    border-style: dashed;
+  }
 }
 @property --tw-translate-x {
   syntax: "*";
