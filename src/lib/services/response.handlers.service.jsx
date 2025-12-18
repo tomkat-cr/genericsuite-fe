@@ -103,7 +103,8 @@ const get401ErrorMessage = (statusText, reasonDetail) => statusText?.includes('U
         'Could not verify [L2]',
         'Inconsistency [L4]'
     ].includes(reasonDetail) ||
-        (reasonDetail || '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED
+        String(reasonDetail ? reasonDetail : '').includes('inactive') ?
+        MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED
 ) : statusText;
 
 export async function handleFetchError(error) {
