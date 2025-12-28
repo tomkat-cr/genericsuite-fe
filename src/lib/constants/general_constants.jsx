@@ -42,7 +42,10 @@ export const ACTION_LIST = 'list';
 
 // Generic editor : messages
 
+export const MSG_ERROR_MISSING_SUB_TYPE_PARAM = 'Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType}';
 export const MSG_ERROR_MISSING_ARRAY_NAME_PARAM = 'Missing "array_name" parameter. It must be specified for subType "array".';
+export const MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM = 'Missing "endpointKeyNames" parameter. It must be specified for subType "{subType}".';
+export const MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM = 'Empty "endpointKeyNames" parameter. It must be specified for subType "{subType}".';
 export const MSG_ERROR_ID_NOT_FOUND = 'ID not found...';
 export const MSG_DELETE_CONFIRM = 'Are you sure to delete this element? Please confirm with the [Delete] button or [Cancel] this operation.';
 export const MSG_ACTION_CREATE = 'Create';

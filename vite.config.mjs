@@ -1,11 +1,11 @@
 /* vite.config.js | Vite */
 
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import vitePluginRequire from 'vite-plugin-require';
 import tailwindcss from "@tailwindcss/vite";
-import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
 import fs from 'node:fs';
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import vitePluginRequire from 'vite-plugin-require';
 // import history from 'connect-history-api-fallback';
 
 /*
@@ -61,6 +61,7 @@ export default defineConfig(({ mode }) => {
         REACT_APP_X_TOKEN: (process.env.REACT_APP_X_TOKEN || ''),
         REACT_APP_APP_NAME: (process.env.REACT_APP_APP_NAME || 'exampleapp'),
         REACT_APP_USE_AXIOS: (process.env.REACT_APP_USE_AXIOS || '1'),
+        REACT_APP_API_KEYS_PREFIX: (process.env.API_KEYS_PREFIX || 'sk-gsu-'),
     }
 
     console.log('Server config:', serverConfig);

@@ -1,53 +1,53 @@
 // GenericCrudEditor common functions
 
+import { formatCaughtError } from "../helpers/error-and-reenter.jsx";
+import { getUrlParams } from "../helpers/url-params.jsx";
+import { dbApiService } from "./db.service.jsx";
+import {
+    mandatoryFiltersDbListPreRead,
+    mandatoryFiltersDbPreRead,
+} from './generic.editor.rfc.specific.func.jsx';
 import {
     timestampDbListPostRead,
     timestampDbPostRead,
     timestampDbPreWrite,
 } from './generic.editor.rfc.timestamp.jsx';
-import {
-    mandatoryFiltersDbListPreRead,
-    mandatoryFiltersDbPreRead,
-} from './generic.editor.rfc.specific.func.jsx';
 import { console_debug_log } from './logging.service.jsx';
-import { getUrlParams } from "../helpers/url-params.jsx";
-import { formatCaughtError } from "../helpers/error-and-reenter.jsx";
-import { dbApiService } from "./db.service.jsx";
 
 import {
     ACTION_CREATE,
+    ACTION_DELETE,
     ACTION_READ,
     ACTION_UPDATE,
-    ACTION_DELETE,
+    MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM,
     MSG_ERROR_MISSING_ARRAY_NAME_PARAM,
+    MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM,
+    MSG_ERROR_MISSING_SUB_TYPE_PARAM,
 } from "../constants/general_constants.jsx";
 
 export const getEditorData = (props) => (
     props.editorConfig
 )
 
-const setParentData = (parentData, editor) => {
-    // There's a inconsistency, parentData isn't loaded yet
-    // So leave things asi is...
-    if (parentData === null) {
+const setEndpointFilter = (parentData, editor) => {
+    // Check inconsistencies: parentData isn't loaded yet or endpointKeyNames is not defined
+    if (parentData === null || !editor.endpointKeyNames) {
         return editor;
     }
-    if (parentData.length < editor.parentKeyNames.length) {
+    // Check inconsistencies: parentData length
+    if (parentData.length < editor.endpointKeyNames.length) {
         return editor;
     }
-    let newParentFilter = {};
-    editor.parentKeyNames.map(
-        (keyPair) =>
-        (
-            newParentFilter[keyPair.parameterName] =
-            parentData[keyPair.parentElementName]
-        )
-    );
-    // IMPORTANT: parentFilter and parentData
-    // This is for editor.type = 'child_listing' / editor.subType = 'array'
+    // Set endpointFilter to retrieve the parent table item
+    // containing the array of child items, or the child table items
+    editor.endpointFilter = {};
+    editor.endpointKeyNames.map((keyPair) => (
+        editor.endpointFilter[keyPair.parameterName] = parentData[keyPair.parentElementName]
+    ));
+    // IMPORTANT: endpointFilter and parentData
+    // This is for editor.type = 'child_listing' / editor.subType = 'array' or 'table'
     // The component call must have the parentData={parentData} attribute
     // and eventually handleFormPageActions={handleFormPageActions}
-    editor.parentFilter = newParentFilter;
     editor.parentData = parentData;
     return editor;
 };
@@ -88,11 +88,6 @@ export const getEditoObj = (props, editor_response) => {
     if (typeof editor.primaryKeyName == 'undefined') {
         editor.primaryKeyName = 'id';
     }
-    // Parent Key Names, for child listing
-    if (typeof editor.parentKeyNames == 'undefined') {
-        editor.parentKeyNames = [];
-    }
-
     // Specific functions - BEGIN
     //
     // dbListPreRead: Before read data from database in the listing.
@@ -159,7 +154,6 @@ export const getEditoObj = (props, editor_response) => {
     editor.dbPreWrite.push(
         timestampDbPreWrite, // this must be the lastone
     );
-
     //
     // Specific functions - END
 
@@ -171,20 +165,51 @@ export const getEditoObj = (props, editor_response) => {
     if (typeof editor.subType == 'undefined') {
         editor.subType = 'table'; // 'array' | 'table'
     }
-    // Array name for those 'array' type child listing. These elements are inside a real table.
-    if (typeof editor.array_name == 'undefined' &&
-        editor.subType === 'array') {
-        // No default value for the array name
-        // editor.array_name = editor.baseUrl
-        editor.error = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // 'Missing "array_name" parameter. It must be specified for subType "array".';
+    // Endpoint Key Names, for child listing
+    if (typeof editor.endpointKeyNames == 'undefined') {
+        if (typeof editor.parentKeyNames != 'undefined') {
+            editor.endpointKeyNames = editor.parentKeyNames;
+            console.error("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.")
+        } else {
+            editor.endpointKeyNames = [];
+        }
     }
-    // Filters for child components
-    editor = setParentData(
-        (typeof props.parentData !== 'undefined' ?
-            props.parentData : null
-        ),
-        editor
-    );
+
+    // Array name for the 'array' subType child listing. These elements are inside a real table.
+    let subTypeError = false;
+    if (editor.subType === 'array') {
+        if (typeof editor.array_name == 'undefined') {
+            subTypeError = true;
+            editor.error = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // Missing "array_name" parameter. It must be specified for subType "array".
+        } else if (typeof editor.endpointKeyNames == 'undefined') {
+            subTypeError = true;
+            // Missing "endpointKeyNames" parameter. It must be specified for subType "{subType}".
+            editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+        }
+    } else
+        // Child data for 'table' subType child listing. These elements are outside a real table.
+        if (editor.subType === 'table' && typeof editor.endpointKeyNames == 'undefined') {
+            subTypeError = true;
+            editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+        }
+    if (editor.type == 'child_listing' && !subTypeError) {
+        // Filters for child components
+        if (editor.subType === 'array') {
+            if (editor.endpointKeyNames.length == 0) {
+                // "endpointKeyNames" parameter is empty. It must be specified for subType "{subType}".
+                editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+            }
+        } else if (editor.subType === 'table') {
+            if (editor.endpointKeyNames.length == 0) {
+                editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+            }
+        } else {
+            editor.error = MSG_ERROR_MISSING_SUB_TYPE_PARAM.replace("{subType}", editor.subType); // Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType};
+        }
+        if (!editor.error && typeof props.parentData !== 'undefined') {
+            editor = setEndpointFilter(props.parentData, editor);
+        }
+    }
     // Populate Select type Fields Options
     editor.selectFieldsOptionsPromises = getSelectFieldsOptions(editor.fieldElements);
     // Get parameters passed in the URL
@@ -282,5 +307,4 @@ export const getSelectFieldsOptions = (fieldElements) => {
                 promiseResult: currentObj.dataPopulator()
             };
         });
-  };
-  
+};

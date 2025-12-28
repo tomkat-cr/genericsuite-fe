@@ -26,6 +26,10 @@ destroy_symlinks() {
     sh "${SCRIPTS_DIR}/run_symlinks_handler.sh" remove
 }
 
+rebuild_css() {
+    make tailwind-build
+}
+
 install_remove_requirements() {
     action="$1"
 
@@ -50,7 +54,7 @@ check_one_bundle() {
     bundle_installed="$1"
     bundle_name="$2"
     echo ""
-    echo "Checking ${bundle_name} installation..."
+    echo "Checking ${bundle_name} installation... (${bundle_installed})"
     if [ "${bundle_installed}" != "" ]; then
         echo ""
         echo "It's highly recommended to remove ${bundle_name}."
@@ -87,6 +91,7 @@ fi
 # and destroy symlinks (e.g. /public/static)
 turn_on_module
 destroy_symlinks
+rebuild_css
 
 export PACKAGE_NAME=$(perl -ne 'print $1 if /"name":\s*"([^"]*)"/' package.json)
 if [ "${PACKAGE_NAME}" = "" ]; then

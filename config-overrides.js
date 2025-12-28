@@ -6,6 +6,7 @@ const path = require('path');
 const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
 
 process.env.REACT_APP_API_VERSION = process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1';
+process.env.REACT_APP_API_KEYS_PREFIX = process.env.REACT_APP_API_KEYS_PREFIX || process.env.API_KEYS_PREFIX || 'sk-gsu-';
 
 /*
 https://github.com/timarney/react-app-rewired

@@ -7,10 +7,10 @@
   "type": "child_listing",
   "subType": "array",
   "array_name": "users_config",
-  "parentKeyNames": [
+  "parentUrl": "users",
+  "endpointKeyNames": [
     {
       "parameterName": "user_id",
-      "parentUrl": "users",
       "parentElementName": "id"
     }
   ],
@@ -36,12 +36,12 @@
       "listing": true
     },
     {
-        "name": "config_value",
-        "required": true,
-        "label": "Value",
-        "type": "text",
-        "readonly": false,
-        "listing": true
+      "name": "config_value",
+      "required": true,
+      "label": "Value",
+      "type": "text",
+      "readonly": false,
+      "listing": true
     }
   ]
 }

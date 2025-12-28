@@ -181,7 +181,7 @@ const GenericCrudEditorMain = (props) => {
         editor, 'dbListPreRead', accessKeysListing, formMode, currentUser
       ).then(
         funcResponse => {
-          accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
+          accessKeysListing = Object.assign({}, accessKeysListing, editor.endpointFilter, searchFilters, funcResponse.fieldValues);
           editor.db.getAll(accessKeysListing).then(
             data => {
               ShowHideWaitAnimation(false, animationElementId);

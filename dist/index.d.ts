@@ -504,10 +504,13 @@ declare var general_constants: Readonly<{
     MSG_ERROR_CLICK_TO_RELOGIN: "Login again";
     MSG_ERROR_CLICK_TO_RETRY: "Retry";
     MSG_ERROR_CONNECTION_FAIL: "Connection failure";
+    MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM: "Empty \"endpointKeyNames\" parameter. It must be specified for subType \"{subType}\".";
     MSG_ERROR_ID_NOT_FOUND: "ID not found...";
     MSG_ERROR_INVALID_CREDS: "Invalid credentials. Please try again.";
     MSG_ERROR_INVALID_TOKEN: string[];
     MSG_ERROR_MISSING_ARRAY_NAME_PARAM: "Missing \"array_name\" parameter. It must be specified for subType \"array\".";
+    MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM: "Missing \"endpointKeyNames\" parameter. It must be specified for subType \"{subType}\".";
+    MSG_ERROR_MISSING_SUB_TYPE_PARAM: "Incorrect \"subType\" parameter. It must be \"array\" or \"table\" for \"child_listing\" type. Current value: {editor.subType}";
     MSG_ERROR_POSSIBLE_CORS: "Possible CORS";
     MSG_ERROR_SESSION_EXPIRED: "Session expired.";
     MSG_IS_REQUIRED: "is required";

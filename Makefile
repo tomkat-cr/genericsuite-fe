@@ -84,6 +84,9 @@ run_prod: build-prod
 tailwind:
 	npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css --watch
 
+tailwind-build:
+	npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css
+
 add_submodules:
 	sh node_modules/genericsuite/scripts/add_github_submodules.sh
 

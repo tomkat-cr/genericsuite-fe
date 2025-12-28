@@ -117,7 +117,7 @@ export const FormPage = ({
             accessKeysDataScreen[editor.primaryKeyName] = id;
             processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(
                 funcResponse => {
-                    accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.parentFilter);
+                    accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.endpointFilter);
                     editor.db.getOne(accessKeysDataScreen)
                         .then(
                             data => {
@@ -949,26 +949,32 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
         delete initialValues["resultset"];
     }
     if (editor.type === "child_listing") {
-        // Build the format for child table
-        // Example:
-        // {
-        //     "user_id": "{{TEST_USER_ID}}",
-        //     "food_times": {
-        //         "food_moment_id": "test_food_moment_id_2",
-        //         "food_time": "10:00"
-        //     },
-        //     "food_times_old": {
-        //         "food_moment_id": "test_food_moment_id_1"
-        //     }
-        // }
-        rowId = null;
-        rowToSave = editor.parentKeyNames.reduce((acc, keyPair) => {
+        // Add the parent id to the child object
+        rowToSave = editor.endpointKeyNames.reduce((acc, keyPair) => {
             acc[keyPair.parameterName] = // parent table 'id' field name
                 editor.parentData[keyPair.parentElementName]; // parent table 'id' value
             return { ...acc };
         }, {});
-        rowToSave[editor.array_name] = submitedtElements; // array object in the parent row with new values
-        rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
+        if (editor.subType === "array") {
+            // Build the format for child array
+            // Example:
+            // {
+            //     "user_id": "{{TEST_USER_ID}}",
+            //     "food_times": {
+            //         "food_moment_id": "test_food_moment_id_2",
+            //         "food_time": "10:00"
+            //     },
+            //     "food_times_old": {
+            //         "food_moment_id": "test_food_moment_id_1"
+            //     }
+            // }
+            rowId = null;
+            rowToSave[editor.array_name] = submitedtElements; // array object in the parent row with new values
+            rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
+        } else {
+            // Build the format for child external table, merging the parent id to the child object
+            rowToSave = { ...submitedtElements, ...rowToSave };
+        }
     }
     // Save the row to Database
     const dbService = new dbApiService({ url: editor.dbApiUrl });

@@ -10,13 +10,15 @@ import {
 import { console_debug_log } from '../../services/logging.service.jsx';
 
 import {
-    TRUE_FALSE,
     ACTION_CREATE,
+    TRUE_FALSE,
 } from '../../constants/general_constants.jsx';
 
 import users_api_keys from "../../../configs/frontend/users_api_keys.json";
 
 const debug = false;
+
+const REACT_APP_API_KEYS_PREFIX = process.env.REACT_APP_API_KEYS_PREFIX || "sk-gsu-";
 
 export function UsersApiKey_EditorData() {
     // console_debug_log("UsersApiKey_EditorData");
@@ -35,7 +37,7 @@ export function UsersApiKey() {
     };
 }
 
-export const UsersApiKeyComponent = ({parentData}) => (
+export const UsersApiKeyComponent = ({ parentData }) => (
     <GenericCrudEditor
         editorConfig={UsersApiKey_EditorData()}
         parentData={parentData}
@@ -55,10 +57,11 @@ export const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
     // Users api keys pre-form data load default values (dbPreRead)
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
-        switch(action) {
+        switch (action) {
             case ACTION_CREATE:
-                const access_token = generateAccessToken();
-                if (debug) console_debug_log(`>>> UsersApiKeyGenerate | access_token:`, access_token);
+                const access_token_waw = generateAccessToken();
+                const access_token = `${REACT_APP_API_KEYS_PREFIX}${access_token_waw}`;
+                if (debug) console_debug_log('>>> UsersApiKeyGenerate | access_token:', access_token, 'access_token_waw:', access_token_waw);
                 resp.fieldValues = Object.assign({}, data, {
                     'resultset': {
                         'access_token': access_token

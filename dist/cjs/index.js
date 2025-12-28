@@ -2628,7 +2628,10 @@ const ACTION_LIST = 'list';
 
 // Generic editor : messages
 
+const MSG_ERROR_MISSING_SUB_TYPE_PARAM = 'Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType}';
 const MSG_ERROR_MISSING_ARRAY_NAME_PARAM = 'Missing "array_name" parameter. It must be specified for subType "array".';
+const MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM = 'Missing "endpointKeyNames" parameter. It must be specified for subType "{subType}".';
+const MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM = 'Empty "endpointKeyNames" parameter. It must be specified for subType "{subType}".';
 const MSG_ERROR_ID_NOT_FOUND = 'ID not found...';
 const MSG_DELETE_CONFIRM = 'Are you sure to delete this element? Please confirm with the [Delete] button or [Cancel] this operation.';
 const MSG_ACTION_CREATE = 'Create';
@@ -2697,10 +2700,13 @@ var general_constants = /*#__PURE__*/Object.freeze({
   MSG_ERROR_CLICK_TO_RELOGIN: MSG_ERROR_CLICK_TO_RELOGIN,
   MSG_ERROR_CLICK_TO_RETRY: MSG_ERROR_CLICK_TO_RETRY,
   MSG_ERROR_CONNECTION_FAIL: MSG_ERROR_CONNECTION_FAIL,
+  MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM: MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM,
   MSG_ERROR_ID_NOT_FOUND: MSG_ERROR_ID_NOT_FOUND,
   MSG_ERROR_INVALID_CREDS: MSG_ERROR_INVALID_CREDS,
   MSG_ERROR_INVALID_TOKEN: MSG_ERROR_INVALID_TOKEN,
   MSG_ERROR_MISSING_ARRAY_NAME_PARAM: MSG_ERROR_MISSING_ARRAY_NAME_PARAM,
+  MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM: MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM,
+  MSG_ERROR_MISSING_SUB_TYPE_PARAM: MSG_ERROR_MISSING_SUB_TYPE_PARAM,
   MSG_ERROR_POSSIBLE_CORS: MSG_ERROR_POSSIBLE_CORS,
   MSG_ERROR_SESSION_EXPIRED: MSG_ERROR_SESSION_EXPIRED,
   MSG_IS_REQUIRED: MSG_IS_REQUIRED,
@@ -4485,84 +4491,6 @@ var wait_animation_utility = /*#__PURE__*/Object.freeze({
   WaitAnimation: WaitAnimation
 });
 
-const GMT_TAIL = '.000Z'; // '.000-0000'
-const DATE_TIME_TAIL = "T00:00:00".concat(GMT_TAIL);
-const timestampToDate = function (timestamp) {
-  let fullDateTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  let separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  let militaryTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  const timestampUnixEpoch = timestamp * 1000;
-  const date = new Date(timestampUnixEpoch);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  // const formattedTime = hours % 12 + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
-  const formattedTime = (hours > 12 ? hours - 12 : hours) + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
-  if (fullDateTime) {
-    if (separator) {
-      if (!militaryTime) {
-        return date.toISOString().split("T")[0] + separator + formattedTime;
-      }
-      return date.toISOString().split("T").join(separator).slice(0, 19);
-    }
-    if (!militaryTime) {
-      return date.toISOString().split("T")[0] + 'T' + formattedTime;
-    }
-    return date.toISOString();
-  }
-  return date.toISOString().split("T")[0];
-};
-const addMissingTz = stringDate => stringDate + (stringDate.indexOf('.') > 0 ? '' : GMT_TAIL);
-const dateToTimestap = stringDate => new Date(addMissingTz(stringDate)).valueOf() / 1000;
-const nowToTimestap = () => new Date().valueOf() / 1000;
-const fixDateWithTz = dateTimeString => {
-  switch (dateTimeString.length) {
-    case 10:
-      dateTimeString += DATE_TIME_TAIL;
-      break;
-    case 16:
-      dateTimeString += ":00".concat(GMT_TAIL);
-      break;
-    default:
-      dateTimeString = addMissingTz(dateTimeString);
-  }
-  return dateTimeString;
-};
-const processTimestampToDate = (timestampMixed, fullDatetime, separator) => {
-  if (!timestampMixed) {
-    timestampMixed = 0; // nowToTimestap();
-  }
-  if (typeof timestampMixed === 'string') {
-    timestampMixed = fixDateWithTz(timestampMixed);
-    timestampMixed = dateToTimestap(timestampMixed);
-  }
-  return timestampToDate(timestampMixed, fullDatetime, separator);
-};
-const processDateToTimestamp = dateTime => {
-  dateTime = fixDateWithTz(dateTime);
-  return dateToTimestap(dateTime);
-};
-const addZeroTimeToDate = dateValue => {
-  const date = new Date(dateValue);
-  date.setHours(0);
-  date.setMinutes(0);
-  date.setSeconds(0);
-  date.setMilliseconds(0);
-  return date.toISOString().slice(0, 19).replace('T', ' ');
-};
-
-var dateTimestamp = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  addMissingTz: addMissingTz,
-  addZeroTimeToDate: addZeroTimeToDate,
-  dateToTimestap: dateToTimestap,
-  fixDateWithTz: fixDateWithTz,
-  nowToTimestap: nowToTimestap,
-  processDateToTimestamp: processDateToTimestamp,
-  processTimestampToDate: processTimestampToDate,
-  timestampToDate: timestampToDate
-});
-
 const genericFuncArrayDefaultValue = function () {
   let data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   return {
@@ -4693,6 +4621,84 @@ var generic_editor_rfc_specific_func = /*#__PURE__*/Object.freeze({
   processGenericFuncArray: processGenericFuncArray
 });
 
+const GMT_TAIL = '.000Z'; // '.000-0000'
+const DATE_TIME_TAIL = "T00:00:00".concat(GMT_TAIL);
+const timestampToDate = function (timestamp) {
+  let fullDateTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  let separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  let militaryTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+  const timestampUnixEpoch = timestamp * 1000;
+  const date = new Date(timestampUnixEpoch);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  // const formattedTime = hours % 12 + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
+  const formattedTime = (hours > 12 ? hours - 12 : hours) + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
+  if (fullDateTime) {
+    if (separator) {
+      if (!militaryTime) {
+        return date.toISOString().split("T")[0] + separator + formattedTime;
+      }
+      return date.toISOString().split("T").join(separator).slice(0, 19);
+    }
+    if (!militaryTime) {
+      return date.toISOString().split("T")[0] + 'T' + formattedTime;
+    }
+    return date.toISOString();
+  }
+  return date.toISOString().split("T")[0];
+};
+const addMissingTz = stringDate => stringDate + (stringDate.indexOf('.') > 0 ? '' : GMT_TAIL);
+const dateToTimestap = stringDate => new Date(addMissingTz(stringDate)).valueOf() / 1000;
+const nowToTimestap = () => new Date().valueOf() / 1000;
+const fixDateWithTz = dateTimeString => {
+  switch (dateTimeString.length) {
+    case 10:
+      dateTimeString += DATE_TIME_TAIL;
+      break;
+    case 16:
+      dateTimeString += ":00".concat(GMT_TAIL);
+      break;
+    default:
+      dateTimeString = addMissingTz(dateTimeString);
+  }
+  return dateTimeString;
+};
+const processTimestampToDate = (timestampMixed, fullDatetime, separator) => {
+  if (!timestampMixed) {
+    timestampMixed = 0; // nowToTimestap();
+  }
+  if (typeof timestampMixed === 'string') {
+    timestampMixed = fixDateWithTz(timestampMixed);
+    timestampMixed = dateToTimestap(timestampMixed);
+  }
+  return timestampToDate(timestampMixed, fullDatetime, separator);
+};
+const processDateToTimestamp = dateTime => {
+  dateTime = fixDateWithTz(dateTime);
+  return dateToTimestap(dateTime);
+};
+const addZeroTimeToDate = dateValue => {
+  const date = new Date(dateValue);
+  date.setHours(0);
+  date.setMinutes(0);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+  return date.toISOString().slice(0, 19).replace('T', ' ');
+};
+
+var dateTimestamp = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  addMissingTz: addMissingTz,
+  addZeroTimeToDate: addZeroTimeToDate,
+  dateToTimestap: dateToTimestap,
+  fixDateWithTz: fixDateWithTz,
+  nowToTimestap: nowToTimestap,
+  processDateToTimestamp: processDateToTimestamp,
+  processTimestampToDate: processTimestampToDate,
+  timestampToDate: timestampToDate
+});
+
 const timestampDbListPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during Listing Database Post Read
   return new Promise((resolve, reject) => {
@@ -4766,22 +4772,23 @@ var generic_editor_rfc_timestamp = /*#__PURE__*/Object.freeze({
 // GenericCrudEditor common functions
 
 const getEditorData = props => props.editorConfig;
-const setParentData = (parentData, editor) => {
-  // There's a inconsistency, parentData isn't loaded yet
-  // So leave things asi is...
-  if (parentData === null) {
+const setEndpointFilter = (parentData, editor) => {
+  // Check inconsistencies: parentData isn't loaded yet or endpointKeyNames is not defined
+  if (parentData === null || !editor.endpointKeyNames) {
     return editor;
   }
-  if (parentData.length < editor.parentKeyNames.length) {
+  // Check inconsistencies: parentData length
+  if (parentData.length < editor.endpointKeyNames.length) {
     return editor;
   }
-  let newParentFilter = {};
-  editor.parentKeyNames.map(keyPair => newParentFilter[keyPair.parameterName] = parentData[keyPair.parentElementName]);
-  // IMPORTANT: parentFilter and parentData
-  // This is for editor.type = 'child_listing' / editor.subType = 'array'
+  // Set endpointFilter to retrieve the parent table item
+  // containing the array of child items, or the child table items
+  editor.endpointFilter = {};
+  editor.endpointKeyNames.map(keyPair => editor.endpointFilter[keyPair.parameterName] = parentData[keyPair.parentElementName]);
+  // IMPORTANT: endpointFilter and parentData
+  // This is for editor.type = 'child_listing' / editor.subType = 'array' or 'table'
   // The component call must have the parentData={parentData} attribute
   // and eventually handleFormPageActions={handleFormPageActions}
-  editor.parentFilter = newParentFilter;
   editor.parentData = parentData;
   return editor;
 };
@@ -4822,11 +4829,6 @@ const getEditoObj = (props, editor_response) => {
   if (typeof editor.primaryKeyName == 'undefined') {
     editor.primaryKeyName = 'id';
   }
-  // Parent Key Names, for child listing
-  if (typeof editor.parentKeyNames == 'undefined') {
-    editor.parentKeyNames = [];
-  }
-
   // Specific functions - BEGIN
   //
   // dbListPreRead: Before read data from database in the listing.
@@ -4886,7 +4888,6 @@ const getEditoObj = (props, editor_response) => {
   );
   editor.dbPreWrite.push(timestampDbPreWrite // this must be the lastone
   );
-
   //
   // Specific functions - END
 
@@ -4898,14 +4899,51 @@ const getEditoObj = (props, editor_response) => {
   if (typeof editor.subType == 'undefined') {
     editor.subType = 'table'; // 'array' | 'table'
   }
-  // Array name for those 'array' type child listing. These elements are inside a real table.
-  if (typeof editor.array_name == 'undefined' && editor.subType === 'array') {
-    // No default value for the array name
-    // editor.array_name = editor.baseUrl
-    editor.error = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // 'Missing "array_name" parameter. It must be specified for subType "array".';
+  // Endpoint Key Names, for child listing
+  if (typeof editor.endpointKeyNames == 'undefined') {
+    if (typeof editor.parentKeyNames != 'undefined') {
+      editor.endpointKeyNames = editor.parentKeyNames;
+      console.error("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.");
+    } else {
+      editor.endpointKeyNames = [];
+    }
   }
-  // Filters for child components
-  editor = setParentData(typeof props.parentData !== 'undefined' ? props.parentData : null, editor);
+
+  // Array name for the 'array' subType child listing. These elements are inside a real table.
+  let subTypeError = false;
+  if (editor.subType === 'array') {
+    if (typeof editor.array_name == 'undefined') {
+      subTypeError = true;
+      editor.error = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // Missing "array_name" parameter. It must be specified for subType "array".
+    } else if (typeof editor.endpointKeyNames == 'undefined') {
+      subTypeError = true;
+      // Missing "endpointKeyNames" parameter. It must be specified for subType "{subType}".
+      editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+    }
+  } else
+    // Child data for 'table' subType child listing. These elements are outside a real table.
+    if (editor.subType === 'table' && typeof editor.endpointKeyNames == 'undefined') {
+      subTypeError = true;
+      editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+    }
+  if (editor.type == 'child_listing' && !subTypeError) {
+    // Filters for child components
+    if (editor.subType === 'array') {
+      if (editor.endpointKeyNames.length == 0) {
+        // "endpointKeyNames" parameter is empty. It must be specified for subType "{subType}".
+        editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+      }
+    } else if (editor.subType === 'table') {
+      if (editor.endpointKeyNames.length == 0) {
+        editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+      }
+    } else {
+      editor.error = MSG_ERROR_MISSING_SUB_TYPE_PARAM.replace("{subType}", editor.subType); // Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType};
+    }
+    if (!editor.error && typeof props.parentData !== 'undefined') {
+      editor = setEndpointFilter(props.parentData, editor);
+    }
+  }
   // Populate Select type Fields Options
   editor.selectFieldsOptionsPromises = getSelectFieldsOptions(editor.fieldElements);
   // Get parameters passed in the URL
@@ -5453,7 +5491,7 @@ const FormPage = _ref => {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
       processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
-        accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.parentFilter);
+        accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.endpointFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
           processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => {
@@ -6004,27 +6042,33 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
     delete initialValues["resultset"];
   }
   if (editor.type === "child_listing") {
-    // Build the format for child table
-    // Example:
-    // {
-    //     "user_id": "{{TEST_USER_ID}}",
-    //     "food_times": {
-    //         "food_moment_id": "test_food_moment_id_2",
-    //         "food_time": "10:00"
-    //     },
-    //     "food_times_old": {
-    //         "food_moment_id": "test_food_moment_id_1"
-    //     }
-    // }
-    rowId = null;
-    rowToSave = editor.parentKeyNames.reduce((acc, keyPair) => {
+    // Add the parent id to the child object
+    rowToSave = editor.endpointKeyNames.reduce((acc, keyPair) => {
       acc[keyPair.parameterName] =
       // parent table 'id' field name
       editor.parentData[keyPair.parentElementName]; // parent table 'id' value
       return _objectSpread2({}, acc);
     }, {});
-    rowToSave[editor.array_name] = submitedtElements; // array object in the parent row with new values
-    rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
+    if (editor.subType === "array") {
+      // Build the format for child array
+      // Example:
+      // {
+      //     "user_id": "{{TEST_USER_ID}}",
+      //     "food_times": {
+      //         "food_moment_id": "test_food_moment_id_2",
+      //         "food_time": "10:00"
+      //     },
+      //     "food_times_old": {
+      //         "food_moment_id": "test_food_moment_id_1"
+      //     }
+      // }
+      rowId = null;
+      rowToSave[editor.array_name] = submitedtElements; // array object in the parent row with new values
+      rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
+    } else {
+      // Build the format for child external table, merging the parent id to the child object
+      rowToSave = _objectSpread2(_objectSpread2({}, submitedtElements), rowToSave);
+    }
   }
   // Save the row to Database
   const dbService = new dbApiService({
@@ -6314,7 +6358,7 @@ const GenericCrudEditorMain = props => {
       };
       // dbListPreRead: To set a Listing filters, assign funcResponse.fieldValues[db_field]=filter_value
       processGenericFuncArray(editor, 'dbListPreRead', accessKeysListing, formMode, currentUser).then(funcResponse => {
-        accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
+        accessKeysListing = Object.assign({}, accessKeysListing, editor.endpointFilter, searchFilters, funcResponse.fieldValues);
         editor.db.getAll(accessKeysListing).then(data => {
           ShowHideWaitAnimation(false, animationElementId);
           // dbListPostRead: To fix Listing fields
@@ -6767,11 +6811,11 @@ var dbApiUrl$4 = "users_config";
 var component$4 = "UsersConfig";
 var type$1 = "child_listing";
 var subType$1 = "array";
-var array_name$1 = "users_config";
-var parentKeyNames$1 = [
+var array_name = "users_config";
+var parentUrl = "users";
+var endpointKeyNames$1 = [
 	{
 		parameterName: "user_id",
-		parentUrl: "users",
 		parentElementName: "id"
 	}
 ];
@@ -6813,8 +6857,9 @@ var users_config = {
 	component: component$4,
 	type: type$1,
 	subType: subType$1,
-	array_name: array_name$1,
-	parentKeyNames: parentKeyNames$1,
+	array_name: array_name,
+	parentUrl: parentUrl,
+	endpointKeyNames: endpointKeyNames$1,
 	primaryKeyName: primaryKeyName$1,
 	defaultOrder: defaultOrder$2,
 	fieldElements: fieldElements$4
@@ -6850,12 +6895,10 @@ var name$3 = "User's API Key";
 var dbApiUrl$3 = "users_api_keys";
 var component$3 = "UsersApiKey";
 var type = "child_listing";
-var subType = "array";
-var array_name = "users_api_keys";
-var parentKeyNames = [
+var subType = "table";
+var endpointKeyNames = [
 	{
 		parameterName: "user_id",
-		parentUrl: "users",
 		parentElementName: "id"
 	}
 ];
@@ -6902,14 +6945,14 @@ var users_api_keys = {
 	component: component$3,
 	type: type,
 	subType: subType,
-	array_name: array_name,
-	parentKeyNames: parentKeyNames,
+	endpointKeyNames: endpointKeyNames,
 	primaryKeyName: primaryKeyName,
 	defaultOrder: defaultOrder$1,
 	fieldElements: fieldElements$3,
 	dbPreRead: dbPreRead
 };
 
+const REACT_APP_API_KEYS_PREFIX = process.env.REACT_APP_API_KEYS_PREFIX || "sk-gsu-";
 function UsersApiKey_EditorData() {
   // console_debug_log("UsersApiKey_EditorData");
   const registry = {
@@ -6949,7 +6992,8 @@ const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
     let resp = genericFuncArrayDefaultValue(data);
     switch (action) {
       case ACTION_CREATE:
-        const access_token = generateAccessToken();
+        const access_token_waw = generateAccessToken();
+        const access_token = "".concat(REACT_APP_API_KEYS_PREFIX).concat(access_token_waw);
         resp.fieldValues = Object.assign({}, data, {
           'resultset': {
             'access_token': access_token

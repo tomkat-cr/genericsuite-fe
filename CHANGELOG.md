@@ -18,21 +18,28 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## [Unreleased]
 
 ### Added
-- Add API_VERSION envvar to set the API version, default to "v1" [GS-245].
-- Add WAIT_ANIMATION_MARGIN_TOP_CLASS constant to add top margin to <WaitAnimation /> in the <App /> component [GS-246].
-- Add UPDATE_SNAPSHOTS envvar to "make publish" to run "npm test -- -u" instead of "npm run test".
-- Add "UPDATE_SNAPSHOTS=1 make publish" documentation on Makefile.
-- Add field types h1 to h6 to JSON files [GS-250].
-- Add horizontal rule separator before child elements in generic editor form pages [GS-250].
+- API_VERSION envvar to set the API version, default to "v1" [GS-245].
+- Generic editor form page child listings now accepts external tables with the subType "table" [GS-159].
+- Horizontal rule separator before child elements in generic editor form pages [GS-250].
+- API_KEYS_PREFIX envvar to set the API keys prefix, default to "sk-gsu-" [GS-159].
+- WAIT_ANIMATION_MARGIN_TOP_CLASS constant to add top margin to <WaitAnimation /> in the <App /> component [GS-246].
+- UPDATE_SNAPSHOTS envvar to "make publish" to run "npm test -- -u" instead of "npm run test".
+- "UPDATE_SNAPSHOTS=1 make publish" documentation on Makefile.
+- Field types h1 to h6 to JSON files [GS-250].
+- "make tailwind-build" to rebuild the Tailwind CSS files (without stay watching for changes) [GS-63].
+- "make tailwind-build" added to the publish bash script [GS-63].
 
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
 - Enhance error message in the login page [GS-246].
 - Update class_name_constants.jsx to make buttons more rounded and remove unused comments [GS-246].
 - Update getFetch() to check if the response is ok using the [200, 201, 202, 204] status codes [GS-245].
-- Style class constants renamed: PAGE_ANIMATION_CLASS to WAIT_ANIMATION_CLASS, SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS to WAIT_ANIMATION_ENABLED_CLASS, SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS to WAIT_ANIMATION_DISABLED_CLASS [GS-246].
-- Component <ShowHidePageAnimation /> renamed to <ShowHideWaitAnimation /> [GS-246].
+- Rename style class constants: PAGE_ANIMATION_CLASS to WAIT_ANIMATION_CLASS, SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS to WAIT_ANIMATION_ENABLED_CLASS, SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS to WAIT_ANIMATION_DISABLED_CLASS [GS-246].
+- Rename component <ShowHidePageAnimation /> to <ShowHideWaitAnimation /> [GS-246].
 - Horizontal rule separator <hr /> is now dashed [GS-250].
+- API keys now are in a separate table "users_api_keys", not an array of the "users" table [GS-159].
+- Rename "parentKeyNames" to "endpointKeyNames" in JSON config files [GS-159].
+- Move "parentUrl" attribute from "endpointKeyNames" to the root of the JSON config files [GS-159].
 
 ### Fixed
 - Fix login button visible while menus are loading [GS-246].
@@ -260,7 +267,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "add_github_submodules.sh" to do "git submodule init", "git submodule sync" and "git pull --tags origin main" instead of "git checkout origin/main" to effectively pull the JSON configs from the git repository when the directory specified in "GIT_SUBMODULE_LOCAL_PATH" already exists and "git submodule add" was already run.
 
 ### Changed
-- The REACT_APP_API_URL_DEV, REACT_APP_API_URL_QA, REACT_APP_API_URL_STAGING, REACT_APP_API_URL_PROD, and REACT_APP_API_URL_DEMO variable names in the .env file were renamed to APP_API_URL_DEV, APP_API_URL_QA, APP_API_URL_STAGING, APP_API_URL_PROD, and APP_API_URL_DEMO.
+- Rename The REACT_APP_API_URL_DEV, REACT_APP_API_URL_QA, REACT_APP_API_URL_STAGING, REACT_APP_API_URL_PROD, and REACT_APP_API_URL_DEMO variable names in the .env file to APP_API_URL_DEV, APP_API_URL_QA, APP_API_URL_STAGING, APP_API_URL_PROD, and APP_API_URL_DEMO.
 - The GITHUB_USERNAME and GITHUB_REPONAME variables are not longer required because "aws_deploy_to_s3.sh" just saves the existing value of "homepage" in package.json. Those 2 variables were removed from the .env file.
 - "aws_deploy_to_s3.sh" take into account the APP_FE_URL domain in the CloudFront distribution creation.
 - "make publish" report the package name and version in the publishing confirmation.
@@ -385,7 +392,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add GenericSuite logo to index.tsx to customize Login.
 
 ### Changed
-- "appLogoPar" parameter renamed to "appLogo" in the LoginPage component.
+- Rename "appLogoPar" parameter to "appLogo" in the LoginPage component.
 - "appLogo" parameter added to App.jsx, HomePage.jsx and generic.menu.service.jsx.
 - REACT_APP_GENERIC_SUITE_AI_PATH removed from env.example, webpack.config.js and generic.editor.rfc.ai.button.jsx, and replaced by REACT_APP_GENERIC_SUITE_AI.
 - "console.error" replaced by "console_debug_log" in db.service.jsx and generic.editor.rfc.ai.button.jsx to avoid test errors.
@@ -393,9 +400,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - All dependencies moved to devDependencies and peerDependencies to effectively build the library in npmjs.
 - Module in "tsconfig.json" changed to "ESNext"
 - "/index.d.ts" removed.
-- "src/lib/index.js" renamed to "src/lib/index.cjs"
-- "babel.config.json" renamed to "babel.config.cjs".
-- "rollup.config.js" renamed to "rollup.config.mjs"
+- Rename "src/lib/index.js" to "src/lib/index.cjs"
+- Rename "babel.config.json" to "babel.config.cjs".
+- Rename "rollup.config.js" to "rollup.config.mjs"
 
 ### Fixed
 - Fix the "RollupError: Could not resolve entry module "dist/esm/index.js"." error changing the following values in "package.json":
@@ -490,7 +497,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add SuggestionDropdown component (and autocomplete) as a field type in GCE_RFC [FA-120].
 - Add `suggestion_dropdown` as type in name field (user_ingredients json definitions) [FA-120].
 - Add Enable ACLs for the bucket in AWS deploy to S3 [FA-97].
-- Add `parentUrl` attribute to child_listing/array in json definitions [FA-115].
+- Add `parentUrl` attribute to child_listing/array in json definitions to be used on certain specific functions (because the parent table name is defined in the backend JSON file "table_name" attribute and frontend does not have access to it) [FA-115].
 - Add dishes and dish ingredients in json definitions [FA-135].
 
 
