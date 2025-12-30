@@ -223,6 +223,8 @@ export const getEditoObj = (props, editor_response) => {
     return editor;
 }
 
+const verifyEditorCache = {};
+
 const verifyEditorObj = (editorObj) => {
     const debug = false;
     let gfd_response = { "error": false, "error_message": "", "response": null };
@@ -230,22 +232,32 @@ const verifyEditorObj = (editorObj) => {
         gfd_response.errorMsg = "GetFormData: editorObj is null [GCE-GFD-012]";
         return Promise.resolve(gfd_response);
     }
-    if (typeof editorObj["calleeName"] === 'undefined' || editorObj["calleeName"] === null) {
+    const calleeName = editorObj["calleeName"];
+    if (typeof calleeName === 'undefined' || calleeName === null) {
         gfd_response.error = true;
         gfd_response.errorMsg = "GetFormData: calleeName is not defined [GCE-GFD-010]";
         return Promise.resolve(gfd_response);
     }
-    if (editorObj["calleeName"] === false) {
+    if (calleeName === false) {
         if (debug) {
             console_debug_log(`calleeName == FALSEEEEEEE`)
         }
         gfd_response.response = editorObj;
         return Promise.resolve(gfd_response);
     }
+
+    if (verifyEditorCache[calleeName]) {
+        if (debug) {
+            console_debug_log(`verifyEditorObj | CACHE HIT for ${calleeName}`);
+        }
+        return verifyEditorCache[calleeName];
+    }
+
     const endpoint = "menu_options/element";
     const db = new dbApiService({ url: endpoint });
-    const json_body = { "element": editorObj["calleeName"] };
-    return db.getAll([], json_body, 'POST').then(
+    const json_body = { "element": calleeName };
+
+    const verifyPromise = db.getAll([], json_body, 'POST').then(
         data => {
             // All clear, go ahead
             if (debug) {
@@ -264,9 +276,14 @@ const verifyEditorObj = (editorObj) => {
             }
             gfd_response.error = true;
             gfd_response.errorMsg = `GetFormData: ${error.message} [GCE-GFD-020]`;
+            // Clear cache on error so it can be retried? 
+            // Better to keep it cached to prevent flood, but maybe remove if we want retry.
+            // For now, let's keep the error response cached.
             return gfd_response;
         }
     );
+    verifyEditorCache[calleeName] = verifyPromise;
+    return verifyPromise;
 }
 
 export const setEditorParameters = (props) => {

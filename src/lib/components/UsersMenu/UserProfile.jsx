@@ -1,33 +1,35 @@
 import React from 'react';
 
+import { useUser } from '../../helpers/UserContext.jsx';
 import {
     GetFormData,
 } from '../../services/generic.editor.rfc.service.jsx';
 import { GenericSinglePageEditor } from '../../services/generic.editor.singlepage.jsx';
-import { useUser } from '../../helpers/UserContext.jsx';
 
 import {
     BILLING_PLANS,
 } from '../../constants/app_constants.jsx';
 import {
-    TRUE_FALSE,
-    LANGUAGES,
     GENDERS,
+    LANGUAGES,
+    TRUE_FALSE,
 } from '../../constants/general_constants.jsx';
 
-import { UsersConfig } from './UsersConfig.jsx';
 import {
     UsersDbListPreRead,
     UsersDbPreWrite,
-    UsersValidations,
     UsersPasswordValidations,
+    UsersValidations,
 } from '../SuperAdminOptions/Users.jsx';
+
+import { UsersApiKey } from '../UsersMenu/UsersApiKey.jsx';
+import { UsersConfig } from './UsersConfig.jsx';
 
 import users_profile from "../../../configs/frontend/users_profile.json";
 
 export function UsersProfile_EditorData() {
     const registry = {
-        "LANGUAGES": LANGUAGES, 
+        "LANGUAGES": LANGUAGES,
         "TRUE_FALSE": TRUE_FALSE,
         "BILLING_PLANS": BILLING_PLANS,
         "GENDERS": GENDERS,
@@ -37,6 +39,7 @@ export function UsersProfile_EditorData() {
         "UsersDbPreWrite": UsersDbPreWrite,
         "UsersValidations": UsersValidations,
         "UsersPasswordValidations": UsersPasswordValidations,
+        "UsersApiKey": UsersApiKey,
     }
     // return GetFormData('users_profile', registry, 'UserProfileEditor');
     return GetFormData(users_profile, registry, 'UserProfileEditor');

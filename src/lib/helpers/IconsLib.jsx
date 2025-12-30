@@ -2,10 +2,10 @@
 import React from 'react';
 
 import {
-    ROUNDED_ICON_CLASS,
     ML2_ICON_CLASS,
-    VERTICAL_SLIDER_ICON_CLASS,
+    ROUNDED_ICON_CLASS,
     STROKE_WHITE_ICON_CLASS,
+    VERTICAL_SLIDER_ICON_CLASS,
 } from '../constants/class_name_constants.jsx';
 
 const debug = false;
@@ -22,33 +22,33 @@ export const GsIcons = ({
     additionalIconsFn = null,
 }) => {
 
-/*
-Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
-expected one of ["2xs","xs","sm","lg","xl","2xl","1x","2x","3x","4x","5x","6x","7x","8x","9x","10x"].
-
-Reference::
-https://docs.fontawesome.com/web/style/size
-
-Relative Sizing Class	Font Size	Equivalent in Pixels
-fa-2xs	0.625em	10px
-fa-xs	0.75em	12px
-fa-sm	0.875em	14px
-fa-lg	1.25em	20px
-fa-xl	1.5em	24px
-fa-2xl	2em	    32px
-
-Literal Sizing Class	Font Size	Equivalent in Pixels
-fa-1x	1em     16px
-fa-2x	2em     32px
-fa-3x	3em     48px
-fa-4x	4em     64px
-fa-5x	5em     80px
-fa-6x	6em     96px
-fa-7x	7em     112px
-fa-8x	8em     128px
-fa-9x	9em     144px
-fa-10x	10em    160px
-*/
+    /*
+    Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
+    expected one of ["2xs","xs","sm","lg","xl","2xl","1x","2x","3x","4x","5x","6x","7x","8x","9x","10x"].
+    
+    Reference::
+    https://docs.fontawesome.com/web/style/size
+    
+    Relative Sizing Class	Font Size	Equivalent in Pixels
+    fa-2xs	0.625em	10px
+    fa-xs	0.75em	12px
+    fa-sm	0.875em	14px
+    fa-lg	1.25em	20px
+    fa-xl	1.5em	24px
+    fa-2xl	2em	    32px
+    
+    Literal Sizing Class	Font Size	Equivalent in Pixels
+    fa-1x	1em     16px
+    fa-2x	2em     32px
+    fa-3x	3em     48px
+    fa-4x	4em     64px
+    fa-5x	5em     80px
+    fa-6x	6em     96px
+    fa-7x	7em     112px
+    fa-8x	8em     128px
+    fa-9x	9em     144px
+    fa-10x	10em    160px
+    */
     const sizeData = {
         "2xs": {
             "width": "10",
@@ -177,7 +177,7 @@ fa-10x	10em    160px
                 </svg>
             );
             break;
-    
+
         case 'arrows-rotate':
             selectedSvg = (
                 <svg
@@ -223,7 +223,7 @@ fa-10x	10em    160px
                 </svg>
             );
             break;
-    
+
         case 'eye':
             selectedSvg = (
                 <svg
@@ -289,7 +289,7 @@ fa-10x	10em    160px
                 </svg>
             );
             break;
-        
+
         case 'less-than':
             selectedSvg = (
                 <svg
@@ -317,15 +317,15 @@ fa-10x	10em    160px
                         x="-256"
                         y="-64"
                     />
-                        <g
-                            // id="vertical-menu"
-                            id="menu-dots-more"
-                            fill="currentColor"
-                        >
-                            <circle cx="32.026" cy="12.028" r="4" />
-                            <circle cx="32.026" cy="52.028" r="4" />
-                            <circle cx="32.026" cy="32.028" r="4" />
-                        </g>
+                    <g
+                        // id="vertical-menu"
+                        id="menu-dots-more"
+                        fill="currentColor"
+                    >
+                        <circle cx="32.026" cy="12.028" r="4" />
+                        <circle cx="32.026" cy="52.028" r="4" />
+                        <circle cx="32.026" cy="32.028" r="4" />
+                    </g>
                 </svg>
             );
             break;
@@ -385,21 +385,21 @@ fa-10x	10em    160px
                     >
                         <g opacity=".5">
                             <g opacity=".5">
-                                <path fill="#FAFAFA" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/>
-                                <path stroke="#C9C9C9" strokeWidth="2.418" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/>
+                                <path fill="#FAFAFA" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z" />
+                                <path stroke="#C9C9C9" strokeWidth="2.418" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z" />
                             </g>
-                            <path stroke="url(#a)" strokeWidth="2.418" d="M0-1.209h553.581" transform="scale(1 -1) rotate(45 1163.11 91.165)"/>
-                            <path stroke="url(#b)" strokeWidth="2.418" d="M404.846 598.671h391.726"/>
-                            <path stroke="url(#c)" strokeWidth="2.418" d="M599.5 795.742V404.017"/>
-                            <path stroke="url(#d)" strokeWidth="2.418" d="m795.717 796.597-391.441-391.44"/>
-                            <path fill="#fff" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/>
+                            <path stroke="url(#a)" strokeWidth="2.418" d="M0-1.209h553.581" transform="scale(1 -1) rotate(45 1163.11 91.165)" />
+                            <path stroke="url(#b)" strokeWidth="2.418" d="M404.846 598.671h391.726" />
+                            <path stroke="url(#c)" strokeWidth="2.418" d="M599.5 795.742V404.017" />
+                            <path stroke="url(#d)" strokeWidth="2.418" d="m795.717 796.597-391.441-391.44" />
+                            <path fill="#fff" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z" />
                             <g clipPath="url(#e)">
-                                <path fill="#666" fillRule="evenodd" d="M616.426 586.58h-31.434v16.176l3.553-3.554.531-.531h9.068l.074-.074 8.463-8.463h2.565l7.18 7.181V586.58Zm-15.715 14.654 3.698 3.699 1.283 1.282-2.565 2.565-1.282-1.283-5.2-5.199h-6.066l-5.514 5.514-.073.073v2.876a2.418 2.418 0 0 0 2.418 2.418h26.598a2.418 2.418 0 0 0 2.418-2.418v-8.317l-8.463-8.463-7.181 7.181-.071.072Zm-19.347 5.442v4.085a6.045 6.045 0 0 0 6.046 6.045h26.598a6.044 6.044 0 0 0 6.045-6.045v-7.108l1.356-1.355-1.282-1.283-.074-.073v-17.989h-38.689v23.43l-.146.146.146.147Z" clipRule="evenodd"/>
+                                <path fill="#666" fillRule="evenodd" d="M616.426 586.58h-31.434v16.176l3.553-3.554.531-.531h9.068l.074-.074 8.463-8.463h2.565l7.18 7.181V586.58Zm-15.715 14.654 3.698 3.699 1.283 1.282-2.565 2.565-1.282-1.283-5.2-5.199h-6.066l-5.514 5.514-.073.073v2.876a2.418 2.418 0 0 0 2.418 2.418h26.598a2.418 2.418 0 0 0 2.418-2.418v-8.317l-8.463-8.463-7.181 7.181-.071.072Zm-19.347 5.442v4.085a6.045 6.045 0 0 0 6.046 6.045h26.598a6.044 6.044 0 0 0 6.045-6.045v-7.108l1.356-1.355-1.282-1.283-.074-.073v-17.989h-38.689v23.43l-.146.146.146.147Z" clipRule="evenodd" />
                             </g>
-                            <path stroke="#C9C9C9" strokeWidth="2.418" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/>
+                            <path stroke="#C9C9C9" strokeWidth="2.418" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z" />
                         </g>
                         <defs>
-                            <linearGradient id="a" x1="554.061" x2="-.48" y1=".083" y2=".087" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0"/><stop offset=".208" stopColor="#C9C9C9"/><stop offset=".792" stopColor="#C9C9C9"/><stop offset="1" stopColor="#C9C9C9" stopOpacity="0"/></linearGradient><linearGradient id="b" x1="796.912" x2="404.507" y1="599.963" y2="599.965" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0"/><stop offset=".208" stopColor="#C9C9C9"/><stop offset=".792" stopColor="#C9C9C9"/><stop offset="1" stopColor="#C9C9C9" stopOpacity="0"/></linearGradient><linearGradient id="c" x1="600.792" x2="600.794" y1="403.677" y2="796.082" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0"/><stop offset=".208" stopColor="#C9C9C9"/><stop offset=".792" stopColor="#C9C9C9"/><stop offset="1" stopColor="#C9C9C9" stopOpacity="0"/></linearGradient><linearGradient id="d" x1="404.85" x2="796.972" y1="403.903" y2="796.02" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0"/><stop offset=".208" stopColor="#C9C9C9"/><stop offset=".792" stopColor="#C9C9C9"/><stop offset="1" stopColor="#C9C9C9" stopOpacity="0"/></linearGradient><clipPath id="e"><path fill="#fff" d="M581.364 580.535h38.689v38.689h-38.689z"/></clipPath>
+                            <linearGradient id="a" x1="554.061" x2="-.48" y1=".083" y2=".087" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0" /><stop offset=".208" stopColor="#C9C9C9" /><stop offset=".792" stopColor="#C9C9C9" /><stop offset="1" stopColor="#C9C9C9" stopOpacity="0" /></linearGradient><linearGradient id="b" x1="796.912" x2="404.507" y1="599.963" y2="599.965" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0" /><stop offset=".208" stopColor="#C9C9C9" /><stop offset=".792" stopColor="#C9C9C9" /><stop offset="1" stopColor="#C9C9C9" stopOpacity="0" /></linearGradient><linearGradient id="c" x1="600.792" x2="600.794" y1="403.677" y2="796.082" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0" /><stop offset=".208" stopColor="#C9C9C9" /><stop offset=".792" stopColor="#C9C9C9" /><stop offset="1" stopColor="#C9C9C9" stopOpacity="0" /></linearGradient><linearGradient id="d" x1="404.85" x2="796.972" y1="403.903" y2="796.02" gradientUnits="userSpaceOnUse"><stop stopColor="#C9C9C9" stopOpacity="0" /><stop offset=".208" stopColor="#C9C9C9" /><stop offset=".792" stopColor="#C9C9C9" /><stop offset="1" stopColor="#C9C9C9" stopOpacity="0" /></linearGradient><clipPath id="e"><path fill="#fff" d="M581.364 580.535h38.689v38.689h-38.689z" /></clipPath>
                         </defs>
                     </rect>
                 </svg>
@@ -472,7 +472,7 @@ fa-10x	10em    160px
             selectedSvg = (
                 <svg
                     viewBox="0 0 24 24"
-                    // role="presentation"
+                // role="presentation"
                 >
                     <path
                         fill="currentColor"
@@ -498,7 +498,7 @@ fa-10x	10em    160px
                 </svg>
             );
             break;
-    
+
         case 'trash':
             selectedSvg = (
                 <svg
@@ -544,7 +544,7 @@ fa-10x	10em    160px
                 </svg>
             );
             break;
-            
+
         case 'vertical-slider':
             selectedSvg = (
                 <div
@@ -556,7 +556,7 @@ fa-10x	10em    160px
         case 'warning-sign':
             selectedSvg = (
                 <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                 </svg>
             );
             break;
@@ -564,11 +564,12 @@ fa-10x	10em    160px
         case 'checked-sign':
             selectedSvg = (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" className="oi sl aye">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
                 </svg>
             );
             break;
 
+        case 'close':
         case 'x':
             selectedSvg = (
                 <svg

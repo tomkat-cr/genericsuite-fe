@@ -132,7 +132,8 @@ export const ALERT_SUCCESS_CLASS = `${ALERT_BASE_CLASS} text-green-800 bg-green-
 
 export const ERROR_MSG_CLASS = `${ALERT_DANGER_CLASS} mt-4 p-2 rounded-md errorMsgClass`;
 export const WARNING_MSG_CLASS = `${ALERT_WARNING_CLASS} mt-4 p-2 rounded-md warningMsgClass`;
-export const INFO_MSG_CLASS = `${ALERT_INFO_CLASS} mt-4 p-2 rounded-md infoMsgClass`;
+export const INFO_MSG_CLASS = `${ALERT_INFO_CLASS} mt-4 mb-4 p-2 rounded-md flex justify-between align-middle infoMsgClass`;
+export const INFO_MSG_BUTTON_CLASS = "rounded-full p-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-800 infoMsgButtonClass";
 export const SUCCESS_MSG_CLASS = `${ALERT_SUCCESS_CLASS} mt-4 p-2 rounded-md successMsgClass`;
 export const GRAY_BOX_MSG_CLASS = `${ALERT_BASE_CLASS} text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass`;
 

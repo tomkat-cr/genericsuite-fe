@@ -1,32 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import React from 'react';
 
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { useUser } from '../../helpers/UserContext.jsx';
 import { useAppContext } from '../../helpers/AppContext.jsx';
+import { useUser } from '../../helpers/UserContext.jsx';
 
+import {
+    BUTTON_PRIMARY_CLASS,
+    ERROR_MSG_CLASS,
+    FORM_CONTROL_CLASS,
+    FORM_GROUP_CLASS,
+    INVALID_FEEDBACK_CLASS,
+    IS_INVALID_CLASS,
+    LOGIN_PAGE_APP_LOGO_CLASS,
+    POPUP_TOP_MARGIN_CLASS,
+} from '../../constants/class_name_constants.jsx';
+import { imageDirectory } from '../../constants/general_constants.jsx';
+import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
+import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
+import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
+import { getUrlParams } from '../../helpers/url-params.jsx';
 import {
     authenticationService,
 } from '../../services/authentication.service.jsx';
-import { getUrlParams } from '../../helpers/url-params.jsx';
-import { getLastUrl, getPrefix, removeLastUrl } from '../../helpers/history.jsx';
-import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
-import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
-import { imageDirectory } from '../../constants/general_constants.jsx';
-import {
-    ERROR_MSG_CLASS,
-    FORM_GROUP_CLASS,
-    FORM_CONTROL_CLASS,
-    INVALID_FEEDBACK_CLASS,
-    BUTTON_PRIMARY_CLASS,
-    IS_INVALID_CLASS,
-    POPUP_TOP_MARGIN_CLASS,
-    LOGIN_PAGE_APP_LOGO_CLASS,
-} from '../../constants/class_name_constants.jsx';
-import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
 import { console_debug_log } from '../../services/logging.service.jsx';
+import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 
 // This way to import the .svg files doesn't work on prod environents...
 // import DefaultAppLogo from '../../images/app_logo_square.svg';
@@ -75,7 +74,7 @@ export const LoginPage = (props) => {
         return sanitizeRedirectUrl(urlParams.redirect);
     }
 
-    const { currentUser, registerUser, unRegisterUser } = useUser();
+    const { currentUser, registerUser } = useUser();
     const { appLogo, theme } = useAppContext();
 
     const handleSubmit = (username, password, setStatus, setSubmitting) => {
@@ -148,6 +147,7 @@ export const LoginPage = (props) => {
                                 <Field
                                     name="username"
                                     type="text"
+                                    autoComplete="username"
                                     className={FORM_CONTROL_CLASS + ' ' + (
                                         errors.username && touched.username ? IS_INVALID_CLASS : theme.input
                                     )}
@@ -170,6 +170,7 @@ export const LoginPage = (props) => {
                                 <Field
                                     name="password"
                                     type="password"
+                                    autoComplete="current-password"
                                     className={FORM_CONTROL_CLASS + ' ' + (
                                         errors.password && touched.password ? IS_INVALID_CLASS : theme.input
                                     )}

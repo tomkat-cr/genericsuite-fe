@@ -1,24 +1,22 @@
 import React from 'react';
 import { Button } from './ModalLib.jsx';
-import { Link as RouterLink } from 'react-router-dom';
 
-import {
-    MSG_ERROR_INVALID_TOKEN,
-    MSG_ERROR_CLICK_TO_RELOGIN,
-    MSG_ERROR_CLICK_TO_RETRY,
-    MSG_ERROR_SESSION_EXPIRED,
-} from '../constants/general_constants.jsx';
 import { APP_EMAILS, APP_VALID_URLS } from '../constants/app_constants.jsx';
 import { ALERT_DANGER_CLASS } from '../constants/class_name_constants.jsx';
+import {
+    MSG_ERROR_CLICK_TO_RELOGIN,
+    MSG_ERROR_CLICK_TO_RETRY,
+    MSG_ERROR_INVALID_TOKEN,
+    MSG_ERROR_SESSION_EXPIRED,
+} from '../constants/general_constants.jsx';
 import {
     authenticationService,
 } from '../services/authentication.service.jsx';
 import {
-    console_debug_log,
-    get_debug_flag,
+    console_debug_log
 } from '../services/logging.service.jsx';
-import { history, getPrefix, setLastUrl, hasHashRouter, getUrlForRouter } from './history.jsx';
-import { ModalPopUp } from './ModalPopUp.jsx'
+import { getPrefix, getUrlForRouter, setLastUrl } from './history.jsx';
+import { ModalPopUp } from './ModalPopUp.jsx';
 
 const debug = false;
 
@@ -178,7 +176,6 @@ export function errorLoginAgain(
             <div>
                 <br />
                 <Button
-                    // as={RouterLink}
                     to={getPrefix() + '/login'}
                     onClick={parentLogoutHandler}>{MSG_ERROR_CLICK_TO_RELOGIN}
                 </Button>

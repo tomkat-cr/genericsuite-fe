@@ -183,13 +183,15 @@ declare var authentication_service: Readonly<{
     };
     getCurrentUserData: () => Promise<any>;
     getUserData: (userId: any) => Promise<any>;
+    getUserDataCache: (userId: any) => Promise<any>;
     getUserLocalData: (res: any) => {
         id: any;
         firstName: any;
         pref_side_menu: any;
         pref_dark_mode: any;
     };
-    verifyCurrentUser: (registerUser: any, currentUser: any) => void;
+    setUserDataCache: (userId: any, userData: any) => void;
+    verifyCurrentUser: (registerUser: any, currentUser: any, setAskForLogin: any) => void;
 }>;
 declare var blob_files_utilities: Readonly<{
     __proto__: null;
@@ -282,6 +284,7 @@ declare var class_name_constants: Readonly<{
     GRAY_BOX_MSG_CLASS: string;
     HIDDEN_CLASS: "hidden hiddenClass";
     HORIZONTALLY_CENTERED_CLASS: "flex flex-col items-center horizontallyCenteredClass";
+    INFO_MSG_BUTTON_CLASS: "rounded-full p-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-800 infoMsgButtonClass";
     INFO_MSG_CLASS: string;
     INLINE_CLASS: "inline inlineClass";
     INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
@@ -497,6 +500,7 @@ declare var general_constants: Readonly<{
     MSG_ACTION_READ: "View";
     MSG_ACTION_UPDATE: "Update";
     MSG_ALT_WAIT_ANIMATION: "Wait...";
+    MSG_CLOSE: "Close";
     MSG_DELETE_CONFIRM: "Are you sure to delete this element? Please confirm with the [Delete] button or [Cancel] this operation.";
     MSG_DONE_CREATED: "Item has been created";
     MSG_DONE_DELETED: "Item has been deleted";
@@ -557,18 +561,13 @@ declare var generic_editor_rfc_common: Readonly<{
         name: any;
         promiseResult: any;
     }[];
-    setEditorParameters: (props: any) => Promise<{
-        error: boolean;
-        error_message: string;
-        response: null;
-    }> | null;
+    setEditorParameters: (props: any) => any;
 }>;
 declare var generic_editor_rfc_formpage: Readonly<{
     __proto__: null;
     FormPage: (_ref: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
-    getFieldElementsYupValidations: (editor: any, editorFlags: any) => any;
 }>;
 declare var generic_editor_rfc_provider: Readonly<{
     __proto__: null;
@@ -670,7 +669,7 @@ declare var generic_menu_service: Readonly<{
     getDefaultRoutes: (currentUser: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
-        element: () => React.FunctionComponentElement<any>;
+        element: () => React.FunctionComponentElement<any> | null;
     }[];
     getDefaultRoutesRaw: (componentMap: any) => {
         title: string;
@@ -678,16 +677,16 @@ declare var generic_menu_service: Readonly<{
         element: string;
         type: string;
     }[];
-    getMenuFromApi: (getState: any, setState: any, setMenuOptions: any) => void;
+    getMenuFromApi: (setState: any, getErrorState: any, setErrorState: any, setMenuOptions: any, ...args: any[]) => void;
     getRoutes: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
-        element: () => React.FunctionComponentElement<any>;
+        element: () => React.FunctionComponentElement<any> | null;
     }[];
     getRoutesRaw: (currentUser: any, menuOptions: any, componentMap: any, setExpanded: any) => {
         key: string;
         path: string;
-        element: () => React.FunctionComponentElement<any>;
+        element: () => React.FunctionComponentElement<any> | null;
     }[];
 }>;
 declare var history$1: Readonly<{

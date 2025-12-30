@@ -236,7 +236,8 @@ const ALERT_INFO_CLASS = "".concat(ALERT_BASE_CLASS, " text-cyan-800 bg-cyan-100
 const ALERT_SUCCESS_CLASS = "".concat(ALERT_BASE_CLASS, " text-green-800 bg-green-100 border-green-200 alertSuccessClass");
 const ERROR_MSG_CLASS = "".concat(ALERT_DANGER_CLASS, " mt-4 p-2 rounded-md errorMsgClass");
 const WARNING_MSG_CLASS = "".concat(ALERT_WARNING_CLASS, " mt-4 p-2 rounded-md warningMsgClass");
-const INFO_MSG_CLASS = "".concat(ALERT_INFO_CLASS, " mt-4 p-2 rounded-md infoMsgClass");
+const INFO_MSG_CLASS = "".concat(ALERT_INFO_CLASS, " mt-4 mb-4 p-2 rounded-md flex justify-between align-middle infoMsgClass");
+const INFO_MSG_BUTTON_CLASS = "rounded-full p-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-800 infoMsgButtonClass";
 const SUCCESS_MSG_CLASS = "".concat(ALERT_SUCCESS_CLASS, " mt-4 p-2 rounded-md successMsgClass");
 const GRAY_BOX_MSG_CLASS = "".concat(ALERT_BASE_CLASS, " text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass");
 
@@ -477,6 +478,7 @@ var class_name_constants = /*#__PURE__*/Object.freeze({
   GRAY_BOX_MSG_CLASS: GRAY_BOX_MSG_CLASS,
   HIDDEN_CLASS: HIDDEN_CLASS,
   HORIZONTALLY_CENTERED_CLASS: HORIZONTALLY_CENTERED_CLASS,
+  INFO_MSG_BUTTON_CLASS: INFO_MSG_BUTTON_CLASS,
   INFO_MSG_CLASS: INFO_MSG_CLASS,
   INLINE_CLASS: INLINE_CLASS,
   INPUT_FLEXIBLE_CLASS: INPUT_FLEXIBLE_CLASS,
@@ -1185,6 +1187,7 @@ const GsIcons = _ref => {
         d: "M4.5 12.75l6 6 9-13.5"
       }));
       break;
+    case 'close':
     case 'x':
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
         viewBox: "0 0 24 24",
@@ -1480,6 +1483,64 @@ var ui = /*#__PURE__*/Object.freeze({
 });
 
 const AppContext = /*#__PURE__*/React.createContext();
+const appReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_APP_LOGO':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        appLogo: action.payload
+      });
+    case 'SET_APP_LOGO_HEADER':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        appLogoHeader: action.payload
+      });
+    case 'SET_COMPONENT_MAP':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        componentMap: action.payload
+      });
+    case 'SET_STATE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        state: action.payload
+      });
+    case 'SET_MENU_OPTIONS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        menuOptions: action.payload
+      });
+    case 'SET_SIDE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        sideMenu: action.payload
+      });
+    case 'TOGGLE_SIDE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        sideMenu: !state.sideMenu
+      });
+    case 'SET_DARK_MODE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isDarkMode: action.payload
+      });
+    case 'TOGGLE_DARK_MODE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isDarkMode: !state.isDarkMode
+      });
+    case 'SET_MOBILE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isMobileMenuOpen: action.payload
+      });
+    case 'TOGGLE_MOBILE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isMobileMenuOpen: !state.isMobileMenuOpen
+      });
+    case 'SET_EXPANDED_MENUS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        expandedMenus: action.payload
+      });
+    case 'SET_WIDE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isWide: action.payload
+      });
+    default:
+      return state;
+  }
+};
 const AppProvider = _ref => {
   let {
     globalComponentMap,
@@ -1487,29 +1548,88 @@ const AppProvider = _ref => {
     globalAppLogoHeader = "",
     children
   } = _ref;
-  const [appLogo, setAppLogo] = React.useState(globalAppLogo);
-  const [appLogoHeader, setAppLogoHeader] = React.useState(globalAppLogoHeader);
-  const [componentMap, setComponentMap] = React.useState(globalComponentMap);
-  const [state, setState] = React.useState("");
-  const [menuOptions, setMenuOptions] = React.useState(null);
-  const [sideMenu, setSideMenu] = React.useState(false);
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [expandedMenus, setExpandedMenus] = React.useState([]);
-  const [isWide, setIsWide] = React.useState(isWindowWide());
-  const theme = isDarkMode ? componentMap["defaultTheme"].dark : componentMap["defaultTheme"].light;
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-  const toggleSideMenu = () => setSideMenu(!sideMenu);
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const toggleSubmenu = (menuName, menuVisible) => {
-    setExpandedMenus(prev => menuVisible ? [...prev, menuName] : prev.filter(item => item !== menuName));
+  const initialState = {
+    appLogo: globalAppLogo,
+    appLogoHeader: globalAppLogoHeader,
+    componentMap: globalComponentMap,
+    errorState: "",
+    // Error message
+    state: "",
+    // LOADING, ERROR, OK, TIMEOUT
+    menuOptions: null,
+    sideMenu: false,
+    isDarkMode: false,
+    isMobileMenuOpen: false,
+    expandedMenus: [],
+    isWide: isWindowWide()
   };
-  const isComponent = componentObj => {
+  const [appState, dispatch] = React.useReducer(appReducer, initialState);
+  const theme = appState.isDarkMode ? appState.componentMap["defaultTheme"].dark : appState.componentMap["defaultTheme"].light;
+  const setAppLogo = React.useCallback(payload => dispatch({
+    type: 'SET_APP_LOGO',
+    payload
+  }), []);
+  const setAppLogoHeader = React.useCallback(payload => dispatch({
+    type: 'SET_APP_LOGO_HEADER',
+    payload
+  }), []);
+  const setComponentMap = React.useCallback(payload => dispatch({
+    type: 'SET_COMPONENT_MAP',
+    payload
+  }), []);
+  const setErrorState = React.useCallback(payload => dispatch({
+    type: 'SET_ERROR',
+    payload
+  }), []);
+  const setState = React.useCallback(payload => dispatch({
+    type: 'SET_STATE',
+    payload
+  }), []);
+  const setMenuOptions = React.useCallback(payload => dispatch({
+    type: 'SET_MENU_OPTIONS',
+    payload
+  }), []);
+  const setSideMenu = React.useCallback(payload => dispatch({
+    type: 'SET_SIDE_MENU',
+    payload
+  }), []);
+  const setIsDarkMode = React.useCallback(payload => dispatch({
+    type: 'SET_DARK_MODE',
+    payload
+  }), []);
+  const setIsMobileMenuOpen = React.useCallback(payload => dispatch({
+    type: 'SET_MOBILE_MENU',
+    payload
+  }), []);
+  const setExpandedMenus = React.useCallback(payload => dispatch({
+    type: 'SET_EXPANDED_MENUS',
+    payload
+  }), []);
+  const setIsWide = React.useCallback(payload => dispatch({
+    type: 'SET_WIDE',
+    payload
+  }), []);
+  const toggleDarkMode = React.useCallback(() => dispatch({
+    type: 'TOGGLE_DARK_MODE'
+  }), []);
+  const toggleSideMenu = React.useCallback(() => dispatch({
+    type: 'TOGGLE_SIDE_MENU'
+  }), []);
+  const toggleMobileMenu = React.useCallback(() => dispatch({
+    type: 'TOGGLE_MOBILE_MENU'
+  }), []);
+  const toggleSubmenu = React.useCallback((menuName, menuVisible) => {
+    dispatch({
+      type: 'SET_EXPANDED_MENUS',
+      payload: menuVisible ? [...appState.expandedMenus, menuName] : appState.expandedMenus.filter(item => item !== menuName)
+    });
+  }, [appState.expandedMenus]);
+  const isComponent = React.useCallback(componentObj => {
     return String(componentObj).includes('component:');
-  };
-  const setExpanded = componentObj => {
+  }, []);
+  const setExpanded = React.useCallback(componentObj => {
     /* Close mobile menu if any option is clicked */
-    if (document.getElementById("navbar-main-toggle") && isMobileMenuOpen) {
+    if (document.getElementById("navbar-main-toggle") && appState.isMobileMenuOpen) {
       document.getElementById("navbar-main-toggle").click();
     }
     if (componentObj) {
@@ -1532,43 +1652,35 @@ const AppProvider = _ref => {
       }
     }
     return '';
-  };
+  }, [appState.isMobileMenuOpen, isComponent]);
   React.useEffect(() => {
     const resizer = resizeManager(() => {
       setIsWide(isWindowWide());
     });
     resizer.addListener();
     return () => resizer.removeListener();
-  }, []);
+  }, [setIsWide]);
+  const contextValue = React.useMemo(() => _objectSpread2(_objectSpread2({}, appState), {}, {
+    setAppLogo,
+    setAppLogoHeader,
+    setComponentMap,
+    setErrorState,
+    setState,
+    setMenuOptions,
+    setSideMenu,
+    setIsDarkMode,
+    setIsMobileMenuOpen,
+    setExpandedMenus,
+    setIsWide,
+    theme,
+    toggleDarkMode,
+    toggleSideMenu,
+    toggleMobileMenu,
+    toggleSubmenu,
+    setExpanded
+  }), [appState, theme, setAppLogo, setAppLogoHeader, setComponentMap, setErrorState, setState, setMenuOptions, setSideMenu, setIsDarkMode, setIsMobileMenuOpen, setExpandedMenus, setIsWide, toggleDarkMode, toggleSideMenu, toggleMobileMenu, toggleSubmenu, setExpanded]);
   return /*#__PURE__*/React.createElement(AppContext.Provider, {
-    value: {
-      appLogo,
-      setAppLogo,
-      appLogoHeader,
-      setAppLogoHeader,
-      componentMap,
-      setComponentMap,
-      state,
-      setState,
-      menuOptions,
-      setMenuOptions,
-      sideMenu,
-      setSideMenu,
-      isDarkMode,
-      setIsDarkMode,
-      isMobileMenuOpen,
-      setIsMobileMenuOpen,
-      expandedMenus,
-      setExpandedMenus,
-      isWide,
-      setIsWide,
-      theme,
-      toggleDarkMode,
-      toggleSideMenu,
-      toggleMobileMenu,
-      toggleSubmenu,
-      setExpanded
-    }
+    value: contextValue
   }, children);
 };
 const useAppContext = () => {
@@ -1582,23 +1694,63 @@ var AppContext$1 = /*#__PURE__*/Object.freeze({
 });
 
 const UserContext = /*#__PURE__*/React.createContext();
+const initialState$2 = {
+  currentUser: null,
+  askForLogin: false
+};
+const userReducer = (state, action) => {
+  switch (action.type) {
+    case 'REGISTER_USER':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        currentUser: action.payload
+      });
+    case 'UNREGISTER_USER':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        currentUser: null
+      });
+    case 'SET_ASK_FOR_LOGIN':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        askForLogin: action.payload
+      });
+    default:
+      return state;
+  }
+};
 const UserProvider = _ref => {
   let {
     children
   } = _ref;
-  const [currentUser, setCurrentUser] = React.useState(null);
+  const [state, dispatch] = React.useReducer(userReducer, initialState$2);
+  const setAskForLogin = newAskForLogin => {
+    dispatch({
+      type: 'SET_ASK_FOR_LOGIN',
+      payload: newAskForLogin
+    });
+  };
   const registerUser = userData => {
-    setCurrentUser(userData);
+    dispatch({
+      type: 'REGISTER_USER',
+      payload: userData
+    });
+    if (userData) {
+      setAskForLogin(false);
+    }
   };
   const unRegisterUser = () => {
-    setCurrentUser(null);
+    dispatch({
+      type: 'UNREGISTER_USER'
+    });
+    setAskForLogin(true);
   };
+  const currentUserValue = React.useMemo(() => ({
+    currentUser: state.currentUser,
+    registerUser,
+    unRegisterUser,
+    askForLogin: state.askForLogin,
+    setAskForLogin
+  }), [state.currentUser, registerUser, unRegisterUser, state.askForLogin, setAskForLogin]);
   return /*#__PURE__*/React.createElement(UserContext.Provider, {
-    value: {
-      currentUser,
-      registerUser,
-      unRegisterUser
-    }
+    value: currentUserValue
   }, children);
 };
 const useUser = () => {
@@ -1611,7 +1763,7 @@ var UserContext$1 = /*#__PURE__*/Object.freeze({
   useUser: useUser
 });
 
-const _excluded$2 = ["onClick"],
+const _excluded$3 = ["onClick"],
   _excluded2 = ["variant", "className", "as"];
 const MainContainer = _ref => {
   let {
@@ -2140,7 +2292,7 @@ const ToggleSideBar = _ref15 => {
   let {
       onClick
     } = _ref15,
-    props = _objectWithoutProperties(_ref15, _excluded$2);
+    props = _objectWithoutProperties(_ref15, _excluded$3);
   props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + ((_props$className = props.className) !== null && _props$className !== void 0 ? _props$className : '');
   return /*#__PURE__*/React.createElement("div", _extends({
     onClick: onClick
@@ -2190,14 +2342,14 @@ var NavLib = /*#__PURE__*/Object.freeze({
   ToggleSideBar: ToggleSideBar
 });
 
-const _excluded$1 = ["isWide", "variant", "className"];
+const _excluded$2 = ["isWide", "variant", "className"];
 const Button = _ref => {
   let {
       isWide,
       variant = 'primary',
       className = ''
     } = _ref,
-    props = _objectWithoutProperties(_ref, _excluded$1);
+    props = _objectWithoutProperties(_ref, _excluded$2);
   const baseStyle = MODALIB_BUTTON_BASESTYLE_CLASS + " " + (isWide ? MODALIB_BUTTON_BASESTYLE_WIDE_CLASS : MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS);
   const variants = {
     primary: MODALIB_BUTTON_PRIMARY_CLASS,
@@ -2574,6 +2726,42 @@ var jsonUtilities = /*#__PURE__*/Object.freeze({
   buildConstant: buildConstant
 });
 
+var BILLING_PLANS$1 = {
+	free: "Free",
+	basic: "Basic",
+	premium: "Premium"
+};
+var ERROR_MESSAGES$1 = {
+	ACCOUNT_INACTIVE: "User account inactive [L5]. To activate your account, please contact support@exampleapp.com"
+};
+var APP_EMAILS$1 = {
+	SUPPORT_EMAIL: "support@exampleapp.com",
+	INFO_EMAIL: "info@exampleapp.com"
+};
+var APP_VALID_URLS$1 = {
+	APP_DOMAIN: "exampleapp.com",
+	APP_WEBSITE: "https://www.exampleapp.com"
+};
+var constants$1 = {
+	BILLING_PLANS: BILLING_PLANS$1,
+	ERROR_MESSAGES: ERROR_MESSAGES$1,
+	APP_EMAILS: APP_EMAILS$1,
+	APP_VALID_URLS: APP_VALID_URLS$1
+};
+
+const BILLING_PLANS = buildConstant(constants$1.BILLING_PLANS);
+const ERROR_MESSAGES = constants$1.ERROR_MESSAGES;
+const APP_EMAILS = constants$1.APP_EMAILS;
+const APP_VALID_URLS = constants$1.APP_VALID_URLS;
+
+var app_constants = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  APP_EMAILS: APP_EMAILS,
+  APP_VALID_URLS: APP_VALID_URLS,
+  BILLING_PLANS: BILLING_PLANS,
+  ERROR_MESSAGES: ERROR_MESSAGES
+});
+
 var TRUE_FALSE$1 = {
 	"0": "No",
 	"1": "Yes"
@@ -2590,7 +2778,7 @@ var GENDERS$1 = {
 	m: "Male",
 	f: "Female"
 };
-var constants$1 = {
+var constants = {
 	TRUE_FALSE: TRUE_FALSE$1,
 	YES_NO: YES_NO$1,
 	LANGUAGES: LANGUAGES$1,
@@ -2654,6 +2842,7 @@ const MSG_ACTIONS = 'Actions';
 const MSG_SEARCH = 'Search';
 const MSG_RELOAD = 'Reload';
 const MSG_MORE = 'More';
+const MSG_CLOSE = 'Close';
 const MSG_IS_REQUIRED = 'is required';
 const MSG_MUST_BE = 'must be';
 const MSG_VALID_INTEGER = 'an integer number';
@@ -2669,10 +2858,10 @@ const ROWS_PER_PAGE = 30;
 // Generic editor : general select options
 
 // const constants = getConfigsJsonFile('general_constants');
-const TRUE_FALSE = buildConstant(constants$1.TRUE_FALSE);
-const YES_NO = buildConstant(constants$1.YES_NO);
-const LANGUAGES = buildConstant(constants$1.LANGUAGES);
-const GENDERS = buildConstant(constants$1.GENDERS);
+const TRUE_FALSE = buildConstant(constants.TRUE_FALSE);
+const YES_NO = buildConstant(constants.YES_NO);
+const LANGUAGES = buildConstant(constants.LANGUAGES);
+const GENDERS = buildConstant(constants.GENDERS);
 
 var general_constants = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -2693,6 +2882,7 @@ var general_constants = /*#__PURE__*/Object.freeze({
   MSG_ACTION_READ: MSG_ACTION_READ,
   MSG_ACTION_UPDATE: MSG_ACTION_UPDATE,
   MSG_ALT_WAIT_ANIMATION: MSG_ALT_WAIT_ANIMATION,
+  MSG_CLOSE: MSG_CLOSE,
   MSG_DELETE_CONFIRM: MSG_DELETE_CONFIRM,
   MSG_DONE_CREATED: MSG_DONE_CREATED,
   MSG_DONE_DELETED: MSG_DONE_DELETED,
@@ -2731,41 +2921,44 @@ var general_constants = /*#__PURE__*/Object.freeze({
   imageDirectory: imageDirectory
 });
 
-var BILLING_PLANS$1 = {
-	free: "Free",
-	basic: "Basic",
-	premium: "Premium"
+const defaultItemName = function () {
+  let lsItemName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  return lsItemName ? lsItemName : 'currentConfig';
 };
-var ERROR_MESSAGES$1 = {
-	ACCOUNT_INACTIVE: "User account inactive [L5]. To activate your account, please contact support@exampleapp.com"
+const buildConfigData = function () {
+  let lsDataDict = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  const defaultConfigData = {
+    "pref_dark_mode": "1",
+    "pref_side_menu": "1",
+    "language": "en",
+    "currency": "USD",
+    "timezone": "America/New_York",
+    "gce_rows_per_page": ROWS_PER_PAGE,
+    "gce_actions_allows_mouse_over": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0",
+    "gce_actions_allows_magic_button": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1"
+  };
+  lsDataDict = lsDataDict !== null && lsDataDict !== void 0 ? lsDataDict : {};
+  // Merge defaultConfigData with lsDataDict
+  return _objectSpread2(_objectSpread2({}, defaultConfigData), lsDataDict);
 };
-var APP_EMAILS$1 = {
-	SUPPORT_EMAIL: "support@exampleapp.com",
-	INFO_EMAIL: "info@exampleapp.com"
+const saveLocalConfig = function (lsDataDict) {
+  let lsItemName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  lsItemName = defaultItemName(lsItemName);
+  // This allows to add configuration items individually
+  const existingLocalConfig = getLocalConfig(lsItemName);
+  lsDataDict = _objectSpread2(_objectSpread2({}, existingLocalConfig), lsDataDict);
+  saveItemToLocalStorage(lsItemName, lsDataDict);
 };
-var APP_VALID_URLS$1 = {
-	APP_DOMAIN: "exampleapp.com",
-	APP_WEBSITE: "https://www.exampleapp.com"
+const getLocalConfig = function () {
+  let lsItemName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  lsItemName = defaultItemName(lsItemName);
+  const lsDataDict = getItemFromLocalStorage(lsItemName);
+  return buildConfigData(lsDataDict);
 };
-var constants = {
-	BILLING_PLANS: BILLING_PLANS$1,
-	ERROR_MESSAGES: ERROR_MESSAGES$1,
-	APP_EMAILS: APP_EMAILS$1,
-	APP_VALID_URLS: APP_VALID_URLS$1
+const getLocalConfigItem = lsItemName => {
+  const localConfig = getLocalConfig();
+  return localConfig[lsItemName];
 };
-
-const BILLING_PLANS = buildConstant(constants.BILLING_PLANS);
-const ERROR_MESSAGES = constants.ERROR_MESSAGES;
-const APP_EMAILS = constants.APP_EMAILS;
-const APP_VALID_URLS = constants.APP_VALID_URLS;
-
-var app_constants = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  APP_EMAILS: APP_EMAILS,
-  APP_VALID_URLS: APP_VALID_URLS,
-  BILLING_PLANS: BILLING_PLANS,
-  ERROR_MESSAGES: ERROR_MESSAGES
-});
 
 const getCurrentUserFromLocalStorage = () => {
   // return JSON.parse(localStorage.getItem('currentUser'));
@@ -3497,45 +3690,6 @@ var db_service = /*#__PURE__*/Object.freeze({
   dbApiService: dbApiService
 });
 
-const defaultItemName = function () {
-  let lsItemName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  return lsItemName ? lsItemName : 'currentConfig';
-};
-const buildConfigData = function () {
-  let lsDataDict = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  const defaultConfigData = {
-    "pref_dark_mode": "1",
-    "pref_side_menu": "1",
-    "language": "en",
-    "currency": "USD",
-    "timezone": "America/New_York",
-    "gce_rows_per_page": ROWS_PER_PAGE,
-    "gce_actions_allows_mouse_over": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0",
-    "gce_actions_allows_magic_button": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1"
-  };
-  lsDataDict = lsDataDict !== null && lsDataDict !== void 0 ? lsDataDict : {};
-  // Merge defaultConfigData with lsDataDict
-  return _objectSpread2(_objectSpread2({}, defaultConfigData), lsDataDict);
-};
-const saveLocalConfig = function (lsDataDict) {
-  let lsItemName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  lsItemName = defaultItemName(lsItemName);
-  // This allows to add configuration items individually
-  const existingLocalConfig = getLocalConfig(lsItemName);
-  lsDataDict = _objectSpread2(_objectSpread2({}, existingLocalConfig), lsDataDict);
-  saveItemToLocalStorage(lsItemName, lsDataDict);
-};
-const getLocalConfig = function () {
-  let lsItemName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  lsItemName = defaultItemName(lsItemName);
-  const lsDataDict = getItemFromLocalStorage(lsItemName);
-  return buildConfigData(lsDataDict);
-};
-const getLocalConfigItem = lsItemName => {
-  const localConfig = getLocalConfig();
-  return localConfig[lsItemName];
-};
-
 // Authentication service
 
 const authenticationService = {
@@ -3613,20 +3767,40 @@ const getCurrentUserData = () => {
     };
   });
 };
-const verifyCurrentUser = (registerUser, currentUser) => {
+const verifyCurrentUser = (registerUser, currentUser, setAskForLogin) => {
   if (currentUser) {
-    // Avoid multiple calls to setCurrentUser
     return;
   }
   if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
     getCurrentUserData().then(userData => {
-      if (userData.error) ; else {
+      if (typeof userData.error !== 'undefined' && userData.error) {
+        console.error("verifyCurrentUser() | userData.errorMsg:", userData.errorMsg);
+        setAskForLogin(true);
+      } else {
         registerUser(getUserLocalData(userData));
       }
     }, error => {
+      setAskForLogin(true);
       console.error(error.errorMsg);
     });
+  } else {
+    setAskForLogin(true);
   }
+};
+
+/*
+ * Get User Data cache
+ */
+
+let userDataCache = {};
+const getUserDataCache = userId => {
+  if (userDataCache[userId]) {
+    return Promise.resolve(userDataCache[userId]);
+  }
+  return getUserData(userId);
+};
+const setUserDataCache = (userId, userData) => {
+  userDataCache[userId] = Object.assign({}, userData);
 };
 
 var authentication_service = /*#__PURE__*/Object.freeze({
@@ -3634,7 +3808,9 @@ var authentication_service = /*#__PURE__*/Object.freeze({
   authenticationService: authenticationService,
   getCurrentUserData: getCurrentUserData,
   getUserData: getUserData,
+  getUserDataCache: getUserDataCache,
   getUserLocalData: getUserLocalData,
+  setUserDataCache: setUserDataCache,
   verifyCurrentUser: verifyCurrentUser
 });
 
@@ -3737,9 +3913,7 @@ function errorLoginAgain(errorMessage) {
   }
   if (forceLogin || MSG_ERROR_INVALID_TOKEN.includes(errorMessage)) {
     setLastUrl();
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button
-    // as={RouterLink}
-    , {
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Button, {
       to: getPrefix() + '/login',
       onClick: parentLogoutHandler
     }, MSG_ERROR_CLICK_TO_RELOGIN));
@@ -4173,24 +4347,33 @@ const InvalidElement = _ref2 => {
   }, children));
 };
 const InvalidRoute = () => {
+  // Catch all invalid routes and redirect to a default page or show a not found component
+  const {
+    state
+  } = useAppContext();
+  if (state === "LOADING_MENU" || state === "") {
+    return null;
+  }
   return /*#__PURE__*/React.createElement(InvalidElement, null, "URL not found...");
 };
-
-// export const getMenuFromApi = (state, setState, setMenuOptions) => {
-const getMenuFromApi = (getState, setState, setMenuOptions) => {
-  if (getState() !== "") {
+const getMenuFromApi = function (setState, getErrorState, setErrorState, setMenuOptions) {
+  let getMenuOptions = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+  if (getErrorState() !== "" || getMenuOptions && getMenuOptions() !== null) {
     return;
   }
+  setState("LOADING_MENU");
   const endpoint = "menu_options";
   const db = new dbApiService({
     url: endpoint
   });
   db.getAll().then(data => {
     setMenuOptions(data.resultset);
+    setState("MENU_LOADED");
   }, error => {
     error = formatCaughtError(error);
     if (!window.location.href.includes("/login")) {
-      setState(error);
+      setErrorState(error);
+      setState("MENU_ERROR");
     }
   });
 };
@@ -4205,7 +4388,7 @@ const GenericMenuBuilder = _ref3 => {
     currentUser
   } = useUser();
   const {
-    state,
+    errorState,
     menuOptions,
     setExpanded,
     componentMap
@@ -4275,10 +4458,10 @@ const GenericMenuBuilder = _ref3 => {
     // NavLinks
     return GetNavs(item_type_filter, topTitle, itemType, icon, mobileMenuMode);
   };
-  if (state !== "" && itemType === "routes") {
+  if (errorState !== "" && itemType === "routes") {
     return /*#__PURE__*/React.createElement(DefaultRoutes, null);
   }
-  if (state !== "") {
+  if (errorState !== "") {
     return /*#__PURE__*/React.createElement(DefaultRoutes, null);
   }
   return menuItems(isTopMenuAlternativeType(itemType) ? 'top_menu' : itemType, title, itemType, mobileMenuMode);
@@ -4956,6 +5139,7 @@ const getEditoObj = (props, editor_response) => {
   }
   return editor;
 };
+const verifyEditorCache = {};
 const verifyEditorObj = editorObj => {
   let gfd_response = {
     "error": false,
@@ -4966,23 +5150,27 @@ const verifyEditorObj = editorObj => {
     gfd_response.errorMsg = "GetFormData: editorObj is null [GCE-GFD-012]";
     return Promise.resolve(gfd_response);
   }
-  if (typeof editorObj["calleeName"] === 'undefined' || editorObj["calleeName"] === null) {
+  const calleeName = editorObj["calleeName"];
+  if (typeof calleeName === 'undefined' || calleeName === null) {
     gfd_response.error = true;
     gfd_response.errorMsg = "GetFormData: calleeName is not defined [GCE-GFD-010]";
     return Promise.resolve(gfd_response);
   }
-  if (editorObj["calleeName"] === false) {
+  if (calleeName === false) {
     gfd_response.response = editorObj;
     return Promise.resolve(gfd_response);
+  }
+  if (verifyEditorCache[calleeName]) {
+    return verifyEditorCache[calleeName];
   }
   const endpoint = "menu_options/element";
   const db = new dbApiService({
     url: endpoint
   });
   const json_body = {
-    "element": editorObj["calleeName"]
+    "element": calleeName
   };
-  return db.getAll([], json_body, 'POST').then(data => {
+  const verifyPromise = db.getAll([], json_body, 'POST').then(data => {
     gfd_response.response = editorObj;
     return gfd_response;
   }, error => {
@@ -4990,8 +5178,13 @@ const verifyEditorObj = editorObj => {
     error = formatCaughtError(error);
     gfd_response.error = true;
     gfd_response.errorMsg = "GetFormData: ".concat(error.message, " [GCE-GFD-020]");
+    // Clear cache on error so it can be retried? 
+    // Better to keep it cached to prevent flood, but maybe remove if we want retry.
+    // For now, let's keep the error response cached.
     return gfd_response;
   });
+  verifyEditorCache[calleeName] = verifyPromise;
+  return verifyPromise;
 };
 const setEditorParameters = props => {
   let editor_response = getEditorData(props);
@@ -5044,37 +5237,38 @@ const MainSectionProvider = _ref => {
     children
   } = _ref;
   const [cache, setCache] = React.useState({});
-  const initCache = () => {
+  const initCache = React.useCallback(() => {
     setCache({});
-  };
-  const getCachedData = entryName => {
+  }, []);
+  const getCachedData = React.useCallback(entryName => {
     return cache[entryName];
-  };
-  const putCachedData = (entryName, data) => {
+  }, [cache]);
+  const putCachedData = React.useCallback((entryName, data) => {
     setCache(prevCache => _objectSpread2(_objectSpread2({}, prevCache), {}, {
       [entryName]: data
     }));
-  };
-  const typeofCachedData = entryName => {
+  }, []);
+  const typeofCachedData = React.useCallback(entryName => {
     return typeof cache[entryName];
-  };
-  const listCache = () => {
+  }, [cache]);
+  const listCache = React.useCallback(() => {
     return cache;
-  };
-  const debugCache = function () {
+  }, [cache]);
+  const debugCache = React.useCallback(function () {
     let description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'debugCache';
     console_debug_log(">>>>--->> listCache [".concat(description, "]:"), listCache());
     return '';
-  };
+  }, [listCache]);
+  const contextValue = React.useMemo(() => ({
+    initCache,
+    getCachedData,
+    putCachedData,
+    typeofCachedData,
+    listCache,
+    debugCache
+  }), [initCache, getCachedData, putCachedData, typeofCachedData, listCache, debugCache]);
   return /*#__PURE__*/React.createElement(MainSectionContext.Provider, {
-    value: {
-      initCache,
-      getCachedData,
-      putCachedData,
-      typeofCachedData,
-      listCache,
-      debugCache
-    }
+    value: contextValue
   }, children);
 };
 
@@ -5119,7 +5313,7 @@ var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
 
 const debug$2 = false;
 const GenericSelectGenerator = props => {
-  const [state, setState] = React.useState(null);
+  const [errorState, setErrorState] = React.useState(null);
   const [config, setConfig] = React.useState(null);
   const [rows, setRows] = React.useState(null);
   const {
@@ -5148,7 +5342,7 @@ const GenericSelectGenerator = props => {
           if (debug$2) ;
         }
         ;
-        config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setState(error));
+        config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setErrorState(error));
       } catch (error) {
         console.error(config.editor.title + '-Select | error object:', error);
       }
@@ -5172,9 +5366,9 @@ const GenericSelectGenerator = props => {
     // Still not ready...
     return '';
   }
-  if (state) {
+  if (errorState) {
     // Some error happens
-    return state.toString();
+    return errorState.toString();
   }
   const {
     filter,
@@ -5207,7 +5401,7 @@ const GenericSelectGenerator = props => {
   });
 };
 const GenericSelectDataPopulator = props => {
-  const [state, setState] = React.useState(null);
+  const [errorState, setErrorState] = React.useState(null);
   const [config, setConfig] = React.useState(null);
   const [rows, setRows] = React.useState(null);
   const {
@@ -5241,8 +5435,8 @@ const GenericSelectDataPopulator = props => {
     if (!rows) {
       return '';
     }
-    if (state) {
-      return state.toString();
+    if (errorState) {
+      return errorState.toString();
     }
     const array_options = rows.resultset.filter(option => filter === null ? true : dbService.convertId(option[key_name]) === filter).map(option => {
       let element = {};
@@ -5269,7 +5463,7 @@ const GenericSelectDataPopulator = props => {
         ;
         console_debug_log('>> GENERICSELECTGENERATOR # 2 | accessKeysListing:');
         console_debug_log(accessKeysListing);
-        config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setState(error));
+        config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setErrorState(error));
       } catch (error) {
         console_debug_log(config.editor.title + "-Select | error object:");
         console_debug_log(error);
@@ -5449,66 +5643,150 @@ var generic_editor_rfc_suggestion_dropdown = /*#__PURE__*/Object.freeze({
   SuggestionDropdown: SuggestionDropdown
 });
 
+const _excluded$1 = ["resultset"];
 let calcFields = {};
+const formPageReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_FORM_DATA':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        formData: action.payload
+      });
+    case 'SET_ERROR_STATUS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        errorStatus: action.payload
+      });
+    case 'INCREMENT_REFRESH':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        refresh: state.refresh + 1
+      });
+    case 'SET_FORM_MSG':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        formMsg: action.payload
+      });
+    case 'SET_ITEM_READ':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        itemRead: action.payload
+      });
+    default:
+      return state;
+  }
+};
+const editFormReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_EDIT_FORM_DATA':
+      return _objectSpread2(_objectSpread2({}, state), action.payload);
+    default:
+      return state;
+  }
+};
 const FormPage = _ref => {
   let {
-    editor_par,
-    mode_par,
-    id_par,
-    onCancel_par,
-    setInfoMsg_par,
+    editor,
+    mode,
+    id,
+    onCancel,
+    setInfoMsg,
     handleFormPageActions = null,
     message = "",
     messageType = ""
   } = _ref;
-  const [formData, setFormData] = React.useState(null);
-  const [status, setStatus] = React.useState("");
-  const [refresh, setRefresh] = React.useState(0);
-  const [formMsg, setFormMsg] = React.useState({
-    message: message,
-    messageType: messageType
+  const [state, dispatch] = React.useReducer(formPageReducer, {
+    formData: null,
+    errorStatus: {
+      error: "",
+      code: ""
+    },
+    refresh: 0,
+    formMsg: {
+      message: message,
+      messageType: messageType
+    },
+    itemRead: false
   });
+  const {
+    formData,
+    errorStatus,
+    refresh,
+    formMsg,
+    itemRead
+  } = state;
   const {
     currentUser
   } = useUser();
   const {
     theme
   } = useAppContext();
+  const dataAlreadyLoaded = React.useRef(false);
+  const setFormData = payload => dispatch({
+    type: 'SET_FORM_DATA',
+    payload
+  });
+  const setErrorStatus = (errorMessage, errorCode) => dispatch({
+    type: 'SET_ERROR_STATUS',
+    payload: {
+      error: errorMessage,
+      code: errorCode
+    }
+  });
+  const setRefresh = () => {
+    dispatch({
+      type: 'INCREMENT_REFRESH'
+    });
+    dataAlreadyLoaded.current = false;
+  };
+  const setFormMsg = payload => dispatch({
+    type: 'SET_FORM_MSG',
+    payload
+  });
   const {
     debugCache
   } = React.useContext(MainSectionContext);
-  const editor = editor_par;
-  const mode = mode_par;
-  const id = id_par;
-  React.useEffect(() => {
+  const initForm = () => {
+    if (dataAlreadyLoaded.current) {
+      return;
+    }
+    dataAlreadyLoaded.current = true;
     if (mode === ACTION_CREATE) {
       // To assign specific default values in creation...
       processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(funcResponse => {
         setFormData(funcResponse.fieldValues);
-      }, error => setStatus(errorAndReEnter(error, '[GCE-FD-010]')));
+      }, error => setErrorStatus(error, '[GCE-FD-010]'));
     }
     if (mode === ACTION_UPDATE || mode === ACTION_READ || mode === ACTION_DELETE) {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
       processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
-        accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.endpointFilter);
+        const _funcResponse$fieldVa = funcResponse.fieldValues,
+          {
+            resultset
+          } = _funcResponse$fieldVa,
+          fieldValuesWithoutResultSet = _objectWithoutProperties(_funcResponse$fieldVa, _excluded$1);
+        accessKeysDataScreen = Object.assign({}, fieldValuesWithoutResultSet, editor.endpointFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
           processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(funcResponse => {
             setFormData(funcResponse.fieldValues);
-          }, error => setStatus(errorAndReEnter(error, '[GCE-FD-020]')));
+          }, error => {
+            console.error('ERROR on dbPostRead - GCE-FD-020', error);
+            setErrorStatus(error, '[GCE-FD-020]');
+          });
         }, error => {
-          console_debug_log("ERROR - GCE-FD-030");
-          console.error(error);
-          setStatus(errorAndReEnter(error, '[GCE-FD-030]'));
+          console.error('ERROR on getOne - GCE-FD-030', error);
+          setErrorStatus(error, '[GCE-FD-030]');
         });
-      }, error => setStatus(errorAndReEnter(error, '[GCE-FD-040]')));
+      }, error => {
+        console.error('ERROR on dbPreRead - GCE-FD-040', error);
+        setErrorStatus(error, '[GCE-FD-040]');
+      });
     }
-  }, [id, editor, mode, refresh]);
+  };
+  React.useEffect(() => {
+    initForm();
+  }, [refresh]);
   if (handleFormPageActions === null) {
     handleFormPageActions = funcResponse => {
       if (typeof funcResponse['otherData']['refresh'] != "undefined") {
-        setRefresh(refresh + 1);
+        setRefresh();
         setFormMsg({
           message: '',
           messageType: ''
@@ -5516,7 +5794,10 @@ const FormPage = _ref => {
       }
     };
   }
-  if (!editor || !formData) {
+  if (!editor) {
+    return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
+  }
+  if (!formData && !errorStatus.error) {
     return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   const editorFlags = getEditorFlags(mode);
@@ -5527,12 +5808,10 @@ const FormPage = _ref => {
     baseUrl: editor.baseUrl,
     title: editor.title,
     actionTitle: actionTitle
-  }), status && /*#__PURE__*/React.createElement("div", {
-    className: ERROR_MSG_CLASS
-  }, status), !status && formData && /*#__PURE__*/React.createElement(EditFormFormik, {
+  }), errorStatus.error && /*#__PURE__*/React.createElement(React.Fragment, null, errorAndReEnter(errorStatus.error, errorStatus.code)), !errorStatus.error && formData && /*#__PURE__*/React.createElement(EditFormFormik, {
     editor: editor,
-    parenHandleCancel: onCancel_par,
-    setInfoMsg: setInfoMsg_par,
+    parenHandleCancel: onCancel,
+    setInfoMsg: setInfoMsg,
     action: mode,
     dataset: formData.resultset,
     message: formMsg['message'],
@@ -5540,10 +5819,7 @@ const FormPage = _ref => {
     handleFormPageActions: handleFormPageActions,
     theme: theme,
     currentUser: currentUser
-  }), !status && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '')
-  // </div>
-  // </div>
-  ;
+  }), !errorStatus.error && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '');
 };
 const CrudEditorFormPageTitle = _ref2 => {
   let {
@@ -5793,12 +6069,23 @@ const EditFormFormik = _ref5 => {
     theme,
     currentUser
   } = _ref5;
-  const [formData, setFormData] = React.useState({
+  const [state, dispatch] = React.useReducer(editFormReducer, {
     readyToShow: false,
     dataset: null,
     canCommit: null,
     message: null,
     messageType: null
+  });
+  const {
+    readyToShow,
+    dataset: editDataset,
+    canCommit,
+    message: editMessage,
+    messageType: editMessageType
+  } = state;
+  const setFormData = payload => dispatch({
+    type: 'SET_EDIT_FORM_DATA',
+    payload
   });
   React.useEffect(() => {
     const editorFlags = getEditorFlags(action);
@@ -5832,27 +6119,30 @@ const EditFormFormik = _ref5 => {
       });
     }
   }, [editor, action, dataset]);
-  if (!formData['readyToShow']) {
+  if (!readyToShow) {
     return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
-  if (!formData['canCommit'] === null) {
-    formData['canCommit'] = false;
+  let finalCanCommit = canCommit;
+  if (finalCanCommit === null) {
+    finalCanCommit = false;
   }
-  if (!formData['message'] === null) {
-    formData['message'] = message;
+  let finalMessage = editMessage;
+  if (finalMessage === null) {
+    finalMessage = message;
   }
-  if (!formData['messageType'] === null) {
-    formData['messageType'] = messageType;
+  let finalMessageType = editMessageType;
+  if (finalMessageType === null || finalMessageType === '') {
+    finalMessageType = messageType;
   }
   return EditFormFormikFinal({
     editor: editor,
     parenHandleCancel: parenHandleCancel,
     setInfoMsg: setInfoMsg,
     action: action,
-    dataset: formData['dataset'],
-    canCommit: formData['canCommit'],
-    message: formData['message'],
-    messageType: formData['messageType'],
+    dataset: editDataset,
+    canCommit: finalCanCommit,
+    message: finalMessage,
+    messageType: finalMessageType,
     handleFormPageActions: handleFormPageActions,
     theme: theme,
     currentUser: currentUser
@@ -5903,11 +6193,10 @@ const EditFormFormikFinal = _ref6 => {
     enableReinitialize: true,
     initialValues: initialFieldValues
     //
-    // Todo: THIS DOESN'T WORK IN ACTION=CREATION
-    // validationSchema={Yup.object().shape(
-    //     getFieldElementsYupValidations(editor, editorFlags)
-    // )}
+    // TODO: getFieldElementsYupValidations didn't work with action=CREATION, at least on 2023-11-12
+    //
     ,
+    validationSchema: Yup__namespace.object().shape(getFieldElementsYupValidations(editor, editorFlags)),
     onSubmit: (submitedtElements, _ref7) => {
       let {
         setStatus,
@@ -5953,23 +6242,23 @@ const EditFormFormikFinal = _ref6 => {
                 }, error => {
                   console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                   setSubmitting(false);
-                  setStatus(errorAndReEnter(error.errorMsg, '[EFFF-010]'));
+                  setStatus(error.errorMsg + ' [EFFF-010]');
                 });
               }
             }, error => {
               console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
               setSubmitting(false);
-              setStatus(errorAndReEnter(error, 'EFFF-020'));
+              setStatus(error + ' EFFF-020');
             });
           }, error => {
             console_debug_log('dbPreWrite [EFFF-030] | error:', error);
             setSubmitting(false);
-            setStatus(errorAndReEnter((error.errorMsg, 'EFFF-030')));
+            setStatus(error.errorMsg + ' EFFF-030');
           });
         }, error => {
           console_debug_log('validations [EFFF-040] | error:', error);
           setSubmitting(false);
-          setStatus(errorAndReEnter(error.errorMsg, 'EFFF-040'));
+          setStatus(error + ' EFFF-040');
         });
       }
     }
@@ -6009,7 +6298,7 @@ const EditFormFormikFinal = _ref6 => {
       onClick: handleCancel
     }, MSG_ACTION_CANCEL)), status && /*#__PURE__*/React.createElement("div", {
       className: ERROR_MSG_CLASS
-    }, status));
+    }, errorAndReEnter(status)));
   });
 };
 const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
@@ -6173,7 +6462,9 @@ const getFieldElementsYupValidations = (editor, editorFlags) => {
   if (editorFlags.isDelete) {
     return {};
   }
-  const response = editor.fieldElements.reduce((acc, currentObj) => {
+  const response = editor.fieldElements.filter(currentObj => {
+    return !["label", "hr", "h1", "h2", "h3", "h4", "h5", "h6"].includes(currentObj.type);
+  }).reduce((acc, currentObj) => {
     let responseObj = Yup__namespace; // https://github.com/jquense/yup
     switch (currentObj.type) {
       case 'number':
@@ -6203,8 +6494,7 @@ const getFieldElementsYupValidations = (editor, editorFlags) => {
 
 var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  FormPage: FormPage,
-  getFieldElementsYupValidations: getFieldElementsYupValidations
+  FormPage: FormPage
 });
 
 const CrudEditorSearch = _ref => {
@@ -6291,9 +6581,77 @@ var generic_editor_rfc_search = /*#__PURE__*/Object.freeze({
   CrudEditorSearch: CrudEditorSearch
 });
 
-// GenericCrudEditor (GCE) service main
-
 const debug$1 = false;
+const initialState$1 = {
+  editor: null,
+  rows: null,
+  currentPage: 1,
+  rowsPerPage: 10,
+  formMode: [ACTION_LIST, null],
+  status: "",
+  infoMsg: "",
+  searchFilters: {},
+  searchText: ""
+};
+function gceReducer(state, action) {
+  switch (action.type) {
+    case 'SET_EDITOR':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        editor: action.payload
+      });
+    case 'SET_ROWS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        rows: action.payload
+      });
+    case 'SET_CURRENT_PAGE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        currentPage: action.payload
+      });
+    case 'SET_ROWS_PER_PAGE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        rowsPerPage: action.payload
+      });
+    case 'SET_FORM_MODE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        formMode: action.payload
+      });
+    case 'SET_STATUS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        status: action.payload
+      });
+    case 'SET_INFO_MSG':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        infoMsg: action.payload
+      });
+    case 'SET_SEARCH_FILTERS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        searchFilters: action.payload
+      });
+    case 'SET_SEARCH_TEXT':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        searchText: action.payload
+      });
+    case 'HANDLE_CANCEL':
+      {
+        const {
+          config
+        } = action.payload;
+        let newState = _objectSpread2({}, state);
+        if (typeof config['searchFilters'] !== 'undefined') {
+          newState.searchFilters = config['searchFilters'];
+          newState.searchText = config['searchText'];
+        }
+        if (typeof config['nextAction'] !== 'undefined') {
+          newState.formMode = [config['nextAction'], config['id'], config['infoMsg'], "INFO"];
+        } else {
+          newState.formMode = [ACTION_LIST, null];
+        }
+        return newState;
+      }
+    default:
+      return state;
+  }
+}
 const GenericCrudEditor = _ref => {
   let {
     editorConfig,
@@ -6307,15 +6665,48 @@ const GenericCrudEditor = _ref => {
   })));
 };
 const GenericCrudEditorMain = props => {
-  const [editor, setEditor] = React.useState(null);
-  const [rows, setRows] = React.useState(null);
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(parseInt(getLocalConfigItem("gce_rows_per_page")));
-  const [formMode, setFormMode] = React.useState([ACTION_LIST, null]);
-  const [status, setStatus] = React.useState("");
-  const [infoMsg, setInfoMsg] = React.useState("");
-  const [searchFilters, setSearchFilters] = React.useState({});
-  const [searchText, setSearchText] = React.useState("");
+  const [state, dispatch] = React.useReducer(gceReducer, _objectSpread2(_objectSpread2({}, initialState$1), {}, {
+    rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
+  }));
+  const {
+    editor,
+    rows,
+    currentPage,
+    rowsPerPage,
+    formMode,
+    status,
+    infoMsg,
+    searchFilters,
+    searchText
+  } = state;
+  const setStatus = p => dispatch({
+    type: 'SET_STATUS',
+    payload: p
+  });
+  const setEditor = p => dispatch({
+    type: 'SET_EDITOR',
+    payload: p
+  });
+  const setRows = p => dispatch({
+    type: 'SET_ROWS',
+    payload: p
+  });
+  const setInfoMsg = p => dispatch({
+    type: 'SET_INFO_MSG',
+    payload: p
+  });
+  const setFormMode = p => dispatch({
+    type: 'SET_FORM_MODE',
+    payload: p
+  });
+  const setCurrentPage = p => dispatch({
+    type: 'SET_CURRENT_PAGE',
+    payload: p
+  });
+  const setRowsPerPage = p => dispatch({
+    type: 'SET_ROWS_PER_PAGE',
+    payload: p
+  });
   const {
     initCache,
     debugCache
@@ -6349,7 +6740,7 @@ const GenericCrudEditorMain = props => {
     });
   }, []);
   React.useEffect(() => {
-    if (editor) {
+    if (editor && formMode[0] === ACTION_LIST) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation";
       ShowHideWaitAnimation(true, animationElementId);
       let accessKeysListing = {
@@ -6378,15 +6769,12 @@ const GenericCrudEditorMain = props => {
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
   const handleCancel = function () {
     let config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    if (typeof config['searchFilters'] !== 'undefined') {
-      setSearchFilters(config['searchFilters']);
-      setSearchText(config['searchText']);
-    }
-    if (typeof config['nextAction'] !== 'undefined') {
-      setFormMode([config['nextAction'], config['id'], config['infoMsg'], "INFO"]);
-    } else {
-      setFormMode([ACTION_LIST, null]);
-    }
+    dispatch({
+      type: 'HANDLE_CANCEL',
+      payload: {
+        config
+      }
+    });
   };
   const handleNew = () => {
     setFormMode([ACTION_CREATE, null]);
@@ -6495,11 +6883,11 @@ const GenericCrudEditorMain = props => {
   }
   if (formMode[0] !== ACTION_LIST) {
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(FormPage, {
-      mode_par: formMode[0],
-      id_par: formMode[1],
-      onCancel_par: handleCancel,
-      setInfoMsg_par: setInfoMsg,
-      editor_par: editor,
+      mode: formMode[0],
+      id: formMode[1],
+      onCancel: handleCancel,
+      setInfoMsg: setInfoMsg,
+      editor: editor,
       handleFormPageActions: props.handleFormPageActions,
       message: typeof formMode[2] !== 'undefined' ? formMode[2] : '',
       messageType: typeof formMode[3] !== 'undefined' ? formMode[3] : ''
@@ -6511,7 +6899,13 @@ const GenericCrudEditorMain = props => {
   }, infoMsg && /*#__PURE__*/React.createElement("div", {
     key: "".concat(editor.baseUrl, "_info_msg"),
     className: INFO_MSG_CLASS
-  }, infoMsg), rows && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(CrudEditorListingTitle, {
+  }, /*#__PURE__*/React.createElement("div", null, infoMsg), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setInfoMsg(''),
+    className: INFO_MSG_BUTTON_CLASS
+  }, /*#__PURE__*/React.createElement(GsIcons, {
+    icon: "x",
+    alt: MSG_CLOSE
+  })))), rows && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(CrudEditorListingTitle, {
     baseUrl: editor.baseUrl,
     title: editor.title,
     handleRefresh: handleRefresh
@@ -6804,15 +7198,13 @@ var generic_editor_rfc_service = /*#__PURE__*/Object.freeze({
   GetFormData: GetFormData
 });
 
-var baseUrl$4 = "users_config";
-var title$4 = "User Configurations";
-var name$4 = "User's Configuration";
-var dbApiUrl$4 = "users_config";
-var component$4 = "UsersConfig";
+var baseUrl$4 = "users_api_keys";
+var title$4 = "User API Keys";
+var name$4 = "User's API Key";
+var dbApiUrl$4 = "users_api_keys";
+var component$4 = "UsersApiKey";
 var type$1 = "child_listing";
-var subType$1 = "array";
-var array_name = "users_config";
-var parentUrl = "users";
+var subType$1 = "table";
 var endpointKeyNames$1 = [
 	{
 		parameterName: "user_id",
@@ -6820,91 +7212,8 @@ var endpointKeyNames$1 = [
 	}
 ];
 var primaryKeyName$1 = "id";
-var defaultOrder$2 = "config_name";
+var defaultOrder$2 = "access_token";
 var fieldElements$4 = [
-	{
-		name: "id",
-		required: false,
-		label: "ID",
-		type: "text",
-		readonly: true,
-		hidden: true,
-		listing: false,
-		uuid_generator: true
-	},
-	{
-		name: "config_name",
-		required: true,
-		label: "Name",
-		type: "text",
-		readonly: false,
-		listing: true
-	},
-	{
-		name: "config_value",
-		required: true,
-		label: "Value",
-		type: "text",
-		readonly: false,
-		listing: true
-	}
-];
-var users_config = {
-	baseUrl: baseUrl$4,
-	title: title$4,
-	name: name$4,
-	dbApiUrl: dbApiUrl$4,
-	component: component$4,
-	type: type$1,
-	subType: subType$1,
-	array_name: array_name,
-	parentUrl: parentUrl,
-	endpointKeyNames: endpointKeyNames$1,
-	primaryKeyName: primaryKeyName$1,
-	defaultOrder: defaultOrder$2,
-	fieldElements: fieldElements$4
-};
-
-function UsersConfig_EditorData() {
-  // console_debug_log("UsersConfig_EditorData");
-  const registry = {
-    "UsersConfig": UsersConfig
-  };
-  // return GetFormData('users_config', registry, false);
-  return GetFormData(users_config, registry, false);
-}
-function UsersConfig() {
-  return {
-    editorConfig: UsersConfig_EditorData(),
-    component: UsersConfigComponent
-  };
-}
-const UsersConfigComponent = _ref => {
-  let {
-    parentData
-  } = _ref;
-  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
-    editorConfig: UsersConfig_EditorData(),
-    parentData: parentData
-  });
-};
-
-var baseUrl$3 = "users_api_keys";
-var title$3 = "User API Keys";
-var name$3 = "User's API Key";
-var dbApiUrl$3 = "users_api_keys";
-var component$3 = "UsersApiKey";
-var type = "child_listing";
-var subType = "table";
-var endpointKeyNames = [
-	{
-		parameterName: "user_id",
-		parentElementName: "id"
-	}
-];
-var primaryKeyName = "id";
-var defaultOrder$1 = "access_token";
-var fieldElements$3 = [
 	{
 		name: "id",
 		required: false,
@@ -6938,17 +7247,17 @@ var dbPreRead = [
 	"UsersApiKeyDbPreRead"
 ];
 var users_api_keys = {
-	baseUrl: baseUrl$3,
-	title: title$3,
-	name: name$3,
-	dbApiUrl: dbApiUrl$3,
-	component: component$3,
-	type: type,
-	subType: subType,
-	endpointKeyNames: endpointKeyNames,
-	primaryKeyName: primaryKeyName,
-	defaultOrder: defaultOrder$1,
-	fieldElements: fieldElements$3,
+	baseUrl: baseUrl$4,
+	title: title$4,
+	name: name$4,
+	dbApiUrl: dbApiUrl$4,
+	component: component$4,
+	type: type$1,
+	subType: subType$1,
+	endpointKeyNames: endpointKeyNames$1,
+	primaryKeyName: primaryKeyName$1,
+	defaultOrder: defaultOrder$2,
+	fieldElements: fieldElements$4,
 	dbPreRead: dbPreRead
 };
 
@@ -7002,6 +7311,91 @@ const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
         break;
     }
     resolve(resp);
+  });
+};
+
+var baseUrl$3 = "users_config";
+var title$3 = "User Configurations";
+var name$3 = "User's Configuration";
+var dbApiUrl$3 = "users_config";
+var component$3 = "UsersConfig";
+var type = "child_listing";
+var subType = "array";
+var array_name = "users_config";
+var parentUrl = "users";
+var endpointKeyNames = [
+	{
+		parameterName: "user_id",
+		parentElementName: "id"
+	}
+];
+var primaryKeyName = "id";
+var defaultOrder$1 = "config_name";
+var fieldElements$3 = [
+	{
+		name: "id",
+		required: false,
+		label: "ID",
+		type: "text",
+		readonly: true,
+		hidden: true,
+		listing: false,
+		uuid_generator: true
+	},
+	{
+		name: "config_name",
+		required: true,
+		label: "Name",
+		type: "text",
+		readonly: false,
+		listing: true
+	},
+	{
+		name: "config_value",
+		required: true,
+		label: "Value",
+		type: "text",
+		readonly: false,
+		listing: true
+	}
+];
+var users_config = {
+	baseUrl: baseUrl$3,
+	title: title$3,
+	name: name$3,
+	dbApiUrl: dbApiUrl$3,
+	component: component$3,
+	type: type,
+	subType: subType,
+	array_name: array_name,
+	parentUrl: parentUrl,
+	endpointKeyNames: endpointKeyNames,
+	primaryKeyName: primaryKeyName,
+	defaultOrder: defaultOrder$1,
+	fieldElements: fieldElements$3
+};
+
+function UsersConfig_EditorData() {
+  // console_debug_log("UsersConfig_EditorData");
+  const registry = {
+    "UsersConfig": UsersConfig
+  };
+  // return GetFormData('users_config', registry, false);
+  return GetFormData(users_config, registry, false);
+}
+function UsersConfig() {
+  return {
+    editorConfig: UsersConfig_EditorData(),
+    component: UsersConfigComponent
+  };
+}
+const UsersConfigComponent = _ref => {
+  let {
+    parentData
+  } = _ref;
+  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
+    editorConfig: UsersConfig_EditorData(),
+    parentData: parentData
   });
 };
 
@@ -7152,7 +7546,7 @@ var fieldElements$2 = [
 		force_value: ""
 	}
 ];
-var childComponents = [
+var childComponents$1 = [
 	"UsersConfig",
 	"UsersApiKey"
 ];
@@ -7175,7 +7569,7 @@ var users = {
 	component: component$2,
 	dbApiUrl: dbApiUrl$2,
 	fieldElements: fieldElements$2,
-	childComponents: childComponents,
+	childComponents: childComponents$1,
 	dbListPreRead: dbListPreRead$1,
 	dbPreWrite: dbPreWrite$1,
 	dbPreValidations: dbPreValidations$1,
@@ -7212,7 +7606,8 @@ const UsersValidations = (data, editor, action, currentUser) => {
   // Users pre-deletion/update validations
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
-    getUserData(currentUser.id).then(userData => {
+    getUserDataCache(currentUser.id).then(userData => {
+      setUserDataCache(currentUser.id, userData);
       if (typeof data !== 'undefined' && typeof data['_id'] !== 'undefined') {
         data['id'] = editor.db.convertId(data['_id']);
       }
@@ -7260,7 +7655,8 @@ const UsersDbListPreRead = (data, editor, action, currentUser) => {
   // Users pre-deletion/update validations
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
-    getUserData(currentUser.id).then(currentUserData => {
+    getUserDataCache(currentUser.id).then(currentUserData => {
+      setUserDataCache(currentUser.id, currentUserData);
       if (currentUserData.error) {
         resp.error = true;
         resp.errorMsg = currentUserData.errorMsg;
@@ -7324,8 +7720,6 @@ const UsersDbPreWrite = (data, editor, action) => {
   });
 };
 
-// GenericCrudEditor single page editor
-
 const GenericSinglePageEditor = _ref => {
   let {
     editorConfig,
@@ -7339,10 +7733,48 @@ const GenericSinglePageEditor = _ref => {
   })));
 };
 const debug = false;
+const initialState = {
+  editor: null,
+  formMode: null,
+  status: ""
+};
+function gspeReducer(state, action) {
+  switch (action.type) {
+    case 'SET_EDITOR':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        editor: action.payload
+      });
+    case 'SET_FORM_MODE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        formMode: action.payload
+      });
+    case 'SET_STATUS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        status: action.payload
+      });
+    default:
+      return state;
+  }
+}
 const GenericSinglePageEditorMain = props => {
-  const [editor, setEditor] = React.useState(null);
-  const [formMode, setFormMode] = React.useState(null);
-  const [status, setStatus] = React.useState("");
+  const [state, dispatch] = React.useReducer(gspeReducer, initialState);
+  const {
+    editor,
+    formMode,
+    status
+  } = state;
+  const setEditor = p => dispatch({
+    type: 'SET_EDITOR',
+    payload: p
+  });
+  const setFormMode = p => dispatch({
+    type: 'SET_FORM_MODE',
+    payload: p
+  });
+  const setStatus = p => dispatch({
+    type: 'SET_STATUS',
+    payload: p
+  });
   const {
     initCache
   } = React.useContext(MainSectionContext);
@@ -7353,7 +7785,7 @@ const GenericSinglePageEditorMain = props => {
       } else if (editor_response.error) {
         console_debug_log("GSPE-ERROR-010:");
         console_debug_log(editor_response.errorMsg);
-        setStatus(errorAndReEnter(editor_response.errorMsg));
+        setStatus(editor_response.errorMsg);
       } else if (!editor_response.response) {
         setEditor(null);
       } else {
@@ -7362,7 +7794,7 @@ const GenericSinglePageEditorMain = props => {
     }, error => {
       console_debug_log("GSPE-ERROR-020:");
       console_debug_log(error);
-      setStatus(errorAndReEnter(error));
+      setStatus(error);
     });
   }, [props, debug]);
   React.useEffect(() => {
@@ -7370,8 +7802,6 @@ const GenericSinglePageEditorMain = props => {
     setFormMode(form_mode);
   }, [props.id, debug]);
   const setInfoMsg = msg => {
-    console_debug_log('setInfoMsg | msg:');
-    console_debug_log(msg);
   };
   const handleCancel = () => {
     window.location.href = '/';
@@ -7383,16 +7813,14 @@ const GenericSinglePageEditorMain = props => {
     return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   if (status) {
-    return /*#__PURE__*/React.createElement("div", {
-      className: ERROR_MSG_CLASS
-    }, status, debug);
+    return /*#__PURE__*/React.createElement(React.Fragment, null, errorAndReEnter(status + ("")));
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(FormPage, {
-    mode_par: formMode[0],
-    id_par: formMode[1],
-    onCancel_par: handleCancel,
-    setInfoMsg_par: setInfoMsg,
-    editor_par: editor
+    mode: formMode[0],
+    id: formMode[1],
+    onCancel: handleCancel,
+    setInfoMsg: setInfoMsg,
+    editor: editor
   }));
 };
 
@@ -7531,6 +7959,9 @@ var fieldElements$1 = [
 		force_value: ""
 	}
 ];
+var childComponents = [
+	"UsersApiKey"
+];
 var dbListPreRead = [
 	"UsersDbListPreRead"
 ];
@@ -7551,6 +7982,7 @@ var users_profile = {
 	dbApiUrl: dbApiUrl$1,
 	updateItem: updateItem,
 	fieldElements: fieldElements$1,
+	childComponents: childComponents,
 	dbListPreRead: dbListPreRead,
 	dbPreWrite: dbPreWrite,
 	dbPreValidations: dbPreValidations,
@@ -7568,7 +8000,8 @@ function UsersProfile_EditorData() {
     "UsersDbListPreRead": UsersDbListPreRead,
     "UsersDbPreWrite": UsersDbPreWrite,
     "UsersValidations": UsersValidations,
-    "UsersPasswordValidations": UsersPasswordValidations
+    "UsersPasswordValidations": UsersPasswordValidations,
+    "UsersApiKey": UsersApiKey
   };
   // return GetFormData('users_profile', registry, 'UserProfileEditor');
   return GetFormData(users_profile, registry, 'UserProfileEditor');
@@ -7647,8 +8080,7 @@ const LoginPage = props => {
   };
   const {
     currentUser,
-    registerUser,
-    unRegisterUser
+    registerUser
   } = useUser();
   const {
     appLogo,
@@ -7721,6 +8153,7 @@ const LoginPage = props => {
     }, "Username"), /*#__PURE__*/React.createElement(formik.Field, {
       name: "username",
       type: "text",
+      autoComplete: "username",
       className: FORM_CONTROL_CLASS + ' ' + (errors.username && touched.username ? IS_INVALID_CLASS : theme.input)
     }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
       name: "username",
@@ -7734,6 +8167,7 @@ const LoginPage = props => {
     }, "Password"), /*#__PURE__*/React.createElement(formik.Field, {
       name: "password",
       type: "password",
+      autoComplete: "current-password",
       className: FORM_CONTROL_CLASS + ' ' + (errors.password && touched.password ? IS_INVALID_CLASS : theme.input)
     }), /*#__PURE__*/React.createElement(formik.ErrorMessage, {
       name: "password",
@@ -7946,11 +8380,14 @@ const AppMainInner = _ref6 => {
   // const location = useLocation();
   // if (debug) console_debug_log("App | location:", location);
   const {
-    currentUser
+    currentUser,
+    askForLogin,
+    unRegisterUser
   } = useUser();
   const {
-    state,
     setState,
+    errorState,
+    setErrorState,
     menuOptions,
     setMenuOptions,
     sideMenu,
@@ -7959,16 +8396,27 @@ const AppMainInner = _ref6 => {
     componentMap
   } = useAppContext();
   const showContentOnly = getShowContentOnly();
-  const stateHandler = () => {
+  const getMenuFromApiAlreadyCalled = React.useRef(false);
+  const callGetMenuFromApi = () => {
+    // Load menus from JSON configurations
+    if (!getMenuFromApiAlreadyCalled.current) {
+      getMenuFromApiAlreadyCalled.current = true;
+      getMenuFromApi(setState, getErrorState, setErrorState, setMenuOptions, getMenuOptions);
+    }
+  };
+  const logoutHandler = () => {
+    unRegisterUser();
     logoutHander();
   };
-  const getState = () => {
-    return state;
+  const getErrorState = () => {
+    return errorState;
+  };
+  const getMenuOptions = () => {
+    return menuOptions;
   };
   React.useEffect(() => {
-    // Load menus from JSON configurations
     if (currentUser) {
-      getMenuFromApi(getState, setState, setMenuOptions);
+      callGetMenuFromApi();
     }
   }, [currentUser]);
   if (showContentOnly) {
@@ -7984,16 +8432,16 @@ const AppMainInner = _ref6 => {
   })), !sideMenu && /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer, null, /*#__PURE__*/React.createElement(React.Fragment, null, !sideMenu && /*#__PURE__*/React.createElement(AppMainComponent, {
-    stateHandler: stateHandler,
+    logoutHandler: logoutHandler,
     showContentOnly: showContentOnly,
-    menuOptions: menuOptions,
+    askForLogin: askForLogin,
     currentUser: currentUser
   }, children), sideMenu && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Navbar.TopForSideMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(AppMainComponent, {
-    stateHandler: stateHandler,
+    logoutHandler: logoutHandler,
     showContentOnly: showContentOnly,
-    menuOptions: menuOptions,
+    askForLogin: askForLogin,
     currentUser: currentUser
   }, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null))))), /*#__PURE__*/React.createElement(Navbar.MobileMenu, null, /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     itemType: "mobile_menu"
@@ -8006,31 +8454,31 @@ const AppMainInner = _ref6 => {
 };
 const AppMainComponent = _ref7 => {
   let {
-    stateHandler,
+    logoutHandler,
     showContentOnly,
-    menuOptions,
+    askForLogin,
     currentUser,
     children
   } = _ref7;
   const {
-    state
+    errorState
   } = useAppContext();
-  if (state !== "") {
+  if (errorState !== "") {
     if (showContentOnly) {
-      return /*#__PURE__*/React.createElement(CloseButton, null, getErrorMessage(state));
+      return /*#__PURE__*/React.createElement(CloseButton, null, getErrorMessage(errorState));
     }
-    return errorAndReEnter(state, null, true, null, stateHandler, false, false);
+    return errorAndReEnter(errorState, null, true, null, logoutHandler, false, false);
   }
-  if (!menuOptions) {
-    if (currentUser) {
-      return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
-    }
+  if (askForLogin) {
     return /*#__PURE__*/React.createElement("div", {
       className: LOGIN_BUTTON_IN_APP_COMPONENT_CLASS
     }, /*#__PURE__*/React.createElement(GsButton, {
       as: reactRouterDom.Link,
       to: getPrefix() + '/login'
     }, "Login"));
+  }
+  if (!currentUser) {
+    return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
   }
   return children;
 };
@@ -8040,10 +8488,10 @@ const AppMain = () => {
   };
   const {
     currentUser,
-    registerUser
+    registerUser,
+    setAskForLogin
   } = useUser();
   const {
-    state,
     setState,
     menuOptions,
     setMenuOptions,
@@ -8051,20 +8499,26 @@ const AppMain = () => {
     setExpanded
   } = useAppContext();
   const [router, setRouter] = React.useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
+  const verifyCurrentUserAlreadyCalled = React.useRef(false);
+  const setRouterAlreadyCalled = React.useRef(false);
+  const callVerifyCurrentUser = () => {
+    if (!verifyCurrentUserAlreadyCalled.current) {
+      verifyCurrentUserAlreadyCalled.current = true;
+      verifyCurrentUser(registerUser, currentUser, setAskForLogin);
+    }
+  };
+  const assignRouter = () => {
+    if (!setRouterAlreadyCalled.current) {
+      setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
+      setRouterAlreadyCalled.current = true;
+    }
+  };
   React.useEffect(() => {
-    verifyCurrentUser(registerUser, currentUser);
+    callVerifyCurrentUser();
   }, []);
-
-  // useEffect(() => {
-  //     // Load menus from JSON configurations
-  //     if (currentUser) {
-  //         getMenuFromApi(state, setState, setMenuOptions);
-  //     }
-  // }, [currentUser, state]);
-
   React.useEffect(() => {
     if (menuOptions) {
-      setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
+      assignRouter();
     }
   }, [menuOptions]);
   if (hasHashRouter) {
@@ -8104,7 +8558,7 @@ const App = _ref8 => {
     appLogo = "",
     appLogoHeader = ""
   } = _ref8;
-  const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+  const [componentMapFinal, setComponentMapFinal] = React.useState(mergeDicts(componentMap, defaultComponentMap));
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
     globalComponentMap: componentMapFinal,
     globalAppLogo: appLogo,

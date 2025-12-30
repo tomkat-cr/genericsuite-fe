@@ -1,24 +1,24 @@
 // GenericCrudEditor select components
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import {
-  MainSectionContext,
-} from './generic.editor.rfc.provider.jsx';
+import { dbApiService } from "./db.service.jsx";
 import {
   getEditorData,
 } from './generic.editor.rfc.common.jsx';
 import {
+  MainSectionContext,
+} from './generic.editor.rfc.provider.jsx';
+import {
   console_debug_log,
 } from './logging.service.jsx';
-import { dbApiService } from "./db.service.jsx";
 
 import { MSG_SELECT_AN_OPTION } from "../constants/general_constants.jsx";
 
 const debug = false;
 
 export const GenericSelectGenerator = (props) => {
-  const [state, setState] = useState(null);
+  const [errorState, setErrorState] = useState(null);
   const [config, setConfig] = useState(null);
   const [rows, setRows] = useState(null);
   const {
@@ -61,7 +61,7 @@ export const GenericSelectGenerator = (props) => {
         config && config.dbService.getAll(accessKeysListing)
           .then(
             data => setRowsAndCache(data),
-            error => setState(error)
+            error => setErrorState(error)
           )
       } catch (error) {
         console.error(config.editor.title + '-Select | error object:', error);
@@ -75,7 +75,7 @@ export const GenericSelectGenerator = (props) => {
       dbService: new dbApiService({ url: editor.dbApiUrl }),
       filter:
         typeof props.filter !== 'undefined' ? props.filter : null,
-      dbFilter: 
+      dbFilter:
         typeof props.dbFilter !== 'undefined' ? props.dbFilter : null,
       show_description:
         typeof props.show_description !== 'undefined'
@@ -95,9 +95,9 @@ export const GenericSelectGenerator = (props) => {
     return '';
   }
 
-  if (state) {
+  if (errorState) {
     // Some error happens
-    return state.toString();
+    return errorState.toString();
   }
 
   const { filter, show_description, description_fields, dbService } = config;
@@ -127,7 +127,7 @@ export const GenericSelectGenerator = (props) => {
   }
 
   return selectOptions
-    .filter((option) => 
+    .filter((option) =>
       filter === null ? true : dbService.convertId(option._id) === filter
     )
     .map((option) => {
@@ -146,7 +146,7 @@ export const GenericSelectGenerator = (props) => {
 };
 
 export const GenericSelectDataPopulator = (props) => {
-  const [state, setState] = useState(null);
+  const [errorState, setErrorState] = useState(null);
   const [config, setConfig] = useState(null);
   const [rows, setRows] = useState(null);
   const {
@@ -183,8 +183,8 @@ export const GenericSelectDataPopulator = (props) => {
     if (!rows) {
       return '';
     }
-    if (state) {
-      return state.toString();
+    if (errorState) {
+      return errorState.toString();
     }
     const array_options = rows.resultset
       .filter((option) =>
@@ -222,7 +222,7 @@ export const GenericSelectDataPopulator = (props) => {
         config && config.dbService.getAll(accessKeysListing)
           .then(
             data => setRowsAndCache(data),
-            error => setState(error)
+            error => setErrorState(error)
           );
       } catch (error) {
         console_debug_log(config.editor.title + "-Select | error object:");
@@ -265,7 +265,7 @@ export const getSelectDescription = (currentObj, dbRow) => {
   // Component select (with specific select component and data populator)
   if (currentObj.type === 'select_component') {
     const filter = (
-      typeof dbRow[currentObj.name] !== "undefined" ? 
+      typeof dbRow[currentObj.name] !== "undefined" ?
         dbRow[currentObj.name].toString() : null
     )
     return (

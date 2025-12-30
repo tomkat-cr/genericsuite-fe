@@ -1,6 +1,6 @@
 // GenericCrudEditor (GCE) service main
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
 import { useAppContext } from "../helpers/AppContext.jsx";
@@ -12,6 +12,7 @@ import {
   MSG_ACTION_DELETE,
   MSG_ACTION_EDIT,
   MSG_ACTION_READ,
+  MSG_CLOSE,
   MSG_MORE,
   MSG_RELOAD
 } from "../constants/general_constants.jsx";
@@ -79,6 +80,7 @@ import {
   BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS,
   HIDDEN_CLASS,
+  INFO_MSG_BUTTON_CLASS,
   INFO_MSG_CLASS,
   VISIBLE_CLASS,
   WAIT_ANIMATION_MARGIN_TOP_CLASS,
@@ -100,6 +102,62 @@ import {
 
 const debug = false;
 
+const initialState = {
+  editor: null,
+  rows: null,
+  currentPage: 1,
+  rowsPerPage: 10,
+  formMode: [ACTION_LIST, null],
+  status: "",
+  infoMsg: "",
+  searchFilters: {},
+  searchText: "",
+};
+
+function gceReducer(state, action) {
+  switch (action.type) {
+    case 'SET_EDITOR':
+      return { ...state, editor: action.payload };
+    case 'SET_ROWS':
+      return { ...state, rows: action.payload };
+    case 'SET_CURRENT_PAGE':
+      return { ...state, currentPage: action.payload };
+    case 'SET_ROWS_PER_PAGE':
+      return { ...state, rowsPerPage: action.payload };
+    case 'SET_FORM_MODE':
+      return { ...state, formMode: action.payload };
+    case 'SET_STATUS':
+      return { ...state, status: action.payload };
+    case 'SET_INFO_MSG':
+      return { ...state, infoMsg: action.payload };
+    case 'SET_SEARCH_FILTERS':
+      return { ...state, searchFilters: action.payload };
+    case 'SET_SEARCH_TEXT':
+      return { ...state, searchText: action.payload };
+    case 'HANDLE_CANCEL': {
+      const { config } = action.payload;
+      let newState = { ...state };
+      if (typeof config['searchFilters'] !== 'undefined') {
+        newState.searchFilters = config['searchFilters'];
+        newState.searchText = config['searchText'];
+      }
+      if (typeof config['nextAction'] !== 'undefined') {
+        newState.formMode = [
+          config['nextAction'],
+          config['id'],
+          config['infoMsg'],
+          "INFO",
+        ];
+      } else {
+        newState.formMode = [ACTION_LIST, null];
+      }
+      return newState;
+    }
+    default:
+      return state;
+  }
+}
+
 export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActions = null }) => {
   return (
     <>
@@ -115,17 +173,32 @@ export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActi
 }
 
 const GenericCrudEditorMain = (props) => {
-  const [editor, setEditor] = useState(null);
-  const [rows, setRows] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(
-    parseInt(getLocalConfigItem("gce_rows_per_page"))
-  );
-  const [formMode, setFormMode] = useState([ACTION_LIST, null]);
-  const [status, setStatus] = useState("");
-  const [infoMsg, setInfoMsg] = useState("");
-  const [searchFilters, setSearchFilters] = useState({});
-  const [searchText, setSearchText] = useState("");
+  const [state, dispatch] = useReducer(gceReducer, {
+    ...initialState,
+    rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
+  });
+
+  const {
+    editor,
+    rows,
+    currentPage,
+    rowsPerPage,
+    formMode,
+    status,
+    infoMsg,
+    searchFilters,
+    searchText
+  } = state;
+
+  const setStatus = (p) => dispatch({ type: 'SET_STATUS', payload: p });
+  const setEditor = (p) => dispatch({ type: 'SET_EDITOR', payload: p });
+  const setRows = (p) => dispatch({ type: 'SET_ROWS', payload: p });
+  const setInfoMsg = (p) => dispatch({ type: 'SET_INFO_MSG', payload: p });
+  const setFormMode = (p) => dispatch({ type: 'SET_FORM_MODE', payload: p });
+  const setCurrentPage = (p) => dispatch({ type: 'SET_CURRENT_PAGE', payload: p });
+  const setRowsPerPage = (p) => dispatch({ type: 'SET_ROWS_PER_PAGE', payload: p });
+  const setSearchFilters = (p) => dispatch({ type: 'SET_SEARCH_FILTERS', payload: p });
+  const setSearchText = (p) => dispatch({ type: 'SET_SEARCH_TEXT', payload: p });
 
   const {
     initCache,
@@ -169,7 +242,7 @@ const GenericCrudEditorMain = (props) => {
   }, []);
 
   useEffect(() => {
-    if (editor) {
+    if (editor && formMode[0] === ACTION_LIST) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation"
       ShowHideWaitAnimation(true, animationElementId);
       let accessKeysListing = {
@@ -223,20 +296,7 @@ const GenericCrudEditorMain = (props) => {
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
 
   const handleCancel = (config = {}) => {
-    if ((typeof config['searchFilters'] !== 'undefined')) {
-      setSearchFilters(config['searchFilters']);
-      setSearchText(config['searchText']);
-    }
-    if ((typeof config['nextAction'] !== 'undefined')) {
-      setFormMode([
-        config['nextAction'],
-        config['id'],
-        config['infoMsg'],
-        "INFO",
-      ]);
-    } else {
-      setFormMode([ACTION_LIST, null]);
-    }
+    dispatch({ type: 'HANDLE_CANCEL', payload: { config } });
   };
 
   const handleNew = () => {
@@ -369,11 +429,11 @@ const GenericCrudEditorMain = (props) => {
     return (
       <>
         <FormPage
-          mode_par={formMode[0]}
-          id_par={formMode[1]}
-          onCancel_par={handleCancel}
-          setInfoMsg_par={setInfoMsg}
-          editor_par={editor}
+          mode={formMode[0]}
+          id={formMode[1]}
+          onCancel={handleCancel}
+          setInfoMsg={setInfoMsg}
+          editor={editor}
           handleFormPageActions={props.handleFormPageActions}
           message={typeof formMode[2] !== 'undefined' ? formMode[2] : ''}
           messageType={typeof formMode[3] !== 'undefined' ? formMode[3] : ''}
@@ -393,7 +453,20 @@ const GenericCrudEditorMain = (props) => {
           key={`${editor.baseUrl}_info_msg`}
           className={INFO_MSG_CLASS}
         >
-          {infoMsg}
+          <div>
+            {infoMsg}
+          </div>
+          <div>
+            <button
+              onClick={() => setInfoMsg('')}
+              className={INFO_MSG_BUTTON_CLASS}
+            >
+              <GsIcons
+                icon='x'
+                alt={MSG_CLOSE}
+              />
+            </button>
+          </div>
         </div>
       )}
       {/* Listing space */}

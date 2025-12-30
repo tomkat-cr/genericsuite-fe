@@ -1,6 +1,6 @@
 // GenericCrudEditor single page editor
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 
 import { errorAndReEnter } from '../helpers/error-and-reenter.jsx';
 import {
@@ -19,7 +19,6 @@ import {
 } from './logging.service.jsx';
 
 import {
-    ERROR_MSG_CLASS,
     WAIT_ANIMATION_MARGIN_TOP_CLASS,
 } from "../constants/class_name_constants.jsx";
 import {
@@ -44,10 +43,32 @@ export const GenericSinglePageEditor = ({ editorConfig, id, parentData }) => {
 
 const debug = false;
 
+const initialState = {
+    editor: null,
+    formMode: null,
+    status: "",
+};
+
+function gspeReducer(state, action) {
+    switch (action.type) {
+        case 'SET_EDITOR':
+            return { ...state, editor: action.payload };
+        case 'SET_FORM_MODE':
+            return { ...state, formMode: action.payload };
+        case 'SET_STATUS':
+            return { ...state, status: action.payload };
+        default:
+            return state;
+    }
+}
+
 export const GenericSinglePageEditorMain = (props) => {
-    const [editor, setEditor] = useState(null);
-    const [formMode, setFormMode] = useState(null);
-    const [status, setStatus] = useState("");
+    const [state, dispatch] = useReducer(gspeReducer, initialState);
+    const { editor, formMode, status } = state;
+
+    const setEditor = (p) => dispatch({ type: 'SET_EDITOR', payload: p });
+    const setFormMode = (p) => dispatch({ type: 'SET_FORM_MODE', payload: p });
+    const setStatus = (p) => dispatch({ type: 'SET_STATUS', payload: p });
     const {
         initCache,
     } = useContext(MainSectionContext);
@@ -64,7 +85,7 @@ export const GenericSinglePageEditorMain = (props) => {
                 } else if (editor_response.error) {
                     console_debug_log("GSPE-ERROR-010:");
                     console_debug_log(editor_response.errorMsg);
-                    setStatus(errorAndReEnter(editor_response.errorMsg));
+                    setStatus(editor_response.errorMsg);
                 } else if (!editor_response.response) {
                     setEditor(null);
                 } else {
@@ -78,7 +99,7 @@ export const GenericSinglePageEditorMain = (props) => {
             error => {
                 console_debug_log("GSPE-ERROR-020:");
                 console_debug_log(error);
-                setStatus(errorAndReEnter(error));
+                setStatus(error);
             }
         );
     }, [props, debug]);
@@ -93,8 +114,10 @@ export const GenericSinglePageEditorMain = (props) => {
     }, [props.id, debug]);
 
     const setInfoMsg = (msg) => {
-        console_debug_log('setInfoMsg | msg:');
-        console_debug_log(msg);
+        if (debug) {
+            console_debug_log('setInfoMsg | msg:');
+            console_debug_log(msg);
+        }
     };
 
     const handleCancel = () => {
@@ -127,21 +150,20 @@ export const GenericSinglePageEditorMain = (props) => {
     }
     if (status) {
         return (
-            <div className={ERROR_MSG_CLASS}>
-                {status}
-                {debug && "[GSPE-ST]"}
-            </div>
+            <>
+                {errorAndReEnter(status + (debug ? " [GSPE-ST]" : ""))}
+            </>
         );
     }
 
     return (
         <>
             <FormPage
-                mode_par={formMode[0]}
-                id_par={formMode[1]}
-                onCancel_par={handleCancel}
-                setInfoMsg_par={setInfoMsg}
-                editor_par={editor}
+                mode={formMode[0]}
+                id={formMode[1]}
+                onCancel={handleCancel}
+                setInfoMsg={setInfoMsg}
+                editor={editor}
             />
         </>
     );

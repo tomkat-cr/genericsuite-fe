@@ -1,13 +1,12 @@
 // GenericMenuService (GMS) main
 
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
+import { Route, Link as RouterLink, Routes } from 'react-router-dom';
 
 import { useAppContext } from '../helpers/AppContext.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
-import { history, getPrefix, hasHashRouter, getUrlForRouter } from '../helpers/history.jsx';
 import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
+import { getPrefix, getUrlForRouter, history } from '../helpers/history.jsx';
 import {
     dbApiService,
 } from './db.service.jsx';
@@ -30,14 +29,14 @@ import {
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import NavDropdown from 'react-bootstrap/cjs/NavDropdown.js';
 
-import { Nav, NavDropdown } from '../helpers/NavLib.jsx';
-import { GsIcons } from '../helpers/IconsLib.jsx';
 import {
     ALERT_DANGER_CLASS,
     APP_GENERAL_MARGINS_CLASS,
     HORIZONTALLY_CENTERED_CLASS,
     NAV_LINK_ICON_CLASS,
 } from '../constants/class_name_constants.jsx';
+import { GsIcons } from '../helpers/IconsLib.jsx';
+import { Nav, NavDropdown } from '../helpers/NavLib.jsx';
 
 const debug = false;
 
@@ -399,7 +398,11 @@ const InvalidElement = ({ children }) => {
 
 const InvalidRoute = () => {
     // Catch all invalid routes and redirect to a default page or show a not found component
-    if (debug) console_debug_log('InvalidRoute');
+    const { state } = useAppContext();
+    if (debug) console_debug_log('InvalidRoute | state:', state);
+    if (state === "LOADING_MENU" || state === "") {
+        return null;
+    }
     return (
         <InvalidElement>
             URL not found...
@@ -407,11 +410,11 @@ const InvalidRoute = () => {
     );
 }
 
-// export const getMenuFromApi = (state, setState, setMenuOptions) => {
-export const getMenuFromApi = (getState, setState, setMenuOptions) => {
-    if (getState() !== "") {
+export const getMenuFromApi = (setState, getErrorState, setErrorState, setMenuOptions, getMenuOptions = null) => {
+    if (getErrorState() !== "" || (getMenuOptions && getMenuOptions() !== null)) {
         return;
     }
+    setState("LOADING_MENU");
     const endpoint = "menu_options";
     const db = new dbApiService({ url: endpoint });
     db.getAll().then(
@@ -421,6 +424,7 @@ export const getMenuFromApi = (getState, setState, setMenuOptions) => {
                 console_debug_log(data);
             }
             setMenuOptions(data.resultset);
+            setState("MENU_LOADED");
         },
         error => {
             error = formatCaughtError(error);
@@ -429,7 +433,8 @@ export const getMenuFromApi = (getState, setState, setMenuOptions) => {
                 console_debug_log(error);
             }
             if (!window.location.href.includes("/login")) {
-                setState(error);
+                setErrorState(error);
+                setState("MENU_ERROR");
             }
         }
     );
@@ -445,7 +450,7 @@ export const GenericMenuBuilder = (
 ) => {
     const { currentUser } = useUser();
     const {
-        state,
+        errorState,
         menuOptions,
         setExpanded,
         componentMap,
@@ -552,13 +557,13 @@ export const GenericMenuBuilder = (
         return GetNavs(item_type_filter, topTitle, itemType, icon, mobileMenuMode);
     };
 
-    if (state !== "" && itemType === "routes") {
+    if (errorState !== "" && itemType === "routes") {
         return (
             <DefaultRoutes />
         );
     }
 
-    if (state !== "") {
+    if (errorState !== "") {
         return (
             <DefaultRoutes />
         );

@@ -68,6 +68,7 @@ export const MSG_ACTIONS = 'Actions';
 export const MSG_SEARCH = 'Search';
 export const MSG_RELOAD = 'Reload';
 export const MSG_MORE = 'More';
+export const MSG_CLOSE = 'Close';
 
 export const MSG_IS_REQUIRED = 'is required';
 export const MSG_MUST_BE = 'must be';

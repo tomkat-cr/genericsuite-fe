@@ -1,18 +1,17 @@
 // GenericCrudEditor data form functions
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useRef } from 'react';
 
 import { ErrorMessage, Field, Form, Formik, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
+import { dbApiService } from "./db.service.jsx";
 import { getEditorFlags } from './generic.editor.rfc.common.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
 import { SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
 import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
 import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
 import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
-// import { ChatBotButton } from './generic.editor.rfc.ai.button.jsx';
-import { dbApiService } from "./db.service.jsx";
 import { defaultValue } from './generic.editor.utilities.jsx';
 import { console_debug_log } from './logging.service.jsx';
 import { WaitAnimation } from "./wait.animation.utility.jsx";
@@ -40,10 +39,8 @@ import {
     BUTTON_PRIMARY_CLASS,
     ERROR_MSG_CLASS,
     INFO_MSG_CLASS,
-    // APP_FORMPAGE_LEVEL1_DIV_CLASS,
-    // APP_FORMPAGE_LEVEL2_DIV_CLASS,
     INVALID_FEEDBACK_CLASS,
-    WAIT_ANIMATION_MARGIN_TOP_CLASS,
+    WAIT_ANIMATION_MARGIN_TOP_CLASS
 } from "../constants/class_name_constants.jsx";
 import {
     ACTION_CREATE,
@@ -71,43 +68,87 @@ const debug = false;
 
 let calcFields = {};
 
+const formPageReducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_FORM_DATA':
+            return { ...state, formData: action.payload };
+        case 'SET_ERROR_STATUS':
+            return { ...state, errorStatus: action.payload };
+        case 'INCREMENT_REFRESH':
+            return { ...state, refresh: state.refresh + 1 };
+        case 'SET_FORM_MSG':
+            return { ...state, formMsg: action.payload };
+        case 'SET_ITEM_READ':
+            return { ...state, itemRead: action.payload };
+        default:
+            return state;
+    }
+};
+
+const editFormReducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_EDIT_FORM_DATA':
+            return { ...state, ...action.payload };
+        default:
+            return state;
+    }
+};
+
+
 export const FormPage = ({
-    editor_par,
-    mode_par,
-    id_par,
-    onCancel_par,
-    setInfoMsg_par,
+    editor,
+    mode,
+    id,
+    onCancel,
+    setInfoMsg,
     handleFormPageActions = null,
     message = "",
     messageType = "",
 }) => {
-    const [formData, setFormData] = useState(null);
-    const [status, setStatus] = useState("");
-    const [refresh, setRefresh] = useState(0);
-    const [formMsg, setFormMsg] = useState({ message: message, messageType: messageType });
+    const [state, dispatch] = useReducer(formPageReducer, {
+        formData: null,
+        errorStatus: { error: "", code: "" },
+        refresh: 0,
+        formMsg: { message: message, messageType: messageType },
+        itemRead: false
+    });
+    const { formData, errorStatus, refresh, formMsg, itemRead } = state;
 
     const { currentUser } = useUser();
     const { theme } = useAppContext();
+    const dataAlreadyLoaded = useRef(false);
+
+    const setFormData = (payload) => dispatch({ type: 'SET_FORM_DATA', payload });
+    const setErrorStatus = (errorMessage, errorCode) => dispatch(
+        { type: 'SET_ERROR_STATUS', payload: { error: errorMessage, code: errorCode } });
+    const setRefresh = () => {
+        dispatch({ type: 'INCREMENT_REFRESH' });
+        dataAlreadyLoaded.current = false;
+    };
+    const setFormMsg = (payload) => dispatch({ type: 'SET_FORM_MSG', payload });
+    const setItemRead = (payload) => dispatch({ type: 'SET_ITEM_READ', payload });
 
     const {
         debugCache,
     } = useContext(MainSectionContext);
 
-    const editor = editor_par;
-    const mode = mode_par;
-    const id = id_par;
+    const initForm = () => {
+        if (dataAlreadyLoaded.current) {
+            return;
+        }
+        dataAlreadyLoaded.current = true;
 
-    useEffect(() => {
         if (mode === ACTION_CREATE) {
             // To assign specific default values in creation...
             processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(
                 funcResponse => {
                     if (debug) console_debug_log(`>> FormPage | dbPreRead # 1 > funcResponse:`, funcResponse, 'editor', editor);
-                    setFormData(funcResponse.fieldValues)
+                    setFormData(funcResponse.fieldValues);
                 },
-                error => setStatus(errorAndReEnter(error, '[GCE-FD-010]'))
+                error => setErrorStatus(error, '[GCE-FD-010]')
             )
         }
+
         if (
             (mode === ACTION_UPDATE ||
                 mode === ACTION_READ ||
@@ -117,7 +158,8 @@ export const FormPage = ({
             accessKeysDataScreen[editor.primaryKeyName] = id;
             processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(
                 funcResponse => {
-                    accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.endpointFilter);
+                    const { resultset, ...fieldValuesWithoutResultSet } = funcResponse.fieldValues;
+                    accessKeysDataScreen = Object.assign({}, fieldValuesWithoutResultSet, editor.endpointFilter);
                     editor.db.getOne(accessKeysDataScreen)
                         .then(
                             data => {
@@ -126,22 +168,31 @@ export const FormPage = ({
                                 processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(
                                     funcResponse => {
                                         if (debug) console_debug_log(`>> FormPage | dbPostRead > funcResponse:`, funcResponse.fieldValues, 'editor', editor);
-                                        setFormData(funcResponse.fieldValues)
+                                        setFormData(funcResponse.fieldValues);
                                     },
-                                    error => setStatus(errorAndReEnter(error, '[GCE-FD-020]'))
+                                    error => {
+                                        console.error('ERROR on dbPostRead - GCE-FD-020', error);
+                                        setErrorStatus(error, '[GCE-FD-020]');
+                                    }
                                 );
                             },
                             error => {
-                                console_debug_log(`ERROR - GCE-FD-030`)
-                                console.error(error);
-                                setStatus(errorAndReEnter(error, '[GCE-FD-030]'));
+                                console.error('ERROR on getOne - GCE-FD-030', error);
+                                setErrorStatus(error, '[GCE-FD-030]');
                             },
                         );
                 },
-                error => setStatus(errorAndReEnter(error, '[GCE-FD-040]'))
+                error => {
+                    console.error('ERROR on dbPreRead - GCE-FD-040', error);
+                    setErrorStatus(error, '[GCE-FD-040]');
+                }
             );
         }
-    }, [id, editor, mode, refresh]);
+    }
+
+    useEffect(() => {
+        initForm();
+    }, [refresh]);
 
     if (handleFormPageActions === null) {
         handleFormPageActions = (funcResponse) => {
@@ -150,12 +201,15 @@ export const FormPage = ({
             }
             if (typeof funcResponse['otherData']['refresh'] != "undefined") {
                 setRefresh(refresh + 1);
-                setFormMsg({ message: '', messageType: '' })
+                setFormMsg({ message: '', messageType: '' });
             }
         }
     }
 
-    if (!editor || !formData) {
+    if (!editor) {
+        return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
+    }
+    if (!formData && !errorStatus.error) {
         return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
     }
 
@@ -173,27 +227,21 @@ export const FormPage = ({
         <div
             className={`${APP_TOP_DIV_CLASS} ${theme.contentBg}`}
         >
-            {/* <div 
-                className={APP_FORMPAGE_LEVEL1_DIV_CLASS}
-            > */}
             <CrudEditorFormPageTitle
                 baseUrl={editor.baseUrl}
                 title={editor.title}
                 actionTitle={actionTitle}
             />
-            {/* <div
-                    className={APP_FORMPAGE_LEVEL2_DIV_CLASS}
-                > */}
-            {status && (
-                <div className={ERROR_MSG_CLASS}>
-                    {status}
-                </div>
+            {errorStatus.error && (
+                <>
+                    {errorAndReEnter(errorStatus.error, errorStatus.code)}
+                </>
             )}
-            {!status && formData &&
+            {!errorStatus.error && formData &&
                 <EditFormFormik
                     editor={editor}
-                    parenHandleCancel={onCancel_par}
-                    setInfoMsg={setInfoMsg_par}
+                    parenHandleCancel={onCancel}
+                    setInfoMsg={setInfoMsg}
                     action={mode}
                     dataset={formData.resultset}
                     message={formMsg['message']}
@@ -203,15 +251,14 @@ export const FormPage = ({
                     currentUser={currentUser}
                 />
             }
-            {!status &&
+            {
+                !errorStatus.error &&
                 formData &&
                 !editorFlags.isCreate &&
                 iterateChildComponents(editor, formData.resultset, handleFormPageActions)
             }
             {(debug ? debugCache("FormPage") : '')}
-        </div>
-        // </div>
-        // </div>
+        </div >
     );
 };
 
@@ -553,13 +600,25 @@ const EditFormFormik = (
         currentUser,
     }
 ) => {
-    const [formData, setFormData] = useState({
+    const [state, dispatch] = useReducer(editFormReducer, {
         readyToShow: false,
         dataset: null,
         canCommit: null,
         message: null,
         messageType: null,
     });
+    const {
+        readyToShow,
+        dataset: editDataset,
+        canCommit,
+        message: editMessage,
+        messageType: editMessageType
+    } = state;
+
+    if (debug) console_debug_log('>> EditFormFormik | readyToShow:', readyToShow, '*dataset:', dataset, '*editDataset:', editDataset, 'canCommit:', canCommit, '*message:', message, '*editMessage:', editMessage, '*messageType:', messageType, '*editMessageType:', editMessageType);
+
+    const setFormData = (payload) => dispatch({ type: 'SET_EDIT_FORM_DATA', payload });
+
     if (debug) console_debug_log(`>> 1 >> EditFormFormik | dataset:`, dataset, 'editor:', editor, 'action:', action);
 
     useEffect(() => {
@@ -582,7 +641,6 @@ const EditFormFormik = (
                 editor, 'dbPreValidations', dataset, action, currentUser
             ).then(
                 funcResponse => {
-                    if (debug) console_debug_log(`>> 2 >> EditFormFormik | BEFORE dbPreValidations > funcResponse:`, funcResponse);
                     setFormData(
                         {
                             readyToShow: true,
@@ -614,20 +672,23 @@ const EditFormFormik = (
         ]
     );
 
-    if (!formData['readyToShow']) {
+    if (!readyToShow) {
         return (
             WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
         );
     }
 
-    if (!formData['canCommit'] === null) {
-        formData['canCommit'] = false;
+    let finalCanCommit = canCommit;
+    if (finalCanCommit === null) {
+        finalCanCommit = false;
     }
-    if (!formData['message'] === null) {
-        formData['message'] = message;
+    let finalMessage = editMessage;
+    if (finalMessage === null) {
+        finalMessage = message;
     }
-    if (!formData['messageType'] === null) {
-        formData['messageType'] = messageType;
+    let finalMessageType = editMessageType;
+    if (finalMessageType === null || finalMessageType === '') {
+        finalMessageType = messageType;
     }
 
     return (
@@ -636,10 +697,11 @@ const EditFormFormik = (
             parenHandleCancel: parenHandleCancel,
             setInfoMsg: setInfoMsg,
             action: action,
-            dataset: formData['dataset'],
-            canCommit: formData['canCommit'],
-            message: formData['message'],
-            messageType: formData['messageType'],
+            dataset: editDataset,
+            canCommit: finalCanCommit,
+            message: finalMessage,
+            messageType: finalMessageType,
+
             handleFormPageActions: handleFormPageActions,
             theme: theme,
             currentUser: currentUser,
@@ -660,6 +722,9 @@ const EditFormFormikFinal = ({
     theme,
     currentUser,
 }) => {
+
+    if (debug) console_debug_log('>> EditFormFormikFinal | dataset:', dataset, 'message:', message, 'messageType:', messageType);
+
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);
     const rowId = initialFieldValues[editor.primaryKeyName];
@@ -711,10 +776,11 @@ const EditFormFormikFinal = ({
             enableReinitialize={true}
             initialValues={initialFieldValues}
             //
-            // Todo: THIS DOESN'T WORK IN ACTION=CREATION
-            // validationSchema={Yup.object().shape(
-            //     getFieldElementsYupValidations(editor, editorFlags)
-            // )}
+            // TODO: getFieldElementsYupValidations didn't work with action=CREATION, at least on 2023-11-12
+            //
+            validationSchema={Yup.object().shape(
+                getFieldElementsYupValidations(editor, editorFlags)
+            )}
             onSubmit={(submitedtElements, { setStatus, setSubmitting }) => {
                 if (!canCommit) {
                     setSubmitting(false);
@@ -807,7 +873,7 @@ const EditFormFormikFinal = ({
                                                     error => {
                                                         console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                                                         setSubmitting(false);
-                                                        setStatus(errorAndReEnter(error.errorMsg, '[EFFF-010]'));
+                                                        setStatus(error.errorMsg + ' [EFFF-010]');
                                                     }
                                                 )
                                             }
@@ -815,21 +881,21 @@ const EditFormFormikFinal = ({
                                         (error) => {
                                             console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
                                             setSubmitting(false);
-                                            setStatus(errorAndReEnter(error, 'EFFF-020'));
+                                            setStatus(error + ' EFFF-020');
                                         }
                                     );
                                 },
                                 error => {
                                     console_debug_log('dbPreWrite [EFFF-030] | error:', error);
                                     setSubmitting(false);
-                                    setStatus(errorAndReEnter((error.errorMsg, 'EFFF-030')));
+                                    setStatus(error.errorMsg + ' EFFF-030');
                                 }
                             )
                         },
                         error => {
                             console_debug_log('validations [EFFF-040] | error:', error);
                             setSubmitting(false);
-                            setStatus(errorAndReEnter(error.errorMsg, 'EFFF-040'));
+                            setStatus(error + ' EFFF-040');
                         }
                     );
 
@@ -890,7 +956,7 @@ const EditFormFormikFinal = ({
                     </div>
                     {status &&
                         <div className={ERROR_MSG_CLASS}>
-                            {status}
+                            {errorAndReEnter(status)}
                         </div>
                     }
                 </Form>
@@ -1083,11 +1149,14 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
     return response;
 };
 
-export const getFieldElementsYupValidations = (editor, editorFlags) => {
+const getFieldElementsYupValidations = (editor, editorFlags) => {
     if (editorFlags.isDelete) {
         return {};
     }
     const response = editor.fieldElements
+        .filter((currentObj) => {
+            return !["label", "hr", "h1", "h2", "h3", "h4", "h5", "h6"].includes(currentObj.type);
+        })
         .reduce((acc, currentObj) => {
             let responseObj = Yup; // https://github.com/jquense/yup
             switch (currentObj.type) {
@@ -1123,5 +1192,6 @@ export const getFieldElementsYupValidations = (editor, editorFlags) => {
             acc[currentObj.name] = responseObj;
             return { ...acc };
         }, {});
+    if (debug) console_debug_log('getFieldElementsYupValidations | response:', response);
     return response;
 };

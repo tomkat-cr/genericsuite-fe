@@ -28,6 +28,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Field types h1 to h6 to JSON files [GS-250].
 - "make tailwind-build" to rebuild the Tailwind CSS files (without stay watching for changes) [GS-63].
 - "make tailwind-build" added to the publish bash script [GS-63].
+- getUserDataCache and setUserDataCache to set a cache reading current user's data, ad implemented in the Users.jsx specific functions [GS-251].
+- close button for GCE_RFC index messages shown returning fom the form data page [GS-251].
+- Api Keys to User Profile [GS-251].
 
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
@@ -40,11 +43,22 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - API keys now are in a separate table "users_api_keys", not an array of the "users" table [GS-159].
 - Rename "parentKeyNames" to "endpointKeyNames" in JSON config files [GS-159].
 - Move "parentUrl" attribute from "endpointKeyNames" to the root of the JSON config files [GS-159].
+- MainSectionContext, UsersContext and AppContext implemment useCallback, useMemo, useRef, and useReducer instead of useState, to avoid components unnecessary reloads [GS-251].
+- configs README referece the official GenericSuite documentation instead of repeating its content [GS-251].
+- getFieldElementsYupValidations() enabled to have validations on the form data page [GS-251].
+- Rename state and setState with errorState, setErrorState on AppContext.jsx, App.jsx, generic.editor.rfc.selector.jsx, generic.menu.service.jsx [GS-251].
+- Rename status and setStatus with errorStatus, setErrorStatus on generic.editor.rfc.formpage.jsx [GS-251]
+- rename <FormPage /> parameters: mode_par, id_par, and editor_par to mode, id, and editor [GS-251].
 
 ### Fixed
-- Fix login button visible while menus are loading [GS-246].
-- Fix the error message when using axios and the session expires or the user credentials are invalid [GS-246].
-- Fix getFileExtension() to remove the URL query parameters [GS-72].
+- Error message when using axios and the session expires or the user credentials are invalid [GS-246].
+- getFileExtension() to remove the URL query parameters [GS-72].
+- Optimize the Generic CRUD Editor (GCE_RFC) API calls, avoiding repeated calls [GS-251].
+- Optimize the Generic Menu Generator (GMG) API calls, avoiding repeated calls [GS-251].
+- Login button shown on each page refresh, while menus are loading [GS-251].
+- GMG shows the "URL not found..." message during the menu loading [GS-251].
+- GCE_RFC doesn't show the error message when the session has been expired [GS-251].
+- Supress warning on the LoginPage about the username and password autocomplete attributes (More info: https://goo.gl/9p2vKq)
 
 
 ## [1.1.0] - 2025-11-17

@@ -1,17 +1,16 @@
 // Authentication service
 
-import { Buffer } from 'buffer'
+import { Buffer } from 'buffer';
 
-import { logout, currentUserSubject } from './logout.service.jsx';
-import { dbApiService } from './db.service.jsx';
-import { gsFetch, getBaseApiUrl } from './fetch.utilities.jsx';
-import { convertId } from './id.utilities.jsx';
-import { console_debug_log } from './logging.service.jsx';
 import { getLocalConfig } from '../helpers/local-config.jsx';
 import { saveItemToLocalStorage } from '../helpers/localstorage-manager.jsx';
+import { dbApiService } from './db.service.jsx';
+import { getBaseApiUrl, gsFetch } from './fetch.utilities.jsx';
+import { convertId } from './id.utilities.jsx';
+import { console_debug_log } from './logging.service.jsx';
+import { currentUserSubject, logout } from './logout.service.jsx';
 
 const debug = false;
-
 export const authenticationService = {
     login,
     logout,
@@ -100,25 +99,47 @@ export const getCurrentUserData = () => {
         );
 }
 
-export const verifyCurrentUser = (registerUser, currentUser) => {
+export const verifyCurrentUser = (registerUser, currentUser, setAskForLogin) => {
     if (currentUser) {
         // Avoid multiple calls to setCurrentUser
+        if (debug) console_debug_log("verifyCurrentUser() | currentUser already set");
         return;
     }
     if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
         getCurrentUserData()
             .then(
                 userData => {
-                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' userData # 1:", userData);
-                    if (userData.error) {
-                        if (debug) console.error('userData.error_message:', userData.error_message);
+                    if (typeof userData.error !== 'undefined' && userData.error) {
+                        console.error("verifyCurrentUser() | userData.errorMsg:", userData.errorMsg);
+                        setAskForLogin(true);
                     } else {
+                        if (debug) console_debug_log("verifyCurrentUser() | call to setCurrentUser with userData:", userData);
                         registerUser(getUserLocalData(userData));
                     }
                 },
                 error => {
+                    setAskForLogin(true);
                     console.error(error.errorMsg);
                 }
             );
+    } else {
+        setAskForLogin(true);
     }
+}
+
+/*
+ * Get User Data cache
+ */
+
+let userDataCache = {}
+
+export const getUserDataCache = (userId) => {
+    if (userDataCache[userId]) {
+        return Promise.resolve(userDataCache[userId])
+    }
+    return getUserData(userId)
+}
+
+export const setUserDataCache = (userId, userData) => {
+    userDataCache[userId] = Object.assign({}, userData)
 }

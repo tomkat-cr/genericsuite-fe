@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     createBrowserRouter,
     HashRouter,
@@ -249,9 +249,14 @@ const AppMainInnerUnauthenticated = ({ children }) => {
 const AppMainInner = ({ children }) => {
     // const location = useLocation();
     // if (debug) console_debug_log("App | location:", location);
-    const { currentUser } = useUser();
     const {
-        state, setState,
+        currentUser,
+        askForLogin,
+        unRegisterUser,
+    } = useUser();
+    const {
+        setState,
+        errorState, setErrorState,
         menuOptions, setMenuOptions,
         sideMenu, setSideMenu,
         isMobileMenuOpen,
@@ -259,23 +264,36 @@ const AppMainInner = ({ children }) => {
     } = useAppContext();
 
     const showContentOnly = getShowContentOnly();
+    const getMenuFromApiAlreadyCalled = useRef(false);
+
+    const callGetMenuFromApi = () => {
+        // Load menus from JSON configurations
+        if (!getMenuFromApiAlreadyCalled.current) {
+            getMenuFromApiAlreadyCalled.current = true;
+            getMenuFromApi(setState, getErrorState, setErrorState, setMenuOptions, getMenuOptions);
+        }
+    }
 
     if (debug) {
         console_debug_log("App enters... | window.location:", window.location, "showContentOnly:", showContentOnly);
     }
 
-    const stateHandler = () => {
+    const logoutHandler = () => {
+        unRegisterUser();
         logoutHander();
     }
 
-    const getState = () => {
-        return state;
+    const getErrorState = () => {
+        return errorState;
+    }
+
+    const getMenuOptions = () => {
+        return menuOptions;
     }
 
     useEffect(() => {
-        // Load menus from JSON configurations
         if (currentUser) {
-            getMenuFromApi(getState, setState, setMenuOptions);
+            callGetMenuFromApi();
         }
     }, [currentUser]);
 
@@ -313,9 +331,9 @@ const AppMainInner = ({ children }) => {
                 <>
                     {!sideMenu && (
                         <AppMainComponent
-                            stateHandler={stateHandler}
+                            logoutHandler={logoutHandler}
                             showContentOnly={showContentOnly}
-                            menuOptions={menuOptions}
+                            askForLogin={askForLogin}
                             currentUser={currentUser}
                         >
                             {children}
@@ -330,12 +348,12 @@ const AppMainInner = ({ children }) => {
                             </Navbar.TopForSideMenu>
                             <AppSectionContainer.ForSideMenu>
                                 {/* <ToggleSideBar
-                                    onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
-                                /> */}
+                                onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
+                            /> */}
                                 <AppMainComponent
-                                    stateHandler={stateHandler}
+                                    logoutHandler={logoutHandler}
                                     showContentOnly={showContentOnly}
-                                    menuOptions={menuOptions}
+                                    askForLogin={askForLogin}
                                     currentUser={currentUser}
                                 >
                                     {children}
@@ -371,34 +389,29 @@ const AppMainInner = ({ children }) => {
 };
 
 const AppMainComponent = ({
-    stateHandler,
+    logoutHandler,
     showContentOnly,
-    menuOptions,
+    askForLogin,
     currentUser,
     children,
 }) => {
-    const { state } = useAppContext();
+    const { errorState } = useAppContext();
 
-    if (state !== "") {
-        if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
+    if (errorState !== "") {
+        if (debug) console_debug_log("AppMainComponent | errorAndReEnter | errorState:", errorState);
         if (showContentOnly) {
             return (
                 <CloseButton>
-                    {getErrorMessage(state)}
+                    {getErrorMessage(errorState)}
                 </CloseButton>
             );
         }
-        return errorAndReEnter(state, null, true, null, stateHandler, false, false);
+        return errorAndReEnter(errorState, null, true, null, logoutHandler, false, false);
     }
 
-    if (debug) console_debug_log("AppMainComponent | currentUser:", currentUser, "menuOptions:", menuOptions);
+    if (debug) console_debug_log("AppMainComponent | currentUser:", currentUser, "askForLogin:", askForLogin);
 
-    if (!menuOptions) {
-        if (currentUser) {
-            return (
-                WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
-            );
-        }
+    if (askForLogin) {
         return (
             <div
                 className={LOGIN_BUTTON_IN_APP_COMPONENT_CLASS}
@@ -412,6 +425,13 @@ const AppMainComponent = ({
             </div>
         )
     }
+
+    if (!currentUser) {
+        return (
+            WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
+        );
+    }
+
     return (children);
 }
 
@@ -419,29 +439,40 @@ const AppMain = () => {
     const routerFutureFlags = {
         v7_relativeSplatPath: true
     }
-    const { currentUser, registerUser } = useUser();
+
+    const { currentUser, registerUser, setAskForLogin } = useUser();
     const {
-        state, setState,
+        setState,
         menuOptions, setMenuOptions,
         componentMap,
         setExpanded,
     } = useAppContext();
+
     const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
+    const verifyCurrentUserAlreadyCalled = useRef(false);
+    const setRouterAlreadyCalled = useRef(false);
+
+    const callVerifyCurrentUser = () => {
+        if (!verifyCurrentUserAlreadyCalled.current) {
+            verifyCurrentUserAlreadyCalled.current = true;
+            verifyCurrentUser(registerUser, currentUser, setAskForLogin);
+        }
+    }
+
+    const assignRouter = () => {
+        if (!setRouterAlreadyCalled.current) {
+            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
+            setRouterAlreadyCalled.current = true;
+        }
+    }
 
     useEffect(() => {
-        verifyCurrentUser(registerUser, currentUser);
+        callVerifyCurrentUser();
     }, []);
-
-    // useEffect(() => {
-    //     // Load menus from JSON configurations
-    //     if (currentUser) {
-    //         getMenuFromApi(state, setState, setMenuOptions);
-    //     }
-    // }, [currentUser, state]);
 
     useEffect(() => {
         if (menuOptions) {
-            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
+            assignRouter();
         }
     }, [menuOptions])
 
@@ -490,7 +521,10 @@ const defaultComponentMap = {
 };
 
 export const App = ({ componentMap = {}, appLogo = "", appLogoHeader = "" }) => {
-    const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+    const [componentMapFinal, setComponentMapFinal] = useState(
+        mergeDicts(componentMap, defaultComponentMap)
+    );
+
     return (
         <UserProvider>
             <AppProvider
