@@ -5939,7 +5939,8 @@ const PutOneFormfield = _ref4 => {
         className: fieldClass,
         onBlur: runCalculation,
         showAsField: "1",
-        onChange: customOnChange
+        onChange: customOnChange,
+        setValue: setFieldValue
       });
       break;
     case 'suggestion_dropdown':

@@ -449,6 +449,7 @@ const PutOneFormfield = ({
                     onBlur={runCalculation}
                     showAsField="1"
                     onChange={customOnChange}
+                    setValue={setFieldValue}
                 />
             );
             break;
