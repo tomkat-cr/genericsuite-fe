@@ -31,6 +31,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - getUserDataCache and setUserDataCache to set a cache reading current user's data, ad implemented in the Users.jsx specific functions [GS-251].
 - close button for GCE_RFC index messages shown returning fom the form data page [GS-251].
 - Api Keys to User Profile [GS-251].
+- "customOnChange()" function added to <PutOneFormfield /> so "component" type fields can update the Formik internal values and therefore saved in the database [GS-252].
+- ShowAsDisabledField component can render the custom component as a simulated disabled field (current behavior) or as a Formik Field, customizable with the new "showAsField", "isReadOnly", "type", "onChange", "onBlur" parameters. OnChange allows to store the calculated value in the Formik internal values and therefore saved in the database [GS-252].
 
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].

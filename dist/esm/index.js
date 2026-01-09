@@ -5879,6 +5879,10 @@ const PutOneFormfield = _ref4 => {
       // }
     }
   };
+  const customOnChange = e => {
+    // This allows "component" fields to updated the Formik form values
+    setFieldValue(e.target.name, e.target.value);
+  };
   addCalculation(currentObj);
   const input_type = ['number', 'integer'].includes(currentObj.type) ? 'number' : currentObj.type;
 
@@ -5926,15 +5930,16 @@ const PutOneFormfield = _ref4 => {
       break;
     case 'component':
       elementInput = /*#__PURE__*/React.createElement(currentObj.component, {
-        // dbRow={initialValue}
         value: initialValue,
         name: idName,
         id: idName,
         disabled: readOnlyfield,
         required: currentObj.required && !readOnlyfield,
+        readOnly: readOnlyfield,
         className: fieldClass,
         onBlur: runCalculation,
-        showAsField: "1"
+        showAsField: "1",
+        onChange: customOnChange
       });
       break;
     case 'suggestion_dropdown':
@@ -8817,10 +8822,36 @@ var mocks = /*#__PURE__*/Object.freeze({
 // GenericCrudEditor UI components
 const ShowAsDisabledField = _ref => {
   let {
-    className = '',
+    className = APP_FORMPAGE_FIELD_GOOD_CLASS,
+    name = '',
+    key = '',
+    id = '',
+    type = "text",
+    value = null,
+    readOnly = false,
+    required = false,
+    disabled = false,
+    showAsField = "1",
+    onChange = () => {},
+    onBlur = () => {},
     backgroundColor = null,
     children
   } = _ref;
+  if (showAsField === "1") {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Field, {
+      name: name,
+      key: name,
+      id: name,
+      type: type,
+      required: required,
+      disabled: disabled,
+      readOnly: readOnly,
+      className: className,
+      value: value !== null ? value : children,
+      onChange: onChange,
+      onBlur: onBlur
+    }));
+  }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "".concat(backgroundColor !== null && backgroundColor !== void 0 ? backgroundColor : DISABLE_FIELD_BACKGROUND_COLOR_CLASS, " ").concat(className)
   }, children));

@@ -367,6 +367,11 @@ const PutOneFormfield = ({
         }
     }
 
+    const customOnChange = (e) => {
+        // This allows "component" fields to updated the Formik form values
+        setFieldValue(e.target.name, e.target.value);
+    }
+
     addCalculation(currentObj);
 
     const input_type = (
@@ -434,15 +439,16 @@ const PutOneFormfield = ({
         case 'component':
             elementInput = (
                 <currentObj.component
-                    // dbRow={initialValue}
                     value={initialValue}
                     name={idName}
                     id={idName}
                     disabled={readOnlyfield}
                     required={currentObj.required && !readOnlyfield}
+                    readOnly={readOnlyfield}
                     className={fieldClass}
                     onBlur={runCalculation}
                     showAsField="1"
+                    onChange={customOnChange}
                 />
             );
             break;
