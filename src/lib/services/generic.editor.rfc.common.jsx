@@ -109,8 +109,8 @@ export const getEditoObj = (props, editor_response) => {
     if (typeof editor.dbPostRead == 'undefined') {
         editor.dbPostRead = [];
     }
-    // dbPreValidations: FormData field values validation before doing a Delete operation.
-    // If any error, prevents the database row to be deleted.
+    // dbPreValidations: Validate data before show the Data Form.
+    // If any error, shows the error message and prevents edition of the Data Form or deletion of the row.
     if (typeof editor.dbPreValidations == 'undefined') {
         editor.dbPreValidations = [];
     }
@@ -129,20 +129,25 @@ export const getEditoObj = (props, editor_response) => {
     if (typeof editor.dbPostWrite == 'undefined') {
         editor.dbPostWrite = [];
     }
-    // User ID filter
-    if (typeof editor.userIdFilter == 'undefined') {
-        editor.userIdFilter = false;
-    }
     if (typeof editor.mandatoryFilters == 'undefined') {
         editor.mandatoryFilters = {};
     } else {
         editor.dbListPreRead.push(
             mandatoryFiltersDbListPreRead
-        )
+        );
         editor.dbPreRead.push(
             mandatoryFiltersDbPreRead
-        )
+        );
     }
+
+    // User ID filter
+    if (typeof editor.userIdFilter == 'undefined') {
+        editor.userIdFilter = false;
+    }
+    if (editor.userIdFilter) {
+        editor.mandatoryFilters.userId = currentUser.id;
+    }
+
     // THESE 3 MUST BE LAST ONES
     // Date <-> Timestamp management
     editor.dbListPostRead.push(

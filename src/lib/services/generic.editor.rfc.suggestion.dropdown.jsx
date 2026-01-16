@@ -1,27 +1,29 @@
 // Suggestion Dropdown
 
-import React, { useState, useEffect } from 'react';
 import Downshift from 'downshift';
 import { useFormikContext } from 'formik';
-// import { debounce } from 'lodash';
+import { debounce } from 'lodash';
+import React, { useEffect, useState } from 'react';
 
-import { dbApiService } from './db.service.jsx';
-import { convertId } from './id.utilities.jsx';
-import {
-    defaultValue,
-    replaceSpecialVars,
-} from "./generic.editor.utilities.jsx";
-import { 
-    console_debug_log,
-} from "./logging.service.jsx";
-import { useUser } from '../helpers/UserContext.jsx';
-import { useAppContext } from '../helpers/AppContext.jsx';
 import {
     INVALID_FEEDBACK_CLASS,
     SUGGESTION_DROPDOWN_CLASS,
 } from '../constants/class_name_constants.jsx';
+import { useAppContext } from '../helpers/AppContext.jsx';
+import { useUser } from '../helpers/UserContext.jsx';
+import { dbApiService } from './db.service.jsx';
+import {
+    defaultValue,
+    replaceSpecialVars,
+} from "./generic.editor.utilities.jsx";
+import { convertId } from './id.utilities.jsx';
+import {
+    console_debug_log,
+} from "./logging.service.jsx";
 
 const debug = false;
+
+const debounceTimeout = 500;
 
 export const SuggestionDropdown = ({
     name,
@@ -152,7 +154,7 @@ export const SuggestionDropdown = ({
                 <Downshift
                     inputValue={inputValue}
                     onChange={handleSuggestionSelected}
-                    // onInputValueChange={debounce((inputValue) => setInputValue(inputValue), 500)}
+                    onInputValueChange={debounce((inputValue) => setInputValue(inputValue), debounceTimeout)}
                     // onInputValueChange={(inputValue) => setInputValue(inputValue)}
                     onInputValueChange={(inputValue) => inputValueChange(inputValue)}
                     itemToString={(item) => (item ? item[suggestion_name_fieldname] : inputValue)}
