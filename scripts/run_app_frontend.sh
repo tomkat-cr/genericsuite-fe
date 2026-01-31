@@ -28,6 +28,15 @@ if [ "${RUN_BUNDLER}" = "" ]; then
     RUN_BUNDLER="vite"
 fi
 
+# Whether to use containers engine app for local development environment when RUN_PROTOCOL="https".
+USE_CONTAINERS_ENGINE_APP=1
+
+# Run protocol and port replacement: automatic protocol and port replacement for
+# local development environment variables REACT_APP_API_URL and APP_API_URL
+# when RUN_PROTOCOL="https" can be turned off by assigning RUN_PROTOCOL_AND_PORT_REPLACEMENT=0.
+RUN_PROTOCOL_AND_PORT_REPLACEMENT=1
+
+# Read environment variables from .env file
 set -o allexport; source ".env" ; set +o allexport ;
 
 STAGE="$1"
@@ -37,6 +46,8 @@ echo "Stage = ${STAGE}"
 echo "APP_API_URL_DEV = ${APP_API_URL_DEV}"
 echo "RUN_BUNDLER = ${RUN_BUNDLER}"
 echo "RUN_PROTOCOL = ${RUN_PROTOCOL}"
+echo "USE_CONTAINERS_ENGINE_APP = ${USE_CONTAINERS_ENGINE_APP}"
+echo "RUN_PROTOCOL_AND_PORT_REPLACEMENT = ${RUN_PROTOCOL_AND_PORT_REPLACEMENT}"
 echo ""
 if [ "${STAGE}" = "dev" ]; then
     if [ "${RUN_PROTOCOL}" != "" ]; then
@@ -74,14 +85,23 @@ if [ "${STAGE}" = "dev" ]; then
         http_method="http"
     else
         http_method="https"
-        make copy_ssl_certs
+        if [ "${USE_CONTAINERS_ENGINE_APP}" = "1" ]; then
+            make copy_ssl_certs
+        else
+            echo "Skipping SSL certs copy becasue USE_CONTAINERS_ENGINE_APP is not set to 1"
+        fi
     fi
     echo "Run by: ${http_method}"
     echo "* Backend:"
-    export APP_API_URL_DEV="${http_method}://${APP_LOCAL_DOMAIN_NAME}:${BACKEND_LOCAL_PORT}"
-    export REACT_APP_API_URL="${APP_API_URL_DEV}"
-    echo ">>--> New APP_API_URL_DEV = ${APP_API_URL_DEV}"
-    echo ">>--> New REACT_APP_API_URL = ${REACT_APP_API_URL}"
+    if [ "${RUN_PROTOCOL_AND_PORT_REPLACEMENT}" = "1"]; then
+        export APP_API_URL_DEV="${http_method}://${APP_LOCAL_DOMAIN_NAME}:${BACKEND_LOCAL_PORT}"
+        export REACT_APP_API_URL="${APP_API_URL_DEV}"
+        echo ">>--> New APP_API_URL_DEV = ${APP_API_URL_DEV}"
+        echo ">>--> New REACT_APP_API_URL = ${REACT_APP_API_URL}"
+    else
+        export REACT_APP_API_URL="${APP_API_URL_DEV}"
+        echo ">>--> REACT_APP_API_URL = ${REACT_APP_API_URL}"
+    fi
 fi
 
 # Copy images to build/static/media
@@ -97,7 +117,12 @@ create_symlinks
 
 echo ""
 echo "* Frontend:"
-echo "${http_method}://${APP_LOCAL_DOMAIN_NAME}:${FRONTEND_LOCAL_PORT}"
+if [ "${RUN_PROTOCOL_AND_PORT_REPLACEMENT}" = "1"]; then
+    echo "${http_method}://${APP_LOCAL_DOMAIN_NAME}:${FRONTEND_LOCAL_PORT}"
+else
+    APP_FE_URL="$(eval echo \"\$APP_FE_URL_${STAGE_UPPERCASE}\")"
+    echo "${APP_FE_URL}"
+fi
 
 export REACT_APP_VERSION=$(cat version.txt)
 echo ""

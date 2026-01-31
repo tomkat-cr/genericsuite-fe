@@ -16,6 +16,7 @@ npm install --save-dev vite @vitejs/plugin-react vite-plugin-require @tailwindcs
 
 export default defineConfig(({ mode }) => {
     const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
+    const useContainersEngineApp = process.env.USE_CONTAINERS_ENGINE_APP || "1";
 
     console.log('** Vite options **');
     console.log('');
@@ -43,7 +44,7 @@ export default defineConfig(({ mode }) => {
     };
 
     // Add HTTPS if needed
-    if (process.env.REACT_APP_API_URL.includes("https://")) {
+    if (process.env.REACT_APP_API_URL.includes("https://") && useContainersEngineApp === "1") {
         serverConfig.https = {
             key: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.key`)),
             cert: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.crt`)),

@@ -3151,7 +3151,7 @@ var response_handlers_service = /*#__PURE__*/Object.freeze({
 
 // Blob files utilities
 
-const debug$4 = false;
+const debug$3 = false;
 const defaultFilenametoDownload = 'audio.wav';
 const getFileExtension = filename => {
   const filenameWithoutQuery = filename ? filename.split('?')[0] : null;
@@ -3284,7 +3284,7 @@ const fixBlob = async function (blobObj, filename) {
   let blobUrl = null;
   try {
     blobUrl = URL.createObjectURL(blobObj);
-    if (debug$4) ;
+    if (debug$3) ;
   } catch (e) {
     // 'Overload resolution failed' happens when axios is used (not with fetch)
     if (!e.message.includes('Overload resolution failed')) {
@@ -3298,9 +3298,9 @@ const fixBlob = async function (blobObj, filename) {
       blobObj = new Blob(binaryData, {
         type: contentType
       });
-      if (debug$4) ;
+      if (debug$3) ;
       blobUrl = URL.createObjectURL(blobObj);
-      if (debug$4) ;
+      if (debug$3) ;
     } catch (e) {
       return Promise.reject(e);
     }
@@ -3348,7 +3348,7 @@ var blob_files_utilities = /*#__PURE__*/Object.freeze({
 
 // const https = require('https');
 
-const debug$3 = false;
+const debug$2 = false;
 const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
 const getAxios = (url, requestOptions) => {
   let response;
@@ -3368,28 +3368,28 @@ const getAxios = (url, requestOptions) => {
       let new_response;
       new_response = Object.assign({}, response);
       new_response.ok = [200, 201, 202, 204].includes(response.status);
-      if (debug$3) ;
+      if (debug$2) ;
       if (!new_response.ok) {
         return Promise.reject(new_response);
       }
       const headers = response.headers;
-      if (debug$3) ;
+      if (debug$2) ;
       if (responseHasFile(headers)) {
         const filename = getFilenameFromContentDisposition(headers);
         return fixBlob(response.data, filename, headers).then(text => {
-          if (debug$3) ;
+          if (debug$2) ;
           return {
             headers,
             text,
             new_response
           };
         }, error => {
-          if (debug$3) ;
+          if (debug$2) ;
           return Promise.reject(new_response);
         });
       } else {
         const text = response.data;
-        if (debug$3) ;
+        if (debug$2) ;
         return {
           headers,
           text,
@@ -3402,7 +3402,7 @@ const getAxios = (url, requestOptions) => {
         text,
         new_response
       } = _ref;
-      if (debug$3) ;
+      if (debug$2) ;
       const data = {
         response: text,
         headers: headers,
@@ -3424,7 +3424,7 @@ const getFetch = (url, requestOptions) => {
   try {
     if (usePlainFetch) ; else {
       response = fetch(url, requestOptions).then(response => {
-        if (debug$3) ;
+        if (debug$2) ;
         if (!response.ok) {
           // throw new Error('Network response was not ok');
           return Promise.reject(response);
@@ -3439,21 +3439,21 @@ const getFetch = (url, requestOptions) => {
             // Verifying if it's a binary encoded as Base64 string
             return fixBlob(blob, filename, headers).then(text => {
               // "text" contains the blob URL...
-              if (debug$3) ;
+              if (debug$2) ;
               return {
                 headers,
                 text,
                 response
               };
             }, error => {
-              if (debug$3) ;
+              if (debug$2) ;
               return Promise.reject(response);
             });
           });
         } else {
           // Process headers if needed here and the response text body
           return response.text().then(text => {
-            if (debug$3) ;
+            if (debug$2) ;
             return {
               headers,
               text,
@@ -3467,7 +3467,7 @@ const getFetch = (url, requestOptions) => {
           text,
           response
         } = _ref2;
-        if (debug$3) ;
+        if (debug$2) ;
         const data = {
           response: text,
           headers: headers,
@@ -4976,6 +4976,7 @@ const setEndpointFilter = (parentData, editor) => {
   return editor;
 };
 const getColumns = editor => {
+  // Get columns fixed with default values
   return Object.keys(editor.fieldElements).map(key => {
     if (typeof editor.fieldElements[key].listing == "undefined") {
       editor.fieldElements[key].listing = false;
@@ -5242,36 +5243,64 @@ const MainSectionProvider = _ref => {
     children
   } = _ref;
   const [cache, setCache] = React.useState({});
+  const cacheRef = React.useRef(cache);
+  const promisesRef = React.useRef({});
+  React.useEffect(() => {
+    cacheRef.current = cache;
+  }, [cache]);
   const initCache = React.useCallback(() => {
     setCache({});
+    promisesRef.current = {};
   }, []);
   const getCachedData = React.useCallback(entryName => {
-    return cache[entryName];
-  }, [cache]);
+    return cacheRef.current[entryName];
+  }, []);
   const putCachedData = React.useCallback((entryName, data) => {
-    setCache(prevCache => _objectSpread2(_objectSpread2({}, prevCache), {}, {
-      [entryName]: data
-    }));
+    setCache(prevCache => {
+      if (prevCache[entryName] === data) return prevCache;
+      return _objectSpread2(_objectSpread2({}, prevCache), {}, {
+        [entryName]: data
+      });
+    });
   }, []);
   const typeofCachedData = React.useCallback(entryName => {
-    return typeof cache[entryName];
-  }, [cache]);
+    return typeof cacheRef.current[entryName];
+  }, []);
   const listCache = React.useCallback(() => {
-    return cache;
-  }, [cache]);
+    return cacheRef.current;
+  }, []);
   const debugCache = React.useCallback(function () {
     let description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'debugCache';
     console_debug_log(">>>>--->> listCache [".concat(description, "]:"), listCache());
     return '';
   }, [listCache]);
+  const fetchOrCache = React.useCallback((entryName, fetchFn) => {
+    if (typeof cacheRef.current[entryName] !== 'undefined') {
+      return Promise.resolve(cacheRef.current[entryName]);
+    }
+    if (promisesRef.current[entryName]) {
+      return promisesRef.current[entryName];
+    }
+    const promise = fetchFn().then(data => {
+      putCachedData(entryName, data);
+      delete promisesRef.current[entryName];
+      return data;
+    }).catch(err => {
+      delete promisesRef.current[entryName];
+      throw err;
+    });
+    promisesRef.current[entryName] = promise;
+    return promise;
+  }, [putCachedData]);
   const contextValue = React.useMemo(() => ({
     initCache,
     getCachedData,
     putCachedData,
     typeofCachedData,
     listCache,
-    debugCache
-  }), [initCache, getCachedData, putCachedData, typeofCachedData, listCache, debugCache]);
+    debugCache,
+    fetchOrCache
+  }), [initCache, getCachedData, putCachedData, typeofCachedData, listCache, debugCache, fetchOrCache]);
   return /*#__PURE__*/React.createElement(MainSectionContext.Provider, {
     value: contextValue
   }, children);
@@ -5316,7 +5345,8 @@ var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
   SearchEngineButton: SearchEngineButton
 });
 
-const debug$2 = false;
+// GenericCrudEditor select components
+
 const GenericSelectGenerator = props => {
   const [errorState, setErrorState] = React.useState(null);
   const [config, setConfig] = React.useState(null);
@@ -5325,34 +5355,20 @@ const GenericSelectGenerator = props => {
     getCachedData,
     putCachedData,
     typeofCachedData,
-    debugCache
+    debugCache,
+    fetchOrCache
   } = React.useContext(MainSectionContext);
   React.useEffect(() => {
     setConfig(initConfig(props));
   }, [props]);
   React.useEffect(() => {
-    const setRowsAndCache = data => {
-      // select_cache[config.select_name] = data;
-      putCachedData(config.select_name, data);
-      setRows(data);
-    };
-    // if (config && typeof select_cache[config.select_name] !== 'undefined') {
-    if (config && typeofCachedData(config.select_name) !== 'undefined') {
-      setRows(getCachedData(config.select_name));
-    } else {
-      try {
-        let accessKeysListing = {};
-        if (config && config.dbFilter) {
-          accessKeysListing = _objectSpread2(_objectSpread2({}, accessKeysListing), config.dbFilter);
-          if (debug$2) ;
-        }
-        ;
-        config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setErrorState(error));
-      } catch (error) {
+    if (config) {
+      const accessKeysListing = config.dbFilter || {};
+      fetchOrCache(config.select_name, () => config.dbService.getAll(accessKeysListing)).then(data => setRows(data), error => setErrorState(error)).catch(error => {
         console.error(config.editor.title + '-Select | error object:', error);
-      }
+      });
     }
-  }, [config, getCachedData, putCachedData, typeofCachedData]);
+  }, [config, fetchOrCache]);
   const initConfig = props => {
     const editor = getEditorData(props);
     return {
@@ -5412,7 +5428,8 @@ const GenericSelectDataPopulator = props => {
   const {
     getCachedData,
     putCachedData,
-    typeofCachedData
+    typeofCachedData,
+    fetchOrCache
   } = React.useContext(MainSectionContext);
   const initConfig = props => {
     const editor = getEditorData(props);
@@ -5424,7 +5441,8 @@ const GenericSelectDataPopulator = props => {
       dbFilter: props.dbFilter !== undefined ? props.dbFilter : null,
       editor: editor,
       select_name: editor.name,
-      title_field_name: props.title_field_name !== undefined ? props.show_description : "title",
+      columns: props.columns !== undefined ? props.columns : '',
+      title_field_name: props.title_field_name !== undefined ? props.title_field_name : "title",
       value_field_name: props.value_field_name !== undefined ? props.value_field_name : "value",
       key_name: props.key_name !== undefined ? props.key_name : "_id"
     };
@@ -5454,32 +5472,13 @@ const GenericSelectDataPopulator = props => {
   React.useEffect(() => {
     setConfig(initConfig(props));
   }, [props]);
-  React.useEffect(() => {
-    const setRowsAndCache = data => {
-      putCachedData(config.select_name, data);
-      setRows(data);
-    };
-    async function getData() {
-      try {
-        let accessKeysListing = {};
-        if (config && config.dbFilter) {
-          accessKeysListing = _objectSpread2(_objectSpread2({}, accessKeysListing), config.dbFilter);
-        }
-        ;
-        console_debug_log('>> GENERICSELECTGENERATOR # 2 | accessKeysListing:');
-        console_debug_log(accessKeysListing);
-        config && config.dbService.getAll(accessKeysListing).then(data => setRowsAndCache(data), error => setErrorState(error));
-      } catch (error) {
-        console_debug_log(config.editor.title + "-Select | error object:");
-        console_debug_log(error);
-      }
+  if (config) {
+    const accessKeysListing = config.dbFilter || {};
+    if (config.columns !== '') {
+      accessKeysListing['gs_listing_columns'] = config.columns;
     }
-    if (config && typeofCachedData(config.select_name) !== 'undefined') {
-      setRows(getCachedData(config.select_name));
-    } else {
-      getData();
-    }
-  }, [config, getCachedData, putCachedData, typeofCachedData]);
+    fetchOrCache(config.select_name, () => config.dbService.getAll(accessKeysListing)).then(data => setRows(data), error => setErrorState(error));
+  }
   return returnData();
 };
 const putSelectOptionsFromArray = function (select_array_elements) {
@@ -22811,14 +22810,14 @@ const SuggestionDropdown = _ref => {
     setInputValue(newInputValue);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(SUGGESTION_DROPDOWN_CLASS, " ").concat(theme.input)
+    className: "".concat(SUGGESTION_DROPDOWN_CLASS, " ").concat(className || "", " ").concat(theme.input)
   }, /*#__PURE__*/React.createElement(Downshift, {
     inputValue: inputValue,
+    initialInputValue: inputValue,
     onChange: handleSuggestionSelected,
-    onInputValueChange: lodashExports.debounce(inputValue => setInputValue(inputValue), debounceTimeout)
-    // onInputValueChange={(inputValue) => setInputValue(inputValue)}
+    onInputValueChange: lodashExports.debounce(inputValue => inputValueChange(inputValue), debounceTimeout)
+    // onInputValueChange={(inputValue) => inputValueChange(inputValue)}
     ,
-    onInputValueChange: inputValue => inputValueChange(inputValue),
     itemToString: item => item ? item[suggestion_name_fieldname] : inputValue,
     id: name,
     name: nameInternal,

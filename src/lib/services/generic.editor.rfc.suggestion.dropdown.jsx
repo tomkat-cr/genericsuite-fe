@@ -149,14 +149,14 @@ export const SuggestionDropdown = ({
     return (
         <>
             <div
-                className={`${SUGGESTION_DROPDOWN_CLASS} ${theme.input}`}
+                className={`${SUGGESTION_DROPDOWN_CLASS} ${className || ""} ${theme.input}`}
             >
                 <Downshift
                     inputValue={inputValue}
+                    initialInputValue={inputValue}
                     onChange={handleSuggestionSelected}
-                    onInputValueChange={debounce((inputValue) => setInputValue(inputValue), debounceTimeout)}
-                    // onInputValueChange={(inputValue) => setInputValue(inputValue)}
-                    onInputValueChange={(inputValue) => inputValueChange(inputValue)}
+                    onInputValueChange={debounce((inputValue) => inputValueChange(inputValue), debounceTimeout)}
+                    // onInputValueChange={(inputValue) => inputValueChange(inputValue)}
                     itemToString={(item) => (item ? item[suggestion_name_fieldname] : inputValue)}
                     id={name}
                     name={nameInternal}

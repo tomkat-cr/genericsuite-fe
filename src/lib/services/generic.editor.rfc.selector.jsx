@@ -26,6 +26,7 @@ export const GenericSelectGenerator = (props) => {
     putCachedData,
     typeofCachedData,
     debugCache,
+    fetchOrCache,
   } = useContext(MainSectionContext);
 
   useEffect(() => {
@@ -33,41 +34,18 @@ export const GenericSelectGenerator = (props) => {
   }, [props]);
 
   useEffect(() => {
-    const setRowsAndCache = (data) => {
-      // select_cache[config.select_name] = data;
-      putCachedData(config.select_name, data);
-      setRows(data);
+    if (config) {
+      const accessKeysListing = config.dbFilter || {};
+      fetchOrCache(config.select_name, () => config.dbService.getAll(accessKeysListing))
+        .then(
+          data => setRows(data),
+          error => setErrorState(error)
+        )
+        .catch(error => {
+          console.error(config.editor.title + '-Select | error object:', error);
+        });
     }
-    // if (config && typeof select_cache[config.select_name] !== 'undefined') {
-    if (config && typeofCachedData(config.select_name) !== 'undefined') {
-      // setRows(select_cache[config.select_name]);
-      if (debug) {
-        console_debug_log(`>> GENERICSELECTGENERATOR # 0 | config.select_name: ${config.select_name} | getCachedData(config.select_name):}`);
-        console_debug_log(getCachedData(config.select_name));
-      }
-      setRows(getCachedData(config.select_name));
-    } else {
-      try {
-        let accessKeysListing = {};
-        if (config && config.dbFilter) {
-          accessKeysListing = {
-            ...accessKeysListing,
-            ...config.dbFilter,
-          };
-          if (debug) {
-            console_debug_log('>> GENERICSELECTGENERATOR # 1 | accessKeysListing:', accessKeysListing);
-          }
-        };
-        config && config.dbService.getAll(accessKeysListing)
-          .then(
-            data => setRowsAndCache(data),
-            error => setErrorState(error)
-          )
-      } catch (error) {
-        console.error(config.editor.title + '-Select | error object:', error);
-      };
-    }
-  }, [config, getCachedData, putCachedData, typeofCachedData]);
+  }, [config, fetchOrCache]);
 
   const initConfig = (props) => {
     const editor = getEditorData(props);
@@ -153,6 +131,7 @@ export const GenericSelectDataPopulator = (props) => {
     getCachedData,
     putCachedData,
     typeofCachedData,
+    fetchOrCache,
   } = useContext(MainSectionContext);
 
   const initConfig = (props) => {
@@ -163,9 +142,12 @@ export const GenericSelectDataPopulator = (props) => {
       dbFilter: props.dbFilter !== undefined ? props.dbFilter : null,
       editor: editor,
       select_name: editor.name,
+      columns: props.columns !== undefined
+        ? props.columns
+        : '',
       title_field_name:
         props.title_field_name !== undefined
-          ? props.show_description
+          ? props.title_field_name
           : "title",
       value_field_name:
         props.value_field_name !== undefined
@@ -203,38 +185,17 @@ export const GenericSelectDataPopulator = (props) => {
     setConfig(initConfig(props));
   }, [props]);
 
-  useEffect(() => {
-    const setRowsAndCache = (data) => {
-      putCachedData(config.select_name, data);
-      setRows(data);
+  if (config) {
+    const accessKeysListing = config.dbFilter || {};
+    if (config.columns !== '') {
+      accessKeysListing['gs_listing_columns'] = config.columns;
     }
-    async function getData() {
-      try {
-        let accessKeysListing = {};
-        if (config && config.dbFilter) {
-          accessKeysListing = {
-            ...accessKeysListing,
-            ...config.dbFilter,
-          };
-        };
-        console_debug_log('>> GENERICSELECTGENERATOR # 2 | accessKeysListing:');
-        console_debug_log(accessKeysListing);
-        config && config.dbService.getAll(accessKeysListing)
-          .then(
-            data => setRowsAndCache(data),
-            error => setErrorState(error)
-          );
-      } catch (error) {
-        console_debug_log(config.editor.title + "-Select | error object:");
-        console_debug_log(error);
-      }
-    }
-    if (config && typeofCachedData(config.select_name) !== 'undefined') {
-      setRows(getCachedData(config.select_name));
-    } else {
-      getData();
-    }
-  }, [config, getCachedData, putCachedData, typeofCachedData]);
+    fetchOrCache(config.select_name, () => config.dbService.getAll(accessKeysListing))
+      .then(
+        data => setRows(data),
+        error => setErrorState(error)
+      );
+  }
 
   return returnData();
 };

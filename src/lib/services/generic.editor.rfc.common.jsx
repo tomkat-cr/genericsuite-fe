@@ -53,6 +53,7 @@ const setEndpointFilter = (parentData, editor) => {
 };
 
 const getColumns = (editor) => {
+    // Get columns fixed with default values
     return Object.keys(editor.fieldElements).map((key) => {
         if (typeof editor.fieldElements[key].listing == "undefined") {
             editor.fieldElements[key].listing = false;

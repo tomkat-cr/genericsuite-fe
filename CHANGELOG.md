@@ -33,6 +33,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Api Keys to User Profile [GS-251].
 - "customOnChange()" function added to <PutOneFormfield /> as "onChange" parameter, also Formik setFieldValue() added as "setValue" parameter, so "component" type fields can update the Formik internal values and therefore saved in the database [GS-252].
 - ShowAsDisabledField component can render the custom component as a simulated disabled field (current behavior) or as a Formik Field, customizable with the new "showAsField", "isReadOnly", "type", "onChange", "onBlur" parameters. OnChange allows to store the calculated value in the Formik internal values and therefore saved in the database [GS-252].
+- Add USE_CONTAINERS_ENGINE_APP envvar to control whether to use containers engine app for local development environment when RUN_PROTOCOL="https" [GS-252].
+- Add RUN_PROTOCOL_AND_PORT_REPLACEMENT envvar to control automatic protocol and port replacement for local development environment variables REACT_APP_API_URL and APP_API_URL [GS-252].
+- Add "gs_listing_columns" query parameter to limit the columns to be returned from the API in the GenericSelectDataPopulator [GS-252].
 
 ### Changed
 - Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
@@ -50,7 +53,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - getFieldElementsYupValidations() enabled to have validations on the form data page [GS-251].
 - Rename state and setState with errorState, setErrorState on AppContext.jsx, App.jsx, generic.editor.rfc.selector.jsx, generic.menu.service.jsx [GS-251].
 - Rename status and setStatus with errorStatus, setErrorStatus on generic.editor.rfc.formpage.jsx [GS-251]
-- rename <FormPage /> parameters: mode_par, id_par, and editor_par to mode, id, and editor [GS-251].
+- Rename <FormPage /> parameters: mode_par, id_par, and editor_par to mode, id, and editor [GS-251].
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].
@@ -61,6 +64,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - GMG shows the "URL not found..." message during the menu loading [GS-251].
 - GCE_RFC doesn't show the error message when the session has been expired [GS-251].
 - Supress warning on the LoginPage about the username and password autocomplete attributes (More info: https://goo.gl/9p2vKq)
+- Fix input field color in the <SuggestionDropdown /> component [GS-252].
+- Fix the Cache initialization in the Generic CRUD Editor provider (MainSectionProvider) [GS-252].
 
 
 ## [1.1.0] - 2025-11-17
