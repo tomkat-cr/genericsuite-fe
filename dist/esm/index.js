@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import axios, { AxiosError } from 'axios';
 import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import Downshift from 'downshift';
+import { useCombobox } from 'downshift';
 
 function _defineProperty(e, r, t) {
   return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
@@ -583,7 +583,8 @@ const GsIcons = _ref => {
     additionalIconsFn = null
   } = _ref;
   /*
-  Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
+  Some vector icons thanks to: https://www.svgrepo.com/
+   Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
   expected one of ["2xs","xs","sm","lg","xl","2xl","1x","2x","3x","4x","5x","6x","7x","8x","9x","10x"].
   
   Reference::
@@ -1180,6 +1181,36 @@ const GsIcons = _ref => {
       }), /*#__PURE__*/React.createElement("path", {
         d: "m6 6 12 12"
       }));
+      break;
+    case 'error':
+      selectedSvg = /*#__PURE__*/React.createElement("svg", {
+        width: "24px",
+        height: "24px",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg"
+      }, /*#__PURE__*/React.createElement("g", {
+        id: "style=linear"
+      }, /*#__PURE__*/React.createElement("g", {
+        id: "error-box"
+      }, /*#__PURE__*/React.createElement("path", {
+        id: "vector",
+        d: "M2 8C2 4.68629 4.68629 2 8 2H16C19.3137 2 22 4.68629 22 8V16C22 19.3137 19.3137 22 16 22H8C4.68629 22 2 19.3137 2 16V8Z",
+        stroke: "#000000",
+        strokeWidth: "1.5"
+      }), /*#__PURE__*/React.createElement("path", {
+        id: "vector_2",
+        d: "M9.00012 9L15.0001 15",
+        stroke: "#000000",
+        strokeWidth: "1.5",
+        strokeLinecap: "round"
+      }), /*#__PURE__*/React.createElement("path", {
+        id: "vector_3",
+        d: "M15 9L9 14.9999",
+        stroke: "#000000",
+        strokeWidth: "1.5",
+        strokeLinecap: "round"
+      }))));
       break;
     default:
       if (additionalIconsFn) {
@@ -5296,7 +5327,7 @@ var generic_editor_rfc_provider = /*#__PURE__*/Object.freeze({
 const SearchEngineButton = _ref => {
   let {
     valueElement,
-    google_prompt
+    googlePrompt
   } = _ref;
   const setPrompt = (prompt, valueToReplace) => {
     return prompt.replace("%s", valueToReplace);
@@ -5305,7 +5336,7 @@ const SearchEngineButton = _ref => {
     e.preventDefault();
     const inputValue = document.getElementById(valueElement).value;
     if (inputValue !== "") {
-      const googleSearchUrl = "https://www.google.com/search?q=".concat(encodeURIComponent(setPrompt(google_prompt, inputValue)));
+      const googleSearchUrl = "https://www.google.com/search?q=".concat(encodeURIComponent(setPrompt(googlePrompt, inputValue)));
       window.open(googleSearchUrl, '_blank');
     }
   };
@@ -5318,9 +5349,42 @@ const SearchEngineButton = _ref => {
     alt: "Open Google Search"
   }))));
 };
+const ChatBotButtonGeneric = _ref2 => {
+  let {
+    AuxComponent,
+    valueElement,
+    chatbotPrompt
+  } = _ref2;
+  if (typeof AuxComponent === "undefined") {
+    console_debug_log(">> ChatBotButtonGeneric | AuxComponent is undefined");
+    return /*#__PURE__*/React.createElement("div", {
+      className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
+    }, /*#__PURE__*/React.createElement(GsIcons, {
+      icon: "error",
+      alt: "Error: AuxComponent is undefined"
+    }));
+  }
+  try {
+    return /*#__PURE__*/React.createElement("div", {
+      className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
+    }, /*#__PURE__*/React.createElement(AuxComponent, {
+      valueElement: valueElement,
+      chatbot_prompt: chatbotPrompt
+    }));
+  } catch (error) {
+    console_debug_log(">> ChatBotButtonGeneric | error:", error, 'editor', editor);
+    return /*#__PURE__*/React.createElement("div", {
+      className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
+    }, /*#__PURE__*/React.createElement(GsIcons, {
+      icon: "error",
+      alt: "Error: Internal error"
+    }));
+  }
+};
 
 var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
   __proto__: null,
+  ChatBotButtonGeneric: ChatBotButtonGeneric,
   SearchEngineButton: SearchEngineButton
 });
 
@@ -5478,7 +5542,8 @@ const getSelectDescription = (currentObj, dbRow) => {
     const filter = typeof dbRow[currentObj.name] !== "undefined" ? dbRow[currentObj.name].toString() : null;
     return /*#__PURE__*/React.createElement(currentObj.component, {
       filter: filter,
-      show_description: true
+      show_description: true,
+      currentObj: currentObj
     });
   }
   // Generic select
@@ -5495,7 +5560,8 @@ const getSelectDescription = (currentObj, dbRow) => {
     return /*#__PURE__*/React.createElement(currentObj.component, {
       value: value,
       dbRow: dbRow,
-      listing: "1"
+      listing: "1",
+      currentObj: currentObj
     });
   }
   // Returns plain value
@@ -22732,6 +22798,7 @@ const SuggestionDropdown = _ref => {
     setFieldValue
   } = useFormikContext();
   const [inputValue, setInputValue] = useState(value);
+  const [debouncedInputValue, setDebouncedInputValue] = useState(value);
   const [suggestions, setSuggestions] = useState([]);
   const {
     currentUser
@@ -22743,7 +22810,7 @@ const SuggestionDropdown = _ref => {
   // This component's input field must be different to the external input field to enable value sync
   const nameInternal = "".concat(name, "_sdd");
   const filter_api_url = defaultValue(config, 'filter_api_url'); // Ex. "fda_food_query"
-  const filter_api_request_method = defaultValue(config, "filter_api_request_method", "POST"); // Ex. true or false
+  const filter_api_request_method = String(defaultValue(config, "filter_api_request_method", "get")).toUpperCase(); // Ex. true or false
   const filter_search_param_name = defaultValue(config, 'filter_search_param_name'); // Ex. "food_name"
   const filter_search_other_param = defaultValue(config, 'filter_search_other_param'); // Ex. {"autocomplete": "1"}
   const suggestion_id_fieldname = defaultValue(config, "suggestion_id_fieldname"); // Ex. "id"
@@ -22751,14 +22818,14 @@ const SuggestionDropdown = _ref => {
   const suggestion_name_fieldname = defaultValue(config, "suggestion_name_fieldname", suggestion_desc_fieldname); // Ex. "description"
   const autocomplete_fields = defaultValue(config, "autocomplete_fields", {});
   useEffect(() => {
-    if (inputValue) {
-      // Get suggestions from external surce
+    if (debouncedInputValue) {
+      // Get suggestions from external source
       const dbService = new dbApiService({
         url: filter_api_url
       });
       let urlParams = {};
       let bodyData = replaceSpecialVars(filter_search_other_param, currentUser);
-      bodyData[filter_search_param_name] = inputValue;
+      bodyData[filter_search_param_name] = debouncedInputValue;
       if (filter_api_request_method === "GET") {
         urlParams = Object.assign({}, bodyData);
         bodyData = {};
@@ -22771,7 +22838,7 @@ const SuggestionDropdown = _ref => {
         }
       }).catch(error => console.error(error));
     }
-  }, [inputValue, filter_api_url, filter_search_other_param, filter_search_param_name, name, setFieldValue, filter_api_request_method]);
+  }, [debouncedInputValue, filter_api_url, filter_search_other_param, filter_search_param_name, name, setFieldValue, filter_api_request_method, currentUser]);
   const handleSuggestionSelected = suggestion => {
     if (suggestion) {
       Object.entries(autocomplete_fields).forEach(_ref2 => {
@@ -22782,48 +22849,59 @@ const SuggestionDropdown = _ref => {
       // Store new inputValue from suggestion
       const newInputValue = suggestion[suggestion_name_fieldname];
       setInputValue(newInputValue);
+      setDebouncedInputValue(newInputValue);
     }
   };
   const inputValueChange = newInputValue => {
     setFieldValue(name, newInputValue);
     setInputValue(newInputValue);
   };
+  const updateDebouncedInputValue = useMemo(() => lodashExports.debounce(value => setDebouncedInputValue(value), debounceTimeout), []);
+  const onInputValueChangeInternal = newInputValue => {
+    inputValueChange(newInputValue);
+    updateDebouncedInputValue(newInputValue);
+  };
+  const {
+    isOpen,
+    getMenuProps,
+    getInputProps,
+    highlightedIndex,
+    getItemProps,
+    selectedItem
+  } = useCombobox({
+    items: suggestions,
+    inputValue,
+    onInputValueChange: _ref3 => {
+      let {
+        inputValue: newInputValue
+      } = _ref3;
+      onInputValueChangeInternal(newInputValue);
+    },
+    onSelectedItemChange: _ref4 => {
+      let {
+        selectedItem
+      } = _ref4;
+      handleSuggestionSelected(selectedItem);
+    },
+    itemToString: item => item ? item[suggestion_name_fieldname] : inputValue,
+    id: name
+  });
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "".concat(SUGGESTION_DROPDOWN_CLASS, " ").concat(className || "", " ").concat(theme.input)
-  }, /*#__PURE__*/React.createElement(Downshift, {
-    inputValue: inputValue,
-    initialInputValue: inputValue,
-    onChange: handleSuggestionSelected,
-    onInputValueChange: lodashExports.debounce(inputValue => inputValueChange(inputValue), debounceTimeout)
-    // onInputValueChange={(inputValue) => inputValueChange(inputValue)}
-    ,
-    itemToString: item => item ? item[suggestion_name_fieldname] : inputValue,
-    id: name,
-    name: nameInternal,
-    key: nameInternal,
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", getInputProps({
+    className: "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " ").concat(disabled ? DISABLE_FIELD_BACKGROUND_COLOR_CLASS : "", " ").concat(inputValue && suggestions.length === 0 ? IS_INVALID_CLASS : ""),
     disabled: disabled,
     required: required,
-    className: className
-  }, _ref3 => {
-    let {
-      getInputProps,
-      getItemProps,
-      getMenuProps,
-      isOpen,
-      highlightedIndex,
-      selectedItem,
-      getToggleButtonProps
-    } = _ref3;
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", getInputProps()), /*#__PURE__*/React.createElement("ul", getMenuProps(), isOpen ? suggestions.map((suggestion, index) => /*#__PURE__*/React.createElement("li", getItemProps({
-      key: convertId(suggestion[suggestion_id_fieldname]),
-      index,
-      item: suggestion,
-      style: {
-        backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
-        fontWeight: selectedItem === suggestion ? 'bold' : 'normal'
-      }
-    }), suggestion[suggestion_desc_fieldname])) : null));
-  })), inputValue && suggestions.length === 0 && /*#__PURE__*/React.createElement("div", {
+    name: nameInternal
+  })), /*#__PURE__*/React.createElement("ul", getMenuProps(), isOpen && suggestions.map((suggestion, index) => /*#__PURE__*/React.createElement("li", getItemProps({
+    key: convertId(suggestion[suggestion_id_fieldname]),
+    index,
+    item: suggestion,
+    style: {
+      backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
+      fontWeight: selectedItem === suggestion ? 'bold' : 'normal'
+    }
+  }), suggestion[suggestion_desc_fieldname]))))), inputValue && suggestions.length === 0 && /*#__PURE__*/React.createElement("div", {
     className: INVALID_FEEDBACK_CLASS
   }, "Error: No suggestions found."));
 };
@@ -23239,12 +23317,13 @@ const PutOneFormfield = _ref4 => {
   if (chatbot_popup || google_popup) {
     elementInput = /*#__PURE__*/React.createElement("div", {
       className: APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS
-    }, elementInput, chatbot_popup && currentObj.aux_component !== null && /*#__PURE__*/React.createElement(currentObj.aux_component, {
+    }, elementInput, chatbot_popup && currentObj.aux_component !== null && /*#__PURE__*/React.createElement(ChatBotButtonGeneric, {
+      AuxComponent: currentObj.aux_component,
       valueElement: idName,
-      chatbot_prompt: chatbot_prompt
+      chatbotPrompt: chatbot_prompt
     }), google_popup && /*#__PURE__*/React.createElement(SearchEngineButton, {
       valueElement: idName,
-      google_prompt: google_prompt
+      googlePrompt: google_prompt
     }));
   }
   return /*#__PURE__*/React.createElement("div", {
@@ -24542,9 +24621,25 @@ var fieldElements$3 = [
 		name: "config_name",
 		required: true,
 		label: "Name",
-		type: "text",
-		readonly: false,
-		listing: true
+		type: "suggestion_dropdown",
+		listing: true,
+		suggestion_id_fieldname: "_id",
+		suggestion_desc_fieldname: "config_name",
+		suggestion_name_fieldname: "config_name",
+		filter_api_url: "general_config",
+		filter_search_param_name: "config_name",
+		filter_search_other_param: {
+			like: "1",
+			limit: 10
+		},
+		autocomplete_fields: {
+			config_value: "config_value"
+		},
+		chatbot_popup: true,
+		aux_component: "ChatBotButton",
+		chatbot_prompt: "Give me the list of configuration parameters for GenericSuite backend",
+		google_popup: true,
+		google_prompt: "GenericSuite backend configuration parameters list"
 	},
 	{
 		name: "config_value",

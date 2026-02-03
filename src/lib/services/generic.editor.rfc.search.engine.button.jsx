@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { 
+import {
     console_debug_log,
 } from "./logging.service.jsx";
 
@@ -20,22 +20,22 @@ const debug = false;
 
 export const SearchEngineButton = ({
     valueElement,
-    google_prompt,
+    googlePrompt,
 }) => {
 
     if (debug) {
-        console_debug_log(`SearchEngineButton | valueElement: ${valueElement} | document.getElementById(valueElement)| ${document.getElementById(valueElement)} | google_prompt: ${google_prompt}`);
+        console_debug_log(`SearchEngineButton | valueElement: ${valueElement} | document.getElementById(valueElement)| ${document.getElementById(valueElement)} | googlePrompt: ${googlePrompt}`);
     }
 
     const setPrompt = (prompt, valueToReplace) => {
         return prompt.replace("%s", valueToReplace);
     }
-    
+
     const handleGoogleClick = (e) => {
         e.preventDefault();
         const inputValue = document.getElementById(valueElement).value;
         if (inputValue !== "") {
-            const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(setPrompt(google_prompt, inputValue))}`;
+            const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(setPrompt(googlePrompt, inputValue))}`;
             window.open(googleSearchUrl, '_blank');
         }
     };
@@ -59,3 +59,48 @@ export const SearchEngineButton = ({
         </>
     );
 };
+
+export const ChatBotButtonGeneric = ({
+    AuxComponent,
+    valueElement,
+    chatbotPrompt,
+}) => {
+    if (typeof AuxComponent === "undefined") {
+        console_debug_log(`>> ChatBotButtonGeneric | AuxComponent is undefined`);
+        return (
+            <div
+                className={SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS}
+            >
+                <GsIcons
+                    icon="error"
+                    alt="Error: AuxComponent is undefined"
+                />
+            </div>
+        );
+    }
+    try {
+        return (
+            <div
+                className={SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS}
+            >
+                <AuxComponent
+                    valueElement={valueElement}
+                    chatbot_prompt={chatbotPrompt}
+                />
+            </div>
+        );
+    } catch (error) {
+        console_debug_log(`>> ChatBotButtonGeneric | error:`, error, 'editor', editor);
+        return (
+            <div
+                className={SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS}
+            >
+                <GsIcons
+                    icon="error"
+                    alt="Error: Internal error"
+                />
+            </div>
+        );
+    }
+}
+

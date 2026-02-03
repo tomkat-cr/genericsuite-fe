@@ -33,12 +33,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Api Keys to User Profile [GS-251].
 - "customOnChange()" function added to <PutOneFormfield /> as "onChange" parameter, also Formik setFieldValue() added as "setValue" parameter, so "component" type fields can update the Formik internal values and therefore saved in the database [GS-252].
 - ShowAsDisabledField component can render the custom component as a simulated disabled field (current behavior) or as a Formik Field, customizable with the new "showAsField", "isReadOnly", "type", "onChange", "onBlur" parameters. OnChange allows to store the calculated value in the Formik internal values and therefore saved in the database [GS-252].
-- Add USE_CONTAINERS_ENGINE_APP envvar to control whether to use containers engine app for local development environment when RUN_PROTOCOL="https" [GS-252].
-- Add RUN_PROTOCOL_AND_PORT_REPLACEMENT envvar to control automatic protocol and port replacement for local development environment variables REACT_APP_API_URL and APP_API_URL [GS-252].
-- Add "gs_listing_columns" query parameter to limit the columns to be returned from the API in the GenericSelectDataPopulator [GS-252].
+- USE_CONTAINERS_ENGINE_APP envvar to control whether to use containers engine app for local development environment when RUN_PROTOCOL="https" [GS-257].
+- RUN_PROTOCOL_AND_PORT_REPLACEMENT envvar to control automatic protocol and port replacement for local development environment variables APP_FE_URL_DEV and APP_API_URL_DEV [GS-257].
+- "gs_listing_columns" query parameter to limit the columns to be returned from the API in the GenericSelectDataPopulator [GS-252].
+- "link_external_configs.sh" script to link external JSON configs directory so it can be tested in GenericSuite FE Core [GS-258].
+- "config_name" field type change to "suggestion_dropdown" in "Admin > Users > User Configurations", so the Suggestion Dropdown can be tested in GenericSuite FE Core [GS-258].
+- Error icon to GsIconLib [GS-258].
+- ChatBotButtonGeneric component to add a try-catch layer to field definitions that has "chatbot_popup" set to true [GS-258].
 
 ### Changed
-- Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
 - Enhance error message in the login page [GS-246].
 - Update class_name_constants.jsx to make buttons more rounded and remove unused comments [GS-246].
 - Update getFetch() to check if the response is ok using the [200, 201, 202, 204] status codes [GS-245].
@@ -54,6 +57,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Rename state and setState with errorState, setErrorState on AppContext.jsx, App.jsx, generic.editor.rfc.selector.jsx, generic.menu.service.jsx [GS-251].
 - Rename status and setStatus with errorStatus, setErrorStatus on generic.editor.rfc.formpage.jsx [GS-251]
 - Rename <FormPage /> parameters: mode_par, id_par, and editor_par to mode, id, and editor [GS-251].
+- Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
+- REACT_APP_APP_NAME envvar can be removed and replaced by APP_NAME in monorepos [GS-243].
+- REACT_APP_DEBUG envvar can be removed and replaced by APP_DEBUG in monorepos [GS-243].
+- If REACT_APP_API_URL is not set, APP_API_URL can be used instead [GS-243].
+- If REACT_APP_URI_PREFIX is not set, URI_PREFIX can be used instead [GS-243].
+- If REACT_APP_X_TOKEN is not set, X_TOKEN can be used instead [GS-243].
+- If REACT_APP_USE_AXIOS is not set, USE_AXIOS can be used instead [GS-243].
+- Send "currentObj" to "select_component" and "component" field types now receive "currentObj" as a parameter in getSelectDescription() [GS-258].
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].
@@ -66,7 +77,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Supress warning on the LoginPage about the username and password autocomplete attributes (More info: https://goo.gl/9p2vKq)
 - Fix input field color in the <SuggestionDropdown /> component [GS-252].
 - Fix the Cache initialization in the Generic CRUD Editor provider (MainSectionProvider) [GS-252].
-
+- Fix SuggestionDropdown component: use debounce to limit the number of calls to the API, and replace legacy Downshift component with useCombobox hook [GS-258].
 
 ## [1.1.0] - 2025-11-17
 

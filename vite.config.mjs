@@ -55,13 +55,13 @@ export default defineConfig(({ mode }) => {
 
     const process_env = {
         REACT_APP_VERSION: (process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
-        REACT_APP_API_URL: (process.env.REACT_APP_API_URL || `https://${appLocalDomainName}`),
+        REACT_APP_API_URL: (process.env.REACT_APP_API_URL || process.env.API_URL || `https://${appLocalDomainName}`),
         REACT_APP_API_VERSION: (process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1'),
-        REACT_APP_DEBUG: (process.env.REACT_APP_DEBUG || '0'),
-        REACT_APP_URI_PREFIX: (process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
-        REACT_APP_X_TOKEN: (process.env.REACT_APP_X_TOKEN || ''),
-        REACT_APP_APP_NAME: (process.env.REACT_APP_APP_NAME || 'exampleapp'),
-        REACT_APP_USE_AXIOS: (process.env.REACT_APP_USE_AXIOS || '1'),
+        REACT_APP_DEBUG: (process.env.REACT_APP_DEBUG || process.env.APP_DEBUG || '0'),
+        REACT_APP_URI_PREFIX: (process.env.REACT_APP_URI_PREFIX || process.env.URI_PREFIX || 'exampleapp_frontend'),
+        REACT_APP_X_TOKEN: (process.env.REACT_APP_X_TOKEN || process.env.X_TOKEN || ''),
+        REACT_APP_APP_NAME: (process.env.REACT_APP_APP_NAME || process.env.APP_NAME || 'exampleapp'),
+        REACT_APP_USE_AXIOS: (process.env.REACT_APP_USE_AXIOS || process.env.USE_AXIOS || '1'),
         REACT_APP_API_KEYS_PREFIX: (process.env.API_KEYS_PREFIX || 'sk-gsu-'),
     }
 

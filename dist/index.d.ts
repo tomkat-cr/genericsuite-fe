@@ -582,6 +582,9 @@ declare var generic_editor_rfc_search: Readonly<{
 }>;
 declare var generic_editor_rfc_search_engine_button: Readonly<{
     __proto__: null;
+    ChatBotButtonGeneric: (_ref2: any) => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
     SearchEngineButton: (_ref: any) => React.FunctionComponentElement<{
         children?: React.ReactNode | undefined;
     }>;

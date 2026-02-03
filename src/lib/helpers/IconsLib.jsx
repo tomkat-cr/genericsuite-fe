@@ -23,6 +23,8 @@ export const GsIcons = ({
 }) => {
 
     /*
+    Some vector icons thanks to: https://www.svgrepo.com/
+
     Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
     expected one of ["2xs","xs","sm","lg","xl","2xl","1x","2x","3x","4x","5x","6x","7x","8x","9x","10x"].
     
@@ -581,6 +583,26 @@ export const GsIcons = ({
                     strokeLinejoin="round"
                 >
                     <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+                </svg>
+            );
+            break;
+
+        case 'error':
+            selectedSvg = (
+                <svg
+                    width="24px"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <g id="style=linear">
+                        <g id="error-box">
+                            <path id="vector" d="M2 8C2 4.68629 4.68629 2 8 2H16C19.3137 2 22 4.68629 22 8V16C22 19.3137 19.3137 22 16 22H8C4.68629 22 2 19.3137 2 16V8Z" stroke="#000000" strokeWidth="1.5" />
+                            <path id="vector_2" d="M9.00012 9L15.0001 15" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" />
+                            <path id="vector_3" d="M15 9L9 14.9999" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" />
+                        </g>
+                    </g>
                 </svg>
             );
             break;

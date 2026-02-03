@@ -233,6 +233,7 @@ export const getSelectDescription = (currentObj, dbRow) => {
       <currentObj.component
         filter={filter}
         show_description={true}
+        currentObj={currentObj}
       />
     );
   }
@@ -256,6 +257,7 @@ export const getSelectDescription = (currentObj, dbRow) => {
         value={value}
         dbRow={dbRow}
         listing="1"
+        currentObj={currentObj}
       />
     );
   }

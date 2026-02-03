@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { dbApiService } from "./db.service.jsx";
 import { getEditorFlags } from './generic.editor.rfc.common.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
-import { SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
+import { ChatBotButtonGeneric, SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
 import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
 import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
 import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
@@ -562,15 +562,16 @@ const PutOneFormfield = ({
             >
                 {elementInput}
                 {chatbot_popup && currentObj.aux_component !== null && (
-                    <currentObj.aux_component
+                    <ChatBotButtonGeneric
+                        AuxComponent={currentObj.aux_component}
                         valueElement={idName}
-                        chatbot_prompt={chatbot_prompt}
+                        chatbotPrompt={chatbot_prompt}
                     />
                 )}
                 {google_popup && (
                     <SearchEngineButton
                         valueElement={idName}
-                        google_prompt={google_prompt}
+                        googlePrompt={google_prompt}
                     />
                 )}
             </div>
