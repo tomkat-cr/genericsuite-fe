@@ -290,6 +290,7 @@ const PutOneFormfield = ({
     touched,
     initialValue,
     theme,
+    dbRow,
 }) => {
     const { setFieldValue } = useFormikContext();
 
@@ -417,7 +418,10 @@ const PutOneFormfield = ({
                     className={fieldClass}
                     onBlur={runCalculation}
                 >
-                    <currentObj.component />
+                    <currentObj.component
+                        currentObj={currentObj}
+                        dbRow={dbRow}
+                    />
                 </Field>
             );
             break;
@@ -450,6 +454,8 @@ const PutOneFormfield = ({
                     showAsField="1"
                     onChange={customOnChange}
                     setValue={setFieldValue}
+                    currentObj={currentObj}
+                    dbRow={dbRow}
                 />
             );
             break;
@@ -929,6 +935,7 @@ const EditFormFormikFinal = ({
                             touched={touched}
                             initialValue={initialFieldValues[htmlElement[1].name]}
                             theme={theme}
+                            dbRow={dataset}
                         />
                     })}
                     <div

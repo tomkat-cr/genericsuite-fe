@@ -17,14 +17,34 @@ import { MSG_SELECT_AN_OPTION } from "../constants/general_constants.jsx";
 
 const debug = false;
 
+export const buildDescription = (itemData, fieldArray) => {
+  let description = '';
+  fieldArray.forEach((field) => {
+    description += itemData[field] + ' ';
+  });
+  return description.trim();
+}
+
 export const GenericSelectGenerator = (props) => {
+  /*
+   * Select options generator component.
+   * Return the description for the select value if show_description is true,
+   * otherwise returns one or more <option>...</option> for a <select>, sending
+   * a request to the API, and adding a <option>...</option> with the key and description for each row returned
+   *
+   * Parameters:
+   *  filter: filter by _id. Default to no filter (null)
+   *  dbFilter: database query filter. Default to no filter (null)
+   *  show_description: if true, show description in the listing page or read-only form page, otherwise builds the <option>. Default is false
+   *  description_fields: array of fields to show in the description. Default is ["name"]
+   */
   const [errorState, setErrorState] = useState(null);
   const [config, setConfig] = useState(null);
   const [rows, setRows] = useState(null);
   const {
-    getCachedData,
-    putCachedData,
-    typeofCachedData,
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
     debugCache,
     fetchOrCache,
   } = useContext(MainSectionContext);
@@ -50,21 +70,28 @@ export const GenericSelectGenerator = (props) => {
   const initConfig = (props) => {
     const editor = getEditorData(props);
     return {
+      // dbService: database service instance
       dbService: new dbApiService({ url: editor.dbApiUrl }),
+      // editor: editor configuration
+      editor: editor,
+      // select_name: name of the select, taken from the editor name
+      select_name: editor.name,
+      // filter: filter by _id. Default to no filter (null)
       filter:
         typeof props.filter !== 'undefined' ? props.filter : null,
+      // dbFilter: database query filter. Default to no filter (null)
       dbFilter:
         typeof props.dbFilter !== 'undefined' ? props.dbFilter : null,
+      // show_description: if true, show description in the listing page or read-only form page. Default is false
       show_description:
         typeof props.show_description !== 'undefined'
           ? props.show_description
           : false,
+      // description_fields: array of fields to show in the description. Default is ["name"]
       description_fields:
         typeof props.description_fields !== 'undefined'
           ? props.description_fields
           : ["name"],
-      editor: editor,
-      select_name: editor.name,
     };
   }
 
@@ -96,14 +123,6 @@ export const GenericSelectGenerator = (props) => {
     debugCache("GenericSelectGenerator");
   }
 
-  const buildDescription = (option, fieldArray) => {
-    let description = '';
-    fieldArray.forEach((field) => {
-      description += option[field] + ' ';
-    });
-    return description.trim();
-  }
-
   return selectOptions
     .filter((option) =>
       filter === null ? true : dbService.convertId(option._id) === filter
@@ -128,9 +147,9 @@ export const GenericSelectDataPopulator = (props) => {
   const [config, setConfig] = useState(null);
   const [rows, setRows] = useState(null);
   const {
-    getCachedData,
-    putCachedData,
-    typeofCachedData,
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
     fetchOrCache,
   } = useContext(MainSectionContext);
 
@@ -232,6 +251,7 @@ export const getSelectDescription = (currentObj, dbRow) => {
     return (
       <currentObj.component
         filter={filter}
+        dbRow={dbRow}
         show_description={true}
         currentObj={currentObj}
       />

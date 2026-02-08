@@ -593,6 +593,7 @@ declare var generic_editor_rfc_selector: Readonly<{
     __proto__: null;
     GenericSelectDataPopulator: (props: any) => any;
     GenericSelectGenerator: (props: any) => any;
+    buildDescription: (itemData: any, fieldArray: any) => string;
     getSelectDescription: (currentObj: any, dbRow: any) => any;
     putSelectOptionsFromArray: (select_array_elements: any, ...args: any[]) => React.ReactElement<{
         key: any;

@@ -5411,14 +5411,33 @@ var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
 
 // GenericCrudEditor select components
 
+const buildDescription = (itemData, fieldArray) => {
+  let description = '';
+  fieldArray.forEach(field => {
+    description += itemData[field] + ' ';
+  });
+  return description.trim();
+};
 const GenericSelectGenerator = props => {
+  /*
+   * Select options generator component.
+   * Return the description for the select value if show_description is true,
+   * otherwise returns one or more <option>...</option> for a <select>, sending
+   * a request to the API, and adding a <option>...</option> with the key and description for each row returned
+   *
+   * Parameters:
+   *  filter: filter by _id. Default to no filter (null)
+   *  dbFilter: database query filter. Default to no filter (null)
+   *  show_description: if true, show description in the listing page or read-only form page, otherwise builds the <option>. Default is false
+   *  description_fields: array of fields to show in the description. Default is ["name"]
+   */
   const [errorState, setErrorState] = React.useState(null);
   const [config, setConfig] = React.useState(null);
   const [rows, setRows] = React.useState(null);
   const {
-    getCachedData,
-    putCachedData,
-    typeofCachedData,
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
     debugCache,
     fetchOrCache
   } = React.useContext(MainSectionContext);
@@ -5436,15 +5455,22 @@ const GenericSelectGenerator = props => {
   const initConfig = props => {
     const editor = getEditorData(props);
     return {
+      // dbService: database service instance
       dbService: new dbApiService({
         url: editor.dbApiUrl
       }),
-      filter: typeof props.filter !== 'undefined' ? props.filter : null,
-      dbFilter: typeof props.dbFilter !== 'undefined' ? props.dbFilter : null,
-      show_description: typeof props.show_description !== 'undefined' ? props.show_description : false,
-      description_fields: typeof props.description_fields !== 'undefined' ? props.description_fields : ["name"],
+      // editor: editor configuration
       editor: editor,
-      select_name: editor.name
+      // select_name: name of the select, taken from the editor name
+      select_name: editor.name,
+      // filter: filter by _id. Default to no filter (null)
+      filter: typeof props.filter !== 'undefined' ? props.filter : null,
+      // dbFilter: database query filter. Default to no filter (null)
+      dbFilter: typeof props.dbFilter !== 'undefined' ? props.dbFilter : null,
+      // show_description: if true, show description in the listing page or read-only form page. Default is false
+      show_description: typeof props.show_description !== 'undefined' ? props.show_description : false,
+      // description_fields: array of fields to show in the description. Default is ["name"]
+      description_fields: typeof props.description_fields !== 'undefined' ? props.description_fields : ["name"]
     };
   };
   if (rows === null) {
@@ -5468,13 +5494,6 @@ const GenericSelectGenerator = props => {
     selectAnOptionItem[description_fields[i]] = '';
   }
   const selectOptions = [...[...[selectAnOptionItem]], ...rows.resultset];
-  const buildDescription = (option, fieldArray) => {
-    let description = '';
-    fieldArray.forEach(field => {
-      description += option[field] + ' ';
-    });
-    return description.trim();
-  };
   return selectOptions.filter(option => filter === null ? true : dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
       return buildDescription(option, description_fields);
@@ -5490,9 +5509,9 @@ const GenericSelectDataPopulator = props => {
   const [config, setConfig] = React.useState(null);
   const [rows, setRows] = React.useState(null);
   const {
-    getCachedData,
-    putCachedData,
-    typeofCachedData,
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
     fetchOrCache
   } = React.useContext(MainSectionContext);
   const initConfig = props => {
@@ -5563,6 +5582,7 @@ const getSelectDescription = (currentObj, dbRow) => {
     const filter = typeof dbRow[currentObj.name] !== "undefined" ? dbRow[currentObj.name].toString() : null;
     return /*#__PURE__*/React.createElement(currentObj.component, {
       filter: filter,
+      dbRow: dbRow,
       show_description: true,
       currentObj: currentObj
     });
@@ -5593,6 +5613,7 @@ var generic_editor_rfc_selector = /*#__PURE__*/Object.freeze({
   __proto__: null,
   GenericSelectDataPopulator: GenericSelectDataPopulator,
   GenericSelectGenerator: GenericSelectGenerator,
+  buildDescription: buildDescription,
   getSelectDescription: getSelectDescription,
   putSelectOptionsFromArray: putSelectOptionsFromArray
 });
@@ -23138,7 +23159,8 @@ const PutOneFormfield = _ref4 => {
     errors,
     touched,
     initialValue,
-    theme
+    theme,
+    dbRow
   } = _ref4;
   const {
     setFieldValue
@@ -23225,7 +23247,10 @@ const PutOneFormfield = _ref4 => {
         required: currentObj.required && !readOnlyfield,
         className: fieldClass,
         onBlur: runCalculation
-      }, /*#__PURE__*/React.createElement(currentObj.component, null));
+      }, /*#__PURE__*/React.createElement(currentObj.component, {
+        currentObj: currentObj,
+        dbRow: dbRow
+      }));
       break;
     case 'select':
       elementInput = /*#__PURE__*/React.createElement(formik.Field, {
@@ -23250,7 +23275,9 @@ const PutOneFormfield = _ref4 => {
         onBlur: runCalculation,
         showAsField: "1",
         onChange: customOnChange,
-        setValue: setFieldValue
+        setValue: setFieldValue,
+        currentObj: currentObj,
+        dbRow: dbRow
       });
       break;
     case 'suggestion_dropdown':
@@ -23578,7 +23605,8 @@ const EditFormFormikFinal = _ref6 => {
         errors: errors,
         touched: touched,
         initialValue: initialFieldValues[htmlElement[1].name],
-        theme: theme
+        theme: theme,
+        dbRow: dataset
       });
     }), /*#__PURE__*/React.createElement("div", {
       className: APP_FORMPAGE_FORM_BUTTON_BAR_CLASS
