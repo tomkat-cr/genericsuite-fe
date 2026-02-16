@@ -3099,7 +3099,7 @@ function handleResponseText(response, text, headers) {
   }
   return data;
 }
-const get401ErrorMessage = (statusText, reasonDetail) => statusText !== null && statusText !== void 0 && statusText.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || String(reasonDetail ? reasonDetail : '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText;
+const get401ErrorMessage = (statusText, reasonDetail) => !statusText || statusText !== null && statusText !== void 0 && statusText.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || String(reasonDetail ? reasonDetail : '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText || reasonDetail;
 async function handleFetchError(error) {
   let possibleCORS;
   let errorMsg;
@@ -3134,7 +3134,7 @@ async function handleFetchError(error) {
         message: "Request failed with status code 401"
         name: "AxiosError"
         request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}
-        response: {data: 'Could not verify [L3]', status: 401, statusText: 'Unauthorized', headers: AxiosHeaders, config: {…}, …}
+        response: {data: 'Could not verify [L3]', status: 401, statusText: 'Unauthorized' or "", headers: AxiosHeaders, config: {…}, …}
         status: 401
         stack: "AxiosError: Request failed with status code 401\n    at settle (http://example-domain.com/node_modules/.vite/deps/axios.js?v=1eba938e:1257:12)\n ..."
     */

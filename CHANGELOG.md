@@ -65,8 +65,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - If REACT_APP_X_TOKEN is not set, X_TOKEN can be used instead [GS-243].
 - If REACT_APP_USE_AXIOS is not set, USE_AXIOS can be used instead [GS-243].
 - Send "currentObj" to "select_component" and "component" field types now receive "currentObj" as a parameter in getSelectDescription() [GS-258].
-- Pass `dbRow` to form fields types "select_component" and "component" for enhanced data context [GS-36].
-- Export `buildDescription` utility on "generic.editor.rfc.selector" and enhance "GenericSelectGenerator" documentation [GS-36].
+- Pass `dbRow` to form fields types "select_component" and "component" for enhanced data context [GS-37].
+- Export `buildDescription` utility on "generic.editor.rfc.selector" and enhance "GenericSelectGenerator" documentation [GS-37].
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].
@@ -80,6 +80,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix input field color in the <SuggestionDropdown /> component [GS-252].
 - Fix the Cache initialization in the Generic CRUD Editor provider (MainSectionProvider) [GS-252].
 - Fix SuggestionDropdown component: use debounce to limit the number of calls to the API, and replace legacy Downshift component with useCombobox hook [GS-258].
+- Show the error message in the login page when using axios and the session expires or the user credentials are invalid [GS-37] [GS-202].
 
 
 ## [1.1.0] - 2025-11-17

@@ -97,7 +97,7 @@ export function handleResponseText(response, text, headers) {
     return data;
 }
 
-const get401ErrorMessage = (statusText, reasonDetail) => statusText?.includes('Unauthorized') ? (
+const get401ErrorMessage = (statusText, reasonDetail) => !statusText || statusText?.includes('Unauthorized') ? (
     [
         'Could not verify [L3]',
         'Could not verify [L2]',
@@ -105,12 +105,13 @@ const get401ErrorMessage = (statusText, reasonDetail) => statusText?.includes('U
     ].includes(reasonDetail) ||
         String(reasonDetail ? reasonDetail : '').includes('inactive') ?
         MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED
-) : statusText;
+) : statusText || reasonDetail;
 
 export async function handleFetchError(error) {
     let possibleCORS;
     let errorMsg;
     let reasonDetail;
+    if (debug) console_debug_log('handleFetchError error:', error);
     if (error instanceof Response) {
         /*
             body: (...)
@@ -145,7 +146,7 @@ export async function handleFetchError(error) {
             message: "Request failed with status code 401"
             name: "AxiosError"
             request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}
-            response: {data: 'Could not verify [L3]', status: 401, statusText: 'Unauthorized', headers: AxiosHeaders, config: {…}, …}
+            response: {data: 'Could not verify [L3]', status: 401, statusText: 'Unauthorized' or "", headers: AxiosHeaders, config: {…}, …}
             status: 401
             stack: "AxiosError: Request failed with status code 401\n    at settle (http://example-domain.com/node_modules/.vite/deps/axios.js?v=1eba938e:1257:12)\n ..."
         */
@@ -157,10 +158,12 @@ export async function handleFetchError(error) {
             errorMsg = error.message;
             reasonDetail = error.response?.data;
         }
+        if (debug) console_debug_log('Axios Error | errorMsg:', errorMsg, 'reasonDetail:', reasonDetail);
     } else {
         possibleCORS = (error instanceof TypeError && error.message.includes('Failed to fetch'));
         errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
         reasonDetail = error;
+        if (debug) console_debug_log('Fetch Error | errorMsg:', errorMsg, 'reasonDetail:', reasonDetail);
     }
     if (debug) {
         console_debug_log(
