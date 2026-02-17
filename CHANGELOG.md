@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
 
-## [Unreleased]
+## [Unreleased] - YYYY-MM-DD
 
 ### Added
 
@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [Unreleased]
+## [1.2.0] - 2026-02-18
 
 ### Added
 - API_VERSION envvar to set the API version, default to "v1" [GS-245].
@@ -39,7 +39,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - "link_external_configs.sh" script to link external JSON configs directory so it can be tested in GenericSuite FE Core [GS-258].
 - "config_name" field type change to "suggestion_dropdown" in "Admin > Users > User Configurations", so the Suggestion Dropdown can be tested in GenericSuite FE Core [GS-258].
 - Error icon to GsIconLib [GS-258].
-- ChatBotButtonGeneric component to add a try-catch layer to field definitions that has "chatbot_popup" set to true [GS-258].
+- <ChatBotButtonGeneric /> component to add a try-catch layer to field definitions that has "chatbot_popup" set to true [GS-258].
+- Comprehensive parameter documentation for `GenericSelectDataPopulator`.
+- Comprehensive documentation for `getUrlParams`.
+- Add VERBOSE_RUN_CONFIG envvar to enable verbose logging in run_config.sh.
 
 ### Changed
 - Enhance error message in the login page [GS-246].
@@ -67,6 +70,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Send "currentObj" to "select_component" and "component" field types now receive "currentObj" as a parameter in getSelectDescription() [GS-258].
 - Pass `dbRow` to form fields types "select_component" and "component" for enhanced data context [GS-37].
 - Export `buildDescription` utility on "generic.editor.rfc.selector" and enhance "GenericSelectGenerator" documentation [GS-37].
+- Pass `currentObj` as a parameter to `dataPopulator` on getSelectFieldsOptions() [GS-37].
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].

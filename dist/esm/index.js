@@ -3980,6 +3980,13 @@ var errorAndReenter = /*#__PURE__*/Object.freeze({
 
 function getUrlParams() {
   let props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window;
+  /*
+  Get query parameters / url parameters
+   Example:
+      const getUrlParams = gs.urlParams.getUrlParams;
+      const urlParams = getUrlParams();
+      noMenu = (urlParams.menu && urlParams.menu === "0"),
+  */
   let urlParams = {};
   let searchString;
   try {
@@ -5229,7 +5236,7 @@ const getSelectFieldsOptions = fieldElements => {
     let currentObj = key[1];
     return {
       name: currentObj.name,
-      promiseResult: currentObj.dataPopulator()
+      promiseResult: currentObj.dataPopulator(currentObj)
     };
   });
 };
@@ -5484,6 +5491,18 @@ const GenericSelectGenerator = props => {
   });
 };
 const GenericSelectDataPopulator = props => {
+  /*
+   * Generic select data populator component.
+   * Return the data for a select, sending a request to the API, and adding a <option>...</option> with the key and description for each row returned
+   *
+   * Parameters:
+   *  filter: filter by _id. Default to no filter (null)
+   *  dbFilter: database query filter. Default to no filter (null)
+   *  columns: columns to show in the listing page or read-only form page. Default is "" meaning all columns
+   *  title_field_name: field name to show in the title. Default is "title"
+   *  value_field_name: field name to show in the value. Default is "value"
+   *  key_name: field name to show in the key. Default is "_id"
+   */
   const [errorState, setErrorState] = useState(null);
   const [config, setConfig] = useState(null);
   const [rows, setRows] = useState(null);

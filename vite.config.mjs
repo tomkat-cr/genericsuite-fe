@@ -17,9 +17,14 @@ npm install --save-dev vite @vitejs/plugin-react vite-plugin-require @tailwindcs
 export default defineConfig(({ mode }) => {
     const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
     const useContainersEngineApp = process.env.USE_CONTAINERS_ENGINE_APP || "1";
+    const apiUrl = process.env.REACT_APP_API_URL || process.env.API_URL || `https://${appLocalDomainName}`;
+    const localEnvironment = apiUrl.includes("local") || ['development', 'dev', 'qa'].includes(process.env.NODE_ENV);
+    const verbose = (process.env.VERBOSE || "0") === '1';
 
-    console.log('** Vite options **');
-    console.log('');
+    if (localEnvironment && verbose) {
+        console.log('** Vite options **');
+        console.log('');
+    }
 
     // Server configuration
     const serverConfig = {
@@ -44,7 +49,7 @@ export default defineConfig(({ mode }) => {
     };
 
     // Add HTTPS if needed
-    if (process.env.REACT_APP_API_URL.includes("https://") && useContainersEngineApp === "1") {
+    if (apiUrl.includes("https://") && useContainersEngineApp === "1") {
         serverConfig.https = {
             key: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.key`)),
             cert: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.crt`)),
@@ -55,7 +60,7 @@ export default defineConfig(({ mode }) => {
 
     const process_env = {
         REACT_APP_VERSION: (process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
-        REACT_APP_API_URL: (process.env.REACT_APP_API_URL || process.env.API_URL || `https://${appLocalDomainName}`),
+        REACT_APP_API_URL: apiUrl,
         REACT_APP_API_VERSION: (process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1'),
         REACT_APP_DEBUG: (process.env.REACT_APP_DEBUG || process.env.APP_DEBUG || '0'),
         REACT_APP_URI_PREFIX: (process.env.REACT_APP_URI_PREFIX || process.env.URI_PREFIX || 'exampleapp_frontend'),
@@ -65,9 +70,11 @@ export default defineConfig(({ mode }) => {
         REACT_APP_API_KEYS_PREFIX: (process.env.API_KEYS_PREFIX || 'sk-gsu-'),
     }
 
-    console.log('Server config:', serverConfig);
-    console.log('process_env:', process_env);
-    console.log('');
+    if (localEnvironment && verbose) {
+        console.log('Server config:', serverConfig);
+        console.log('process_env:', process_env);
+        console.log('');
+    }
 
     return {
         plugins: [

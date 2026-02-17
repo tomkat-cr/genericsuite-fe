@@ -327,7 +327,7 @@ export const getSelectFieldsOptions = (fieldElements) => {
             let currentObj = key[1];
             return {
                 name: currentObj.name,
-                promiseResult: currentObj.dataPopulator()
+                promiseResult: currentObj.dataPopulator(currentObj)
             };
         });
 };

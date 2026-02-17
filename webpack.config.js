@@ -6,7 +6,9 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
-const localEnvironment = process.env.REACT_APP_API_URL.includes("local") || ['development', 'dev', 'qa'].includes(process.env.NODE_ENV);
+const apiUrl = process.env.REACT_APP_API_URL || process.env.API_URL || `https://${appLocalDomainName}`;
+const localEnvironment = apiUrl.includes("local") || ['development', 'dev', 'qa'].includes(process.env.NODE_ENV);
+const verbose = (process.env.VERBOSE_RUN_CONFIG || "0") === '1';
 
 /*
 https://webpack.js.org/
@@ -27,12 +29,12 @@ let devServerConfig = {
     allowedHosts: [appLocalDomainName], // To avoid "Invalid Host header" error
 };
 
-if (localEnvironment) {
+if (localEnvironment && verbose) {
     console.log('** WebPack options **');
     console.log('');
 }
 
-if (process.env.REACT_APP_API_URL.includes("https://")) {
+if (apiUrl.includes("https://")) {
     devServerConfig.server = {
         // Enable HTTPS
         type: 'https',
@@ -48,7 +50,7 @@ if (process.env.REACT_APP_API_URL.includes("https://")) {
 const process_env = {
     // PUBLIC_URL: JSON.stringify(`https://${appLocalDomainName}`),
     REACT_APP_VERSION: JSON.stringify(process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
-    REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || `https://${appLocalDomainName}`),
+    REACT_APP_API_URL: JSON.stringify(apiUrl),
     REACT_APP_API_VERSION: JSON.stringify(process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1'),
     REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || '0'),
     REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
@@ -58,7 +60,7 @@ const process_env = {
     REACT_APP_API_KEYS_PREFIX: JSON.stringify(process.env.API_KEYS_PREFIX || 'sk-gsu-'),
 }
 
-if (localEnvironment) {
+if (localEnvironment && verbose) {
     console.log('devServerConfig:', devServerConfig);
     console.log('process_env:', process_env);
     console.log('');
