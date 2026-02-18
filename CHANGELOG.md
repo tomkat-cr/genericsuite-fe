@@ -35,7 +35,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - ShowAsDisabledField component can render the custom component as a simulated disabled field (current behavior) or as a Formik Field, customizable with the new "showAsField", "isReadOnly", "type", "onChange", "onBlur" parameters. OnChange allows to store the calculated value in the Formik internal values and therefore saved in the database [GS-252].
 - USE_CONTAINERS_ENGINE_APP envvar to control whether to use containers engine app for local development environment when RUN_PROTOCOL="https" [GS-257].
 - RUN_PROTOCOL_AND_PORT_REPLACEMENT envvar to control automatic protocol and port replacement for local development environment variables APP_FE_URL_DEV and APP_API_URL_DEV [GS-257].
-- "gs_listing_columns" query parameter to limit the columns to be returned from the API in the GenericSelectDataPopulator [GS-252].
 - "link_external_configs.sh" script to link external JSON configs directory so it can be tested in GenericSuite FE Core [GS-258].
 - "config_name" field type change to "suggestion_dropdown" in "Admin > Users > User Configurations", so the Suggestion Dropdown can be tested in GenericSuite FE Core [GS-258].
 - Error icon to GsIconLib [GS-258].

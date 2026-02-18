@@ -5503,7 +5503,9 @@ const GenericSelectDataPopulator = props => {
       dbFilter: props.dbFilter !== undefined ? props.dbFilter : null,
       editor: editor,
       select_name: editor.name,
-      columns: props.columns !== undefined ? props.columns : '',
+      // columns: props.columns !== undefined
+      //   ? props.columns
+      //   : '',
       title_field_name: props.title_field_name !== undefined ? props.title_field_name : "title",
       value_field_name: props.value_field_name !== undefined ? props.value_field_name : "value",
       key_name: props.key_name !== undefined ? props.key_name : "_id"
@@ -5536,9 +5538,9 @@ const GenericSelectDataPopulator = props => {
   }, [props]);
   if (config) {
     const accessKeysListing = config.dbFilter || {};
-    if (config.columns !== '') {
-      accessKeysListing['gs_listing_columns'] = config.columns;
-    }
+    // if (config.columns !== '') {
+    //   accessKeysListing['gs_listing_columns'] = config.columns;
+    // }
     fetchOrCache(config.select_name, () => config.dbService.getAll(accessKeysListing)).then(data => setRows(data), error => setErrorState(error));
   }
   return returnData();
