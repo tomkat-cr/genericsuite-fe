@@ -80,7 +80,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Login button shown on each page refresh, while menus are loading [GS-251].
 - GMG shows the "URL not found..." message during the menu loading [GS-251].
 - GCE_RFC doesn't show the error message when the session has been expired [GS-251].
-- Supress warning on the LoginPage about the username and password autocomplete attributes (More info: https://goo.gl/9p2vKq)
+- Suppress warning on the LoginPage about the username and password autocomplete attributes (More info: https://goo.gl/9p2vKq)
 - Fix input field color in the <SuggestionDropdown /> component [GS-252].
 - Fix the Cache initialization in the Generic CRUD Editor provider (MainSectionProvider) [GS-252].
 - Fix SuggestionDropdown component: use debounce to limit the number of calls to the API, and replace legacy Downshift component with useCombobox hook [GS-258].
