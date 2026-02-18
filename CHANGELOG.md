@@ -85,6 +85,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix the Cache initialization in the Generic CRUD Editor provider (MainSectionProvider) [GS-252].
 - Fix SuggestionDropdown component: use debounce to limit the number of calls to the API, and replace legacy Downshift component with useCombobox hook [GS-258].
 - Show the error message in the login page when using axios and the session expires or the user credentials are invalid [GS-37] [GS-202].
+- Implement secure markdown rendering for messages [GS-262].
+  * The includesAppValidLinks function is used as a security heuristic to determine if an error message should be rendered as HTML. This check was insufficient as it only verifies if the message contains a hardcoded 'valid' email or URL. An attacker can bypass this check by including one of these strings (e.g., 'support@exampleapp.com') in a malicious payload. If the error message contains untrusted data, such as reflected input from an API error response, this leads to a Cross-Site Scripting (XSS) vulnerability when the message is rendered in the UI.
+- Optimize user data fetching with request caching to avoid race conditions [GS-262].
 
 
 ## [1.1.0] - 2025-11-17

@@ -1369,6 +1369,9 @@ const LinkifyText = _ref => {
   }));
 };
 const renderMarkdownContent = text => {
+  if (!text || typeof text !== 'string') {
+    return null;
+  }
   return /*#__PURE__*/React.createElement(ReactMarkdown, {
     components: {
       p: _ref2 => {
@@ -1403,6 +1406,7 @@ const renderMarkdownContent = text => {
         return /*#__PURE__*/React.createElement("a", {
           href: href,
           target: "_blank",
+          rel: "noopener noreferrer",
           className: MARKDOWN_UNDERLINE_CLASS
         }, children);
       }
@@ -2600,10 +2604,9 @@ const ModalPopUp = _ref => {
       height: '400px'
     },
     title: title
-  }), !link && htmlContent === null && children, !link && htmlContent !== null && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }), !link && htmlContent === null && children, !link && htmlContent !== null && /*#__PURE__*/React.createElement("div", {
     className: htmlContentClass
-    // dangerouslySetInnerHTML={{ __html: htmlContent }}
-  }, htmlContent))), /*#__PURE__*/React.createElement(Modal.Footer, {
+  }, renderMarkdownContent(htmlContent))), /*#__PURE__*/React.createElement(Modal.Footer, {
     isWide: isWide
   }, closeButtonMessage && /*#__PURE__*/React.createElement(DefaultButtonModal, {
     variant: "secondary",
@@ -2757,42 +2760,6 @@ var jsonUtilities = /*#__PURE__*/Object.freeze({
   buildConstant: buildConstant
 });
 
-var BILLING_PLANS$1 = {
-	free: "Free",
-	basic: "Basic",
-	premium: "Premium"
-};
-var ERROR_MESSAGES$1 = {
-	ACCOUNT_INACTIVE: "User account inactive [L5]. To activate your account, please contact support@exampleapp.com"
-};
-var APP_EMAILS$1 = {
-	SUPPORT_EMAIL: "support@exampleapp.com",
-	INFO_EMAIL: "info@exampleapp.com"
-};
-var APP_VALID_URLS$1 = {
-	APP_DOMAIN: "exampleapp.com",
-	APP_WEBSITE: "https://www.exampleapp.com"
-};
-var constants$1 = {
-	BILLING_PLANS: BILLING_PLANS$1,
-	ERROR_MESSAGES: ERROR_MESSAGES$1,
-	APP_EMAILS: APP_EMAILS$1,
-	APP_VALID_URLS: APP_VALID_URLS$1
-};
-
-const BILLING_PLANS = buildConstant(constants$1.BILLING_PLANS);
-const ERROR_MESSAGES = constants$1.ERROR_MESSAGES;
-const APP_EMAILS = constants$1.APP_EMAILS;
-const APP_VALID_URLS = constants$1.APP_VALID_URLS;
-
-var app_constants = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  APP_EMAILS: APP_EMAILS,
-  APP_VALID_URLS: APP_VALID_URLS,
-  BILLING_PLANS: BILLING_PLANS,
-  ERROR_MESSAGES: ERROR_MESSAGES
-});
-
 var TRUE_FALSE$1 = {
 	"0": "No",
 	"1": "Yes"
@@ -2809,7 +2776,7 @@ var GENDERS$1 = {
 	m: "Male",
 	f: "Female"
 };
-var constants = {
+var constants$1 = {
 	TRUE_FALSE: TRUE_FALSE$1,
 	YES_NO: YES_NO$1,
 	LANGUAGES: LANGUAGES$1,
@@ -2889,10 +2856,10 @@ const ROWS_PER_PAGE = 30;
 // Generic editor : general select options
 
 // const constants = getConfigsJsonFile('general_constants');
-const TRUE_FALSE = buildConstant(constants.TRUE_FALSE);
-const YES_NO = buildConstant(constants.YES_NO);
-const LANGUAGES = buildConstant(constants.LANGUAGES);
-const GENDERS = buildConstant(constants.GENDERS);
+const TRUE_FALSE = buildConstant(constants$1.TRUE_FALSE);
+const YES_NO = buildConstant(constants$1.YES_NO);
+const LANGUAGES = buildConstant(constants$1.LANGUAGES);
+const GENDERS = buildConstant(constants$1.GENDERS);
 
 var general_constants = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -3824,11 +3791,26 @@ const verifyCurrentUser = (registerUser, currentUser, setAskForLogin) => {
  */
 
 let userDataCache = {};
+const inFlightRequests = {};
 const getUserDataCache = userId => {
   if (userDataCache[userId]) {
     return Promise.resolve(userDataCache[userId]);
   }
-  return getUserData(userId);
+  if (inFlightRequests[userId]) {
+    return inFlightRequests[userId];
+  }
+  const request = getUserData(userId).then(data => {
+    delete inFlightRequests[userId];
+    if (!data.error) {
+      setUserDataCache(userId, data);
+    }
+    return data;
+  }).catch(error => {
+    delete inFlightRequests[userId];
+    throw error;
+  });
+  inFlightRequests[userId] = request;
+  return request;
 };
 const setUserDataCache = (userId, userData) => {
   userDataCache[userId] = Object.assign({}, userData);
@@ -3906,7 +3888,6 @@ function errorAndReEnter(error) {
     logoutButton = true;
   }
   const retryMessage = isSessionExpired(errorMessage) ? MSG_ERROR_SESSION_EXPIRED : errorMessage;
-  const msgContainsHtml = includesAppValidLinks(retryMessage);
   const retryButton = MSG_ERROR_CLICK_TO_RETRY;
   const loginButton = forceLogin || isSessionExpired(errorMessage) ? MSG_ERROR_CLICK_TO_RELOGIN : null;
   if (isSessionExpired(errorMessage)) {
@@ -3921,10 +3902,10 @@ function errorAndReEnter(error) {
     primaryButtonMessage: loginButton,
     primaryButtonAction: parentLogoutHandler,
     logoutButton: logoutButton,
-    htmlContent: msgContainsHtml ? retryMessage : null,
+    htmlContent: retryMessage,
     iconClassName: ALERT_DANGER_CLASS,
     closeButtonAction: closeHandler
-  }, msgContainsHtml ? null : retryMessage);
+  });
 }
 function errorAndReEnterNonModal(error) {
   let forceLogin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -24541,6 +24522,42 @@ var generic_editor_rfc_service = /*#__PURE__*/Object.freeze({
   GetFormData: GetFormData
 });
 
+var BILLING_PLANS$1 = {
+	free: "Free",
+	basic: "Basic",
+	premium: "Premium"
+};
+var ERROR_MESSAGES$1 = {
+	ACCOUNT_INACTIVE: "User account inactive [L5]. To activate your account, please contact support@exampleapp.com"
+};
+var APP_EMAILS$2 = {
+	SUPPORT_EMAIL: "support@exampleapp.com",
+	INFO_EMAIL: "info@exampleapp.com"
+};
+var APP_VALID_URLS$2 = {
+	APP_DOMAIN: "exampleapp.com",
+	APP_WEBSITE: "https://www.exampleapp.com"
+};
+var constants = {
+	BILLING_PLANS: BILLING_PLANS$1,
+	ERROR_MESSAGES: ERROR_MESSAGES$1,
+	APP_EMAILS: APP_EMAILS$2,
+	APP_VALID_URLS: APP_VALID_URLS$2
+};
+
+const BILLING_PLANS = buildConstant(constants.BILLING_PLANS);
+const ERROR_MESSAGES = constants.ERROR_MESSAGES;
+const APP_EMAILS$1 = constants.APP_EMAILS;
+const APP_VALID_URLS$1 = constants.APP_VALID_URLS;
+
+var app_constants = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  APP_EMAILS: APP_EMAILS$1,
+  APP_VALID_URLS: APP_VALID_URLS$1,
+  BILLING_PLANS: BILLING_PLANS,
+  ERROR_MESSAGES: ERROR_MESSAGES
+});
+
 var baseUrl$4 = "users_api_keys";
 var title$4 = "User API Keys";
 var name$4 = "User's API Key";
@@ -25538,12 +25555,9 @@ const LoginPage = props => {
       type: "submit",
       className: BUTTON_PRIMARY_CLASS,
       disabled: isSubmitting
-    }, "Login"), isSubmitting && WaitAnimation()), status && !includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
+    }, "Login"), isSubmitting && WaitAnimation()), status && /*#__PURE__*/React.createElement("div", {
       className: ERROR_MSG_CLASS
-    }, status), status && includesAppValidLinks(status) && /*#__PURE__*/React.createElement("div", {
-      className: ERROR_MSG_CLASS
-      // dangerouslySetInnerHTML={{ __html: status }}
-    }, status))));
+    }, renderMarkdownContent(status)))));
   }));
 };
 

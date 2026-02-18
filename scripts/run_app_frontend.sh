@@ -40,6 +40,12 @@ RUN_PROTOCOL_AND_PORT_REPLACEMENT=1
 set -o allexport; source ".env" ; set +o allexport ;
 
 STAGE="$1"
+STAGE_UPPERCASE=$(echo "${STAGE}" | tr '[:lower:]' '[:upper:]')
+# Check stage is valid
+if [ "${STAGE_UPPERCASE}" != "DEV" ] && [ "${STAGE_UPPERCASE}" != "QA" ] && [ "${STAGE_UPPERCASE}" != "PROD" ] && [ "${STAGE_UPPERCASE}" != "DEMO" ]; then
+    echo "ERROR: Invalid stage: ${STAGE}"
+    exit 1
+fi
 
 echo ""
 echo "Stage = ${STAGE}"
@@ -49,7 +55,7 @@ echo "RUN_PROTOCOL = ${RUN_PROTOCOL}"
 echo "USE_CONTAINERS_ENGINE_APP = ${USE_CONTAINERS_ENGINE_APP}"
 echo "RUN_PROTOCOL_AND_PORT_REPLACEMENT = ${RUN_PROTOCOL_AND_PORT_REPLACEMENT}"
 echo ""
-if [ "${STAGE}" = "dev" ]; then
+if [ "${STAGE_UPPERCASE}" = "DEV" ]; then
     if [ "${RUN_PROTOCOL}" != "" ]; then
         if [ "${RUN_PROTOCOL}" = "http" ]; then
             choice="1"
@@ -93,7 +99,7 @@ if [ "${STAGE}" = "dev" ]; then
     fi
     echo "Run by: ${http_method}"
     echo "* Backend:"
-    if [ "${RUN_PROTOCOL_AND_PORT_REPLACEMENT}" = "1"]; then
+    if [ "${RUN_PROTOCOL_AND_PORT_REPLACEMENT}" = "1" ]; then
         export APP_API_URL_DEV="${http_method}://${APP_LOCAL_DOMAIN_NAME}:${BACKEND_LOCAL_PORT}"
         export REACT_APP_API_URL="${APP_API_URL_DEV}"
         echo ">>--> New APP_API_URL_DEV = ${APP_API_URL_DEV}"
@@ -117,7 +123,7 @@ create_symlinks
 
 echo ""
 echo "* Frontend:"
-if [ "${RUN_PROTOCOL_AND_PORT_REPLACEMENT}" = "1"]; then
+if [ "${RUN_PROTOCOL_AND_PORT_REPLACEMENT}" = "1" ]; then
     echo "${http_method}://${APP_LOCAL_DOMAIN_NAME}:${FRONTEND_LOCAL_PORT}"
 else
     APP_FE_URL="$(eval echo \"\$APP_FE_URL_${STAGE_UPPERCASE}\")"
@@ -169,15 +175,15 @@ run_app() {
     fi
 }
 
-if [ "${STAGE}" = "dev" ]; then
+if [ "${STAGE_UPPERCASE}" = "DEV" ]; then
     run_app
 fi
 
-if [ "${STAGE}" = "qa" ]; then
+if [ "${STAGE_UPPERCASE}" = "QA" ]; then
     run_app
 fi
 
-if [ "${STAGE}" = "prod" ]; then
+if [ "${STAGE_UPPERCASE}" = "PROD" ]; then
 	npm start
 fi
 

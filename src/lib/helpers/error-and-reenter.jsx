@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from './ModalLib.jsx';
 
-import { APP_EMAILS, APP_VALID_URLS } from '../constants/app_constants.jsx';
 import { ALERT_DANGER_CLASS } from '../constants/class_name_constants.jsx';
 import {
     MSG_ERROR_CLICK_TO_RELOGIN,
@@ -111,7 +110,6 @@ export function errorAndReEnter(
             ? MSG_ERROR_SESSION_EXPIRED
             : errorMessage
         ;
-    const msgContainsHtml = includesAppValidLinks(retryMessage);
     const retryButton = MSG_ERROR_CLICK_TO_RETRY;
     const loginButton = (
         forceLogin || isSessionExpired(errorMessage)
@@ -131,13 +129,10 @@ export function errorAndReEnter(
             primaryButtonMessage={loginButton}
             primaryButtonAction={parentLogoutHandler}
             logoutButton={logoutButton}
-            htmlContent={msgContainsHtml ? retryMessage : null}
+            htmlContent={retryMessage}
             iconClassName={ALERT_DANGER_CLASS}
             closeButtonAction={closeHandler}
-        >
-            {/* {msgContainsHtml ? null : errorMessageDiv(retryMessage)} */}
-            {msgContainsHtml ? null : retryMessage}
-        </ModalPopUp>
+        />
     );
 }
 

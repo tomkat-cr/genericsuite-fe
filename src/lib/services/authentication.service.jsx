@@ -131,15 +131,33 @@ export const verifyCurrentUser = (registerUser, currentUser, setAskForLogin) => 
  * Get User Data cache
  */
 
-let userDataCache = {}
+let userDataCache = {};
+const inFlightRequests = {};
 
 export const getUserDataCache = (userId) => {
     if (userDataCache[userId]) {
-        return Promise.resolve(userDataCache[userId])
+        return Promise.resolve(userDataCache[userId]);
     }
-    return getUserData(userId)
-}
+
+    if (inFlightRequests[userId]) {
+        return inFlightRequests[userId];
+    }
+
+    const request = getUserData(userId).then(data => {
+        delete inFlightRequests[userId];
+        if (!data.error) {
+            setUserDataCache(userId, data);
+        }
+        return data;
+    }).catch(error => {
+        delete inFlightRequests[userId];
+        throw error;
+    });
+
+    inFlightRequests[userId] = request;
+    return request;
+};
 
 export const setUserDataCache = (userId, userData) => {
-    userDataCache[userId] = Object.assign({}, userData)
-}
+    userDataCache[userId] = Object.assign({}, userData);
+};

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Modal } from './ModalLib.jsx';
 
@@ -6,13 +6,13 @@ import { getPrefix, getUrlForRouter } from '../helpers/history.jsx';
 import { console_debug_log } from '../services/logging.service.jsx';
 
 import { BUTTON_PRIMARY_CLASS } from '../constants/class_name_constants.jsx';
-import { resizeManager, isWindowWide } from './ui.jsx';
 import { useAppContext } from './AppContext.jsx';
+import { renderMarkdownContent } from './ui.jsx';
 
 const debug = false;
 
 export const ModalPopUp = ({
-    title=null,
+    title = null,
     children,
     closeButtonMessage = "Close",
     closeButtonAction = null,
@@ -66,21 +66,18 @@ export const ModalPopUp = ({
                 <Modal.Body>
                     {link && (
                         <iframe
-                            src={link+linkSuffix}
-                            style={{width:'100%',height:'400px'}}
+                            src={link + linkSuffix}
+                            style={{ width: '100%', height: '400px' }}
                             title={title}
                         />)
                     }
                     {!link && htmlContent === null && children}
                     {!link && htmlContent !== null &&
-                        <>
-                            <div
-                                className={htmlContentClass}
-                                // dangerouslySetInnerHTML={{ __html: htmlContent }}
-                            >
-                                {htmlContent}
-                            </div>
-                        </>
+                        <div
+                            className={htmlContentClass}
+                        >
+                            {renderMarkdownContent(htmlContent)}
+                        </div>
                     }
                 </Modal.Body>
                 <Modal.Footer
@@ -98,7 +95,7 @@ export const ModalPopUp = ({
                     {secondButtonMessage && (
                         <DefaultButtonModal
                             variant="secondary"
-                            action={secondButtonAction} 
+                            action={secondButtonAction}
                             isWide={isWide}
                         >
                             {secondButtonMessage}
@@ -107,7 +104,7 @@ export const ModalPopUp = ({
                     {primaryButtonMessage && logoutButton && (
                         <LogoutNavigate
                             variant="primary"
-                            action={primaryButtonAction} 
+                            action={primaryButtonAction}
                             isWide={isWide}
                         >
                             {primaryButtonMessage}
@@ -116,7 +113,7 @@ export const ModalPopUp = ({
                     {primaryButtonMessage && !logoutButton && (
                         <DefaultButtonModal
                             variant="primary"
-                            action={primaryButtonAction} 
+                            action={primaryButtonAction}
                             isWide={isWide}
                         >
                             {primaryButtonMessage}
@@ -139,7 +136,7 @@ export const DefaultButtonModal = ({
     return (
         <Button
             variant={variant}
-            onClick={() => action ? action() : null} 
+            onClick={() => action ? action() : null}
         >
             {children}
         </Button>
@@ -172,7 +169,7 @@ export const LogoutNavigate = ({
             aria-details="ModalLib | LogoutNavigate"
             as={Link}
             variant={variant}
-            to={getPrefix()+'/login'}
+            to={getPrefix() + '/login'}
         >
             {children}
         </Button>

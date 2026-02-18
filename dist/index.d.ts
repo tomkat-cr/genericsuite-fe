@@ -183,7 +183,7 @@ declare var authentication_service: Readonly<{
     };
     getCurrentUserData: () => Promise<any>;
     getUserData: (userId: any) => Promise<any>;
-    getUserDataCache: (userId: any) => Promise<any>;
+    getUserDataCache: (userId: any) => any;
     getUserLocalData: (res: any) => {
         id: any;
         firstName: any;
@@ -764,7 +764,7 @@ declare var ui: Readonly<{
     growUpTextAreaInner: (textAreaId: any, conversationBlockId: any, sectionViewportHeight: any, maxOffsetHeight: any, ...args: any[]) => void;
     isMobileDevice: () => boolean;
     isWindowWide: () => boolean;
-    renderMarkdownContent: (text: any) => React.FunctionComponentElement<Readonly<react_markdown_lib.Options>>;
+    renderMarkdownContent: (text: any) => React.FunctionComponentElement<Readonly<react_markdown_lib.Options>> | null;
     resetTextArea: (textAreaId: any, conversationBlockId: any, sectionViewportHeight: any, maxOffsetHeight: any, ...args: any[]) => void;
     resizeManager: (callback: any) => {
         addListener: () => void;

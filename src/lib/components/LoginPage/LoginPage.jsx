@@ -17,9 +17,10 @@ import {
     POPUP_TOP_MARGIN_CLASS,
 } from '../../constants/class_name_constants.jsx';
 import { imageDirectory } from '../../constants/general_constants.jsx';
-import { getErrorMessage, includesAppValidLinks } from '../../helpers/error-and-reenter.jsx';
+import { getErrorMessage } from '../../helpers/error-and-reenter.jsx';
 import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
 import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
+import { renderMarkdownContent } from '../../helpers/ui.jsx';
 import { getUrlParams } from '../../helpers/url-params.jsx';
 import {
     authenticationService,
@@ -195,19 +196,11 @@ export const LoginPage = (props) => {
                                     WaitAnimation()
                                 }
                             </div>
-                            {status && !includesAppValidLinks(status) &&
+                            {status &&
                                 <div
                                     className={ERROR_MSG_CLASS}
                                 >
-                                    {status}
-                                </div>
-                            }
-                            {status && includesAppValidLinks(status) &&
-                                <div
-                                    className={ERROR_MSG_CLASS}
-                                // dangerouslySetInnerHTML={{ __html: status }}
-                                >
-                                    {status}
+                                    {renderMarkdownContent(status)}
                                 </div>
                             }
                         </Form>
