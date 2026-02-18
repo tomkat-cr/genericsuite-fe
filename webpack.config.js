@@ -52,11 +52,11 @@ const process_env = {
     REACT_APP_VERSION: JSON.stringify(process.env.REACT_APP_VERSION || fs.readFileSync('version.txt', 'utf8')),
     REACT_APP_API_URL: JSON.stringify(apiUrl),
     REACT_APP_API_VERSION: JSON.stringify(process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1'),
-    REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || '0'),
-    REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || 'exampleapp_frontend'),
-    REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || ''),
-    REACT_APP_APP_NAME: JSON.stringify(process.env.REACT_APP_APP_NAME || 'exampleapp'),
-    REACT_APP_USE_AXIOS: JSON.stringify(process.env.REACT_APP_USE_AXIOS || '1'),
+    REACT_APP_DEBUG: JSON.stringify(process.env.REACT_APP_DEBUG || process.env.APP_DEBUG || '0'),
+    REACT_APP_URI_PREFIX: JSON.stringify(process.env.REACT_APP_URI_PREFIX || process.env.URI_PREFIX || 'exampleapp_frontend'),
+    REACT_APP_X_TOKEN: JSON.stringify(process.env.REACT_APP_X_TOKEN || process.env.X_TOKEN || ''),
+    REACT_APP_APP_NAME: JSON.stringify(process.env.REACT_APP_APP_NAME || process.env.APP_NAME || 'exampleapp'),
+    REACT_APP_USE_AXIOS: JSON.stringify(process.env.REACT_APP_USE_AXIOS || process.env.USE_AXIOS || '1'),
     REACT_APP_API_KEYS_PREFIX: JSON.stringify(process.env.API_KEYS_PREFIX || 'sk-gsu-'),
 }
 
