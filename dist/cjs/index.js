@@ -23568,23 +23568,23 @@ const EditFormFormikFinal = _ref6 => {
                 }, error => {
                   console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                   setSubmitting(false);
-                  setStatus(error.errorMsg + ' [EFFF-010]');
+                  setStatus((error.errorMsg || error) + ' [EFFF-010]');
                 });
               }
             }, error => {
               console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
               setSubmitting(false);
-              setStatus(error + ' EFFF-020');
+              setStatus((error.errorMsg || error) + ' EFFF-020');
             });
           }, error => {
             console_debug_log('dbPreWrite [EFFF-030] | error:', error);
             setSubmitting(false);
-            setStatus(error.errorMsg + ' EFFF-030');
+            setStatus((error.errorMsg || error) + ' EFFF-030');
           });
         }, error => {
           console_debug_log('validations [EFFF-040] | error:', error);
           setSubmitting(false);
-          setStatus(error + ' EFFF-040');
+          setStatus((error.errorMsg || error) + ' EFFF-040');
         });
       }
     }
