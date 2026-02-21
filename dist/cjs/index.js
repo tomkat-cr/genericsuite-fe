@@ -4850,10 +4850,11 @@ const timestampToDate = function (timestamp) {
   }
   return date.toISOString().split("T")[0];
 };
-const addMissingTz = stringDate => stringDate + (stringDate.indexOf('.') > 0 ? '' : GMT_TAIL);
-const dateToTimestap = stringDate => new Date(addMissingTz(stringDate)).valueOf() / 1000;
+const addMissingTz = stringDate => String(stringDate) + (String(stringDate).indexOf('.') > 0 ? '' : GMT_TAIL);
+const dateToTimestap = stringDate => new Date(addMissingTz(String(stringDate))).valueOf() / 1000;
 const nowToTimestap = () => new Date().valueOf() / 1000;
 const fixDateWithTz = dateTimeString => {
+  dateTimeString = String(dateTimeString);
   switch (dateTimeString.length) {
     case 10:
       dateTimeString += DATE_TIME_TAIL;

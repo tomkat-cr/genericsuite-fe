@@ -6,14 +6,14 @@ const GMT_TAIL = '.000Z' // '.000-0000'
 const DATE_TIME_TAIL = `T00:00:00${GMT_TAIL}`
 
 export const timestampToDate = (timestamp, fullDateTime = false, separator = null, militaryTime = true) => {
-    const timestampUnixEpoch = timestamp*1000;
+    const timestampUnixEpoch = timestamp * 1000;
     const date = new Date(timestampUnixEpoch);
     if (debug) console_debug_log('timestampToDate', timestamp, fullDateTime, separator, militaryTime);
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const ampm = hours >= 12 ? 'PM' : 'AM';
     // const formattedTime = hours % 12 + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
-    const formattedTime = (hours > 12 ? hours-12 : hours) + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
+    const formattedTime = (hours > 12 ? hours - 12 : hours) + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
     if (fullDateTime) {
         if (separator) {
             if (!militaryTime) {
@@ -33,13 +33,14 @@ export const timestampToDate = (timestamp, fullDateTime = false, separator = nul
     return date.toISOString().split("T")[0];
 }
 
-export const addMissingTz = (stringDate) => (stringDate + (stringDate.indexOf('.') > 0 ? '' : GMT_TAIL))
+export const addMissingTz = (stringDate) => (String(stringDate) + (String(stringDate).indexOf('.') > 0 ? '' : GMT_TAIL))
 
-export const dateToTimestap = (stringDate) => ((new Date(addMissingTz(stringDate)).valueOf())/1000);
+export const dateToTimestap = (stringDate) => ((new Date(addMissingTz(String(stringDate))).valueOf()) / 1000);
 
-export const nowToTimestap = () => ((new Date().valueOf())/1000);
+export const nowToTimestap = () => ((new Date().valueOf()) / 1000);
 
 export const fixDateWithTz = (dateTimeString) => {
+    dateTimeString = String(dateTimeString);
     switch (dateTimeString.length) {
         case 10:
             dateTimeString += DATE_TIME_TAIL;
