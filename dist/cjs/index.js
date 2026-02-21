@@ -23474,6 +23474,15 @@ const EditFormFormik = _ref5 => {
     currentUser: currentUser
   });
 };
+const getErrorMsgFromApi = error => {
+  if (error.errorMsg) {
+    return error.errorMsg;
+  }
+  if (error.message) {
+    return error.message;
+  }
+  return String(error);
+};
 const EditFormFormikFinal = _ref6 => {
   let {
     editor,
@@ -23568,23 +23577,23 @@ const EditFormFormikFinal = _ref6 => {
                 }, error => {
                   console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                   setSubmitting(false);
-                  setStatus((error.errorMsg || error) + ' [EFFF-010]');
+                  setStatus(getErrorMsgFromApi(error) + ' [EFFF-010]');
                 });
               }
             }, error => {
               console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
               setSubmitting(false);
-              setStatus((error.errorMsg || error) + ' EFFF-020');
+              setStatus(getErrorMsgFromApi(error) + ' EFFF-020');
             });
           }, error => {
             console_debug_log('dbPreWrite [EFFF-030] | error:', error);
             setSubmitting(false);
-            setStatus((error.errorMsg || error) + ' EFFF-030');
+            setStatus(getErrorMsgFromApi(error) + ' EFFF-030');
           });
         }, error => {
           console_debug_log('validations [EFFF-040] | error:', error);
           setSubmitting(false);
-          setStatus((error.errorMsg || error) + ' EFFF-040');
+          setStatus(getErrorMsgFromApi(error) + ' EFFF-040');
         });
       }
     }
@@ -23821,7 +23830,8 @@ const getFieldElementsYupValidations = (editor, editorFlags) => {
 
 var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  FormPage: FormPage
+  FormPage: FormPage,
+  getErrorMsgFromApi: getErrorMsgFromApi
 });
 
 const CrudEditorSearch = _ref => {

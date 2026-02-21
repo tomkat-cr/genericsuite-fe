@@ -723,6 +723,16 @@ const EditFormFormik = (
     )
 }
 
+export const getErrorMsgFromApi = (error) => {
+    if (error.errorMsg) {
+        return error.errorMsg;
+    }
+    if (error.message) {
+        return error.message;
+    }
+    return String(error);
+}
+
 const EditFormFormikFinal = ({
     editor,
     parenHandleCancel,
@@ -887,7 +897,7 @@ const EditFormFormikFinal = ({
                                                     error => {
                                                         console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                                                         setSubmitting(false);
-                                                        setStatus((error.errorMsg || error) + ' [EFFF-010]');
+                                                        setStatus(getErrorMsgFromApi(error) + ' [EFFF-010]');
                                                     }
                                                 )
                                             }
@@ -895,21 +905,21 @@ const EditFormFormikFinal = ({
                                         (error) => {
                                             console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
                                             setSubmitting(false);
-                                            setStatus((error.errorMsg || error) + ' EFFF-020');
+                                            setStatus(getErrorMsgFromApi(error) + ' EFFF-020');
                                         }
                                     );
                                 },
                                 error => {
                                     console_debug_log('dbPreWrite [EFFF-030] | error:', error);
                                     setSubmitting(false);
-                                    setStatus((error.errorMsg || error) + ' EFFF-030');
+                                    setStatus(getErrorMsgFromApi(error) + ' EFFF-030');
                                 }
                             )
                         },
                         error => {
                             console_debug_log('validations [EFFF-040] | error:', error);
                             setSubmitting(false);
-                            setStatus((error.errorMsg || error) + ' EFFF-040');
+                            setStatus(getErrorMsgFromApi(error) + ' EFFF-040');
                         }
                     );
 

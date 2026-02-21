@@ -568,6 +568,7 @@ declare var generic_editor_rfc_formpage: Readonly<{
     FormPage: (_ref: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
+    getErrorMsgFromApi: (error: any) => any;
 }>;
 declare var generic_editor_rfc_provider: Readonly<{
     __proto__: null;
