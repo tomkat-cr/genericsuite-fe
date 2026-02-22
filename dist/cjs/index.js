@@ -4845,6 +4845,7 @@ const timestampToDate = function (timestamp) {
   let militaryTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
   const timestampUnixEpoch = timestamp * 1000;
   const date = new Date(timestampUnixEpoch);
+  console_debug_log('timestampToDate', timestamp, fullDateTime, separator, militaryTime);
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const ampm = hours >= 12 ? 'PM' : 'AM';
@@ -4892,7 +4893,13 @@ const processTimestampToDate = (timestampMixed, fullDatetime, separator) => {
   return timestampToDate(timestampMixed, fullDatetime, separator);
 };
 const processDateToTimestamp = dateTime => {
+  {
+    console_debug_log("*==*==* processDateToTimestamp - BEFORE: ".concat(dateTime));
+  }
   dateTime = fixDateWithTz(dateTime);
+  {
+    console_debug_log("*==*==* processDateToTimestamp - AFTER: ".concat(dateTime, " | Resultado: ").concat(dateToTimestap(dateTime)));
+  }
   return dateToTimestap(dateTime);
 };
 const addZeroTimeToDate = dateValue => {
@@ -4944,11 +4951,11 @@ const timestampDbPostRead = (dataRead, editor, action) => {
       switch (currentObj.type) {
         case 'date':
           // For date edition, we need only the date portion
-          acc[currentObj.name] = processTimestampToDate(String(acc[currentObj.name]));
+          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name]);
           break;
         case 'datetime-local':
           // For datetime-local edition, we need the date from time separation to be the 'T'
-          acc[currentObj.name] = processTimestampToDate(String(acc[currentObj.name]), true, 'T');
+          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, 'T');
           break;
       }
       return _objectSpread2({}, acc);

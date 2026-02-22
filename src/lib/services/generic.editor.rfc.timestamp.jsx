@@ -38,11 +38,11 @@ export const timestampDbPostRead = (dataRead, editor, action) => {
       switch (currentObj.type) {
         case 'date':
           // For date edition, we need only the date portion
-          acc[currentObj.name] = processTimestampToDate(String(acc[currentObj.name]));
+          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name]);
           break;
         case 'datetime-local':
           // For datetime-local edition, we need the date from time separation to be the 'T'
-          acc[currentObj.name] = processTimestampToDate(String(acc[currentObj.name]), true, 'T');
+          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, 'T');
           break;
         default:
       }

@@ -90,7 +90,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Optimize user data fetching with request caching to avoid race conditions [GS-262].
 - "TypeError: stringDate.indexOf is not a function" on addMissingTz when the supplied date is a number [GS-194].
 - "[object Object] EFFF-020" when the API returns an error deleting/updating the item on EditFormFormikFinal() [GS-194].
-- timestampDbPostRead() converts date to string before calling processTimestampToDate() because timestamps in relational databases are numbers and shown as "mm/dd/yyyy, --:-- --" on the data form [GS-194]
 
 ## [1.1.0] - 2025-11-17
 
