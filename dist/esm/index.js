@@ -4933,8 +4933,8 @@ const timestampDbPostRead = (dataRead, editor, action) => {
       }
       return _objectSpread2({}, acc);
     }, dataRead.resultset[0]);
-    // resp.fieldValues.resultset = new_row;
-    resp.fieldValues = new_row;
+    resp.fieldValues.resultset = new_row;
+    // resp.fieldValues = new_row;
     console_debug_log('timestampDbPostRead - POST\n| resp:', resp);
     resolve(resp);
   });
@@ -23405,10 +23405,12 @@ const EditFormFormik = _ref5 => {
     message: editMessage,
     messageType: editMessageType
   } = state;
+  console_debug_log('>> EditFormFormik | readyToShow:', readyToShow, '*dataset:', dataset, '*editDataset:', editDataset, 'canCommit:', canCommit, '*message:', message, '*editMessage:', editMessage, '*messageType:', messageType, '*editMessageType:', editMessageType);
   const setFormData = payload => dispatch({
     type: 'SET_EDIT_FORM_DATA',
     payload
   });
+  console_debug_log(">> 1 >> EditFormFormik | dataset:", dataset, 'editor:', editor, 'action:', action);
   useEffect(() => {
     const editorFlags = getEditorFlags(action);
     if (editorFlags.isRead) {
@@ -23420,6 +23422,7 @@ const EditFormFormik = _ref5 => {
         messageType: null
       });
     } else {
+      console_debug_log(">> 2 >> EditFormFormik | AFTER dbPreValidations > dataset:", dataset);
 
       // Validate data before show the Data Form
       processGenericFuncArray(editor, 'dbPreValidations', dataset, action, currentUser).then(funcResponse => {
@@ -23484,6 +23487,7 @@ const EditFormFormikFinal = _ref6 => {
     theme,
     currentUser
   } = _ref6;
+  console_debug_log('>> EditFormFormikFinal | dataset:', dataset, 'message:', message, 'messageType:', messageType);
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -23495,6 +23499,14 @@ const EditFormFormikFinal = _ref6 => {
     // 'Are you sure to delete this element? Please confirm with the [Delete] button or [Cancel] this operation.'
     messageType = "ERROR";
     message = (message ? "<br/>" : "") + MSG_DELETE_CONFIRM;
+  }
+  {
+    console_debug_log('editForm_Formik_Final | dataset:');
+    console_debug_log(dataset);
+    console_debug_log('Editor:');
+    console_debug_log(editor);
+    console_debug_log('initialFieldValues:');
+    console_debug_log(initialFieldValues);
   }
   const handleCancel = function () {
     let infoMsg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -23510,6 +23522,7 @@ const EditFormFormikFinal = _ref6 => {
       e.preventDefault();
     }
   };
+  console_debug_log("FormPage | editor.fieldElements:", editor.fieldElements);
   return /*#__PURE__*/React.createElement(Formik, {
     key: editor.name,
     enableReinitialize: true,
@@ -23528,6 +23541,9 @@ const EditFormFormikFinal = _ref6 => {
         setSubmitting(false);
       } else {
         setStatus();
+        {
+          console_debug_log('BEFORE dbService.createUpdateDelete(action = ' + action + ', rowId = ' + rowId + ')');
+        }
         if (!(!rowId && editorFlags.isCreate || rowId)) {
           console_debug_log("NO-SENSE ERROR: rowId is Zero and is not Creation");
           setSubmitting(false);
@@ -23537,10 +23553,27 @@ const EditFormFormikFinal = _ref6 => {
           // Removes calculated ID
           delete submitedtElements.id;
         }
+
+        // Validate data before save the row to Database
+        {
+          console_debug_log('BEFORE validations');
+        }
         processGenericFuncArray(editor, 'validations', submitedtElements, action, currentUser).then(funcResponse => {
+          {
+            console_debug_log('BEFORE dbPreWrite');
+          }
           processGenericFuncArray(editor, 'dbPreWrite', submitedtElements, action, currentUser).then(funcResponse => {
+            // Save the row to Database
+            {
+              console_debug_log('BEFORE saveRowToDatabase | submitedtElements:');
+              console_debug_log(submitedtElements);
+            }
             submitedtElements = _objectSpread2({}, funcResponse.fieldValues);
             saveRowToDatabase(editor, action, rowId, submitedtElements, initialFieldValues).then(result => {
+              {
+                console_debug_log('>>>  Formik result');
+                console_debug_log(result);
+              }
               if (result && result.error) {
                 setSubmitting(false);
                 setStatus(result);
@@ -23548,7 +23581,13 @@ const EditFormFormikFinal = _ref6 => {
                 if (editorFlags.isCreate) {
                   submitedtElements.id = result['resultset']['_id'];
                 }
+                {
+                  console_debug_log('BEFORE dbPostWrite | submitedtElements:', submitedtElements);
+                }
                 processGenericFuncArray(editor, 'dbPostWrite', submitedtElements, action, currentUser).then(funcResponse => {
+                  {
+                    console_debug_log('AFTER saveRowToDatabase');
+                  }
                   const infoMsg = editorFlags.isDelete ? MSG_DONE_DELETED : editorFlags.isCreate ? MSG_DONE_CREATED : editorFlags.isUpdate ? MSG_DONE_UPDATED : null;
                   handleFormPageActions(funcResponse);
                   if (editorFlags.isCreate && editor.createReenter) {

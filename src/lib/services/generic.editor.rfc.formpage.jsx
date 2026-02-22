@@ -629,6 +629,9 @@ const EditFormFormik = (
         messageType: editMessageType
     } = state;
 
+    // TODO: remove before publish 2026-02-22
+    const debug = true;
+
     if (debug) console_debug_log('>> EditFormFormik | readyToShow:', readyToShow, '*dataset:', dataset, '*editDataset:', editDataset, 'canCommit:', canCommit, '*message:', message, '*editMessage:', editMessage, '*messageType:', messageType, '*editMessageType:', editMessageType);
 
     const setFormData = (payload) => dispatch({ type: 'SET_EDIT_FORM_DATA', payload });
@@ -736,6 +739,9 @@ const EditFormFormikFinal = ({
     theme,
     currentUser,
 }) => {
+
+    // TODO: remove before publish 2026-02-22
+    const debug = true;
 
     if (debug) console_debug_log('>> EditFormFormikFinal | dataset:', dataset, 'message:', message, 'messageType:', messageType);
 
