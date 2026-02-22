@@ -8,7 +8,7 @@ import {
 import { genericFuncArrayDefaultValue } from "./generic.editor.rfc.specific.func.jsx";
 import { console_debug_log } from "./logging.service.jsx";
 
-const debug = false;
+const debug = true;
 
 export const timestampDbListPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during Listing Database Post Read
@@ -34,7 +34,7 @@ export const timestampDbListPostRead = (dataRead, editor, action) => {
 
 export const timestampDbPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during FormData Database Post Read
-  if (debug) console_debug_log('timestampDbPostRead\n| action:', action, '\n| editor:', editor, '\n| dataRead:', dataRead);
+  if (debug) console_debug_log('timestampDbPostRead - PRE\n| action:', action, '\n| editor:', editor, '\n| dataRead:', dataRead);
 
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(dataRead);
@@ -53,6 +53,7 @@ export const timestampDbPostRead = (dataRead, editor, action) => {
       return { ...acc };
     }, dataRead.resultset[0]);
     resp.fieldValues.resultset = new_row;
+    if (debug) console_debug_log('timestampDbPostRead - POST\n| resp:', resp);
     resolve(resp);
   });
 }
