@@ -4845,7 +4845,6 @@ const timestampToDate = function (timestamp) {
   let militaryTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
   const timestampUnixEpoch = timestamp * 1000;
   const date = new Date(timestampUnixEpoch);
-  console_debug_log('timestampToDate', timestamp, fullDateTime, separator, militaryTime);
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const ampm = hours >= 12 ? 'PM' : 'AM';
@@ -4893,13 +4892,7 @@ const processTimestampToDate = (timestampMixed, fullDatetime, separator) => {
   return timestampToDate(timestampMixed, fullDatetime, separator);
 };
 const processDateToTimestamp = dateTime => {
-  {
-    console_debug_log("*==*==* processDateToTimestamp - BEFORE: ".concat(dateTime));
-  }
   dateTime = fixDateWithTz(dateTime);
-  {
-    console_debug_log("*==*==* processDateToTimestamp - AFTER: ".concat(dateTime, " | Resultado: ").concat(dateToTimestap(dateTime)));
-  }
   return dateToTimestap(dateTime);
 };
 const addZeroTimeToDate = dateValue => {
@@ -4944,8 +4937,6 @@ const timestampDbListPostRead = (dataRead, editor, action) => {
   });
 };
 const timestampDbPostRead = (dataRead, editor, action) => {
-  // Timestamp to Date convertion during FormData Database Post Read
-  console_debug_log('timestampDbPostRead\n| action:', action, '\n| editor:', editor, '\n| dataRead:', dataRead);
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(dataRead);
     const new_row = editor.fieldElements.reduce((acc, currentObj) => {
@@ -4960,7 +4951,7 @@ const timestampDbPostRead = (dataRead, editor, action) => {
           break;
       }
       return _objectSpread2({}, acc);
-    }, dataRead.resultset);
+    }, dataRead.resultset[0]);
     resp.fieldValues.resultset = new_row;
     resolve(resp);
   });

@@ -1,6 +1,6 @@
 import { console_debug_log } from "../services/logging.service.jsx";
 
-const debug = true;
+const debug = false;
 
 const GMT_TAIL = '.000Z' // '.000-0000'
 const DATE_TIME_TAIL = `T00:00:00${GMT_TAIL}`
