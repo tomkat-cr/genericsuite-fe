@@ -52,7 +52,8 @@ export const timestampDbPostRead = (dataRead, editor, action) => {
       }
       return { ...acc };
     }, dataRead.resultset[0]);
-    resp.fieldValues.resultset = new_row;
+    // resp.fieldValues.resultset = new_row;
+    resp.fieldValues = new_row;
     if (debug) console_debug_log('timestampDbPostRead - POST\n| resp:', resp);
     resolve(resp);
   });
