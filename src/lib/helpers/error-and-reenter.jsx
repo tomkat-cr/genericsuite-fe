@@ -224,3 +224,17 @@ export const getErrorDetail = (errorRaw) => {
     }
     return errorDetails;
 }
+
+export const getErrorMsgFromApi = (errorObject, errorCode) => {
+    let error = errorObject;
+    if (errorObject.errorMsg) {
+        error = errorObject.errorMsg;
+    }
+    if (errorObject.message) {
+        error = errorObject.message;
+    }
+    if (!errorCode) {
+        return error;
+    }
+    return error + '\n[' + errorCode + ']';
+}

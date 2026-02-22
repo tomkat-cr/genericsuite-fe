@@ -21,7 +21,7 @@ import {
     nowToTimestap,
     timestampToDate,
 } from '../helpers/date-timestamp.jsx';
-import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
+import { errorAndReEnter, getErrorMsgFromApi } from "../helpers/error-and-reenter.jsx";
 import { GsButton } from '../helpers/NavLib.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
 
@@ -120,7 +120,7 @@ export const FormPage = ({
 
     const setFormData = (payload) => dispatch({ type: 'SET_FORM_DATA', payload });
     const setErrorStatus = (errorMessage, errorCode) => dispatch(
-        { type: 'SET_ERROR_STATUS', payload: { error: errorMessage, code: errorCode } });
+        { type: 'SET_ERROR_STATUS', payload: { error: getErrorMsgFromApi(errorMessage), code: errorCode } });
     const setRefresh = () => {
         dispatch({ type: 'INCREMENT_REFRESH' });
         dataAlreadyLoaded.current = false;
@@ -723,16 +723,6 @@ const EditFormFormik = (
     )
 }
 
-export const getErrorMsgFromApi = (error) => {
-    if (error.errorMsg) {
-        return error.errorMsg;
-    }
-    if (error.message) {
-        return error.message;
-    }
-    return String(error);
-}
-
 const EditFormFormikFinal = ({
     editor,
     parenHandleCancel,
@@ -897,7 +887,7 @@ const EditFormFormikFinal = ({
                                                     error => {
                                                         console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                                                         setSubmitting(false);
-                                                        setStatus(getErrorMsgFromApi(error) + ' [EFFF-010]');
+                                                        setStatus(getErrorMsgFromApi(error, '[EFFF-010]'));
                                                     }
                                                 )
                                             }
@@ -905,21 +895,21 @@ const EditFormFormikFinal = ({
                                         (error) => {
                                             console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
                                             setSubmitting(false);
-                                            setStatus(getErrorMsgFromApi(error) + ' EFFF-020');
+                                            setStatus(getErrorMsgFromApi(error, '[EFFF-020]'));
                                         }
                                     );
                                 },
                                 error => {
                                     console_debug_log('dbPreWrite [EFFF-030] | error:', error);
                                     setSubmitting(false);
-                                    setStatus(getErrorMsgFromApi(error) + ' EFFF-030');
+                                    setStatus(getErrorMsgFromApi(error, '[EFFF-030]'));
                                 }
                             )
                         },
                         error => {
                             console_debug_log('validations [EFFF-040] | error:', error);
                             setSubmitting(false);
-                            setStatus(getErrorMsgFromApi(error) + ' EFFF-040');
+                            setStatus(getErrorMsgFromApi(error, '[EFFF-040]'));
                         }
                     );
 

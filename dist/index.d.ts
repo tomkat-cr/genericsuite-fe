@@ -462,6 +462,7 @@ declare var errorAndReenter: Readonly<{
     };
     getErrorDetail: (errorRaw: any) => any;
     getErrorMessage: (error: any) => any;
+    getErrorMsgFromApi: (errorObject: any, errorCode: any) => any;
     includesAppValidLinks: (message: any) => boolean;
     isSessionExpired: (errorMessage: any) => boolean;
     logoutHander: typeof logoutHander;
@@ -568,7 +569,6 @@ declare var generic_editor_rfc_formpage: Readonly<{
     FormPage: (_ref: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
-    getErrorMsgFromApi: (error: any) => any;
 }>;
 declare var generic_editor_rfc_provider: Readonly<{
     __proto__: null;

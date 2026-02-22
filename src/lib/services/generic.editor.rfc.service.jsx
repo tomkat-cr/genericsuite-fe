@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useReducer } from "react";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
 import { useAppContext } from "../helpers/AppContext.jsx";
-import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
+import { errorAndReEnter, getErrorMsgFromApi } from "../helpers/error-and-reenter.jsx";
 import { GsIcons } from "../helpers/IconsLib.jsx";
 import { useUser } from '../helpers/UserContext.jsx';
 
@@ -234,7 +234,7 @@ const GenericCrudEditorMain = (props) => {
         console_debug_log(error);
         setStatus(
           errorAndReEnter(
-            error, (debug ? '[GCE-M-020]' : null)
+            getErrorMsgFromApi(error), (debug ? '[GCE-M-020]' : null)
           )
         );
       }
@@ -265,7 +265,7 @@ const GenericCrudEditorMain = (props) => {
                 funcResponse => setRows(funcResponse.fieldValues),
                 error => setStatus(
                   errorAndReEnter(
-                    error, (debug ? '[GCE-M-030]' : null)
+                    getErrorMsgFromApi(error), (debug ? '[GCE-M-030]' : null)
                   )
                 )
               )
@@ -276,7 +276,7 @@ const GenericCrudEditorMain = (props) => {
               ShowHideWaitAnimation(false, animationElementId);
               setStatus(
                 errorAndReEnter(
-                  error, (debug ? ' [GCE-M-040]' : null)
+                  getErrorMsgFromApi(error), (debug ? ' [GCE-M-040]' : null)
                 )
               );
             }
@@ -287,7 +287,7 @@ const GenericCrudEditorMain = (props) => {
           console.error(error);
           setStatus(
             errorAndReEnter(
-              error, (debug ? ' [GCE-M-050]' : null)
+              getErrorMsgFromApi(error), (debug ? ' [GCE-M-050]' : null)
             )
           )
         }

@@ -70,6 +70,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Pass `dbRow` to form fields types "select_component" and "component" for enhanced data context [GS-37].
 - Export `buildDescription` utility on "generic.editor.rfc.selector" and enhance "GenericSelectGenerator" documentation [GS-37].
 - Pass `currentObj` as a parameter to `dataPopulator` on getSelectFieldsOptions() [GS-37].
+- Centralize and enhance API error message extraction with a new `getErrorMsgFromApi` helper to avoid error messages like "[object Object]" when axios is used [GS-262].
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].
@@ -89,7 +90,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Optimize user data fetching with request caching to avoid race conditions [GS-262].
 - "TypeError: stringDate.indexOf is not a function" on addMissingTz when the supplied date is a number [GS-194].
 - "[object Object] EFFF-020" when the API returns an error deleting/updating the item on EditFormFormikFinal() [GS-194].
-
+- timestampDbPostRead() converts date to string before calling processTimestampToDate() because timestamps in relational databases are numbers and shown as "mm/dd/yyyy, --:-- --" on the data form [GS-194]
 
 ## [1.1.0] - 2025-11-17
 

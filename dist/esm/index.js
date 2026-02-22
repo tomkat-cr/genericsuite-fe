@@ -3942,6 +3942,19 @@ const getErrorDetail = errorRaw => {
   }
   return errorDetails;
 };
+const getErrorMsgFromApi = (errorObject, errorCode) => {
+  let error = errorObject;
+  if (errorObject.errorMsg) {
+    error = errorObject.errorMsg;
+  }
+  if (errorObject.message) {
+    error = errorObject.message;
+  }
+  if (!errorCode) {
+    return error;
+  }
+  return error + '\n[' + errorCode + ']';
+};
 
 var errorAndReenter = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -3953,6 +3966,7 @@ var errorAndReenter = /*#__PURE__*/Object.freeze({
   formatCaughtError: formatCaughtError,
   getErrorDetail: getErrorDetail,
   getErrorMessage: getErrorMessage,
+  getErrorMsgFromApi: getErrorMsgFromApi,
   includesAppValidLinks: includesAppValidLinks,
   isSessionExpired: isSessionExpired,
   logoutHander: logoutHander,
@@ -4909,11 +4923,11 @@ const timestampDbPostRead = (dataRead, editor, action) => {
       switch (currentObj.type) {
         case 'date':
           // For date edition, we need only the date portion
-          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name]);
+          acc[currentObj.name] = processTimestampToDate(String(acc[currentObj.name]));
           break;
         case 'datetime-local':
           // For datetime-local edition, we need the date from time separation to be the 'T'
-          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, 'T');
+          acc[currentObj.name] = processTimestampToDate(String(acc[currentObj.name]), true, 'T');
           break;
       }
       return _objectSpread2({}, acc);
@@ -23016,7 +23030,7 @@ const FormPage = _ref => {
   const setErrorStatus = (errorMessage, errorCode) => dispatch({
     type: 'SET_ERROR_STATUS',
     payload: {
-      error: errorMessage,
+      error: getErrorMsgFromApi(errorMessage),
       code: errorCode
     }
   });
@@ -23453,15 +23467,6 @@ const EditFormFormik = _ref5 => {
     currentUser: currentUser
   });
 };
-const getErrorMsgFromApi = error => {
-  if (error.errorMsg) {
-    return error.errorMsg;
-  }
-  if (error.message) {
-    return error.message;
-  }
-  return String(error);
-};
 const EditFormFormikFinal = _ref6 => {
   let {
     editor,
@@ -23556,23 +23561,23 @@ const EditFormFormikFinal = _ref6 => {
                 }, error => {
                   console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                   setSubmitting(false);
-                  setStatus(getErrorMsgFromApi(error) + ' [EFFF-010]');
+                  setStatus(getErrorMsgFromApi(error, '[EFFF-010]'));
                 });
               }
             }, error => {
               console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
               setSubmitting(false);
-              setStatus(getErrorMsgFromApi(error) + ' EFFF-020');
+              setStatus(getErrorMsgFromApi(error, '[EFFF-020]'));
             });
           }, error => {
             console_debug_log('dbPreWrite [EFFF-030] | error:', error);
             setSubmitting(false);
-            setStatus(getErrorMsgFromApi(error) + ' EFFF-030');
+            setStatus(getErrorMsgFromApi(error, '[EFFF-030]'));
           });
         }, error => {
           console_debug_log('validations [EFFF-040] | error:', error);
           setSubmitting(false);
-          setStatus(getErrorMsgFromApi(error) + ' EFFF-040');
+          setStatus(getErrorMsgFromApi(error, '[EFFF-040]'));
         });
       }
     }
@@ -23809,8 +23814,7 @@ const getFieldElementsYupValidations = (editor, editorFlags) => {
 
 var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  FormPage: FormPage,
-  getErrorMsgFromApi: getErrorMsgFromApi
+  FormPage: FormPage
 });
 
 const CrudEditorSearch = _ref => {
@@ -24052,7 +24056,7 @@ const GenericCrudEditorMain = props => {
     }, error => {
       console_debug_log("GCE-M-020:");
       console_debug_log(error);
-      setStatus(errorAndReEnter(error, null));
+      setStatus(errorAndReEnter(getErrorMsgFromApi(error), null));
     });
   }, []);
   useEffect(() => {
@@ -24069,17 +24073,17 @@ const GenericCrudEditorMain = props => {
         editor.db.getAll(accessKeysListing).then(data => {
           ShowHideWaitAnimation(false, animationElementId);
           // dbListPostRead: To fix Listing fields
-          processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(error, null)));
+          processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(getErrorMsgFromApi(error), null)));
         }, error => {
           console_debug_log("GenericCrudEditor / Listing - ERROR:");
           console.error(error);
           ShowHideWaitAnimation(false, animationElementId);
-          setStatus(errorAndReEnter(error, null));
+          setStatus(errorAndReEnter(getErrorMsgFromApi(error), null));
         });
       }, error => {
         console_debug_log("GenericCrudEditor / dbListPreRead - ERROR:");
         console.error(error);
-        setStatus(errorAndReEnter(error, null));
+        setStatus(errorAndReEnter(getErrorMsgFromApi(error), null));
       });
     }
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
