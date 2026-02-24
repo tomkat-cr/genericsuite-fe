@@ -7,6 +7,7 @@ import { useAppContext } from '../helpers/AppContext.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
 import { formatCaughtError } from '../helpers/error-and-reenter.jsx';
 import { getPrefix, getUrlForRouter, history } from '../helpers/history.jsx';
+import { getWindowLocationHref, getWindowLocationOrigin } from '../helpers/navigation.jsx';
 import {
     dbApiService,
 } from './db.service.jsx';
@@ -62,20 +63,20 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
     } else {
         // |about|
         // Before:
-        // "|js|window.open(window.location.origin + '/#/about_body?menu=0', 'AppAboutPopUp','height=600,width=400')"
+        // "|js|window.open(getWindowLocationOrigin() + '/#/about_body?menu=0', 'AppAboutPopUp','height=600,width=400')"
         if (onClickString.startsWith("|")) {
             const match = onClickString.match(jsPrefixToken);
             if (match) {
                 const woOptions = (typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null);
                 if (woOptions) {
-                    const windowOpenFn = (woOptions) => (window.open(`${window.location.origin}${getUrlForRouter("/" + woOptions.url)}`, woOptions.name, woOptions.options));
+                    const windowOpenFn = (woOptions) => (window.open(`${getWindowLocationOrigin()}${getUrlForRouter("/" + woOptions.url)}`, woOptions.name, woOptions.options));
                     if (setExpanded) {
-                        resutlFunction = () => { setExpanded(); windowOpenFn(woOptions); return window.location.href; };
+                        resutlFunction = () => { setExpanded(); windowOpenFn(woOptions); return getWindowLocationHref(); };
                     } else {
-                        resutlFunction = () => { windowOpenFn(woOptions); return window.location.href };
+                        resutlFunction = () => { windowOpenFn(woOptions); return getWindowLocationHref() };
                     }
                 } else {
-                    resutlFunction = () => { alert(`ERROR: invalid onClick: ${onClickString}`); return window.location.href };
+                    resutlFunction = () => { alert(`ERROR: invalid onClick: ${onClickString}`); return getWindowLocationHref() };
                 }
             }
         } else {
@@ -432,7 +433,7 @@ export const getMenuFromApi = (setState, getErrorState, setErrorState, setMenuOp
                 console_debug_log("getMenuFromApi: ERROR");
                 console_debug_log(error);
             }
-            if (!window.location.href.includes("/login")) {
+            if (!getWindowLocationHref().includes("/login")) {
                 setErrorState(error);
                 setState("MENU_ERROR");
             }

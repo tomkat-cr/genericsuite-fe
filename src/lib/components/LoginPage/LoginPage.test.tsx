@@ -9,11 +9,18 @@ jest.mock('react-markdown', () => ({
     default: jest.fn(() => null)
 }));
 
-import { UserProvider } from "../../helpers/UserContext";
 import { AppProvider } from "../../helpers/AppContext";
+import { UserProvider } from "../../helpers/UserContext";
 
-import { LoginPage } from "./LoginPage";
 import { Formik } from 'formik';
+import { getWindowLocationOrigin, setWindowLocationHref } from '../../helpers/navigation.jsx';
+import { LoginPage } from "./LoginPage";
+
+// Mock navigation helpers
+jest.mock('../../helpers/navigation.jsx', () => ({
+    getWindowLocationOrigin: jest.fn(),
+    setWindowLocationHref: jest.fn(),
+}));
 
 // Mock authentication service to resolve login successfully
 jest.mock('../../services/authentication.service.jsx', () => ({
@@ -28,32 +35,17 @@ const flushPromises = () => new Promise(resolve => setTimeout(resolve, 0));
 
 describe('LoginPage', () => {
     const TEST_ORIGIN = 'http://localhost:3000';
-    let originalLocation: Location;
     let assignedHref = '';
 
     beforeEach(() => {
         assignedHref = '';
-        originalLocation = window.location as any;
-        // allow redefining window.location
-        // @ts-ignore
-        delete (window as any).location;
-        Object.defineProperty(window, 'location', {
-            configurable: true,
-            value: {
-                ...new URL(TEST_ORIGIN + '/'),
-                get href() { return assignedHref || `${TEST_ORIGIN}/`; },
-                set href(val: string) { assignedHref = val; },
-                origin: TEST_ORIGIN,
-            }
+        (getWindowLocationOrigin as jest.Mock).mockReturnValue(TEST_ORIGIN);
+        (setWindowLocationHref as jest.Mock).mockImplementation((url) => {
+            assignedHref = url;
         });
     });
 
     afterEach(() => {
-        // Restore original location
-        Object.defineProperty(window, 'location', {
-            configurable: true,
-            value: originalLocation
-        });
         jest.clearAllMocks();
         localStorage.clear();
     });
@@ -61,13 +53,13 @@ describe('LoginPage', () => {
     it("renders the LoginPage component", () => {
         const component = renderer.create(
             // <MemoryRouter>
-                <UserProvider>
-                    <AppProvider
-                        globalComponentMap={mockDefaultComponentMap()}
-                    >
-                        <LoginPage />
-                    </AppProvider>
-                </UserProvider>
+            <UserProvider>
+                <AppProvider
+                    globalComponentMap={mockDefaultComponentMap()}
+                >
+                    <LoginPage />
+                </AppProvider>
+            </UserProvider>
             // </MemoryRouter>
         );
         let tree = component.toJSON();

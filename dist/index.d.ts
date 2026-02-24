@@ -3,6 +3,7 @@ import * as rxjs from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import * as react_router_dom from 'react-router-dom';
 import React from 'react';
+import { ObjectId } from 'bson';
 
 declare function About(): React.FunctionComponentElement<any>;
 declare function AboutBody(_ref: any): React.DetailedReactHTMLElement<{
@@ -292,6 +293,7 @@ declare var class_name_constants: Readonly<{
     IS_INVALID_CLASS: "border-red-500 isInvalidClass";
     LOGIN_BUTTON_IN_APP_COMPONENT_CLASS: string;
     LOGIN_PAGE_APP_LOGO_CLASS: "mx-auto my-0 loginPageAppLogoClass";
+    LOGIN_PAGE_EXTRA_PT: "pt-6 loginPageExtraPtClass";
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: "flex min-h-screen mainContainerForSideMenuClass";
     MAIN_CONTAINER_FOR_TOP_MENU_CLASS: "flex flex-col min-h-screen mainContainerForTopMenuClass";
     MARKDOWN_BOLD_CLASS: "font-bold markdown-bold-class";
@@ -707,7 +709,8 @@ declare var history$1: Readonly<{
 declare var id_utilities: Readonly<{
     __proto__: null;
     convertId: (id: any) => any;
-    getUuidV4: () => any;
+    generateNewIdObject: () => ObjectId;
+    newIdString: () => void;
 }>;
 declare var jsonUtilities: Readonly<{
     __proto__: null;
@@ -726,6 +729,10 @@ declare var logout_service: Readonly<{
     currentUserSubject: BehaviorSubject<any>;
     getCurrentUserFromLocalStorage: () => any;
     logout: typeof logout;
+}>;
+declare var md5_utilities: Readonly<{
+    __proto__: null;
+    getHash: (text: any) => string;
 }>;
 declare var media: Readonly<{
     __proto__: null;
@@ -776,6 +783,11 @@ declare var ui: Readonly<{
 declare var urlParams: Readonly<{
     __proto__: null;
     getUrlParams: typeof getUrlParams;
+}>;
+declare var uuid_utilities: Readonly<{
+    __proto__: null;
+    generateUUID: typeof generateUUID;
+    getUuidV4: () => any;
 }>;
 declare var wait_animation_utility: Readonly<{
     __proto__: null;
@@ -830,6 +842,7 @@ declare function errorMessageDiv(errorMessage: any): React.DetailedReactHTMLElem
 declare function logoutHander(): void;
 declare function refreshPage(): void;
 declare function getPrefix(...args: any[]): string;
+
 declare function console_debug_log(debug_message: any, ...args: any[]): void;
 declare function get_debug_flag(): any;
 
@@ -917,5 +930,6 @@ declare function mockUserData(): {
     };
 };
 declare function getUrlParams(...args: any[]): {};
+declare function generateUUID(): any;
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };

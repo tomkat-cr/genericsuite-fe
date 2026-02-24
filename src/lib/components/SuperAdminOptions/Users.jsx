@@ -24,6 +24,7 @@ import {
 
 import { UsersApiKey } from '../UsersMenu/UsersApiKey.jsx';
 import { UsersConfig } from '../UsersMenu/UsersConfig.jsx';
+import { UsersHistoryDbPostWrite, UsersUserHistory } from '../UsersMenu/UsersUserHistory.jsx';
 
 import users from "../../../configs/frontend/users.json";
 
@@ -39,9 +40,11 @@ export function Users_EditorData(calleeName = 'Users_EditorData') {
         "Users": Users,
         "UsersDbListPreRead": UsersDbListPreRead,
         "UsersDbPreWrite": UsersDbPreWrite,
+        "UsersHistoryDbPostWrite": UsersHistoryDbPostWrite,
         "UsersValidations": UsersValidations,
         "UsersPasswordValidations": UsersPasswordValidations,
         "UsersApiKey": UsersApiKey,
+        "UsersUserHistory": UsersUserHistory,
     }
     // return GetFormData('users', registry, calleeName);
     return GetFormData(users, registry, calleeName);

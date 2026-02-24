@@ -16,24 +16,25 @@ import {
 } from '../services/logging.service.jsx';
 import { getPrefix, getUrlForRouter, setLastUrl } from './history.jsx';
 import { ModalPopUp } from './ModalPopUp.jsx';
+import { getWindowLocationOrigin, setWindowLocationHref, windowLocationReload } from './navigation.jsx';
 
 const debug = false;
 
 const hardLogin = false;
 
 export function logoutHander() {
-    const loginUrl = `${window.location.origin}${getUrlForRouter('/login')}`;
+    const loginUrl = `${getWindowLocationOrigin()}${getUrlForRouter('/login')}`;
     authenticationService.logout();
     if (hardLogin) {
         if (debug) console_debug_log(`logoutHander | window.location.href = ${loginUrl}`);
-        window.location.href = loginUrl;
+        setWindowLocationHref(loginUrl);
     } else {
-        window.location.reload(true);
+        windowLocationReload(true);
     }
 };
 
 export function refreshPage() {
-    window.location.reload();;
+    windowLocationReload();;
 };
 
 export const getErrorMessage = (error) => {
@@ -236,5 +237,9 @@ export const getErrorMsgFromApi = (errorObject, errorCode) => {
     if (!errorCode) {
         return error;
     }
-    return error + '\n[' + errorCode + ']';
+    return error +
+        '\n\n' +
+        (errorCode.startsWith('[') ? '' : '[') +
+        errorCode +
+        (errorCode.endsWith(']') ? '' : ']');
 }

@@ -19,9 +19,7 @@ import {
     getErrorMessage,
     logoutHander,
 } from '../../helpers/error-and-reenter.jsx';
-import {
-    getUrlParams,
-} from '../../helpers/url-params.jsx';
+import { getUrlParams } from '../../helpers/url-params.jsx';
 import {
     UserProvider,
     useUser
@@ -148,7 +146,7 @@ const AppNavBar = ({ children }) => {
             <Navbar.Brand
                 as={RouterLink}
                 to='/'
-            // onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+            // onClick={() => (currentUser ? setExpanded() : setExpanded(() => windowLocationReload()))}
             >
                 <div
                     className={NAVBAR_BRAND_NAME_CLASS}
@@ -275,7 +273,7 @@ const AppMainInner = ({ children }) => {
     }
 
     if (debug) {
-        console_debug_log("App enters... | window.location:", window.location, "showContentOnly:", showContentOnly);
+        console_debug_log("App enters... | window.location:", getWindowLocation(), "showContentOnly:", showContentOnly);
     }
 
     const logoutHandler = () => {

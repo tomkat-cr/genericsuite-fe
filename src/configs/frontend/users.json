@@ -147,6 +147,7 @@
         }
     ],
     "childComponents": [
+        "UsersUserHistory",
         "UsersConfig",
         "UsersApiKey"
     ],
@@ -155,6 +156,9 @@
     ],
     "dbPreWrite": [
         "UsersDbPreWrite"
+    ],
+    "dbPostWrite": [
+        "UsersHistoryDbPostWrite"
     ],
     "dbPreValidations": [
         "UsersValidations"

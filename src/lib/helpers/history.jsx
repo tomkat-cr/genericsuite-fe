@@ -1,10 +1,11 @@
 import { createBrowserHistory } from 'history';
 
 import {
-    saveRawItemToLocalStorage,
     getRawItemFromLocalStorage,
     removeItemFromLocalStorage,
+    saveRawItemToLocalStorage,
 } from './localstorage-manager.jsx';
+import { getWindowLocationHref } from './navigation.jsx';
 
 export const history = createBrowserHistory();
 
@@ -17,7 +18,7 @@ export const getUrlForRouter = (url) => {
     return `${hasHashRouter ? '/#' : ''}${getPrefix()}${url}`;
 }
 
-export function getPrefix(hardPrefix=false) {
+export function getPrefix(hardPrefix = false) {
     if (hardPrefix) {
         const prefix = process.env.REACT_APP_URI_PREFIX ?? '';
         return `/${prefix}`;
@@ -25,9 +26,9 @@ export function getPrefix(hardPrefix=false) {
     return '';
 }
 
-export const setLastUrl = (lastURL=null) => {
+export const setLastUrl = (lastURL = null) => {
     if (!lastURL) {
-        lastURL = window.location.href;
+        lastURL = getWindowLocationHref();
     }
     if (lastURL.indexOf('/login') === -1) {
         saveRawItemToLocalStorage('lastURL', lastURL);

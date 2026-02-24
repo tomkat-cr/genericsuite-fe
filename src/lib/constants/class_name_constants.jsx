@@ -284,6 +284,7 @@ export const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-whi
 // Login page
 
 export const LOGIN_PAGE_APP_LOGO_CLASS = "mx-auto my-0 loginPageAppLogoClass";
+export const LOGIN_PAGE_EXTRA_PT = "pt-6 loginPageExtraPtClass";
 
 // Login button
 

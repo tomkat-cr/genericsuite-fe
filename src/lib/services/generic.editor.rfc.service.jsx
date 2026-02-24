@@ -6,7 +6,9 @@ import React, { useContext, useEffect, useReducer } from "react";
 import { useAppContext } from "../helpers/AppContext.jsx";
 import { errorAndReEnter, getErrorMsgFromApi } from "../helpers/error-and-reenter.jsx";
 import { GsIcons } from "../helpers/IconsLib.jsx";
+import { windowLocationReload } from '../helpers/navigation.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
+import { getHash } from './md5.utilities.jsx';
 
 import {
   MSG_ACTION_DELETE,
@@ -332,22 +334,27 @@ const GenericCrudEditorMain = (props) => {
   const handleRefresh = (newPage) => {
     // select_cache = {};
     initCache();
-    window.location.reload(true);
+    windowLocationReload(true);
   }
 
   const rowId = (row) => {
     if (debug) {
       console_debug_log(`rowId | editor.primaryKeyName: ${editor.primaryKeyName} | row:`, row)
     }
-    const response = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
+    const rowIdVar = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
+    const response = typeof rowIdVar === 'undefined' ? getHash(JSON.stringify(row)) : rowIdVar;
+    if (typeof rowIdVar === 'undefined') {
+      console.error(`ERROR [GCE-M-060]: row does not have '_id' nor '${editor.primaryKeyName}' | Editor: ${editor.name} | Row: ${JSON.stringify(row)}`)
+    }
     return response;
   }
 
   const actionsHandler = (mode, row) => {
-    const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
+    const currentRowId = rowId(row);
+    const element = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_controls`);
     const currRowHadHiddenClass = element.classList.contains('hidden');
-    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
-    const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
+    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_magicButton`);
+    const rowElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
     if (mode === 'show') {
       // Highlight row
@@ -529,15 +536,16 @@ const GenericCrudEditorMain = (props) => {
                 className={APP_LISTING_TABLE_BODY_TBODY_CLASS}
               >
                 {rows && typeof rows.resultset !== 'undefined' &&
-                  rows.resultset.map((row, index) => (
-                    // To avoid use of <> to group 2 <tr> (one for the row and one for the actions)
+                  rows.resultset.map((row, index) => {
+                    // To avoid use of "<>" to group two "<tr>" (one for the row and one for the actions)
                     // because it throws the warning:
-                    // "Warning: Each child in a list should have a unique "key" prop."
+                    //    "Warning: Each child in a list should have a unique "key" prop."
                     // we use <React.Fragment> instead
-                    <React.Fragment key={`${editor.baseUrl}_row_${rowId(row)}_tr_enclosure`}>
+                    const uniqueRowId = rowId(row)
+                    return (<React.Fragment key={`${editor.baseUrl}_row_${uniqueRowId}_tr_enclosure`}>
                       <tr
-                        id={`${editor.baseUrl}_row_${rowId(row)}_row`}
-                        key={`${editor.baseUrl}_row_${rowId(row)}_row`}
+                        id={`${editor.baseUrl}_row_${uniqueRowId}_row`}
+                        key={`${editor.baseUrl}_row_${uniqueRowId}_row`}
                         className={index % 2 ? `${APP_LISTING_TABLE_BODY_TR_ODD_CLASS}` : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}`}
                         onMouseOver={() => {
                           actionsHandler('show', row);
@@ -552,13 +560,13 @@ const GenericCrudEditorMain = (props) => {
                         {actionsHandlerAllowsMagicButton && (
                           <td
                             // Action buttons
-                            key={`${editor.baseUrl}_row_${rowId(row)}_magicButton_td`}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_magicButton_td`}
                             // colSpan={Object.keys(editor.fieldElements).length + 1}
                             className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
                           >
                             <div
-                              id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
-                              key={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
+                              id={`${editor.baseUrl}_row_${uniqueRowId}_magicButton`}
+                              key={`${editor.baseUrl}_row_${uniqueRowId}_magicButton`}
                               className={VISIBLE_CLASS}
                             >
                               <GsIcons
@@ -572,7 +580,7 @@ const GenericCrudEditorMain = (props) => {
                           (key) =>
                             editor.fieldElements[key].listing && (
                               <td
-                                key={`${editor.baseUrl}_row_${rowId(row)}_${key}_td`}
+                                key={`${editor.baseUrl}_row_${uniqueRowId}_${key}_td`}
                                 className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS}
                               >
                                 {
@@ -586,8 +594,8 @@ const GenericCrudEditorMain = (props) => {
                         )}
                       </tr>
                       <tr
-                        id={`${editor.baseUrl}_row_${rowId(row)}_controls`}
-                        key={`${editor.baseUrl}_row_${rowId(row)}_controls`}
+                        id={`${editor.baseUrl}_row_${uniqueRowId}_controls`}
+                        key={`${editor.baseUrl}_row_${uniqueRowId}_controls`}
                         className={(index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS}
                         onMouseOver={() => {
                           actionsHandler('show', row);
@@ -601,13 +609,13 @@ const GenericCrudEditorMain = (props) => {
                       >
                         <td
                           // Action buttons
-                          key={`${editor.baseUrl}_row_${rowId(row)}_controls_td`}
+                          key={`${editor.baseUrl}_row_${uniqueRowId}_controls_td`}
                           colSpan={Object.keys(editor.fieldElements).length + 1}
                           className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
                         >
                           <button
-                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_eye`}
-                            onClick={() => handleView(rowId(row))}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_controls_eye`}
+                            onClick={() => handleView(uniqueRowId)}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -616,8 +624,8 @@ const GenericCrudEditorMain = (props) => {
                             />
                           </button>
                           <button
-                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
-                            onClick={() => handleModify(rowId(row))}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_controls_edit`}
+                            onClick={() => handleModify(uniqueRowId)}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -626,8 +634,8 @@ const GenericCrudEditorMain = (props) => {
                             />
                           </button>
                           <button
-                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_trash`}
-                            onClick={() => handleDelete(rowId(row))}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_controls_trash`}
+                            onClick={() => handleDelete(uniqueRowId)}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -637,8 +645,8 @@ const GenericCrudEditorMain = (props) => {
                           </button>
                         </td>
                       </tr>
-                    </React.Fragment>
-                  ))}
+                    </React.Fragment>)
+                  })}
               </tbody>
             </table>
           </div>

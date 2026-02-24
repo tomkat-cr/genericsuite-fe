@@ -14,11 +14,13 @@ import {
     INVALID_FEEDBACK_CLASS,
     IS_INVALID_CLASS,
     LOGIN_PAGE_APP_LOGO_CLASS,
+    LOGIN_PAGE_EXTRA_PT,
     POPUP_TOP_MARGIN_CLASS,
 } from '../../constants/class_name_constants.jsx';
 import { imageDirectory } from '../../constants/general_constants.jsx';
 import { getErrorMessage } from '../../helpers/error-and-reenter.jsx';
 import { getLastUrl, removeLastUrl } from '../../helpers/history.jsx';
+import { getWindowLocationOrigin, setWindowLocationHref } from '../../helpers/navigation.jsx';
 import { CenteredBoxContainer } from '../../helpers/NavLib.jsx';
 import { renderMarkdownContent } from '../../helpers/ui.jsx';
 import { getUrlParams } from '../../helpers/url-params.jsx';
@@ -50,9 +52,10 @@ export const LoginPage = (props) => {
             // ignore decode errors, use raw candidate
         }
         try {
-            const parsed = new URL(candidate, window.location.origin);
+            const origin = getWindowLocationOrigin();
+            const parsed = new URL(candidate, origin);
             // Only allow same-origin destinations
-            if (parsed.origin !== window.location.origin) {
+            if (parsed.origin !== origin) {
                 return '/';
             }
             // Build a safe relative URL explicitly to preserve query and hash
@@ -98,10 +101,10 @@ export const LoginPage = (props) => {
                     }
 
                     // return <Navigate to={redirectUrl} replace={true}/>
-                    window.location.href = sanitizeRedirectUrl(redirectUrl);
+                    setWindowLocationHref(sanitizeRedirectUrl(redirectUrl));
 
                     // To handle menu access rights changes
-                    // window.location.reload(true);
+                    // windowLocationReload(true);
                 },
                 error => {
                     setSubmitting(false);
@@ -128,16 +131,16 @@ export const LoginPage = (props) => {
                 <div
                     className={POPUP_TOP_MARGIN_CLASS}
                 >
+                    <img src={imageDirectory + (appLogo || defaultAppLogo)}
+                        width="150"
+                        height="150"
+                        className={LOGIN_PAGE_APP_LOGO_CLASS}
+                        alt="App Logo"
+                    />
                     <CenteredBoxContainer>
                         <Form>
-                            <img src={imageDirectory + (appLogo || defaultAppLogo)}
-                                width="150"
-                                height="150"
-                                className={LOGIN_PAGE_APP_LOGO_CLASS}
-                                alt="App Logo"
-                            />
                             <div
-                                className={FORM_GROUP_CLASS}
+                                className={FORM_GROUP_CLASS + " " + LOGIN_PAGE_EXTRA_PT}
                             >
                                 <label
                                     htmlFor="username"

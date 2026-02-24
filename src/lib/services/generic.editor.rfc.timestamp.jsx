@@ -8,7 +8,7 @@ import {
 import { genericFuncArrayDefaultValue } from "./generic.editor.rfc.specific.func.jsx";
 import { console_debug_log } from "./logging.service.jsx";
 
-const debug = true;
+const debug = false;
 
 export const timestampDbListPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during Listing Database Post Read
@@ -51,9 +51,8 @@ export const timestampDbPostRead = (dataRead, editor, action) => {
         default:
       }
       return { ...acc };
-    }, dataRead.resultset[0]);
-    resp.fieldValues.resultset = new_row;
-    // resp.fieldValues = new_row;
+    }, (editor.type == "child_listing" ? dataRead.resultset[0] : dataRead.resultset));
+    resp.fieldValues.resultset = (editor.type == "child_listing" ? [new_row] : new_row);
     if (debug) console_debug_log('timestampDbPostRead - POST\n| resp:', resp);
     resolve(resp);
   });

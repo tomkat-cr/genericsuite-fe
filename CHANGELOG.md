@@ -41,7 +41,11 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - <ChatBotButtonGeneric /> component to add a try-catch layer to field definitions that has "chatbot_popup" set to true [GS-258].
 - Comprehensive parameter documentation for `GenericSelectDataPopulator`.
 - Comprehensive documentation for `getUrlParams`.
-- Add VERBOSE_RUN_CONFIG envvar to enable verbose logging in run_config.sh.
+- VERBOSE_RUN_CONFIG envvar to enable verbose logging in run_config.sh.
+- MD5 utilities [GS-266].
+- BSON-type ObjectId() generation to "id.utilities.jsx" [GS-266].
+- "UsersUserHistory.jsx" and "users_user_history.json" to debug child listings with dates and MondoDB BSON-type ObjectId() generation [GS-266].
+- Implement navigation helpers for testability [GS-219].
 
 ### Changed
 - Enhance error message in the login page [GS-246].
@@ -71,6 +75,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Export `buildDescription` utility on "generic.editor.rfc.selector" and enhance "GenericSelectGenerator" documentation [GS-37].
 - Pass `currentObj` as a parameter to `dataPopulator` on getSelectFieldsOptions() [GS-37].
 - Centralize and enhance API error message extraction with a new `getErrorMsgFromApi` helper to avoid error messages like "[object Object]" when axios is used [GS-262].
+- Rename "idUtilities.getUuidV4" to "uuidUtilities.getUuidV4" [GS-266].
+- Login page desing enhanced by isolating the logo from the user and password box.
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].
@@ -90,7 +96,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Optimize user data fetching with request caching to avoid race conditions [GS-262].
 - "TypeError: stringDate.indexOf is not a function" on addMissingTz when the supplied date is a number [GS-194].
 - "[object Object] EFFF-020" when the API returns an error deleting/updating the item on EditFormFormikFinal() [GS-194].
-- timestampDbPostRead() use resultset[0] for calling processTimestampToDate() because "date" and "datetime-local" fields shown as "mm/dd/yyyy, --:-- --" on read-only data form [GS-194]
+- Date not shown on read-only child listings data forms: timestampDbPostRead() use resultset[0] for calling processTimestampToDate() because "date" and "datetime-local" fields shown as "mm/dd/yyyy, --:-- --" [GS-266]
+- Use MD5 utilities to hash rowId in data forms when there's no row._id or row[editor.primaryKeyName], avoiding the "Encountered two children with the same key, `<table_name>_row_undefined_tr_enclosure`" warning [GS-266].
+
+### Security
+- Upgrade jest and babel to latest versions to fix the "npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful." warning [GS-219].
+- 37 security vulnerabilities (including high and critical ones) found in the project's dependencies were addressed, adding an "overrides" section to package.json to force secure versions of transitive dependencies (elliptic, json5, minimatch, postcss, loader-utils) without breaking your high-level setup [GS-219].
+
 
 ## [1.1.0] - 2025-11-17
 
