@@ -4032,6 +4032,9 @@ function getUrlParams() {
         if (searchString.startsWith('?')) {
           // Remove only the leading '?', do not split by other '?' inside values
           searchString = searchString.slice(1);
+        } else if (searchString.indexOf('?') > -1) {
+          // Remove everything after the first '?', do not split by other '?' inside values
+          searchString = searchString.substring(searchString.indexOf('?') + 1);
         }
         if (searchString === '') {
           return urlParams;
@@ -24564,10 +24567,10 @@ const CrudEditorPagination = _ref3 => {
     alt: MSG_PREVIOUS
   })), /*#__PURE__*/React.createElement("div", {
     className: APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS
-  }, MSG_PAGE, " ", currentPage, " ", MSG_OF, " ", totalPages), /*#__PURE__*/React.createElement("button", {
-    disabled: currentPage === totalPages,
+  }, MSG_PAGE, " ", currentPage, totalPages > 0 ? " ".concat(MSG_OF, " ").concat(totalPages) : ''), /*#__PURE__*/React.createElement("button", {
+    disabled: currentPage >= totalPages,
     onClick: () => goToNewPage(currentPage + 1),
-    className: "".concat(currentPage === totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+    className: "".concat(currentPage >= totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "greater-than",
     alt: MSG_NEXT
@@ -25964,6 +25967,11 @@ const TopRightMenu = _ref3 => {
   const {
     currentUser
   } = useUser();
+  if (showContentOnly) {
+    // This is too prevent showing the menu when showContentOnly is true
+    // E.g. pop-up about page
+    return null;
+  }
   return /*#__PURE__*/React.createElement(Navbar.TopRightMenu, {
     authenticated: authenticated
   }, /*#__PURE__*/React.createElement(DarkModeButton, null), /*#__PURE__*/React.createElement(MenuModeButton, null), /*#__PURE__*/React.createElement(Navbar.Toggle, null), currentUser && authenticated && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
@@ -26053,7 +26061,6 @@ const AppMainInner = _ref6 => {
   }), sideMenu && isMobileMenuOpen && currentUser && /*#__PURE__*/React.createElement(GenericMenuBuilder, {
     title: currentUser.firstName,
     itemType: "hamburger",
-    showContentOnly: showContentOnly,
     mobileMenuMode: true
   })), !sideMenu && /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly

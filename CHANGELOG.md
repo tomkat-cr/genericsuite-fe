@@ -98,10 +98,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - "[object Object] EFFF-020" when the API returns an error deleting/updating the item on EditFormFormikFinal() [GS-194].
 - Date not shown on read-only child listings data forms: timestampDbPostRead() use resultset[0] for calling processTimestampToDate() because "date" and "datetime-local" fields shown as "mm/dd/yyyy, --:-- --" [GS-266]
 - Use MD5 utilities to hash rowId in data forms when there's no row._id or row[editor.primaryKeyName], avoiding the "Encountered two children with the same key, `<table_name>_row_undefined_tr_enclosure`" warning [GS-266].
+- Query parameters are not recognized in getUrlParams() [GS-266].
+- Show only content when `menu=0` in the main page [GS-266].
+- Disable next page button and avoid show "Page 1 of 0" message when the table has no items on the GCE_RFC [GS-266].
 
 ### Security
-- Upgrade jest and babel to latest versions to fix the "npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful." warning [GS-219].
-- 37 security vulnerabilities (including high and critical ones) found in the project's dependencies were addressed, adding an "overrides" section to package.json to force secure versions of transitive dependencies (elliptic, json5, minimatch, postcss, loader-utils) without breaking your high-level setup [GS-219].
+- Upgrade jest and babel to latest versions to fix the "npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful." warning [GS-219] [GS-267].
+- 37 security vulnerabilities (including high and critical ones) found in the project's dependencies were addressed, adding an "overrides" section to package.json to force secure versions of transitive dependencies (elliptic, json5, minimatch, postcss, loader-utils) without breaking your high-level setup [GS-219] [GS-267].
 
 
 ## [1.1.0] - 2025-11-17

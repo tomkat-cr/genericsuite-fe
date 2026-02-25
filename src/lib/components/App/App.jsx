@@ -101,6 +101,7 @@ const debug = false;
 const getShowContentOnly = () => {
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
+    if (debug) console_debug_log(">> getShowContentOnly | showContentOnly:", showContentOnly, "urlParams:", urlParams);
     return showContentOnly;
 }
 
@@ -164,6 +165,11 @@ const AppNavBar = ({ children }) => {
 
 const TopRightMenu = ({ showContentOnly, authenticated = true }) => {
     const { currentUser } = useUser();
+    if (showContentOnly) {
+        // This is too prevent showing the menu when showContentOnly is true
+        // E.g. pop-up about page
+        return null;
+    }
     return (
         <Navbar.TopRightMenu
             authenticated={authenticated}
@@ -314,7 +320,6 @@ const AppMainInner = ({ children }) => {
                         <GenericMenuBuilder
                             title={currentUser.firstName}
                             itemType="hamburger"
-                            showContentOnly={showContentOnly}
                             mobileMenuMode={true}
                         />
                     )}

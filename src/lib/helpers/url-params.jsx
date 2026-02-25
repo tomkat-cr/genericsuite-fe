@@ -25,7 +25,11 @@ export function getUrlParams(props = window) {
                 if (searchString.startsWith('?')) {
                     // Remove only the leading '?', do not split by other '?' inside values
                     searchString = searchString.slice(1);
+                } else if (searchString.indexOf('?') > -1) {
+                    // Remove everything after the first '?', do not split by other '?' inside values
+                    searchString = searchString.substring(searchString.indexOf('?') + 1);
                 }
+
                 if (searchString === '') {
                     return urlParams;
                 }

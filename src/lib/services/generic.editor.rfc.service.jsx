@@ -846,12 +846,12 @@ const CrudEditorPagination = ({ id, currentPage, totalPages, goToNewPage }) => {
       <div
         className={APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS}
       >
-        {MSG_PAGE} {currentPage} {MSG_OF} {totalPages}
+        {MSG_PAGE} {currentPage}{totalPages > 0 ? ` ${MSG_OF} ${totalPages}` : ''}
       </div>
       <button
-        disabled={currentPage === totalPages}
+        disabled={currentPage >= totalPages}
         onClick={() => goToNewPage(currentPage + 1)}
-        className={`${currentPage === totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`}
+        className={`${currentPage >= totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`}
       >
         <GsIcons
           icon="greater-than"
