@@ -101,6 +101,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Query parameters are not recognized in getUrlParams() [GS-266].
 - Show only content when `menu=0` in the main page [GS-266].
 - Disable next page button and avoid show "Page 1 of 0" message when the table has no items on the GCE_RFC [GS-266].
+- Fix the drop-down menus closing when any other element is clicked [GS-266].
 
 ### Security
 - Upgrade jest and babel to latest versions to fix the "npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful." warning [GS-219] [GS-267].

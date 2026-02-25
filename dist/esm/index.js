@@ -257,7 +257,7 @@ const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focu
 
 // Login page
 
-const LOGIN_PAGE_APP_LOGO_CLASS = "mx-auto my-0 loginPageAppLogoClass";
+const LOGIN_PAGE_APP_LOGO_CLASS = "pb-4 mx-auto my-0 loginPageAppLogoClass";
 const LOGIN_PAGE_EXTRA_PT = "pt-6 loginPageExtraPtClass";
 
 // Login button
@@ -649,6 +649,466 @@ var logging_service = /*#__PURE__*/Object.freeze({
   __proto__: null,
   console_debug_log: console_debug_log,
   get_debug_flag: get_debug_flag
+});
+
+const randomKey = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+var ramdomize = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  randomKey: randomKey
+});
+
+const textareaMinHeightDefault = 40;
+const toggleIdVisibility = (onOff, ids) => {
+  ids.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.style.display = onOff === 'on' ? '' : 'none';
+    }
+  });
+};
+const getElementWithErrorHandling = elementId => {
+  try {
+    const elementObj = document.getElementById(elementId);
+    return elementObj;
+  } catch (error) {
+    // Element not found or stil loading...            
+    return null;
+  }
+};
+const growUpTextAreaInner = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
+  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
+  const textarea = getElementWithErrorHandling(textAreaId);
+  if (textarea) {
+    // Grow upwards
+    // Adjust the height of the textarea to grow as the user types
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+    // If the content goes beyond its height, adjust the scroll to grow upwards
+    const conversationObj = document.getElementById(conversationBlockId);
+    // Calculate the height based on the viewport height (82vh, ".conversation-block.height" in FynBot.css)
+    const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    // Ensure the textarea does not exceed its max-height...
+    if (textarea.scrollHeight > maxOffsetHeight) {
+      textarea.style.height = "".concat(maxOffsetHeight, "px");
+    }
+    // Set conversation height to make textarea to scroll up according its height
+    const sectionViewportHeightInPx = sectionViewportHeight / 100 * viewportHeight;
+    const conversationHeight = sectionViewportHeightInPx - textarea.clientHeight + textareaMinHeight;
+    conversationObj.style.height = "".concat(conversationHeight, "px");
+  }
+};
+const growUpTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
+  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
+  const textarea = getElementWithErrorHandling(textAreaId);
+  if (textarea) {
+    textarea.addEventListener('input', event => growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight));
+  }
+};
+const resetTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
+  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
+  const textarea = getElementWithErrorHandling(textAreaId);
+  if (textarea) {
+    growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight);
+  }
+};
+const LinkifyText = _ref => {
+  let {
+    children
+  } = _ref;
+  // Detect links in the text.
+  // Example: [Carlos Jose Ramirez Divo - Sitio web oficial](https://www.carlosjramirez.com/en/about-carlos-jose-ramirez-divo/)
+
+  const regex = /\[[^\]]+\]\([^)]+\)/g;
+  const matches = children.match(regex);
+  const links = !matches ? [] : matches.map(match => {
+    const title = match.substring(1, match.indexOf(']'));
+    const url = match.substring(match.indexOf('(') + 1, match.length - 1);
+    return /*#__PURE__*/React.createElement("a", {
+      key: url,
+      href: url,
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, title);
+  });
+  const formattedText = children.split(regex).reduce((acc, textChunk, index) => {
+    if (index === 0) {
+      return [textChunk];
+    }
+    acc.push(links[index - 1]);
+    acc.push(textChunk);
+    return acc;
+  }, []);
+  return /*#__PURE__*/React.createElement("div", null, formattedText.map((chunck, index) => {
+    if (typeof chunck !== 'string') {
+      return chunck;
+    }
+    return chunck.split('\n').map((line, index) => {
+      return /*#__PURE__*/React.createElement("p", {
+        key: randomKey()
+      }, line);
+    });
+  }));
+};
+const renderMarkdownContent = text => {
+  if (!text || typeof text !== 'string') {
+    return null;
+  }
+  return /*#__PURE__*/React.createElement(ReactMarkdown, {
+    components: {
+      p: _ref2 => {
+        let {
+          children
+        } = _ref2;
+        return /*#__PURE__*/React.createElement("p", {
+          className: MARKDOWN_P_CLASS
+        }, children);
+      },
+      strong: _ref3 => {
+        let {
+          children
+        } = _ref3;
+        return /*#__PURE__*/React.createElement("strong", {
+          className: MARKDOWN_BOLD_CLASS
+        }, children);
+      },
+      em: _ref4 => {
+        let {
+          children
+        } = _ref4;
+        return /*#__PURE__*/React.createElement("em", {
+          className: MARKDOWN_ITALIC_CLASS
+        }, children);
+      },
+      a: _ref5 => {
+        let {
+          children,
+          href
+        } = _ref5;
+        return /*#__PURE__*/React.createElement("a", {
+          href: href,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: MARKDOWN_UNDERLINE_CLASS
+        }, children);
+      }
+      // Add more markdown components as needed
+    }
+  }, text);
+};
+const CopyButton = _ref6 => {
+  let {
+    text
+  } = _ref6;
+  const showCopiedMessage = e => {
+    const copiedMessage = document.createElement('div');
+    copiedMessage.textContent = 'Copied!';
+    copiedMessage.style.position = 'absolute';
+    copiedMessage.style.bottom = '-40px'; // Position under the button
+    copiedMessage.style.left = '-20px'; // Align with the button's left edge
+    copiedMessage.style.padding = '5px';
+    copiedMessage.style.borderRadius = '5px';
+    copiedMessage.style.border = 'none';
+    copiedMessage.style.background = 'grey';
+    copiedMessage.style.color = 'white';
+    copiedMessage.style.fontSize = '0.75rem';
+    copiedMessage.style.zIndex = '1000';
+    copiedMessage.style.opacity = '0';
+    copiedMessage.style.transition = 'opacity 0.3s';
+    e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
+    setTimeout(() => {
+      copiedMessage.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+      copiedMessage.style.opacity = '0';
+      setTimeout(() => copiedMessage.remove(), 2000);
+    }, 2000);
+  };
+  const securedCopyToClipboard = text => {
+    navigator.clipboard.writeText(text);
+  };
+  const unsecuredCopyToClipboard = text => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+    document.body.removeChild(textArea);
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    id: "copyButton",
+    style: {
+      position: 'absolute',
+      top: '10px',
+      right: '20px',
+      padding: '3px',
+      borderRadius: '5px',
+      border: 'none',
+      background: 'grey',
+      color: 'white',
+      cursor: 'pointer',
+      fontSize: '12px'
+    },
+    onClick: e => {
+      if (window.isSecureContext && navigator.clipboard) {
+        securedCopyToClipboard(text);
+      } else {
+        unsecuredCopyToClipboard(text);
+      }
+      showCopiedMessage(e);
+    }
+  }, "Copy"));
+};
+const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+const isWindowWide = () => window.innerWidth >= 640;
+const resizeManager = callback => {
+  const handleResize = () => {
+    callback();
+  };
+  const addListener = () => {
+    window.addEventListener('resize', handleResize);
+  };
+  const removeListener = () => {
+    window.removeEventListener('resize', handleResize);
+  };
+  return {
+    addListener,
+    removeListener
+  };
+};
+
+var ui = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  CopyButton: CopyButton,
+  LinkifyText: LinkifyText,
+  getElementWithErrorHandling: getElementWithErrorHandling,
+  growUpTextArea: growUpTextArea,
+  growUpTextAreaInner: growUpTextAreaInner,
+  isMobileDevice: isMobileDevice,
+  isWindowWide: isWindowWide,
+  renderMarkdownContent: renderMarkdownContent,
+  resetTextArea: resetTextArea,
+  resizeManager: resizeManager,
+  toggleIdVisibility: toggleIdVisibility
+});
+
+const AppContext = /*#__PURE__*/createContext();
+const appReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_APP_LOGO':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        appLogo: action.payload
+      });
+    case 'SET_APP_LOGO_HEADER':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        appLogoHeader: action.payload
+      });
+    case 'SET_COMPONENT_MAP':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        componentMap: action.payload
+      });
+    case 'SET_STATE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        state: action.payload
+      });
+    case 'SET_MENU_OPTIONS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        menuOptions: action.payload
+      });
+    case 'SET_SIDE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        sideMenu: action.payload
+      });
+    case 'TOGGLE_SIDE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        sideMenu: !state.sideMenu
+      });
+    case 'SET_DARK_MODE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isDarkMode: action.payload
+      });
+    case 'TOGGLE_DARK_MODE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isDarkMode: !state.isDarkMode
+      });
+    case 'SET_MOBILE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isMobileMenuOpen: action.payload
+      });
+    case 'TOGGLE_MOBILE_MENU':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isMobileMenuOpen: !state.isMobileMenuOpen
+      });
+    case 'SET_EXPANDED_MENUS':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        expandedMenus: action.payload
+      });
+    case 'SET_WIDE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        isWide: action.payload
+      });
+    default:
+      return state;
+  }
+};
+const AppProvider = _ref => {
+  let {
+    globalComponentMap,
+    globalAppLogo = "",
+    globalAppLogoHeader = "",
+    children
+  } = _ref;
+  const initialState = {
+    appLogo: globalAppLogo,
+    appLogoHeader: globalAppLogoHeader,
+    componentMap: globalComponentMap,
+    errorState: "",
+    // Error message
+    state: "",
+    // LOADING, ERROR, OK, TIMEOUT
+    menuOptions: null,
+    sideMenu: false,
+    isDarkMode: false,
+    isMobileMenuOpen: false,
+    expandedMenus: [],
+    isWide: isWindowWide()
+  };
+  const [appState, dispatch] = useReducer(appReducer, initialState);
+  const theme = appState.isDarkMode ? appState.componentMap["defaultTheme"].dark : appState.componentMap["defaultTheme"].light;
+  const setAppLogo = useCallback(payload => dispatch({
+    type: 'SET_APP_LOGO',
+    payload
+  }), []);
+  const setAppLogoHeader = useCallback(payload => dispatch({
+    type: 'SET_APP_LOGO_HEADER',
+    payload
+  }), []);
+  const setComponentMap = useCallback(payload => dispatch({
+    type: 'SET_COMPONENT_MAP',
+    payload
+  }), []);
+  const setErrorState = useCallback(payload => dispatch({
+    type: 'SET_ERROR',
+    payload
+  }), []);
+  const setState = useCallback(payload => dispatch({
+    type: 'SET_STATE',
+    payload
+  }), []);
+  const setMenuOptions = useCallback(payload => dispatch({
+    type: 'SET_MENU_OPTIONS',
+    payload
+  }), []);
+  const setSideMenu = useCallback(payload => dispatch({
+    type: 'SET_SIDE_MENU',
+    payload
+  }), []);
+  const setIsDarkMode = useCallback(payload => dispatch({
+    type: 'SET_DARK_MODE',
+    payload
+  }), []);
+  const setIsMobileMenuOpen = useCallback(payload => dispatch({
+    type: 'SET_MOBILE_MENU',
+    payload
+  }), []);
+  const setExpandedMenus = useCallback(payload => dispatch({
+    type: 'SET_EXPANDED_MENUS',
+    payload
+  }), []);
+  const setIsWide = useCallback(payload => dispatch({
+    type: 'SET_WIDE',
+    payload
+  }), []);
+  const toggleDarkMode = useCallback(() => dispatch({
+    type: 'TOGGLE_DARK_MODE'
+  }), []);
+  const toggleSideMenu = useCallback(() => dispatch({
+    type: 'TOGGLE_SIDE_MENU'
+  }), []);
+  const toggleMobileMenu = useCallback(() => dispatch({
+    type: 'TOGGLE_MOBILE_MENU'
+  }), []);
+  const toggleSubmenu = useCallback((menuName, menuVisible) => {
+    dispatch({
+      type: 'SET_EXPANDED_MENUS',
+      payload: menuVisible ? [menuName] : appState.expandedMenus.filter(item => item !== menuName)
+    });
+  }, [appState.expandedMenus]);
+  const isComponent = useCallback(componentObj => {
+    return String(componentObj).includes('component:');
+  }, []);
+  const setExpanded = useCallback(componentObj => {
+    /* Close mobile menu if any option is clicked */
+    if (document.getElementById("navbar-main-toggle") && appState.isMobileMenuOpen) {
+      document.getElementById("navbar-main-toggle").click();
+    }
+    setExpandedMenus([]);
+    if (componentObj) {
+      if (isComponent(componentObj)) {
+        try {
+          return /*#__PURE__*/React.createElement("componentObj", null);
+        } catch (error) {
+          console_debug_log('[ASE-E010] componentObj:', componentObj);
+          console_debug_log(error);
+          return null;
+        }
+      } else {
+        try {
+          return componentObj();
+        } catch (error) {
+          console_debug_log('[ASE-E020] componentObj:', componentObj);
+          console_debug_log(error);
+          return null;
+        }
+      }
+    }
+    return '';
+  }, [appState.isMobileMenuOpen, isComponent]);
+  useEffect(() => {
+    const resizer = resizeManager(() => {
+      setIsWide(isWindowWide());
+    });
+    resizer.addListener();
+    return () => resizer.removeListener();
+  }, [setIsWide]);
+  const contextValue = useMemo(() => _objectSpread2(_objectSpread2({}, appState), {}, {
+    setAppLogo,
+    setAppLogoHeader,
+    setComponentMap,
+    setErrorState,
+    setState,
+    setMenuOptions,
+    setSideMenu,
+    setIsDarkMode,
+    setIsMobileMenuOpen,
+    setExpandedMenus,
+    setIsWide,
+    theme,
+    toggleDarkMode,
+    toggleSideMenu,
+    toggleMobileMenu,
+    toggleSubmenu,
+    setExpanded
+  }), [appState, theme, setAppLogo, setAppLogoHeader, setComponentMap, setErrorState, setState, setMenuOptions, setSideMenu, setIsDarkMode, setIsMobileMenuOpen, setExpandedMenus, setIsWide, toggleDarkMode, toggleSideMenu, toggleMobileMenu, toggleSubmenu, setExpanded]);
+  return /*#__PURE__*/React.createElement(AppContext.Provider, {
+    value: contextValue
+  }, children);
+};
+const useAppContext = () => {
+  return useContext(AppContext);
+};
+
+var AppContext$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  AppProvider: AppProvider,
+  useAppContext: useAppContext
 });
 
 // IconsLib
@@ -1331,465 +1791,6 @@ var IconsLib = /*#__PURE__*/Object.freeze({
   GsIcons: GsIcons
 });
 
-const randomKey = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
-var ramdomize = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  randomKey: randomKey
-});
-
-const textareaMinHeightDefault = 40;
-const toggleIdVisibility = (onOff, ids) => {
-  ids.forEach(id => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.style.display = onOff === 'on' ? '' : 'none';
-    }
-  });
-};
-const getElementWithErrorHandling = elementId => {
-  try {
-    const elementObj = document.getElementById(elementId);
-    return elementObj;
-  } catch (error) {
-    // Element not found or stil loading...            
-    return null;
-  }
-};
-const growUpTextAreaInner = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
-  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
-  const textarea = getElementWithErrorHandling(textAreaId);
-  if (textarea) {
-    // Grow upwards
-    // Adjust the height of the textarea to grow as the user types
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
-    // If the content goes beyond its height, adjust the scroll to grow upwards
-    const conversationObj = document.getElementById(conversationBlockId);
-    // Calculate the height based on the viewport height (82vh, ".conversation-block.height" in FynBot.css)
-    const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-    // Ensure the textarea does not exceed its max-height...
-    if (textarea.scrollHeight > maxOffsetHeight) {
-      textarea.style.height = "".concat(maxOffsetHeight, "px");
-    }
-    // Set conversation height to make textarea to scroll up according its height
-    const sectionViewportHeightInPx = sectionViewportHeight / 100 * viewportHeight;
-    const conversationHeight = sectionViewportHeightInPx - textarea.clientHeight + textareaMinHeight;
-    conversationObj.style.height = "".concat(conversationHeight, "px");
-  }
-};
-const growUpTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
-  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
-  const textarea = getElementWithErrorHandling(textAreaId);
-  if (textarea) {
-    textarea.addEventListener('input', event => growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight));
-  }
-};
-const resetTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
-  let textareaMinHeight = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : textareaMinHeightDefault;
-  const textarea = getElementWithErrorHandling(textAreaId);
-  if (textarea) {
-    growUpTextAreaInner(textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight, textareaMinHeight);
-  }
-};
-const LinkifyText = _ref => {
-  let {
-    children
-  } = _ref;
-  // Detect links in the text.
-  // Example: [Carlos Jose Ramirez Divo - Sitio web oficial](https://www.carlosjramirez.com/en/about-carlos-jose-ramirez-divo/)
-
-  const regex = /\[[^\]]+\]\([^)]+\)/g;
-  const matches = children.match(regex);
-  const links = !matches ? [] : matches.map(match => {
-    const title = match.substring(1, match.indexOf(']'));
-    const url = match.substring(match.indexOf('(') + 1, match.length - 1);
-    return /*#__PURE__*/React.createElement("a", {
-      key: url,
-      href: url,
-      target: "_blank",
-      rel: "noopener noreferrer"
-    }, title);
-  });
-  const formattedText = children.split(regex).reduce((acc, textChunk, index) => {
-    if (index === 0) {
-      return [textChunk];
-    }
-    acc.push(links[index - 1]);
-    acc.push(textChunk);
-    return acc;
-  }, []);
-  return /*#__PURE__*/React.createElement("div", null, formattedText.map((chunck, index) => {
-    if (typeof chunck !== 'string') {
-      return chunck;
-    }
-    return chunck.split('\n').map((line, index) => {
-      return /*#__PURE__*/React.createElement("p", {
-        key: randomKey()
-      }, line);
-    });
-  }));
-};
-const renderMarkdownContent = text => {
-  if (!text || typeof text !== 'string') {
-    return null;
-  }
-  return /*#__PURE__*/React.createElement(ReactMarkdown, {
-    components: {
-      p: _ref2 => {
-        let {
-          children
-        } = _ref2;
-        return /*#__PURE__*/React.createElement("p", {
-          className: MARKDOWN_P_CLASS
-        }, children);
-      },
-      strong: _ref3 => {
-        let {
-          children
-        } = _ref3;
-        return /*#__PURE__*/React.createElement("strong", {
-          className: MARKDOWN_BOLD_CLASS
-        }, children);
-      },
-      em: _ref4 => {
-        let {
-          children
-        } = _ref4;
-        return /*#__PURE__*/React.createElement("em", {
-          className: MARKDOWN_ITALIC_CLASS
-        }, children);
-      },
-      a: _ref5 => {
-        let {
-          children,
-          href
-        } = _ref5;
-        return /*#__PURE__*/React.createElement("a", {
-          href: href,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: MARKDOWN_UNDERLINE_CLASS
-        }, children);
-      }
-      // Add more markdown components as needed
-    }
-  }, text);
-};
-const CopyButton = _ref6 => {
-  let {
-    text
-  } = _ref6;
-  const showCopiedMessage = e => {
-    const copiedMessage = document.createElement('div');
-    copiedMessage.textContent = 'Copied!';
-    copiedMessage.style.position = 'absolute';
-    copiedMessage.style.bottom = '-40px'; // Position under the button
-    copiedMessage.style.left = '-20px'; // Align with the button's left edge
-    copiedMessage.style.padding = '5px';
-    copiedMessage.style.borderRadius = '5px';
-    copiedMessage.style.border = 'none';
-    copiedMessage.style.background = 'grey';
-    copiedMessage.style.color = 'white';
-    copiedMessage.style.fontSize = '0.75rem';
-    copiedMessage.style.zIndex = '1000';
-    copiedMessage.style.opacity = '0';
-    copiedMessage.style.transition = 'opacity 0.3s';
-    e.currentTarget.appendChild(copiedMessage); // Append to the button's parent
-    setTimeout(() => {
-      copiedMessage.style.opacity = '1';
-    }, 100);
-    setTimeout(() => {
-      copiedMessage.style.opacity = '0';
-      setTimeout(() => copiedMessage.remove(), 2000);
-    }, 2000);
-  };
-  const securedCopyToClipboard = text => {
-    navigator.clipboard.writeText(text);
-  };
-  const unsecuredCopyToClipboard = text => {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      console.error('Unable to copy to clipboard', err);
-    }
-    document.body.removeChild(textArea);
-  };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
-    id: "copyButton",
-    style: {
-      position: 'absolute',
-      top: '10px',
-      right: '20px',
-      padding: '3px',
-      borderRadius: '5px',
-      border: 'none',
-      background: 'grey',
-      color: 'white',
-      cursor: 'pointer',
-      fontSize: '12px'
-    },
-    onClick: e => {
-      if (window.isSecureContext && navigator.clipboard) {
-        securedCopyToClipboard(text);
-      } else {
-        unsecuredCopyToClipboard(text);
-      }
-      showCopiedMessage(e);
-    }
-  }, "Copy"));
-};
-const isMobileDevice = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-};
-const isWindowWide = () => window.innerWidth >= 640;
-const resizeManager = callback => {
-  const handleResize = () => {
-    callback();
-  };
-  const addListener = () => {
-    window.addEventListener('resize', handleResize);
-  };
-  const removeListener = () => {
-    window.removeEventListener('resize', handleResize);
-  };
-  return {
-    addListener,
-    removeListener
-  };
-};
-
-var ui = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  CopyButton: CopyButton,
-  LinkifyText: LinkifyText,
-  getElementWithErrorHandling: getElementWithErrorHandling,
-  growUpTextArea: growUpTextArea,
-  growUpTextAreaInner: growUpTextAreaInner,
-  isMobileDevice: isMobileDevice,
-  isWindowWide: isWindowWide,
-  renderMarkdownContent: renderMarkdownContent,
-  resetTextArea: resetTextArea,
-  resizeManager: resizeManager,
-  toggleIdVisibility: toggleIdVisibility
-});
-
-const AppContext = /*#__PURE__*/createContext();
-const appReducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_APP_LOGO':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        appLogo: action.payload
-      });
-    case 'SET_APP_LOGO_HEADER':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        appLogoHeader: action.payload
-      });
-    case 'SET_COMPONENT_MAP':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        componentMap: action.payload
-      });
-    case 'SET_STATE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        state: action.payload
-      });
-    case 'SET_MENU_OPTIONS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        menuOptions: action.payload
-      });
-    case 'SET_SIDE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        sideMenu: action.payload
-      });
-    case 'TOGGLE_SIDE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        sideMenu: !state.sideMenu
-      });
-    case 'SET_DARK_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        isDarkMode: action.payload
-      });
-    case 'TOGGLE_DARK_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        isDarkMode: !state.isDarkMode
-      });
-    case 'SET_MOBILE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        isMobileMenuOpen: action.payload
-      });
-    case 'TOGGLE_MOBILE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        isMobileMenuOpen: !state.isMobileMenuOpen
-      });
-    case 'SET_EXPANDED_MENUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        expandedMenus: action.payload
-      });
-    case 'SET_WIDE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
-        isWide: action.payload
-      });
-    default:
-      return state;
-  }
-};
-const AppProvider = _ref => {
-  let {
-    globalComponentMap,
-    globalAppLogo = "",
-    globalAppLogoHeader = "",
-    children
-  } = _ref;
-  const initialState = {
-    appLogo: globalAppLogo,
-    appLogoHeader: globalAppLogoHeader,
-    componentMap: globalComponentMap,
-    errorState: "",
-    // Error message
-    state: "",
-    // LOADING, ERROR, OK, TIMEOUT
-    menuOptions: null,
-    sideMenu: false,
-    isDarkMode: false,
-    isMobileMenuOpen: false,
-    expandedMenus: [],
-    isWide: isWindowWide()
-  };
-  const [appState, dispatch] = useReducer(appReducer, initialState);
-  const theme = appState.isDarkMode ? appState.componentMap["defaultTheme"].dark : appState.componentMap["defaultTheme"].light;
-  const setAppLogo = useCallback(payload => dispatch({
-    type: 'SET_APP_LOGO',
-    payload
-  }), []);
-  const setAppLogoHeader = useCallback(payload => dispatch({
-    type: 'SET_APP_LOGO_HEADER',
-    payload
-  }), []);
-  const setComponentMap = useCallback(payload => dispatch({
-    type: 'SET_COMPONENT_MAP',
-    payload
-  }), []);
-  const setErrorState = useCallback(payload => dispatch({
-    type: 'SET_ERROR',
-    payload
-  }), []);
-  const setState = useCallback(payload => dispatch({
-    type: 'SET_STATE',
-    payload
-  }), []);
-  const setMenuOptions = useCallback(payload => dispatch({
-    type: 'SET_MENU_OPTIONS',
-    payload
-  }), []);
-  const setSideMenu = useCallback(payload => dispatch({
-    type: 'SET_SIDE_MENU',
-    payload
-  }), []);
-  const setIsDarkMode = useCallback(payload => dispatch({
-    type: 'SET_DARK_MODE',
-    payload
-  }), []);
-  const setIsMobileMenuOpen = useCallback(payload => dispatch({
-    type: 'SET_MOBILE_MENU',
-    payload
-  }), []);
-  const setExpandedMenus = useCallback(payload => dispatch({
-    type: 'SET_EXPANDED_MENUS',
-    payload
-  }), []);
-  const setIsWide = useCallback(payload => dispatch({
-    type: 'SET_WIDE',
-    payload
-  }), []);
-  const toggleDarkMode = useCallback(() => dispatch({
-    type: 'TOGGLE_DARK_MODE'
-  }), []);
-  const toggleSideMenu = useCallback(() => dispatch({
-    type: 'TOGGLE_SIDE_MENU'
-  }), []);
-  const toggleMobileMenu = useCallback(() => dispatch({
-    type: 'TOGGLE_MOBILE_MENU'
-  }), []);
-  const toggleSubmenu = useCallback((menuName, menuVisible) => {
-    dispatch({
-      type: 'SET_EXPANDED_MENUS',
-      payload: menuVisible ? [...appState.expandedMenus, menuName] : appState.expandedMenus.filter(item => item !== menuName)
-    });
-  }, [appState.expandedMenus]);
-  const isComponent = useCallback(componentObj => {
-    return String(componentObj).includes('component:');
-  }, []);
-  const setExpanded = useCallback(componentObj => {
-    /* Close mobile menu if any option is clicked */
-    if (document.getElementById("navbar-main-toggle") && appState.isMobileMenuOpen) {
-      document.getElementById("navbar-main-toggle").click();
-    }
-    if (componentObj) {
-      if (isComponent(componentObj)) {
-        try {
-          return /*#__PURE__*/React.createElement("componentObj", null);
-        } catch (error) {
-          console_debug_log('[ASE-E010] componentObj:', componentObj);
-          console_debug_log(error);
-          return null;
-        }
-      } else {
-        try {
-          return componentObj();
-        } catch (error) {
-          console_debug_log('[ASE-E020] componentObj:', componentObj);
-          console_debug_log(error);
-          return null;
-        }
-      }
-    }
-    return '';
-  }, [appState.isMobileMenuOpen, isComponent]);
-  useEffect(() => {
-    const resizer = resizeManager(() => {
-      setIsWide(isWindowWide());
-    });
-    resizer.addListener();
-    return () => resizer.removeListener();
-  }, [setIsWide]);
-  const contextValue = useMemo(() => _objectSpread2(_objectSpread2({}, appState), {}, {
-    setAppLogo,
-    setAppLogoHeader,
-    setComponentMap,
-    setErrorState,
-    setState,
-    setMenuOptions,
-    setSideMenu,
-    setIsDarkMode,
-    setIsMobileMenuOpen,
-    setExpandedMenus,
-    setIsWide,
-    theme,
-    toggleDarkMode,
-    toggleSideMenu,
-    toggleMobileMenu,
-    toggleSubmenu,
-    setExpanded
-  }), [appState, theme, setAppLogo, setAppLogoHeader, setComponentMap, setErrorState, setState, setMenuOptions, setSideMenu, setIsDarkMode, setIsMobileMenuOpen, setExpandedMenus, setIsWide, toggleDarkMode, toggleSideMenu, toggleMobileMenu, toggleSubmenu, setExpanded]);
-  return /*#__PURE__*/React.createElement(AppContext.Provider, {
-    value: contextValue
-  }, children);
-};
-const useAppContext = () => {
-  return useContext(AppContext);
-};
-
-var AppContext$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  AppProvider: AppProvider,
-  useAppContext: useAppContext
-});
-
 const UserContext = /*#__PURE__*/createContext();
 const initialState$2 = {
   currentUser: null,
@@ -2135,17 +2136,10 @@ const NavDropdown = _ref12 => {
     theme,
     isWide
   } = useAppContext();
-  const [dropDownOpen, setDropDownOpen] = useState(false);
   const fullId = "".concat(id, "_").concat(type);
+  const isExpanded = expandedMenus.includes(fullId);
   const toggledropDownOpen = () => {
-    const elementId = "".concat(fullId, "_dropDown");
-    const element = document.getElementById(elementId);
-    if (dropDownOpen) {
-      element.classList.add('hidden');
-    } else {
-      element.classList.remove('hidden');
-    }
-    setDropDownOpen(!dropDownOpen);
+    toggleSubmenu(fullId, !isExpanded);
   };
   const variantsDirectionImage = {
     top_menu: 'arrow-right-small',
@@ -2180,20 +2174,27 @@ const NavDropdown = _ref12 => {
     mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS
   };
   useEffect(() => {
-    // variantOnClick(fullId);
-    toggleSubmenu(fullId, dropDownOpen);
-  }, [dropDownOpen, fullId]);
+    const elementId = "".concat(fullId, "_dropDown");
+    const element = document.getElementById(elementId);
+    if (element) {
+      if (isExpanded) {
+        element.classList.remove('hidden');
+      } else {
+        element.classList.add('hidden');
+      }
+    }
+  }, [isExpanded, fullId]);
   useEffect(() => {
     const elementId = "".concat(fullId, "_submenu_image");
     const element = document.getElementById(elementId);
     if (element) {
-      if (expandedMenus.includes(fullId)) {
+      if (isExpanded) {
         element.classList.add('rotate-90');
       } else {
         element.classList.remove('rotate-90');
       }
     }
-  }, [dropDownOpen, fullId, expandedMenus]);
+  }, [isExpanded, fullId]);
   const directionImage = variantsDirectionImage[type] || '';
   const variantStyleTopDiv = variantsTopDiv[type] || '';
   const variantStyleInnerDiv = variantsInnerDiv[type] || '';
@@ -2225,7 +2226,7 @@ const NavDropdown = _ref12 => {
       return null;
     }
     return /*#__PURE__*/React.cloneElement(child, {
-      closeParent: () => toggledropDownOpen()
+      closeParent: () => toggleSubmenu(fullId, false)
     });
   })));
 };
@@ -2264,7 +2265,7 @@ const NavDropdownItem = _ref13 => {
     className: variantStyleButton,
     to: to,
     onClick: e => {
-      closeParent();
+      if (closeParent) closeParent();
       if (onClick) {
         onClick(e);
       }
@@ -2272,7 +2273,7 @@ const NavDropdownItem = _ref13 => {
   }, children), !As && /*#__PURE__*/React.createElement("button", {
     className: variantStyleButton,
     onClick: e => {
-      closeParent();
+      if (closeParent) closeParent();
       if (onClick) {
         onClick(e);
       }
@@ -2373,9 +2374,8 @@ const NavLink = _ref14 => {
   return /*#__PURE__*/React.createElement("div", {
     className: variantStyleLi
   }, /*#__PURE__*/React.createElement(As, {
-    to: to
-    // onClick={onClick}
-    ,
+    to: to,
+    onClick: onClick,
     className: variantStyleButton
   }, children));
 };

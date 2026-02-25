@@ -80,7 +80,7 @@ export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppL
         dispatch({
             type: 'SET_EXPANDED_MENUS',
             payload: menuVisible
-                ? [...appState.expandedMenus, menuName]
+                ? [menuName]
                 : appState.expandedMenus.filter(item => item !== menuName)
         });
     }, [appState.expandedMenus]);
@@ -96,6 +96,7 @@ export const AppProvider = ({ globalComponentMap, globalAppLogo = "", globalAppL
         ) {
             document.getElementById("navbar-main-toggle").click();
         }
+        setExpandedMenus([]);
         if (componentObj) {
             if (debug) console_debug_log(`>> setExpanded [1] | isComponent: ${isComponent(componentObj)} | componentObj:`, componentObj);
             if (isComponent(componentObj)) {

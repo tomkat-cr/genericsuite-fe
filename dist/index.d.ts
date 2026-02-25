@@ -292,7 +292,7 @@ declare var class_name_constants: Readonly<{
     INVALID_FEEDBACK_CLASS: "text-red-800 text-sm mt-1 invalidFeedbackClass";
     IS_INVALID_CLASS: "border-red-500 isInvalidClass";
     LOGIN_BUTTON_IN_APP_COMPONENT_CLASS: string;
-    LOGIN_PAGE_APP_LOGO_CLASS: "mx-auto my-0 loginPageAppLogoClass";
+    LOGIN_PAGE_APP_LOGO_CLASS: "pb-4 mx-auto my-0 loginPageAppLogoClass";
     LOGIN_PAGE_EXTRA_PT: "pt-6 loginPageExtraPtClass";
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: "flex min-h-screen mainContainerForSideMenuClass";
     MAIN_CONTAINER_FOR_TOP_MENU_CLASS: "flex flex-col min-h-screen mainContainerForTopMenuClass";
