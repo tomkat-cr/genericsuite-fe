@@ -45,7 +45,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - MD5 utilities [GS-266].
 - BSON-type ObjectId() generation to "id.utilities.jsx" [GS-266].
 - "UsersUserHistory.jsx" and "users_user_history.json" to debug child listings with dates and MondoDB BSON-type ObjectId() generation [GS-266].
-- Implement navigation helpers for testability [GS-219].
+- Implement navigation helpers for testability [GS-267].
 
 ### Changed
 - Enhance error message in the login page [GS-246].
@@ -76,7 +76,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Pass `currentObj` as a parameter to `dataPopulator` on getSelectFieldsOptions() [GS-37].
 - Centralize and enhance API error message extraction with a new `getErrorMsgFromApi` helper to avoid error messages like "[object Object]" when axios is used [GS-262].
 - Rename "idUtilities.getUuidV4" to "uuidUtilities.getUuidV4" [GS-266].
-- Login page desing enhanced by isolating the logo from the user and password box.
+- Login page design enhanced by isolating the logo from the user and password box.
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].

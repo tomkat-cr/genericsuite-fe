@@ -25435,7 +25435,7 @@ const GenericSinglePageEditorMain = props => {
   const setInfoMsg = msg => {
   };
   const handleCancel = () => {
-    window.location.href = '/';
+    setWindowLocationHref('/');
   };
   if (!editor) {
     if (status) {

@@ -3,6 +3,7 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 
 import { errorAndReEnter } from '../helpers/error-and-reenter.jsx';
+import { setWindowLocationHref, windowLocationReload } from '../helpers/navigation.jsx';
 import {
     getEditoObj,
     setEditorParameters,
@@ -121,13 +122,13 @@ export const GenericSinglePageEditorMain = (props) => {
     };
 
     const handleCancel = () => {
-        window.location.href = '/';
+        setWindowLocationHref('/');
     };
 
     // eslint-disable-next-line
     const handleRefresh = (newPage) => {
         initCache();
-        window.location.reload(true);
+        windowLocationReload(true);
     }
 
     if (debug) {
