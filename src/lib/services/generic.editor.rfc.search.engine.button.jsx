@@ -90,7 +90,7 @@ export const ChatBotButtonGeneric = ({
             </div>
         );
     } catch (error) {
-        console_debug_log(`>> ChatBotButtonGeneric | error:`, error, 'editor', editor);
+        console_debug_log(`>> ChatBotButtonGeneric | error:`, error);
         return (
             <div
                 className={SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS}

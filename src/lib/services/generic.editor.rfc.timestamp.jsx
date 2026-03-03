@@ -51,7 +51,7 @@ export const timestampDbPostRead = (dataRead, editor, action) => {
         default:
       }
       return { ...acc };
-    }, (editor.type == "child_listing" ? dataRead.resultset[0] : dataRead.resultset));
+    }, (editor.type == "child_listing" ? (dataRead.resultset?.[0] || {}) : dataRead.resultset));
     resp.fieldValues.resultset = (editor.type == "child_listing" ? [new_row] : new_row);
     if (debug) console_debug_log('timestampDbPostRead - POST\n| resp:', resp);
     resolve(resp);

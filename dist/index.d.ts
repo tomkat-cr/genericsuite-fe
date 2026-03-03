@@ -710,7 +710,7 @@ declare var id_utilities: Readonly<{
     __proto__: null;
     convertId: (id: any) => any;
     generateNewIdObject: () => ObjectId;
-    newIdString: () => void;
+    newIdString: () => string;
 }>;
 declare var jsonUtilities: Readonly<{
     __proto__: null;

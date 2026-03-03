@@ -3512,7 +3512,7 @@ const generateNewIdObject = () => new ObjectId();
 // To get the ID as a 24-character hexadecimal string (which is what's stored in the DB):
 const newIdString = () => {
   const newId = generateNewIdObject();
-  newId.toHexString();
+  return newId.toHexString();
 };
 
 var id_utilities = /*#__PURE__*/Object.freeze({
@@ -4949,6 +4949,7 @@ const timestampDbListPostRead = (dataRead, editor, action) => {
 };
 const timestampDbPostRead = (dataRead, editor, action) => {
   return new Promise((resolve, reject) => {
+    var _dataRead$resultset;
     let resp = genericFuncArrayDefaultValue(dataRead);
     const new_row = editor.fieldElements.reduce((acc, currentObj) => {
       switch (currentObj.type) {
@@ -4962,7 +4963,7 @@ const timestampDbPostRead = (dataRead, editor, action) => {
           break;
       }
       return _objectSpread2({}, acc);
-    }, editor.type == "child_listing" ? dataRead.resultset[0] : dataRead.resultset);
+    }, editor.type == "child_listing" ? ((_dataRead$resultset = dataRead.resultset) === null || _dataRead$resultset === void 0 ? void 0 : _dataRead$resultset[0]) || {} : dataRead.resultset);
     resp.fieldValues.resultset = editor.type == "child_listing" ? [new_row] : new_row;
     resolve(resp);
   });
@@ -5406,7 +5407,7 @@ const ChatBotButtonGeneric = _ref2 => {
       chatbot_prompt: chatbotPrompt
     }));
   } catch (error) {
-    console_debug_log(">> ChatBotButtonGeneric | error:", error, 'editor', editor);
+    console_debug_log(">> ChatBotButtonGeneric | error:", error);
     return /*#__PURE__*/React.createElement("div", {
       className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
     }, /*#__PURE__*/React.createElement(GsIcons, {

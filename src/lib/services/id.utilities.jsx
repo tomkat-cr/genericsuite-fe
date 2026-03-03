@@ -13,5 +13,5 @@ export const generateNewIdObject = () => new ObjectId();
 // To get the ID as a 24-character hexadecimal string (which is what's stored in the DB):
 export const newIdString = () => {
     const newId = generateNewIdObject();
-    newId.toHexString();
+    return newId.toHexString();
 }
