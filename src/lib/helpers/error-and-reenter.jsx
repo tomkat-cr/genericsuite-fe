@@ -17,6 +17,7 @@ import {
 import { getPrefix, getUrlForRouter, setLastUrl } from './history.jsx';
 import { ModalPopUp } from './ModalPopUp.jsx';
 import { getWindowLocationOrigin, setWindowLocationHref, windowLocationReload } from './navigation.jsx';
+import { isDict } from '../services/general.utilities.jsx';
 
 const debug = false;
 
@@ -229,11 +230,43 @@ export const getErrorDetail = (errorRaw) => {
 export const getErrorMsgFromApi = (errorObject, errorCode) => {
     let error = errorObject;
     if (errorObject.errorMsg) {
-        error = errorObject.errorMsg;
+        // "errorMsg" can be a string or an array... for example:
+        // {
+        //     error: true,
+        //     message: 'Request failed with status code 400',
+        //     reason: 'error: User History xyz already exist [AFTTU3].'
+        // }
+        if (isDict(errorObject.errorMsg)) {
+            // Check if it has "reason" field...
+            if (errorObject.errorMsg.reason) {
+                error = errorObject.errorMsg.reason;
+                // Check if it has "message" field...
+            } else if (errorObject.errorMsg.message) {
+                error = errorObject.errorMsg.message;
+                // Otherwise... Join the array into a string...
+            } else {
+                error = Object.values(
+                    errorObject.errorMsg
+                ).filter(
+                    item => item !== true
+                ).map(
+                    item => item
+                ).join('\n\n');
+            }
+        } else {
+            // If it is not an array, so consider it as a string...
+            error = errorObject.errorMsg;
+        }
     }
-    if (errorObject.message) {
+
+    if (errorObject.reason) {
+        error = errorObject.reason;
+    } else if (errorObject.message) {
         error = errorObject.message;
     }
+
+    if (debug) console_debug_log('>> getErrorMsgFromApi | error:', error);
+
     if (!errorCode) {
         return error;
     }

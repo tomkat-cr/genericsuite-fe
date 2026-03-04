@@ -29,8 +29,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - "make tailwind-build" to rebuild the Tailwind CSS files (without stay watching for changes) [GS-63].
 - "make tailwind-build" added to the publish bash script [GS-63].
 - getUserDataCache and setUserDataCache to set a cache reading current user's data, ad implemented in the Users.jsx specific functions [GS-251].
-- close button for GCE_RFC index messages shown returning fom the form data page [GS-251].
-- Api Keys to User Profile [GS-251].
+- Close button for GCE_RFC Index page emerging messages (e.g. "X items deleted...") shown returning from the Form Data page [GS-251].
+- Api Keys child component added to User Profile [GS-159].
 - "customOnChange()" function added to <PutOneFormfield /> as "onChange" parameter, also Formik setFieldValue() added as "setValue" parameter, so "component" type fields can update the Formik internal values and therefore saved in the database [GS-252].
 - ShowAsDisabledField component can render the custom component as a simulated disabled field (current behavior) or as a Formik Field, customizable with the new "showAsField", "isReadOnly", "type", "onChange", "onBlur" parameters. OnChange allows to store the calculated value in the Formik internal values and therefore saved in the database [GS-252].
 - USE_CONTAINERS_ENGINE_APP envvar to control whether to use containers engine app for local development environment when RUN_PROTOCOL="https" [GS-257].
@@ -46,6 +46,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - BSON-type ObjectId() generation to "id.utilities.jsx" [GS-266].
 - "UsersUserHistory.jsx" and "users_user_history.json" to debug child listings with dates and MondoDB BSON-type ObjectId() generation [GS-266].
 - Implement navigation helpers for testability [GS-267].
+- "generalUtilities" to detect different element types, including dict and list [GS-251].
 
 ### Changed
 - Enhance error message in the login page [GS-246].
@@ -58,8 +59,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Rename "parentKeyNames" to "endpointKeyNames" in JSON config files [GS-159].
 - Move "parentUrl" attribute from "endpointKeyNames" to the root of the JSON config files [GS-159].
 - MainSectionContext, UsersContext and AppContext implemment useCallback, useMemo, useRef, and useReducer instead of useState, to avoid components unnecessary reloads [GS-251].
-- configs README referece the official GenericSuite documentation instead of repeating its content [GS-251].
-- getFieldElementsYupValidations() enabled to have validations on the form data page [GS-251].
+- Configs README referece the official GenericSuite documentation instead of repeating its content [GS-251].
+- getFieldElementsYupValidations() enabled to have validations on the Form Data page [GS-251].
 - Rename state and setState with errorState, setErrorState on AppContext.jsx, App.jsx, generic.editor.rfc.selector.jsx, generic.menu.service.jsx [GS-251].
 - Rename status and setStatus with errorStatus, setErrorStatus on generic.editor.rfc.formpage.jsx [GS-251]
 - Rename <FormPage /> parameters: mode_par, id_par, and editor_par to mode, id, and editor [GS-251].
@@ -80,6 +81,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixed
 - Error message when using axios and the session expires or the user credentials are invalid [GS-246].
+- API "errorMsg" as an array when there are errors in the main API call or in the specific functions API calls [GS-251].
 - getFileExtension() to remove the URL query parameters [GS-72].
 - Optimize the Generic CRUD Editor (GCE_RFC) API calls, avoiding repeated calls [GS-251].
 - Optimize the Generic Menu Generator (GMG) API calls, avoiding repeated calls [GS-251].

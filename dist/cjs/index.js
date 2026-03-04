@@ -3843,6 +3843,27 @@ var authentication_service = /*#__PURE__*/Object.freeze({
   verifyCurrentUser: verifyCurrentUser
 });
 
+function isDict(value) {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+function isList(value) {
+  return Array.isArray(value);
+}
+function isString(value) {
+  return typeof value === 'string';
+}
+function isNumber(value) {
+  return typeof value === 'number';
+}
+
+var general_utilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  isDict: isDict,
+  isList: isList,
+  isNumber: isNumber,
+  isString: isString
+});
+
 function logoutHander() {
   "".concat(getWindowLocationOrigin()).concat(getUrlForRouter('/login'));
   authenticationService.logout();
@@ -3982,9 +4003,31 @@ const getErrorDetail = errorRaw => {
 const getErrorMsgFromApi = (errorObject, errorCode) => {
   let error = errorObject;
   if (errorObject.errorMsg) {
-    error = errorObject.errorMsg;
+    // "errorMsg" can be a string or an array... for example:
+    // {
+    //     error: true,
+    //     message: 'Request failed with status code 400',
+    //     reason: 'error: User History xyz already exist [AFTTU3].'
+    // }
+    if (isDict(errorObject.errorMsg)) {
+      // Check if it has "reason" field...
+      if (errorObject.errorMsg.reason) {
+        error = errorObject.errorMsg.reason;
+        // Check if it has "message" field...
+      } else if (errorObject.errorMsg.message) {
+        error = errorObject.errorMsg.message;
+        // Otherwise... Join the array into a string...
+      } else {
+        error = Object.values(errorObject.errorMsg).filter(item => item !== true).map(item => item).join('\n\n');
+      }
+    } else {
+      // If it is not an array, so consider it as a string...
+      error = errorObject.errorMsg;
+    }
   }
-  if (errorObject.message) {
+  if (errorObject.reason) {
+    error = errorObject.reason;
+  } else if (errorObject.message) {
     error = errorObject.message;
   }
   if (!errorCode) {
@@ -26581,6 +26624,7 @@ exports.dictUtilities = dictUtilities;
 exports.errorAndReenter = errorAndReenter;
 exports.fetchUtilities = fetch_utilities;
 exports.generalConstants = general_constants;
+exports.generalUtilities = general_utilities;
 exports.genericEditorRfcCommon = generic_editor_rfc_common;
 exports.genericEditorRfcFormpage = generic_editor_rfc_formpage;
 exports.genericEditorRfcProvider = generic_editor_rfc_provider;

@@ -3822,6 +3822,27 @@ var authentication_service = /*#__PURE__*/Object.freeze({
   verifyCurrentUser: verifyCurrentUser
 });
 
+function isDict(value) {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+function isList(value) {
+  return Array.isArray(value);
+}
+function isString(value) {
+  return typeof value === 'string';
+}
+function isNumber(value) {
+  return typeof value === 'number';
+}
+
+var general_utilities = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  isDict: isDict,
+  isList: isList,
+  isNumber: isNumber,
+  isString: isString
+});
+
 function logoutHander() {
   "".concat(getWindowLocationOrigin()).concat(getUrlForRouter('/login'));
   authenticationService.logout();
@@ -3961,9 +3982,31 @@ const getErrorDetail = errorRaw => {
 const getErrorMsgFromApi = (errorObject, errorCode) => {
   let error = errorObject;
   if (errorObject.errorMsg) {
-    error = errorObject.errorMsg;
+    // "errorMsg" can be a string or an array... for example:
+    // {
+    //     error: true,
+    //     message: 'Request failed with status code 400',
+    //     reason: 'error: User History xyz already exist [AFTTU3].'
+    // }
+    if (isDict(errorObject.errorMsg)) {
+      // Check if it has "reason" field...
+      if (errorObject.errorMsg.reason) {
+        error = errorObject.errorMsg.reason;
+        // Check if it has "message" field...
+      } else if (errorObject.errorMsg.message) {
+        error = errorObject.errorMsg.message;
+        // Otherwise... Join the array into a string...
+      } else {
+        error = Object.values(errorObject.errorMsg).filter(item => item !== true).map(item => item).join('\n\n');
+      }
+    } else {
+      // If it is not an array, so consider it as a string...
+      error = errorObject.errorMsg;
+    }
   }
-  if (errorObject.message) {
+  if (errorObject.reason) {
+    error = errorObject.reason;
+  } else if (errorObject.message) {
     error = errorObject.message;
   }
   if (!errorCode) {
@@ -26519,5 +26562,5 @@ var uuid_utilities = /*#__PURE__*/Object.freeze({
 const appLogoCircle = 'app_logo_circle.svg';
 const appLogoLandscape = 'app_logo_landscape.svg';
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, general_utilities as generalUtilities, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };
 //# sourceMappingURL=index.js.map

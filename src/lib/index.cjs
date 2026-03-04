@@ -58,6 +58,7 @@ import * as md5Utilities from './services/md5.utilities.jsx';
 import * as ramdomize from './services/ramdomize.jsx';
 import * as responseHandlersService from './services/response.handlers.service.jsx';
 import * as uuidUtilities from './services/uuid.utilities.jsx';
+import * as generalUtilities from './services/general.utilities.jsx';
 import * as waitAnimationUtility from './services/wait.animation.utility.jsx';
 // Images
 // const appLogoEmblem = 'app_log_emblem.svg';
@@ -96,10 +97,41 @@ export {
     genericEditorRfcUi,
     genericEditorSinglepage,
     genericEditorUtilities,
-    genericMenuService, history, HomePage, IconsLib, idUtilities, jsonUtilities, loggingService, LoginPage, logoutService, md5Utilities, media, ModalPopUp, NavLib, PrivateRoute, ramdomize,
+    genericMenuService,
+    generalUtilities,
+    history,
+    HomePage,
+    IconsLib,
+    idUtilities,
+    jsonUtilities,
+    loggingService,
+    LoginPage,
+    logoutService,
+    md5Utilities,
+    media,
+    ModalPopUp,
+    NavLib,
+    PrivateRoute,
+    ramdomize,
     responseHandlersService,
     // Test Helpers
     testHelpersMocks, ui,
-    urlParams, UserContext, UserProfileEditor, Users, Users_EditorData, UsersApiKey, UsersApiKey_EditorData, UsersApiKeyDbPreRead, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, uuidUtilities, waitAnimationUtility
+    urlParams,
+    UserContext,
+    UserProfileEditor,
+    Users,
+    Users_EditorData,
+    UsersApiKey,
+    UsersApiKey_EditorData,
+    UsersApiKeyDbPreRead,
+    UsersConfig,
+    UsersConfig_EditorData,
+    UsersDbListPreRead,
+    UsersDbPreWrite,
+    UsersPasswordValidations,
+    UsersProfile_EditorData,
+    UsersValidations,
+    uuidUtilities,
+    waitAnimationUtility,
 };
 
