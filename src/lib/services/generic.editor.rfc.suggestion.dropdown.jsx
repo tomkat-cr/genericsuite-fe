@@ -12,6 +12,7 @@ import {
     IS_INVALID_CLASS,
     SUGGESTION_DROPDOWN_CLASS,
 } from '../constants/class_name_constants.jsx';
+import { getErrorMsgFromApi } from '../helpers/error-and-reenter.jsx';
 import { useAppContext } from '../helpers/AppContext.jsx';
 import { useUser } from '../helpers/UserContext.jsx';
 import { dbApiService } from './db.service.jsx';
@@ -40,6 +41,7 @@ export const SuggestionDropdown = ({
     const [inputValue, setInputValue] = useState(value);
     const [debouncedInputValue, setDebouncedInputValue] = useState(value);
     const [suggestions, setSuggestions] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(null);
     const { currentUser } = useUser();
     const { theme } = useAppContext();
 
@@ -97,7 +99,12 @@ export const SuggestionDropdown = ({
                         setSuggestions(response.resultset);
                     }
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    if (debug) {
+                        console.error('SuggestionDropdown API call error:', error);
+                    }
+                    setErrorMessage(getErrorMsgFromApi(error));
+                });
         }
     }, [
         debouncedInputValue,
@@ -109,6 +116,10 @@ export const SuggestionDropdown = ({
         filter_api_request_method,
         currentUser
     ]);
+
+    useEffect(() => {
+        setErrorMessage(null);
+    }, [suggestions]);
 
     const handleSuggestionSelected = (suggestion) => {
         if (debug) {
@@ -198,7 +209,7 @@ export const SuggestionDropdown = ({
             </div>
             {inputValue && suggestions.length === 0 && (
                 <div className={INVALID_FEEDBACK_CLASS}>
-                    Error: No suggestions found.
+                    {errorMessage || 'Error: No suggestions found'}
                 </div>
             )}
         </>

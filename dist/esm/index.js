@@ -22959,6 +22959,7 @@ const SuggestionDropdown = _ref => {
   const [inputValue, setInputValue] = useState(value);
   const [debouncedInputValue, setDebouncedInputValue] = useState(value);
   const [suggestions, setSuggestions] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
   const {
     currentUser
   } = useUser();
@@ -22995,9 +22996,14 @@ const SuggestionDropdown = _ref => {
         } else {
           setSuggestions(response.resultset);
         }
-      }).catch(error => console.error(error));
+      }).catch(error => {
+        setErrorMessage(getErrorMsgFromApi(error));
+      });
     }
   }, [debouncedInputValue, filter_api_url, filter_search_other_param, filter_search_param_name, name, setFieldValue, filter_api_request_method, currentUser]);
+  useEffect(() => {
+    setErrorMessage(null);
+  }, [suggestions]);
   const handleSuggestionSelected = suggestion => {
     if (suggestion) {
       Object.entries(autocomplete_fields).forEach(_ref2 => {
@@ -23062,7 +23068,7 @@ const SuggestionDropdown = _ref => {
     }
   }), suggestion[suggestion_desc_fieldname]))))), inputValue && suggestions.length === 0 && /*#__PURE__*/React.createElement("div", {
     className: INVALID_FEEDBACK_CLASS
-  }, "Error: No suggestions found."));
+  }, errorMessage || 'Error: No suggestions found'));
 };
 
 var generic_editor_rfc_suggestion_dropdown = /*#__PURE__*/Object.freeze({
@@ -23635,8 +23641,10 @@ const EditFormFormikFinal = _ref6 => {
     //
     // TODO: getFieldElementsYupValidations didn't work with action=CREATION, at least on 2023-11-12
     //
+    // validationSchema={Yup.object().shape(
+    //     getFieldElementsYupValidations(editor, editorFlags)
+    // )}
     ,
-    validationSchema: Yup.object().shape(getFieldElementsYupValidations(editor, editorFlags)),
     onSubmit: (submitedtElements, _ref7) => {
       let {
         setStatus,
@@ -23899,39 +23907,6 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
   }
   return response;
 };
-const getFieldElementsYupValidations = (editor, editorFlags) => {
-  if (editorFlags.isDelete) {
-    return {};
-  }
-  const response = editor.fieldElements.filter(currentObj => {
-    return !["label", "hr", "h1", "h2", "h3", "h4", "h5", "h6"].includes(currentObj.type);
-  }).reduce((acc, currentObj) => {
-    let responseObj = Yup; // https://github.com/jquense/yup
-    switch (currentObj.type) {
-      case 'number':
-        responseObj = responseObj.number("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_NUMBER));
-        break;
-      case 'integer':
-        responseObj = responseObj.number().integer("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_INTEGER));
-        break;
-      case 'date':
-        responseObj = responseObj.date("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_DATE));
-        break;
-      case 'email':
-        responseObj = responseObj.string().email("".concat(currentObj.label, " ").concat(MSG_MUST_BE, " ").concat(MSG_VALID_EMAIL));
-        break;
-      case 'text':
-      default:
-        responseObj = responseObj.string();
-    }
-    if (currentObj.required) {
-      responseObj = responseObj.required("".concat(currentObj.label, " ").concat(MSG_IS_REQUIRED));
-    }
-    acc[currentObj.name] = responseObj;
-    return _objectSpread2({}, acc);
-  }, {});
-  return response;
-};
 
 var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -24078,6 +24053,9 @@ function gceReducer(state, action) {
           config
         } = action.payload;
         let newState = _objectSpread2({}, state);
+        {
+          console_debug_log('gceReducer | HANDLE_CANCEL | config:', config);
+        }
         if (typeof config['searchFilters'] !== 'undefined') {
           newState.searchFilters = config['searchFilters'];
           newState.searchText = config['searchText'];

@@ -790,11 +790,14 @@ const EditFormFormikFinal = ({
             enableReinitialize={true}
             initialValues={initialFieldValues}
             //
-            // TODO: getFieldElementsYupValidations didn't work with action=CREATION, at least on 2023-11-12
+            // TODO: getFieldElementsYupValidations didn't work with action=CREATION
+            // For example it has issues on the user creation (OpenAI API key and model are not mandatory
+            // but it is still requesting those fields to have any value).
+            // Therefore, we are disabling the Yup validations for now.
             //
-            validationSchema={Yup.object().shape(
-                getFieldElementsYupValidations(editor, editorFlags)
-            )}
+            // validationSchema={Yup.object().shape(
+            //     getFieldElementsYupValidations(editor, editorFlags)
+            // )}
             onSubmit={(submitedtElements, { setStatus, setSubmitting }) => {
                 if (!canCommit) {
                     setSubmitting(false);

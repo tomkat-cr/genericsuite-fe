@@ -117,6 +117,8 @@ const initialState = {
 };
 
 function gceReducer(state, action) {
+  // TODO: Remove this debug flag befor PUSHING to production
+  const gceReducerDebug = true;
   switch (action.type) {
     case 'SET_EDITOR':
       return { ...state, editor: action.payload };
@@ -139,6 +141,9 @@ function gceReducer(state, action) {
     case 'HANDLE_CANCEL': {
       const { config } = action.payload;
       let newState = { ...state };
+      if (gceReducerDebug) {
+        console_debug_log('gceReducer | HANDLE_CANCEL | config:', config);
+      }
       if (typeof config['searchFilters'] !== 'undefined') {
         newState.searchFilters = config['searchFilters'];
         newState.searchText = config['searchText'];
