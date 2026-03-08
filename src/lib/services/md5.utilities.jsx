@@ -4,7 +4,7 @@ import { md5 } from 'js-md5';
 
 import { console_debug_log } from './logging.service.jsx';
 
-const debug = true;
+const debug = false;
 
 export const getHash = (text) => {
     const hashedText = md5(text);

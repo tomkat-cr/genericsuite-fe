@@ -72,6 +72,8 @@ const formPageReducer = (state, action) => {
     switch (action.type) {
         case 'SET_FORM_DATA':
             return { ...state, formData: action.payload };
+        case 'SET_INTERNAL_MODE':
+            return { ...state, internalMode: action.payload };
         case 'SET_ERROR_STATUS':
             return { ...state, errorStatus: action.payload };
         case 'INCREMENT_REFRESH':
@@ -94,7 +96,6 @@ const editFormReducer = (state, action) => {
     }
 };
 
-
 export const FormPage = ({
     editor,
     mode,
@@ -107,18 +108,20 @@ export const FormPage = ({
 }) => {
     const [state, dispatch] = useReducer(formPageReducer, {
         formData: null,
+        internalMode: mode,
         errorStatus: { error: "", code: "" },
         refresh: 0,
         formMsg: { message: message, messageType: messageType },
         itemRead: false
     });
-    const { formData, errorStatus, refresh, formMsg, itemRead } = state;
+    const { formData, internalMode, errorStatus, refresh, formMsg, itemRead } = state;
 
     const { currentUser } = useUser();
     const { theme } = useAppContext();
     const dataAlreadyLoaded = useRef(false);
 
     const setFormData = (payload) => dispatch({ type: 'SET_FORM_DATA', payload });
+    const setInternalMode = (payload) => dispatch({ type: 'SET_INTERNAL_MODE', payload });
     const setErrorStatus = (errorMessage, errorCode) => dispatch(
         { type: 'SET_ERROR_STATUS', payload: { error: getErrorMsgFromApi(errorMessage), code: errorCode } });
     const setRefresh = () => {
@@ -133,6 +136,10 @@ export const FormPage = ({
     } = useContext(MainSectionContext);
 
     const initForm = () => {
+        if (mode !== state.internalMode) {
+            dataAlreadyLoaded.current = false;
+            setInternalMode(mode);
+        }
         if (dataAlreadyLoaded.current) {
             return;
         }
@@ -192,7 +199,7 @@ export const FormPage = ({
 
     useEffect(() => {
         initForm();
-    }, [refresh]);
+    }, [refresh, mode]);
 
     if (handleFormPageActions === null) {
         handleFormPageActions = (funcResponse) => {

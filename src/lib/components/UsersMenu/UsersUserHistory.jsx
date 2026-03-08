@@ -22,7 +22,7 @@ import { console_debug_log } from '../../services/logging.service.jsx';
 
 import users_user_history from "../../../configs/frontend/users_user_history.json";
 
-const debug = true;
+const debug = false;
 
 export function UsersUserHistory_EditorData() {
     const registry = {

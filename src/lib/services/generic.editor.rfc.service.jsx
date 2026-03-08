@@ -154,8 +154,8 @@ function gceReducer(state, action) {
           config['infoMsg'],
           "INFO",
         ];
-        if (typeof config['setRefreshComponent'] !== 'undefined') {
-          config.setRefreshComponent((prev) => prev + 1);
+        if (gceReducerDebug) {
+          console_debug_log('gceReducer | HANDLE_CANCEL | newState.formMode:', newState.formMode);
         }
       } else {
         newState.formMode = [ACTION_LIST, null];
@@ -182,9 +182,6 @@ export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActi
 }
 
 const GenericCrudEditorMain = (props) => {
-
-  const [refreshComponent, setRefreshComponent] = useState(0);
-
   const [state, dispatch] = useReducer(gceReducer, {
     ...initialState,
     rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
@@ -308,9 +305,6 @@ const GenericCrudEditorMain = (props) => {
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
 
   const handleCancel = (config = null) => {
-    if (config !== null) {
-      config['setRefreshComponent'] = setRefreshComponent;
-    }
     dispatch({ type: 'HANDLE_CANCEL', payload: { config: config || {} } });
   };
 
@@ -411,7 +405,6 @@ const GenericCrudEditorMain = (props) => {
     }
   }
 
-
   if (!editor) {
     if (status) {
       return (
@@ -446,6 +439,9 @@ const GenericCrudEditorMain = (props) => {
   }
 
   if (formMode[0] !== ACTION_LIST) {
+    if (debug) {
+      console_debug_log('GenericCrudEditorMain | formMode[0] !== ACTION_LIST | formMode:', formMode);
+    }
     return (
       <>
         <FormPage

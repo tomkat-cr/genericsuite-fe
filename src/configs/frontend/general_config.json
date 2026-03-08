@@ -5,6 +5,7 @@
     "component": "GeneralConfig",
     "dbApiUrl": "general_config",
     "defaultOrder": "config_name|asc",
+    "createReenter": true,
     "fieldElements": [
         {
             "name": "id",

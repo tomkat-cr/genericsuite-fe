@@ -4775,7 +4775,6 @@ var wait_animation_utility = /*#__PURE__*/Object.freeze({
 
 const getHash = text => {
   const hashedText = jsMd5.md5(text);
-  console_debug_log("Hashing text: '".concat(text, "' -> '").concat(hashedText, "'"));
   return hashedText;
 };
 
@@ -23110,6 +23109,10 @@ const formPageReducer = (state, action) => {
       return _objectSpread2(_objectSpread2({}, state), {}, {
         formData: action.payload
       });
+    case 'SET_INTERNAL_MODE':
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        internalMode: action.payload
+      });
     case 'SET_ERROR_STATUS':
       return _objectSpread2(_objectSpread2({}, state), {}, {
         errorStatus: action.payload
@@ -23151,6 +23154,7 @@ const FormPage = _ref => {
   } = _ref;
   const [state, dispatch] = React.useReducer(formPageReducer, {
     formData: null,
+    internalMode: mode,
     errorStatus: {
       error: "",
       code: ""
@@ -23164,6 +23168,7 @@ const FormPage = _ref => {
   });
   const {
     formData,
+    internalMode,
     errorStatus,
     refresh,
     formMsg,
@@ -23178,6 +23183,10 @@ const FormPage = _ref => {
   const dataAlreadyLoaded = React.useRef(false);
   const setFormData = payload => dispatch({
     type: 'SET_FORM_DATA',
+    payload
+  });
+  const setInternalMode = payload => dispatch({
+    type: 'SET_INTERNAL_MODE',
     payload
   });
   const setErrorStatus = (errorMessage, errorCode) => dispatch({
@@ -23201,6 +23210,10 @@ const FormPage = _ref => {
     debugCache
   } = React.useContext(MainSectionContext);
   const initForm = () => {
+    if (mode !== state.internalMode) {
+      dataAlreadyLoaded.current = false;
+      setInternalMode(mode);
+    }
     if (dataAlreadyLoaded.current) {
       return;
     }
@@ -23241,7 +23254,7 @@ const FormPage = _ref => {
   };
   React.useEffect(() => {
     initForm();
-  }, [refresh]);
+  }, [refresh, mode]);
   if (handleFormPageActions === null) {
     handleFormPageActions = funcResponse => {
       if (typeof funcResponse['otherData']['refresh'] != "undefined") {
@@ -24088,9 +24101,6 @@ function gceReducer(state, action) {
         }
         if (typeof config['nextAction'] !== 'undefined') {
           newState.formMode = [config['nextAction'], config['id'], config['infoMsg'], "INFO"];
-          if (typeof config['setRefreshComponent'] !== 'undefined') {
-            config.setRefreshComponent(prev => prev + 1);
-          }
         } else {
           newState.formMode = [ACTION_LIST, null];
         }
@@ -24113,7 +24123,6 @@ const GenericCrudEditor = _ref => {
   })));
 };
 const GenericCrudEditorMain = props => {
-  const [refreshComponent, setRefreshComponent] = React.useState(0);
   const [state, dispatch] = React.useReducer(gceReducer, _objectSpread2(_objectSpread2({}, initialState$1), {}, {
     rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
   }));
@@ -24218,9 +24227,6 @@ const GenericCrudEditorMain = props => {
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
   const handleCancel = function () {
     let config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    if (config !== null) {
-      config['setRefreshComponent'] = setRefreshComponent;
-    }
     dispatch({
       type: 'HANDLE_CANCEL',
       payload: {
@@ -25015,9 +25021,6 @@ const UsersHistoryDbPostWrite = (data, editor, action) => {
   return new Promise((resolve, reject) => {
     let resp = genericFuncArrayDefaultValue(data);
     const parentId = data[editor.primaryKeyName];
-    {
-      console_debug_log('UsersHistoryDbPostWrite - parentId: ' + String(parentId) + ' | data:', data);
-    }
     switch (action) {
       case ACTION_CREATE:
       case ACTION_UPDATE:
@@ -25034,15 +25037,9 @@ const UsersHistoryDbPostWrite = (data, editor, action) => {
             plan: data['plan']
           }
         };
-        {
-          console_debug_log("UsersDbPostWrite - itemToSave:", itemToSave);
-        }
         db.createRow(itemToSave).then(_ => {
           // To refresh parent component and show the new calorie total
           resp['otherData']['refresh'] = true;
-          {
-            console_debug_log("UsersDbPostWrite | resp:", resp);
-          }
           resolve(resp);
         }, error => {
           console_debug_log("[UDPW-020] UsersDbPostWrite | error:", error);
@@ -25857,6 +25854,7 @@ var name = "Configuration Parameter";
 var component = "GeneralConfig";
 var dbApiUrl = "general_config";
 var defaultOrder = "config_name|asc";
+var createReenter = true;
 var fieldElements = [
 	{
 		name: "id",
@@ -25908,6 +25906,7 @@ var general_config = {
 	component: component,
 	dbApiUrl: dbApiUrl,
 	defaultOrder: defaultOrder,
+	createReenter: createReenter,
 	fieldElements: fieldElements
 };
 
