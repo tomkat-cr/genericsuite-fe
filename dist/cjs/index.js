@@ -24082,15 +24082,15 @@ function gceReducer(state, action) {
           config
         } = action.payload;
         let newState = _objectSpread2({}, state);
-        {
-          console_debug_log('gceReducer | HANDLE_CANCEL | config:', config);
-        }
         if (typeof config['searchFilters'] !== 'undefined') {
           newState.searchFilters = config['searchFilters'];
           newState.searchText = config['searchText'];
         }
         if (typeof config['nextAction'] !== 'undefined') {
           newState.formMode = [config['nextAction'], config['id'], config['infoMsg'], "INFO"];
+          if (typeof config['setRefreshComponent'] !== 'undefined') {
+            config.setRefreshComponent(prev => prev + 1);
+          }
         } else {
           newState.formMode = [ACTION_LIST, null];
         }
@@ -24113,6 +24113,7 @@ const GenericCrudEditor = _ref => {
   })));
 };
 const GenericCrudEditorMain = props => {
+  const [refreshComponent, setRefreshComponent] = React.useState(0);
   const [state, dispatch] = React.useReducer(gceReducer, _objectSpread2(_objectSpread2({}, initialState$1), {}, {
     rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
   }));
@@ -24155,7 +24156,6 @@ const GenericCrudEditorMain = props => {
     type: 'SET_ROWS_PER_PAGE',
     payload: p
   });
-  const [refreshComponent, setRefreshComponent] = React.useState(0);
   const {
     initCache,
     debugCache
@@ -24218,18 +24218,15 @@ const GenericCrudEditorMain = props => {
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
   const handleCancel = function () {
     let config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    if (config !== null) {
+      config['setRefreshComponent'] = setRefreshComponent;
+    }
     dispatch({
       type: 'HANDLE_CANCEL',
       payload: {
         config: config || {}
       }
     });
-    if (config !== null) {
-      {
-        console_debug_log('FIRING setRefreshComponent...');
-      }
-      setRefreshComponent(refreshComponent + 1);
-    }
   };
   const handleNew = () => {
     setFormMode([ACTION_CREATE, null]);

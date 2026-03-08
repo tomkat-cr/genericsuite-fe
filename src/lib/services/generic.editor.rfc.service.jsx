@@ -103,9 +103,7 @@ import {
 } from "../constants/general_constants.jsx";
 
 const debug = false;
-
-// TODO: Remove this debug flag befor PUSHING to production
-const gceReducerDebug = true;
+const gceReducerDebug = false;
 
 const initialState = {
   editor: null,
@@ -156,6 +154,9 @@ function gceReducer(state, action) {
           config['infoMsg'],
           "INFO",
         ];
+        if (typeof config['setRefreshComponent'] !== 'undefined') {
+          config.setRefreshComponent((prev) => prev + 1);
+        }
       } else {
         newState.formMode = [ACTION_LIST, null];
       }
@@ -181,6 +182,9 @@ export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActi
 }
 
 const GenericCrudEditorMain = (props) => {
+
+  const [refreshComponent, setRefreshComponent] = useState(0);
+
   const [state, dispatch] = useReducer(gceReducer, {
     ...initialState,
     rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
@@ -207,8 +211,6 @@ const GenericCrudEditorMain = (props) => {
   const setRowsPerPage = (p) => dispatch({ type: 'SET_ROWS_PER_PAGE', payload: p });
   const setSearchFilters = (p) => dispatch({ type: 'SET_SEARCH_FILTERS', payload: p });
   const setSearchText = (p) => dispatch({ type: 'SET_SEARCH_TEXT', payload: p });
-
-  const [refreshComponent, setRefreshComponent] = useState(0);
 
   const {
     initCache,
@@ -306,13 +308,10 @@ const GenericCrudEditorMain = (props) => {
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
 
   const handleCancel = (config = null) => {
-    dispatch({ type: 'HANDLE_CANCEL', payload: { config: config || {} } });
     if (config !== null) {
-      if (gceReducerDebug) {
-        console_debug_log('FIRING setRefreshComponent...');
-      }
-      setRefreshComponent(refreshComponent + 1);
+      config['setRefreshComponent'] = setRefreshComponent;
     }
+    dispatch({ type: 'HANDLE_CANCEL', payload: { config: config || {} } });
   };
 
   const handleNew = () => {
