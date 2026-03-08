@@ -1,6 +1,6 @@
 // GenericCrudEditor (GCE) service main
 
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
 import { useAppContext } from "../helpers/AppContext.jsx";
@@ -207,6 +207,8 @@ const GenericCrudEditorMain = (props) => {
   const setSearchFilters = (p) => dispatch({ type: 'SET_SEARCH_FILTERS', payload: p });
   const setSearchText = (p) => dispatch({ type: 'SET_SEARCH_TEXT', payload: p });
 
+  const [refreshComponent, setRefreshComponent] = useState(0);
+
   const {
     initCache,
     debugCache,
@@ -302,8 +304,11 @@ const GenericCrudEditorMain = (props) => {
     }
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
 
-  const handleCancel = (config = {}) => {
-    dispatch({ type: 'HANDLE_CANCEL', payload: { config } });
+  const handleCancel = (config = null) => {
+    dispatch({ type: 'HANDLE_CANCEL', payload: { config: config || {} } });
+    if (config !== null) {
+      setRefreshComponent(refreshComponent + 1);
+    }
   };
 
   const handleNew = () => {

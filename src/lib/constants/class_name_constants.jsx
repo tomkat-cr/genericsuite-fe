@@ -293,6 +293,7 @@ export const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = `${HORIZONTALLY_CENTERED_CLAS
 // Components
 
 export const SUGGESTION_DROPDOWN_CLASS = "align-middle flex";
+export const SUGGESTION_DROPDOWN_WRAPPER_CLASS = "flex flex-col suggestionDropdownWrapperClass";
 
 // Wait animation
 

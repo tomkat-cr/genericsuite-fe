@@ -385,6 +385,7 @@ declare var class_name_constants: Readonly<{
     STROKE_WHITE_ICON_CLASS: "stroke-white";
     SUCCESS_MSG_CLASS: string;
     SUGGESTION_DROPDOWN_CLASS: "align-middle flex";
+    SUGGESTION_DROPDOWN_WRAPPER_CLASS: "flex flex-col suggestionDropdownWrapperClass";
     TOP0_Z50_CLASS: "top-0 z-50 top0z50Class";
     VERTICALLY_CENTERED_CLASS: "flex items-center justify-center verticallyCenteredClass";
     VERTICAL_SLIDER_ICON_CLASS: "h-8 w-1.5 rounded-full bg-slate-400";
@@ -634,9 +635,9 @@ declare var generic_editor_rfc_specific_func: Readonly<{
 }>;
 declare var generic_editor_rfc_suggestion_dropdown: Readonly<{
     __proto__: null;
-    SuggestionDropdown: (_ref: any) => React.FunctionComponentElement<{
-        children?: React.ReactNode | undefined;
-    }>;
+    SuggestionDropdown: (_ref: any) => React.DetailedReactHTMLElement<{
+        className: string;
+    }, HTMLElement>;
 }>;
 declare var generic_editor_rfc_timestamp: Readonly<{
     __proto__: null;

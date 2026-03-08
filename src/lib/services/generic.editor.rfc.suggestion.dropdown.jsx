@@ -11,6 +11,7 @@ import {
     INVALID_FEEDBACK_CLASS,
     IS_INVALID_CLASS,
     SUGGESTION_DROPDOWN_CLASS,
+    SUGGESTION_DROPDOWN_WRAPPER_CLASS,
 } from '../constants/class_name_constants.jsx';
 import { getErrorMsgFromApi } from '../helpers/error-and-reenter.jsx';
 import { useAppContext } from '../helpers/AppContext.jsx';
@@ -25,7 +26,7 @@ import {
     console_debug_log,
 } from "./logging.service.jsx";
 
-const debug = false;
+const debug = true;
 
 const debounceTimeout = 500;
 
@@ -90,8 +91,8 @@ export const SuggestionDropdown = ({
             dbService.getAll(urlParams, bodyData, filter_api_request_method)
                 .then(response => {
                     if (debug) {
-                        console_debug_log('setSuggestions(response.resultset)');
-                        console_debug_log(response.resultset);
+                        console_debug_log('setSuggestions(response)', response);
+                        console_debug_log('setSuggestions(response.resultset)', response.resultset);
                     }
                     if (typeof response.resultset == "string") {
                         setSuggestions([]);
@@ -174,7 +175,7 @@ export const SuggestionDropdown = ({
     });
 
     return (
-        <>
+        <div className={SUGGESTION_DROPDOWN_WRAPPER_CLASS}>
             <div className={`${SUGGESTION_DROPDOWN_CLASS} ${className || ""} ${theme.input}`}>
                 <div>
                     <input
@@ -212,7 +213,7 @@ export const SuggestionDropdown = ({
                     {errorMessage || 'Error: No suggestions found'}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 
