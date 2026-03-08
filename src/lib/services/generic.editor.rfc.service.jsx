@@ -104,6 +104,9 @@ import {
 
 const debug = false;
 
+// TODO: Remove this debug flag befor PUSHING to production
+const gceReducerDebug = true;
+
 const initialState = {
   editor: null,
   rows: null,
@@ -117,8 +120,6 @@ const initialState = {
 };
 
 function gceReducer(state, action) {
-  // TODO: Remove this debug flag befor PUSHING to production
-  const gceReducerDebug = true;
   switch (action.type) {
     case 'SET_EDITOR':
       return { ...state, editor: action.payload };
@@ -307,6 +308,9 @@ const GenericCrudEditorMain = (props) => {
   const handleCancel = (config = null) => {
     dispatch({ type: 'HANDLE_CANCEL', payload: { config: config || {} } });
     if (config !== null) {
+      if (gceReducerDebug) {
+        console_debug_log('FIRING setRefreshComponent...');
+      }
       setRefreshComponent(refreshComponent + 1);
     }
   };

@@ -23000,21 +23000,6 @@ const SuggestionDropdown = _ref => {
   const suggestion_desc_fieldname = defaultValue(config, "suggestion_desc_fieldname"); // Ex. "description"
   const suggestion_name_fieldname = defaultValue(config, "suggestion_name_fieldname", suggestion_desc_fieldname); // Ex. "description"
   const autocomplete_fields = defaultValue(config, "autocomplete_fields", {});
-  /*
-      Ex.
-      "autocomplete_fields": {
-          "calories_value": "calories_value",
-          "calories_unit": "calories_unit",
-          "serving_size": "serving_size",
-          "serving_size_unit": "serving_size_unit",
-          "brand_name": "brand_name"
-      }
-  */
-
-  {
-    console_debug_log("SuggestionDropdown 1: fda_food_query | name: ".concat(name, ", disabled: ").concat(disabled, ", required: ").concat(required, ", className: ").concat(className));
-    console_debug_log("Config: ".concat(config));
-  }
   React.useEffect(() => {
     if (debouncedInputValue) {
       // Get suggestions from external source
@@ -23024,29 +23009,19 @@ const SuggestionDropdown = _ref => {
       let urlParams = {};
       let bodyData = replaceSpecialVars(filter_search_other_param, currentUser);
       bodyData[filter_search_param_name] = debouncedInputValue;
-      {
-        console_debug_log("SuggestionDropdown 2: ".concat(filter_api_url, " | useEffect | bodyData:"));
-        console_debug_log(bodyData);
-      }
       if (filter_api_request_method === "GET") {
         urlParams = Object.assign({}, bodyData);
         bodyData = {};
       }
       dbService.getAll(urlParams, bodyData, filter_api_request_method).then(response => {
-        {
-          console_debug_log('setSuggestions(response)', response);
-          console_debug_log('setSuggestions(response.resultset)', response.resultset);
-        }
         if (typeof response.resultset == "string") {
           setSuggestions([]);
         } else {
           setSuggestions(response.resultset);
         }
       }).catch(error => {
-        {
-          console.error('SuggestionDropdown API call error:', error);
-        }
         setErrorMessage(getErrorMsgFromApi(error));
+        setSuggestions([]);
       });
     }
   }, [debouncedInputValue, filter_api_url, filter_search_other_param, filter_search_param_name, name, setFieldValue, filter_api_request_method, currentUser]);
@@ -23054,10 +23029,6 @@ const SuggestionDropdown = _ref => {
     setErrorMessage(null);
   }, [suggestions]);
   const handleSuggestionSelected = suggestion => {
-    {
-      console_debug_log("handleSuggestionSelected | suggestion:");
-      console_debug_log(suggestion);
-    }
     if (suggestion) {
       Object.entries(autocomplete_fields).forEach(_ref2 => {
         let [field_name, attr_name] = _ref2;
@@ -24254,6 +24225,9 @@ const GenericCrudEditorMain = props => {
       }
     });
     if (config !== null) {
+      {
+        console_debug_log('FIRING setRefreshComponent...');
+      }
       setRefreshComponent(refreshComponent + 1);
     }
   };

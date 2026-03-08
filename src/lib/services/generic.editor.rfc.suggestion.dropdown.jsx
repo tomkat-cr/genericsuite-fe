@@ -26,7 +26,7 @@ import {
     console_debug_log,
 } from "./logging.service.jsx";
 
-const debug = true;
+const debug = false;
 
 const debounceTimeout = 500;
 
@@ -69,8 +69,8 @@ export const SuggestionDropdown = ({
     */
 
     if (debug) {
-        console_debug_log(`SuggestionDropdown 1: fda_food_query | name: ${name}, disabled: ${disabled}, required: ${required}, className: ${className}`);
-        console_debug_log(`Config: ${config}`);
+        console_debug_log(`SuggestionDropdown | name: ${name}, disabled: ${disabled}, required: ${required}, className: ${className}`);
+        console_debug_log('SuggestionDropdown | Config:', config);
     }
 
     useEffect(() => {
@@ -105,6 +105,7 @@ export const SuggestionDropdown = ({
                         console.error('SuggestionDropdown API call error:', error);
                     }
                     setErrorMessage(getErrorMsgFromApi(error));
+                    setSuggestions([]);
                 });
         }
     }, [
