@@ -5202,7 +5202,7 @@ const getEditoObj = (props, editor_response) => {
   if (typeof editor.endpointKeyNames == 'undefined') {
     if (typeof editor.parentKeyNames != 'undefined') {
       editor.endpointKeyNames = editor.parentKeyNames;
-      console.error("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.");
+      console.warn("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.");
     } else {
       editor.endpointKeyNames = [];
     }
@@ -23921,6 +23921,12 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
       }
     } else if (verifyElementExistence(dataset, currentObj.name)) {
       responseObj = dataset[currentObj.name];
+      if (responseObj === null || responseObj === undefined) {
+        // To avoid the warning "Warning:
+        // `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components"
+        // in fileds like users table "openai_api_key" and "openai_model" that has no default values and come null from the database
+        responseObj = '';
+      }
     } else if (defaultValues) {
       responseObj = setDefaultFieldValue(currentObj);
     }
@@ -24265,9 +24271,16 @@ const GenericCrudEditorMain = props => {
     initCache();
     windowLocationReload(true);
   };
+  const canonicalRow = row => JSON.stringify(row, (_, value) => value && typeof value === 'object' && !Array.isArray(value) ? Object.keys(value).sort().reduce((acc, k) => {
+    acc[k] = value[k];
+    return acc;
+  }, {}) : value);
   const rowId = row => {
     const rowIdVar = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
-    const response = typeof rowIdVar === 'undefined' ? getHash(JSON.stringify(row)) : rowIdVar;
+    // Use MD5 utilities to hash rowId when there is no row._id or row[editor.primaryKeyName],
+    // avoiding the "Encountered two children with the same key, <table_name>_row_undefined_tr_enclosure" warning
+    // For example: food_times_row_undefined_tr_enclosure [GS-266]
+    const response = typeof rowIdVar === 'undefined' ? getHash(canonicalRow(row)) : rowIdVar;
     if (typeof rowIdVar === 'undefined') {
       console.error("ERROR [GCE-M-060]: row does not have '_id' nor '".concat(editor.primaryKeyName, "' | Editor: ").concat(editor.name, " | Row: ").concat(JSON.stringify(row)));
     }

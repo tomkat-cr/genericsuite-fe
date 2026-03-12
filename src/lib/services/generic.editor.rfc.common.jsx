@@ -175,7 +175,7 @@ export const getEditoObj = (props, editor_response) => {
     if (typeof editor.endpointKeyNames == 'undefined') {
         if (typeof editor.parentKeyNames != 'undefined') {
             editor.endpointKeyNames = editor.parentKeyNames;
-            console.error("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.")
+            console.warn("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.")
         } else {
             editor.endpointKeyNames = [];
         }

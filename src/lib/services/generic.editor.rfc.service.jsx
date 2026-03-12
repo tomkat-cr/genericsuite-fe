@@ -1,6 +1,6 @@
 // GenericCrudEditor (GCE) service main
 
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
 import { useAppContext } from "../helpers/AppContext.jsx";
@@ -344,12 +344,21 @@ const GenericCrudEditorMain = (props) => {
     windowLocationReload(true);
   }
 
+  const canonicalRow = (row) => JSON.stringify(row, (_, value) =>
+    value && typeof value === 'object' && !Array.isArray(value)
+      ? Object.keys(value).sort().reduce((acc, k) => { acc[k] = value[k]; return acc; }, {})
+      : value
+  );
+
   const rowId = (row) => {
     if (debug) {
       console_debug_log(`rowId | editor.primaryKeyName: ${editor.primaryKeyName} | row:`, row)
     }
     const rowIdVar = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
-    const response = typeof rowIdVar === 'undefined' ? getHash(JSON.stringify(row)) : rowIdVar;
+    // Use MD5 utilities to hash rowId when there is no row._id or row[editor.primaryKeyName],
+    // avoiding the "Encountered two children with the same key, <table_name>_row_undefined_tr_enclosure" warning
+    // For example: food_times_row_undefined_tr_enclosure [GS-266]
+    const response = typeof rowIdVar === 'undefined' ? getHash(canonicalRow(row)) : rowIdVar;
     if (typeof rowIdVar === 'undefined') {
       console.error(`ERROR [GCE-M-060]: row does not have '_id' nor '${editor.primaryKeyName}' | Editor: ${editor.name} | Row: ${JSON.stringify(row)}`)
     }

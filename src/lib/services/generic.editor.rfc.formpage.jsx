@@ -592,7 +592,12 @@ const PutOneFormfield = ({
     }
 
     if (debug) {
-        console_debug_log(`PutOneFormfield | Field (key): ${currentObj.name} | className: ${divFieldClass} | elementLabel: ${elementLabel}`);
+        console.debug("PutOneFormfield",
+            " | Field (key): ", currentObj.name,
+            " | type: ", currentObj.type,
+            " | initialValue: ", initialValue,
+            " | className: ", divFieldClass,
+            " | elementLabel: ", elementLabel);
     }
 
     return (
@@ -744,7 +749,7 @@ const EditFormFormikFinal = ({
     currentUser,
 }) => {
 
-    if (debug) console_debug_log('>> EditFormFormikFinal | dataset:', dataset, 'message:', message, 'messageType:', messageType);
+    if (debug) console.debug('>> EditFormFormikFinal | dataset:', dataset, 'message:', message, 'messageType:', messageType);
 
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);
@@ -1143,6 +1148,12 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
                 }
             } else if (verifyElementExistence(dataset, currentObj.name)) {
                 responseObj = dataset[currentObj.name];
+                if (responseObj === null || responseObj === undefined) {
+                    // To avoid the warning "Warning:
+                    // `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components"
+                    // in fileds like users table "openai_api_key" and "openai_model" that has no default values and come null from the database
+                    responseObj = '';
+                }
             } else if (defaultValues) {
                 responseObj = setDefaultFieldValue(currentObj);
             }
