@@ -1,114 +1,161 @@
 // GenericCrudEditor data form functions
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useReducer, useRef } from 'react';
 
-import { Formik, Field, Form, ErrorMessage, useFormikContext } from 'formik';
+import { ErrorMessage, Field, Form, Formik, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
-import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
+import { dbApiService } from "./db.service.jsx";
 import { getEditorFlags } from './generic.editor.rfc.common.jsx';
-import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
-import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
-import { SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
-// import { ChatBotButton } from './generic.editor.rfc.ai.button.jsx';
+import { ChatBotButtonGeneric, SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
+import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
+import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
+import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
 import { defaultValue } from './generic.editor.utilities.jsx';
 import { console_debug_log } from './logging.service.jsx';
-import { dbApiService } from "./db.service.jsx";
 import { WaitAnimation } from "./wait.animation.utility.jsx";
 
+import { useAppContext } from '../helpers/AppContext.jsx';
 import {
     nowToTimestap,
     timestampToDate,
 } from '../helpers/date-timestamp.jsx';
-import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
-import { useUser } from '../helpers/UserContext.jsx';
-import { useAppContext } from '../helpers/AppContext.jsx';
+import { errorAndReEnter, getErrorMsgFromApi } from "../helpers/error-and-reenter.jsx";
 import { GsButton } from '../helpers/NavLib.jsx';
+import { useUser } from '../helpers/UserContext.jsx';
 
 import {
-    ACTION_CREATE,
-    ACTION_READ,
-    ACTION_UPDATE,
-    ACTION_DELETE,
-    MSG_DELETE_CONFIRM,
-    MSG_ACTION_CREATE,
-    MSG_ACTION_READ,
-    MSG_ACTION_UPDATE,
-    MSG_ACTION_DELETE,
-    MSG_ACTION_CANCEL,
-    MSG_DONE_DELETED,
-    MSG_DONE_CREATED,
-    MSG_DONE_UPDATED,
-    MSG_IS_REQUIRED,
-    MSG_MUST_BE,
-    MSG_VALID_INTEGER,
-    MSG_VALID_NUMBER,
-    MSG_VALID_DATE,
-    MSG_VALID_EMAIL,
-} from "../constants/general_constants.jsx";
-import {
-    BUTTON_PRIMARY_CLASS,
-    BUTTON_SECONDARY_CLASS,
-    ERROR_MSG_CLASS,
-    INFO_MSG_CLASS,
-    APP_TOP_DIV_CLASS,
-    APP_TITLE_H1_CLASS,
-    // APP_FORMPAGE_LEVEL1_DIV_CLASS,
-    // APP_FORMPAGE_LEVEL2_DIV_CLASS,
-    INVALID_FEEDBACK_CLASS,
+    APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS,
+    APP_FORMPAGE_FIELD_CLASS,
+    APP_FORMPAGE_FIELD_GOOD_CLASS,
+    APP_FORMPAGE_FIELD_INVALID_CLASS,
     APP_FORMPAGE_FORM_BUTTON_BAR_CLASS,
     APP_FORMPAGE_LABEL_CLASS,
     APP_FORMPAGE_LABEL_REQUIRED_CLASS,
-    APP_FORMPAGE_FIELD_CLASS,
-    APP_FORMPAGE_FIELD_BASE_CLASS,
-    APP_FORMPAGE_FIELD_GOOD_CLASS,
-    APP_FORMPAGE_FIELD_INVALID_CLASS,
     APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS,
-    APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS,
+    APP_TITLE_H1_CLASS,
+    APP_TOP_DIV_CLASS,
+    BUTTON_PRIMARY_CLASS,
+    ERROR_MSG_CLASS,
+    INFO_MSG_CLASS,
+    INVALID_FEEDBACK_CLASS,
+    WAIT_ANIMATION_MARGIN_TOP_CLASS
 } from "../constants/class_name_constants.jsx";
+import {
+    ACTION_CREATE,
+    ACTION_DELETE,
+    ACTION_READ,
+    ACTION_UPDATE,
+    MSG_ACTION_CANCEL,
+    MSG_ACTION_CREATE,
+    MSG_ACTION_DELETE,
+    MSG_ACTION_READ,
+    MSG_ACTION_UPDATE,
+    MSG_DELETE_CONFIRM,
+    MSG_DONE_CREATED,
+    MSG_DONE_DELETED,
+    MSG_DONE_UPDATED,
+    MSG_IS_REQUIRED,
+    MSG_MUST_BE,
+    MSG_VALID_DATE,
+    MSG_VALID_EMAIL,
+    MSG_VALID_INTEGER,
+    MSG_VALID_NUMBER,
+} from "../constants/general_constants.jsx";
 
 const debug = false;
 
 let calcFields = {};
 
+const formPageReducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_FORM_DATA':
+            return { ...state, formData: action.payload };
+        case 'SET_INTERNAL_MODE':
+            return { ...state, internalMode: action.payload };
+        case 'SET_ERROR_STATUS':
+            return { ...state, errorStatus: action.payload };
+        case 'INCREMENT_REFRESH':
+            return { ...state, refresh: state.refresh + 1 };
+        case 'SET_FORM_MSG':
+            return { ...state, formMsg: action.payload };
+        case 'SET_ITEM_READ':
+            return { ...state, itemRead: action.payload };
+        default:
+            return state;
+    }
+};
+
+const editFormReducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_EDIT_FORM_DATA':
+            return { ...state, ...action.payload };
+        default:
+            return state;
+    }
+};
+
 export const FormPage = ({
-    editor_par,
-    mode_par,
-    id_par,
-    onCancel_par,
-    setInfoMsg_par,
+    editor,
+    mode,
+    id,
+    onCancel,
+    setInfoMsg,
     handleFormPageActions = null,
     message = "",
     messageType = "",
 }) => {
-    const [formData, setFormData] = useState(null);
-    const [status, setStatus] = useState("");
-    const [refresh, setRefresh] = useState(0);
-    const [formMsg, setFormMsg] = useState({message: message, messageType: messageType});
+    const [state, dispatch] = useReducer(formPageReducer, {
+        formData: null,
+        internalMode: mode,
+        errorStatus: { error: "", code: "" },
+        refresh: 0,
+        formMsg: { message: message, messageType: messageType },
+        itemRead: false
+    });
+    const { formData, internalMode, errorStatus, refresh, formMsg, itemRead } = state;
 
     const { currentUser } = useUser();
     const { theme } = useAppContext();
+    const dataAlreadyLoaded = useRef(false);
+
+    const setFormData = (payload) => dispatch({ type: 'SET_FORM_DATA', payload });
+    const setInternalMode = (payload) => dispatch({ type: 'SET_INTERNAL_MODE', payload });
+    const setErrorStatus = (errorMessage, errorCode) => dispatch(
+        { type: 'SET_ERROR_STATUS', payload: { error: getErrorMsgFromApi(errorMessage), code: errorCode } });
+    const setRefresh = () => {
+        dispatch({ type: 'INCREMENT_REFRESH' });
+        dataAlreadyLoaded.current = false;
+    };
+    const setFormMsg = (payload) => dispatch({ type: 'SET_FORM_MSG', payload });
+    const setItemRead = (payload) => dispatch({ type: 'SET_ITEM_READ', payload });
 
     const {
         debugCache,
     } = useContext(MainSectionContext);
 
-    const editor = editor_par;
-    const mode = mode_par;
-    const id = id_par;
+    const initForm = () => {
+        if (mode !== state.internalMode) {
+            dataAlreadyLoaded.current = false;
+            setInternalMode(mode);
+        }
+        if (dataAlreadyLoaded.current) {
+            return;
+        }
+        dataAlreadyLoaded.current = true;
 
-    useEffect(() => {
         if (mode === ACTION_CREATE) {
             // To assign specific default values in creation...
             processGenericFuncArray(editor, 'dbPreRead', {}, mode, currentUser).then(
                 funcResponse => {
                     if (debug) console_debug_log(`>> FormPage | dbPreRead # 1 > funcResponse:`, funcResponse, 'editor', editor);
-                    setFormData(funcResponse.fieldValues)
+                    setFormData(funcResponse.fieldValues);
                 },
-                error => setStatus(errorAndReEnter(error,'[GCE-FD-010]'))
+                error => setErrorStatus(error, '[GCE-FD-010]')
             )
         }
+
         if (
             (mode === ACTION_UPDATE ||
                 mode === ACTION_READ ||
@@ -118,7 +165,8 @@ export const FormPage = ({
             accessKeysDataScreen[editor.primaryKeyName] = id;
             processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(
                 funcResponse => {
-                    accessKeysDataScreen = Object.assign({}, funcResponse.fieldValues, editor.parentFilter);
+                    const { resultset, ...fieldValuesWithoutResultSet } = funcResponse.fieldValues;
+                    accessKeysDataScreen = Object.assign({}, fieldValuesWithoutResultSet, editor.endpointFilter);
                     editor.db.getOne(accessKeysDataScreen)
                         .then(
                             data => {
@@ -127,22 +175,31 @@ export const FormPage = ({
                                 processGenericFuncArray(editor, 'dbPostRead', data, mode, currentUser).then(
                                     funcResponse => {
                                         if (debug) console_debug_log(`>> FormPage | dbPostRead > funcResponse:`, funcResponse.fieldValues, 'editor', editor);
-                                        setFormData(funcResponse.fieldValues)
+                                        setFormData(funcResponse.fieldValues);
                                     },
-                                    error => setStatus(errorAndReEnter(error, '[GCE-FD-020]'))
+                                    error => {
+                                        console.error('ERROR on dbPostRead - GCE-FD-020', error);
+                                        setErrorStatus(error, '[GCE-FD-020]');
+                                    }
                                 );
                             },
                             error => {
-                                console_debug_log(`ERROR - GCE-FD-030`)
-                                console.error(error);
-                                setStatus(errorAndReEnter(error, '[GCE-FD-030]'));
+                                console.error('ERROR on getOne - GCE-FD-030', error);
+                                setErrorStatus(error, '[GCE-FD-030]');
                             },
                         );
                 },
-                error => setStatus(errorAndReEnter(error, '[GCE-FD-040]'))
+                error => {
+                    console.error('ERROR on dbPreRead - GCE-FD-040', error);
+                    setErrorStatus(error, '[GCE-FD-040]');
+                }
             );
         }
-    }, [id, editor, mode, refresh]);
+    }
+
+    useEffect(() => {
+        initForm();
+    }, [refresh, mode]);
 
     if (handleFormPageActions === null) {
         handleFormPageActions = (funcResponse) => {
@@ -150,14 +207,17 @@ export const FormPage = ({
                 console_debug_log(`FormPage / handleFormPageActions | funcResponse:`, funcResponse);
             }
             if (typeof funcResponse['otherData']['refresh'] != "undefined") {
-                setRefresh(refresh+1);
-                setFormMsg({message: '', messageType: ''})
+                setRefresh(refresh + 1);
+                setFormMsg({ message: '', messageType: '' });
             }
         }
     }
 
-    if (!editor || !formData) {
-        return WaitAnimation();
+    if (!editor) {
+        return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
+    }
+    if (!formData && !errorStatus.error) {
+        return WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS);
     }
 
     const editorFlags = getEditorFlags(mode);
@@ -171,48 +231,41 @@ export const FormPage = ({
                     : MSG_ACTION_DELETE;
 
     return (
-        <div 
+        <div
             className={`${APP_TOP_DIV_CLASS} ${theme.contentBg}`}
         >
-            {/* <div 
-                className={APP_FORMPAGE_LEVEL1_DIV_CLASS}
-            > */}
-                <CrudEditorFormPageTitle
-                    baseUrl={editor.baseUrl}
-                    title={editor.title}
-                    actionTitle={actionTitle}
+            <CrudEditorFormPageTitle
+                baseUrl={editor.baseUrl}
+                title={editor.title}
+                actionTitle={actionTitle}
+            />
+            {errorStatus.error && (
+                <>
+                    {errorAndReEnter(errorStatus.error, errorStatus.code)}
+                </>
+            )}
+            {!errorStatus.error && formData &&
+                <EditFormFormik
+                    editor={editor}
+                    parenHandleCancel={onCancel}
+                    setInfoMsg={setInfoMsg}
+                    action={mode}
+                    dataset={formData.resultset}
+                    message={formMsg['message']}
+                    messageType={formMsg['messageType']}
+                    handleFormPageActions={handleFormPageActions}
+                    theme={theme}
+                    currentUser={currentUser}
                 />
-                {/* <div
-                    className={APP_FORMPAGE_LEVEL2_DIV_CLASS}
-                > */}
-                    {status && (
-                        <div className={ERROR_MSG_CLASS}>
-                            {status}
-                        </div>
-                    )}
-                    {!status && formData &&
-                        <EditFormFormik
-                            editor={editor}
-                            parenHandleCancel={onCancel_par}
-                            setInfoMsg={setInfoMsg_par}
-                            action={mode}
-                            dataset={formData.resultset}
-                            message={formMsg['message']}
-                            messageType={formMsg['messageType']}
-                            handleFormPageActions={handleFormPageActions}
-                            theme={theme}
-                            currentUser={currentUser}
-                        />
-                    }
-                    {!status &&
-                        formData &&
-                        !editorFlags.isCreate &&
-                        iterateChildComponents(editor, formData.resultset, handleFormPageActions)
-                    }
-                    {(debug ? debugCache("FormPage") : '')}
-                </div>
-            // </div>
-        // </div>
+            }
+            {
+                !errorStatus.error &&
+                formData &&
+                !editorFlags.isCreate &&
+                iterateChildComponents(editor, formData.resultset, handleFormPageActions)
+            }
+            {(debug ? debugCache("FormPage") : '')}
+        </div >
     );
 };
 
@@ -227,6 +280,15 @@ const CrudEditorFormPageTitle = ({ baseUrl, title, actionTitle }) => {
     );
 }
 
+const GetHTag = ({ tag, children }) => {
+    return React.createElement(tag, { children });
+}
+
+const GetHTagForceTailwind = () => {
+    // To force the use of tailwindcss for the h1 to h6 tags
+    return (<><h1></h1><h2></h2><h3></h3><h4></h4><h5></h5><h6></h6></>)
+}
+
 const PutOneFormfield = ({
     currentObjArray,
     componentSelectFieldsOptions,
@@ -235,6 +297,7 @@ const PutOneFormfield = ({
     touched,
     initialValue,
     theme,
+    dbRow,
 }) => {
     const { setFieldValue } = useFormikContext();
 
@@ -248,7 +311,7 @@ const PutOneFormfield = ({
     const readOnlyfield =
         editorFlags.isReadOnly ||
         (typeof currentObj.readonly !== "undefined" && currentObj.readonly);
-    
+
     if (typeof currentObj.hidden !== "undefined" && currentObj.hidden) {
         return (
             <Field
@@ -274,7 +337,7 @@ const PutOneFormfield = ({
             calcFields[htmlElement.name] = htmlElement.formula;
         }
     }
-    
+
     const runCalculation = (e) => {
         for (const key in calcFields) {
             const formula = calcFields[key];
@@ -284,38 +347,43 @@ const PutOneFormfield = ({
                 console_debug_log(`e.target.name: ${e.target.name} `);
             }
             // if (formula.includes(e.target.name)) {
-                const inputs = document.getElementsByName(key);
-                if (inputs.length > 0) {
-                    let calculatedValue = null;
-                    try {
-                        // calculatedValue = eval(formula);
-                        calculatedValue = formula(inputs);
-                    } catch (error) {
-                        console.error('Error calculating value:', error);
-                    }
-                    if (debug) {
-                        console_debug_log(`calculatedValue: ${calculatedValue} `);
-                    }
-                    if (!isNaN(calculatedValue)) {
-                        if (debug) {
-                            console_debug_log(`Before setFieldValue(${key}, ${calculatedValue})`);
-                        }
-                        setFieldValue(key, calculatedValue);
-                        if (debug) {
-                            console_debug_log(`After setFieldValue(${key}, ${calculatedValue})`);
-                        }
-                    } else {
-                        console.error('calculatedValue is:', calculatedValue);
-                    }
+            const inputs = document.getElementsByName(key);
+            if (inputs.length > 0) {
+                let calculatedValue = null;
+                try {
+                    // calculatedValue = eval(formula);
+                    calculatedValue = formula(inputs);
+                } catch (error) {
+                    console.error('Error calculating value:', error);
                 }
+                if (debug) {
+                    console_debug_log(`calculatedValue: ${calculatedValue} `);
+                }
+                if (!isNaN(calculatedValue)) {
+                    if (debug) {
+                        console_debug_log(`Before setFieldValue(${key}, ${calculatedValue})`);
+                    }
+                    setFieldValue(key, calculatedValue);
+                    if (debug) {
+                        console_debug_log(`After setFieldValue(${key}, ${calculatedValue})`);
+                    }
+                } else {
+                    console.error('calculatedValue is:', calculatedValue);
+                }
+            }
             // }
         }
     }
-    
+
+    const customOnChange = (e) => {
+        // This allows "component" fields to updated the Formik form values
+        setFieldValue(e.target.name, e.target.value);
+    }
+
     addCalculation(currentObj);
 
     const input_type = (
-        ['number', 'integer'].includes(currentObj.type) ? 
+        ['number', 'integer'].includes(currentObj.type) ?
             'number' : currentObj.type
     )
 
@@ -344,7 +412,7 @@ const PutOneFormfield = ({
             className={INVALID_FEEDBACK_CLASS}
         />
     );
-    
+
     switch (currentObj.type) {
         case 'select_component':
             elementInput = (
@@ -357,12 +425,15 @@ const PutOneFormfield = ({
                     className={fieldClass}
                     onBlur={runCalculation}
                 >
-                    <currentObj.component />
+                    <currentObj.component
+                        currentObj={currentObj}
+                        dbRow={dbRow}
+                    />
                 </Field>
             );
             break;
         case 'select':
-            elementInput =  (
+            elementInput = (
                 <Field
                     name={idName}
                     id={idName}
@@ -377,23 +448,27 @@ const PutOneFormfield = ({
             );
             break;
         case 'component':
-            elementInput =  (
+            elementInput = (
                 <currentObj.component
-                    // dbRow={initialValue}
                     value={initialValue}
                     name={idName}
                     id={idName}
                     disabled={readOnlyfield}
                     required={currentObj.required && !readOnlyfield}
+                    readOnly={readOnlyfield}
                     className={fieldClass}
                     onBlur={runCalculation}
                     showAsField="1"
+                    onChange={customOnChange}
+                    setValue={setFieldValue}
+                    currentObj={currentObj}
+                    dbRow={dbRow}
                 />
             );
             break;
         case 'suggestion_dropdown':
             idName = `${currentObj.name}-input`
-            elementInput =  (
+            elementInput = (
                 <SuggestionDropdown
                     name={currentObj.name}
                     id={currentObj.name}
@@ -409,7 +484,7 @@ const PutOneFormfield = ({
         case 'label':
             elementLabel = '';
             elementError = '';
-            elementInput =  (
+            elementInput = (
                 <div key={idName}>
                     <label
                         className={divFieldClass}
@@ -417,6 +492,23 @@ const PutOneFormfield = ({
                         {currentObj.label}
                     </label>
                 </div>
+            );
+            break;
+        case 'h1':
+        case 'h2':
+        case 'h3':
+        case 'h4':
+        case 'h5':
+        case 'h6':
+            elementLabel = '';
+            elementError = '';
+            elementInput = (
+                <GetHTag
+                    tag={currentObj.type}
+                    key={idName}
+                >
+                    {currentObj.label}
+                </GetHTag>
             );
             break;
         case 'hr':
@@ -445,7 +537,7 @@ const PutOneFormfield = ({
             );
             if (typeof currentObj.component === 'undefined') {
                 // Normal input field
-                elementInput =  (
+                elementInput = (
                     <Field
                         key={idName}
                         name={idName}
@@ -459,7 +551,7 @@ const PutOneFormfield = ({
                 );
             } else {
                 // Component input field
-                elementInput =  (
+                elementInput = (
                     <currentObj.component
                         value={initialValue}
                         name={idName}
@@ -483,15 +575,16 @@ const PutOneFormfield = ({
             >
                 {elementInput}
                 {chatbot_popup && currentObj.aux_component !== null && (
-                    <currentObj.aux_component
+                    <ChatBotButtonGeneric
+                        AuxComponent={currentObj.aux_component}
                         valueElement={idName}
-                        chatbot_prompt={chatbot_prompt}
+                        chatbotPrompt={chatbot_prompt}
                     />
                 )}
                 {google_popup && (
                     <SearchEngineButton
                         valueElement={idName}
-                        google_prompt={google_prompt}
+                        googlePrompt={google_prompt}
                     />
                 )}
             </div>
@@ -499,7 +592,12 @@ const PutOneFormfield = ({
     }
 
     if (debug) {
-        console_debug_log(`PutOneFormfield | Field (key): ${currentObj.name} | className: ${divFieldClass} | elementLabel: ${elementLabel}`);
+        console.debug("PutOneFormfield",
+            " | Field (key): ", currentObj.name,
+            " | type: ", currentObj.type,
+            " | initialValue: ", initialValue,
+            " | className: ", divFieldClass,
+            " | elementLabel: ", elementLabel);
     }
 
     return (
@@ -528,13 +626,25 @@ const EditFormFormik = (
         currentUser,
     }
 ) => {
-    const [formData, setFormData] = useState({
+    const [state, dispatch] = useReducer(editFormReducer, {
         readyToShow: false,
         dataset: null,
         canCommit: null,
         message: null,
         messageType: null,
     });
+    const {
+        readyToShow,
+        dataset: editDataset,
+        canCommit,
+        message: editMessage,
+        messageType: editMessageType
+    } = state;
+
+    if (debug) console_debug_log('>> EditFormFormik | readyToShow:', readyToShow, '*dataset:', dataset, '*editDataset:', editDataset, 'canCommit:', canCommit, '*message:', message, '*editMessage:', editMessage, '*messageType:', messageType, '*editMessageType:', editMessageType);
+
+    const setFormData = (payload) => dispatch({ type: 'SET_EDIT_FORM_DATA', payload });
+
     if (debug) console_debug_log(`>> 1 >> EditFormFormik | dataset:`, dataset, 'editor:', editor, 'action:', action);
 
     useEffect(() => {
@@ -557,7 +667,6 @@ const EditFormFormik = (
                 editor, 'dbPreValidations', dataset, action, currentUser
             ).then(
                 funcResponse => {
-                    if (debug) console_debug_log(`>> 2 >> EditFormFormik | BEFORE dbPreValidations > funcResponse:`, funcResponse);
                     setFormData(
                         {
                             readyToShow: true,
@@ -589,21 +698,23 @@ const EditFormFormik = (
         ]
     );
 
-    if (!formData['readyToShow']) {
-        // return '';
+    if (!readyToShow) {
         return (
-            WaitAnimation()
+            WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
         );
     }
 
-    if (!formData['canCommit'] === null) {
-        formData['canCommit'] = false;
+    let finalCanCommit = canCommit;
+    if (finalCanCommit === null) {
+        finalCanCommit = false;
     }
-    if (!formData['message'] === null) {
-        formData['message'] = message;
+    let finalMessage = editMessage;
+    if (finalMessage === null) {
+        finalMessage = message;
     }
-    if (!formData['messageType'] === null) {
-        formData['messageType'] = messageType;
+    let finalMessageType = editMessageType;
+    if (finalMessageType === null || finalMessageType === '') {
+        finalMessageType = messageType;
     }
 
     return (
@@ -612,10 +723,11 @@ const EditFormFormik = (
             parenHandleCancel: parenHandleCancel,
             setInfoMsg: setInfoMsg,
             action: action,
-            dataset: formData['dataset'],
-            canCommit: formData['canCommit'],
-            message: formData['message'],
-            messageType: formData['messageType'],
+            dataset: editDataset,
+            canCommit: finalCanCommit,
+            message: finalMessage,
+            messageType: finalMessageType,
+
             handleFormPageActions: handleFormPageActions,
             theme: theme,
             currentUser: currentUser,
@@ -636,6 +748,9 @@ const EditFormFormikFinal = ({
     theme,
     currentUser,
 }) => {
+
+    if (debug) console.debug('>> EditFormFormikFinal | dataset:', dataset, 'message:', message, 'messageType:', messageType);
+
     const editorFlags = getEditorFlags(action);
     const initialFieldValues = getFieldElementsDbValues(editor, dataset);
     const rowId = initialFieldValues[editor.primaryKeyName];
@@ -687,7 +802,11 @@ const EditFormFormikFinal = ({
             enableReinitialize={true}
             initialValues={initialFieldValues}
             //
-            // Todo: THIS DOESN'T WORK IN ACTION=CREATION
+            // TODO: getFieldElementsYupValidations didn't work with action=CREATION
+            // For example it has issues on the user creation (OpenAI API key and model are not mandatory
+            // but it is still requesting those fields to have any value).
+            // Therefore, we are disabling the Yup validations for now.
+            //
             // validationSchema={Yup.object().shape(
             //     getFieldElementsYupValidations(editor, editorFlags)
             // )}
@@ -783,7 +902,7 @@ const EditFormFormikFinal = ({
                                                     error => {
                                                         console_debug_log('dbPostWrite [EFFF-010] | error:', error);
                                                         setSubmitting(false);
-                                                        setStatus(errorAndReEnter(error.errorMsg, '[EFFF-010]'));
+                                                        setStatus(getErrorMsgFromApi(error, '[EFFF-010]'));
                                                     }
                                                 )
                                             }
@@ -791,21 +910,21 @@ const EditFormFormikFinal = ({
                                         (error) => {
                                             console_debug_log('saveRowToDatabase [EFFF-020] | error:', error);
                                             setSubmitting(false);
-                                            setStatus(errorAndReEnter(error, 'EFFF-020'));
+                                            setStatus(getErrorMsgFromApi(error, '[EFFF-020]'));
                                         }
                                     );
                                 },
                                 error => {
                                     console_debug_log('dbPreWrite [EFFF-030] | error:', error);
                                     setSubmitting(false);
-                                    setStatus(errorAndReEnter((error.errorMsg, 'EFFF-030')));
+                                    setStatus(getErrorMsgFromApi(error, '[EFFF-030]'));
                                 }
                             )
                         },
                         error => {
                             console_debug_log('validations [EFFF-040] | error:', error);
                             setSubmitting(false);
-                            setStatus(errorAndReEnter(error.errorMsg, 'EFFF-040'));
+                            setStatus(getErrorMsgFromApi(error, '[EFFF-040]'));
                         }
                     );
 
@@ -831,6 +950,7 @@ const EditFormFormikFinal = ({
                             touched={touched}
                             initialValue={initialFieldValues[htmlElement[1].name]}
                             theme={theme}
+                            dbRow={dataset}
                         />
                     })}
                     <div
@@ -851,7 +971,7 @@ const EditFormFormikFinal = ({
                                             : MSG_ACTION_UPDATE}
                                 </GsButton>
                                 {isSubmitting && (
-                                    WaitAnimation()
+                                    WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
                                 )}
                             </>
                         )}
@@ -866,7 +986,7 @@ const EditFormFormikFinal = ({
                     </div>
                     {status &&
                         <div className={ERROR_MSG_CLASS}>
-                            {status}
+                            {errorAndReEnter(status)}
                         </div>
                     }
                 </Form>
@@ -892,10 +1012,10 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
         }
         let ChildElement = htmlElement[1];
         if (String(ChildElement).includes('component:')) {
-                if (debug) {
-                    console_debug_log("iterateChildComponents - ChildElement).includes('component:')");
-                }
-                ChildElement = htmlElement[1]().component;
+            if (debug) {
+                console_debug_log("iterateChildComponents - ChildElement).includes('component:')");
+            }
+            ChildElement = htmlElement[1]().component;
         }
         if (debug) {
             console_debug_log("iterateChildComponents - ChildElement with parentData (initialFieldValues):", initialFieldValues);
@@ -905,6 +1025,7 @@ const iterateChildComponents = (editor, dataset, handleFormPageActions) => {
                 key={'ChildElement_' + htmlElement[0]}
                 className={APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS}
             >
+                <hr />
                 <ChildElement
                     parentData={initialFieldValues}
                     handleFormPageActions={handleFormPageActions}
@@ -924,26 +1045,32 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
         delete initialValues["resultset"];
     }
     if (editor.type === "child_listing") {
-        // Build the format for child table
-        // Example:
-        // {
-        //     "user_id": "{{TEST_USER_ID}}",
-        //     "food_times": {
-        //         "food_moment_id": "test_food_moment_id_2",
-        //         "food_time": "10:00"
-        //     },
-        //     "food_times_old": {
-        //         "food_moment_id": "test_food_moment_id_1"
-        //     }
-        // }
-        rowId = null;
-        rowToSave = editor.parentKeyNames.reduce((acc, keyPair) => {
+        // Add the parent id to the child object
+        rowToSave = editor.endpointKeyNames.reduce((acc, keyPair) => {
             acc[keyPair.parameterName] = // parent table 'id' field name
                 editor.parentData[keyPair.parentElementName]; // parent table 'id' value
             return { ...acc };
         }, {});
-        rowToSave[editor.array_name] = submitedtElements; // array object in the parent row with new values
-        rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
+        if (editor.subType === "array") {
+            // Build the format for child array
+            // Example:
+            // {
+            //     "user_id": "{{TEST_USER_ID}}",
+            //     "food_times": {
+            //         "food_moment_id": "test_food_moment_id_2",
+            //         "food_time": "10:00"
+            //     },
+            //     "food_times_old": {
+            //         "food_moment_id": "test_food_moment_id_1"
+            //     }
+            // }
+            rowId = null;
+            rowToSave[editor.array_name] = submitedtElements; // array object in the parent row with new values
+            rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
+        } else {
+            // Build the format for child external table, merging the parent id to the child object
+            rowToSave = { ...submitedtElements, ...rowToSave };
+        }
     }
     // Save the row to Database
     const dbService = new dbApiService({ url: editor.dbApiUrl });
@@ -1021,6 +1148,12 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
                 }
             } else if (verifyElementExistence(dataset, currentObj.name)) {
                 responseObj = dataset[currentObj.name];
+                if (responseObj === null || responseObj === undefined) {
+                    // To avoid the warning "Warning:
+                    // `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components"
+                    // in fileds like users table "openai_api_key" and "openai_model" that has no default values and come null from the database
+                    responseObj = '';
+                }
             } else if (defaultValues) {
                 responseObj = setDefaultFieldValue(currentObj);
             }
@@ -1028,9 +1161,14 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
                 responseObj = currentObj['force_value'];
             }
             switch (currentObj.type) {
-                // case 'component':
                 case 'label':
                 case 'hr':
+                case 'h1':
+                case 'h2':
+                case 'h3':
+                case 'h4':
+                case 'h5':
+                case 'h6':
                     // Excluded types
                     break;
                 default:
@@ -1047,11 +1185,14 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
     return response;
 };
 
-export const getFieldElementsYupValidations = (editor, editorFlags) => {
+const getFieldElementsYupValidations = (editor, editorFlags) => {
     if (editorFlags.isDelete) {
         return {};
     }
     const response = editor.fieldElements
+        .filter((currentObj) => {
+            return !["label", "hr", "h1", "h2", "h3", "h4", "h5", "h6"].includes(currentObj.type);
+        })
         .reduce((acc, currentObj) => {
             let responseObj = Yup; // https://github.com/jquense/yup
             switch (currentObj.type) {
@@ -1087,5 +1228,6 @@ export const getFieldElementsYupValidations = (editor, editorFlags) => {
             acc[currentObj.name] = responseObj;
             return { ...acc };
         }, {});
+    if (debug) console_debug_log('getFieldElementsYupValidations | response:', response);
     return response;
 };

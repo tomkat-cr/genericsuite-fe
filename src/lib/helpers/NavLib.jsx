@@ -1,81 +1,80 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { console_debug_log } from '../services/logging.service.jsx';
 import {
-    APP_SIDE_MENU_BG_COLOR_CLASS,
-    MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
-    MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
-    NAVBAR_HEADER_FOR_TOP_MENU_CLASS,
-    NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS,
-    NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS,
-    NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS,
-    NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS,
-    NAVBAR_TOGGLE_BUTTON_CLASS,
-    NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
-    NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
-    NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
-    NAV_LINK_BUTTON_TOP_MENU_CLASS,
-    NAV_LINK_BUTTON_HAMBURGER_CLASS,
-    NAV_LINK_BUTTON_SIDE_MENU_CLASS,
-    NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
-    NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
-    NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
-    NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS,
-    NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS,
-    NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS,
-    NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS,
-    NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS,
-    NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS,
-    NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
-    NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS,
-    NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS,
-    NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS,
-    NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS,
-    NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS,
-    NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS,
-    NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
-    NAV_LINK_BUTTON_MOBILE_MENU_CLASS,
-    NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS,
-    NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS,
-    NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS,
-    NAVBAR_MOBILE_MENU_DIV_1_CLASS,
-    NAVBAR_MOBILE_MENU_DIV_2_CLASS,
-    NAVBAR_MOBILE_MENU_H2_CLASS,
-    NAVBAR_MOBILE_CLOSE_BUTTON_CLASS,
-    NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS,
-    NAVBAR_MOBILE_NAV_CLASS,
-    NAVBAR_MOBILE_MENU_DIV_3_CLASS,
-    NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS,
-    NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS,
-    NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
-    NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS,
-    NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
-    APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS,
-    NAVBAR_HEADER_FOR_SIDE_MENU_CLASS,
-    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS,
-    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS,
-    NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS,
-    // NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN,
-    NAVBAR_TEXT_CLASS,
-    NAVBAR_TOGGLE_IMAGE_CLASS,
-    NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS,
-    APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS,
-    NAVBAR_TOP_FOR_SIDE_MENU_CLASS,
     APP_FOOTER_CONTAINER_CLASS,
-    CENTERED_BOX_CONTAINER_DIV_1_CLASS,
-    CENTERED_BOX_CONTAINER_DIV_3_CLASS,
+    APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS,
     APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS,
-    CENTERED_BOX_CONTAINER_DIV_2_CLASS,
+    APP_SECTION_CONTAINER_FOR_TOP_MENU_CLASS,
     BUTTON_PRIMARY_CLASS,
     BUTTON_SECONDARY_CLASS,
-    NAV_LINK_ICON_CLASS,
-    VERTICALLY_CENTERED_CLASS,
-    TOP0_Z50_CLASS,
+    CENTERED_BOX_CONTAINER_DIV_1_CLASS,
+    CENTERED_BOX_CONTAINER_DIV_2_CLASS,
+    CENTERED_BOX_CONTAINER_DIV_3_CLASS,
     HIDDEN_CLASS,
+    MAIN_CONTAINER_FOR_SIDE_MENU_CLASS,
+    MAIN_CONTAINER_FOR_TOP_MENU_CLASS,
+    NAVBAR_BRAND_ELEMENTS_FOR_SIDE_MENU_CLASS,
+    NAVBAR_BRAND_ELEMENTS_FOR_TOP_MENU_CLASS,
+    NAVBAR_HEADER_FOR_SIDE_MENU_CLASS,
+    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS,
+    NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS,
+    NAVBAR_HEADER_FOR_TOP_MENU_CLASS,
+    NAVBAR_MOBILE_CLOSE_BUTTON_CLASS,
+    NAVBAR_MOBILE_CLOSE_BUTTON_ICON_CLASS,
+    NAVBAR_MOBILE_MENU_DIV_1_CLASS,
+    NAVBAR_MOBILE_MENU_DIV_2_CLASS,
+    NAVBAR_MOBILE_MENU_DIV_3_CLASS,
+    NAVBAR_MOBILE_MENU_H2_CLASS,
+    NAVBAR_MOBILE_NAV_CLASS,
+    // NAVBAR_BRAND_HIDDEN_IF_LARGE_SCREEN,
+    NAVBAR_TEXT_CLASS,
+    NAVBAR_TOGGLE_BUTTON_CLASS,
+    NAVBAR_TOGGLE_IMAGE_CLASS,
+    NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS,
+    NAVBAR_TOP_CENTER_MENU_ON_TOP_CLASS,
+    NAVBAR_TOP_FOR_SIDE_MENU_CLASS,
+    NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS,
+    NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS,
     NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS,
+    NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS,
+    NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS,
+    NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS,
+    NAV_DROPDOWN_IMAGE_HAMBURGER_CLASS,
+    NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS,
+    NAV_DROPDOWN_IMAGE_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
+    NAV_DROPDOWN_INNER_DIV_HAMBURGER_CLASS,
+    NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS,
+    NAV_DROPDOWN_INNER_DIV_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_INNER_DIV_TOP_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_TOP_DIV_HAMBURGER_CLASS,
+    NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_TOP_DIV_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
+    NAV_DROPDOWN_TOP_DIV_HAMBURGER_CLASS,
+    NAV_DROPDOWN_TOP_DIV_MOBILE_MENU_CLASS,
+    NAV_DROPDOWN_TOP_DIV_SIDE_MENU_CLASS,
+    NAV_DROPDOWN_TOP_DIV_TOP_MENU_CLASS,
+    NAV_LINK_BUTTON_HAMBURGER_CLASS,
+    NAV_LINK_BUTTON_MOBILE_MENU_CLASS,
+    NAV_LINK_BUTTON_SIDE_MENU_CLASS,
+    NAV_LINK_BUTTON_TOP_MENU_CLASS,
+    NAV_LINK_ICON_CLASS,
+    NAV_LINK_TOP_DIV_HAMBURGER_CLASS,
+    NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS,
+    NAV_LINK_TOP_DIV_SIDE_MENU_CLASS,
+    NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
+    TOP0_Z50_CLASS,
+    VERTICALLY_CENTERED_CLASS
 } from '../constants/class_name_constants.jsx';
-import { GsIcons } from './IconsLib.jsx';
+import { console_debug_log } from '../services/logging.service.jsx';
 import { useAppContext } from './AppContext.jsx';
+import { GsIcons } from './IconsLib.jsx';
 import { useUser } from './UserContext.jsx';
 
 // Containers
@@ -117,7 +116,7 @@ export const AppSectionContainer = ({ children }) => {
     );
 }
 
-export const AppSectionContainerForSideMenu = ( { children }) => {
+export const AppSectionContainerForSideMenu = ({ children }) => {
     /* App section inner container for side menu */
     if (debug) console_debug_log("||||| AppSectionContainerForSideMenu");
     return (
@@ -185,16 +184,16 @@ export const Navbar = ({ children, collapseOnSelect, expand }) => {
         if (isWide) {
             return (
                 <>
-                <nav
-                    id='navbar-side-menu'
-                    className={`${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`}
+                    <nav
+                        id='navbar-side-menu'
+                        className={`${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`}
                     >
-                    {children}
-                </nav>
-                <ToggleSideBar
-                    onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
+                        {children}
+                    </nav>
+                    <ToggleSideBar
+                        onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
                     />
-            </>);
+                </>);
         }
         return null;
     }
@@ -345,7 +344,7 @@ const NavbarToggle = () => {
         <button
             id="navbar-main-toggle"
             onClick={toggleMobileMenu}
-            className={NAVBAR_TOGGLE_BUTTON_CLASS + (isWide ? " " + HIDDEN_CLASS : "") }
+            className={NAVBAR_TOGGLE_BUTTON_CLASS + (isWide ? " " + HIDDEN_CLASS : "")}
         >
             <GsIcons
                 icon="menu-hamburger"
@@ -393,21 +392,14 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 
 export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode }) => {
     const { expandedMenus, toggleSubmenu, theme, isWide } = useAppContext();
-    const [dropDownOpen, setDropDownOpen] = useState(false);
     const fullId = `${id}_${type}`;
+    const isExpanded = expandedMenus.includes(fullId);
 
     if (debug) console_debug_log(`||||| NavDropdown | id: ${id} | fullId: ${fullId}`, children);
 
     const toggledropDownOpen = () => {
-        const elementId = `${fullId}_dropDown`;
-        const element = document.getElementById(elementId);
-        if (dropDownOpen) {
-            element.classList.add('hidden');
-        } else {
-            element.classList.remove('hidden');
-        }
-        if (debug) console_debug_log(`>>--> NavDropdown | toggledropDownOpen | elementId: ${elementId} | previous dropDownOpen: ${dropDownOpen}`);
-        setDropDownOpen(!dropDownOpen);
+        if (debug) console_debug_log(`>>--> NavDropdown | toggledropDownOpen | fullId: ${fullId} | previous isExpanded: ${isExpanded}`);
+        toggleSubmenu(fullId, !isExpanded);
     };
 
     const variantsDirectionImage = {
@@ -446,22 +438,28 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
     };
 
     useEffect(() => {
-        if (debug) console_debug_log(`SideMenu | useEffect | dropDownOpen: ${dropDownOpen}`);
-        // variantOnClick(fullId);
-        toggleSubmenu(fullId, dropDownOpen);
-    }, [dropDownOpen, fullId]);
+        const elementId = `${fullId}_dropDown`;
+        const element = document.getElementById(elementId);
+        if (element) {
+            if (isExpanded) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+    }, [isExpanded, fullId]);
 
     useEffect(() => {
         const elementId = `${fullId}_submenu_image`;
         const element = document.getElementById(elementId);
         if (element) {
-            if (expandedMenus.includes(fullId)) {
+            if (isExpanded) {
                 element.classList.add('rotate-90');
             } else {
                 element.classList.remove('rotate-90');
             }
         }
-    }, [dropDownOpen, fullId, expandedMenus]);
+    }, [isExpanded, fullId]);
 
     const directionImage = variantsDirectionImage[type] || '';
     const variantStyleTopDiv = variantsTopDiv[type] || '';
@@ -498,7 +496,7 @@ export const NavDropdown = ({ children, title, id, type, icon, mobileMenuMode })
                             return null;
                         }
                         return React.cloneElement(child, {
-                            closeParent: () => toggledropDownOpen(),
+                            closeParent: () => toggleSubmenu(fullId, false),
                         });
                     }
                     )
@@ -540,7 +538,7 @@ const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, clos
                     to={to}
                     onClick={(e) => {
                         if (debug) console_debug_log(`>>--> NavDropdownItem | 1) Called NavDropdown child and closes the dropdown... | e:`, e);
-                        closeParent();
+                        if (closeParent) closeParent();
                         if (onClick) {
                             onClick(e);
                         }
@@ -554,7 +552,7 @@ const NavDropdownItem = ({ children, as, to, onClick, reloadDocument, type, clos
                     className={variantStyleButton}
                     onClick={(e) => {
                         if (debug) console_debug_log(`>>--> NavDropdownItem | 2) Called NavDropdown child and closes the dropdown... | e:`, e);
-                        closeParent();
+                        if (closeParent) closeParent();
                         if (onClick) {
                             onClick(e);
                         }
@@ -656,7 +654,7 @@ const NavLink = ({ children, as, to, onClick, reloadDocument, type, mobileMenuMo
         >
             <As
                 to={to}
-                // onClick={onClick}
+                onClick={onClick}
                 className={variantStyleButton}
             >
                 {children}

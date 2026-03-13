@@ -1,28 +1,25 @@
-import React from 'react'
+import React from 'react';
 
 import ReactMarkdown from 'react-markdown';
 
-import { ModalPopUp } from '../../helpers/ModalPopUp.jsx'
-import { hasHashRouter } from '../../helpers/history.jsx'
 import {
-    renderMarkdownContent,
-    CopyButton,
-} from '../../helpers/ui.jsx';
-import {
-    ALERT_DANGER_CLASS,
     ALERT_SUCCESS_CLASS,
     APP_GENERAL_MARGINS_CLASS,
-    MARKDOWN_BOLD_CLASS,
-    MARKDOWN_ITALIC_CLASS,
-    MARKDOWN_P_CLASS,
-    MARKDOWN_UNDERLINE_CLASS,
-} from '../../constants/class_name_constants.jsx'
+    MARKDOWN_P_CLASS
+} from '../../constants/class_name_constants.jsx';
+import { hasHashRouter } from '../../helpers/history.jsx';
+import { ModalPopUp } from '../../helpers/ModalPopUp.jsx';
+import { getWindowLocationOrigin } from '../../helpers/navigation.jsx';
+import {
+    CopyButton,
+    renderMarkdownContent,
+} from '../../helpers/ui.jsx';
 
 export const About = () => {
     return (
         <ModalPopUp
             title='About'
-            link={`${window.location.origin}${hasHashRouter ? '/#' : ''}/about_body?menu=0`}
+            link={`${getWindowLocationOrigin()}${hasHashRouter ? '/#' : ''}/about_body?menu=0`}
         />
     )
 }
@@ -39,12 +36,12 @@ export const AboutBody = ({
         >
             <h1>About {appName}</h1>
             <p>(Version: {(version && version !== '') ? version : "N/A"})</p>
-            <br/>
+            <br />
             {children}
             {modalPopUpTest && (
                 <ModalPopUp
                     title='Test ModalPopUp'
-                    showTitle={true}    
+                    showTitle={true}
                     // iconClassName={ALERT_DANGER_CLASS}
                     iconClassName={ALERT_SUCCESS_CLASS}
                     primaryButtonMessage={"Login Again"}
@@ -59,14 +56,14 @@ export const AboutBody = ({
                             li: ({ children }) => <li className={MARKDOWN_P_CLASS}>* {children}</li>,
                         }}
                     >
-- This is a bullet point with _Italic_ and **Boldface** with markdown syntax.
+                        - This is a bullet point with _Italic_ and **Boldface** with markdown syntax.
                     </ReactMarkdown>
                     <ReactMarkdown
                         components={{
                             li: ({ children }) => <li className={MARKDOWN_P_CLASS}>* {children}</li>,
                         }}
                     >
-- This is another bullet point.
+                        - This is another bullet point.
                     </ReactMarkdown>
                     <ReactMarkdown>
                         ```

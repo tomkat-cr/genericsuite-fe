@@ -64,12 +64,12 @@ help() {
 }
 
 run_build() {
-    echo "Building React app... (${RUN_METHOD} / ${ENV_TYPE})"
+    echo "Building React app... (${RUN_BUNDLER} / ${ENV_TYPE})"
     if [ "${ENV_TYPE}" = "prod" ]; then
         echo "Building for production..."
-        if [ "${RUN_METHOD}" = "webpack" ]; then
+        if [ "${RUN_BUNDLER}" = "webpack" ]; then
             run_command="npx webpack --mode production"
-        elif [ "${RUN_METHOD}" = "vite" ]; then
+        elif [ "${RUN_BUNDLER}" = "vite" ]; then
             run_command="npx vite build"
         else
             run_command="npx react-app-rewired build"
@@ -81,9 +81,9 @@ run_build() {
         fi
     else
         echo "Building for development (${ENV_TYPE})..."
-        if [ "${RUN_METHOD}" = "webpack" ]; then
+        if [ "${RUN_BUNDLER}" = "webpack" ]; then
             run_command="npx webpack --mode development"
-        elif [ "${RUN_METHOD}" = "vite" ]; then
+        elif [ "${RUN_BUNDLER}" = "vite" ]; then
             run_command="npx vite build"
         else
             run_command="npx react-app-rewired build"
@@ -117,8 +117,8 @@ if [ -z "${ACTION}" ]; then
     help
 fi
 
-RUN_METHOD="$2"
-if [ "${RUN_METHOD}" = "" ]; then
+RUN_BUNDLER="$2"
+if [ "${RUN_BUNDLER}" = "" ]; then
     help
 fi
 

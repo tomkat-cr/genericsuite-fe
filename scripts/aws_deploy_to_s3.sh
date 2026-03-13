@@ -33,10 +33,8 @@ cd "${REPO_BASEDIR}"
 
 # Defaults
 
-if [ "${RUN_METHOD}" = "" ]; then
-    RUN_METHOD="vite"
-    # RUN_METHOD="webpack"
-    # RUN_METHOD="react-scripts"
+if [ "${RUN_BUNDLER}" = "" ]; then
+    RUN_BUNDLER="vite"
 fi
 
 UPDATE_BUILD="1"
@@ -370,7 +368,7 @@ fi
 
 if [ "${ERROR_MSG}" = "" ]; then
 
-    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_METHOD}
+    sh "${SCRIPTS_DIR}/run_method_dependency_manager.sh" install ${RUN_BUNDLER}
 
     export TSCONFIG_BASE_URL=$(perl -ne 'print $1 if /"baseUrl":\s*"([^"]*)"/' tsconfig.json)
     echo "tsconfig.json TSCONFIG_BASE_URL was: ${TSCONFIG_BASE_URL}"
@@ -408,13 +406,13 @@ if [ "${ERROR_MSG}" = "" ]; then
         # during the build process, because the 'static' is a symlink, not a directory
         remove_symlinks
 
-        echo "Building React app... (${RUN_METHOD})"
+        echo "Building React app... (${RUN_BUNDLER})"
 
         if [ "$1" = "prod" ]; then
             echo "Building for production..."
-            if [ "${RUN_METHOD}" = "webpack" ]; then
+            if [ "${RUN_BUNDLER}" = "webpack" ]; then
                 run_command="npx webpack --mode production"
-            elif [ "${RUN_METHOD}" = "vite" ]; then
+            elif [ "${RUN_BUNDLER}" = "vite" ]; then
                 run_command="npx vite build"
             else
                 run_command="npx react-app-rewired build"
@@ -426,9 +424,9 @@ if [ "${ERROR_MSG}" = "" ]; then
             fi
         else
             echo "Building for development ($1)..."
-            if [ "${RUN_METHOD}" = "webpack" ]; then
+            if [ "${RUN_BUNDLER}" = "webpack" ]; then
                 run_command="npx webpack --mode development"
-            elif [ "${RUN_METHOD}" = "vite" ]; then
+            elif [ "${RUN_BUNDLER}" = "vite" ]; then
                 run_command="npx vite build"
             else
                 run_command="npx react-app-rewired build"

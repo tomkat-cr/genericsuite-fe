@@ -1,40 +1,39 @@
 // Authentication service
 
-import { Buffer } from 'buffer'
+import { Buffer } from 'buffer';
 
-import { logout, currentUserSubject } from './logout.service.jsx';
-import { dbApiService } from './db.service.jsx';
-import { gsFetch } from './fetch.utilities.jsx';
-import { convertId } from './id.utilities.jsx';
-import { console_debug_log } from './logging.service.jsx';
 import { getLocalConfig } from '../helpers/local-config.jsx';
 import { saveItemToLocalStorage } from '../helpers/localstorage-manager.jsx';
+import { dbApiService } from './db.service.jsx';
+import { getBaseApiUrl, gsFetch } from './fetch.utilities.jsx';
+import { convertId } from './id.utilities.jsx';
+import { console_debug_log } from './logging.service.jsx';
+import { currentUserSubject, logout } from './logout.service.jsx';
 
 const debug = false;
-
 export const authenticationService = {
     login,
     logout,
     currentUser: currentUserSubject.asObservable(),
-    get currentUserValue () { return currentUserSubject.value }
+    get currentUserValue() { return currentUserSubject.value }
 };
 
 function login(username, password) {
     const config = {
-        apiUrl: process.env.REACT_APP_API_URL
+        apiUrl: getBaseApiUrl()
     }
     // FA-62 - FE: Find a replacement for btoa()
     const requestOptions = {
         method: 'POST',
         headers: {
-            "Authorization":  "Basic " + Buffer.from(
+            "Authorization": "Basic " + Buffer.from(
                 username + ":" + password
             ).toString('base64')
         },
     };
     return gsFetch(`${config.apiUrl}/users/login`, requestOptions)
         .then(res => {
-            if(res.error) {
+            if (res.error) {
                 return Promise.reject(res.message);
             }
             let user = {
@@ -100,21 +99,65 @@ export const getCurrentUserData = () => {
         );
 }
 
-export const verifyCurrentUser = (registerUser) => {
+export const verifyCurrentUser = (registerUser, currentUser, setAskForLogin) => {
+    if (currentUser) {
+        // Avoid multiple calls to setCurrentUser
+        if (debug) console_debug_log("verifyCurrentUser() | currentUser already set");
+        return;
+    }
     if (authenticationService && typeof authenticationService.currentUserValue !== 'undefined' && authenticationService.currentUserValue) {
         getCurrentUserData()
-            .then( 
+            .then(
                 userData => {
-                    if (debug) console_debug_log("LoginPage | call to setCurrentUser with 'user' userData # 1:", userData);
-                    if (userData.error) {
-                        if (debug) console.error('userData.error_message:', userData.error_message);
+                    if (typeof userData.error !== 'undefined' && userData.error) {
+                        console.error("verifyCurrentUser() | userData.errorMsg:", userData.errorMsg);
+                        setAskForLogin(true);
                     } else {
+                        if (debug) console_debug_log("verifyCurrentUser() | call to setCurrentUser with userData:", userData);
                         registerUser(getUserLocalData(userData));
                     }
                 },
                 error => {
+                    setAskForLogin(true);
                     console.error(error.errorMsg);
                 }
             );
+    } else {
+        setAskForLogin(true);
     }
 }
+
+/*
+ * Get User Data cache
+ */
+
+let userDataCache = {};
+const inFlightRequests = {};
+
+export const getUserDataCache = (userId) => {
+    if (userDataCache[userId]) {
+        return Promise.resolve(userDataCache[userId]);
+    }
+
+    if (inFlightRequests[userId]) {
+        return inFlightRequests[userId];
+    }
+
+    const request = getUserData(userId).then(data => {
+        delete inFlightRequests[userId];
+        if (!data.error) {
+            setUserDataCache(userId, data);
+        }
+        return data;
+    }).catch(error => {
+        delete inFlightRequests[userId];
+        throw error;
+    });
+
+    inFlightRequests[userId] = request;
+    return request;
+};
+
+export const setUserDataCache = (userId, userData) => {
+    userDataCache[userId] = Object.assign({}, userData);
+};

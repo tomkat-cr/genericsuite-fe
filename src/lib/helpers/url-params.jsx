@@ -3,6 +3,14 @@ import { console_debug_log } from "../services/logging.service.jsx";
 const debug = false;
 
 export function getUrlParams(props = window) {
+    /*
+    Get query parameters / url parameters
+
+    Example:
+        const getUrlParams = gs.urlParams.getUrlParams;
+        const urlParams = getUrlParams();
+        noMenu = (urlParams.menu && urlParams.menu === "0"),
+    */
     let urlParams = {};
     let searchString;
     if (debug) console_debug_log('getUrlParams | props:', props);
@@ -17,12 +25,16 @@ export function getUrlParams(props = window) {
                 if (searchString.startsWith('?')) {
                     // Remove only the leading '?', do not split by other '?' inside values
                     searchString = searchString.slice(1);
+                } else if (searchString.indexOf('?') > -1) {
+                    // Remove everything after the first '?', do not split by other '?' inside values
+                    searchString = searchString.substring(searchString.indexOf('?') + 1);
                 }
+
                 if (searchString === '') {
                     return urlParams;
                 }
                 let keyPairs = searchString.split("&");
-                if(Array.isArray(keyPairs)) {
+                if (Array.isArray(keyPairs)) {
                     for (let i = 0; i < keyPairs.length; i++) {
                         const keyPairString = keyPairs[i];
                         const [rawKey, ...rest] = keyPairString.split('=');
@@ -53,7 +65,7 @@ export function getUrlParams(props = window) {
                     urlParams = props.match.params;
                 }
             }
-        }   
+        }
     } catch (error) {
         console.log(`getUrlParams ERROR | ${props}`);
         console.error(error)

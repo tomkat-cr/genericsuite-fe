@@ -1,53 +1,75 @@
 // GenericCrudEditor single page editor
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 
-import { 
+import { errorAndReEnter } from '../helpers/error-and-reenter.jsx';
+import { setWindowLocationHref, windowLocationReload } from '../helpers/navigation.jsx';
+import {
+    getEditoObj,
+    setEditorParameters,
+} from './generic.editor.rfc.common.jsx';
+import {
+    FormPage,
+} from './generic.editor.rfc.formpage.jsx';
+import {
     MainSectionContext,
     MainSectionProvider,
 } from './generic.editor.rfc.provider.jsx';
-import { 
-    FormPage,
-} from './generic.editor.rfc.formpage.jsx';
-import { 
-    setEditorParameters,
-    getEditoObj,
-} from './generic.editor.rfc.common.jsx';
-import { 
+import {
     console_debug_log,
 } from './logging.service.jsx';
-import { getPrefix } from '../helpers/history.jsx';
-import { errorAndReEnter } from '../helpers/error-and-reenter.jsx';
 
+import {
+    WAIT_ANIMATION_MARGIN_TOP_CLASS,
+} from "../constants/class_name_constants.jsx";
 import {
     ACTION_UPDATE,
 } from "../constants/general_constants.jsx";
-import {
-    ERROR_MSG_CLASS,
-} from "../constants/class_name_constants.jsx";
 
 import { WaitAnimation } from "./wait.animation.utility.jsx";
 
 export const GenericSinglePageEditor = ({ editorConfig, id, parentData }) => {
     return (
-      <>
-        <MainSectionProvider>
-          <GenericSinglePageEditorMain
-            editorConfig={editorConfig}
-            id={id}
-            parentData={parentData}
-          />
-        </MainSectionProvider>
-      </>
+        <>
+            <MainSectionProvider>
+                <GenericSinglePageEditorMain
+                    editorConfig={editorConfig}
+                    id={id}
+                    parentData={parentData}
+                />
+            </MainSectionProvider>
+        </>
     );
-  }
+}
 
 const debug = false;
-  
+
+const initialState = {
+    editor: null,
+    formMode: null,
+    status: "",
+};
+
+function gspeReducer(state, action) {
+    switch (action.type) {
+        case 'SET_EDITOR':
+            return { ...state, editor: action.payload };
+        case 'SET_FORM_MODE':
+            return { ...state, formMode: action.payload };
+        case 'SET_STATUS':
+            return { ...state, status: action.payload };
+        default:
+            return state;
+    }
+}
+
 export const GenericSinglePageEditorMain = (props) => {
-    const [editor, setEditor] = useState(null);
-    const [formMode, setFormMode] = useState(null);
-    const [status, setStatus] = useState("");
+    const [state, dispatch] = useReducer(gspeReducer, initialState);
+    const { editor, formMode, status } = state;
+
+    const setEditor = (p) => dispatch({ type: 'SET_EDITOR', payload: p });
+    const setFormMode = (p) => dispatch({ type: 'SET_FORM_MODE', payload: p });
+    const setStatus = (p) => dispatch({ type: 'SET_STATUS', payload: p });
     const {
         initCache,
     } = useContext(MainSectionContext);
@@ -59,26 +81,26 @@ export const GenericSinglePageEditorMain = (props) => {
         }
         setEditorParameters(props).then(
             editor_response => {
-              if (!editor_response) {
-                setEditor(null);
-              } else if(editor_response.error) {
-                console_debug_log("GSPE-ERROR-010:");
-                console_debug_log(editor_response.errorMsg);
-                setStatus(errorAndReEnter(editor_response.errorMsg));
-              } else if (!editor_response.response) {
-                setEditor(null);
-              } else {
-                if (debug) {
-                    console_debug_log('GenericSinglePageEditor | $$$ editor_response:');
-                    console_debug_log(editor_response);
+                if (!editor_response) {
+                    setEditor(null);
+                } else if (editor_response.error) {
+                    console_debug_log("GSPE-ERROR-010:");
+                    console_debug_log(editor_response.errorMsg);
+                    setStatus(editor_response.errorMsg);
+                } else if (!editor_response.response) {
+                    setEditor(null);
+                } else {
+                    if (debug) {
+                        console_debug_log('GenericSinglePageEditor | $$$ editor_response:');
+                        console_debug_log(editor_response);
+                    }
+                    setEditor(getEditoObj(props, editor_response));
                 }
-                setEditor(getEditoObj(props, editor_response));
-              }
             },
             error => {
-              console_debug_log("GSPE-ERROR-020:");
-              console_debug_log(error);
-              setStatus(errorAndReEnter(error));
+                console_debug_log("GSPE-ERROR-020:");
+                console_debug_log(error);
+                setStatus(error);
             }
         );
     }, [props, debug]);
@@ -93,20 +115,22 @@ export const GenericSinglePageEditorMain = (props) => {
     }, [props.id, debug]);
 
     const setInfoMsg = (msg) => {
-        console_debug_log('setInfoMsg | msg:');
-        console_debug_log(msg);
+        if (debug) {
+            console_debug_log('setInfoMsg | msg:');
+            console_debug_log(msg);
+        }
     };
 
     const handleCancel = () => {
-        window.location.href = '/';
+        setWindowLocationHref('/');
     };
 
     // eslint-disable-next-line
     const handleRefresh = (newPage) => {
         initCache();
-        window.location.reload(true);
+        windowLocationReload(true);
     }
-    
+
     if (debug) {
         console_debug_log('UserProfileEditor | editor:');
         console_debug_log(editor);
@@ -122,26 +146,25 @@ export const GenericSinglePageEditorMain = (props) => {
             );
         }
         return (
-            WaitAnimation()
+            WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
         );
     }
     if (status) {
         return (
-            <div className={ERROR_MSG_CLASS}>
-                {status}
-                {debug && "[GSPE-ST]"}
-            </div>
+            <>
+                {errorAndReEnter(status + (debug ? " [GSPE-ST]" : ""))}
+            </>
         );
     }
-        
+
     return (
         <>
             <FormPage
-                mode_par={formMode[0]}
-                id_par={formMode[1]}
-                onCancel_par={handleCancel}
-                setInfoMsg_par={setInfoMsg}
-                editor_par={editor}
+                mode={formMode[0]}
+                id={formMode[1]}
+                onCancel={handleCancel}
+                setInfoMsg={setInfoMsg}
+                editor={editor}
             />
         </>
     );

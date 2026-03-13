@@ -46,7 +46,7 @@ export const growUpTextAreaInner = (
     if (textarea) {
         // Grow upwards
         // Adjust the height of the textarea to grow as the user types
-        textarea.style.height = 'auto';     
+        textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
         // If the content goes beyond its height, adjust the scroll to grow upwards
         const conversationObj = document.getElementById(conversationBlockId);
@@ -151,13 +151,16 @@ export const LinkifyText = ({ children }) => {
 };
 
 export const renderMarkdownContent = (text) => {
+    if (!text || typeof text !== 'string') {
+        return null;
+    }
     return (
         <ReactMarkdown
             components={{
                 p: ({ children }) => <p className={MARKDOWN_P_CLASS}>{children}</p>,
                 strong: ({ children }) => <strong className={MARKDOWN_BOLD_CLASS}>{children}</strong>,
                 em: ({ children }) => <em className={MARKDOWN_ITALIC_CLASS}>{children}</em>,
-                a: ({ children, href }) => <a href={href} target="_blank" className={MARKDOWN_UNDERLINE_CLASS}>{children}</a>,
+                a: ({ children, href }) => <a href={href} target="_blank" rel="noopener noreferrer" className={MARKDOWN_UNDERLINE_CLASS}>{children}</a>,
                 // Add more markdown components as needed
             }}
         >
@@ -167,7 +170,7 @@ export const renderMarkdownContent = (text) => {
 };
 
 export const CopyButton = ({ text }) => {
-    
+
     const showCopiedMessage = (e) => {
         const copiedMessage = document.createElement('div');
         copiedMessage.textContent = 'Copied!';
@@ -204,9 +207,9 @@ export const CopyButton = ({ text }) => {
         textArea.focus();
         textArea.select();
         try {
-          document.execCommand('copy');
+            document.execCommand('copy');
         } catch (err) {
-          console.error('Unable to copy to clipboard', err);
+            console.error('Unable to copy to clipboard', err);
         }
         document.body.removeChild(textArea);
     }

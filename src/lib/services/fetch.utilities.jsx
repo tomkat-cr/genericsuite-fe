@@ -1,8 +1,8 @@
 // Fetch/Axios utilities
-import { handleResponse, handleFetchError, usePlainFetch, IsJsonString } from './response.handlers.service.jsx';
+import axios from 'axios';
 import { fixBlob, getFilenameFromContentDisposition, responseHasFile } from './blob.files.utilities.jsx';
 import { console_debug_log } from './logging.service.jsx';
-import axios from 'axios';
+import { handleFetchError, handleResponse, usePlainFetch } from './response.handlers.service.jsx';
 
 // const https = require('https');
 
@@ -14,64 +14,56 @@ export const getAxios = (url, requestOptions) => {
     if (debug) console_debug_log('GETAXIOS | url:', url, '\n | requestOptions:', requestOptions);
     let response;
     const { method, body, headers } = requestOptions;
-    // const api_url = process.env.REACT_APP_API_URL || "";
-    // const https_dev_env = api_url.includes("local") && api_url.includes("https");
     let axios_config = {
         url: url,
         method: method,
         data: body,
         headers: headers,
     };
-    // if (https_dev_env) {
-    //     axios_config.httpsAgent = new https.Agent({
-    //         rejectUnauthorized: false,
-    //     });
-    //     console.log('>> axios_config with https.Agent.rejectUnauthorized:', axios_config);
-    // }
     try {
         response = axios(axios_config)
-        .then(response => {
-            let new_response;
-            new_response = Object.assign({}, response);
-            new_response.ok = response.status === 200;
-            if (debug) console_debug_log('||| getAxios | Phase 1 | response:', response);
-            if (response.status !== 200) {
-                return Promise.reject(new_response);
-            }
-            const headers = response.headers;
-            if (debug) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
-            if (responseHasFile(headers)) {
-                const filename = getFilenameFromContentDisposition(headers);
-                return fixBlob(response.data, filename, headers)
-                    .then(
-                        (text) => {
-                            if (debug) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
-                            return { headers, text, new_response };
-                        },
-                        (error) => {
-                            if (debug) console_debug_log('||| getAxios | fixBlob | error:', error);
-                            return Promise.reject(new_response);
-                        }
-                    );
-            } else {
-                const text = response.data;                
-                if (debug) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
-                return { headers, text, new_response };
-            }
-        })
-        .then(({ headers, text, new_response }) => {
-            if (debug) console_debug_log('||| getAxios | Phase 2 | headers:', headers, 'text', text, 'new_response:', new_response);
-            const data = {
-                response: text,
-                headers: headers, // Attach headers to the data object
-                ok: new_response.ok,
-                status: new_response.status,
-                statusText: new_response.statusText,
-            };
-            return data;
-        })
-        .then(handleResponse)
-        .catch(handleFetchError);
+            .then(response => {
+                let new_response;
+                new_response = Object.assign({}, response);
+                new_response.ok = [200, 201, 202, 204].includes(response.status);
+                if (debug) console_debug_log('||| getAxios | Phase 1 | response:', response);
+                if (!new_response.ok) {
+                    return Promise.reject(new_response);
+                }
+                const headers = response.headers;
+                if (debug) console_debug_log('||| getAxios | Phase 1.5 | headers:', headers);
+                if (responseHasFile(headers)) {
+                    const filename = getFilenameFromContentDisposition(headers);
+                    return fixBlob(response.data, filename, headers)
+                        .then(
+                            (text) => {
+                                if (debug) console_debug_log('||| getAxios | Phase 2 (with file attached) | new_response:', new_response);
+                                return { headers, text, new_response };
+                            },
+                            (error) => {
+                                if (debug) console_debug_log('||| getAxios | fixBlob | error:', error);
+                                return Promise.reject(new_response);
+                            }
+                        );
+                } else {
+                    const text = response.data;
+                    if (debug) console_debug_log('||| getAxios | Phase 3 | new_response:', new_response);
+                    return { headers, text, new_response };
+                }
+            })
+            .then(({ headers, text, new_response }) => {
+                if (debug) console_debug_log('||| getAxios | Phase 2 | headers:', headers, 'text', text, 'new_response:', new_response);
+                const data = {
+                    response: text,
+                    headers: headers, // Attach headers to the data object
+                    ok: new_response.ok,
+                    status: new_response.status,
+                    statusText: new_response.statusText,
+                };
+                return data;
+            })
+            .then(handleResponse)
+            .catch(handleFetchError);
     } catch (error) {
         console.error('|| getAxios | Error:', error);
         response = Promise.resolve(handleFetchError(error));
@@ -151,4 +143,9 @@ export const gsFetch = (url, requestOptions) => {
         return getAxios(url, requestOptions);
     }
     return getFetch(url, requestOptions);
+}
+
+export const getBaseApiUrl = () => {
+    const apiVersion = process.env.REACT_APP_API_VERSION || 'v1';
+    return `${process.env.REACT_APP_API_URL}/${apiVersion}`;
 }

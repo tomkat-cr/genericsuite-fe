@@ -1,31 +1,52 @@
 // GenericCrudEditor select components
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import {
-  MainSectionContext,
-} from './generic.editor.rfc.provider.jsx';
+import { dbApiService } from "./db.service.jsx";
 import {
   getEditorData,
 } from './generic.editor.rfc.common.jsx';
 import {
+  MainSectionContext,
+} from './generic.editor.rfc.provider.jsx';
+import {
   console_debug_log,
 } from './logging.service.jsx';
-import { dbApiService } from "./db.service.jsx";
 
 import { MSG_SELECT_AN_OPTION } from "../constants/general_constants.jsx";
 
 const debug = false;
 
+export const buildDescription = (itemData, fieldArray) => {
+  let description = '';
+  fieldArray.forEach((field) => {
+    description += itemData[field] + ' ';
+  });
+  return description.trim();
+}
+
 export const GenericSelectGenerator = (props) => {
-  const [state, setState] = useState(null);
+  /*
+   * Select options generator component.
+   * Return the description for the select value if show_description is true,
+   * otherwise returns one or more <option>...</option> for a <select>, sending
+   * a request to the API, and adding a <option>...</option> with the key and description for each row returned
+   *
+   * Parameters:
+   *  filter: filter by _id. Default to no filter (null)
+   *  dbFilter: database query filter. Default to no filter (null)
+   *  show_description: if true, show description in the listing page or read-only form page, otherwise builds the <option>. Default is false
+   *  description_fields: array of fields to show in the description. Default is ["name"]
+   */
+  const [errorState, setErrorState] = useState(null);
   const [config, setConfig] = useState(null);
   const [rows, setRows] = useState(null);
   const {
-    getCachedData,
-    putCachedData,
-    typeofCachedData,
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
     debugCache,
+    fetchOrCache,
   } = useContext(MainSectionContext);
 
   useEffect(() => {
@@ -33,60 +54,44 @@ export const GenericSelectGenerator = (props) => {
   }, [props]);
 
   useEffect(() => {
-    const setRowsAndCache = (data) => {
-      // select_cache[config.select_name] = data;
-      putCachedData(config.select_name, data);
-      setRows(data);
+    if (config) {
+      const accessKeysListing = config.dbFilter || {};
+      fetchOrCache(config.select_name, () => config.dbService.getAll(accessKeysListing))
+        .then(
+          data => setRows(data),
+          error => setErrorState(error)
+        )
+        .catch(error => {
+          console.error(config.editor.title + '-Select | error object:', error);
+        });
     }
-    // if (config && typeof select_cache[config.select_name] !== 'undefined') {
-    if (config && typeofCachedData(config.select_name) !== 'undefined') {
-      // setRows(select_cache[config.select_name]);
-      if (debug) {
-        console_debug_log(`>> GENERICSELECTGENERATOR # 0 | config.select_name: ${config.select_name} | getCachedData(config.select_name):}`);
-        console_debug_log(getCachedData(config.select_name));
-      }
-      setRows(getCachedData(config.select_name));
-    } else {
-      try {
-        let accessKeysListing = {};
-        if (config && config.dbFilter) {
-          accessKeysListing = {
-            ...accessKeysListing,
-            ...config.dbFilter,
-          };
-          if (debug) {
-            console_debug_log('>> GENERICSELECTGENERATOR # 1 | accessKeysListing:', accessKeysListing);
-          }
-        };
-        config && config.dbService.getAll(accessKeysListing)
-          .then(
-            data => setRowsAndCache(data),
-            error => setState(error)
-          )
-      } catch (error) {
-        console.error(config.editor.title + '-Select | error object:', error);
-      };
-    }
-  }, [config, getCachedData, putCachedData, typeofCachedData]);
+  }, [config, fetchOrCache]);
 
   const initConfig = (props) => {
     const editor = getEditorData(props);
     return {
+      // dbService: database service instance
       dbService: new dbApiService({ url: editor.dbApiUrl }),
+      // editor: editor configuration
+      editor: editor,
+      // select_name: name of the select, taken from the editor name
+      select_name: editor.name,
+      // filter: filter by _id. Default to no filter (null)
       filter:
         typeof props.filter !== 'undefined' ? props.filter : null,
-      dbFilter: 
+      // dbFilter: database query filter. Default to no filter (null)
+      dbFilter:
         typeof props.dbFilter !== 'undefined' ? props.dbFilter : null,
+      // show_description: if true, show description in the listing page or read-only form page. Default is false
       show_description:
         typeof props.show_description !== 'undefined'
           ? props.show_description
           : false,
+      // description_fields: array of fields to show in the description. Default is ["name"]
       description_fields:
         typeof props.description_fields !== 'undefined'
           ? props.description_fields
           : ["name"],
-      editor: editor,
-      select_name: editor.name,
     };
   }
 
@@ -95,9 +100,9 @@ export const GenericSelectGenerator = (props) => {
     return '';
   }
 
-  if (state) {
+  if (errorState) {
     // Some error happens
-    return state.toString();
+    return errorState.toString();
   }
 
   const { filter, show_description, description_fields, dbService } = config;
@@ -118,16 +123,8 @@ export const GenericSelectGenerator = (props) => {
     debugCache("GenericSelectGenerator");
   }
 
-  const buildDescription = (option, fieldArray) => {
-    let description = '';
-    fieldArray.forEach((field) => {
-      description += option[field] + ' ';
-    });
-    return description.trim();
-  }
-
   return selectOptions
-    .filter((option) => 
+    .filter((option) =>
       filter === null ? true : dbService.convertId(option._id) === filter
     )
     .map((option) => {
@@ -146,13 +143,26 @@ export const GenericSelectGenerator = (props) => {
 };
 
 export const GenericSelectDataPopulator = (props) => {
-  const [state, setState] = useState(null);
+  /*
+   * Generic select data populator component.
+   * Return the data for a select, sending a request to the API, and adding a <option>...</option> with the key and description for each row returned
+   *
+   * Parameters:
+   *  filter: filter by _id. Default to no filter (null)
+   *  dbFilter: database query filter. Default to no filter (null)
+   *  columns: columns to show in the listing page or read-only form page. Default is "" meaning all columns
+   *  title_field_name: field name to show in the title. Default is "title"
+   *  value_field_name: field name to show in the value. Default is "value"
+   *  key_name: field name to show in the key. Default is "_id"
+   */
+  const [errorState, setErrorState] = useState(null);
   const [config, setConfig] = useState(null);
   const [rows, setRows] = useState(null);
   const {
-    getCachedData,
-    putCachedData,
-    typeofCachedData,
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
+    fetchOrCache,
   } = useContext(MainSectionContext);
 
   const initConfig = (props) => {
@@ -163,9 +173,12 @@ export const GenericSelectDataPopulator = (props) => {
       dbFilter: props.dbFilter !== undefined ? props.dbFilter : null,
       editor: editor,
       select_name: editor.name,
+      // columns: props.columns !== undefined
+      //   ? props.columns
+      //   : '',
       title_field_name:
         props.title_field_name !== undefined
-          ? props.show_description
+          ? props.title_field_name
           : "title",
       value_field_name:
         props.value_field_name !== undefined
@@ -183,8 +196,8 @@ export const GenericSelectDataPopulator = (props) => {
     if (!rows) {
       return '';
     }
-    if (state) {
-      return state.toString();
+    if (errorState) {
+      return errorState.toString();
     }
     const array_options = rows.resultset
       .filter((option) =>
@@ -203,38 +216,17 @@ export const GenericSelectDataPopulator = (props) => {
     setConfig(initConfig(props));
   }, [props]);
 
-  useEffect(() => {
-    const setRowsAndCache = (data) => {
-      putCachedData(config.select_name, data);
-      setRows(data);
-    }
-    async function getData() {
-      try {
-        let accessKeysListing = {};
-        if (config && config.dbFilter) {
-          accessKeysListing = {
-            ...accessKeysListing,
-            ...config.dbFilter,
-          };
-        };
-        console_debug_log('>> GENERICSELECTGENERATOR # 2 | accessKeysListing:');
-        console_debug_log(accessKeysListing);
-        config && config.dbService.getAll(accessKeysListing)
-          .then(
-            data => setRowsAndCache(data),
-            error => setState(error)
-          );
-      } catch (error) {
-        console_debug_log(config.editor.title + "-Select | error object:");
-        console_debug_log(error);
-      }
-    }
-    if (config && typeofCachedData(config.select_name) !== 'undefined') {
-      setRows(getCachedData(config.select_name));
-    } else {
-      getData();
-    }
-  }, [config, getCachedData, putCachedData, typeofCachedData]);
+  if (config) {
+    const accessKeysListing = config.dbFilter || {};
+    // if (config.columns !== '') {
+    //   accessKeysListing['gs_listing_columns'] = config.columns;
+    // }
+    fetchOrCache(config.select_name, () => config.dbService.getAll(accessKeysListing))
+      .then(
+        data => setRows(data),
+        error => setErrorState(error)
+      );
+  }
 
   return returnData();
 };
@@ -265,13 +257,15 @@ export const getSelectDescription = (currentObj, dbRow) => {
   // Component select (with specific select component and data populator)
   if (currentObj.type === 'select_component') {
     const filter = (
-      typeof dbRow[currentObj.name] !== "undefined" ? 
+      typeof dbRow[currentObj.name] !== "undefined" ?
         dbRow[currentObj.name].toString() : null
     )
     return (
       <currentObj.component
         filter={filter}
+        dbRow={dbRow}
         show_description={true}
+        currentObj={currentObj}
       />
     );
   }
@@ -295,6 +289,7 @@ export const getSelectDescription = (currentObj, dbRow) => {
         value={value}
         dbRow={dbRow}
         listing="1"
+        currentObj={currentObj}
       />
     );
   }

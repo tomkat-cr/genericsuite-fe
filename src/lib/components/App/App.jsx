@@ -1,67 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-    Link as RouterLink,
     createBrowserRouter,
-    RouterProvider,
     HashRouter,
-    Navigate,
-    Link,
+    Link as RouterLink,
+    RouterProvider
 } from "react-router-dom";
 // import { useLocation } from 'react-router-dom';
 
 import {
-    GenericMenuBuilder,
-    getMenuFromApi,
-    getDefaultRoutes,
-    getRoutes,
-    GetHashRoutes,
-} from '../../services/generic.menu.service.jsx';
-import {
-    console_debug_log,
-} from '../../services/logging.service.jsx';
-import {
-    verifyCurrentUser
-} from '../../services/authentication.service.jsx';
-import {
-    errorAndReEnter,
-    logoutHander,
-    getErrorMessage,
-} from '../../helpers/error-and-reenter.jsx';
-import {
-    getUrlParams,
-} from '../../helpers/url-params.jsx';
+    AppProvider,
+    useAppContext,
+} from '../../helpers/AppContext.jsx';
 import {
     mergeDicts,
 } from '../../helpers/dict-utilities.jsx';
+import {
+    errorAndReEnter,
+    getErrorMessage,
+    logoutHander,
+} from '../../helpers/error-and-reenter.jsx';
+import { getUrlParams } from '../../helpers/url-params.jsx';
 import {
     UserProvider,
     useUser
 } from '../../helpers/UserContext.jsx';
 import {
-    AppProvider,
-    useAppContext,
-} from '../../helpers/AppContext.jsx';
-
+    verifyCurrentUser
+} from '../../services/authentication.service.jsx';
 import {
-    getLocalConfig,
-    saveLocalConfig
-} from '../../helpers/local-config.jsx';
+    GenericMenuBuilder,
+    getDefaultRoutes,
+    GetHashRoutes,
+    getMenuFromApi,
+    getRoutes,
+} from '../../services/generic.menu.service.jsx';
+import {
+    console_debug_log,
+} from '../../services/logging.service.jsx';
+
 import { imageDirectory } from '../../constants/general_constants.jsx';
 
-import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 import { DarkModeButton } from '../../helpers/DarkModeButton.jsx';
 import { MenuModeButton } from '../../helpers/MenuModeButton.jsx';
+import { WaitAnimation } from '../../services/wait.animation.utility.jsx';
 
 // Specific imports
 
 import { Users_EditorData } from '../SuperAdminOptions/Users.jsx';
 import { UserProfileEditor } from '../UsersMenu/UserProfile.jsx';
 // import { ChatBot } from '../ChatBot/ChatBot.jsx';
+import { About, AboutBody } from '../About/About.jsx';
+import { AppFooter } from '../AppFooter/AppFooter.jsx';
 import { HomePage } from '../HomePage/HomePage.jsx';
 import { LoginPage } from '../LoginPage/LoginPage.jsx';
-import { About, AboutBody } from '../About/About.jsx';
 import { GeneralConfig_EditorData } from '../SuperAdminOptions/GeneralConfig.jsx';
-import { AppFooter } from '../AppFooter/AppFooter.jsx';
 
 // Component specific CSS:
 // import './App.css';
@@ -81,38 +73,39 @@ import { AppFooter } from '../AppFooter/AppFooter.jsx';
 // import Nav from 'react-bootstrap/cjs/Nav.js';
 // import Navbar from 'react-bootstrap/cjs/Navbar.js';
 import {
-    MainContainer,
-    AppSectionContainer,
-    AppFooterContainer,
-    Navbar,
-    // ToggleSideBar,
-    GsButton,
-} from '../../helpers/NavLib.jsx';
+    ALERT_DANGER_CLASS,
+    BUTTON_PRIMARY_CLASS,
+    defaultTheme,
+    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS,
+    NAVBAR_BRAND_APP_LOGO_CLASS,
+    NAVBAR_BRAND_APP_VERSION_CLASS,
+    NAVBAR_BRAND_NAME_CLASS,
+    WAIT_ANIMATION_MARGIN_TOP_CLASS,
+} from '../../constants/class_name_constants.jsx';
 import {
     getPrefix,
     hasHashRouter,
     history,
 } from '../../helpers/history.jsx';
 import {
-    defaultTheme,
-    ALERT_DANGER_CLASS,
-    BUTTON_PRIMARY_CLASS,
-    NAVBAR_BRAND_APP_LOGO_CLASS,
-    NAVBAR_BRAND_NAME_CLASS,
-    NAVBAR_BRAND_APP_VERSION_CLASS,
-    APP_GENERAL_MARGINS_CLASS,
-    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS,
-} from '../../constants/class_name_constants.jsx';
+    AppFooterContainer,
+    AppSectionContainer,
+    // ToggleSideBar,
+    GsButton,
+    MainContainer,
+    Navbar,
+} from '../../helpers/NavLib.jsx';
 
 const debug = false;
 
 const getShowContentOnly = () => {
     const urlParams = getUrlParams();
     const showContentOnly = (urlParams && typeof urlParams.menu !== "undefined" && urlParams.menu === "0");
+    if (debug) console_debug_log(">> getShowContentOnly | showContentOnly:", showContentOnly, "urlParams:", urlParams);
     return showContentOnly;
 }
 
-const CloseButton = ({children}) => {
+const CloseButton = ({ children }) => {
     return (
         <>
             {children && (
@@ -138,13 +131,13 @@ const AppNavBar = ({ children }) => {
     const { setExpanded, appLogoHeader } = useAppContext();
     const version = process.env.REACT_APP_VERSION;
     const appName = (
-        appLogoHeader ? 
+        appLogoHeader ?
             <img
                 src={imageDirectory + appLogoHeader}
                 className={NAVBAR_BRAND_APP_LOGO_CLASS}
                 alt="App Logo"
             />
-                :
+            :
             process.env.REACT_APP_APP_NAME
     );
     return (
@@ -154,7 +147,7 @@ const AppNavBar = ({ children }) => {
             <Navbar.Brand
                 as={RouterLink}
                 to='/'
-                // onClick={() => (currentUser ? setExpanded() : setExpanded(() => window.location.reload()))}
+            // onClick={() => (currentUser ? setExpanded() : setExpanded(() => windowLocationReload()))}
             >
                 <div
                     className={NAVBAR_BRAND_NAME_CLASS}
@@ -172,6 +165,11 @@ const AppNavBar = ({ children }) => {
 
 const TopRightMenu = ({ showContentOnly, authenticated = true }) => {
     const { currentUser } = useUser();
+    if (showContentOnly) {
+        // This is too prevent showing the menu when showContentOnly is true
+        // E.g. pop-up about page
+        return null;
+    }
     return (
         <Navbar.TopRightMenu
             authenticated={authenticated}
@@ -238,14 +236,14 @@ const AppMainInnerUnauthenticated = ({ children }) => {
                             <>{children}</>
                         </AppSectionContainer.ForSideMenu>
                         <AppFooterContainer>
-                            <AppFooter/>
+                            <AppFooter />
                         </AppFooterContainer>
                     </>
                 )}
             </AppSectionContainer>
             {!sideMenu && (
                 <AppFooterContainer>
-                    <AppFooter/>
+                    <AppFooter />
                 </AppFooterContainer>
             )}
         </MainContainer>
@@ -255,9 +253,14 @@ const AppMainInnerUnauthenticated = ({ children }) => {
 const AppMainInner = ({ children }) => {
     // const location = useLocation();
     // if (debug) console_debug_log("App | location:", location);
-    const { currentUser } = useUser();
     const {
-        state, setState,
+        currentUser,
+        askForLogin,
+        unRegisterUser,
+    } = useUser();
+    const {
+        setState,
+        errorState, setErrorState,
         menuOptions, setMenuOptions,
         sideMenu, setSideMenu,
         isMobileMenuOpen,
@@ -265,21 +268,38 @@ const AppMainInner = ({ children }) => {
     } = useAppContext();
 
     const showContentOnly = getShowContentOnly();
+    const getMenuFromApiAlreadyCalled = useRef(false);
 
-    if (debug) {
-        console_debug_log("App enters... | window.location:", window.location, "showContentOnly:", showContentOnly);
+    const callGetMenuFromApi = () => {
+        // Load menus from JSON configurations
+        if (!getMenuFromApiAlreadyCalled.current) {
+            getMenuFromApiAlreadyCalled.current = true;
+            getMenuFromApi(setState, getErrorState, setErrorState, setMenuOptions, getMenuOptions);
+        }
     }
 
-    const stateHandler = () => {
+    if (debug) {
+        console_debug_log("App enters... | window.location:", getWindowLocation(), "showContentOnly:", showContentOnly);
+    }
+
+    const logoutHandler = () => {
+        unRegisterUser();
         logoutHander();
     }
 
+    const getErrorState = () => {
+        return errorState;
+    }
+
+    const getMenuOptions = () => {
+        return menuOptions;
+    }
+
     useEffect(() => {
-        // Load menus from JSON configurations
         if (currentUser) {
-            getMenuFromApi(state, setState, setMenuOptions);
+            callGetMenuFromApi();
         }
-    }, [currentUser, state]);
+    }, [currentUser]);
 
     if (showContentOnly) {
         return (
@@ -300,7 +320,6 @@ const AppMainInner = ({ children }) => {
                         <GenericMenuBuilder
                             title={currentUser.firstName}
                             itemType="hamburger"
-                            showContentOnly={showContentOnly}
                             mobileMenuMode={true}
                         />
                     )}
@@ -315,8 +334,10 @@ const AppMainInner = ({ children }) => {
                 <>
                     {!sideMenu && (
                         <AppMainComponent
-                            stateHandler={stateHandler}
+                            logoutHandler={logoutHandler}
                             showContentOnly={showContentOnly}
+                            askForLogin={askForLogin}
+                            currentUser={currentUser}
                         >
                             {children}
                         </AppMainComponent>
@@ -330,17 +351,19 @@ const AppMainInner = ({ children }) => {
                             </Navbar.TopForSideMenu>
                             <AppSectionContainer.ForSideMenu>
                                 {/* <ToggleSideBar
-                                    onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
-                                /> */}
+                                onClick={() => document.getElementById('navbar-side-menu').classList.toggle('hidden')}
+                            /> */}
                                 <AppMainComponent
-                                    stateHandler={stateHandler}
+                                    logoutHandler={logoutHandler}
                                     showContentOnly={showContentOnly}
+                                    askForLogin={askForLogin}
+                                    currentUser={currentUser}
                                 >
                                     {children}
                                 </AppMainComponent>
                             </AppSectionContainer.ForSideMenu>
                             <AppFooterContainer>
-                                <AppFooter/>
+                                <AppFooter />
                             </AppFooterContainer>
                         </>
                     )}
@@ -361,7 +384,7 @@ const AppMainInner = ({ children }) => {
             </Navbar.MobileMenu>
             {!sideMenu && (
                 <AppFooterContainer>
-                    <AppFooter/>
+                    <AppFooter />
                 </AppFooterContainer>
             )}
         </MainContainer>
@@ -369,40 +392,49 @@ const AppMainInner = ({ children }) => {
 };
 
 const AppMainComponent = ({
-    stateHandler,
+    logoutHandler,
     showContentOnly,
+    askForLogin,
+    currentUser,
     children,
 }) => {
-    // const location = useLocation();
-    // if (debug) console_debug_log("AppMainComponent | location:", location);
-    const { state, menuOptions, currentUser } = useAppContext();
+    const { errorState } = useAppContext();
 
-    if (state !== "") {
-        if (debug) console_debug_log("AppMainComponent | errorAndReEnter | state:", state);
+    if (errorState !== "") {
+        if (debug) console_debug_log("AppMainComponent | errorAndReEnter | errorState:", errorState);
         if (showContentOnly) {
             return (
                 <CloseButton>
-                    {getErrorMessage(state)}
+                    {getErrorMessage(errorState)}
                 </CloseButton>
             );
         }
-        return errorAndReEnter(state, null, true, null, stateHandler, false, false);
+        return errorAndReEnter(errorState, null, true, null, logoutHandler, false, false);
     }
-    if (!menuOptions) {
-        if (debug) console_debug_log("AppMainComponent | WaitAnimation");
+
+    if (debug) console_debug_log("AppMainComponent | currentUser:", currentUser, "askForLogin:", askForLogin);
+
+    if (askForLogin) {
         return (
-            <div 
+            <div
                 className={LOGIN_BUTTON_IN_APP_COMPONENT_CLASS}
             >
                 <GsButton
                     as={RouterLink}
-                    to={getPrefix()+'/login'}
+                    to={getPrefix() + '/login'}
                 >
                     Login
                 </GsButton>
             </div>
         )
     }
+
+    if (!currentUser) {
+        return (
+            WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
+        );
+    }
+
     return (children);
 }
 
@@ -410,29 +442,40 @@ const AppMain = () => {
     const routerFutureFlags = {
         v7_relativeSplatPath: true
     }
-    const { currentUser, registerUser } = useUser();
+
+    const { currentUser, registerUser, setAskForLogin } = useUser();
     const {
-        state, setState,
+        setState,
         menuOptions, setMenuOptions,
         componentMap,
         setExpanded,
     } = useAppContext();
+
     const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
+    const verifyCurrentUserAlreadyCalled = useRef(false);
+    const setRouterAlreadyCalled = useRef(false);
+
+    const callVerifyCurrentUser = () => {
+        if (!verifyCurrentUserAlreadyCalled.current) {
+            verifyCurrentUserAlreadyCalled.current = true;
+            verifyCurrentUser(registerUser, currentUser, setAskForLogin);
+        }
+    }
+
+    const assignRouter = () => {
+        if (!setRouterAlreadyCalled.current) {
+            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
+            setRouterAlreadyCalled.current = true;
+        }
+    }
 
     useEffect(() => {
-        verifyCurrentUser(registerUser);
+        callVerifyCurrentUser();
     }, []);
 
     useEffect(() => {
-        // Load menus from JSON configurations
-        if (currentUser) {
-            getMenuFromApi(state, setState, setMenuOptions);
-        }
-    }, [currentUser, state]);
-
-    useEffect(() => {
         if (menuOptions) {
-            setRouter(getRoutes(currentUser, menuOptions, componentMap, setExpanded));
+            assignRouter();
         }
     }, [menuOptions])
 
@@ -480,8 +523,11 @@ const defaultComponentMap = {
     "defaultTheme": defaultTheme,
 };
 
-export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
-    const componentMapFinal = mergeDicts(componentMap, defaultComponentMap);
+export const App = ({ componentMap = {}, appLogo = "", appLogoHeader = "" }) => {
+    const [componentMapFinal, setComponentMapFinal] = useState(
+        mergeDicts(componentMap, defaultComponentMap)
+    );
+
     return (
         <UserProvider>
             <AppProvider
@@ -489,8 +535,8 @@ export const App = ({componentMap = {}, appLogo = "", appLogoHeader = ""}) => {
                 globalAppLogo={appLogo}
                 globalAppLogoHeader={appLogoHeader}
             >
-                <AppMain/>
+                <AppMain />
             </AppProvider>
         </UserProvider>
-      );
+    );
 }

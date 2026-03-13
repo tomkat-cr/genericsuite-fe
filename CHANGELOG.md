@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
 
-## [Unreleased]
+## [Unreleased] - YYYY-MM-DD
 
 ### Added
 
@@ -13,6 +13,102 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Fixed
 
 ### Removed
+
+
+## [1.2.0] - 2026-02-18
+
+### Added
+- API_VERSION envvar to set the API version, default to "v1" [GS-245].
+- Generic editor form page child listings now accepts external tables with the subType "table" [GS-159].
+- Horizontal rule separator before child elements in generic editor form pages [GS-250].
+- API_KEYS_PREFIX envvar to set the API keys prefix, default to "sk-gsu-" [GS-159].
+- WAIT_ANIMATION_MARGIN_TOP_CLASS constant to add top margin to <WaitAnimation /> in the <App /> component [GS-246].
+- UPDATE_SNAPSHOTS envvar to "make publish" to run "npm test -- -u" instead of "npm run test".
+- "UPDATE_SNAPSHOTS=1 make publish" documentation on Makefile.
+- Field types h1 to h6 to JSON files [GS-250].
+- "make tailwind-build" to rebuild the Tailwind CSS files (without stay watching for changes) [GS-63].
+- "make tailwind-build" added to the publish bash script [GS-63].
+- getUserDataCache and setUserDataCache to set a cache reading current user's data, ad implemented in the Users.jsx specific functions [GS-251].
+- Close button for GCE_RFC Index page emerging messages (e.g. "X items deleted...") shown returning from the Form Data page [GS-251].
+- Api Keys child component added to User Profile [GS-159].
+- "customOnChange()" function added to <PutOneFormfield /> as "onChange" parameter, also Formik setFieldValue() added as "setValue" parameter, so "component" type fields can update the Formik internal values and therefore saved in the database [GS-252].
+- ShowAsDisabledField component can render the custom component as a simulated disabled field (current behavior) or as a Formik Field, customizable with the new "showAsField", "isReadOnly", "type", "onChange", "onBlur" parameters. OnChange allows to store the calculated value in the Formik internal values and therefore saved in the database [GS-252].
+- USE_CONTAINERS_ENGINE_APP envvar to control whether to use containers engine app for local development environment when RUN_PROTOCOL="https" [GS-257].
+- RUN_PROTOCOL_AND_PORT_REPLACEMENT envvar to control automatic protocol and port replacement for local development environment variables APP_FE_URL_DEV and APP_API_URL_DEV [GS-257].
+- "link_external_configs.sh" script to link external JSON configs directory so it can be tested in GenericSuite FE Core [GS-258].
+- "config_name" field type change to "suggestion_dropdown" in "Admin > Users > User Configurations", so the Suggestion Dropdown can be tested in GenericSuite FE Core [GS-258].
+- Error icon to GsIconLib [GS-258].
+- <ChatBotButtonGeneric /> component to add a try-catch layer to field definitions that has "chatbot_popup" set to true [GS-258].
+- Comprehensive parameter documentation for `GenericSelectDataPopulator`.
+- Comprehensive documentation for `getUrlParams`.
+- VERBOSE_RUN_CONFIG envvar to enable verbose logging in run_config.sh.
+- MD5 utilities [GS-266].
+- BSON-type ObjectId() generation to "id.utilities.jsx" [GS-266].
+- "UsersUserHistory.jsx" and "users_user_history.json" to debug child listings with dates and MondoDB BSON-type ObjectId() generation [GS-266].
+- Implement navigation helpers for testability [GS-267].
+- "generalUtilities" to detect different element types, including dict and list [GS-251].
+
+### Changed
+- Enhance error message in the login page [GS-246].
+- Update class_name_constants.jsx to make buttons more rounded and remove unused comments [GS-246].
+- Update getFetch() to check if the response is ok using the [200, 201, 202, 204] status codes [GS-245].
+- Rename style class constants: PAGE_ANIMATION_CLASS to WAIT_ANIMATION_CLASS, SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS to WAIT_ANIMATION_ENABLED_CLASS, SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS to WAIT_ANIMATION_DISABLED_CLASS [GS-246].
+- Rename component <ShowHidePageAnimation /> to <ShowHideWaitAnimation /> [GS-246].
+- Horizontal rule separator <hr /> is now dashed [GS-250].
+- API keys now are in a separate table "users_api_keys", not an array of the "users" table [GS-159].
+- Rename "parentKeyNames" to "endpointKeyNames" in JSON config files [GS-159].
+- Move "parentUrl" attribute from "endpointKeyNames" to the root of the JSON config files [GS-159].
+- MainSectionContext, UsersContext and AppContext implemment useCallback, useMemo, useRef, and useReducer instead of useState, to avoid components unnecessary reloads [GS-251].
+- Configs README referece the official GenericSuite documentation instead of repeating its content [GS-251].
+- getFieldElementsYupValidations() enabled to have validations on the Form Data page [GS-251].
+- Rename state and setState with errorState, setErrorState on AppContext.jsx, App.jsx, generic.editor.rfc.selector.jsx, generic.menu.service.jsx [GS-251].
+- Rename status and setStatus with errorStatus, setErrorStatus on generic.editor.rfc.formpage.jsx [GS-251]
+- Rename <FormPage /> parameters: mode_par, id_par, and editor_par to mode, id, and editor [GS-251].
+- Rename the frontend envvars to avoid conflicts with the same envvar used in the backend and be able to merge the ".env" files in a monorepo: GIT_SUBMODULE_LOCAL_PATH to GIT_SUBMODULE_LOCAL_PATH_FRONTEND, and RUN_METHOD to RUN_BUNDLER [GS-243].
+- REACT_APP_APP_NAME envvar can be removed and replaced by APP_NAME in monorepos [GS-243].
+- REACT_APP_DEBUG envvar can be removed and replaced by APP_DEBUG in monorepos [GS-243].
+- If REACT_APP_API_URL is not set, APP_API_URL can be used instead [GS-243].
+- If REACT_APP_URI_PREFIX is not set, URI_PREFIX can be used instead [GS-243].
+- If REACT_APP_X_TOKEN is not set, X_TOKEN can be used instead [GS-243].
+- If REACT_APP_USE_AXIOS is not set, USE_AXIOS can be used instead [GS-243].
+- Send "currentObj" to "select_component" and "component" field types now receive "currentObj" as a parameter in getSelectDescription() [GS-258].
+- Pass `dbRow` to form fields types "select_component" and "component" for enhanced data context [GS-37].
+- Export `buildDescription` utility on "generic.editor.rfc.selector" and enhance "GenericSelectGenerator" documentation [GS-37].
+- Pass `currentObj` as a parameter to `dataPopulator` on getSelectFieldsOptions() [GS-37].
+- Centralize and enhance API error message extraction with a new `getErrorMsgFromApi` helper to avoid error messages like "[object Object]" when axios is used [GS-262].
+- Rename "idUtilities.getUuidV4" to "uuidUtilities.getUuidV4" [GS-266].
+- Login page design enhanced by isolating the logo from the user and password box.
+
+### Fixed
+- Error message when using axios and the session expires or the user credentials are invalid [GS-246].
+- API "errorMsg" as an array when there are errors in the main API call or in the specific functions API calls [GS-251].
+- getFileExtension() to remove the URL query parameters [GS-72].
+- Optimize the Generic CRUD Editor (GCE_RFC) API calls, avoiding repeated calls [GS-251].
+- Optimize the Generic Menu Generator (GMG) API calls, avoiding repeated calls [GS-251].
+- Login button shown on each page refresh, while menus are loading [GS-251].
+- GMG shows the "URL not found..." message during the menu loading [GS-251].
+- GCE_RFC doesn't show the error message when the session has been expired [GS-251].
+- Suppress warning on the LoginPage about the username and password autocomplete attributes (More info: https://goo.gl/9p2vKq)
+- Fix input field color in the <SuggestionDropdown /> component [GS-252].
+- Fix the Cache initialization in the Generic CRUD Editor provider (MainSectionProvider) [GS-252].
+- Fix SuggestionDropdown component: use debounce to limit the number of calls to the API, and replace legacy Downshift component with useCombobox hook [GS-258].
+- Show the error message in the login page when using axios and the session expires or the user credentials are invalid [GS-37] [GS-202].
+- Implement secure markdown rendering for messages [GS-262].
+  * The includesAppValidLinks function is used as a security heuristic to determine if an error message should be rendered as HTML. This check was insufficient as it only verifies if the message contains a hardcoded 'valid' email or URL. An attacker can bypass this check by including one of these strings (e.g., 'support@exampleapp.com') in a malicious payload. If the error message contains untrusted data, such as reflected input from an API error response, this leads to a Cross-Site Scripting (XSS) vulnerability when the message is rendered in the UI.
+- Optimize user data fetching with request caching to avoid race conditions [GS-262].
+- "TypeError: stringDate.indexOf is not a function" on addMissingTz when the supplied date is a number [GS-194].
+- "[object Object] EFFF-020" when the API returns an error deleting/updating the item on EditFormFormikFinal() [GS-194].
+- Date not shown on read-only child listings data forms: timestampDbPostRead() use resultset[0] for calling processTimestampToDate() because "date" and "datetime-local" fields shown as "mm/dd/yyyy, --:-- --" [GS-266]
+- Use MD5 utilities to hash rowId in data forms when there's no row._id or row[editor.primaryKeyName], avoiding the "Encountered two children with the same key, `<table_name>_row_undefined_tr_enclosure`" warning [GS-266].
+- Query parameters are not recognized in getUrlParams() [GS-266].
+- Show only content when `menu=0` in the main page [GS-266].
+- Disable next page button and avoid show "Page 1 of 0" message when the table has no items on the GCE_RFC [GS-266].
+- Fix the drop-down menus closing when any other element is clicked [GS-266].
+- Prevent React warnings by handling null/undefined form field values in getFieldElementsDbValues() [GS-266] [GS-262].
+
+### Security
+- Upgrade jest and babel to latest versions to fix the "npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful." warning [GS-219] [GS-267].
+- 37 security vulnerabilities (including high and critical ones) found in the project's dependencies were addressed, adding an "overrides" section to package.json to force secure versions of transitive dependencies (elliptic, json5, minimatch, postcss, loader-utils) without breaking your high-level setup [GS-219] [GS-267].
 
 
 ## [1.1.0] - 2025-11-17
@@ -235,7 +331,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "add_github_submodules.sh" to do "git submodule init", "git submodule sync" and "git pull --tags origin main" instead of "git checkout origin/main" to effectively pull the JSON configs from the git repository when the directory specified in "GIT_SUBMODULE_LOCAL_PATH" already exists and "git submodule add" was already run.
 
 ### Changed
-- The REACT_APP_API_URL_DEV, REACT_APP_API_URL_QA, REACT_APP_API_URL_STAGING, REACT_APP_API_URL_PROD, and REACT_APP_API_URL_DEMO variable names in the .env file were renamed to APP_API_URL_DEV, APP_API_URL_QA, APP_API_URL_STAGING, APP_API_URL_PROD, and APP_API_URL_DEMO.
+- Rename the REACT_APP_API_URL_DEV, REACT_APP_API_URL_QA, REACT_APP_API_URL_STAGING, REACT_APP_API_URL_PROD, and REACT_APP_API_URL_DEMO variable names in the .env file to APP_API_URL_DEV, APP_API_URL_QA, APP_API_URL_STAGING, APP_API_URL_PROD, and APP_API_URL_DEMO.
 - The GITHUB_USERNAME and GITHUB_REPONAME variables are not longer required because "aws_deploy_to_s3.sh" just saves the existing value of "homepage" in package.json. Those 2 variables were removed from the .env file.
 - "aws_deploy_to_s3.sh" take into account the APP_FE_URL domain in the CloudFront distribution creation.
 - "make publish" report the package name and version in the publishing confirmation.
@@ -360,7 +456,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add GenericSuite logo to index.tsx to customize Login.
 
 ### Changed
-- "appLogoPar" parameter renamed to "appLogo" in the LoginPage component.
+- Rename "appLogoPar" parameter to "appLogo" in the LoginPage component.
 - "appLogo" parameter added to App.jsx, HomePage.jsx and generic.menu.service.jsx.
 - REACT_APP_GENERIC_SUITE_AI_PATH removed from env.example, webpack.config.js and generic.editor.rfc.ai.button.jsx, and replaced by REACT_APP_GENERIC_SUITE_AI.
 - "console.error" replaced by "console_debug_log" in db.service.jsx and generic.editor.rfc.ai.button.jsx to avoid test errors.
@@ -368,9 +464,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - All dependencies moved to devDependencies and peerDependencies to effectively build the library in npmjs.
 - Module in "tsconfig.json" changed to "ESNext"
 - "/index.d.ts" removed.
-- "src/lib/index.js" renamed to "src/lib/index.cjs"
-- "babel.config.json" renamed to "babel.config.cjs".
-- "rollup.config.js" renamed to "rollup.config.mjs"
+- Rename "src/lib/index.js" to "src/lib/index.cjs"
+- Rename "babel.config.json" to "babel.config.cjs".
+- Rename "rollup.config.js" to "rollup.config.mjs"
 
 ### Fixed
 - Fix the "RollupError: Could not resolve entry module "dist/esm/index.js"." error changing the following values in "package.json":
@@ -465,7 +561,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add SuggestionDropdown component (and autocomplete) as a field type in GCE_RFC [FA-120].
 - Add `suggestion_dropdown` as type in name field (user_ingredients json definitions) [FA-120].
 - Add Enable ACLs for the bucket in AWS deploy to S3 [FA-97].
-- Add `parentUrl` attribute to child_listing/array in json definitions [FA-115].
+- Add `parentUrl` attribute to child_listing/array in json definitions to be used on certain specific functions (because the parent table name is defined in the backend JSON file "table_name" attribute and frontend does not have access to it) [FA-115].
 - Add dishes and dish ingredients in json definitions [FA-135].
 
 

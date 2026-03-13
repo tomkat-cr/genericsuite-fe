@@ -1,20 +1,38 @@
 // GenericCrudEditor (GCE) service main
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 
 // import { getConfigsJsonFile } from "../_helpers/json-utilities";
-import { GsIcons } from "../helpers/IconsLib.jsx";
-import { errorAndReEnter } from "../helpers/error-and-reenter.jsx";
-import { useUser } from '../helpers/UserContext.jsx';
 import { useAppContext } from "../helpers/AppContext.jsx";
+import { errorAndReEnter, getErrorMsgFromApi } from "../helpers/error-and-reenter.jsx";
+import { GsIcons } from "../helpers/IconsLib.jsx";
+import { windowLocationReload } from '../helpers/navigation.jsx';
+import { useUser } from '../helpers/UserContext.jsx';
+import { getHash } from './md5.utilities.jsx';
 
+import {
+  MSG_ACTION_DELETE,
+  MSG_ACTION_EDIT,
+  MSG_ACTION_READ,
+  MSG_CLOSE,
+  MSG_MORE,
+  MSG_RELOAD
+} from "../constants/general_constants.jsx";
+import { getLocalConfigItem, saveLocalConfig } from '../helpers/local-config.jsx';
+import {
+  getEditoObj,
+  setEditorParameters,
+} from './generic.editor.rfc.common.jsx';
+import {
+  FormPage,
+} from './generic.editor.rfc.formpage.jsx';
 import {
   MainSectionContext,
   MainSectionProvider,
 } from './generic.editor.rfc.provider.jsx';
 import {
-  FormPage,
-} from './generic.editor.rfc.formpage.jsx';
+  CrudEditorSearch,
+} from './generic.editor.rfc.search.jsx';
 import {
   getSelectDescription,
 } from './generic.editor.rfc.selector.jsx';
@@ -22,84 +40,132 @@ import {
   processGenericFuncArray,
 } from './generic.editor.rfc.specific.func.jsx';
 import {
-  setEditorParameters,
-  getEditoObj,
-} from './generic.editor.rfc.common.jsx';
-import {
-  CrudEditorSearch,
-} from './generic.editor.rfc.search.jsx';
-import {
   console_debug_log,
 } from './logging.service.jsx';
-import { getLocalConfigItem, saveLocalConfig } from '../helpers/local-config.jsx';
-import {
-  imageDirectory,
-  MSG_ACTION_DELETE,
-  MSG_ACTION_EDIT,
-  MSG_ACTION_READ,
-  MSG_MORE,
-  MSG_RELOAD,
-} from "../constants/general_constants.jsx";
 
 import {
-  ShowHidePageAnimation,
+  ShowHideWaitAnimation,
   WaitAnimation
 } from "./wait.animation.utility.jsx";
 
 import {
+  APP_LEVEL2_DIV_CLASS,
+  APP_LISTING_TABLE_BODY_TBODY_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TD_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TD_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS,
+  APP_LISTING_TABLE_BODY_TR_EVEN_CLASS,
+  APP_LISTING_TABLE_BODY_TR_ODD_CLASS,
+  APP_LISTING_TABLE_CLASS,
+  APP_LISTING_TABLE_HDR_TH_CLASS,
+  APP_LISTING_TABLE_HDR_THEAD_CLASS,
+  APP_LISTING_TABLE_HDR_TR_CLASS,
+  APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS,
+  APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS,
+  APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS,
+  APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS,
+  APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS,
+  APP_TITLE_H1_CLASS,
+  APP_TITLE_RECYCLE_BUTTON_CLASS,
+  APP_TOP_DIV_CLASS,
+  BUTTON_COMPOSED_LABEL_CLASS,
   BUTTON_LISTING_CLASS,
   BUTTON_LISTING_DISABLED_CLASS,
   BUTTON_LISTING_NEW_CLASS,
   BUTTON_LISTING_REFRESH_CLASS,
-  BUTTON_COMPOSED_LABEL_CLASS,
-  INFO_MSG_CLASS,
   HIDDEN_CLASS,
+  INFO_MSG_BUTTON_CLASS,
+  INFO_MSG_CLASS,
   VISIBLE_CLASS,
-  APP_TOP_DIV_CLASS,
-  APP_TITLE_H1_CLASS,
-  APP_TITLE_RECYCLE_BUTTON_CLASS,
-  APP_LEVEL2_DIV_CLASS,
-  APP_LISTING_TABLE_CLASS,
-  APP_LISTING_TABLE_HDR_THEAD_CLASS,
-  APP_LISTING_TABLE_HDR_TR_CLASS,
-  APP_LISTING_TABLE_HDR_TH_CLASS,
-  APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS,
-  APP_LISTING_TABLE_BODY_TBODY_CLASS,
-  APP_LISTING_TABLE_BODY_TR_ODD_CLASS,
-  APP_LISTING_TABLE_BODY_TR_EVEN_CLASS,
-  APP_LISTING_TABLE_BODY_TD_ODD_CLASS,
-  APP_LISTING_TABLE_BODY_TD_EVEN_CLASS,
-  APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS,
-  APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS,
-  APP_LISTING_TOOLBAR_TOP_DIV_CLASS,
-  APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS,
-  APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS,
-  APP_LISTING_TOOLBAR_ROW_PER_PAGE_LABEL_CLASS,
-  APP_LISTING_TOOLBAR_ROW_PER_PAGE_INPUT_CLASS,
-  APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS,
-  APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS,
-  APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS,
-  APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS,
-  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS,
-  APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS,
+  WAIT_ANIMATION_MARGIN_TOP_CLASS,
 } from "../constants/class_name_constants.jsx";
 import {
   ACTION_CREATE,
-  ACTION_READ,
-  ACTION_UPDATE,
   ACTION_DELETE,
   ACTION_LIST,
-  MSG_ACTION_NEW,
+  ACTION_READ,
+  ACTION_UPDATE,
   MSG_ACTION_LIST,
-  MSG_PREVIOUS,
+  MSG_ACTION_NEW,
   MSG_NEXT,
-  MSG_PAGE,
   MSG_OF,
-  MSG_ACTIONS,
-  MSG_ROWS_PER_PAGE,
+  MSG_PAGE,
+  MSG_PREVIOUS,
+  MSG_ROWS_PER_PAGE
 } from "../constants/general_constants.jsx";
 
 const debug = false;
+const gceReducerDebug = false;
+
+const initialState = {
+  editor: null,
+  rows: null,
+  currentPage: 1,
+  rowsPerPage: 10,
+  formMode: [ACTION_LIST, null],
+  status: "",
+  infoMsg: "",
+  searchFilters: {},
+  searchText: "",
+};
+
+function gceReducer(state, action) {
+  switch (action.type) {
+    case 'SET_EDITOR':
+      return { ...state, editor: action.payload };
+    case 'SET_ROWS':
+      return { ...state, rows: action.payload };
+    case 'SET_CURRENT_PAGE':
+      return { ...state, currentPage: action.payload };
+    case 'SET_ROWS_PER_PAGE':
+      return { ...state, rowsPerPage: action.payload };
+    case 'SET_FORM_MODE':
+      return { ...state, formMode: action.payload };
+    case 'SET_STATUS':
+      return { ...state, status: action.payload };
+    case 'SET_INFO_MSG':
+      return { ...state, infoMsg: action.payload };
+    case 'SET_SEARCH_FILTERS':
+      return { ...state, searchFilters: action.payload };
+    case 'SET_SEARCH_TEXT':
+      return { ...state, searchText: action.payload };
+    case 'HANDLE_CANCEL': {
+      const { config } = action.payload;
+      let newState = { ...state };
+      if (gceReducerDebug) {
+        console_debug_log('gceReducer | HANDLE_CANCEL | config:', config);
+      }
+      if (typeof config['searchFilters'] !== 'undefined') {
+        newState.searchFilters = config['searchFilters'];
+        newState.searchText = config['searchText'];
+      }
+      if (typeof config['nextAction'] !== 'undefined') {
+        newState.formMode = [
+          config['nextAction'],
+          config['id'],
+          config['infoMsg'],
+          "INFO",
+        ];
+        if (gceReducerDebug) {
+          console_debug_log('gceReducer | HANDLE_CANCEL | newState.formMode:', newState.formMode);
+        }
+      } else {
+        newState.formMode = [ACTION_LIST, null];
+      }
+      return newState;
+    }
+    default:
+      return state;
+  }
+}
 
 export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActions = null }) => {
   return (
@@ -116,17 +182,32 @@ export const GenericCrudEditor = ({ editorConfig, parentData, handleFormPageActi
 }
 
 const GenericCrudEditorMain = (props) => {
-  const [editor, setEditor] = useState(null);
-  const [rows, setRows] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(
-    parseInt(getLocalConfigItem("gce_rows_per_page"))
-  );
-  const [formMode, setFormMode] = useState([ACTION_LIST, null]);
-  const [status, setStatus] = useState("");
-  const [infoMsg, setInfoMsg] = useState("");
-  const [searchFilters, setSearchFilters] = useState({});
-  const [searchText, setSearchText] = useState("");
+  const [state, dispatch] = useReducer(gceReducer, {
+    ...initialState,
+    rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
+  });
+
+  const {
+    editor,
+    rows,
+    currentPage,
+    rowsPerPage,
+    formMode,
+    status,
+    infoMsg,
+    searchFilters,
+    searchText
+  } = state;
+
+  const setStatus = (p) => dispatch({ type: 'SET_STATUS', payload: p });
+  const setEditor = (p) => dispatch({ type: 'SET_EDITOR', payload: p });
+  const setRows = (p) => dispatch({ type: 'SET_ROWS', payload: p });
+  const setInfoMsg = (p) => dispatch({ type: 'SET_INFO_MSG', payload: p });
+  const setFormMode = (p) => dispatch({ type: 'SET_FORM_MODE', payload: p });
+  const setCurrentPage = (p) => dispatch({ type: 'SET_CURRENT_PAGE', payload: p });
+  const setRowsPerPage = (p) => dispatch({ type: 'SET_ROWS_PER_PAGE', payload: p });
+  const setSearchFilters = (p) => dispatch({ type: 'SET_SEARCH_FILTERS', payload: p });
+  const setSearchText = (p) => dispatch({ type: 'SET_SEARCH_TEXT', payload: p });
 
   const {
     initCache,
@@ -143,7 +224,7 @@ const GenericCrudEditorMain = (props) => {
       editor_response => {
         if (!editor_response) {
           setEditor(null);
-        } else if(editor_response.error) {
+        } else if (editor_response.error) {
           console_debug_log("GCE-M-010:");
           console_debug_log(editor_response.errorMsg);
           setStatus(
@@ -162,17 +243,17 @@ const GenericCrudEditorMain = (props) => {
         console_debug_log(error);
         setStatus(
           errorAndReEnter(
-            error, (debug ? '[GCE-M-020]' : null)
+            getErrorMsgFromApi(error), (debug ? '[GCE-M-020]' : null)
           )
         );
       }
     );
-  }, [props]);
+  }, []);
 
   useEffect(() => {
-    if (editor) {
+    if (editor && formMode[0] === ACTION_LIST) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation"
-      ShowHidePageAnimation(true, animationElementId);
+      ShowHideWaitAnimation(true, animationElementId);
       let accessKeysListing = {
         page: currentPage,
         limit: rowsPerPage,
@@ -182,10 +263,10 @@ const GenericCrudEditorMain = (props) => {
         editor, 'dbListPreRead', accessKeysListing, formMode, currentUser
       ).then(
         funcResponse => {
-          accessKeysListing = Object.assign({}, accessKeysListing, editor.parentFilter, searchFilters, funcResponse.fieldValues);
+          accessKeysListing = Object.assign({}, accessKeysListing, editor.endpointFilter, searchFilters, funcResponse.fieldValues);
           editor.db.getAll(accessKeysListing).then(
             data => {
-              ShowHidePageAnimation(false, animationElementId);
+              ShowHideWaitAnimation(false, animationElementId);
               // dbListPostRead: To fix Listing fields
               processGenericFuncArray(
                 editor, 'dbListPostRead', data, formMode, currentUser
@@ -193,7 +274,7 @@ const GenericCrudEditorMain = (props) => {
                 funcResponse => setRows(funcResponse.fieldValues),
                 error => setStatus(
                   errorAndReEnter(
-                    error, (debug ? '[GCE-M-030]' : null)
+                    getErrorMsgFromApi(error), (debug ? '[GCE-M-030]' : null)
                   )
                 )
               )
@@ -201,12 +282,12 @@ const GenericCrudEditorMain = (props) => {
             error => {
               console_debug_log(`GenericCrudEditor / Listing - ERROR:`)
               console.error(error);
-              ShowHidePageAnimation(false, animationElementId);
+              ShowHideWaitAnimation(false, animationElementId);
               setStatus(
                 errorAndReEnter(
-                  error, (debug ? ' [GCE-M-040]' : null)
-                  )
-                );
+                  getErrorMsgFromApi(error), (debug ? ' [GCE-M-040]' : null)
+                )
+              );
             }
           );
         },
@@ -215,7 +296,7 @@ const GenericCrudEditorMain = (props) => {
           console.error(error);
           setStatus(
             errorAndReEnter(
-              error, (debug ? ' [GCE-M-050]' : null)
+              getErrorMsgFromApi(error), (debug ? ' [GCE-M-050]' : null)
             )
           )
         }
@@ -223,21 +304,8 @@ const GenericCrudEditorMain = (props) => {
     }
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
 
-  const handleCancel = (config = {}) => {
-    if ((typeof config['searchFilters'] !== 'undefined')) {
-      setSearchFilters(config['searchFilters']);
-      setSearchText(config['searchText']);
-    }
-    if ((typeof config['nextAction'] !== 'undefined')) {
-      setFormMode([
-        config['nextAction'],
-        config['id'],
-        config['infoMsg'],
-        "INFO",
-      ]);
-    } else {
-      setFormMode([ACTION_LIST, null]);
-    }
+  const handleCancel = (config = null) => {
+    dispatch({ type: 'HANDLE_CANCEL', payload: { config: config || {} } });
   };
 
   const handleNew = () => {
@@ -265,7 +333,7 @@ const GenericCrudEditorMain = (props) => {
     if (!event.target.value) {
       return;
     }
-    saveLocalConfig({"gce_rows_per_page": event.target.value});
+    saveLocalConfig({ "gce_rows_per_page": event.target.value });
     setInfoMsg('');
     setRowsPerPage(event.target.value);
   }
@@ -273,22 +341,36 @@ const GenericCrudEditorMain = (props) => {
   const handleRefresh = (newPage) => {
     // select_cache = {};
     initCache();
-    window.location.reload(true);
+    windowLocationReload(true);
   }
+
+  const canonicalRow = (row) => JSON.stringify(row, (_, value) =>
+    value && typeof value === 'object' && !Array.isArray(value)
+      ? Object.keys(value).sort().reduce((acc, k) => { acc[k] = value[k]; return acc; }, {})
+      : value
+  );
 
   const rowId = (row) => {
     if (debug) {
       console_debug_log(`rowId | editor.primaryKeyName: ${editor.primaryKeyName} | row:`, row)
     }
-    const response = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
+    const rowIdVar = typeof row._id === 'undefined' ? row[editor.primaryKeyName] : editor.db.convertId(row._id);
+    // Use MD5 utilities to hash rowId when there is no row._id or row[editor.primaryKeyName],
+    // avoiding the "Encountered two children with the same key, <table_name>_row_undefined_tr_enclosure" warning
+    // For example: food_times_row_undefined_tr_enclosure [GS-266]
+    const response = typeof rowIdVar === 'undefined' ? getHash(canonicalRow(row)) : rowIdVar;
+    if (typeof rowIdVar === 'undefined') {
+      console.error(`ERROR [GCE-M-060]: row does not have '_id' nor '${editor.primaryKeyName}' | Editor: ${editor.name} | Row: ${JSON.stringify(row)}`)
+    }
     return response;
   }
 
   const actionsHandler = (mode, row) => {
-    const element = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_controls`);
+    const currentRowId = rowId(row);
+    const element = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_controls`);
     const currRowHadHiddenClass = element.classList.contains('hidden');
-    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_magicButton`);
-    const rowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(row)}_row`);
+    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_magicButton`);
+    const rowElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
     if (mode === 'show') {
       // Highlight row
@@ -332,24 +414,23 @@ const GenericCrudEditorMain = (props) => {
     }
   }
 
-
   if (!editor) {
     if (status) {
       return (
         <div>
-            {status}
-            {debug && "[GCEM-NES]"}
+          {status}
+          {debug && "[GCEM-NES]"}
         </div>
       );
     }
     return (
-      WaitAnimation()
+      WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
     );
   }
 
   if (!rows && !status) {
     return (
-      WaitAnimation()
+      WaitAnimation(WAIT_ANIMATION_MARGIN_TOP_CLASS)
     );
   }
 
@@ -367,14 +448,17 @@ const GenericCrudEditorMain = (props) => {
   }
 
   if (formMode[0] !== ACTION_LIST) {
+    if (debug) {
+      console_debug_log('GenericCrudEditorMain | formMode[0] !== ACTION_LIST | formMode:', formMode);
+    }
     return (
       <>
         <FormPage
-          mode_par={formMode[0]}
-          id_par={formMode[1]}
-          onCancel_par={handleCancel}
-          setInfoMsg_par={setInfoMsg}
-          editor_par={editor}
+          mode={formMode[0]}
+          id={formMode[1]}
+          onCancel={handleCancel}
+          setInfoMsg={setInfoMsg}
+          editor={editor}
           handleFormPageActions={props.handleFormPageActions}
           message={typeof formMode[2] !== 'undefined' ? formMode[2] : ''}
           messageType={typeof formMode[3] !== 'undefined' ? formMode[3] : ''}
@@ -394,7 +478,20 @@ const GenericCrudEditorMain = (props) => {
           key={`${editor.baseUrl}_info_msg`}
           className={INFO_MSG_CLASS}
         >
-          {infoMsg}
+          <div>
+            {infoMsg}
+          </div>
+          <div>
+            <button
+              onClick={() => setInfoMsg('')}
+              className={INFO_MSG_BUTTON_CLASS}
+            >
+              <GsIcons
+                icon='x'
+                alt={MSG_CLOSE}
+              />
+            </button>
+          </div>
         </div>
       )}
       {/* Listing space */}
@@ -457,15 +554,16 @@ const GenericCrudEditorMain = (props) => {
                 className={APP_LISTING_TABLE_BODY_TBODY_CLASS}
               >
                 {rows && typeof rows.resultset !== 'undefined' &&
-                  rows.resultset.map((row, index) => (
-                    // To avoid use of <> to group 2 <tr> (one for the row and one for the actions)
+                  rows.resultset.map((row, index) => {
+                    // To avoid use of "<>" to group two "<tr>" (one for the row and one for the actions)
                     // because it throws the warning:
-                    // "Warning: Each child in a list should have a unique "key" prop."
+                    //    "Warning: Each child in a list should have a unique "key" prop."
                     // we use <React.Fragment> instead
-                    <React.Fragment key={`${editor.baseUrl}_row_${rowId(row)}_tr_enclosure`}>
+                    const uniqueRowId = rowId(row)
+                    return (<React.Fragment key={`${editor.baseUrl}_row_${uniqueRowId}_tr_enclosure`}>
                       <tr
-                        id={`${editor.baseUrl}_row_${rowId(row)}_row`}
-                        key={`${editor.baseUrl}_row_${rowId(row)}_row`}
+                        id={`${editor.baseUrl}_row_${uniqueRowId}_row`}
+                        key={`${editor.baseUrl}_row_${uniqueRowId}_row`}
                         className={index % 2 ? `${APP_LISTING_TABLE_BODY_TR_ODD_CLASS}` : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}`}
                         onMouseOver={() => {
                           actionsHandler('show', row);
@@ -480,13 +578,13 @@ const GenericCrudEditorMain = (props) => {
                         {actionsHandlerAllowsMagicButton && (
                           <td
                             // Action buttons
-                            key={`${editor.baseUrl}_row_${rowId(row)}_magicButton_td`}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_magicButton_td`}
                             // colSpan={Object.keys(editor.fieldElements).length + 1}
                             className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
                           >
                             <div
-                              id={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
-                              key={`${editor.baseUrl}_row_${rowId(row)}_magicButton`}
+                              id={`${editor.baseUrl}_row_${uniqueRowId}_magicButton`}
+                              key={`${editor.baseUrl}_row_${uniqueRowId}_magicButton`}
                               className={VISIBLE_CLASS}
                             >
                               <GsIcons
@@ -500,7 +598,7 @@ const GenericCrudEditorMain = (props) => {
                           (key) =>
                             editor.fieldElements[key].listing && (
                               <td
-                                key={`${editor.baseUrl}_row_${rowId(row)}_${key}_td`}
+                                key={`${editor.baseUrl}_row_${uniqueRowId}_${key}_td`}
                                 className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS}
                               >
                                 {
@@ -514,8 +612,8 @@ const GenericCrudEditorMain = (props) => {
                         )}
                       </tr>
                       <tr
-                        id={`${editor.baseUrl}_row_${rowId(row)}_controls`}
-                        key={`${editor.baseUrl}_row_${rowId(row)}_controls`}
+                        id={`${editor.baseUrl}_row_${uniqueRowId}_controls`}
+                        key={`${editor.baseUrl}_row_${uniqueRowId}_controls`}
                         className={(index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS}
                         onMouseOver={() => {
                           actionsHandler('show', row);
@@ -529,13 +627,13 @@ const GenericCrudEditorMain = (props) => {
                       >
                         <td
                           // Action buttons
-                          key={`${editor.baseUrl}_row_${rowId(row)}_controls_td`}
+                          key={`${editor.baseUrl}_row_${uniqueRowId}_controls_td`}
                           colSpan={Object.keys(editor.fieldElements).length + 1}
                           className={index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS}
                         >
                           <button
-                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_eye`}
-                            onClick={() => handleView(rowId(row))}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_controls_eye`}
+                            onClick={() => handleView(uniqueRowId)}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -544,8 +642,8 @@ const GenericCrudEditorMain = (props) => {
                             />
                           </button>
                           <button
-                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_edit`}
-                            onClick={() => handleModify(rowId(row))}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_controls_edit`}
+                            onClick={() => handleModify(uniqueRowId)}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -554,8 +652,8 @@ const GenericCrudEditorMain = (props) => {
                             />
                           </button>
                           <button
-                            key={`${editor.baseUrl}_row_${rowId(row)}_controls_trash`}
-                            onClick={() => handleDelete(rowId(row))}
+                            key={`${editor.baseUrl}_row_${uniqueRowId}_controls_trash`}
+                            onClick={() => handleDelete(uniqueRowId)}
                             className={`${BUTTON_LISTING_CLASS}`}
                           >
                             <GsIcons
@@ -565,15 +663,15 @@ const GenericCrudEditorMain = (props) => {
                           </button>
                         </td>
                       </tr>
-                    </React.Fragment>
-                  ))}
+                    </React.Fragment>)
+                  })}
               </tbody>
             </table>
           </div>
           {/* Toolbar */}
           <div
             key={`${editor.baseUrl}_toolbar`}
-            className={APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS :  APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)}
+            className={APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS : APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)}
           >
             <CrudEditorPagination
               id={editor.baseUrl + "_pagination"}
@@ -766,12 +864,12 @@ const CrudEditorPagination = ({ id, currentPage, totalPages, goToNewPage }) => {
       <div
         className={APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS}
       >
-        {MSG_PAGE} {currentPage} {MSG_OF} {totalPages}
+        {MSG_PAGE} {currentPage}{totalPages > 0 ? ` ${MSG_OF} ${totalPages}` : ''}
       </div>
       <button
-        disabled={currentPage === totalPages}
+        disabled={currentPage >= totalPages}
         onClick={() => goToNewPage(currentPage + 1)}
-        className={`${currentPage === totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`}
+        className={`${currentPage >= totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`}
       >
         <GsIcons
           icon="greater-than"
@@ -798,11 +896,11 @@ const CrudEditorNewButton = ({ id, handleNew }) => {
       <div
         className={BUTTON_COMPOSED_LABEL_CLASS}
       >
-          <GsIcons
-            icon="plus"
-            alt={MSG_ACTION_NEW}
-          />
-          &nbsp;{MSG_ACTION_NEW}
+        <GsIcons
+          icon="plus"
+          alt={MSG_ACTION_NEW}
+        />
+        &nbsp;{MSG_ACTION_NEW}
       </div>
     </button>
   );

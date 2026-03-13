@@ -5,8 +5,10 @@ import {
   processDateToTimestamp,
   processTimestampToDate,
 } from "../helpers/date-timestamp.jsx";
-
 import { genericFuncArrayDefaultValue } from "./generic.editor.rfc.specific.func.jsx";
+import { console_debug_log } from "./logging.service.jsx";
+
+const debug = false;
 
 export const timestampDbListPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during Listing Database Post Read
@@ -31,48 +33,50 @@ export const timestampDbListPostRead = (dataRead, editor, action) => {
 }
 
 export const timestampDbPostRead = (dataRead, editor, action) => {
-    // Timestamp to Date convertion during FormData Database Post Read
-    return new Promise((resolve, reject) => {
-      let resp = genericFuncArrayDefaultValue(dataRead);
-      const new_row = editor.fieldElements.reduce( (acc, currentObj) => {
-          switch(currentObj.type) {
-            case 'date':
-              // For date edition, we need only the date portion
-              acc[currentObj.name] = processTimestampToDate(acc[currentObj.name]);
-              break;
-            case 'datetime-local':
-              // For datetime-local edition, we need the date from time separation to be the 'T'
-              acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, 'T');
-              break;
-            default:
-          }
-          return {...acc};
-        }, dataRead.resultset);
-      resp.fieldValues.resultset = new_row;
-      resolve(resp);
-    });
-  }
-  
-  export const timestampDbPreWrite = (row, editor, action) => {
-    return new Promise((resolve, reject) => {
-      // Date to Timestamp convertion during FormData Database Pre Writing
-      let resp = genericFuncArrayDefaultValue(row);
-      const new_row = editor.fieldElements.reduce( (acc, currentObj) => {
-        switch(currentObj.type) {
-          case 'date':
-          case 'datetime-local':
-              acc[currentObj.name] = processDateToTimestamp(acc[currentObj.name]);
-              break;
-          default:
-        }
-        return {...acc};
-      }, row);
-      // Update update_date with current date/time timestamp
-      if (typeof new_row['update_date'] !== 'undefined') {
-        new_row['update_date'] = nowToTimestap();
+  // Timestamp to Date convertion during FormData Database Post Read
+  if (debug) console_debug_log('timestampDbPostRead - PRE\n| action:', action, '\n| editor:', editor, '\n| dataRead:', dataRead);
+
+  return new Promise((resolve, reject) => {
+    let resp = genericFuncArrayDefaultValue(dataRead);
+    const new_row = editor.fieldElements.reduce((acc, currentObj) => {
+      switch (currentObj.type) {
+        case 'date':
+          // For date edition, we need only the date portion
+          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name]);
+          break;
+        case 'datetime-local':
+          // For datetime-local edition, we need the date from time separation to be the 'T'
+          acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, 'T');
+          break;
+        default:
       }
-      resp.fieldValues = new_row;
-      resolve(resp);
-    });
-  }
-  
+      return { ...acc };
+    }, (editor.type == "child_listing" ? (dataRead.resultset?.[0] || {}) : dataRead.resultset));
+    resp.fieldValues.resultset = (editor.type == "child_listing" ? [new_row] : new_row);
+    if (debug) console_debug_log('timestampDbPostRead - POST\n| resp:', resp);
+    resolve(resp);
+  });
+}
+
+export const timestampDbPreWrite = (row, editor, action) => {
+  return new Promise((resolve, reject) => {
+    // Date to Timestamp convertion during FormData Database Pre Writing
+    let resp = genericFuncArrayDefaultValue(row);
+    const new_row = editor.fieldElements.reduce((acc, currentObj) => {
+      switch (currentObj.type) {
+        case 'date':
+        case 'datetime-local':
+          acc[currentObj.name] = processDateToTimestamp(acc[currentObj.name]);
+          break;
+        default:
+      }
+      return { ...acc };
+    }, row);
+    // Update update_date with current date/time timestamp
+    if (typeof new_row['update_date'] !== 'undefined') {
+      new_row['update_date'] = nowToTimestap();
+    }
+    resp.fieldValues = new_row;
+    resolve(resp);
+  });
+}

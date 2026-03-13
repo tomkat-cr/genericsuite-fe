@@ -21,8 +21,8 @@ if [ "${ERROR_MSG}" = "" ]; then
 fi
 
 if [ "${ERROR_MSG}" = "" ]; then
-    if [ "${GIT_SUBMODULE_LOCAL_PATH}" = "" ];then
-        ERROR_MSG="GIT_SUBMODULE_LOCAL_PATH is not set"
+    if [ "${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}" = "" ];then
+        ERROR_MSG="GIT_SUBMODULE_LOCAL_PATH_FRONTEND is not set"
     fi
 fi
 
@@ -48,10 +48,10 @@ if [ "${ERROR_MSG}" = "" ]; then
     if [ "$1" = "--force" ]; then
         echo ""
         echo "FORCING Adding submodule: ${GIT_SUBMODULE_URL}"
-        echo "To: ${GIT_SUBMODULE_LOCAL_PATH}"
+        echo "To: ${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
         echo ""
-        echo "Running: git submodule add '${GIT_SUBMODULE_URL}' '${GIT_SUBMODULE_LOCAL_PATH}'"
-        git submodule add "${GIT_SUBMODULE_URL}" "${GIT_SUBMODULE_LOCAL_PATH}"
+        echo "Running: git submodule add '${GIT_SUBMODULE_URL}' '${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}'"
+        git submodule add "${GIT_SUBMODULE_URL}" "${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
         echo ""
         echo "Running: git submodule init"
         git submodule init
@@ -70,15 +70,15 @@ if [ "${ERROR_MSG}" = "" ]; then
     fi
 fi
 if [ "${ERROR_MSG}" = "" ]; then
-    if [ ! -d "${GIT_SUBMODULE_LOCAL_PATH}" ]; then
+    if [ ! -d "${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}" ]; then
         echo ""
         echo "Adding submodule: ${GIT_SUBMODULE_URL}"
-        echo "To: ${GIT_SUBMODULE_LOCAL_PATH}"
+        echo "To: ${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
         echo ""
-        echo "Running: git submodule add '${GIT_SUBMODULE_URL}' '${GIT_SUBMODULE_LOCAL_PATH}'"
-        if ! git submodule add "${GIT_SUBMODULE_URL}" "${GIT_SUBMODULE_LOCAL_PATH}"
+        echo "Running: git submodule add '${GIT_SUBMODULE_URL}' '${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}'"
+        if ! git submodule add "${GIT_SUBMODULE_URL}" "${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
         then
-            ERROR_MSG="Failed to add submodule: ${GIT_SUBMODULE_LOCAL_PATH}"
+            ERROR_MSG="Failed to add submodule: ${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
         else
             echo "Running: git submodule init"
             if ! git submodule init
@@ -93,12 +93,12 @@ if [ "${ERROR_MSG}" = "" ]; then
             fi
         fi
     else
-        if ! cd "${GIT_SUBMODULE_LOCAL_PATH}"
+        if ! cd "${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
         then
-            ERROR_MSG="Failed to cd into: ${GIT_SUBMODULE_LOCAL_PATH}"
+            ERROR_MSG="Failed to cd into: ${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
         else
             echo "Updating submodule: ${GIT_SUBMODULE_URL}"
-            echo "In: ${GIT_SUBMODULE_LOCAL_PATH}"
+            echo "In: ${GIT_SUBMODULE_LOCAL_PATH_FRONTEND}"
             echo ""
             echo ">> Current directory: `pwd`"
             echo ""

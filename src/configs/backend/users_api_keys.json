@@ -1,4 +1,4 @@
 {
-    "table_name": "users",
+    "table_name": "users_api_keys",
     "specific_function": "delete_params_file"
 }

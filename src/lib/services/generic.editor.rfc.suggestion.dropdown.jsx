@@ -1,27 +1,34 @@
 // Suggestion Dropdown
 
-import React, { useState, useEffect } from 'react';
-import Downshift from 'downshift';
+import { useCombobox } from 'downshift';
 import { useFormikContext } from 'formik';
-// import { debounce } from 'lodash';
+import { debounce } from 'lodash';
+import React, { useEffect, useMemo, useState } from 'react';
 
+import {
+    APP_FORMPAGE_FIELD_BASE_CLASS,
+    DISABLE_FIELD_BACKGROUND_COLOR_CLASS,
+    INVALID_FEEDBACK_CLASS,
+    IS_INVALID_CLASS,
+    SUGGESTION_DROPDOWN_CLASS,
+    SUGGESTION_DROPDOWN_WRAPPER_CLASS,
+} from '../constants/class_name_constants.jsx';
+import { getErrorMsgFromApi } from '../helpers/error-and-reenter.jsx';
+import { useAppContext } from '../helpers/AppContext.jsx';
+import { useUser } from '../helpers/UserContext.jsx';
 import { dbApiService } from './db.service.jsx';
-import { convertId } from './id.utilities.jsx';
 import {
     defaultValue,
     replaceSpecialVars,
 } from "./generic.editor.utilities.jsx";
-import { 
+import { convertId } from './id.utilities.jsx';
+import {
     console_debug_log,
 } from "./logging.service.jsx";
-import { useUser } from '../helpers/UserContext.jsx';
-import { useAppContext } from '../helpers/AppContext.jsx';
-import {
-    INVALID_FEEDBACK_CLASS,
-    SUGGESTION_DROPDOWN_CLASS,
-} from '../constants/class_name_constants.jsx';
 
 const debug = false;
+
+const debounceTimeout = 500;
 
 export const SuggestionDropdown = ({
     name,
@@ -33,7 +40,9 @@ export const SuggestionDropdown = ({
 }) => {
     const { setFieldValue } = useFormikContext();
     const [inputValue, setInputValue] = useState(value);
+    const [debouncedInputValue, setDebouncedInputValue] = useState(value);
     const [suggestions, setSuggestions] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(null);
     const { currentUser } = useUser();
     const { theme } = useAppContext();
 
@@ -41,7 +50,7 @@ export const SuggestionDropdown = ({
     const nameInternal = `${name}_sdd`;
 
     const filter_api_url = defaultValue(config, 'filter_api_url');     // Ex. "fda_food_query"
-    const filter_api_request_method = defaultValue(config, "filter_api_request_method", "POST"); // Ex. true or false
+    const filter_api_request_method = String(defaultValue(config, "filter_api_request_method", "get")).toUpperCase(); // Ex. true or false
     const filter_search_param_name = defaultValue(config, 'filter_search_param_name');     // Ex. "food_name"
     const filter_search_other_param = defaultValue(config, 'filter_search_other_param');   // Ex. {"autocomplete": "1"}
     const suggestion_id_fieldname = defaultValue(config, "suggestion_id_fieldname");  // Ex. "id"
@@ -60,19 +69,19 @@ export const SuggestionDropdown = ({
     */
 
     if (debug) {
-        console_debug_log(`SuggestionDropdown 1: fda_food_query | name: ${name}, disabled: ${disabled}, required: ${required}, className: ${className}`);
-        console_debug_log(`Config: ${config}`);
+        console_debug_log(`SuggestionDropdown | name: ${name}, disabled: ${disabled}, required: ${required}, className: ${className}`);
+        console_debug_log('SuggestionDropdown | Config:', config);
     }
 
     useEffect(() => {
-        if (inputValue) {
-            // Get suggestions from external surce
+        if (debouncedInputValue) {
+            // Get suggestions from external source
             const dbService = new dbApiService({ url: filter_api_url })
             let urlParams = {}
             let bodyData = replaceSpecialVars(filter_search_other_param, currentUser);
-            bodyData[filter_search_param_name] = inputValue;
+            bodyData[filter_search_param_name] = debouncedInputValue;
             if (debug) {
-                console_debug_log(`SuggestionDropdow 2: ${filter_api_url} | useEffect | bodyData:`);
+                console_debug_log(`SuggestionDropdown 2: ${filter_api_url} | useEffect | bodyData:`);
                 console_debug_log(bodyData);
             }
             if (filter_api_request_method === "GET") {
@@ -82,8 +91,8 @@ export const SuggestionDropdown = ({
             dbService.getAll(urlParams, bodyData, filter_api_request_method)
                 .then(response => {
                     if (debug) {
-                        console_debug_log('setSuggestions(response.resultset)');
-                        console_debug_log(response.resultset);
+                        console_debug_log('setSuggestions(response)', response);
+                        console_debug_log('setSuggestions(response.resultset)', response.resultset);
                     }
                     if (typeof response.resultset == "string") {
                         setSuggestions([]);
@@ -91,17 +100,28 @@ export const SuggestionDropdown = ({
                         setSuggestions(response.resultset);
                     }
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    if (debug) {
+                        console.error('SuggestionDropdown API call error:', error);
+                    }
+                    setErrorMessage(getErrorMsgFromApi(error));
+                    setSuggestions([]);
+                });
         }
     }, [
-        inputValue,
+        debouncedInputValue,
         filter_api_url,
         filter_search_other_param,
         filter_search_param_name,
         name,
         setFieldValue,
-        filter_api_request_method
+        filter_api_request_method,
+        currentUser
     ]);
+
+    useEffect(() => {
+        setErrorMessage(null);
+    }, [suggestions]);
 
     const handleSuggestionSelected = (suggestion) => {
         if (debug) {
@@ -114,99 +134,87 @@ export const SuggestionDropdown = ({
                 setFieldValue(field_name, value);
             });
             // Store new inputValue from suggestion
-            const newInputValue = suggestion[suggestion_name_fieldname]
-            if (debug) {
-                console_debug_log(`inputValueChange | 1.1) Before setInputValue(${newInputValue})`);
-            }
+            const newInputValue = suggestion[suggestion_name_fieldname];
             setInputValue(newInputValue);
-            if (debug) {
-                console_debug_log(`inputValueChange | 1.2) After setInputValue(${newInputValue})`);
-            }
+            setDebouncedInputValue(newInputValue);
         }
     };
 
     const inputValueChange = (newInputValue) => {
-        // Sync the external input field value with this component's input field
-        if (debug) {
-            console_debug_log(`inputValueChange | 2.1) Before setFieldValue(${name}, ${inputValue})`);
-        }
         setFieldValue(name, newInputValue);
-        if (debug) {
-            console_debug_log(`inputValueChange | 2.2) After setFieldValue(${name}, ${inputValue})`);
-        }
-        // Store new inputValue
-        if (debug) {
-            console_debug_log(`inputValueChange | 2.3) Before setInputValue(${newInputValue})`);
-        }
         setInputValue(newInputValue);
-        if (debug) {
-            console_debug_log(`inputValueChange | 2.4) After setInputValue(${newInputValue})`);
-        }
     };
 
-    return (
-        <>
-            <div
-                className={`${SUGGESTION_DROPDOWN_CLASS} ${theme.input}`}
-            >
-                <Downshift
-                    inputValue={inputValue}
-                    onChange={handleSuggestionSelected}
-                    // onInputValueChange={debounce((inputValue) => setInputValue(inputValue), 500)}
-                    // onInputValueChange={(inputValue) => setInputValue(inputValue)}
-                    onInputValueChange={(inputValue) => inputValueChange(inputValue)}
-                    itemToString={(item) => (item ? item[suggestion_name_fieldname] : inputValue)}
-                    id={name}
-                    name={nameInternal}
-                    key={nameInternal}
-                    disabled={disabled}
-                    required={required}
-                    className={className}
-                >
-                    {({
-                        getInputProps,
-                        getItemProps,
-                        getMenuProps,
-                        isOpen,
-                        highlightedIndex,
-                        selectedItem,
-                        getToggleButtonProps
-                    }) => (
-                        <div>
-                            <input {...getInputProps()} />
-                            <ul {...getMenuProps()}>
-                                {isOpen
-                                    ? suggestions.map((suggestion, index) => (
-                                        <li
-                                            {...getItemProps({
-                                                key: convertId(suggestion[suggestion_id_fieldname]),
-                                                index,
-                                                item: suggestion,
-                                                style: {
-                                                    backgroundColor:
-                                                        highlightedIndex === index ? 'lightgray' : 'white',
-                                                    fontWeight: selectedItem === suggestion ? 'bold' : 'normal',
-                                                },
-                                            })}
-                                        >
-                                            {suggestion[suggestion_desc_fieldname]}
-                                        </li>
-                                    ))
-                                    : null}
-                            </ul>
-                        </div>
-                    )}
-                </Downshift>
+    const updateDebouncedInputValue = useMemo(
+        () => debounce((value) => setDebouncedInputValue(value), debounceTimeout),
+        []
+    );
 
+    const onInputValueChangeInternal = (newInputValue) => {
+        inputValueChange(newInputValue);
+        updateDebouncedInputValue(newInputValue);
+    };
+
+    const {
+        isOpen,
+        getMenuProps,
+        getInputProps,
+        highlightedIndex,
+        getItemProps,
+        selectedItem,
+    } = useCombobox({
+        items: suggestions,
+        inputValue,
+        onInputValueChange: ({ inputValue: newInputValue }) => {
+            onInputValueChangeInternal(newInputValue);
+        },
+        onSelectedItemChange: ({ selectedItem }) => {
+            handleSuggestionSelected(selectedItem);
+        },
+        itemToString: (item) => (item ? item[suggestion_name_fieldname] : inputValue),
+        id: name,
+    });
+
+    return (
+        <div className={SUGGESTION_DROPDOWN_WRAPPER_CLASS}>
+            <div className={`${SUGGESTION_DROPDOWN_CLASS} ${className || ""} ${theme.input}`}>
+                <div>
+                    <input
+                        {...getInputProps({
+                            className: `${APP_FORMPAGE_FIELD_BASE_CLASS} ${disabled ? DISABLE_FIELD_BACKGROUND_COLOR_CLASS : ""
+                                } ${(inputValue && suggestions.length === 0) ? IS_INVALID_CLASS : ""
+                                }`,
+                            disabled: disabled,
+                            required: required,
+                            name: nameInternal,
+                        })}
+                    />
+                    <ul {...getMenuProps()}>
+                        {isOpen &&
+                            suggestions.map((suggestion, index) => (
+                                <li
+                                    {...getItemProps({
+                                        key: convertId(suggestion[suggestion_id_fieldname]),
+                                        index,
+                                        item: suggestion,
+                                        style: {
+                                            backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
+                                            fontWeight: selectedItem === suggestion ? 'bold' : 'normal',
+                                        },
+                                    })}
+                                >
+                                    {suggestion[suggestion_desc_fieldname]}
+                                </li>
+                            ))}
+                    </ul>
+                </div>
             </div>
             {inputValue && suggestions.length === 0 && (
-                <div
-                    className={INVALID_FEEDBACK_CLASS}
-                >
-                    Error: No suggestions found.
+                <div className={INVALID_FEEDBACK_CLASS}>
+                    {errorMessage || 'Error: No suggestions found'}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

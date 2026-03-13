@@ -1,34 +1,33 @@
 import React from 'react';
 
 import {
-    WAIT_ANIMATION_IMG,
-    MSG_ALT_WAIT_ANIMATION,
+  MSG_ALT_WAIT_ANIMATION,
+  WAIT_ANIMATION_IMG,
 } from '../constants/general_constants.jsx';
 
 import {
-  SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS,
-  SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS,
+  WAIT_ANIMATION_CLASS,
+  WAIT_ANIMATION_DISABLED_CLASS,
+  WAIT_ANIMATION_ENABLED_CLASS,
 } from '../constants/class_name_constants.jsx';
 
-export const WaitAnimation = () => {
-    return (
-      <div>
-        <center>
-          <img src={WAIT_ANIMATION_IMG} alt={MSG_ALT_WAIT_ANIMATION} />
-        </center>
-      </div>
-    );
+export const WaitAnimation = (className = "") => {
+  return (
+    <div className={WAIT_ANIMATION_CLASS + " " + className}>
+      <img src={WAIT_ANIMATION_IMG} alt={MSG_ALT_WAIT_ANIMATION} />
+    </div>
+  );
 };
 
-export const ShowHidePageAnimation = (
-    showAnimation,
-    elementId = "nav_animation"
+export const ShowHideWaitAnimation = (
+  showAnimation,
+  elementId = "nav_animation"
 ) => {
-    let animationDiv = document.getElementById(elementId);
-    if (animationDiv) {
-      animationDiv.className=(showAnimation ?
-        SHOW_HIDE_PAGE_ANIMATION_ENABLED_CLASS
-          :
-        SHOW_HIDE_PAGE_ANIMATION_DISABLED_CLASS);
-    }
+  let animationDiv = document.getElementById(elementId);
+  if (animationDiv) {
+    animationDiv.className = (showAnimation ?
+      WAIT_ANIMATION_ENABLED_CLASS
+      :
+      WAIT_ANIMATION_DISABLED_CLASS);
+  }
 };

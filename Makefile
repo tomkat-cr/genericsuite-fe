@@ -84,6 +84,9 @@ run_prod: build-prod
 tailwind:
 	npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css --watch
 
+tailwind-build:
+	npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css
+
 add_submodules:
 	sh node_modules/genericsuite/scripts/add_github_submodules.sh
 
@@ -105,4 +108,12 @@ pre-publish:
 	sh scripts/npm_publish.sh pre-publish
 
 publish:
+	#
+	# To publish the package to NPMJS checking the test snapshots:
+	#    make publish
+	#
+	# To solve the test errors when there are changes in the UI
+	# not reflected in the test snapshots:
+	#    UPDATE_SNAPSHOTS=1 make publish
+	#
 	sh scripts/npm_publish.sh publish

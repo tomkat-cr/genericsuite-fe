@@ -142,7 +142,7 @@ export const mandatoryFiltersDbListPreRead = (data, editor, action, currentUser)
     return new Promise((resolve, reject) => {
         let resp = genericFuncArrayDefaultValue(data);
         if (typeof editor.mandatoryFilters !== 'undefined') {
-            resp.fieldValues = replaceSpecialVars(editor.mandatoryFilters, currentUser)
+            resp.fieldValues = replaceSpecialVars(editor.mandatoryFilters, currentUser);
         }
         // console_debug_log(`>>> mandatoryFiltersDbListPreRead | resp:`, resp, 'editor.mandatoryFilters:', editor.mandatoryFilters);
         resolve(resp);
