@@ -50,28 +50,28 @@ eject-dev:
 	npm run eject-dev
 
 config:
-	sh node_modules/genericsuite/scripts/change_env_be_endpoint.sh dev
+	bash ./node_modules/genericsuite-fe-scripts/scripts/change_env_be_endpoint.sh dev
 
 config_qa:
-	sh node_modules/genericsuite/scripts/change_env_be_endpoint.sh qa
+	bash ./node_modules/genericsuite-fe-scripts/scripts/change_env_be_endpoint.sh qa
 
 config_demo:
-	sh node_modules/genericsuite/scripts/change_env_be_endpoint.sh demo
+	bash ./node_modules/genericsuite-fe-scripts/scripts/change_env_be_endpoint.sh demo
 
 deploy: config
-	sh node_modules/genericsuite/scripts/aws_deploy_to_s3.sh
+	bash ./node_modules/genericsuite-fe-scripts/scripts/aws_deploy_to_s3.sh
 
 deploy_qa: config_qa
-	sh node_modules/genericsuite/scripts/aws_deploy_to_s3.sh
+	bash ./node_modules/genericsuite-fe-scripts/scripts/aws_deploy_to_s3.sh
 
 deploy_demo: config_demo
-	sh node_modules/genericsuite/scripts/aws_deploy_to_s3.sh
+	bash ./node_modules/genericsuite-fe-scripts/scripts/aws_deploy_to_s3.sh
 
 run: config
-	sh node_modules/genericsuite/scripts/run_app_frontend.sh dev
+	bash ./node_modules/genericsuite-fe-scripts/scripts/run_app_frontend.sh dev
 
 run_qa: config_qa
-	sh node_modules/genericsuite/scripts/run_app_frontend.sh qa
+	bash ./node_modules/genericsuite-fe-scripts/scripts/run_app_frontend.sh qa
 
 server: run
 start: run
@@ -88,26 +88,29 @@ tailwind-build:
 	npx @tailwindcss/cli -i ./src/input.css -o ./public/output.css
 
 add_submodules:
-	sh node_modules/genericsuite/scripts/add_github_submodules.sh
+	bash ./node_modules/genericsuite-fe-scripts/scripts/add_github_submodules.sh
 
 create_ssl_certs:
-	if [ -f ./scripts/create_ssl_certs.sh ]; then sh ./scripts/create_ssl_certs.sh create; else sh node_modules/genericsuite/scripts/create_ssl_certs.sh create; fi
+	bash ./node_modules/genericsuite-fe-scripts/scripts/create_ssl_certs.sh create; fi
 
 copy_ssl_certs:
-	if [ -f ./scripts/create_ssl_certs.sh ]; then sh ./scripts/create_ssl_certs.sh copy; else sh node_modules/genericsuite/scripts/create_ssl_certs.sh copy; fi
+	bash ./node_modules/genericsuite-fe-scripts/scripts/create_ssl_certs.sh copy; fi
 
 ## NPM scripts library
 
 config_lib:
-	sh scripts/change_env_be_endpoint.sh dev
+	bash ./node_modules/genericsuite-fe-scripts/scripts/change_env_be_endpoint.sh dev
 
 run_lib: config_lib
-	sh scripts/run_app_frontend.sh dev
+	bash ./node_modules/genericsuite-fe-scripts/scripts/run_app_frontend.sh dev
 
-pre-publish:
-	sh scripts/npm_publish.sh pre-publish
+sast-test:
+	bash ./node_modules/genericsuite-fe-scripts/scripts/sast_test.sh
 
-publish:
+pre-publish: sast-test
+	bash ./node_modules/genericsuite-fe-scripts/scripts/npm_publish.sh pre-publish
+
+publish: sast-test
 	#
 	# To publish the package to NPMJS checking the test snapshots:
 	#    make publish
@@ -116,4 +119,7 @@ publish:
 	# not reflected in the test snapshots:
 	#    UPDATE_SNAPSHOTS=1 make publish
 	#
-	sh scripts/npm_publish.sh publish
+	bash ./node_modules/genericsuite-fe-scripts/scripts/npm_publish.sh publish
+
+agents_md_link:
+	ln -s CLAUDE.md AGENTS.md

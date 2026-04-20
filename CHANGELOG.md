@@ -15,6 +15,20 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
+## [Unreleased] - 2026-04-03
+
+### Added
+- AGENTS.md and CLAUDE.md files to provide context and instructions to AI agents [GS-303].
+- Add SAST testing [GS-315].
+- Add frontend scripts library [GS-107].
+
+### Fixed
+- getFieldElementsYupValidations() didn't work with action=CREATION, e.g. it has issues on the user creation (OpenAI API key and model are requested as mandatory when they have null values). Therefore, the Yup validations are disabled for now [GS-251].
+
+### Removed
+- The `scripts/` directory were moved to the frontend scripts library [GS-107].
+
+
 ## [1.2.0] - 2026-02-18
 
 ### Added
