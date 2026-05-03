@@ -39,7 +39,7 @@ Check the [The GenericSuite usage](https://genericsuite.carlosjramirez.com/Front
 
 ## License
 
-GenericSuite is open-sourced software licensed under the ISC license.
+GenericSuite is open-sourced software licensed under the MIT license.
 
 ## Credits
 

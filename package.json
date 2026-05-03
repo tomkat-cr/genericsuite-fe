@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "The GenericSuite for ReactJS (frontend version)",
   "author": "Carlos J. Ramirez",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

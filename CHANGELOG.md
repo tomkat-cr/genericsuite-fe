@@ -22,6 +22,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add SAST testing [GS-315].
 - Add frontend scripts library [GS-107].
 
+### Changed
+- License changed to MIT [FA-244].
+
 ### Fixed
 - getFieldElementsYupValidations() didn't work with action=CREATION, e.g. it has issues on the user creation (OpenAI API key and model are requested as mandatory when they have null values). Therefore, the Yup validations are disabled for now [GS-251].
 
