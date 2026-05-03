@@ -120,6 +120,3 @@ publish: sast-test
 	#    UPDATE_SNAPSHOTS=1 make publish
 	#
 	bash ./node_modules/genericsuite-fe-scripts/scripts/npm_publish.sh publish
-
-agents_md_link:
-	ln -s CLAUDE.md AGENTS.md
