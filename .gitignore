@@ -152,3 +152,10 @@ __snapshots__
 
 # Claude Code
 .claude/settings.local.json
+
+# AI Agents
+.claude
+.agents
+.codex
+.cursor
+.gemini
