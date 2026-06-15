@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changed
 - License changed to MIT [FA-244].
+- Rename AWS_S3_BUCKET_NAME to AWS_S3_BUCKET_NAME_FE in the .env file [GS-328].
 
 ### Fixed
 - getFieldElementsYupValidations() didn't work with action=CREATION, e.g. it has issues on the user creation (OpenAI API key and model are requested as mandatory when they have null values). Therefore, the Yup validations are disabled for now [GS-251].
