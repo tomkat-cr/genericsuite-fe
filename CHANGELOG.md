@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixed
 - getFieldElementsYupValidations() didn't work with action=CREATION, e.g. it has issues on the user creation (OpenAI API key and model are requested as mandatory when they have null values). Therefore, the Yup validations are disabled for now [GS-251].
+- `bson` package version fixed to 7.2.0 to fix the "Uncaught TypeError: globalThis?.process?.getBuiltinModule is not a function" error after upgrading vite to version 8 [GS-268].
 
 ### Removed
 - The `scripts/` directory were moved to the frontend scripts library [GS-107].
