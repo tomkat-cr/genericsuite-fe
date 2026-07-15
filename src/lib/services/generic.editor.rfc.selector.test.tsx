@@ -57,6 +57,18 @@ describe('getSelectDescription - select_table', () => {
     );
   });
 
+  it('falls back to client-side lookup when the FK value is a Mongo $oid object', async () => {
+    const dbRow = { user_id: { $oid: 'aaa' } };
+    render(
+      <MainSectionContext.Provider value={providerValue}>
+        <SelectTableDescription currentObj={currentObj} dbRow={dbRow} />
+      </MainSectionContext.Provider>
+    );
+    await waitFor(() =>
+      expect(screen.getByText('John Doe')).toBeInTheDocument()
+    );
+  });
+
   it('renders empty for a null FK value', async () => {
     const { container } = render(
       <MainSectionContext.Provider value={providerValue}>

@@ -52,14 +52,16 @@ export const useRelatedTableRows = (currentObj) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [relatedTable, fetchOrCache]);
 
-  const convertKey = (row) => {
+  const convertValue = (value) => {
     const dbService = new dbApiService({ url: relatedTable });
     return relatedKey === '_id'
-      ? dbService.convertId(row[relatedKey])
-      : String(row[relatedKey]);
+      ? dbService.convertId(value)
+      : String(value);
   };
 
-  return { rows, errorState, convertKey };
+  const convertKey = (row) => convertValue(row[relatedKey]);
+
+  return { rows, errorState, convertKey, convertValue };
 };
 
 export const buildSelectTableDescription = (row, currentObj) => {
@@ -78,7 +80,7 @@ export const SelectTableDescription = ({ currentObj, dbRow }) => {
    * select_table field when the backend didn't provide
    * `{name}_description` (older backend versions).
    */
-  const { rows, errorState, convertKey } = useRelatedTableRows(currentObj);
+  const { rows, errorState, convertKey, convertValue } = useRelatedTableRows(currentObj);
 
   if (errorState) {
     return errorState.toString();
@@ -91,7 +93,7 @@ export const SelectTableDescription = ({ currentObj, dbRow }) => {
     return '';
   }
   const match = rows.resultset.find(
-    (row) => convertKey(row) === String(fkValue)
+    (row) => convertKey(row) === convertValue(fkValue)
   );
   if (!match) {
     return '';
