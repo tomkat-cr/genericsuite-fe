@@ -101,6 +101,35 @@ export const SelectTableDescription = ({ currentObj, dbRow }) => {
   return buildSelectTableDescription(match, currentObj);
 };
 
+export const SelectTableOptions = ({ currentObj }) => {
+  /*
+   * Options generator for a select_table field's editable dropdown.
+   * Fetches (with cache) the related table rows and renders one
+   * <option> per row, plus the "Select an option" placeholder.
+   */
+  const { rows, errorState, convertKey } = useRelatedTableRows(currentObj);
+
+  if (errorState) {
+    return (
+      <option value="">{errorState.toString()}</option>
+    );
+  }
+  if (rows === null) {
+    return null;
+  }
+  return [
+    <option key="_placeholder" value="">{MSG_SELECT_AN_OPTION}</option>,
+    ...rows.resultset.map((row) => {
+      const keyValue = convertKey(row);
+      return (
+        <option key={keyValue} value={keyValue}>
+          {buildSelectTableDescription(row, currentObj)}
+        </option>
+      );
+    }),
+  ];
+};
+
 export const GenericSelectGenerator = (props) => {
   /*
    * Select options generator component.

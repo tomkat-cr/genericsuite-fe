@@ -5,6 +5,7 @@ import '@testing-library/jest-dom';
 import {
   getSelectDescription,
   SelectTableDescription,
+  SelectTableOptions,
 } from './generic.editor.rfc.selector.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
 
@@ -76,5 +77,30 @@ describe('getSelectDescription - select_table', () => {
       </MainSectionContext.Provider>
     );
     await waitFor(() => expect(container.textContent).toBe(''));
+  });
+});
+
+describe('SelectTableOptions', () => {
+  const currentObj = {
+    name: 'user_id',
+    type: 'select_table',
+    related_table: 'users',
+    description_fields: ['firstname', 'lastname'],
+  };
+
+  it('renders a Select-an-option item plus one option per related row', async () => {
+    render(
+      <MainSectionContext.Provider value={providerValue}>
+        <select>
+          <SelectTableOptions currentObj={currentObj} />
+        </select>
+      </MainSectionContext.Provider>
+    );
+    await waitFor(() =>
+      expect(screen.getByText('John Doe')).toBeInTheDocument()
+    );
+    const options = screen.getAllByRole('option');
+    expect(options).toHaveLength(3); // placeholder + 2 rows
+    expect((options[1] as HTMLOptionElement).value).toBe('aaa');
   });
 });

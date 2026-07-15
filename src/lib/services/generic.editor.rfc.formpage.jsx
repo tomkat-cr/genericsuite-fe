@@ -9,7 +9,11 @@ import { dbApiService } from "./db.service.jsx";
 import { getEditorFlags } from './generic.editor.rfc.common.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
 import { ChatBotButtonGeneric, SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
-import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
+import {
+    getSelectDescription,
+    putSelectOptionsFromArray,
+    SelectTableOptions,
+} from './generic.editor.rfc.selector.jsx';
 import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
 import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
 import { defaultValue } from './generic.editor.utilities.jsx';
@@ -431,6 +435,33 @@ const PutOneFormfield = ({
                     />
                 </Field>
             );
+            break;
+        case 'select_table':
+            if (readOnlyfield) {
+                elementInput = (
+                    <div
+                        id={idName}
+                        className={fieldClass}
+                    >
+                        {getSelectDescription(currentObj, dbRow)}
+                    </div>
+                );
+            } else {
+                elementInput = (
+                    <Field
+                        name={idName}
+                        id={idName}
+                        as="select"
+                        required={currentObj.required}
+                        className={fieldClass}
+                        onBlur={runCalculation}
+                    >
+                        <SelectTableOptions
+                            currentObj={currentObj}
+                        />
+                    </Field>
+                );
+            }
             break;
         case 'select':
             elementInput = (
