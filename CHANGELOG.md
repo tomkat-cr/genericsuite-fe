@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## [Unreleased] - YYYY-MM-DD
 
 ### Added
+- `select_table` field type in the Generic CRUD Editor: listing and read-only form show the related record description (`{field}_description` from the backend, with client-side cached fallback); create/edit renders a dropdown populated from the related table. New JSON attributes: `related_table`, `related_key`, `description_fields`, `description_separator`, `related_filter` [GS-select-table].
 
 ### Changed
 
