@@ -103,4 +103,45 @@ describe('SelectTableOptions', () => {
     expect(options).toHaveLength(3); // placeholder + 2 rows
     expect((options[1] as HTMLOptionElement).value).toBe('aaa');
   });
+
+  it('uses distinct cache keys for two select_table fields on the same related_table with different related_filter', async () => {
+    // Two fields both point at 'users' but scope different subsets via
+    // related_filter (e.g. active vs inactive users). If the cache key
+    // only encodes the related_table, the second field's fetchOrCache
+    // call would hit (and return) the first field's cached rows.
+    const recordedKeys: string[] = [];
+    const recordingProviderValue: any = {
+      fetchOrCache: (key: string, fn: () => Promise<any>) => {
+        recordedKeys.push(key);
+        return fn();
+      },
+      debugCache: () => {},
+    };
+    const currentObjActive = {
+      name: 'active_user_id',
+      type: 'select_table',
+      related_table: 'users',
+      description_fields: ['firstname', 'lastname'],
+      related_filter: { active: true },
+    };
+    const currentObjInactive = {
+      name: 'inactive_user_id',
+      type: 'select_table',
+      related_table: 'users',
+      description_fields: ['firstname', 'lastname'],
+      related_filter: { active: false },
+    };
+    render(
+      <MainSectionContext.Provider value={recordingProviderValue}>
+        <select>
+          <SelectTableOptions currentObj={currentObjActive} />
+        </select>
+        <select>
+          <SelectTableOptions currentObj={currentObjInactive} />
+        </select>
+      </MainSectionContext.Provider>
+    );
+    await waitFor(() => expect(recordedKeys).toHaveLength(2));
+    expect(recordedKeys[0]).not.toBe(recordedKeys[1]);
+  });
 });

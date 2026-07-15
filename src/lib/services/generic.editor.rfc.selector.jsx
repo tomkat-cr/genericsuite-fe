@@ -44,7 +44,15 @@ export const useRelatedTableRows = (currentObj) => {
       return;
     }
     const dbService = new dbApiService({ url: relatedTable });
-    fetchOrCache(`select_table_${relatedTable}`, () => dbService.getAll(dbFilter))
+    // Include related_key and related_filter in the cache key: two
+    // select_table fields can share the same related_table but scope
+    // different subsets of rows via related_filter (or key off a
+    // different related_key), and must not collide on the same cache
+    // entry (see genericsuite-mobile crud_editor.dart for the matching
+    // fix on the Flutter side).
+    const cacheKey =
+      `select_table_${relatedTable}_${relatedKey}_${JSON.stringify(dbFilter)}`;
+    fetchOrCache(cacheKey, () => dbService.getAll(dbFilter))
       .then(
         data => setRows(data),
         error => setErrorState(error)
