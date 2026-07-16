@@ -7,7 +7,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## [Unreleased] - YYYY-MM-DD
 
 ### Added
-- `select_table` field type in the Generic CRUD Editor: listing and read-only form show the related record description (`{field}_description` from the backend, with client-side cached fallback); create/edit renders a dropdown populated from the related table. New JSON attributes: `related_table`, `related_key`, `description_fields`, `description_separator`, `related_filter` [GS-select-table].
 
 ### Changed
 
@@ -16,12 +15,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [Unreleased] - 2026-04-03
+## [1.3.0] - 2026-07-15
 
 ### Added
 - AGENTS.md, GEMINI.md, and CLAUDE.md files to provide context and instructions to AI Coding Assistants [GS-303].
 - Add SAST testing [GS-315].
 - Add frontend scripts library [GS-107].
+- `select_table` field type in the Generic CRUD Editor: listing and read-only form show the related record description (`{field}_description` from the backend, with client-side cached fallback); create/edit renders a dropdown populated from the related table. New JSON attributes: `related_table`, `related_key`, `description_fields`, `description_separator`, `related_filter` [GS-259].
 
 ### Changed
 - License changed to MIT [FA-244].
