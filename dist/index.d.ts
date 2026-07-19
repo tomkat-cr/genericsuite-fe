@@ -162,7 +162,7 @@ declare var app_constants: Readonly<{
     };
     BILLING_PLANS: {
         title: any;
-        value: string;
+        value: any;
     }[];
     ERROR_MESSAGES: {
         ACCOUNT_INACTIVE: string;
@@ -488,11 +488,11 @@ declare var general_constants: Readonly<{
     ACTION_UPDATE: "update";
     GENDERS: {
         title: any;
-        value: string;
+        value: any;
     }[];
     LANGUAGES: {
         title: any;
-        value: string;
+        value: any;
     }[];
     MSG_ACTIONS: "Actions";
     MSG_ACTION_CANCEL: "Cancel";
@@ -539,12 +539,12 @@ declare var general_constants: Readonly<{
     ROWS_PER_PAGE: 30;
     TRUE_FALSE: {
         title: any;
-        value: string;
+        value: any;
     }[];
     WAIT_ANIMATION_IMG: "data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==";
     YES_NO: {
         title: any;
-        value: string;
+        value: any;
     }[];
     imageDirectory: "static/media/";
 }>;
@@ -604,12 +604,23 @@ declare var generic_editor_rfc_selector: Readonly<{
     __proto__: null;
     GenericSelectDataPopulator: (props: any) => any;
     GenericSelectGenerator: (props: any) => any;
+    SelectTableDescription: (_ref: any) => any;
+    SelectTableOptions: (_ref2: any) => any[] | React.ReactElement<{
+        value: string;
+    }, string | React.JSXElementConstructor<any>> | null;
     buildDescription: (itemData: any, fieldArray: any) => string;
+    buildSelectTableDescription: (row: any, currentObj: any) => any;
     getSelectDescription: (currentObj: any, dbRow: any) => any;
     putSelectOptionsFromArray: (select_array_elements: any, ...args: any[]) => React.ReactElement<{
         key: any;
         value: any;
     }, string | React.JSXElementConstructor<any>>[];
+    useRelatedTableRows: (currentObj: any) => {
+        rows: any;
+        errorState: any;
+        convertKey: (row: any) => any;
+        convertValue: (value: any) => any;
+    };
 }>;
 declare var generic_editor_rfc_service: Readonly<{
     __proto__: null;
@@ -724,7 +735,7 @@ declare var jsonUtilities: Readonly<{
     __proto__: null;
     buildConstant: (constants: any) => {
         title: any;
-        value: string;
+        value: any;
     }[];
 }>;
 declare var logging_service: Readonly<{

@@ -557,6 +557,14 @@ var history$1 = /*#__PURE__*/Object.freeze({
   setLastUrl: setLastUrl
 });
 
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _arrayWithHoles(r) {
+  if (Array.isArray(r)) return r;
+}
 function _defineProperty(e, r, t) {
   return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
     value: t,
@@ -573,6 +581,36 @@ function _extends() {
     }
     return n;
   }, _extends.apply(null, arguments);
+}
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = true,
+      o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = true, n = r;
+    } finally {
+      try {
+        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 function ownKeys(e, r) {
   var t = Object.keys(e);
@@ -615,6 +653,12 @@ function _objectWithoutPropertiesLoose(r, e) {
   }
   return t;
 }
+function _slicedToArray(r, e) {
+  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+}
+function _toArray(r) {
+  return _arrayWithHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableRest();
+}
 function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
@@ -628,6 +672,13 @@ function _toPrimitive(t, r) {
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, "string");
   return "symbol" == typeof i ? i : i + "";
+}
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
 }
 
 function console_debug_log(debug_message) {
@@ -715,9 +766,7 @@ const resetTextArea = function (textAreaId, conversationBlockId, sectionViewport
   }
 };
 const LinkifyText = _ref => {
-  let {
-    children
-  } = _ref;
+  let children = _ref.children;
   // Detect links in the text.
   // Example: [Carlos Jose Ramirez Divo - Sitio web oficial](https://www.carlosjramirez.com/en/about-carlos-jose-ramirez-divo/)
 
@@ -759,34 +808,26 @@ const renderMarkdownContent = text => {
   return /*#__PURE__*/React.createElement(ReactMarkdown, {
     components: {
       p: _ref2 => {
-        let {
-          children
-        } = _ref2;
+        let children = _ref2.children;
         return /*#__PURE__*/React.createElement("p", {
           className: MARKDOWN_P_CLASS
         }, children);
       },
       strong: _ref3 => {
-        let {
-          children
-        } = _ref3;
+        let children = _ref3.children;
         return /*#__PURE__*/React.createElement("strong", {
           className: MARKDOWN_BOLD_CLASS
         }, children);
       },
       em: _ref4 => {
-        let {
-          children
-        } = _ref4;
+        let children = _ref4.children;
         return /*#__PURE__*/React.createElement("em", {
           className: MARKDOWN_ITALIC_CLASS
         }, children);
       },
       a: _ref5 => {
-        let {
-          children,
-          href
-        } = _ref5;
+        let children = _ref5.children,
+          href = _ref5.href;
         return /*#__PURE__*/React.createElement("a", {
           href: href,
           target: "_blank",
@@ -799,9 +840,7 @@ const renderMarkdownContent = text => {
   }, text);
 };
 const CopyButton = _ref6 => {
-  let {
-    text
-  } = _ref6;
+  let text = _ref6.text;
   const showCopiedMessage = e => {
     const copiedMessage = document.createElement('div');
     copiedMessage.textContent = 'Copied!';
@@ -961,12 +1000,12 @@ const appReducer = (state, action) => {
   }
 };
 const AppProvider = _ref => {
-  let {
-    globalComponentMap,
-    globalAppLogo = "",
-    globalAppLogoHeader = "",
-    children
-  } = _ref;
+  let globalComponentMap = _ref.globalComponentMap,
+    _ref$globalAppLogo = _ref.globalAppLogo,
+    globalAppLogo = _ref$globalAppLogo === void 0 ? "" : _ref$globalAppLogo,
+    _ref$globalAppLogoHea = _ref.globalAppLogoHeader,
+    globalAppLogoHeader = _ref$globalAppLogoHea === void 0 ? "" : _ref$globalAppLogoHea,
+    children = _ref.children;
   const initialState = {
     appLogo: globalAppLogo,
     appLogoHeader: globalAppLogoHeader,
@@ -982,7 +1021,10 @@ const AppProvider = _ref => {
     expandedMenus: [],
     isWide: isWindowWide()
   };
-  const [appState, dispatch] = useReducer(appReducer, initialState);
+  const _useReducer = useReducer(appReducer, initialState),
+    _useReducer2 = _slicedToArray(_useReducer, 2),
+    appState = _useReducer2[0],
+    dispatch = _useReducer2[1];
   const theme = appState.isDarkMode ? appState.componentMap["defaultTheme"].dark : appState.componentMap["defaultTheme"].light;
   const setAppLogo = useCallback(payload => dispatch({
     type: 'SET_APP_LOGO',
@@ -1116,17 +1158,19 @@ var AppContext$1 = /*#__PURE__*/Object.freeze({
 // IconsLib
 const GsIcons = _ref => {
   var _selectedSvg$props$cl;
-  let {
-    icon,
-    size = null,
-    // width = null,
-    // height = null,
-    alt = '',
-    id = '',
-    className = '',
-    role = "img",
-    additionalIconsFn = null
-  } = _ref;
+  let icon = _ref.icon,
+    _ref$size = _ref.size,
+    size = _ref$size === void 0 ? null : _ref$size,
+    _ref$alt = _ref.alt,
+    alt = _ref$alt === void 0 ? '' : _ref$alt,
+    _ref$id = _ref.id,
+    id = _ref$id === void 0 ? '' : _ref$id,
+    _ref$className = _ref.className,
+    className = _ref$className === void 0 ? '' : _ref$className,
+    _ref$role = _ref.role,
+    role = _ref$role === void 0 ? "img" : _ref$role,
+    _ref$additionalIconsF = _ref.additionalIconsFn,
+    additionalIconsFn = _ref$additionalIconsF === void 0 ? null : _ref$additionalIconsF;
   /*
   Some vector icons thanks to: https://www.svgrepo.com/
    Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
@@ -1817,10 +1861,11 @@ const userReducer = (state, action) => {
   }
 };
 const UserProvider = _ref => {
-  let {
-    children
-  } = _ref;
-  const [state, dispatch] = useReducer(userReducer, initialState$2);
+  let children = _ref.children;
+  const _useReducer = useReducer(userReducer, initialState$2),
+    _useReducer2 = _slicedToArray(_useReducer, 2),
+    state = _useReducer2[0],
+    dispatch = _useReducer2[1];
   const setAskForLogin = newAskForLogin => {
     dispatch({
       type: 'SET_ASK_FOR_LOGIN',
@@ -1866,24 +1911,18 @@ var UserContext$1 = /*#__PURE__*/Object.freeze({
 const _excluded$3 = ["onClick"],
   _excluded2 = ["variant", "className", "as"];
 const MainContainer = _ref => {
-  let {
-    children
-  } = _ref;
-  const {
-    theme,
-    sideMenu
-  } = useAppContext();
+  let children = _ref.children;
+  const _useAppContext = useAppContext(),
+    theme = _useAppContext.theme,
+    sideMenu = _useAppContext.sideMenu;
   return /*#__PURE__*/React.createElement("div", {
     className: "".concat(sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS, " ").concat(theme.background, " ").concat(theme.text)
   }, children);
 };
 const AppSectionContainer = _ref2 => {
-  let {
-    children
-  } = _ref2;
-  const {
-    sideMenu
-  } = useAppContext();
+  let children = _ref2.children;
+  const _useAppContext2 = useAppContext(),
+    sideMenu = _useAppContext2.sideMenu;
   if (sideMenu) {
     return /*#__PURE__*/React.createElement("div", {
       className: APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS
@@ -1894,34 +1933,26 @@ const AppSectionContainer = _ref2 => {
   }, children);
 };
 const AppSectionContainerForSideMenu = _ref3 => {
-  let {
-    children
-  } = _ref3;
+  let children = _ref3.children;
   return /*#__PURE__*/React.createElement("main", {
     className: APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS
   }, children);
 };
 AppSectionContainer.ForSideMenu = AppSectionContainerForSideMenu;
 const AppFooterContainer = _ref4 => {
-  let {
-    children
-  } = _ref4;
+  let children = _ref4.children;
   /* App Footer */
-  const {
-    theme
-  } = useAppContext();
+  const _useAppContext3 = useAppContext(),
+    theme = _useAppContext3.theme;
   return /*#__PURE__*/React.createElement("footer", {
     className: "".concat(APP_FOOTER_CONTAINER_CLASS, " ").concat(theme.primary)
   }, children);
 };
 const CenteredBoxContainer = _ref5 => {
-  let {
-    children
-  } = _ref5;
+  let children = _ref5.children;
   /* Center box container, for pop-ups and login page like components */
-  const {
-    theme
-  } = useAppContext();
+  const _useAppContext4 = useAppContext(),
+    theme = _useAppContext4.theme;
   return /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
@@ -1934,17 +1965,14 @@ const CenteredBoxContainer = _ref5 => {
 // NavBar
 
 const Navbar = _ref6 => {
-  let {
-    children,
-    collapseOnSelect,
-    expand
-  } = _ref6;
-  const {
-    theme,
-    sideMenu,
-    isMobileMenuOpen,
-    isWide
-  } = useAppContext();
+  let children = _ref6.children;
+    _ref6.collapseOnSelect;
+    _ref6.expand;
+  const _useAppContext5 = useAppContext(),
+    theme = _useAppContext5.theme,
+    sideMenu = _useAppContext5.sideMenu,
+    isMobileMenuOpen = _useAppContext5.isMobileMenuOpen,
+    isWide = _useAppContext5.isWide;
   if (sideMenu) {
     if (isMobileMenuOpen) {
       return /*#__PURE__*/React.createElement("nav", {
@@ -1967,16 +1995,13 @@ const Navbar = _ref6 => {
   }, children);
 };
 const NavbarBrand = _ref7 => {
-  let {
-    children,
-    as,
-    to,
-    onClick
-  } = _ref7;
-  const {
-    sideMenu,
-    isWide
-  } = useAppContext();
+  let children = _ref7.children,
+    as = _ref7.as,
+    to = _ref7.to,
+    onClick = _ref7.onClick;
+  const _useAppContext6 = useAppContext(),
+    sideMenu = _useAppContext6.sideMenu,
+    isWide = _useAppContext6.isWide;
   const As = as;
   if (sideMenu) {
     return /*#__PURE__*/React.createElement("div", {
@@ -2004,13 +2029,10 @@ const NavbarBrand = _ref7 => {
   }, children));
 };
 const NavbarTopCenterMenu = _ref8 => {
-  let {
-    children
-  } = _ref8;
-  const {
-    sideMenu,
-    isWide
-  } = useAppContext();
+  let children = _ref8.children;
+  const _useAppContext7 = useAppContext(),
+    sideMenu = _useAppContext7.sideMenu,
+    isWide = _useAppContext7.isWide;
   if (sideMenu) {
     return /*#__PURE__*/React.createElement("div", {
       className: NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS
@@ -2022,28 +2044,22 @@ const NavbarTopCenterMenu = _ref8 => {
   }, children);
 };
 const NavbarTopRightMenu = _ref9 => {
-  let {
-    children,
-    authenticated = true
-  } = _ref9;
-  const {
-    currentUser
-  } = useUser();
-  const {
-    sideMenu
-  } = useAppContext();
+  let children = _ref9.children,
+    _ref9$authenticated = _ref9.authenticated,
+    authenticated = _ref9$authenticated === void 0 ? true : _ref9$authenticated;
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
+  const _useAppContext8 = useAppContext(),
+    sideMenu = _useAppContext8.sideMenu;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: (sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!(currentUser && authenticated) ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")
   }, children));
 };
 const MobileMenuCloseButton = _ref0 => {
-  let {
-    className
-  } = _ref0;
+  let className = _ref0.className;
   /* Mobile menu close button */
-  const {
-    toggleMobileMenu
-  } = useAppContext();
+  const _useAppContext9 = useAppContext(),
+    toggleMobileMenu = _useAppContext9.toggleMobileMenu;
   return /*#__PURE__*/React.createElement("button", {
     onClick: toggleMobileMenu,
     className: className !== null && className !== void 0 ? className : '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
@@ -2054,14 +2070,11 @@ const MobileMenuCloseButton = _ref0 => {
   }));
 };
 const NavbarMobileMenu = _ref1 => {
-  let {
-    children
-  } = _ref1;
-  const {
-    theme,
-    isMobileMenuOpen,
-    sideMenu
-  } = useAppContext();
+  let children = _ref1.children;
+  const _useAppContext0 = useAppContext(),
+    theme = _useAppContext0.theme,
+    isMobileMenuOpen = _useAppContext0.isMobileMenuOpen,
+    sideMenu = _useAppContext0.sideMenu;
   if (!isMobileMenuOpen || sideMenu) {
     return null;
   }
@@ -2078,10 +2091,9 @@ const NavbarMobileMenu = _ref1 => {
   }, children)));
 };
 const NavbarToggle = () => {
-  const {
-    toggleMobileMenu,
-    isWide
-  } = useAppContext();
+  const _useAppContext1 = useAppContext(),
+    toggleMobileMenu = _useAppContext1.toggleMobileMenu,
+    isWide = _useAppContext1.isWide;
   return /*#__PURE__*/React.createElement("button", {
     id: "navbar-main-toggle",
     onClick: toggleMobileMenu,
@@ -2093,22 +2105,17 @@ const NavbarToggle = () => {
   }));
 };
 const NavbarText = _ref10 => {
-  let {
-    children,
-    className
-  } = _ref10;
+  let children = _ref10.children,
+    className = _ref10.className;
   return /*#__PURE__*/React.createElement("div", {
     className: className !== null && className !== void 0 ? className : NAVBAR_TEXT_CLASS
   }, children);
 };
 const NavbarTopForSideMenu = _ref11 => {
-  let {
-    children,
-    className
-  } = _ref11;
-  const {
-    theme
-  } = useAppContext();
+  let children = _ref11.children;
+    _ref11.className;
+  const _useAppContext10 = useAppContext(),
+    theme = _useAppContext10.theme;
   return /*#__PURE__*/React.createElement("header", {
     className: "".concat(NAVBAR_TOP_FOR_SIDE_MENU_CLASS, " ").concat(theme.primary)
   }, children);
@@ -2124,20 +2131,17 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 // NavDropdown
 
 const NavDropdown = _ref12 => {
-  let {
-    children,
-    title,
-    id,
-    type,
-    icon,
-    mobileMenuMode
-  } = _ref12;
-  const {
-    expandedMenus,
-    toggleSubmenu,
-    theme,
-    isWide
-  } = useAppContext();
+  let children = _ref12.children,
+    title = _ref12.title,
+    id = _ref12.id,
+    type = _ref12.type,
+    icon = _ref12.icon,
+    mobileMenuMode = _ref12.mobileMenuMode;
+  const _useAppContext11 = useAppContext(),
+    expandedMenus = _useAppContext11.expandedMenus,
+    toggleSubmenu = _useAppContext11.toggleSubmenu,
+    theme = _useAppContext11.theme,
+    isWide = _useAppContext11.isWide;
   const fullId = "".concat(id, "_").concat(type);
   const isExpanded = expandedMenus.includes(fullId);
   const toggledropDownOpen = () => {
@@ -2233,19 +2237,16 @@ const NavDropdown = _ref12 => {
   })));
 };
 const NavDropdownItem = _ref13 => {
-  let {
-    children,
-    as,
-    to,
-    onClick,
-    reloadDocument,
-    type,
-    closeParent,
-    mobileMenuMode
-  } = _ref13;
-  const {
-    theme
-  } = useAppContext();
+  let children = _ref13.children,
+    as = _ref13.as,
+    to = _ref13.to,
+    onClick = _ref13.onClick;
+    _ref13.reloadDocument;
+    let type = _ref13.type,
+    closeParent = _ref13.closeParent,
+    mobileMenuMode = _ref13.mobileMenuMode;
+  const _useAppContext12 = useAppContext(),
+    theme = _useAppContext12.theme;
   const As = as;
   const variantsTopDiv = {
     top_menu: NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
@@ -2345,19 +2346,16 @@ NavDropdown.Item = NavDropdownItem;
 // }
 
 const NavLink = _ref14 => {
-  let {
-    children,
-    as,
-    to,
-    onClick,
-    reloadDocument,
-    type,
-    mobileMenuMode
-  } = _ref14;
-  const {
-    theme,
-    isWide
-  } = useAppContext();
+  let children = _ref14.children,
+    as = _ref14.as,
+    to = _ref14.to,
+    onClick = _ref14.onClick;
+    _ref14.reloadDocument;
+    let type = _ref14.type,
+    mobileMenuMode = _ref14.mobileMenuMode;
+  const _useAppContext13 = useAppContext(),
+    theme = _useAppContext13.theme,
+    isWide = _useAppContext13.isWide;
   const As = as;
   const variantsLi = {
     top_menu: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
@@ -2388,9 +2386,7 @@ Nav.Link = NavLink;
 
 const ToggleSideBar = _ref15 => {
   var _props$className;
-  let {
-      onClick
-    } = _ref15,
+  let onClick = _ref15.onClick,
     props = _objectWithoutProperties(_ref15, _excluded$3);
   props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + ((_props$className = props.className) !== null && _props$className !== void 0 ? _props$className : '');
   return /*#__PURE__*/React.createElement("div", _extends({
@@ -2401,11 +2397,12 @@ const ToggleSideBar = _ref15 => {
 };
 const GsButton = _ref16 => {
   var _props$type;
-  let {
-      variant = 'primary',
-      className = '',
-      as = null
-    } = _ref16,
+  let _ref16$variant = _ref16.variant,
+    variant = _ref16$variant === void 0 ? 'primary' : _ref16$variant,
+    _ref16$className = _ref16.className,
+    className = _ref16$className === void 0 ? '' : _ref16$className,
+    _ref16$as = _ref16.as,
+    as = _ref16$as === void 0 ? null : _ref16$as,
     props = _objectWithoutProperties(_ref16, _excluded2);
   const variants = {
     primary: BUTTON_PRIMARY_CLASS,
@@ -2443,11 +2440,11 @@ var NavLib = /*#__PURE__*/Object.freeze({
 
 const _excluded$2 = ["isWide", "variant", "className"];
 const Button = _ref => {
-  let {
-      isWide,
-      variant = 'primary',
-      className = ''
-    } = _ref,
+  let isWide = _ref.isWide,
+    _ref$variant = _ref.variant,
+    variant = _ref$variant === void 0 ? 'primary' : _ref$variant,
+    _ref$className = _ref.className,
+    className = _ref$className === void 0 ? '' : _ref$className,
     props = _objectWithoutProperties(_ref, _excluded$2);
   const baseStyle = MODALIB_BUTTON_BASESTYLE_CLASS + " " + (isWide ? MODALIB_BUTTON_BASESTYLE_WIDE_CLASS : MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS);
   const variants = {
@@ -2463,15 +2460,12 @@ const Button = _ref => {
   }, props));
 };
 const Modal = _ref2 => {
-  let {
-    show,
-    onHide,
-    className,
-    children
-  } = _ref2;
-  const {
-    theme
-  } = useAppContext();
+  let show = _ref2.show,
+    onHide = _ref2.onHide;
+    _ref2.className;
+    let children = _ref2.children;
+  const _useAppContext = useAppContext(),
+    theme = _useAppContext.theme;
   useEffect(() => {
     const handleOutsideClick = event => {
       // Does not allow close the pop-up if click outside
@@ -2495,9 +2489,7 @@ const Modal = _ref2 => {
   }, children)));
 };
 const ModalHeader = _ref3 => {
-  let {
-    children
-  } = _ref3;
+  let children = _ref3.children;
   // if MODALIB_MODAL_HEADER_CLASS has no spaces or is empty, means it has no styling...
   if (MODALIB_MODAL_HEADER_CLASS.indexOf(' ') === -1) {
     return /*#__PURE__*/React.createElement(React.Fragment, null, children);
@@ -2507,10 +2499,8 @@ const ModalHeader = _ref3 => {
   }, children);
 };
 const ModalIcon = _ref4 => {
-  let {
-    children,
-    iconClassName
-  } = _ref4;
+  _ref4.children;
+    let iconClassName = _ref4.iconClassName;
   if (!iconClassName) {
     return null;
   }
@@ -2524,26 +2514,20 @@ const ModalIcon = _ref4 => {
   })));
 };
 const ModalTitle = _ref5 => {
-  let {
-    children
-  } = _ref5;
+  let children = _ref5.children;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
     className: MODALIB_MODAL_TITLE_CLASS
   }, children));
 };
 const ModalBody = _ref6 => {
-  let {
-    children
-  } = _ref6;
+  let children = _ref6.children;
   return /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_BODY_CLASS
   }, children);
 };
 const ModalFooter = _ref7 => {
-  let {
-    children,
-    isWide
-  } = _ref7;
+  let children = _ref7.children,
+    isWide = _ref7.isWide;
   return /*#__PURE__*/React.createElement("div", {
     className: "".concat(MODALIB_MODAL_FOOTER_CLASS, " ").concat(isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS)
   }, children);
@@ -2556,27 +2540,41 @@ Modal.Icon = ModalIcon;
 Modal.Button = Button;
 
 const ModalPopUp = _ref => {
-  let {
-    title = null,
-    children,
-    closeButtonMessage = "Close",
-    closeButtonAction = null,
-    primaryButtonMessage = null,
-    primaryButtonAction = null,
-    secondButtonMessage = null,
-    secondButtonAction = null,
-    logoutButton = false,
-    allowOnHide = true,
-    link = null,
-    showTitle = true,
-    htmlContent = null,
-    htmlContentClass = null,
-    iconClassName = null
-  } = _ref;
-  const {
-    isWide
-  } = useAppContext();
-  const [show, setShow] = useState(true);
+  let _ref$title = _ref.title,
+    title = _ref$title === void 0 ? null : _ref$title,
+    children = _ref.children,
+    _ref$closeButtonMessa = _ref.closeButtonMessage,
+    closeButtonMessage = _ref$closeButtonMessa === void 0 ? "Close" : _ref$closeButtonMessa,
+    _ref$closeButtonActio = _ref.closeButtonAction,
+    closeButtonAction = _ref$closeButtonActio === void 0 ? null : _ref$closeButtonActio,
+    _ref$primaryButtonMes = _ref.primaryButtonMessage,
+    primaryButtonMessage = _ref$primaryButtonMes === void 0 ? null : _ref$primaryButtonMes,
+    _ref$primaryButtonAct = _ref.primaryButtonAction,
+    primaryButtonAction = _ref$primaryButtonAct === void 0 ? null : _ref$primaryButtonAct,
+    _ref$secondButtonMess = _ref.secondButtonMessage,
+    secondButtonMessage = _ref$secondButtonMess === void 0 ? null : _ref$secondButtonMess,
+    _ref$secondButtonActi = _ref.secondButtonAction,
+    secondButtonAction = _ref$secondButtonActi === void 0 ? null : _ref$secondButtonActi,
+    _ref$logoutButton = _ref.logoutButton,
+    logoutButton = _ref$logoutButton === void 0 ? false : _ref$logoutButton,
+    _ref$allowOnHide = _ref.allowOnHide,
+    allowOnHide = _ref$allowOnHide === void 0 ? true : _ref$allowOnHide,
+    _ref$link = _ref.link,
+    link = _ref$link === void 0 ? null : _ref$link,
+    _ref$showTitle = _ref.showTitle,
+    showTitle = _ref$showTitle === void 0 ? true : _ref$showTitle,
+    _ref$htmlContent = _ref.htmlContent,
+    htmlContent = _ref$htmlContent === void 0 ? null : _ref$htmlContent,
+    _ref$htmlContentClass = _ref.htmlContentClass,
+    htmlContentClass = _ref$htmlContentClass === void 0 ? null : _ref$htmlContentClass,
+    _ref$iconClassName = _ref.iconClassName,
+    iconClassName = _ref$iconClassName === void 0 ? null : _ref$iconClassName;
+  const _useAppContext = useAppContext(),
+    isWide = _useAppContext.isWide;
+  const _useState = useState(true),
+    _useState2 = _slicedToArray(_useState, 2),
+    show = _useState2[0],
+    setShow = _useState2[1];
   const handleClose = () => setShow(false);
   const handleOnHide = () => setShow(!allowOnHide);
   const linkSuffix = "?menu=0";
@@ -2625,22 +2623,19 @@ const ModalPopUp = _ref => {
   }, primaryButtonMessage))));
 };
 const DefaultButtonModal = _ref2 => {
-  let {
-    children,
-    variant,
-    action
-  } = _ref2;
+  let children = _ref2.children,
+    variant = _ref2.variant,
+    action = _ref2.action;
   return /*#__PURE__*/React.createElement(Button, {
     variant: variant,
     onClick: () => action ? action() : null
   }, children);
 };
 const LogoutNavigate = _ref3 => {
-  let {
-    children,
-    variant,
-    asAhref = false
-  } = _ref3;
+  let children = _ref3.children,
+    variant = _ref3.variant,
+    _ref3$asAhref = _ref3.asAhref,
+    asAhref = _ref3$asAhref === void 0 ? false : _ref3$asAhref;
   if (asAhref) {
     return /*#__PURE__*/React.createElement("a", {
       variant: variant,
@@ -2672,10 +2667,9 @@ const About = () => {
   });
 };
 const AboutBody = _ref => {
-  let {
-    children,
-    modalPopUpTest = true
-  } = _ref;
+  let children = _ref.children,
+    _ref$modalPopUpTest = _ref.modalPopUpTest,
+    modalPopUpTest = _ref$modalPopUpTest === void 0 ? true : _ref$modalPopUpTest;
   const version = process.env.REACT_APP_VERSION;
   const appName = process.env.REACT_APP_APP_NAME;
   return /*#__PURE__*/React.createElement("div", {
@@ -2694,9 +2688,7 @@ const AboutBody = _ref => {
   }, "This is a test test test in ", /*#__PURE__*/React.createElement("i", null, "Italic"), ", ", /*#__PURE__*/React.createElement("u", null, "Underline"), " and ", /*#__PURE__*/React.createElement("b", null, "Boldface"), ".", /*#__PURE__*/React.createElement(ReactMarkdown, {
     components: {
       li: _ref2 => {
-        let {
-          children
-        } = _ref2;
+        let children = _ref2.children;
         return /*#__PURE__*/React.createElement("li", {
           className: MARKDOWN_P_CLASS
         }, "* ", children);
@@ -2705,9 +2697,7 @@ const AboutBody = _ref => {
   }, "- This is a bullet point with _Italic_ and **Boldface** with markdown syntax."), /*#__PURE__*/React.createElement(ReactMarkdown, {
     components: {
       li: _ref3 => {
-        let {
-          children
-        } = _ref3;
+        let children = _ref3.children;
         return /*#__PURE__*/React.createElement("li", {
           className: MARKDOWN_P_CLASS
         }, "* ", children);
@@ -2723,7 +2713,9 @@ const mergeDicts = (dictToAdd, originDict) => {
     dictToAdd = {};
   }
   const dictToAddFinal = Object.entries(dictToAdd).reduce((acc, _ref) => {
-    let [key, value] = _ref;
+    let _ref2 = _slicedToArray(_ref, 2),
+      key = _ref2[0],
+      value = _ref2[1];
     acc[key] = value;
     return acc;
   }, _objectSpread2({}, originDict));
@@ -2745,7 +2737,9 @@ var dictUtilities = /*#__PURE__*/Object.freeze({
 
 const buildConstant = constants => {
   return Object.entries(constants).map(_ref => {
-    let [key, value] = _ref;
+    let _ref2 = _slicedToArray(_ref, 2),
+      key = _ref2[0],
+      value = _ref2[1];
     return {
       title: value,
       value: key
@@ -3348,11 +3342,9 @@ const debug$2 = false;
 const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
 const getAxios = (url, requestOptions) => {
   let response;
-  const {
-    method,
-    body,
-    headers
-  } = requestOptions;
+  const method = requestOptions.method,
+    body = requestOptions.body,
+    headers = requestOptions.headers;
   let axios_config = {
     url: url,
     method: method,
@@ -3393,11 +3385,9 @@ const getAxios = (url, requestOptions) => {
         };
       }
     }).then(_ref => {
-      let {
-        headers,
-        text,
-        new_response
-      } = _ref;
+      let headers = _ref.headers,
+        text = _ref.text,
+        new_response = _ref.new_response;
       if (debug$2) ;
       const data = {
         response: text,
@@ -3458,11 +3448,9 @@ const getFetch = (url, requestOptions) => {
           });
         }
       }).then(_ref2 => {
-        let {
-          headers,
-          text,
-          response
-        } = _ref2;
+        let headers = _ref2.headers,
+          text = _ref2.text,
+          response = _ref2.response;
         if (debug$2) ;
         const data = {
           response: text,
@@ -3560,7 +3548,9 @@ class dbApiService {
   paramsToUrlQuery(params) {
     let urlQuery = '';
     Object.entries(params).map(_ref => {
-      let [key, value] = _ref;
+      let _ref2 = _slicedToArray(_ref, 2),
+        key = _ref2[0],
+        value = _ref2[1];
       return urlQuery += (urlQuery === '' ? '?' : '&') + key + '=' + value;
     });
     return urlQuery;
@@ -4067,7 +4057,10 @@ function getUrlParams() {
         if (Array.isArray(keyPairs)) {
           for (let i = 0; i < keyPairs.length; i++) {
             const keyPairString = keyPairs[i];
-            const [rawKey, ...rest] = keyPairString.split('=');
+            const _keyPairString$split = keyPairString.split('='),
+              _keyPairString$split2 = _toArray(_keyPairString$split),
+              rawKey = _keyPairString$split2[0],
+              rest = _arrayLikeToArray(_keyPairString$split2).slice(1);
             let rawValue = rest.length > 0 ? rest.join('=') : '';
             // If this is the redirect param and it contains a hash (#),
             // treat the remainder of the query string as part of the value
@@ -4227,9 +4220,7 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
   };
 };
 const GetHashRoutes = _ref => {
-  let {
-    routes
-  } = _ref;
+  let routes = _ref.routes;
   return /*#__PURE__*/React.createElement(Routes, {
     id: "menuOptionsRoutes",
     history: history
@@ -4394,13 +4385,11 @@ const getDefaultRoutesRaw = componentMap => {
   }];
 };
 const DefaultRoutes = () => {
-  const {
-    currentUser
-  } = useUser();
-  const {
-    componentMap,
-    setExpanded
-  } = useAppContext();
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
+  const _useAppContext = useAppContext(),
+    componentMap = _useAppContext.componentMap,
+    setExpanded = _useAppContext.setExpanded;
   const routes = getDefaultRoutes(currentUser, componentMap, setExpanded);
   return /*#__PURE__*/React.createElement(GetHashRoutes, {
     routes: routes
@@ -4412,9 +4401,7 @@ const getDefaultRoutes = (currentUser, componentMap, setExpanded) => {
   return routes;
 };
 const InvalidElement = _ref2 => {
-  let {
-    children
-  } = _ref2;
+  let children = _ref2.children;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
   }, /*#__PURE__*/React.createElement("div", {
@@ -4424,9 +4411,8 @@ const InvalidElement = _ref2 => {
 };
 const InvalidRoute = () => {
   // Catch all invalid routes and redirect to a default page or show a not found component
-  const {
-    state
-  } = useAppContext();
+  const _useAppContext2 = useAppContext(),
+    state = _useAppContext2.state;
   if (state === "LOADING_MENU" || state === "") {
     return null;
   }
@@ -4454,21 +4440,17 @@ const getMenuFromApi = function (setState, getErrorState, setErrorState, setMenu
   });
 };
 const GenericMenuBuilder = _ref3 => {
-  let {
-    icon,
-    title,
-    itemType,
-    mobileMenuMode
-  } = _ref3;
-  const {
-    currentUser
-  } = useUser();
-  const {
-    errorState,
-    menuOptions,
-    setExpanded,
-    componentMap
-  } = useAppContext();
+  let icon = _ref3.icon,
+    title = _ref3.title,
+    itemType = _ref3.itemType,
+    mobileMenuMode = _ref3.mobileMenuMode;
+  const _useUser2 = useUser(),
+    currentUser = _useUser2.currentUser;
+  const _useAppContext3 = useAppContext(),
+    errorState = _useAppContext3.errorState,
+    menuOptions = _useAppContext3.menuOptions,
+    setExpanded = _useAppContext3.setExpanded,
+    componentMap = _useAppContext3.componentMap;
   const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
     if (!menuOptions) {
       return '';
@@ -4558,14 +4540,12 @@ var generic_menu_service = /*#__PURE__*/Object.freeze({
 });
 
 const DarkModeButton = () => {
-  const {
-    currentUser
-  } = useUser();
-  const {
-    isDarkMode,
-    setIsDarkMode,
-    toggleDarkMode
-  } = useAppContext();
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
+  const _useAppContext = useAppContext(),
+    isDarkMode = _useAppContext.isDarkMode,
+    setIsDarkMode = _useAppContext.setIsDarkMode,
+    toggleDarkMode = _useAppContext.toggleDarkMode;
   useEffect(() => {
     // Component startup
     let newDarkMode = false;
@@ -4627,13 +4607,11 @@ const DarkModeButton = () => {
 };
 
 const MenuModeButton = () => {
-  const {
-    currentUser
-  } = useUser();
-  const {
-    sideMenu,
-    setSideMenu
-  } = useAppContext();
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
+  const _useAppContext = useAppContext(),
+    sideMenu = _useAppContext.sideMenu,
+    setSideMenu = _useAppContext.setSideMenu;
   const saveNewLocalUserConfig = newSideMenuMode => {
     const localConfig = {
       pref_side_menu: newSideMenuMode ? '1' : '0'
@@ -4785,12 +4763,18 @@ const reduceAllResponses = (responses, data) => {
     // E.g. fieldValues["resultset"] may contains 'client_id' and 'client_secret' or another fields...
     // and following response may contains fieldValues["resultset"] = {}
     const mergedFieldValues = _objectSpread2({}, acc['fieldValues']);
-    for (const [key, value] of Object.entries(response['fieldValues'])) {
+    for (const _ref of Object.entries(response['fieldValues'])) {
+      var _ref2 = _slicedToArray(_ref, 2);
+      const key = _ref2[0];
+      const value = _ref2[1];
       if (typeof mergedFieldValues[key] === 'object' && typeof value === 'object' && value !== null) {
         if (mergedFieldValues[key] === null) {
           mergedFieldValues[key] = {};
         }
-        for (const [key2, value2] of Object.entries(value)) {
+        for (const _ref3 of Object.entries(value)) {
+          var _ref4 = _slicedToArray(_ref3, 2);
+          const key2 = _ref4[0];
+          const value2 = _ref4[1];
           mergedFieldValues[key][key2] = value2;
         }
         continue;
@@ -5328,10 +5312,11 @@ const MainSectionContext = /*#__PURE__*/createContext();
 
 // Provider Component
 const MainSectionProvider = _ref => {
-  let {
-    children
-  } = _ref;
-  const [cache, setCache] = useState({});
+  let children = _ref.children;
+  const _useState = useState({}),
+    _useState2 = _slicedToArray(_useState, 2),
+    cache = _useState2[0],
+    setCache = _useState2[1];
   const cacheRef = useRef(cache);
   const promisesRef = useRef({});
   useEffect(() => {
@@ -5404,10 +5389,8 @@ var generic_editor_rfc_provider = /*#__PURE__*/Object.freeze({
 // Search Engine button
 
 const SearchEngineButton = _ref => {
-  let {
-    valueElement,
-    googlePrompt
-  } = _ref;
+  let valueElement = _ref.valueElement,
+    googlePrompt = _ref.googlePrompt;
   const setPrompt = (prompt, valueToReplace) => {
     return prompt.replace("%s", valueToReplace);
   };
@@ -5429,11 +5412,9 @@ const SearchEngineButton = _ref => {
   }))));
 };
 const ChatBotButtonGeneric = _ref2 => {
-  let {
-    AuxComponent,
-    valueElement,
-    chatbotPrompt
-  } = _ref2;
+  let AuxComponent = _ref2.AuxComponent,
+    valueElement = _ref2.valueElement,
+    chatbotPrompt = _ref2.chatbotPrompt;
   if (typeof AuxComponent === "undefined") {
     console_debug_log(">> ChatBotButtonGeneric | AuxComponent is undefined");
     return /*#__PURE__*/React.createElement("div", {
@@ -5467,14 +5448,127 @@ var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
   SearchEngineButton: SearchEngineButton
 });
 
-// GenericCrudEditor select components
-
 const buildDescription = (itemData, fieldArray) => {
   let description = '';
   fieldArray.forEach(field => {
     description += itemData[field] + ' ';
   });
   return description.trim();
+};
+const useRelatedTableRows = currentObj => {
+  /*
+   * Fetches (with cache) the related table rows for a select_table field.
+   * Returns { rows, errorState, convertKey } where convertKey normalizes
+   * the related_key value of a row to a comparable string.
+   */
+  const _useState = useState(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    errorState = _useState2[0],
+    setErrorState = _useState2[1];
+  const _useState3 = useState(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    rows = _useState4[0],
+    setRows = _useState4[1];
+  const _useContext = useContext(MainSectionContext),
+    fetchOrCache = _useContext.fetchOrCache;
+  const relatedTable = currentObj.related_table;
+  const relatedKey = currentObj.related_key || '_id';
+  const dbFilter = currentObj.related_filter || {};
+  useEffect(() => {
+    if (!relatedTable) {
+      setErrorState('select_table: missing related_table attribute');
+      return;
+    }
+    const dbService = new dbApiService({
+      url: relatedTable
+    });
+    // Include related_key and related_filter in the cache key: two
+    // select_table fields can share the same related_table but scope
+    // different subsets of rows via related_filter (or key off a
+    // different related_key), and must not collide on the same cache
+    // entry (see genericsuite-mobile crud_editor.dart for the matching
+    // fix on the Flutter side).
+    const cacheKey = "select_table_".concat(relatedTable, "_").concat(relatedKey, "_").concat(JSON.stringify(dbFilter));
+    fetchOrCache(cacheKey, () => dbService.getAll(dbFilter)).then(data => setRows(data), error => setErrorState(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [relatedTable, fetchOrCache]);
+  const convertValue = value => {
+    const dbService = new dbApiService({
+      url: relatedTable
+    });
+    return relatedKey === '_id' ? dbService.convertId(value) : String(value);
+  };
+  const convertKey = row => convertValue(row[relatedKey]);
+  return {
+    rows,
+    errorState,
+    convertKey,
+    convertValue
+  };
+};
+const buildSelectTableDescription = (row, currentObj) => {
+  const descriptionFields = currentObj.description_fields || ['name'];
+  const separator = typeof currentObj.description_separator !== 'undefined' ? currentObj.description_separator : ' ';
+  return descriptionFields.map(field => row[field]).filter(value => value !== null && typeof value !== 'undefined').join(separator);
+};
+const SelectTableDescription = _ref => {
+  let currentObj = _ref.currentObj,
+    dbRow = _ref.dbRow;
+  /*
+   * Client-side fallback: shows the related record description for a
+   * select_table field when the backend didn't provide
+   * `{name}_description` (older backend versions).
+   */
+  const _useRelatedTableRows = useRelatedTableRows(currentObj),
+    rows = _useRelatedTableRows.rows,
+    errorState = _useRelatedTableRows.errorState,
+    convertKey = _useRelatedTableRows.convertKey,
+    convertValue = _useRelatedTableRows.convertValue;
+  if (errorState) {
+    return errorState.toString();
+  }
+  if (rows === null) {
+    return '';
+  }
+  const fkValue = dbRow[currentObj.name];
+  if (fkValue === null || typeof fkValue === 'undefined') {
+    return '';
+  }
+  const match = rows.resultset.find(row => convertKey(row) === convertValue(fkValue));
+  if (!match) {
+    return '';
+  }
+  return buildSelectTableDescription(match, currentObj);
+};
+const SelectTableOptions = _ref2 => {
+  let currentObj = _ref2.currentObj;
+  /*
+   * Options generator for a select_table field's editable dropdown.
+   * Fetches (with cache) the related table rows and renders one
+   * <option> per row, plus the "Select an option" placeholder.
+   */
+  const _useRelatedTableRows2 = useRelatedTableRows(currentObj),
+    rows = _useRelatedTableRows2.rows,
+    errorState = _useRelatedTableRows2.errorState,
+    convertKey = _useRelatedTableRows2.convertKey;
+  if (errorState) {
+    return /*#__PURE__*/React.createElement("option", {
+      value: ""
+    }, errorState.toString());
+  }
+  if (rows === null) {
+    return null;
+  }
+  return [/*#__PURE__*/React.createElement("option", {
+    key: "_placeholder",
+    value: ""
+  }, MSG_SELECT_AN_OPTION), ...rows.resultset.map(row => {
+    const keyValue = convertKey(row);
+    return /*#__PURE__*/React.createElement("option", {
+      key: keyValue,
+      value: keyValue
+    }, buildSelectTableDescription(row, currentObj));
+  })];
 };
 const GenericSelectGenerator = props => {
   /*
@@ -5489,16 +5583,21 @@ const GenericSelectGenerator = props => {
    *  show_description: if true, show description in the listing page or read-only form page, otherwise builds the <option>. Default is false
    *  description_fields: array of fields to show in the description. Default is ["name"]
    */
-  const [errorState, setErrorState] = useState(null);
-  const [config, setConfig] = useState(null);
-  const [rows, setRows] = useState(null);
-  const {
-    // getCachedData,
-    // putCachedData,
-    // typeofCachedData,
-    debugCache,
-    fetchOrCache
-  } = useContext(MainSectionContext);
+  const _useState5 = useState(null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    errorState = _useState6[0],
+    setErrorState = _useState6[1];
+  const _useState7 = useState(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    config = _useState8[0],
+    setConfig = _useState8[1];
+  const _useState9 = useState(null),
+    _useState0 = _slicedToArray(_useState9, 2),
+    rows = _useState0[0],
+    setRows = _useState0[1];
+  const _useContext2 = useContext(MainSectionContext),
+    debugCache = _useContext2.debugCache,
+    fetchOrCache = _useContext2.fetchOrCache;
   useEffect(() => {
     setConfig(initConfig(props));
   }, [props]);
@@ -5539,12 +5638,10 @@ const GenericSelectGenerator = props => {
     // Some error happens
     return errorState.toString();
   }
-  const {
-    filter,
-    show_description,
-    description_fields,
-    dbService
-  } = config;
+  const filter = config.filter,
+    show_description = config.show_description,
+    description_fields = config.description_fields,
+    dbService = config.dbService;
   let selectAnOptionItem = {};
   selectAnOptionItem['_id'] = null;
   selectAnOptionItem[description_fields[0]] = MSG_SELECT_AN_OPTION;
@@ -5552,6 +5649,9 @@ const GenericSelectGenerator = props => {
     selectAnOptionItem[description_fields[i]] = '';
   }
   const selectOptions = [...[...[selectAnOptionItem]], ...rows.resultset];
+  {
+    debugCache("GenericSelectGenerator");
+  }
   return selectOptions.filter(option => filter === null ? true : dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
       return buildDescription(option, description_fields);
@@ -5575,15 +5675,20 @@ const GenericSelectDataPopulator = props => {
    *  value_field_name: field name to show in the value. Default is "value"
    *  key_name: field name to show in the key. Default is "_id"
    */
-  const [errorState, setErrorState] = useState(null);
-  const [config, setConfig] = useState(null);
-  const [rows, setRows] = useState(null);
-  const {
-    // getCachedData,
-    // putCachedData,
-    // typeofCachedData,
-    fetchOrCache
-  } = useContext(MainSectionContext);
+  const _useState1 = useState(null),
+    _useState10 = _slicedToArray(_useState1, 2),
+    errorState = _useState10[0],
+    setErrorState = _useState10[1];
+  const _useState11 = useState(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    config = _useState12[0],
+    setConfig = _useState12[1];
+  const _useState13 = useState(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    rows = _useState14[0],
+    setRows = _useState14[1];
+  const _useContext3 = useContext(MainSectionContext),
+    fetchOrCache = _useContext3.fetchOrCache;
   const initConfig = props => {
     const editor = getEditorData(props);
     return {
@@ -5603,13 +5708,11 @@ const GenericSelectDataPopulator = props => {
     };
   };
   const returnData = () => {
-    const {
-      filter,
-      title_field_name,
-      value_field_name,
-      key_name,
-      dbService
-    } = config;
+    const filter = config.filter,
+      title_field_name = config.title_field_name,
+      value_field_name = config.value_field_name,
+      key_name = config.key_name,
+      dbService = config.dbService;
     if (!rows) {
       return '';
     }
@@ -5642,6 +5745,9 @@ const putSelectOptionsFromArray = function (select_array_elements) {
   let emptyElement = {};
   emptyElement[title_field_name] = MSG_SELECT_AN_OPTION;
   emptyElement[value_field_name] = null;
+  {
+    console_debug_log("putSelectOptionsFromArray | title_field_name: ".concat(title_field_name, " | value_field_name: ").concat(value_field_name, " | select_array_elements:"), select_array_elements);
+  }
   const selectOptions = [...[emptyElement], ...select_array_elements];
   return selectOptions.map(option => /*#__PURE__*/React.createElement("option", {
     key: option[value_field_name],
@@ -5649,6 +5755,9 @@ const putSelectOptionsFromArray = function (select_array_elements) {
   }, option[title_field_name]));
 };
 const getSelectDescription = (currentObj, dbRow) => {
+  {
+    console_debug_log("getSelectDescription - currentObj, dbRow:", currentObj, dbRow);
+  }
   // Component select (with specific select component and data populator)
   if (currentObj.type === 'select_component') {
     const filter = typeof dbRow[currentObj.name] !== "undefined" ? dbRow[currentObj.name].toString() : null;
@@ -5657,6 +5766,17 @@ const getSelectDescription = (currentObj, dbRow) => {
       dbRow: dbRow,
       show_description: true,
       currentObj: currentObj
+    });
+  }
+  // Related table select (1-1 relationship)
+  if (currentObj.type === 'select_table') {
+    const descAttr = currentObj.name + '_description';
+    if (typeof dbRow[descAttr] !== 'undefined' && dbRow[descAttr] !== null) {
+      return dbRow[descAttr];
+    }
+    return /*#__PURE__*/React.createElement(SelectTableDescription, {
+      currentObj: currentObj,
+      dbRow: dbRow
     });
   }
   // Generic select
@@ -5685,9 +5805,13 @@ var generic_editor_rfc_selector = /*#__PURE__*/Object.freeze({
   __proto__: null,
   GenericSelectDataPopulator: GenericSelectDataPopulator,
   GenericSelectGenerator: GenericSelectGenerator,
+  SelectTableDescription: SelectTableDescription,
+  SelectTableOptions: SelectTableOptions,
   buildDescription: buildDescription,
+  buildSelectTableDescription: buildSelectTableDescription,
   getSelectDescription: getSelectDescription,
-  putSelectOptionsFromArray: putSelectOptionsFromArray
+  putSelectOptionsFromArray: putSelectOptionsFromArray,
+  useRelatedTableRows: useRelatedTableRows
 });
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -5709,14 +5833,14 @@ var hasRequiredLodash;
 function requireLodash () {
 	if (hasRequiredLodash) return lodash$1.exports;
 	hasRequiredLodash = 1;
-	(function (module, exports$1) {
+	(function (module, exports) {
 (function() {
 
 		  /** Used as a safe reference for `undefined` in pre-ES5 environments. */
 		  var undefined$1;
 
 		  /** Used as the semantic version number. */
-		  var VERSION = '4.17.23';
+		  var VERSION = '4.18.1';
 
 		  /** Used as the size to enable large array optimizations. */
 		  var LARGE_ARRAY_SIZE = 200;
@@ -5724,7 +5848,8 @@ function requireLodash () {
 		  /** Error message constants. */
 		  var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
 		      FUNC_ERROR_TEXT = 'Expected a function',
-		      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`';
+		      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`',
+		      INVALID_TEMPL_IMPORTS_ERROR_TEXT = 'Invalid `imports` option passed into `_.template`';
 
 		  /** Used to stand-in for `undefined` hash values. */
 		  var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -6140,7 +6265,7 @@ function requireLodash () {
 		  var root = freeGlobal || freeSelf || Function('return this')();
 
 		  /** Detect free variable `exports`. */
-		  var freeExports = exports$1 && !exports$1.nodeType && exports$1;
+		  var freeExports = exports && !exports.nodeType && exports;
 
 		  /** Detect free variable `module`. */
 		  var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -7456,6 +7581,10 @@ function requireLodash () {
 		     * embedded Ruby (ERB) as well as ES2015 template strings. Change the
 		     * following template settings to use alternative delimiters.
 		     *
+		     * **Security:** See
+		     * [threat model](https://github.com/lodash/lodash/blob/main/threat-model.md)
+		     * — `_.template` is insecure and will be removed in v5.
+		     *
 		     * @static
 		     * @memberOf _
 		     * @type {Object}
@@ -8004,7 +8133,7 @@ function requireLodash () {
 		     * @name has
 		     * @memberOf SetCache
 		     * @param {*} value The value to search for.
-		     * @returns {number} Returns `true` if `value` is found, else `false`.
+		     * @returns {boolean} Returns `true` if `value` is found, else `false`.
 		     */
 		    function setCacheHas(value) {
 		      return this.__data__.has(value);
@@ -10075,7 +10204,9 @@ function requireLodash () {
 		    function baseUnset(object, path) {
 		      path = castPath(path, object);
 
-		      // Prevent prototype pollution, see: https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg
+		      // Prevent prototype pollution:
+		      // https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg
+		      // https://github.com/lodash/lodash/security/advisories/GHSA-f23m-r3pf-42rh
 		      var index = -1,
 		          length = path.length;
 
@@ -10083,32 +10214,17 @@ function requireLodash () {
 		        return true;
 		      }
 
-		      var isRootPrimitive = object == null || (typeof object !== 'object' && typeof object !== 'function');
-
 		      while (++index < length) {
-		        var key = path[index];
-
-		        // skip non-string keys (e.g., Symbols, numbers)
-		        if (typeof key !== 'string') {
-		          continue;
-		        }
+		        var key = toKey(path[index]);
 
 		        // Always block "__proto__" anywhere in the path if it's not expected
 		        if (key === '__proto__' && !hasOwnProperty.call(object, '__proto__')) {
 		          return false;
 		        }
 
-		        // Block "constructor.prototype" chains
-		        if (key === 'constructor' &&
-		            (index + 1) < length &&
-		            typeof path[index + 1] === 'string' &&
-		            path[index + 1] === 'prototype') {
-
-		          // Allow ONLY when the path starts at a primitive root, e.g., _.unset(0, 'constructor.prototype.a')
-		          if (isRootPrimitive && index === 0) {
-		            continue;
-		          }
-
+		        // Block constructor/prototype as non-terminal traversal keys to prevent
+		        // escaping the object graph into built-in constructors and prototypes.
+		        if ((key === 'constructor' || key === 'prototype') && index < length - 1) {
 		          return false;
 		        }
 		      }
@@ -12665,7 +12781,7 @@ function requireLodash () {
 
 		    /**
 		     * Creates an array with all falsey values removed. The values `false`, `null`,
-		     * `0`, `""`, `undefined`, and `NaN` are falsey.
+		     * `0`, `-0`, `0n`, `""`, `undefined`, and `NaN` are falsy.
 		     *
 		     * @static
 		     * @memberOf _
@@ -13204,7 +13320,7 @@ function requireLodash () {
 
 		      while (++index < length) {
 		        var pair = pairs[index];
-		        result[pair[0]] = pair[1];
+		        baseAssignValue(result, pair[0], pair[1]);
 		      }
 		      return result;
 		    }
@@ -19864,6 +19980,8 @@ function requireLodash () {
 		     * **Note:** JavaScript follows the IEEE-754 standard for resolving
 		     * floating-point values which can produce unexpected results.
 		     *
+		     * **Note:** If `lower` is greater than `upper`, the values are swapped.
+		     *
 		     * @static
 		     * @memberOf _
 		     * @since 0.7.0
@@ -19877,8 +19995,15 @@ function requireLodash () {
 		     * _.random(0, 5);
 		     * // => an integer between 0 and 5
 		     *
+		     * // when lower is greater than upper the values are swapped
+		     * _.random(5, 0);
+		     * // => an integer between 0 and 5
+		     *
 		     * _.random(5);
 		     * // => also an integer between 0 and 5
+		     *
+		     * _.random(-5);
+		     * // => an integer between -5 and 0
 		     *
 		     * _.random(5, true);
 		     * // => a floating-point number between 0 and 5
@@ -20481,6 +20606,10 @@ function requireLodash () {
 		     * properties may be accessed as free variables in the template. If a setting
 		     * object is given, it takes precedence over `_.templateSettings` values.
 		     *
+		     * **Security:** `_.template` is insecure and should not be used. It will be
+		     * removed in Lodash v5. Avoid untrusted input. See
+		     * [threat model](https://github.com/lodash/lodash/blob/main/threat-model.md).
+		     *
 		     * **Note:** In the development build `_.template` utilizes
 		     * [sourceURLs](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
 		     * for easier debugging.
@@ -20588,11 +20717,17 @@ function requireLodash () {
 		        options = undefined$1;
 		      }
 		      string = toString(string);
-		      options = assignInWith({}, options, settings, customDefaultsAssignIn);
+		      options = assignWith({}, options, settings, customDefaultsAssignIn);
 
-		      var imports = assignInWith({}, options.imports, settings.imports, customDefaultsAssignIn),
+		      var imports = assignWith({}, options.imports, settings.imports, customDefaultsAssignIn),
 		          importsKeys = keys(imports),
 		          importsValues = baseValues(imports, importsKeys);
+
+		      arrayEach(importsKeys, function(key) {
+		        if (reForbiddenIdentifierChars.test(key)) {
+		          throw new Error(INVALID_TEMPL_IMPORTS_ERROR_TEXT);
+		        }
+		      });
 
 		      var isEscaping,
 		          isEvaluating,
@@ -22942,31 +23077,36 @@ function requireLodash () {
 
 var lodashExports = requireLodash();
 
-// Suggestion Dropdown
-
 const debounceTimeout = 500;
 const SuggestionDropdown = _ref => {
-  let {
-    name,
-    disabled,
-    required,
-    className,
-    value,
-    config
-  } = _ref;
-  const {
-    setFieldValue
-  } = useFormikContext();
-  const [inputValue, setInputValue] = useState(value);
-  const [debouncedInputValue, setDebouncedInputValue] = useState(value);
-  const [suggestions, setSuggestions] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const {
-    currentUser
-  } = useUser();
-  const {
-    theme
-  } = useAppContext();
+  let name = _ref.name,
+    disabled = _ref.disabled,
+    required = _ref.required,
+    className = _ref.className,
+    value = _ref.value,
+    config = _ref.config;
+  const _useFormikContext = useFormikContext(),
+    setFieldValue = _useFormikContext.setFieldValue;
+  const _useState = useState(value),
+    _useState2 = _slicedToArray(_useState, 2),
+    inputValue = _useState2[0],
+    setInputValue = _useState2[1];
+  const _useState3 = useState(value),
+    _useState4 = _slicedToArray(_useState3, 2),
+    debouncedInputValue = _useState4[0],
+    setDebouncedInputValue = _useState4[1];
+  const _useState5 = useState([]),
+    _useState6 = _slicedToArray(_useState5, 2),
+    suggestions = _useState6[0],
+    setSuggestions = _useState6[1];
+  const _useState7 = useState(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    errorMessage = _useState8[0],
+    setErrorMessage = _useState8[1];
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
+  const _useAppContext = useAppContext(),
+    theme = _useAppContext.theme;
 
   // This component's input field must be different to the external input field to enable value sync
   const nameInternal = "".concat(name, "_sdd");
@@ -23009,7 +23149,9 @@ const SuggestionDropdown = _ref => {
   const handleSuggestionSelected = suggestion => {
     if (suggestion) {
       Object.entries(autocomplete_fields).forEach(_ref2 => {
-        let [field_name, attr_name] = _ref2;
+        let _ref3 = _slicedToArray(_ref2, 2),
+          field_name = _ref3[0],
+          attr_name = _ref3[1];
         const value = suggestion[attr_name] ? suggestion[attr_name] : '';
         setFieldValue(field_name, value);
       });
@@ -23028,31 +23170,26 @@ const SuggestionDropdown = _ref => {
     inputValueChange(newInputValue);
     updateDebouncedInputValue(newInputValue);
   };
-  const {
-    isOpen,
-    getMenuProps,
-    getInputProps,
-    highlightedIndex,
-    getItemProps,
-    selectedItem
-  } = useCombobox({
-    items: suggestions,
-    inputValue,
-    onInputValueChange: _ref3 => {
-      let {
-        inputValue: newInputValue
-      } = _ref3;
-      onInputValueChangeInternal(newInputValue);
-    },
-    onSelectedItemChange: _ref4 => {
-      let {
-        selectedItem
-      } = _ref4;
-      handleSuggestionSelected(selectedItem);
-    },
-    itemToString: item => item ? item[suggestion_name_fieldname] : inputValue,
-    id: name
-  });
+  const _useCombobox = useCombobox({
+      items: suggestions,
+      inputValue,
+      onInputValueChange: _ref4 => {
+        let newInputValue = _ref4.inputValue;
+        onInputValueChangeInternal(newInputValue);
+      },
+      onSelectedItemChange: _ref5 => {
+        let selectedItem = _ref5.selectedItem;
+        handleSuggestionSelected(selectedItem);
+      },
+      itemToString: item => item ? item[suggestion_name_fieldname] : inputValue,
+      id: name
+    }),
+    isOpen = _useCombobox.isOpen,
+    getMenuProps = _useCombobox.getMenuProps,
+    getInputProps = _useCombobox.getInputProps,
+    highlightedIndex = _useCombobox.highlightedIndex,
+    getItemProps = _useCombobox.getItemProps,
+    selectedItem = _useCombobox.selectedItem;
   return /*#__PURE__*/React.createElement("div", {
     className: SUGGESTION_DROPDOWN_WRAPPER_CLASS
   }, /*#__PURE__*/React.createElement("div", {
@@ -23121,44 +23258,44 @@ const editFormReducer = (state, action) => {
   }
 };
 const FormPage = _ref => {
-  let {
-    editor,
-    mode,
-    id,
-    onCancel,
-    setInfoMsg,
-    handleFormPageActions = null,
-    message = "",
-    messageType = ""
-  } = _ref;
-  const [state, dispatch] = useReducer(formPageReducer, {
-    formData: null,
-    internalMode: mode,
-    errorStatus: {
-      error: "",
-      code: ""
-    },
-    refresh: 0,
-    formMsg: {
-      message: message,
-      messageType: messageType
-    },
-    itemRead: false
-  });
-  const {
-    formData,
-    internalMode,
-    errorStatus,
-    refresh,
-    formMsg,
-    itemRead
-  } = state;
-  const {
-    currentUser
-  } = useUser();
-  const {
-    theme
-  } = useAppContext();
+  let editor = _ref.editor,
+    mode = _ref.mode,
+    id = _ref.id,
+    onCancel = _ref.onCancel,
+    setInfoMsg = _ref.setInfoMsg,
+    _ref$handleFormPageAc = _ref.handleFormPageActions,
+    handleFormPageActions = _ref$handleFormPageAc === void 0 ? null : _ref$handleFormPageAc,
+    _ref$message = _ref.message,
+    message = _ref$message === void 0 ? "" : _ref$message,
+    _ref$messageType = _ref.messageType,
+    messageType = _ref$messageType === void 0 ? "" : _ref$messageType;
+  const _useReducer = useReducer(formPageReducer, {
+      formData: null,
+      internalMode: mode,
+      errorStatus: {
+        error: "",
+        code: ""
+      },
+      refresh: 0,
+      formMsg: {
+        message: message,
+        messageType: messageType
+      },
+      itemRead: false
+    }),
+    _useReducer2 = _slicedToArray(_useReducer, 2),
+    state = _useReducer2[0],
+    dispatch = _useReducer2[1];
+  const formData = state.formData;
+    state.internalMode;
+    const errorStatus = state.errorStatus,
+    refresh = state.refresh,
+    formMsg = state.formMsg;
+    state.itemRead;
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
+  const _useAppContext = useAppContext(),
+    theme = _useAppContext.theme;
   const dataAlreadyLoaded = useRef(false);
   const setFormData = payload => dispatch({
     type: 'SET_FORM_DATA',
@@ -23185,9 +23322,8 @@ const FormPage = _ref => {
     type: 'SET_FORM_MSG',
     payload
   });
-  const {
-    debugCache
-  } = useContext(MainSectionContext);
+  const _useContext = useContext(MainSectionContext);
+    _useContext.debugCache;
   const initForm = () => {
     if (mode !== state.internalMode) {
       dataAlreadyLoaded.current = false;
@@ -23207,11 +23343,9 @@ const FormPage = _ref => {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
       processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
-        const _funcResponse$fieldVa = funcResponse.fieldValues,
-          {
-            resultset
-          } = _funcResponse$fieldVa,
-          fieldValuesWithoutResultSet = _objectWithoutProperties(_funcResponse$fieldVa, _excluded$1);
+        const _funcResponse$fieldVa = funcResponse.fieldValues;
+          _funcResponse$fieldVa.resultset;
+          const fieldValuesWithoutResultSet = _objectWithoutProperties(_funcResponse$fieldVa, _excluded$1);
         accessKeysDataScreen = Object.assign({}, fieldValuesWithoutResultSet, editor.endpointFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
@@ -23273,39 +23407,32 @@ const FormPage = _ref => {
   }), !errorStatus.error && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '');
 };
 const CrudEditorFormPageTitle = _ref2 => {
-  let {
-    baseUrl,
-    title,
-    actionTitle
-  } = _ref2;
+  let baseUrl = _ref2.baseUrl,
+    title = _ref2.title,
+    actionTitle = _ref2.actionTitle;
   return /*#__PURE__*/React.createElement("h2", {
     key: "".concat(baseUrl, "_title"),
     className: APP_TITLE_H1_CLASS
   }, title + " - " + actionTitle);
 };
 const GetHTag = _ref3 => {
-  let {
-    tag,
-    children
-  } = _ref3;
+  let tag = _ref3.tag,
+    children = _ref3.children;
   return /*#__PURE__*/React.createElement(tag, {
     children
   });
 };
 const PutOneFormfield = _ref4 => {
-  let {
-    currentObjArray,
-    componentSelectFieldsOptions,
-    editorFlags,
-    errors,
-    touched,
-    initialValue,
-    theme,
-    dbRow
-  } = _ref4;
-  const {
-    setFieldValue
-  } = useFormikContext();
+  let currentObjArray = _ref4.currentObjArray;
+    _ref4.componentSelectFieldsOptions;
+    let editorFlags = _ref4.editorFlags,
+    errors = _ref4.errors,
+    touched = _ref4.touched,
+    initialValue = _ref4.initialValue,
+    theme = _ref4.theme,
+    dbRow = _ref4.dbRow;
+  const _useFormikContext = useFormikContext(),
+    setFieldValue = _useFormikContext.setFieldValue;
   let currentObj = currentObjArray[1];
   const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
   const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
@@ -23392,6 +23519,25 @@ const PutOneFormfield = _ref4 => {
         currentObj: currentObj,
         dbRow: dbRow
       }));
+      break;
+    case 'select_table':
+      if (readOnlyfield) {
+        elementInput = /*#__PURE__*/React.createElement("div", {
+          id: idName,
+          className: fieldClass
+        }, getSelectDescription(currentObj, dbRow));
+      } else {
+        elementInput = /*#__PURE__*/React.createElement(Field, {
+          name: idName,
+          id: idName,
+          as: "select",
+          required: currentObj.required,
+          className: fieldClass,
+          onBlur: runCalculation
+        }, /*#__PURE__*/React.createElement(SelectTableOptions, {
+          currentObj: currentObj
+        }));
+      }
       break;
     case 'select':
       elementInput = /*#__PURE__*/React.createElement(Field, {
@@ -23521,32 +23667,33 @@ const PutOneFormfield = _ref4 => {
   }, elementLabel, elementInput, elementError);
 };
 const EditFormFormik = _ref5 => {
-  let {
-    editor,
-    parenHandleCancel,
-    setInfoMsg,
-    action,
-    dataset,
-    message = "",
-    messageType = "",
-    handleFormPageActions,
-    theme,
-    currentUser
-  } = _ref5;
-  const [state, dispatch] = useReducer(editFormReducer, {
-    readyToShow: false,
-    dataset: null,
-    canCommit: null,
-    message: null,
-    messageType: null
-  });
-  const {
-    readyToShow,
-    dataset: editDataset,
-    canCommit,
-    message: editMessage,
-    messageType: editMessageType
-  } = state;
+  let editor = _ref5.editor,
+    parenHandleCancel = _ref5.parenHandleCancel,
+    setInfoMsg = _ref5.setInfoMsg,
+    action = _ref5.action,
+    dataset = _ref5.dataset,
+    _ref5$message = _ref5.message,
+    message = _ref5$message === void 0 ? "" : _ref5$message,
+    _ref5$messageType = _ref5.messageType,
+    messageType = _ref5$messageType === void 0 ? "" : _ref5$messageType,
+    handleFormPageActions = _ref5.handleFormPageActions,
+    theme = _ref5.theme,
+    currentUser = _ref5.currentUser;
+  const _useReducer3 = useReducer(editFormReducer, {
+      readyToShow: false,
+      dataset: null,
+      canCommit: null,
+      message: null,
+      messageType: null
+    }),
+    _useReducer4 = _slicedToArray(_useReducer3, 2),
+    state = _useReducer4[0],
+    dispatch = _useReducer4[1];
+  const readyToShow = state.readyToShow,
+    editDataset = state.dataset,
+    canCommit = state.canCommit,
+    editMessage = state.message,
+    editMessageType = state.messageType;
   const setFormData = payload => dispatch({
     type: 'SET_EDIT_FORM_DATA',
     payload
@@ -23613,19 +23760,17 @@ const EditFormFormik = _ref5 => {
   });
 };
 const EditFormFormikFinal = _ref6 => {
-  let {
-    editor,
-    parenHandleCancel,
-    setInfoMsg,
-    action,
-    dataset,
-    canCommit,
-    message,
-    messageType,
-    handleFormPageActions,
-    theme,
-    currentUser
-  } = _ref6;
+  let editor = _ref6.editor,
+    parenHandleCancel = _ref6.parenHandleCancel,
+    setInfoMsg = _ref6.setInfoMsg,
+    action = _ref6.action,
+    dataset = _ref6.dataset,
+    canCommit = _ref6.canCommit,
+    message = _ref6.message,
+    messageType = _ref6.messageType,
+    handleFormPageActions = _ref6.handleFormPageActions,
+    theme = _ref6.theme,
+    currentUser = _ref6.currentUser;
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -23667,10 +23812,8 @@ const EditFormFormikFinal = _ref6 => {
     // )}
     ,
     onSubmit: (submitedtElements, _ref7) => {
-      let {
-        setStatus,
-        setSubmitting
-      } = _ref7;
+      let setStatus = _ref7.setStatus,
+        setSubmitting = _ref7.setSubmitting;
       if (!canCommit) {
         setSubmitting(false);
       } else {
@@ -23732,12 +23875,10 @@ const EditFormFormikFinal = _ref6 => {
       }
     }
   }, _ref8 => {
-    let {
-      errors,
-      status,
-      touched,
-      isSubmitting
-    } = _ref8;
+    let errors = _ref8.errors,
+      status = _ref8.status,
+      touched = _ref8.touched,
+      isSubmitting = _ref8.isSubmitting;
     return /*#__PURE__*/React.createElement(Form, {
       onKeyDown: submitHandler
     }, message && /*#__PURE__*/React.createElement("div", {
@@ -23941,16 +24082,17 @@ var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
 });
 
 const CrudEditorSearch = _ref => {
-  let {
-    id,
-    fieldElements,
-    handleCancel,
-    value = ""
-  } = _ref;
-  const {
-    theme
-  } = useAppContext();
-  const [searchText, setSearchText] = useState(value);
+  let id = _ref.id,
+    fieldElements = _ref.fieldElements,
+    handleCancel = _ref.handleCancel,
+    _ref$value = _ref.value,
+    value = _ref$value === void 0 ? "" : _ref$value;
+  const _useAppContext = useAppContext(),
+    theme = _useAppContext.theme;
+  const _useState = useState(value),
+    _useState2 = _slicedToArray(_useState, 2),
+    searchText = _useState2[0],
+    setSearchText = _useState2[1];
   const getDateRange = searchValue => {
     const dateRange = searchValue.split(',');
     let result;
@@ -24076,9 +24218,7 @@ function gceReducer(state, action) {
       });
     case 'HANDLE_CANCEL':
       {
-        const {
-          config
-        } = action.payload;
+        const config = action.payload.config;
         let newState = _objectSpread2({}, state);
         if (typeof config['searchFilters'] !== 'undefined') {
           newState.searchFilters = config['searchFilters'];
@@ -24096,11 +24236,10 @@ function gceReducer(state, action) {
   }
 }
 const GenericCrudEditor = _ref => {
-  let {
-    editorConfig,
-    parentData,
-    handleFormPageActions = null
-  } = _ref;
+  let editorConfig = _ref.editorConfig,
+    parentData = _ref.parentData,
+    _ref$handleFormPageAc = _ref.handleFormPageActions,
+    handleFormPageActions = _ref$handleFormPageAc === void 0 ? null : _ref$handleFormPageAc;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MainSectionProvider, null, /*#__PURE__*/React.createElement(GenericCrudEditorMain, {
     editorConfig: editorConfig,
     parentData: parentData,
@@ -24108,20 +24247,21 @@ const GenericCrudEditor = _ref => {
   })));
 };
 const GenericCrudEditorMain = props => {
-  const [state, dispatch] = useReducer(gceReducer, _objectSpread2(_objectSpread2({}, initialState$1), {}, {
-    rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
-  }));
-  const {
-    editor,
-    rows,
-    currentPage,
-    rowsPerPage,
-    formMode,
-    status,
-    infoMsg,
-    searchFilters,
-    searchText
-  } = state;
+  const _useReducer = useReducer(gceReducer, _objectSpread2(_objectSpread2({}, initialState$1), {}, {
+      rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
+    })),
+    _useReducer2 = _slicedToArray(_useReducer, 2),
+    state = _useReducer2[0],
+    dispatch = _useReducer2[1];
+  const editor = state.editor,
+    rows = state.rows,
+    currentPage = state.currentPage,
+    rowsPerPage = state.rowsPerPage,
+    formMode = state.formMode,
+    status = state.status,
+    infoMsg = state.infoMsg,
+    searchFilters = state.searchFilters,
+    searchText = state.searchText;
   const setStatus = p => dispatch({
     type: 'SET_STATUS',
     payload: p
@@ -24150,17 +24290,14 @@ const GenericCrudEditorMain = props => {
     type: 'SET_ROWS_PER_PAGE',
     payload: p
   });
-  const {
-    initCache,
-    debugCache
-  } = useContext(MainSectionContext);
-  const {
-    currentUser
-  } = useUser();
-  const {
-    theme,
-    isWide
-  } = useAppContext();
+  const _useContext = useContext(MainSectionContext),
+    initCache = _useContext.initCache;
+    _useContext.debugCache;
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
+  const _useAppContext = useAppContext(),
+    theme = _useAppContext.theme,
+    isWide = _useAppContext.isWide;
   const actionsHandlerAllowsMouseOver = getLocalConfigItem("gce_actions_allows_mouse_over") == '1';
   const actionsHandlerAllowsMagicButton = getLocalConfigItem("gce_actions_allows_magic_button") == '1';
   useEffect(() => {
@@ -24552,14 +24689,11 @@ const GetFormData = function (editorData, registry) {
   return editorDataObj;
 };
 const CrudEditorRowsPerPage = _ref2 => {
-  let {
-    id,
-    rowsPerPage,
-    handleRowsPerPageChange
-  } = _ref2;
-  const {
-    theme
-  } = useAppContext();
+  _ref2.id;
+    let rowsPerPage = _ref2.rowsPerPage,
+    handleRowsPerPageChange = _ref2.handleRowsPerPageChange;
+  const _useAppContext2 = useAppContext(),
+    theme = _useAppContext2.theme;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS
   }, /*#__PURE__*/React.createElement("label", {
@@ -24581,12 +24715,10 @@ const CrudEditorRowsPerPage = _ref2 => {
   }, rowsPerPage)));
 };
 const CrudEditorPagination = _ref3 => {
-  let {
-    id,
-    currentPage,
-    totalPages,
-    goToNewPage
-  } = _ref3;
+  let id = _ref3.id,
+    currentPage = _ref3.currentPage,
+    totalPages = _ref3.totalPages,
+    goToNewPage = _ref3.goToNewPage;
   return /*#__PURE__*/React.createElement("div", {
     id: id,
     className: APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS
@@ -24612,10 +24744,8 @@ const CrudEditorPagination = _ref3 => {
   }, WaitAnimation()));
 };
 const CrudEditorNewButton = _ref4 => {
-  let {
-    id,
-    handleNew
-  } = _ref4;
+  let id = _ref4.id,
+    handleNew = _ref4.handleNew;
   return /*#__PURE__*/React.createElement("button", {
     id: id,
     onClick: handleNew,
@@ -24628,11 +24758,9 @@ const CrudEditorNewButton = _ref4 => {
   }), "\xA0", MSG_ACTION_NEW));
 };
 const CrudEditorListingTitle = _ref5 => {
-  let {
-    baseUrl,
-    title,
-    handleRefresh
-  } = _ref5;
+  let baseUrl = _ref5.baseUrl,
+    title = _ref5.title,
+    handleRefresh = _ref5.handleRefresh;
   return /*#__PURE__*/React.createElement("h2", {
     key: "".concat(baseUrl, "_title"),
     className: APP_TITLE_H1_CLASS
@@ -24770,9 +24898,7 @@ function UsersApiKey() {
   };
 }
 const UsersApiKeyComponent = _ref => {
-  let {
-    parentData
-  } = _ref;
+  let parentData = _ref.parentData;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersApiKey_EditorData(),
     parentData: parentData
@@ -24898,9 +25024,7 @@ function UsersConfig() {
   };
 }
 const UsersConfigComponent = _ref => {
-  let {
-    parentData
-  } = _ref;
+  let parentData = _ref.parentData;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersConfig_EditorData(),
     parentData: parentData
@@ -25000,9 +25124,7 @@ function UsersUserHistory() {
   };
 }
 const UsersUserHistoryComponent = _ref => {
-  let {
-    parentData
-  } = _ref;
+  let parentData = _ref.parentData;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersUserHistory_EditorData(),
     parentData: parentData
@@ -25375,11 +25497,9 @@ const UsersDbPreWrite = (data, editor, action) => {
 };
 
 const GenericSinglePageEditor = _ref => {
-  let {
-    editorConfig,
-    id,
-    parentData
-  } = _ref;
+  let editorConfig = _ref.editorConfig,
+    id = _ref.id,
+    parentData = _ref.parentData;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MainSectionProvider, null, /*#__PURE__*/React.createElement(GenericSinglePageEditorMain, {
     editorConfig: editorConfig,
     id: id,
@@ -25411,12 +25531,13 @@ function gspeReducer(state, action) {
   }
 }
 const GenericSinglePageEditorMain = props => {
-  const [state, dispatch] = useReducer(gspeReducer, initialState);
-  const {
-    editor,
-    formMode,
-    status
-  } = state;
+  const _useReducer = useReducer(gspeReducer, initialState),
+    _useReducer2 = _slicedToArray(_useReducer, 2),
+    state = _useReducer2[0],
+    dispatch = _useReducer2[1];
+  const editor = state.editor,
+    formMode = state.formMode,
+    status = state.status;
   const setEditor = p => dispatch({
     type: 'SET_EDITOR',
     payload: p
@@ -25429,9 +25550,8 @@ const GenericSinglePageEditorMain = props => {
     type: 'SET_STATUS',
     payload: p
   });
-  const {
-    initCache
-  } = useContext(MainSectionContext);
+  const _useContext = useContext(MainSectionContext);
+    _useContext.initCache;
   useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -25661,9 +25781,8 @@ function UsersProfile_EditorData() {
   return GetFormData(users_profile, registry, 'UserProfileEditor');
 }
 const UserProfileEditor = props => {
-  const {
-    currentUser
-  } = useUser();
+  const _useUser = useUser(),
+    currentUser = _useUser.currentUser;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GenericSinglePageEditor, {
     id: currentUser.id,
     editorConfig: UsersProfile_EditorData()
@@ -25671,13 +25790,16 @@ const UserProfileEditor = props => {
 };
 
 const AppFooter = _ref => {
-  let {
-    appName = null,
-    year = null,
-    url = null,
-    rights = null,
-    otherLine = null
-  } = _ref;
+  let _ref$appName = _ref.appName,
+    appName = _ref$appName === void 0 ? null : _ref$appName,
+    _ref$year = _ref.year,
+    year = _ref$year === void 0 ? null : _ref$year,
+    _ref$url = _ref.url,
+    url = _ref$url === void 0 ? null : _ref$url,
+    _ref$rights = _ref.rights,
+    rights = _ref$rights === void 0 ? null : _ref$rights,
+    _ref$otherLine = _ref.otherLine,
+    otherLine = _ref$otherLine === void 0 ? null : _ref$otherLine;
   const appNameData = appName !== null && appName !== void 0 ? appName : process.env.REACT_APP_APP_NAME;
   const yearData = year !== null && year !== void 0 ? year : new Date().getFullYear();
   const rightsData = rights !== null && rights !== void 0 ? rights : "All rights reserved";
@@ -25688,9 +25810,7 @@ const AppFooter = _ref => {
 };
 
 const HomePage = _ref => {
-  let {
-    children
-  } = _ref;
+  let children = _ref.children;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
   }, children);
@@ -25733,14 +25853,12 @@ const LoginPage = props => {
     }
     return sanitizeRedirectUrl(urlParams.redirect);
   };
-  const {
-    currentUser,
-    registerUser
-  } = useUser();
-  const {
-    appLogo,
-    theme
-  } = useAppContext();
+  const _useUser = useUser();
+    _useUser.currentUser;
+    const registerUser = _useUser.registerUser;
+  const _useAppContext = useAppContext(),
+    appLogo = _useAppContext.appLogo,
+    theme = _useAppContext.theme;
   const handleSubmit = (username, password, setStatus, setSubmitting) => {
     setStatus();
     authenticationService.login(username, password).then(user => {
@@ -25775,23 +25893,17 @@ const LoginPage = props => {
       password: Yup.string().required('Password is required')
     }),
     onSubmit: (_ref, _ref2) => {
-      let {
-        username,
-        password
-      } = _ref;
-      let {
-        setStatus,
-        setSubmitting
-      } = _ref2;
+      let username = _ref.username,
+        password = _ref.password;
+      let setStatus = _ref2.setStatus,
+        setSubmitting = _ref2.setSubmitting;
       handleSubmit(username, password, setStatus, setSubmitting);
     }
   }, _ref3 => {
-    let {
-      errors,
-      status,
-      touched,
-      isSubmitting
-    } = _ref3;
+    let errors = _ref3.errors,
+      status = _ref3.status,
+      touched = _ref3.touched,
+      isSubmitting = _ref3.isSubmitting;
     return /*#__PURE__*/React.createElement("div", {
       className: POPUP_TOP_MARGIN_CLASS
     }, /*#__PURE__*/React.createElement("img", {
@@ -25943,9 +26055,7 @@ const getShowContentOnly = () => {
   return showContentOnly;
 };
 const CloseButton = _ref => {
-  let {
-    children
-  } = _ref;
+  let children = _ref.children;
   return /*#__PURE__*/React.createElement(React.Fragment, null, children && /*#__PURE__*/React.createElement("div", {
     className: ALERT_DANGER_CLASS,
     role: "alert"
@@ -25956,16 +26066,12 @@ const CloseButton = _ref => {
   }, "Close"));
 };
 const AppNavBar = _ref2 => {
-  let {
-    children
-  } = _ref2;
-  const {
-    currentUser
-  } = useUser();
-  const {
-    setExpanded,
-    appLogoHeader
-  } = useAppContext();
+  let children = _ref2.children;
+  const _useUser = useUser();
+    _useUser.currentUser;
+  const _useAppContext = useAppContext();
+    _useAppContext.setExpanded;
+    const appLogoHeader = _useAppContext.appLogoHeader;
   const version = process.env.REACT_APP_VERSION;
   const appName = appLogoHeader ? /*#__PURE__*/React.createElement("img", {
     src: imageDirectory + appLogoHeader,
@@ -25985,13 +26091,11 @@ const AppNavBar = _ref2 => {
   }, version)), children);
 };
 const TopRightMenu = _ref3 => {
-  let {
-    showContentOnly,
-    authenticated = true
-  } = _ref3;
-  const {
-    currentUser
-  } = useUser();
+  let showContentOnly = _ref3.showContentOnly,
+    _ref3$authenticated = _ref3.authenticated,
+    authenticated = _ref3$authenticated === void 0 ? true : _ref3$authenticated;
+  const _useUser2 = useUser(),
+    currentUser = _useUser2.currentUser;
   if (showContentOnly) {
     // This is too prevent showing the menu when showContentOnly is true
     // E.g. pop-up about page
@@ -26007,22 +26111,17 @@ const TopRightMenu = _ref3 => {
   }));
 };
 const NoDesignComponent = _ref4 => {
-  let {
-    children,
-    errorMessage
-  } = _ref4;
+  let children = _ref4.children,
+    errorMessage = _ref4.errorMessage;
   return /*#__PURE__*/React.createElement(React.Fragment, null, errorMessage && /*#__PURE__*/React.createElement("div", {
     className: ALERT_DANGER_CLASS,
     role: "alert"
   }, errorMessage), children);
 };
 const AppMainInnerUnauthenticated = _ref5 => {
-  let {
-    children
-  } = _ref5;
-  const {
-    sideMenu
-  } = useAppContext();
+  let children = _ref5.children;
+  const _useAppContext2 = useAppContext(),
+    sideMenu = _useAppContext2.sideMenu;
   const showContentOnly = getShowContentOnly();
   return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, !sideMenu && /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly,
@@ -26033,27 +26132,23 @@ const AppMainInnerUnauthenticated = _ref5 => {
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(React.Fragment, null, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)))), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
 const AppMainInner = _ref6 => {
-  let {
-    children
-  } = _ref6;
+  let children = _ref6.children;
   // const location = useLocation();
   // if (debug) console_debug_log("App | location:", location);
-  const {
-    currentUser,
-    askForLogin,
-    unRegisterUser
-  } = useUser();
-  const {
-    setState,
-    errorState,
-    setErrorState,
-    menuOptions,
-    setMenuOptions,
-    sideMenu,
-    setSideMenu,
-    isMobileMenuOpen,
-    componentMap
-  } = useAppContext();
+  const _useUser3 = useUser(),
+    currentUser = _useUser3.currentUser,
+    askForLogin = _useUser3.askForLogin,
+    unRegisterUser = _useUser3.unRegisterUser;
+  const _useAppContext3 = useAppContext(),
+    setState = _useAppContext3.setState,
+    errorState = _useAppContext3.errorState,
+    setErrorState = _useAppContext3.setErrorState,
+    menuOptions = _useAppContext3.menuOptions,
+    setMenuOptions = _useAppContext3.setMenuOptions,
+    sideMenu = _useAppContext3.sideMenu;
+    _useAppContext3.setSideMenu;
+    const isMobileMenuOpen = _useAppContext3.isMobileMenuOpen;
+    _useAppContext3.componentMap;
   const showContentOnly = getShowContentOnly();
   const getMenuFromApiAlreadyCalled = useRef(false);
   const callGetMenuFromApi = () => {
@@ -26111,16 +26206,13 @@ const AppMainInner = _ref6 => {
   })), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
 const AppMainComponent = _ref7 => {
-  let {
-    logoutHandler,
-    showContentOnly,
-    askForLogin,
-    currentUser,
-    children
-  } = _ref7;
-  const {
-    errorState
-  } = useAppContext();
+  let logoutHandler = _ref7.logoutHandler,
+    showContentOnly = _ref7.showContentOnly,
+    askForLogin = _ref7.askForLogin,
+    currentUser = _ref7.currentUser,
+    children = _ref7.children;
+  const _useAppContext4 = useAppContext(),
+    errorState = _useAppContext4.errorState;
   if (errorState !== "") {
     if (showContentOnly) {
       return /*#__PURE__*/React.createElement(CloseButton, null, getErrorMessage(errorState));
@@ -26144,19 +26236,20 @@ const AppMain = () => {
   const routerFutureFlags = {
     v7_relativeSplatPath: true
   };
-  const {
-    currentUser,
-    registerUser,
-    setAskForLogin
-  } = useUser();
-  const {
-    setState,
-    menuOptions,
-    setMenuOptions,
-    componentMap,
-    setExpanded
-  } = useAppContext();
-  const [router, setRouter] = useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
+  const _useUser4 = useUser(),
+    currentUser = _useUser4.currentUser,
+    registerUser = _useUser4.registerUser,
+    setAskForLogin = _useUser4.setAskForLogin;
+  const _useAppContext5 = useAppContext();
+    _useAppContext5.setState;
+    const menuOptions = _useAppContext5.menuOptions;
+    _useAppContext5.setMenuOptions;
+    const componentMap = _useAppContext5.componentMap,
+    setExpanded = _useAppContext5.setExpanded;
+  const _useState = useState(getDefaultRoutes(currentUser, componentMap, setExpanded)),
+    _useState2 = _slicedToArray(_useState, 2),
+    router = _useState2[0],
+    setRouter = _useState2[1];
   const verifyCurrentUserAlreadyCalled = useRef(false);
   const setRouterAlreadyCalled = useRef(false);
   const callVerifyCurrentUser = () => {
@@ -26211,12 +26304,16 @@ const defaultComponentMap = {
   "defaultTheme": defaultTheme
 };
 const App = _ref8 => {
-  let {
-    componentMap = {},
-    appLogo = "",
-    appLogoHeader = ""
-  } = _ref8;
-  const [componentMapFinal, setComponentMapFinal] = useState(mergeDicts(componentMap, defaultComponentMap));
+  let _ref8$componentMap = _ref8.componentMap,
+    componentMap = _ref8$componentMap === void 0 ? {} : _ref8$componentMap,
+    _ref8$appLogo = _ref8.appLogo,
+    appLogo = _ref8$appLogo === void 0 ? "" : _ref8$appLogo,
+    _ref8$appLogoHeader = _ref8.appLogoHeader,
+    appLogoHeader = _ref8$appLogoHeader === void 0 ? "" : _ref8$appLogoHeader;
+  const _useState3 = useState(mergeDicts(componentMap, defaultComponentMap)),
+    _useState4 = _slicedToArray(_useState3, 2),
+    componentMapFinal = _useState4[0];
+    _useState4[1];
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
     globalComponentMap: componentMapFinal,
     globalAppLogo: appLogo,
@@ -26381,15 +26478,12 @@ var media = /*#__PURE__*/Object.freeze({
 
 const _excluded = ["component"];
 const PrivateRoute = _ref => {
-  let {
-      component: Component
-    } = _ref,
+  let Component = _ref.component,
     rest = _objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/React.createElement(Route, _extends({}, rest, {
     render: props => {
-      const {
-        currentUser
-      } = useUser();
+      const _useUser = useUser(),
+        currentUser = _useUser.currentUser;
       if (!currentUser) {
         console_debug_log('PrivateRoute Not Authorized...');
         // Not logged in so redirect to login page with the return url
@@ -26495,22 +26589,31 @@ var mocks = /*#__PURE__*/Object.freeze({
 
 // GenericCrudEditor UI components
 const ShowAsDisabledField = _ref => {
-  let {
-    className = APP_FORMPAGE_FIELD_GOOD_CLASS,
-    name = '',
-    key = '',
-    id = '',
-    type = "text",
-    value = null,
-    readOnly = false,
-    required = false,
-    disabled = false,
-    showAsField = "1",
-    onChange = () => {},
-    onBlur = () => {},
-    backgroundColor = null,
-    children
-  } = _ref;
+  let _ref$className = _ref.className,
+    className = _ref$className === void 0 ? APP_FORMPAGE_FIELD_GOOD_CLASS : _ref$className,
+    _ref$name = _ref.name,
+    name = _ref$name === void 0 ? '' : _ref$name;
+    _ref.key;
+    _ref.id;
+    let _ref$type = _ref.type,
+    type = _ref$type === void 0 ? "text" : _ref$type,
+    _ref$value = _ref.value,
+    value = _ref$value === void 0 ? null : _ref$value,
+    _ref$readOnly = _ref.readOnly,
+    readOnly = _ref$readOnly === void 0 ? false : _ref$readOnly,
+    _ref$required = _ref.required,
+    required = _ref$required === void 0 ? false : _ref$required,
+    _ref$disabled = _ref.disabled,
+    disabled = _ref$disabled === void 0 ? false : _ref$disabled,
+    _ref$showAsField = _ref.showAsField,
+    showAsField = _ref$showAsField === void 0 ? "1" : _ref$showAsField,
+    _ref$onChange = _ref.onChange,
+    onChange = _ref$onChange === void 0 ? () => {} : _ref$onChange,
+    _ref$onBlur = _ref.onBlur,
+    onBlur = _ref$onBlur === void 0 ? () => {} : _ref$onBlur,
+    _ref$backgroundColor = _ref.backgroundColor,
+    backgroundColor = _ref$backgroundColor === void 0 ? null : _ref$backgroundColor,
+    children = _ref.children;
   if (showAsField === "1") {
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Field, {
       name: name,
