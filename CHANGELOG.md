@@ -25,14 +25,20 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changed
 - License changed to MIT [FA-244].
-- Rename AWS_S3_BUCKET_NAME to AWS_S3_BUCKET_NAME_FE in the .env file [GS-328].
+- Rename AWS_S3_BUCKET_NAME to AWS_S3_BUCKET_NAME_FE in the .env and .env.example files [GS-328].
 
 ### Fixed
 - getFieldElementsYupValidations() didn't work with action=CREATION, e.g. it has issues on the user creation (OpenAI API key and model are requested as mandatory when they have null values). Therefore, the Yup validations are disabled for now [GS-251].
 - `bson` package version fixed to 7.2.0 to fix the "Uncaught TypeError: globalThis?.process?.getBuiltinModule is not a function" error after upgrading vite to version 8 [GS-268].
 
+### Security
+- Update dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219].
+- Update react-router-dom@^7.18.2 to fix the security vulnerability [GS-219]:
+  - React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response. This is a follow up to CVE-2026-22030 to address related CSRF flows in unstable RSC code paths.
+- "react" and "react-dom" have now peer dependencies with "^18.2.0" that does not affect this codebase because it only uses BrowserRouter/Routes/Route/Link/Navigate, no RSC APIs. By the way React/ReactDOM will be upgraded to 19 on next release to fix the mentioned react-router-dom security vulnerability [GS-219].
+
 ### Removed
-- The `scripts/` directory were moved to the frontend scripts library [GS-107].
+- The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].
 
 
 ## [1.2.0] - 2026-02-18
