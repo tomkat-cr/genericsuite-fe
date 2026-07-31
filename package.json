@@ -113,7 +113,7 @@
     "whatwg-fetch": "^3.6.20"
   },
   "peerDependencies": {
-    "axios": "^1.15.1",
+    "axios": "^1.19.0",
     "bson": "7.2.0",
     "buffer": "^6.0.3",
     "constants-browserify": "^1.0.0",
@@ -141,7 +141,7 @@
     "vm-browserify": "^1.1.2",
     "web-vitals": "^2.1.4",
     "with": "^7.0.2",
-    "yup": "^0.32.11"
+    "yup": "^1.7.1"
   },
   "peerDependenciesMeta": {
     "react": {

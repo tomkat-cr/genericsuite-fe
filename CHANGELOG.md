@@ -32,8 +32,21 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - `bson` package version fixed to 7.2.0 to fix the "Uncaught TypeError: globalThis?.process?.getBuiltinModule is not a function" error after upgrading vite to version 8 [GS-268].
 
 ### Security
-- Update dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219].
-- Update react-router-dom@^7.18.2 to fix the security vulnerability [GS-219]:
+- Upgrade dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219].
+- Upgrade axios@^1.19.0 to fix the security vulnerabilities [GS-219]:
+  - Server-side Request Forgery (SSRF) [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111062] in axios@1.15.1
+  - Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111079] in axios@1.15.1
+  - Insertion of Sensitive Information Into Sent Data [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17172681] in axios@1.15.1
+  - Improperly Controlled Modification of Dynamically-Determined Object Attributes [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-16299921] in axios@1.15.1
+  - Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111060] in axios@1.15.1
+  - Prototype Pollution [Critical Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-16417750] in axios@1.15.1
+  - Improper Removal of Sensitive Information Before Storage or Transfer [High Severity][https://security.snyk.io/vuln/SNYK-JS-FOLLOWREDIRECTS-16032162] in follow-redirects@1.15.11
+- Upgrade yup@^1.7.1 to fix the security vulnerabilities [GS-219]:
+  - Arbitrary Code Injection [High Severity][https://security.snyk.io/vuln/SNYK-JS-LODASH-15869625] in lodash@4.17.23
+    introduced by yup@0.32.11 > lodash@4.17.23
+  - Arbitrary Code Injection [High Severity][https://security.snyk.io/vuln/SNYK-JS-LODASHES-15869627] in lodash-es@4.17.23
+    introduced by yup@0.32.11 > lodash-es@4.17.23
+- Upgrade react-router-dom@^7.18.2 to fix the security vulnerability [GS-219]:
   - React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response. This is a follow up to CVE-2026-22030 to address related CSRF flows in unstable RSC code paths.
 - "react" and "react-dom" have now peer dependencies with "^18.2.0" that does not affect this codebase because it only uses BrowserRouter/Routes/Route/Link/Navigate, no RSC APIs. By the way React/ReactDOM will be upgraded to 19 on next release to fix the mentioned react-router-dom security vulnerability [GS-219].
 
