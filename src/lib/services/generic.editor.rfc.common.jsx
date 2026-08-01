@@ -29,6 +29,12 @@ export const getEditorData = (props) => (
     props.editorConfig
 )
 
+export const getFieldElementKey = (currentObj) => (
+    currentObj.type === 'select_table' && currentObj.local_field
+        ? currentObj.local_field
+        : currentObj.name
+);
+
 const setEndpointFilter = (parentData, editor) => {
     // Check inconsistencies: parentData isn't loaded yet or endpointKeyNames is not defined
     if (parentData === null || !editor.endpointKeyNames) {

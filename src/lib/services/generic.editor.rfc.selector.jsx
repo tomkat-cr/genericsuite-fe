@@ -96,7 +96,7 @@ export const SelectTableDescription = ({ currentObj, dbRow }) => {
   if (rows === null) {
     return '';
   }
-  const fkValue = dbRow[currentObj.name];
+  const fkValue = dbRow[currentObj.local_field || currentObj.name];
   if (fkValue === null || typeof fkValue === 'undefined') {
     return '';
   }

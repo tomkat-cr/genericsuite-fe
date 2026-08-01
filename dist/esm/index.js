@@ -5028,6 +5028,7 @@ var generic_editor_rfc_timestamp = /*#__PURE__*/Object.freeze({
 // GenericCrudEditor common functions
 
 const getEditorData = props => props.editorConfig;
+const getFieldElementKey = currentObj => currentObj.type === 'select_table' && currentObj.local_field ? currentObj.local_field : currentObj.name;
 const setEndpointFilter = (parentData, editor) => {
   // Check inconsistencies: parentData isn't loaded yet or endpointKeyNames is not defined
   if (parentData === null || !editor.endpointKeyNames) {
@@ -5302,6 +5303,7 @@ var generic_editor_rfc_common = /*#__PURE__*/Object.freeze({
   getEditoObj: getEditoObj,
   getEditorData: getEditorData,
   getEditorFlags: getEditorFlags,
+  getFieldElementKey: getFieldElementKey,
   getIsReadOnly: getIsReadOnly,
   getSelectFieldsOptions: getSelectFieldsOptions,
   setEditorParameters: setEditorParameters
@@ -5530,7 +5532,7 @@ const SelectTableDescription = _ref => {
   if (rows === null) {
     return '';
   }
-  const fkValue = dbRow[currentObj.name];
+  const fkValue = dbRow[currentObj.local_field || currentObj.name];
   if (fkValue === null || typeof fkValue === 'undefined') {
     return '';
   }
@@ -23437,7 +23439,8 @@ const PutOneFormfield = _ref4 => {
   const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
   const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
   const divFieldClass = APP_FORMPAGE_FIELD_CLASS + " " + theme.label;
-  const fieldClass = errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input;
+  const fieldKey = getFieldElementKey(currentObj);
+  const fieldClass = errors[fieldKey] && touched[fieldKey] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input;
   const readOnlyfield = editorFlags.isReadOnly || typeof currentObj.readonly !== "undefined" && currentObj.readonly;
   if (typeof currentObj.hidden !== "undefined" && currentObj.hidden) {
     return /*#__PURE__*/React.createElement(Field, {
@@ -23487,7 +23490,7 @@ const PutOneFormfield = _ref4 => {
   const input_type = ['number', 'integer'].includes(currentObj.type) ? 'number' : currentObj.type;
 
   // id name
-  let idName = currentObj.name;
+  let idName = fieldKey;
 
   // Special buttons definitions
   const chatbot_popup = defaultValue(currentObj, "chatbot_popup", false); // Ex. true or false
@@ -24039,8 +24042,8 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
       } else if (defaultValues) {
         responseObj = setDefaultFieldValue(currentObj);
       }
-    } else if (verifyElementExistence(dataset, currentObj.name)) {
-      responseObj = dataset[currentObj.name];
+    } else if (verifyElementExistence(dataset, getFieldElementKey(currentObj))) {
+      responseObj = dataset[getFieldElementKey(currentObj)];
       if (responseObj === null || responseObj === undefined) {
         // To avoid the warning "Warning:
         // `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components"
@@ -24065,7 +24068,7 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
         // Excluded types
         break;
       default:
-        acc[currentObj.name] = responseObj;
+        acc[getFieldElementKey(currentObj)] = responseObj;
     }
     return _objectSpread2({}, acc);
     // }, {});

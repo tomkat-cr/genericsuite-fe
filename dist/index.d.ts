@@ -567,6 +567,7 @@ declare var generic_editor_rfc_common: Readonly<{
         isDelete: boolean;
         isReadOnly: boolean;
     };
+    getFieldElementKey: (currentObj: any) => any;
     getIsReadOnly: (mode: any) => boolean;
     getSelectFieldsOptions: (fieldElements: any) => {
         name: any;
