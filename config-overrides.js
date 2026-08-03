@@ -12,6 +12,17 @@ process.env.REACT_APP_API_KEYS_PREFIX = process.env.REACT_APP_API_KEYS_PREFIX ||
 https://github.com/timarney/react-app-rewired
 
 npm install --save-dev react-app-rewired react-scripts
+
+If one of your dependencies needs Node.js core modules polyfilled in the
+browser bundle (see the commented-out "fallback" entries below), also run:
+
+npm install --save-dev \
+   os-browserify \
+   url \
+   crypto-browserify \
+   stream-browserify \
+   vm-browserify \
+   tty-browserify
 */
 
 module.exports = {
@@ -89,14 +100,14 @@ module.exports = {
       '@': path.resolve(__dirname, 'src/'),
     };
     config.fallback = {
-      "os": require.resolve("os-browserify/browser"),
-      "url": require.resolve("url"),
-      "crypto": require.resolve("crypto-browserify"),
-      "stream": require.resolve("stream-browserify"),
-      "with": require.resolve("with"),
-      "vm": require.resolve("vm-browserify"),
-      "tty": require.resolve("tty-browserify"),
-      "fs": false
+      "fs": false,
+      // Uncomment as needed (see the npm install note above):
+      // "os": require.resolve("os-browserify/browser"),
+      // "url": require.resolve("url"),
+      // "crypto": require.resolve("crypto-browserify"),
+      // "stream": require.resolve("stream-browserify"),
+      // "vm": require.resolve("vm-browserify"),
+      // "tty": require.resolve("tty-browserify"),
     };
     return config;
   },

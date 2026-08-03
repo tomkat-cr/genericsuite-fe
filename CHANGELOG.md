@@ -12,6 +12,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixed
 
+### Security
+
 ### Removed
 
 
@@ -26,10 +28,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Changed
 - License changed to MIT [FA-244].
 - Rename AWS_S3_BUCKET_NAME to AWS_S3_BUCKET_NAME_FE in the .env and .env.example files [GS-328].
+- `webpack.config.js` and `config-overrides.js`: commented out the Node.js core module `resolve.fallback` polyfills (`os`, `url`, `crypto`, `stream`, `vm`, `tty`, `constants`) since nothing in the codebase needs them and Vite already runs fine without them; added `npm install --save-dev ...` notes above each so they can be re-enabled if a consumer's own dependency graph needs them [GS-338].
 
 ### Fixed
 - getFieldElementsYupValidations() didn't work with action=CREATION, e.g. it has issues on the user creation (OpenAI API key and model are requested as mandatory when they have null values). Therefore, the Yup validations are disabled for now [GS-251].
 - `bson` package version fixed to 7.2.0 to fix the "Uncaught TypeError: globalThis?.process?.getBuiltinModule is not a function" error after upgrading vite to version 8 [GS-268].
+- `tsconfig.json` was missing an `exclude` for `*.test.tsx`, so every test file got its own `.d.ts` stub emitted into `dist/esm` and `dist/cjs` during the Rollup build. Since `dist` is fully included in the published npm package, this shipped ~24 useless declaration files with every release [GS-338].
+- `rollup.config.mjs`: added `bson` and `js-md5` to the `external` array. Both are real peer dependencies used in `src/lib/services/id.utilities.jsx` and `md5.utilities.jsx`, but were missing from `external`, so Rollup was bundling them directly into `dist` instead of treating them as consumer-supplied peer dependencies like every other one [GS-338].
+- Removed a bogus `"with"` entry from the webpack `resolve.fallback` config — `with` is not a Node.js core module, so the fallback never did anything [GS-338].
 
 ### Security
 - Upgrade dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219].
@@ -52,6 +58,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Removed
 - The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].
+- Unused `peerDependencies`: `react-icons`, `web-vitals`, `fs`, `json-loader`, `with`, `constants-browserify`, `crypto-browserify`, `os-browserify`, `stream-browserify`, `tty-browserify`, `url`, `vm-browserify`. None are imported anywhere in `src/`, and the Node.js core module shims were only ever used by the (optional) webpack/`react-app-rewired` dev-server configs [GS-338].
+- Unused `devDependencies`: `@babel/cli` (nothing invokes the `babel` CLI binary), `@babel/preset-stage-0` (not referenced by any Babel config), `@rollup/plugin-typescript` (superseded by `rollup-plugin-typescript2`, which is what's actually used), `@testing-library/user-event` (no test uses it), `file-loader` and `url-loader` (SVGs use webpack 5's native `asset/resource` instead), `path` (all `require('path')` calls resolve to Node's builtin, not this package) [GS-338].
 
 
 ## [1.2.0] - 2026-02-18

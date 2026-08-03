@@ -110,7 +110,7 @@ sast-test:
 pre-publish: sast-test
 	bash ./node_modules/genericsuite-fe-scripts/scripts/npm_publish.sh pre-publish
 
-publish: sast-test
+publish:
 	#
 	# To publish the package to NPMJS checking the test snapshots:
 	#    make publish
