@@ -33,7 +33,8 @@ npm install --save-dev \
    stream-browserify \
    vm-browserify \
    tty-browserify \
-   constants-browserify
+   constants-browserify \
+   process
 */
 
 let devServerConfig = {

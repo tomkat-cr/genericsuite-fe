@@ -36,6 +36,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - `tsconfig.json` was missing an `exclude` for `*.test.tsx`, so every test file got its own `.d.ts` stub emitted into `dist/esm` and `dist/cjs` during the Rollup build. Since `dist` is fully included in the published npm package, this shipped ~24 useless declaration files with every release [GS-338].
 - `rollup.config.mjs`: added `bson` and `js-md5` to the `external` array. Both are real peer dependencies used in `src/lib/services/id.utilities.jsx` and `md5.utilities.jsx`, but were missing from `external`, so Rollup was bundling them directly into `dist` instead of treating them as consumer-supplied peer dependencies like every other one [GS-338].
 - Removed a bogus `"with"` entry from the webpack `resolve.fallback` config — `with` is not a Node.js core module, so the fallback never did anything [GS-338].
+- "config-overrides.js" updated to fix errors running the app with RUN_BUNDLER="react-scripts" [GS-338].
+- "process" dependency installation on "webpack.config.js" file documentation to to fix errors running the app [GS-338].
 
 ### Security
 - Upgrade dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219].
