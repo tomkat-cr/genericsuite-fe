@@ -903,7 +903,6 @@ const CopyButton = _ref6 => {
     document.body.removeChild(textArea);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
-    id: "copyButton",
     style: {
       position: 'absolute',
       top: '10px',

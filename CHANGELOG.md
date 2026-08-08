@@ -63,6 +63,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].
 - Unused `peerDependencies`: `react-icons`, `web-vitals`, `fs`, `json-loader`, `with`, `constants-browserify`, `crypto-browserify`, `os-browserify`, `stream-browserify`, `tty-browserify`, `url`, `vm-browserify`. None are imported anywhere in `src/`, and the Node.js core module shims were only ever used by the (optional) webpack/`react-app-rewired` dev-server configs [GS-338].
 - Unused `devDependencies`: `@babel/cli` (nothing invokes the `babel` CLI binary), `@babel/preset-stage-0` (not referenced by any Babel config), `@rollup/plugin-typescript` (superseded by `rollup-plugin-typescript2`, which is what's actually used), `@testing-library/user-event` (no test uses it), `file-loader` and `url-loader` (SVGs use webpack 5's native `asset/resource` instead), `path` (all `require('path')` calls resolve to Node's builtin, not this package) [GS-338].
+- `id="copyButton"` attribute from the <CopyButton /> component [GS-327].
 
 
 ## [1.2.0] - 2026-02-18

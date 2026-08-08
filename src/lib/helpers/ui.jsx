@@ -217,7 +217,6 @@ export const CopyButton = ({ text }) => {
     return (
         <>
             <button
-                id="copyButton"
                 style={{
                     position: 'absolute',
                     top: '10px',
