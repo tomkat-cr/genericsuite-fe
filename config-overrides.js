@@ -3,10 +3,12 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const appLocalDomainName = process.env.APP_LOCAL_DOMAIN_NAME;
 
 process.env.REACT_APP_API_VERSION = process.env.REACT_APP_API_VERSION || process.env.API_VERSION || 'v1';
+const _ownDirname = path.dirname(fileURLToPath(import.meta.url));
 
 /*
 https://github.com/timarney/react-app-rewired
@@ -33,7 +35,7 @@ File: "package.json"
 - If there is a "eslintConfig": "..." attribute, rename it to e.g. "eslintConfig1"
 - Add the following entry to "scripts":
     "start-dev:react-app-rewired": "bash ../node_modules/genericsuite-fe-scripts/scripts/change_env_be_endpoint.sh dev && npx react-app-rewired start",
-- Install typescript: "npm installl -D typescript" or "npm installl -D -w ui typescript"
+- Install typescript: "npm installl -D typescript" or "npm installl -D -w ui typescript"  
 - After changing "package.json", run "npm update" or "npm update -w ui" before start the app.
 */
 
@@ -83,9 +85,9 @@ export default {
         // Change the https certificate options to match your certificate, using the .env file to
         // set the file paths & passphrase.
         config.https = {
-          key: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.key`), 'utf8'),
-          cert: fs.readFileSync(path.resolve(__dirname, `${appLocalDomainName}.chain.crt`), 'utf8'),
-          ca: fs.readFileSync(path.resolve(__dirname, 'ca.crt'), 'utf8'),
+          key: fs.readFileSync(path.resolve(_ownDirname, `${appLocalDomainName}.key`), 'utf8'),
+          cert: fs.readFileSync(path.resolve(_ownDirname, `${appLocalDomainName}.chain.crt`), 'utf8'),
+          ca: fs.readFileSync(path.resolve(_ownDirname, 'ca.crt'), 'utf8'),
           passphrase: process.env.REACT_HTTPS_PASS
         };
       }
@@ -98,7 +100,7 @@ export default {
   plugins: function (config, env) {
     config.plugins = [
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "public", "index.html"),
+        template: path.resolve(_ownDirname, "public", "index.html"),
         favicon: "./public/favicon.ico",
         filename: "index.html",
         manifest: "./public/manifest.json",
@@ -110,17 +112,17 @@ export default {
   resolve: function (config, env) {
     config.extensions = ['*', '.js', '.jsx'];
     config.alias = {
-      '@': path.resolve(__dirname, 'src/'),
+      '@': path.resolve(_ownDirname, 'src/'),
     };
     config.fallback = {
       "fs": false,
       // Uncomment as needed (see the npm install note above):
-      "os": require.resolve("os-browserify/browser"),
-      "url": require.resolve("url"),
-      "crypto": require.resolve("crypto-browserify"),
-      "stream": require.resolve("stream-browserify"),
-      "vm": require.resolve("vm-browserify"),
-      "tty": require.resolve("tty-browserify"),
+      "os": fileURLToPath(import.meta.resolve("os-browserify/browser")),
+      "url": fileURLToPath(import.meta.resolve("url")),
+      "crypto": fileURLToPath(import.meta.resolve("crypto-browserify")),
+      "stream": fileURLToPath(import.meta.resolve("stream-browserify")),
+      "vm": fileURLToPath(import.meta.resolve("vm-browserify")),
+      "tty": fileURLToPath(import.meta.resolve("tty-browserify")),
     };
     return config;
   },

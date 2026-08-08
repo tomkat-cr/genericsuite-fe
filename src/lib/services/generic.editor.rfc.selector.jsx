@@ -15,7 +15,7 @@ import {
 
 import { MSG_SELECT_AN_OPTION } from "../constants/general_constants.jsx";
 
-const debug = true;
+const debug = false;
 
 export const buildDescription = (itemData, fieldArray) => {
   let description = '';

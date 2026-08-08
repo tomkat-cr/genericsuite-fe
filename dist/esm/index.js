@@ -5597,9 +5597,9 @@ const GenericSelectGenerator = props => {
     _useState0 = _slicedToArray(_useState9, 2),
     rows = _useState0[0],
     setRows = _useState0[1];
-  const _useContext2 = useContext(MainSectionContext),
-    debugCache = _useContext2.debugCache,
-    fetchOrCache = _useContext2.fetchOrCache;
+  const _useContext2 = useContext(MainSectionContext);
+    _useContext2.debugCache;
+    const fetchOrCache = _useContext2.fetchOrCache;
   useEffect(() => {
     setConfig(initConfig(props));
   }, [props]);
@@ -5651,9 +5651,6 @@ const GenericSelectGenerator = props => {
     selectAnOptionItem[description_fields[i]] = '';
   }
   const selectOptions = [...[...[selectAnOptionItem]], ...rows.resultset];
-  {
-    debugCache("GenericSelectGenerator");
-  }
   return selectOptions.filter(option => filter === null ? true : dbService.convertId(option._id) === filter).map(option => {
     if (show_description) {
       return buildDescription(option, description_fields);
@@ -5747,9 +5744,6 @@ const putSelectOptionsFromArray = function (select_array_elements) {
   let emptyElement = {};
   emptyElement[title_field_name] = MSG_SELECT_AN_OPTION;
   emptyElement[value_field_name] = null;
-  {
-    console_debug_log("putSelectOptionsFromArray | title_field_name: ".concat(title_field_name, " | value_field_name: ").concat(value_field_name, " | select_array_elements:"), select_array_elements);
-  }
   const selectOptions = [...[emptyElement], ...select_array_elements];
   return selectOptions.map(option => /*#__PURE__*/React.createElement("option", {
     key: option[value_field_name],
@@ -5757,9 +5751,6 @@ const putSelectOptionsFromArray = function (select_array_elements) {
   }, option[title_field_name]));
 };
 const getSelectDescription = (currentObj, dbRow) => {
-  {
-    console_debug_log("getSelectDescription - currentObj, dbRow:", currentObj, dbRow);
-  }
   // Component select (with specific select component and data populator)
   if (currentObj.type === 'select_component') {
     const filter = typeof dbRow[currentObj.name] !== "undefined" ? dbRow[currentObj.name].toString() : null;

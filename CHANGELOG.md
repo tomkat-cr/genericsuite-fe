@@ -36,7 +36,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - `tsconfig.json` was missing an `exclude` for `*.test.tsx`, so every test file got its own `.d.ts` stub emitted into `dist/esm` and `dist/cjs` during the Rollup build. Since `dist` is fully included in the published npm package, this shipped ~24 useless declaration files with every release [GS-338].
 - `rollup.config.mjs`: added `bson` and `js-md5` to the `external` array. Both are real peer dependencies used in `src/lib/services/id.utilities.jsx` and `md5.utilities.jsx`, but were missing from `external`, so Rollup was bundling them directly into `dist` instead of treating them as consumer-supplied peer dependencies like every other one [GS-338].
 - Removed a bogus `"with"` entry from the webpack `resolve.fallback` config — `with` is not a Node.js core module, so the fallback never did anything [GS-338].
-- "config-overrides.js" updated to fix errors running the app with RUN_BUNDLER="react-scripts" [GS-338].
+- "config-overrides.js" updated to fix errors running the app with RUN_BUNDLER="react-scripts" [GS-338] and refactored to use fileURLToPath for path resolution and clean up unused debug logs [GS-327].
 - "process" dependency installation on "webpack.config.js" file documentation to to fix errors running the app [GS-338].
 
 ### Security
@@ -57,6 +57,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Upgrade react-router-dom@^7.18.2 to fix the security vulnerability [GS-219]:
   - React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response. This is a follow up to CVE-2026-22030 to address related CSRF flows in unstable RSC code paths.
 - "react" and "react-dom" have now peer dependencies with "^18.2.0" that does not affect this codebase because it only uses BrowserRouter/Routes/Route/Link/Navigate, no RSC APIs. By the way React/ReactDOM will be upgraded to 19 on next release to fix the mentioned react-router-dom security vulnerability [GS-219].
+- Update: Bump Node version in .nvmrc to 26 [GS-339].
 
 ### Removed
 - The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].

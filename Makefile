@@ -91,10 +91,10 @@ add_submodules:
 	bash ./node_modules/genericsuite-fe-scripts/scripts/add_github_submodules.sh
 
 create_ssl_certs:
-	bash ./node_modules/genericsuite-fe-scripts/scripts/create_ssl_certs.sh create; fi
+	bash ./node_modules/genericsuite-fe-scripts/scripts/create_ssl_certs.sh create
 
 copy_ssl_certs:
-	bash ./node_modules/genericsuite-fe-scripts/scripts/create_ssl_certs.sh copy; fi
+	bash ./node_modules/genericsuite-fe-scripts/scripts/create_ssl_certs.sh copy
 
 ## NPM scripts library
 
