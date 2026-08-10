@@ -57,12 +57,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Upgrade react-router-dom@^7.18.2 to fix the security vulnerability [GS-219]:
   - React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response. This is a follow up to CVE-2026-22030 to address related CSRF flows in unstable RSC code paths.
 - "react" and "react-dom" have now peer dependencies with "^18.2.0" that does not affect this codebase because it only uses BrowserRouter/Routes/Route/Link/Navigate, no RSC APIs. By the way React/ReactDOM will be upgraded to 19 on next release to fix the mentioned react-router-dom security vulnerability [GS-219].
-- Update: Bump Node version in .nvmrc to 26 [GS-339].
+- Bump Node.js version in .nvmrc to 26 [GS-339].
 
 ### Removed
 - The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].
 - Unused `peerDependencies`: `react-icons`, `web-vitals`, `fs`, `json-loader`, `with`, `constants-browserify`, `crypto-browserify`, `os-browserify`, `stream-browserify`, `tty-browserify`, `url`, `vm-browserify`. None are imported anywhere in `src/`, and the Node.js core module shims were only ever used by the (optional) webpack/`react-app-rewired` dev-server configs [GS-338].
-- Unused `devDependencies`: `@babel/cli` (nothing invokes the `babel` CLI binary), `@babel/preset-stage-0` (not referenced by any Babel config), `@rollup/plugin-typescript` (superseded by `rollup-plugin-typescript2`, which is what's actually used), `@testing-library/user-event` (no test uses it), `file-loader` and `url-loader` (SVGs use webpack 5's native `asset/resource` instead), `path` (all `require('path')` calls resolve to Node's builtin, not this package) [GS-338].
+- Unused `devDependencies`: `@babel/cli` (nothing invokes the `babel` CLI binary), `@babel/preset-stage-0` (not referenced by any Babel config), `@rollup/plugin-typescript` (superseded by `rollup-plugin-typescript2`, which is what's actually used), `@testing-library/user-event` (no test uses it), `file-loader` and `url-loader` (SVGs use webpack 5's native `asset/resource` instead), `path` (all `require('path')` calls resolve to Node.js's builtin, not this package) [GS-338].
 - `id="copyButton"` attribute from the <CopyButton /> component [GS-327].
 
 
@@ -387,7 +387,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - "aws_deploy_to_s3.sh" take into account the APP_FE_URL domain in the CloudFront distribution creation.
 - "make publish" report the package name and version in the publishing confirmation.
 - "run_app_frontend.sh" assign APP_API_URL_DEV and REACT_APP_API_URL in the "dev" stage for both http and https modes. Previously it was only made for http.
-- Node install links changed to include the NVM alternative download in the README.
+- Node.js install links changed to include the NVM alternative download in the README.
 - License changed to ISC [FA-244].
 
 
