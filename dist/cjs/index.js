@@ -136,16 +136,16 @@ const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 
 // Alert messages and message boxes
 
 const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded-sm alertBaseClass";
-const ALERT_DANGER_CLASS = "".concat(ALERT_BASE_CLASS, " text-red-800 bg-red-100 border-red-200 alertDangerClass");
-const ALERT_WARNING_CLASS = "".concat(ALERT_BASE_CLASS, " text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass");
-const ALERT_INFO_CLASS = "".concat(ALERT_BASE_CLASS, " text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass");
-const ALERT_SUCCESS_CLASS = "".concat(ALERT_BASE_CLASS, " text-green-800 bg-green-100 border-green-200 alertSuccessClass");
-const ERROR_MSG_CLASS = "".concat(ALERT_DANGER_CLASS, " mt-4 p-2 rounded-md errorMsgClass");
-const WARNING_MSG_CLASS = "".concat(ALERT_WARNING_CLASS, " mt-4 p-2 rounded-md warningMsgClass");
-const INFO_MSG_CLASS = "".concat(ALERT_INFO_CLASS, " mt-4 mb-4 p-2 rounded-md flex justify-between align-middle infoMsgClass");
+const ALERT_DANGER_CLASS = `${ALERT_BASE_CLASS} text-red-800 bg-red-100 border-red-200 alertDangerClass`;
+const ALERT_WARNING_CLASS = `${ALERT_BASE_CLASS} text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass`;
+const ALERT_INFO_CLASS = `${ALERT_BASE_CLASS} text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass`;
+const ALERT_SUCCESS_CLASS = `${ALERT_BASE_CLASS} text-green-800 bg-green-100 border-green-200 alertSuccessClass`;
+const ERROR_MSG_CLASS = `${ALERT_DANGER_CLASS} mt-4 p-2 rounded-md errorMsgClass`;
+const WARNING_MSG_CLASS = `${ALERT_WARNING_CLASS} mt-4 p-2 rounded-md warningMsgClass`;
+const INFO_MSG_CLASS = `${ALERT_INFO_CLASS} mt-4 mb-4 p-2 rounded-md flex justify-between align-middle infoMsgClass`;
 const INFO_MSG_BUTTON_CLASS = "rounded-full p-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-800 infoMsgButtonClass";
-const SUCCESS_MSG_CLASS = "".concat(ALERT_SUCCESS_CLASS, " mt-4 p-2 rounded-md successMsgClass");
-const GRAY_BOX_MSG_CLASS = "".concat(ALERT_BASE_CLASS, " text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass");
+const SUCCESS_MSG_CLASS = `${ALERT_SUCCESS_CLASS} mt-4 p-2 rounded-md successMsgClass`;
+const GRAY_BOX_MSG_CLASS = `${ALERT_BASE_CLASS} text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass`;
 
 // Forms
 
@@ -183,14 +183,14 @@ const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDar
 // Listing page buttons (GCE_RFC)
 
 const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass";
-const BUTTON_LISTING_DISABLED_CLASS = "".concat(BUTTON_LISTING_CLASS, " opacity-50 buttonListingDisabledClass");
-const BUTTON_LISTING_NEW_CLASS = "".concat(BUTTON_LISTING_CLASS, " buttonListingNewClass");
-const BUTTON_LISTING_REFRESH_CLASS = "".concat(BUTTON_LISTING_CLASS, " text-xs buttonListingRefreshClass");
+const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
+const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
+const BUTTON_LISTING_REFRESH_CLASS = `${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
 
 // General app section (GCE_RFC)
 
 const APP_GENERAL_MARGINS_CLASS = 'mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass';
-const APP_TOP_DIV_CLASS = "".concat(APP_GENERAL_MARGINS_CLASS, " rounded-lg appTopDivClass");
+const APP_TOP_DIV_CLASS = `${APP_GENERAL_MARGINS_CLASS} rounded-lg appTopDivClass`;
 const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
 const APP_TITLE_H1_CLASS = 'text-xl font-bold mb-4 appTitleH1Class';
 const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
@@ -203,25 +203,25 @@ const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTabl
 const APP_LISTING_TABLE_HDR_TR_CLASS = "appListingTableHdrTrClass";
 const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
 const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
-const APP_LISTING_TABLE_BODY_TBODY_CLASS = "appListingTableBodyTbodyClass";
+const APP_LISTING_TABLE_BODY_TBODY_CLASS = `appListingTableBodyTbodyClass`;
 const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrOddClass';
 const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrEvenClass';
 const APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS = 'appListingTableBodyTrActionsOddClass';
 const APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS = 'appListingTableBodyTrActionsEvenClass';
 const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS = "p-2 appListingTableBodyTdBaseOddClass";
 const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS = "p-2 appListingTableBodyTdBaseEvenClass";
-const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " break-words appListingTableBodyTdOddClass");
-const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " break-words appListingTableBodyTdEvenClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass");
+const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words appListingTableBodyTdOddClass`;
+const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words appListingTableBodyTdEvenClass`;
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass`;
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass`;
 
 // Listing page search box (GCE_RFC)
 
 const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
 const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
 const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded-xl border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
-const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass");
-const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " mr-2 text-xs appListingSearchBoxStopButtonClass");
+const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
+const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
@@ -241,10 +241,10 @@ const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToo
 const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
 const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
-const APP_FORMPAGE_FIELD_CLASS = "flex flex-col ".concat(FORM_GROUP_CLASS, " appFormPageFieldClass");
-const APP_FORMPAGE_FIELD_BASE_CLASS = "".concat(FORM_CONTROL_CLASS, " border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass");
-const APP_FORMPAGE_FIELD_GOOD_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " appFormPageFieldGoodClass");
-const APP_FORMPAGE_FIELD_INVALID_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " is-invalid appFormPageFieldInvalidClass");
+const APP_FORMPAGE_FIELD_CLASS = `flex flex-col ${FORM_GROUP_CLASS} appFormPageFieldClass`;
+const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
+const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} appFormPageFieldGoodClass`;
+const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid appFormPageFieldInvalidClass`;
 const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS = "align-middle flex appFormPageSpecialButtonDivClass";
 const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChildComponentsTopDivClass";
 
@@ -271,8 +271,8 @@ const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-
 const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-xl text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
 const MODALIB_BUTTON_BASESTYLE_WIDE_CLASS = 'flex-1 modalibButtonBaseStyleWideClass';
 const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center modalibButtonBaseStyleNotWideClass';
-const MODALIB_BUTTON_PRIMARY_CLASS = "".concat(BUTTON_PRIMARY_CLASS, " modalibButtonPrimaryClass");
-const MODALIB_BUTTON_SECONDARY_CLASS = "".concat(BUTTON_SECONDARY_CLASS, " modalibButtonSecondaryClass");
+const MODALIB_BUTTON_PRIMARY_CLASS = `${BUTTON_PRIMARY_CLASS} modalibButtonPrimaryClass`;
+const MODALIB_BUTTON_SECONDARY_CLASS = `${BUTTON_SECONDARY_CLASS} modalibButtonSecondaryClass`;
 const MODALIB_BUTTON_SUCCESS_CLASS = 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass';
 const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass';
 
@@ -283,7 +283,7 @@ const LOGIN_PAGE_EXTRA_PT = "pt-6 loginPageExtraPtClass";
 
 // Login button
 
-const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = "".concat(HORIZONTALLY_CENTERED_CLASS, " p-4 loginButtonInAppComponentClass");
+const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = `${HORIZONTALLY_CENTERED_CLASS} p-4 loginButtonInAppComponentClass`;
 
 // Components
 
@@ -528,21 +528,19 @@ const setWindowLocationHref = url => {
   window.location.href = url;
 };
 
-var _process$env$REACT_AP;
 const history = history$2.createBrowserHistory();
-const hasHashRouter = (_process$env$REACT_AP = process.env.REACT_APP_HASH_ROUTER) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : true;
+const hasHashRouter = process.env.REACT_APP_HASH_ROUTER ?? true;
 const getUrlForRouter = url => {
   if (!url.startsWith('/')) {
     url = '/' + url;
   }
-  return "".concat(hasHashRouter ? '/#' : '').concat(getPrefix()).concat(url);
+  return `${hasHashRouter ? '/#' : ''}${getPrefix()}${url}`;
 };
 function getPrefix() {
   let hardPrefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   if (hardPrefix) {
-    var _process$env$REACT_AP2;
-    const prefix = (_process$env$REACT_AP2 = process.env.REACT_APP_URI_PREFIX) !== null && _process$env$REACT_AP2 !== void 0 ? _process$env$REACT_AP2 : '';
-    return "/".concat(prefix);
+    const prefix = process.env.REACT_APP_URI_PREFIX ?? '';
+    return `/${prefix}`;
   }
   return '';
 }
@@ -578,14 +576,6 @@ var history$1 = /*#__PURE__*/Object.freeze({
   setLastUrl: setLastUrl
 });
 
-function _arrayLikeToArray(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-function _arrayWithHoles(r) {
-  if (Array.isArray(r)) return r;
-}
 function _defineProperty(e, r, t) {
   return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
     value: t,
@@ -603,83 +593,6 @@ function _extends() {
     return n;
   }, _extends.apply(null, arguments);
 }
-function _iterableToArray(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
-}
-function _iterableToArrayLimit(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (null != t) {
-    var e,
-      n,
-      i,
-      u,
-      a = [],
-      f = true,
-      o = false;
-    try {
-      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-    } catch (r) {
-      o = true, n = r;
-    } finally {
-      try {
-        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
-      } finally {
-        if (o) throw n;
-      }
-    }
-    return a;
-  }
-}
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function ownKeys(e, r) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r && (o = o.filter(function (r) {
-      return Object.getOwnPropertyDescriptor(e, r).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread2(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
-      _defineProperty(e, r, t[r]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
-      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-    });
-  }
-  return e;
-}
-function _objectWithoutProperties(e, t) {
-  if (null == e) return {};
-  var o,
-    r,
-    i = _objectWithoutPropertiesLoose(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-function _objectWithoutPropertiesLoose(r, e) {
-  if (null == r) return {};
-  var t = {};
-  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r[n];
-  }
-  return t;
-}
-function _slicedToArray(r, e) {
-  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
-}
-function _toArray(r) {
-  return _arrayWithHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableRest();
-}
 function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
@@ -693,13 +606,6 @@ function _toPrimitive(t, r) {
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, "string");
   return "symbol" == typeof i ? i : i + "";
-}
-function _unsupportedIterableToArray(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
-  }
 }
 
 function console_debug_log(debug_message) {
@@ -764,12 +670,12 @@ const growUpTextAreaInner = function (textAreaId, conversationBlockId, sectionVi
     const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
     // Ensure the textarea does not exceed its max-height...
     if (textarea.scrollHeight > maxOffsetHeight) {
-      textarea.style.height = "".concat(maxOffsetHeight, "px");
+      textarea.style.height = `${maxOffsetHeight}px`;
     }
     // Set conversation height to make textarea to scroll up according its height
     const sectionViewportHeightInPx = sectionViewportHeight / 100 * viewportHeight;
     const conversationHeight = sectionViewportHeightInPx - textarea.clientHeight + textareaMinHeight;
-    conversationObj.style.height = "".concat(conversationHeight, "px");
+    conversationObj.style.height = `${conversationHeight}px`;
   }
 };
 const growUpTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
@@ -787,7 +693,9 @@ const resetTextArea = function (textAreaId, conversationBlockId, sectionViewport
   }
 };
 const LinkifyText = _ref => {
-  let children = _ref.children;
+  let {
+    children
+  } = _ref;
   // Detect links in the text.
   // Example: [Carlos Jose Ramirez Divo - Sitio web oficial](https://www.carlosjramirez.com/en/about-carlos-jose-ramirez-divo/)
 
@@ -829,26 +737,34 @@ const renderMarkdownContent = text => {
   return /*#__PURE__*/React.createElement(ReactMarkdown, {
     components: {
       p: _ref2 => {
-        let children = _ref2.children;
+        let {
+          children
+        } = _ref2;
         return /*#__PURE__*/React.createElement("p", {
           className: MARKDOWN_P_CLASS
         }, children);
       },
       strong: _ref3 => {
-        let children = _ref3.children;
+        let {
+          children
+        } = _ref3;
         return /*#__PURE__*/React.createElement("strong", {
           className: MARKDOWN_BOLD_CLASS
         }, children);
       },
       em: _ref4 => {
-        let children = _ref4.children;
+        let {
+          children
+        } = _ref4;
         return /*#__PURE__*/React.createElement("em", {
           className: MARKDOWN_ITALIC_CLASS
         }, children);
       },
       a: _ref5 => {
-        let children = _ref5.children,
-          href = _ref5.href;
+        let {
+          children,
+          href
+        } = _ref5;
         return /*#__PURE__*/React.createElement("a", {
           href: href,
           target: "_blank",
@@ -861,7 +777,9 @@ const renderMarkdownContent = text => {
   }, text);
 };
 const CopyButton = _ref6 => {
-  let text = _ref6.text;
+  let {
+    text
+  } = _ref6;
   const showCopiedMessage = e => {
     const copiedMessage = document.createElement('div');
     copiedMessage.textContent = 'Copied!';
@@ -964,68 +882,81 @@ const AppContext = /*#__PURE__*/React.createContext();
 const appReducer = (state, action) => {
   switch (action.type) {
     case 'SET_APP_LOGO':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         appLogo: action.payload
-      });
+      };
     case 'SET_APP_LOGO_HEADER':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         appLogoHeader: action.payload
-      });
+      };
     case 'SET_COMPONENT_MAP':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         componentMap: action.payload
-      });
+      };
     case 'SET_STATE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         state: action.payload
-      });
+      };
     case 'SET_MENU_OPTIONS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         menuOptions: action.payload
-      });
+      };
     case 'SET_SIDE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         sideMenu: action.payload
-      });
+      };
     case 'TOGGLE_SIDE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         sideMenu: !state.sideMenu
-      });
+      };
     case 'SET_DARK_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isDarkMode: action.payload
-      });
+      };
     case 'TOGGLE_DARK_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isDarkMode: !state.isDarkMode
-      });
+      };
     case 'SET_MOBILE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isMobileMenuOpen: action.payload
-      });
+      };
     case 'TOGGLE_MOBILE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isMobileMenuOpen: !state.isMobileMenuOpen
-      });
+      };
     case 'SET_EXPANDED_MENUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         expandedMenus: action.payload
-      });
+      };
     case 'SET_WIDE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isWide: action.payload
-      });
+      };
     default:
       return state;
   }
 };
 const AppProvider = _ref => {
-  let globalComponentMap = _ref.globalComponentMap,
-    _ref$globalAppLogo = _ref.globalAppLogo,
-    globalAppLogo = _ref$globalAppLogo === void 0 ? "" : _ref$globalAppLogo,
-    _ref$globalAppLogoHea = _ref.globalAppLogoHeader,
-    globalAppLogoHeader = _ref$globalAppLogoHea === void 0 ? "" : _ref$globalAppLogoHea,
-    children = _ref.children;
+  let {
+    globalComponentMap,
+    globalAppLogo = "",
+    globalAppLogoHeader = "",
+    children
+  } = _ref;
   const initialState = {
     appLogo: globalAppLogo,
     appLogoHeader: globalAppLogoHeader,
@@ -1041,10 +972,7 @@ const AppProvider = _ref => {
     expandedMenus: [],
     isWide: isWindowWide()
   };
-  const _useReducer = React.useReducer(appReducer, initialState),
-    _useReducer2 = _slicedToArray(_useReducer, 2),
-    appState = _useReducer2[0],
-    dispatch = _useReducer2[1];
+  const [appState, dispatch] = React.useReducer(appReducer, initialState);
   const theme = appState.isDarkMode ? appState.componentMap["defaultTheme"].dark : appState.componentMap["defaultTheme"].light;
   const setAppLogo = React.useCallback(payload => dispatch({
     type: 'SET_APP_LOGO',
@@ -1142,7 +1070,8 @@ const AppProvider = _ref => {
     resizer.addListener();
     return () => resizer.removeListener();
   }, [setIsWide]);
-  const contextValue = React.useMemo(() => _objectSpread2(_objectSpread2({}, appState), {}, {
+  const contextValue = React.useMemo(() => ({
+    ...appState,
     setAppLogo,
     setAppLogoHeader,
     setComponentMap,
@@ -1177,20 +1106,17 @@ var AppContext$1 = /*#__PURE__*/Object.freeze({
 
 // IconsLib
 const GsIcons = _ref => {
-  var _selectedSvg$props$cl;
-  let icon = _ref.icon,
-    _ref$size = _ref.size,
-    size = _ref$size === void 0 ? null : _ref$size,
-    _ref$alt = _ref.alt,
-    alt = _ref$alt === void 0 ? '' : _ref$alt,
-    _ref$id = _ref.id,
-    id = _ref$id === void 0 ? '' : _ref$id,
-    _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className,
-    _ref$role = _ref.role,
-    role = _ref$role === void 0 ? "img" : _ref$role,
-    _ref$additionalIconsF = _ref.additionalIconsFn,
-    additionalIconsFn = _ref$additionalIconsF === void 0 ? null : _ref$additionalIconsF;
+  let {
+    icon,
+    size = null,
+    // width = null,
+    // height = null,
+    alt = '',
+    id = '',
+    className = '',
+    role = "img",
+    additionalIconsFn = null
+  } = _ref;
   /*
   Some vector icons thanks to: https://www.svgrepo.com/
    Warning: Failed prop type: Invalid prop `size` of value `m` supplied to `FontAwesomeIcon`,
@@ -1293,10 +1219,10 @@ const GsIcons = _ref => {
       "height": "160"
     }
   };
-  size = size !== null && size !== void 0 ? size : 'sm';
+  size = size ?? 'sm';
   if (typeof sizeData[size] === "undefined") {
-    console.error("Invalid \"size\" *".concat(size, "*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x"));
-    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid \"size\" *".concat(size, "*"));
+    console.error(`Invalid "size" *${size}*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x`);
+    return /*#__PURE__*/React.createElement(React.Fragment, null, `Invalid "size" *${size}*`);
   }
   const currentWidth = sizeData[size].width;
   const currentHeight = sizeData[size].height;
@@ -1306,7 +1232,7 @@ const GsIcons = _ref => {
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
         width: "6",
         height: "3",
-        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: ML2_ICON_CLASS + (className ?? '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L6 0",
         fill: "none",
@@ -1319,7 +1245,7 @@ const GsIcons = _ref => {
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
         width: "3",
         height: "6",
-        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: ML2_ICON_CLASS + (className ?? '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L0 6",
         fill: "none",
@@ -1479,7 +1405,7 @@ const GsIcons = _ref => {
       break;
     case 'place-holder-circle':
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
-        className: ROUNDED_ICON_CLASS + (className !== null && className !== void 0 ? className : ''),
+        className: ROUNDED_ICON_CLASS + (className ?? ''),
         fill: "none"
       }, /*#__PURE__*/React.createElement("rect", {
         width: currentWidth,
@@ -1744,7 +1670,7 @@ const GsIcons = _ref => {
       break;
     case 'vertical-slider':
       selectedSvg = /*#__PURE__*/React.createElement("div", {
-        className: VERTICAL_SLIDER_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: VERTICAL_SLIDER_ICON_CLASS + (className ?? '')
       });
       break;
     case 'warning-sign':
@@ -1831,22 +1757,21 @@ const GsIcons = _ref => {
       }
   }
   if (!selectedSvg) {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid Icon *".concat(icon, "*"));
+    return /*#__PURE__*/React.createElement(React.Fragment, null, `Invalid Icon *${icon}*`);
   }
   let iconProps = {
     'data-icon': icon.toLowerCase(),
     'id': id,
-    'className': (_selectedSvg$props$cl = selectedSvg.props.className) !== null && _selectedSvg$props$cl !== void 0 ? _selectedSvg$props$cl : className
+    'className': selectedSvg.props.className ?? className
   };
   if (selectedSvg.type === "svg") {
-    var _selectedSvg$props$xm, _selectedSvg$props$wi, _selectedSvg$props$he, _selectedSvg$props$ro, _selectedSvg$props$al, _selectedSvg$props$ti;
     // iconProps['viewBox'] = "0 0 " + currentWidth + " " + currentHeight;
-    iconProps['xmlns'] = (_selectedSvg$props$xm = selectedSvg.props.xmlns) !== null && _selectedSvg$props$xm !== void 0 ? _selectedSvg$props$xm : "http://www.w3.org/2000/svg";
-    iconProps['width'] = (_selectedSvg$props$wi = selectedSvg.props.width) !== null && _selectedSvg$props$wi !== void 0 ? _selectedSvg$props$wi : currentWidth;
-    iconProps['height'] = (_selectedSvg$props$he = selectedSvg.props.height) !== null && _selectedSvg$props$he !== void 0 ? _selectedSvg$props$he : currentHeight;
-    iconProps['role'] = (_selectedSvg$props$ro = selectedSvg.props.role) !== null && _selectedSvg$props$ro !== void 0 ? _selectedSvg$props$ro : role;
-    iconProps['alt'] = (_selectedSvg$props$al = selectedSvg.props.alt) !== null && _selectedSvg$props$al !== void 0 ? _selectedSvg$props$al : alt;
-    iconProps['title'] = (_selectedSvg$props$ti = selectedSvg.props.title) !== null && _selectedSvg$props$ti !== void 0 ? _selectedSvg$props$ti : alt;
+    iconProps['xmlns'] = selectedSvg.props.xmlns ?? "http://www.w3.org/2000/svg";
+    iconProps['width'] = selectedSvg.props.width ?? currentWidth;
+    iconProps['height'] = selectedSvg.props.height ?? currentHeight;
+    iconProps['role'] = selectedSvg.props.role ?? role;
+    iconProps['alt'] = selectedSvg.props.alt ?? alt;
+    iconProps['title'] = selectedSvg.props.title ?? alt;
   }
   selectedSvg = /*#__PURE__*/React.cloneElement(selectedSvg, iconProps);
   return selectedSvg;
@@ -1865,27 +1790,29 @@ const initialState$2 = {
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'REGISTER_USER':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         currentUser: action.payload
-      });
+      };
     case 'UNREGISTER_USER':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         currentUser: null
-      });
+      };
     case 'SET_ASK_FOR_LOGIN':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         askForLogin: action.payload
-      });
+      };
     default:
       return state;
   }
 };
 const UserProvider = _ref => {
-  let children = _ref.children;
-  const _useReducer = React.useReducer(userReducer, initialState$2),
-    _useReducer2 = _slicedToArray(_useReducer, 2),
-    state = _useReducer2[0],
-    dispatch = _useReducer2[1];
+  let {
+    children
+  } = _ref;
+  const [state, dispatch] = React.useReducer(userReducer, initialState$2);
   const setAskForLogin = newAskForLogin => {
     dispatch({
       type: 'SET_ASK_FOR_LOGIN',
@@ -1928,21 +1855,25 @@ var UserContext$1 = /*#__PURE__*/Object.freeze({
   useUser: useUser
 });
 
-const _excluded$3 = ["onClick"],
-  _excluded2 = ["variant", "className", "as"];
 const MainContainer = _ref => {
-  let children = _ref.children;
-  const _useAppContext = useAppContext(),
-    theme = _useAppContext.theme,
-    sideMenu = _useAppContext.sideMenu;
+  let {
+    children
+  } = _ref;
+  const {
+    theme,
+    sideMenu
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+    className: `${sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS} ${theme.background} ${theme.text}`
   }, children);
 };
 const AppSectionContainer = _ref2 => {
-  let children = _ref2.children;
-  const _useAppContext2 = useAppContext(),
-    sideMenu = _useAppContext2.sideMenu;
+  let {
+    children
+  } = _ref2;
+  const {
+    sideMenu
+  } = useAppContext();
   if (sideMenu) {
     return /*#__PURE__*/React.createElement("div", {
       className: APP_SECTION_CONTAINER_FOR_SIDE_MENU_CLASS
@@ -1953,30 +1884,38 @@ const AppSectionContainer = _ref2 => {
   }, children);
 };
 const AppSectionContainerForSideMenu = _ref3 => {
-  let children = _ref3.children;
+  let {
+    children
+  } = _ref3;
   return /*#__PURE__*/React.createElement("main", {
     className: APP_SECTION_CONTAINER_FOR_SIDE_MENU_MAIN_CLASS
   }, children);
 };
 AppSectionContainer.ForSideMenu = AppSectionContainerForSideMenu;
 const AppFooterContainer = _ref4 => {
-  let children = _ref4.children;
+  let {
+    children
+  } = _ref4;
   /* App Footer */
-  const _useAppContext3 = useAppContext(),
-    theme = _useAppContext3.theme;
+  const {
+    theme
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("footer", {
-    className: "".concat(APP_FOOTER_CONTAINER_CLASS, " ").concat(theme.primary)
+    className: `${APP_FOOTER_CONTAINER_CLASS} ${theme.primary}`
   }, children);
 };
 const CenteredBoxContainer = _ref5 => {
-  let children = _ref5.children;
+  let {
+    children
+  } = _ref5;
   /* Center box container, for pop-ups and login page like components */
-  const _useAppContext4 = useAppContext(),
-    theme = _useAppContext4.theme;
+  const {
+    theme
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(CENTERED_BOX_CONTAINER_DIV_2_CLASS, " ").concat(theme.contentBg)
+    className: `${CENTERED_BOX_CONTAINER_DIV_2_CLASS} ${theme.contentBg}`
   }, /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_3_CLASS
   }, children)));
@@ -1985,25 +1924,28 @@ const CenteredBoxContainer = _ref5 => {
 // NavBar
 
 const Navbar = _ref6 => {
-  let children = _ref6.children;
-    _ref6.collapseOnSelect;
-    _ref6.expand;
-  const _useAppContext5 = useAppContext(),
-    theme = _useAppContext5.theme,
-    sideMenu = _useAppContext5.sideMenu,
-    isMobileMenuOpen = _useAppContext5.isMobileMenuOpen,
-    isWide = _useAppContext5.isWide;
+  let {
+    children,
+    collapseOnSelect,
+    expand
+  } = _ref6;
+  const {
+    theme,
+    sideMenu,
+    isMobileMenuOpen,
+    isWide
+  } = useAppContext();
   if (sideMenu) {
     if (isMobileMenuOpen) {
       return /*#__PURE__*/React.createElement("nav", {
         id: "navbar-side-menu",
-        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+        className: `${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`
       }, children);
     }
     if (isWide) {
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("nav", {
         id: "navbar-side-menu",
-        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+        className: `${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`
       }, children), /*#__PURE__*/React.createElement(ToggleSideBar, {
         onClick: () => document.getElementById('navbar-side-menu').classList.toggle('hidden')
       }));
@@ -2011,17 +1953,20 @@ const Navbar = _ref6 => {
     return null;
   }
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(NAVBAR_HEADER_FOR_TOP_MENU_CLASS, " ").concat(theme.primary)
+    className: `${NAVBAR_HEADER_FOR_TOP_MENU_CLASS} ${theme.primary}`
   }, children);
 };
 const NavbarBrand = _ref7 => {
-  let children = _ref7.children,
-    as = _ref7.as,
-    to = _ref7.to,
-    onClick = _ref7.onClick;
-  const _useAppContext6 = useAppContext(),
-    sideMenu = _useAppContext6.sideMenu,
-    isWide = _useAppContext6.isWide;
+  let {
+    children,
+    as,
+    to,
+    onClick
+  } = _ref7;
+  const {
+    sideMenu,
+    isWide
+  } = useAppContext();
   const As = as;
   if (sideMenu) {
     return /*#__PURE__*/React.createElement("div", {
@@ -2049,10 +1994,13 @@ const NavbarBrand = _ref7 => {
   }, children));
 };
 const NavbarTopCenterMenu = _ref8 => {
-  let children = _ref8.children;
-  const _useAppContext7 = useAppContext(),
-    sideMenu = _useAppContext7.sideMenu,
-    isWide = _useAppContext7.isWide;
+  let {
+    children
+  } = _ref8;
+  const {
+    sideMenu,
+    isWide
+  } = useAppContext();
   if (sideMenu) {
     return /*#__PURE__*/React.createElement("div", {
       className: NAVBAR_TOP_CENTER_MENU_ON_LEFT_CLASS
@@ -2064,25 +2012,31 @@ const NavbarTopCenterMenu = _ref8 => {
   }, children);
 };
 const NavbarTopRightMenu = _ref9 => {
-  let children = _ref9.children,
-    _ref9$authenticated = _ref9.authenticated,
-    authenticated = _ref9$authenticated === void 0 ? true : _ref9$authenticated;
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
-  const _useAppContext8 = useAppContext(),
-    sideMenu = _useAppContext8.sideMenu;
+  let {
+    children,
+    authenticated = true
+  } = _ref9;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    sideMenu
+  } = useAppContext();
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: (sideMenu ? NAVBAR_TOP_RIGHT_MENU_FOR_SIDE_MENU_CLASS : NAVBAR_TOP_RIGHT_MENU_FOR_TOP_MENU_CLASS) + (!(currentUser && authenticated) ? " " + NAVBAR_TOP_RIGHT_MENU_UNAUTHENTICATED_MARGIN_RIGHT_CLASS : "")
   }, children));
 };
 const MobileMenuCloseButton = _ref0 => {
-  let className = _ref0.className;
+  let {
+    className
+  } = _ref0;
   /* Mobile menu close button */
-  const _useAppContext9 = useAppContext(),
-    toggleMobileMenu = _useAppContext9.toggleMobileMenu;
+  const {
+    toggleMobileMenu
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("button", {
     onClick: toggleMobileMenu,
-    className: className !== null && className !== void 0 ? className : '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
+    className: className ?? '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "x",
     size: "sm",
@@ -2090,18 +2044,21 @@ const MobileMenuCloseButton = _ref0 => {
   }));
 };
 const NavbarMobileMenu = _ref1 => {
-  let children = _ref1.children;
-  const _useAppContext0 = useAppContext(),
-    theme = _useAppContext0.theme,
-    isMobileMenuOpen = _useAppContext0.isMobileMenuOpen,
-    sideMenu = _useAppContext0.sideMenu;
+  let {
+    children
+  } = _ref1;
+  const {
+    theme,
+    isMobileMenuOpen,
+    sideMenu
+  } = useAppContext();
   if (!isMobileMenuOpen || sideMenu) {
     return null;
   }
   return /*#__PURE__*/React.createElement("div", {
     className: NAVBAR_MOBILE_MENU_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(NAVBAR_MOBILE_MENU_DIV_2_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+    className: `${NAVBAR_MOBILE_MENU_DIV_2_CLASS} ${theme.background} ${theme.text}`
   }, /*#__PURE__*/React.createElement("div", {
     className: NAVBAR_MOBILE_MENU_DIV_3_CLASS
   }, /*#__PURE__*/React.createElement("h2", {
@@ -2111,9 +2068,10 @@ const NavbarMobileMenu = _ref1 => {
   }, children)));
 };
 const NavbarToggle = () => {
-  const _useAppContext1 = useAppContext(),
-    toggleMobileMenu = _useAppContext1.toggleMobileMenu,
-    isWide = _useAppContext1.isWide;
+  const {
+    toggleMobileMenu,
+    isWide
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("button", {
     id: "navbar-main-toggle",
     onClick: toggleMobileMenu,
@@ -2125,19 +2083,24 @@ const NavbarToggle = () => {
   }));
 };
 const NavbarText = _ref10 => {
-  let children = _ref10.children,
-    className = _ref10.className;
+  let {
+    children,
+    className
+  } = _ref10;
   return /*#__PURE__*/React.createElement("div", {
-    className: className !== null && className !== void 0 ? className : NAVBAR_TEXT_CLASS
+    className: className ?? NAVBAR_TEXT_CLASS
   }, children);
 };
 const NavbarTopForSideMenu = _ref11 => {
-  let children = _ref11.children;
-    _ref11.className;
-  const _useAppContext10 = useAppContext(),
-    theme = _useAppContext10.theme;
+  let {
+    children,
+    className
+  } = _ref11;
+  const {
+    theme
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("header", {
-    className: "".concat(NAVBAR_TOP_FOR_SIDE_MENU_CLASS, " ").concat(theme.primary)
+    className: `${NAVBAR_TOP_FOR_SIDE_MENU_CLASS} ${theme.primary}`
   }, children);
 };
 Navbar.Brand = NavbarBrand;
@@ -2151,18 +2114,21 @@ Navbar.TopForSideMenu = NavbarTopForSideMenu;
 // NavDropdown
 
 const NavDropdown = _ref12 => {
-  let children = _ref12.children,
-    title = _ref12.title,
-    id = _ref12.id,
-    type = _ref12.type,
-    icon = _ref12.icon,
-    mobileMenuMode = _ref12.mobileMenuMode;
-  const _useAppContext11 = useAppContext(),
-    expandedMenus = _useAppContext11.expandedMenus,
-    toggleSubmenu = _useAppContext11.toggleSubmenu,
-    theme = _useAppContext11.theme,
-    isWide = _useAppContext11.isWide;
-  const fullId = "".concat(id, "_").concat(type);
+  let {
+    children,
+    title,
+    id,
+    type,
+    icon,
+    mobileMenuMode
+  } = _ref12;
+  const {
+    expandedMenus,
+    toggleSubmenu,
+    theme,
+    isWide
+  } = useAppContext();
+  const fullId = `${id}_${type}`;
   const isExpanded = expandedMenus.includes(fullId);
   const toggledropDownOpen = () => {
     toggleSubmenu(fullId, !isExpanded);
@@ -2188,10 +2154,10 @@ const NavDropdown = _ref12 => {
     mobile_menu: NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTop),
-    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
-    side_menu: "".concat(NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+    top_menu: `${NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTop}`,
+    hamburger: `${mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
+    side_menu: `${NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`
   };
   const variantsSubmenuImage = {
     top_menu: NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
@@ -2200,7 +2166,7 @@ const NavDropdown = _ref12 => {
     mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS
   };
   React.useEffect(() => {
-    const elementId = "".concat(fullId, "_dropDown");
+    const elementId = `${fullId}_dropDown`;
     const element = document.getElementById(elementId);
     if (element) {
       if (isExpanded) {
@@ -2211,7 +2177,7 @@ const NavDropdown = _ref12 => {
     }
   }, [isExpanded, fullId]);
   React.useEffect(() => {
-    const elementId = "".concat(fullId, "_submenu_image");
+    const elementId = `${fullId}_submenu_image`;
     const element = document.getElementById(elementId);
     if (element) {
       if (isExpanded) {
@@ -2233,20 +2199,20 @@ const NavDropdown = _ref12 => {
     className: variantStyleTopDiv
   }, /*#__PURE__*/React.createElement("button", {
     className: variantStyleButton,
-    id: "".concat(fullId, "_button"),
+    id: `${fullId}_button`,
     type: "button",
     onClick: toggledropDownOpen
   }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-    icon: icon !== null && icon !== void 0 ? icon : '',
+    icon: icon ?? '',
     size: "2xl",
     className: NAV_LINK_ICON_CLASS
   }) : title, /*#__PURE__*/React.createElement(GsIcons, {
-    id: "".concat(fullId, "_submenu_image"),
+    id: `${fullId}_submenu_image`,
     icon: directionImage,
     className: variantStyleSubmenuImage
   })), /*#__PURE__*/React.createElement("div", {
     className: variantStyleInnerDiv,
-    id: "".concat(fullId, "_dropDown")
+    id: `${fullId}_dropDown`
   }, expandedMenus.includes(fullId) && React.Children.map(children, child => {
     if (!child) {
       return null;
@@ -2257,16 +2223,19 @@ const NavDropdown = _ref12 => {
   })));
 };
 const NavDropdownItem = _ref13 => {
-  let children = _ref13.children,
-    as = _ref13.as,
-    to = _ref13.to,
-    onClick = _ref13.onClick;
-    _ref13.reloadDocument;
-    let type = _ref13.type,
-    closeParent = _ref13.closeParent,
-    mobileMenuMode = _ref13.mobileMenuMode;
-  const _useAppContext12 = useAppContext(),
-    theme = _useAppContext12.theme;
+  let {
+    children,
+    as,
+    to,
+    onClick,
+    reloadDocument,
+    type,
+    closeParent,
+    mobileMenuMode
+  } = _ref13;
+  const {
+    theme
+  } = useAppContext();
   const As = as;
   const variantsTopDiv = {
     top_menu: NAV_DROPDOWN_ITEM_TOP_DIV_TOP_MENU_CLASS,
@@ -2275,10 +2244,10 @@ const NavDropdownItem = _ref13 => {
     mobile_menu: NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTopSubMenu),
-    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu),
-    side_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+    top_menu: `${NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTopSubMenu}`,
+    hamburger: `${mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu}`,
+    side_menu: `${NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`
   };
   const variantStyleTopDiv = variantsTopDiv[type] || '';
   const variantStyleButton = variantsButton[type] || '';
@@ -2366,16 +2335,19 @@ NavDropdown.Item = NavDropdownItem;
 // }
 
 const NavLink = _ref14 => {
-  let children = _ref14.children,
-    as = _ref14.as,
-    to = _ref14.to,
-    onClick = _ref14.onClick;
-    _ref14.reloadDocument;
-    let type = _ref14.type,
-    mobileMenuMode = _ref14.mobileMenuMode;
-  const _useAppContext13 = useAppContext(),
-    theme = _useAppContext13.theme,
-    isWide = _useAppContext13.isWide;
+  let {
+    children,
+    as,
+    to,
+    onClick,
+    reloadDocument,
+    type,
+    mobileMenuMode
+  } = _ref14;
+  const {
+    theme,
+    isWide
+  } = useAppContext();
   const As = as;
   const variantsLi = {
     top_menu: NAV_LINK_TOP_DIV_TOP_MENU_CLASS,
@@ -2384,10 +2356,10 @@ const NavLink = _ref14 => {
     mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_LINK_BUTTON_TOP_MENU_CLASS, "  ").concat(theme.textHoverTop),
-    hamburger: "".concat(mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
-    side_menu: "".concat(NAV_LINK_BUTTON_SIDE_MENU_CLASS, "  ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_LINK_BUTTON_MOBILE_MENU_CLASS, "  ").concat(theme.textHoverSide)
+    top_menu: `${NAV_LINK_BUTTON_TOP_MENU_CLASS}  ${theme.textHoverTop}`,
+    hamburger: `${mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
+    side_menu: `${NAV_LINK_BUTTON_SIDE_MENU_CLASS}  ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_LINK_BUTTON_MOBILE_MENU_CLASS}  ${theme.textHoverSide}`
   };
   const variantStyleLi = variantsLi[type] || '';
   const variantStyleButton = variantsButton[type] || '';
@@ -2405,10 +2377,11 @@ Nav.Link = NavLink;
 // Buttons
 
 const ToggleSideBar = _ref15 => {
-  var _props$className;
-  let onClick = _ref15.onClick,
-    props = _objectWithoutProperties(_ref15, _excluded$3);
-  props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + ((_props$className = props.className) !== null && _props$className !== void 0 ? _props$className : '');
+  let {
+    onClick,
+    ...props
+  } = _ref15;
+  props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + (props.className ?? '');
   return /*#__PURE__*/React.createElement("div", _extends({
     onClick: onClick
   }, props), /*#__PURE__*/React.createElement(GsIcons, {
@@ -2416,31 +2389,28 @@ const ToggleSideBar = _ref15 => {
   }));
 };
 const GsButton = _ref16 => {
-  var _props$type;
-  let _ref16$variant = _ref16.variant,
-    variant = _ref16$variant === void 0 ? 'primary' : _ref16$variant,
-    _ref16$className = _ref16.className,
-    className = _ref16$className === void 0 ? '' : _ref16$className,
-    _ref16$as = _ref16.as,
-    as = _ref16$as === void 0 ? null : _ref16$as,
-    props = _objectWithoutProperties(_ref16, _excluded2);
+  let {
+    variant = 'primary',
+    className = '',
+    as = null,
+    ...props
+  } = _ref16;
   const variants = {
     primary: BUTTON_PRIMARY_CLASS,
     secondary: BUTTON_SECONDARY_CLASS
   };
   const variantStyle = variants[variant] || '';
   if (as) {
-    var _ref17, _props$to;
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
     const As = as;
     return /*#__PURE__*/React.createElement(As, _extends({
-      to: (_ref17 = (_props$to = props.to) !== null && _props$to !== void 0 ? _props$to : props.href) !== null && _ref17 !== void 0 ? _ref17 : null,
-      className: "".concat(variantStyle, " ").concat(className)
+      to: props.to ?? props.href ?? null,
+      className: `${variantStyle} ${className}`
     }, props));
   }
   return /*#__PURE__*/React.createElement("button", _extends({
-    type: (_props$type = props.type) !== null && _props$type !== void 0 ? _props$type : "button",
-    className: "".concat(variantStyle, " ").concat(className)
+    type: props.type ?? "button",
+    className: `${variantStyle} ${className}`
   }, props));
 };
 
@@ -2458,14 +2428,13 @@ var NavLib = /*#__PURE__*/Object.freeze({
   ToggleSideBar: ToggleSideBar
 });
 
-const _excluded$2 = ["isWide", "variant", "className"];
 const Button = _ref => {
-  let isWide = _ref.isWide,
-    _ref$variant = _ref.variant,
-    variant = _ref$variant === void 0 ? 'primary' : _ref$variant,
-    _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className,
-    props = _objectWithoutProperties(_ref, _excluded$2);
+  let {
+    isWide,
+    variant = 'primary',
+    className = '',
+    ...props
+  } = _ref;
   const baseStyle = MODALIB_BUTTON_BASESTYLE_CLASS + " " + (isWide ? MODALIB_BUTTON_BASESTYLE_WIDE_CLASS : MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS);
   const variants = {
     primary: MODALIB_BUTTON_PRIMARY_CLASS,
@@ -2476,16 +2445,19 @@ const Button = _ref => {
   const variantStyle = variants[variant] || variants.primary;
   return /*#__PURE__*/React.createElement(GsButton, _extends({
     variant: "",
-    className: "".concat(baseStyle, " ").concat(variantStyle, " ").concat(className)
+    className: `${baseStyle} ${variantStyle} ${className}`
   }, props));
 };
 const Modal = _ref2 => {
-  let show = _ref2.show,
-    onHide = _ref2.onHide;
-    _ref2.className;
-    let children = _ref2.children;
-  const _useAppContext = useAppContext(),
-    theme = _useAppContext.theme;
+  let {
+    show,
+    onHide,
+    className,
+    children
+  } = _ref2;
+  const {
+    theme
+  } = useAppContext();
   React.useEffect(() => {
     const handleOutsideClick = event => {
       // Does not allow close the pop-up if click outside
@@ -2503,13 +2475,15 @@ const Modal = _ref2 => {
     role: "dialog",
     "aria-modal": "true"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(MODALIB_MODAL_DIV_2_CLASS, " ").concat(theme.contentBg, " ").concat(theme.text)
+    className: `${MODALIB_MODAL_DIV_2_CLASS} ${theme.contentBg} ${theme.text}`
   }, /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_DIV_3_CLASS
   }, children)));
 };
 const ModalHeader = _ref3 => {
-  let children = _ref3.children;
+  let {
+    children
+  } = _ref3;
   // if MODALIB_MODAL_HEADER_CLASS has no spaces or is empty, means it has no styling...
   if (MODALIB_MODAL_HEADER_CLASS.indexOf(' ') === -1) {
     return /*#__PURE__*/React.createElement(React.Fragment, null, children);
@@ -2519,37 +2493,45 @@ const ModalHeader = _ref3 => {
   }, children);
 };
 const ModalIcon = _ref4 => {
-  _ref4.children;
-    let iconClassName = _ref4.iconClassName;
+  let {
+    children,
+    iconClassName
+  } = _ref4;
   if (!iconClassName) {
     return null;
   }
   return /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_ICON_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: (iconClassName !== null && iconClassName !== void 0 ? iconClassName : '') + " " + MODALIB_MODAL_ICON_2_CLASS
+    className: (iconClassName ?? '') + " " + MODALIB_MODAL_ICON_2_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: iconClassName === ALERT_DANGER_CLASS ? "warning-sign" : "checked-sign",
     className: MODALIB_MODAL_ICON_3_CLASS
   })));
 };
 const ModalTitle = _ref5 => {
-  let children = _ref5.children;
+  let {
+    children
+  } = _ref5;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
     className: MODALIB_MODAL_TITLE_CLASS
   }, children));
 };
 const ModalBody = _ref6 => {
-  let children = _ref6.children;
+  let {
+    children
+  } = _ref6;
   return /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_BODY_CLASS
   }, children);
 };
 const ModalFooter = _ref7 => {
-  let children = _ref7.children,
-    isWide = _ref7.isWide;
+  let {
+    children,
+    isWide
+  } = _ref7;
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(MODALIB_MODAL_FOOTER_CLASS, " ").concat(isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS)
+    className: `${MODALIB_MODAL_FOOTER_CLASS} ${isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS}`
   }, children);
 };
 Modal.Header = ModalHeader;
@@ -2560,41 +2542,27 @@ Modal.Icon = ModalIcon;
 Modal.Button = Button;
 
 const ModalPopUp = _ref => {
-  let _ref$title = _ref.title,
-    title = _ref$title === void 0 ? null : _ref$title,
-    children = _ref.children,
-    _ref$closeButtonMessa = _ref.closeButtonMessage,
-    closeButtonMessage = _ref$closeButtonMessa === void 0 ? "Close" : _ref$closeButtonMessa,
-    _ref$closeButtonActio = _ref.closeButtonAction,
-    closeButtonAction = _ref$closeButtonActio === void 0 ? null : _ref$closeButtonActio,
-    _ref$primaryButtonMes = _ref.primaryButtonMessage,
-    primaryButtonMessage = _ref$primaryButtonMes === void 0 ? null : _ref$primaryButtonMes,
-    _ref$primaryButtonAct = _ref.primaryButtonAction,
-    primaryButtonAction = _ref$primaryButtonAct === void 0 ? null : _ref$primaryButtonAct,
-    _ref$secondButtonMess = _ref.secondButtonMessage,
-    secondButtonMessage = _ref$secondButtonMess === void 0 ? null : _ref$secondButtonMess,
-    _ref$secondButtonActi = _ref.secondButtonAction,
-    secondButtonAction = _ref$secondButtonActi === void 0 ? null : _ref$secondButtonActi,
-    _ref$logoutButton = _ref.logoutButton,
-    logoutButton = _ref$logoutButton === void 0 ? false : _ref$logoutButton,
-    _ref$allowOnHide = _ref.allowOnHide,
-    allowOnHide = _ref$allowOnHide === void 0 ? true : _ref$allowOnHide,
-    _ref$link = _ref.link,
-    link = _ref$link === void 0 ? null : _ref$link,
-    _ref$showTitle = _ref.showTitle,
-    showTitle = _ref$showTitle === void 0 ? true : _ref$showTitle,
-    _ref$htmlContent = _ref.htmlContent,
-    htmlContent = _ref$htmlContent === void 0 ? null : _ref$htmlContent,
-    _ref$htmlContentClass = _ref.htmlContentClass,
-    htmlContentClass = _ref$htmlContentClass === void 0 ? null : _ref$htmlContentClass,
-    _ref$iconClassName = _ref.iconClassName,
-    iconClassName = _ref$iconClassName === void 0 ? null : _ref$iconClassName;
-  const _useAppContext = useAppContext(),
-    isWide = _useAppContext.isWide;
-  const _useState = React.useState(true),
-    _useState2 = _slicedToArray(_useState, 2),
-    show = _useState2[0],
-    setShow = _useState2[1];
+  let {
+    title = null,
+    children,
+    closeButtonMessage = "Close",
+    closeButtonAction = null,
+    primaryButtonMessage = null,
+    primaryButtonAction = null,
+    secondButtonMessage = null,
+    secondButtonAction = null,
+    logoutButton = false,
+    allowOnHide = true,
+    link = null,
+    showTitle = true,
+    htmlContent = null,
+    htmlContentClass = null,
+    iconClassName = null
+  } = _ref;
+  const {
+    isWide
+  } = useAppContext();
+  const [show, setShow] = React.useState(true);
   const handleClose = () => setShow(false);
   const handleOnHide = () => setShow(!allowOnHide);
   const linkSuffix = "?menu=0";
@@ -2643,19 +2611,22 @@ const ModalPopUp = _ref => {
   }, primaryButtonMessage))));
 };
 const DefaultButtonModal = _ref2 => {
-  let children = _ref2.children,
-    variant = _ref2.variant,
-    action = _ref2.action;
+  let {
+    children,
+    variant,
+    action
+  } = _ref2;
   return /*#__PURE__*/React.createElement(Button, {
     variant: variant,
     onClick: () => action ? action() : null
   }, children);
 };
 const LogoutNavigate = _ref3 => {
-  let children = _ref3.children,
-    variant = _ref3.variant,
-    _ref3$asAhref = _ref3.asAhref,
-    asAhref = _ref3$asAhref === void 0 ? false : _ref3$asAhref;
+  let {
+    children,
+    variant,
+    asAhref = false
+  } = _ref3;
   if (asAhref) {
     return /*#__PURE__*/React.createElement("a", {
       variant: variant,
@@ -2683,13 +2654,14 @@ var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
 const About = () => {
   return /*#__PURE__*/React.createElement(ModalPopUp, {
     title: "About",
-    link: "".concat(getWindowLocationOrigin()).concat(hasHashRouter ? '/#' : '', "/about_body?menu=0")
+    link: `${getWindowLocationOrigin()}${hasHashRouter ? '/#' : ''}/about_body?menu=0`
   });
 };
 const AboutBody = _ref => {
-  let children = _ref.children,
-    _ref$modalPopUpTest = _ref.modalPopUpTest,
-    modalPopUpTest = _ref$modalPopUpTest === void 0 ? true : _ref$modalPopUpTest;
+  let {
+    children,
+    modalPopUpTest = true
+  } = _ref;
   const version = process.env.REACT_APP_VERSION;
   const appName = process.env.REACT_APP_APP_NAME;
   return /*#__PURE__*/React.createElement("div", {
@@ -2708,7 +2680,9 @@ const AboutBody = _ref => {
   }, "This is a test test test in ", /*#__PURE__*/React.createElement("i", null, "Italic"), ", ", /*#__PURE__*/React.createElement("u", null, "Underline"), " and ", /*#__PURE__*/React.createElement("b", null, "Boldface"), ".", /*#__PURE__*/React.createElement(ReactMarkdown, {
     components: {
       li: _ref2 => {
-        let children = _ref2.children;
+        let {
+          children
+        } = _ref2;
         return /*#__PURE__*/React.createElement("li", {
           className: MARKDOWN_P_CLASS
         }, "* ", children);
@@ -2717,7 +2691,9 @@ const AboutBody = _ref => {
   }, "- This is a bullet point with _Italic_ and **Boldface** with markdown syntax."), /*#__PURE__*/React.createElement(ReactMarkdown, {
     components: {
       li: _ref3 => {
-        let children = _ref3.children;
+        let {
+          children
+        } = _ref3;
         return /*#__PURE__*/React.createElement("li", {
           className: MARKDOWN_P_CLASS
         }, "* ", children);
@@ -2733,12 +2709,12 @@ const mergeDicts = (dictToAdd, originDict) => {
     dictToAdd = {};
   }
   const dictToAddFinal = Object.entries(dictToAdd).reduce((acc, _ref) => {
-    let _ref2 = _slicedToArray(_ref, 2),
-      key = _ref2[0],
-      value = _ref2[1];
+    let [key, value] = _ref;
     acc[key] = value;
     return acc;
-  }, _objectSpread2({}, originDict));
+  }, {
+    ...originDict
+  });
   return dictToAddFinal;
 };
 
@@ -2757,9 +2733,7 @@ var dictUtilities = /*#__PURE__*/Object.freeze({
 
 const buildConstant = constants => {
   return Object.entries(constants).map(_ref => {
-    let _ref2 = _slicedToArray(_ref, 2),
-      key = _ref2[0],
-      value = _ref2[1];
+    let [key, value] = _ref;
     return {
       title: value,
       value: key
@@ -2947,16 +2921,22 @@ const buildConfigData = function () {
     "gce_actions_allows_mouse_over": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0",
     "gce_actions_allows_magic_button": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1"
   };
-  lsDataDict = lsDataDict !== null && lsDataDict !== void 0 ? lsDataDict : {};
+  lsDataDict = lsDataDict ?? {};
   // Merge defaultConfigData with lsDataDict
-  return _objectSpread2(_objectSpread2({}, defaultConfigData), lsDataDict);
+  return {
+    ...defaultConfigData,
+    ...lsDataDict
+  };
 };
 const saveLocalConfig = function (lsDataDict) {
   let lsItemName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   lsItemName = defaultItemName(lsItemName);
   // This allows to add configuration items individually
   const existingLocalConfig = getLocalConfig(lsItemName);
-  lsDataDict = _objectSpread2(_objectSpread2({}, existingLocalConfig), lsDataDict);
+  lsDataDict = {
+    ...existingLocalConfig,
+    ...lsDataDict
+  };
   saveItemToLocalStorage(lsItemName, lsDataDict);
 };
 const getLocalConfig = function () {
@@ -2999,7 +2979,7 @@ function authHeader() {
   try {
     currentUser = getCurrentUserFromLocalStorage();
   } catch (error) {
-    console_debug_log("authHeader | ERROR: ".concat(error));
+    console_debug_log(`authHeader | ERROR: ${error}`);
   }
   if (currentUser && currentUser.token) {
     if (process.env.REACT_APP_X_TOKEN) {
@@ -3008,7 +2988,7 @@ function authHeader() {
       };
     } else {
       return {
-        Authorization: "Bearer ".concat(currentUser.token)
+        Authorization: `Bearer ${currentUser.token}`
       };
     }
   } else {
@@ -3078,7 +3058,7 @@ function handleResponseText(response, text, headers) {
   }
   return data;
 }
-const get401ErrorMessage = (statusText, reasonDetail) => !statusText || statusText !== null && statusText !== void 0 && statusText.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || String(reasonDetail ? reasonDetail : '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText || reasonDetail;
+const get401ErrorMessage = (statusText, reasonDetail) => !statusText || statusText?.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || String(reasonDetail ? reasonDetail : '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText || reasonDetail;
 async function handleFetchError(error) {
   let possibleCORS;
   let errorMsg;
@@ -3099,7 +3079,7 @@ async function handleFetchError(error) {
     reasonDetail = await error.text().then(text => {
       return text;
     }).catch(e => {
-      return "HTTP ".concat(error.status);
+      return `HTTP ${error.status}`;
     });
     if (error.status === 401) {
       errorMsg = get401ErrorMessage(error.statusText, reasonDetail);
@@ -3119,17 +3099,15 @@ async function handleFetchError(error) {
     */
     possibleCORS = error.message.includes('CORS');
     if (error.status === 401) {
-      var _error$response, _error$response2;
-      errorMsg = get401ErrorMessage((_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.statusText, (_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data);
+      errorMsg = get401ErrorMessage(error.response?.statusText, error.response?.data);
       reasonDetail = '';
     } else {
-      var _error$response3;
       errorMsg = error.message;
-      reasonDetail = (_error$response3 = error.response) === null || _error$response3 === void 0 ? void 0 : _error$response3.data;
+      reasonDetail = error.response?.data;
     }
   } else {
     possibleCORS = error instanceof TypeError && error.message.includes('Failed to fetch');
-    errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? " (".concat(MSG_ERROR_POSSIBLE_CORS, ")") : '');
+    errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
     reasonDetail = error;
   }
   return Promise.reject({
@@ -3362,9 +3340,11 @@ const debug$2 = false;
 const useAxios = (process.env.REACT_APP_USE_AXIOS || "1") == "1";
 const getAxios = (url, requestOptions) => {
   let response;
-  const method = requestOptions.method,
-    body = requestOptions.body,
-    headers = requestOptions.headers;
+  const {
+    method,
+    body,
+    headers
+  } = requestOptions;
   let axios_config = {
     url: url,
     method: method,
@@ -3405,9 +3385,11 @@ const getAxios = (url, requestOptions) => {
         };
       }
     }).then(_ref => {
-      let headers = _ref.headers,
-        text = _ref.text,
-        new_response = _ref.new_response;
+      let {
+        headers,
+        text,
+        new_response
+      } = _ref;
       if (debug$2) ;
       const data = {
         response: text,
@@ -3468,9 +3450,11 @@ const getFetch = (url, requestOptions) => {
           });
         }
       }).then(_ref2 => {
-        let headers = _ref2.headers,
-          text = _ref2.text,
-          response = _ref2.response;
+        let {
+          headers,
+          text,
+          response
+        } = _ref2;
         if (debug$2) ;
         const data = {
           response: text,
@@ -3496,7 +3480,7 @@ const gsFetch = (url, requestOptions) => {
 };
 const getBaseApiUrl = () => {
   const apiVersion = process.env.REACT_APP_API_VERSION || 'v1';
-  return "".concat(process.env.REACT_APP_API_URL, "/").concat(apiVersion);
+  return `${process.env.REACT_APP_API_URL}/${apiVersion}`;
 };
 
 var fetch_utilities = /*#__PURE__*/Object.freeze({
@@ -3568,9 +3552,7 @@ class dbApiService {
   paramsToUrlQuery(params) {
     let urlQuery = '';
     Object.entries(params).map(_ref => {
-      let _ref2 = _slicedToArray(_ref, 2),
-        key = _ref2[0],
-        value = _ref2[1];
+      let [key, value] = _ref;
       return urlQuery += (urlQuery === '' ? '?' : '&') + key + '=' + value;
     });
     return urlQuery;
@@ -3607,23 +3589,24 @@ class dbApiService {
       requestOptions['signal'] = options['signal'];
     }
     const urlQuery = this.paramsToUrlQuery(params);
-    const url = "".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery);
+    const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
     if (this.debug) {
-      console_debug_log("###===> getAll() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> getAll() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
     return gsFetch(url, requestOptions);
   }
   getOne(params) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    const requestOptions = _objectSpread2(_objectSpread2({}, options), {}, {
+    const requestOptions = {
+      ...options,
       method: 'GET',
       headers: this.props.authHeader
-    });
+    };
     const urlQuery = this.paramsToUrlQuery(params);
     if (this.debug) {
-      console_debug_log("###===> getOne() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> getOne() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const url = "".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery);
+    const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
     return gsFetch(url, requestOptions);
   }
   createUpdateDelete(action, id, data) {
@@ -3648,9 +3631,9 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> createRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> createRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return gsFetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions);
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   updateRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -3664,15 +3647,15 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> updateRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> updateRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return gsFetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions);
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   deleteRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     let urlQuery = this.paramsToUrlQuery(queryParams);
     if (id !== null) {
-      urlQuery += (urlQuery === '' ? '?' : "&") + "id=".concat(id);
+      urlQuery += (urlQuery === '' ? '?' : "&") + `id=${id}`;
     }
     const requestOptions = {
       method: 'DELETE',
@@ -3680,9 +3663,9 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> deleteRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> deleteRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return gsFetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions);
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   convertId(id) {
     return convertId(id);
@@ -3716,7 +3699,7 @@ function login(username, password) {
       "Authorization": "Basic " + buffer.Buffer.from(username + ":" + password).toString('base64')
     }
   };
-  return gsFetch("".concat(config.apiUrl, "/users/login"), requestOptions).then(res => {
+  return gsFetch(`${config.apiUrl}/users/login`, requestOptions).then(res => {
     if (res.error) {
       return Promise.reject(res.message);
     }
@@ -3738,7 +3721,7 @@ const getUserData = userId => {
   return dbApi.getOne({
     id: userId
   }).then(data => data, error => {
-    console_debug_log("ERROR: getUserData(".concat(userId, "):"));
+    console_debug_log(`ERROR: getUserData(${userId}):`);
     console.error(error);
     return {
       error: true,
@@ -3747,7 +3730,6 @@ const getUserData = userId => {
   });
 };
 const getUserLocalData = res => {
-  var _data$pref_side_menu, _data$pref_dark_mode;
   const data = res.resultset;
   const localConfig = getLocalConfig();
   return {
@@ -3757,8 +3739,8 @@ const getUserLocalData = res => {
     firstName: data.firstname,
     // lastName: data.lastname,
     // token: data.token
-    pref_side_menu: (_data$pref_side_menu = data.pref_side_menu) !== null && _data$pref_side_menu !== void 0 ? _data$pref_side_menu : localConfig.pref_side_menu,
-    pref_dark_mode: (_data$pref_dark_mode = data.pref_dark_mode) !== null && _data$pref_dark_mode !== void 0 ? _data$pref_dark_mode : localConfig.pref_dark_mode
+    pref_side_menu: data.pref_side_menu ?? localConfig.pref_side_menu,
+    pref_dark_mode: data.pref_dark_mode ?? localConfig.pref_dark_mode
   };
 };
 const getCurrentUserData = () => {
@@ -3856,7 +3838,7 @@ var general_utilities = /*#__PURE__*/Object.freeze({
 });
 
 function logoutHander() {
-  "".concat(getWindowLocationOrigin()).concat(getUrlForRouter('/login'));
+  `${getWindowLocationOrigin()}${getUrlForRouter('/login')}`;
   authenticationService.logout();
   {
     windowLocationReload(true);
@@ -3901,7 +3883,7 @@ function errorAndReEnter(error) {
   let logoutButton = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
   let closeButton = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : true;
   let closeHandler = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
-  const errorMessage = getErrorMessage(error) + (errorCode ? " ".concat(errorCode) : '');
+  const errorMessage = getErrorMessage(error) + (errorCode ? ` ${errorCode}` : '');
   if (forceLogin === null) {
     forceLogin = false;
   }
@@ -4077,16 +4059,13 @@ function getUrlParams() {
         if (Array.isArray(keyPairs)) {
           for (let i = 0; i < keyPairs.length; i++) {
             const keyPairString = keyPairs[i];
-            const _keyPairString$split = keyPairString.split('='),
-              _keyPairString$split2 = _toArray(_keyPairString$split),
-              rawKey = _keyPairString$split2[0],
-              rest = _arrayLikeToArray(_keyPairString$split2).slice(1);
+            const [rawKey, ...rest] = keyPairString.split('=');
             let rawValue = rest.length > 0 ? rest.join('=') : '';
             // If this is the redirect param and it contains a hash (#),
             // treat the remainder of the query string as part of the value
             if (rawValue.includes('#') && i < keyPairs.length - 1) {
               const tail = keyPairs.slice(i + 1).join('&');
-              rawValue = "".concat(rawValue, "&").concat(tail);
+              rawValue = `${rawValue}&${tail}`;
               // We consumed the rest
               i = keyPairs.length;
             }
@@ -4110,7 +4089,7 @@ function getUrlParams() {
       }
     }
   } catch (error) {
-    console.log("getUrlParams ERROR | ".concat(props));
+    console.log(`getUrlParams ERROR | ${props}`);
     console.error(error);
   }
   return urlParams;
@@ -4145,6 +4124,8 @@ var generic_editor_utilities = /*#__PURE__*/Object.freeze({
   replaceSpecialVars: replaceSpecialVars
 });
 
+// GenericMenuService (GMS) main
+
 const jsPrefixToken = /\|([^|]*)\|/;
 const routeExact = false;
 const getOnClickObject = (onClickString, componentMap, setExpanded) => {
@@ -4171,7 +4152,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
       if (match) {
         const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
         if (woOptions) {
-          const windowOpenFn = woOptions => window.open("".concat(getWindowLocationOrigin()).concat(getUrlForRouter("/" + woOptions.url)), woOptions.name, woOptions.options);
+          const windowOpenFn = woOptions => window.open(`${getWindowLocationOrigin()}${getUrlForRouter("/" + woOptions.url)}`, woOptions.name, woOptions.options);
           if (setExpanded) {
             resutlFunction = () => {
               setExpanded();
@@ -4186,7 +4167,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
           }
         } else {
           resutlFunction = () => {
-            alert("ERROR: invalid onClick: ".concat(onClickString));
+            alert(`ERROR: invalid onClick: ${onClickString}`);
             return getWindowLocationHref();
           };
         }
@@ -4226,7 +4207,7 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
   }
   const on_click_string = defaultValue(item, "on_click", null);
   const on_click = getOnClickObject(on_click_string, componentMap, setExpanded);
-  const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
+  const title = topTitle == null ? item.title : `[${topTitle}]`;
   return {
     "hard_prefix": hard_prefix,
     "get_prefix": get_prefix,
@@ -4240,7 +4221,9 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
   };
 };
 const GetHashRoutes = _ref => {
-  let routes = _ref.routes;
+  let {
+    routes
+  } = _ref;
   return /*#__PURE__*/React.createElement(reactRouterDom.Routes, {
     id: "menuOptionsRoutes",
     history: history
@@ -4253,17 +4236,14 @@ const GetHashRoutes = _ref => {
     });
   }));
 };
-const editorRoute = (editor, itemDefs) => {
-  var _editor$exact;
-  return {
-    key: itemDefs.title,
-    exact: (_editor$exact = editor.exact) !== null && _editor$exact !== void 0 ? _editor$exact : routeExact,
-    path: '/' + editor.baseUrl,
-    element: editor.component,
-    template: itemDefs.template,
-    on_click_string: itemDefs.on_click_string
-  };
-};
+const editorRoute = (editor, itemDefs) => ({
+  key: itemDefs.title,
+  exact: editor.exact ?? routeExact,
+  path: '/' + editor.baseUrl,
+  element: editor.component,
+  template: itemDefs.template,
+  on_click_string: itemDefs.on_click_string
+});
 const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   const AppMainInner = componentMap["AppMainInner"];
   const AppMainInnerUnauthenticated = componentMap["AppMainInnerUnauthenticated"];
@@ -4295,10 +4275,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
     const itemDefs = getItemDefaults(componentMap, setExpanded, item);
     let resultRoute = null;
     if (item.type === "nav_link") {
-      var _item$exact;
       resultRoute = {
         key: itemDefs["title"],
-        exact: (_item$exact = item["exact"]) !== null && _item$exact !== void 0 ? _item$exact : routeExact,
+        exact: item["exact"] ?? routeExact,
         path: itemDefs["path"],
         element: itemDefs["element_obj"],
         template: itemDefs.template,
@@ -4317,10 +4296,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
             console_debug_log(error);
           }
         } else {
-          var _item$exact2;
           resultRoute = {
             key: itemDefs["title"],
-            exact: (_item$exact2 = item["exact"]) !== null && _item$exact2 !== void 0 ? _item$exact2 : routeExact,
+            exact: item["exact"] ?? routeExact,
             path: itemDefs["path"],
             element: itemDefs["element_obj"],
             template: itemDefs.template,
@@ -4342,7 +4320,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
       RouteTemplateComponent = AppMainInnerUnauthenticated;
     } else if (route.template) {
       if (typeof componentMap[route.template] === "undefined") {
-        error = "[GMB-GR-E030] ERROR - template not registered in \"componentMap\" | route.template: ".concat(route.template);
+        error = `[GMB-GR-E030] ERROR - template not registered in "componentMap" | route.template: ${route.template}`;
         console_debug_log(error);
         RouteTemplateComponent = componentMap["NoDesignComponent"];
       } else {
@@ -4405,11 +4383,13 @@ const getDefaultRoutesRaw = componentMap => {
   }];
 };
 const DefaultRoutes = () => {
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
-  const _useAppContext = useAppContext(),
-    componentMap = _useAppContext.componentMap,
-    setExpanded = _useAppContext.setExpanded;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    componentMap,
+    setExpanded
+  } = useAppContext();
   const routes = getDefaultRoutes(currentUser, componentMap, setExpanded);
   return /*#__PURE__*/React.createElement(GetHashRoutes, {
     routes: routes
@@ -4421,18 +4401,21 @@ const getDefaultRoutes = (currentUser, componentMap, setExpanded) => {
   return routes;
 };
 const InvalidElement = _ref2 => {
-  let children = _ref2.children;
+  let {
+    children
+  } = _ref2;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(ALERT_DANGER_CLASS, " ").concat(HORIZONTALLY_CENTERED_CLASS),
+    className: `${ALERT_DANGER_CLASS} ${HORIZONTALLY_CENTERED_CLASS}`,
     role: "alert"
   }, children));
 };
 const InvalidRoute = () => {
   // Catch all invalid routes and redirect to a default page or show a not found component
-  const _useAppContext2 = useAppContext(),
-    state = _useAppContext2.state;
+  const {
+    state
+  } = useAppContext();
   if (state === "LOADING_MENU" || state === "") {
     return null;
   }
@@ -4460,17 +4443,21 @@ const getMenuFromApi = function (setState, getErrorState, setErrorState, setMenu
   });
 };
 const GenericMenuBuilder = _ref3 => {
-  let icon = _ref3.icon,
-    title = _ref3.title,
-    itemType = _ref3.itemType,
-    mobileMenuMode = _ref3.mobileMenuMode;
-  const _useUser2 = useUser(),
-    currentUser = _useUser2.currentUser;
-  const _useAppContext3 = useAppContext(),
-    errorState = _useAppContext3.errorState,
-    menuOptions = _useAppContext3.menuOptions,
-    setExpanded = _useAppContext3.setExpanded,
-    componentMap = _useAppContext3.componentMap;
+  let {
+    icon,
+    title,
+    itemType,
+    mobileMenuMode
+  } = _ref3;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    errorState,
+    menuOptions,
+    setExpanded,
+    componentMap
+  } = useAppContext();
   const GetNavs = (item_type_filter, topTitle, itemType, icon, mobileMenuMode) => {
     if (!menuOptions) {
       return '';
@@ -4488,13 +4475,13 @@ const GenericMenuBuilder = _ref3 => {
           type: itemType,
           mobileMenuMode: mobileMenuMode
         }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-          icon: icon !== null && icon !== void 0 ? icon : '',
+          icon: icon ?? '',
           size: "2xl",
           className: NAV_LINK_ICON_CLASS
         }) : itemDefs["title"]);
       }
       // Navigation dropdown (main menu item with sub-menus)
-      const navDropdownId = "basic-nav-dropdown-".concat(item.title.replace(/ /g, '_'));
+      const navDropdownId = `basic-nav-dropdown-${item.title.replace(/ /g, '_')}`;
       return /*#__PURE__*/React.createElement(NavDropdown, {
         key: item.title,
         title: itemDefs["title"],
@@ -4508,7 +4495,7 @@ const GenericMenuBuilder = _ref3 => {
           try {
             return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode, componentMap, setExpanded);
           } catch (error) {
-            console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
+            console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
             console_debug_log(error);
             return null;
           }
@@ -4560,12 +4547,14 @@ var generic_menu_service = /*#__PURE__*/Object.freeze({
 });
 
 const DarkModeButton = () => {
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
-  const _useAppContext = useAppContext(),
-    isDarkMode = _useAppContext.isDarkMode,
-    setIsDarkMode = _useAppContext.setIsDarkMode,
-    toggleDarkMode = _useAppContext.toggleDarkMode;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    isDarkMode,
+    setIsDarkMode,
+    toggleDarkMode
+  } = useAppContext();
   React.useEffect(() => {
     // Component startup
     let newDarkMode = false;
@@ -4627,11 +4616,13 @@ const DarkModeButton = () => {
 };
 
 const MenuModeButton = () => {
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
-  const _useAppContext = useAppContext(),
-    sideMenu = _useAppContext.sideMenu,
-    setSideMenu = _useAppContext.setSideMenu;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    sideMenu,
+    setSideMenu
+  } = useAppContext();
   const saveNewLocalUserConfig = newSideMenuMode => {
     const localConfig = {
       pref_side_menu: newSideMenuMode ? '1' : '0'
@@ -4760,13 +4751,17 @@ var md5_utilities = /*#__PURE__*/Object.freeze({
   getHash: getHash
 });
 
+// GenericCrudEditor Specific Functions handling
+
 const genericFuncArrayDefaultValue = function () {
   let data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   return {
     'error': false,
     'errorMsg': '',
     'fieldMsg': {},
-    'fieldValues': _objectSpread2({}, data),
+    'fieldValues': {
+      ...data
+    },
     'fieldsToDelete': [],
     'otherData': {}
   };
@@ -4774,27 +4769,29 @@ const genericFuncArrayDefaultValue = function () {
 const reduceAllResponses = (responses, data) => {
   const defaultValues = genericFuncArrayDefaultValue(data);
   const responsesReduced = responses.reduce((acc, response) => {
-    response = _objectSpread2(_objectSpread2({}, defaultValues), response);
+    response = {
+      ...defaultValues,
+      ...response
+    };
     acc['error'] = acc['error'] || response['error'];
     acc['errorMsg'] += (acc['errorMsg'] !== '' && response['errorMsg'] !== '' ? ', ' : '') + response['errorMsg'];
-    acc['fieldMsg'] = _objectSpread2(_objectSpread2({}, acc['fieldMsg']), response['fieldMsg']);
+    acc['fieldMsg'] = {
+      ...acc['fieldMsg'],
+      ...response['fieldMsg']
+    };
     // Merge fieldValues while preserving array values,
     // to prevent data losing when following fieldValues has same key but empty.
     // E.g. fieldValues["resultset"] may contains 'client_id' and 'client_secret' or another fields...
     // and following response may contains fieldValues["resultset"] = {}
-    const mergedFieldValues = _objectSpread2({}, acc['fieldValues']);
-    for (const _ref of Object.entries(response['fieldValues'])) {
-      var _ref2 = _slicedToArray(_ref, 2);
-      const key = _ref2[0];
-      const value = _ref2[1];
+    const mergedFieldValues = {
+      ...acc['fieldValues']
+    };
+    for (const [key, value] of Object.entries(response['fieldValues'])) {
       if (typeof mergedFieldValues[key] === 'object' && typeof value === 'object' && value !== null) {
         if (mergedFieldValues[key] === null) {
           mergedFieldValues[key] = {};
         }
-        for (const _ref3 of Object.entries(value)) {
-          var _ref4 = _slicedToArray(_ref3, 2);
-          const key2 = _ref4[0];
-          const value2 = _ref4[1];
+        for (const [key2, value2] of Object.entries(value)) {
           mergedFieldValues[key][key2] = value2;
         }
         continue;
@@ -4803,8 +4800,13 @@ const reduceAllResponses = (responses, data) => {
     }
     acc['fieldValues'] = mergedFieldValues;
     acc['fieldsToDelete'] = [...acc['fieldsToDelete'], ...response['fieldsToDelete']];
-    acc['otherData'] = _objectSpread2(_objectSpread2({}, acc['otherData']), response['otherData']);
-    return _objectSpread2({}, acc);
+    acc['otherData'] = {
+      ...acc['otherData'],
+      ...response['otherData']
+    };
+    return {
+      ...acc
+    };
   }, defaultValues);
   return responsesReduced;
 };
@@ -4897,7 +4899,7 @@ var generic_editor_rfc_specific_func = /*#__PURE__*/Object.freeze({
 });
 
 const GMT_TAIL = '.000Z'; // '.000-0000'
-const DATE_TIME_TAIL = "T00:00:00".concat(GMT_TAIL);
+const DATE_TIME_TAIL = `T00:00:00${GMT_TAIL}`;
 const timestampToDate = function (timestamp) {
   let fullDateTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   let separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -4933,7 +4935,7 @@ const fixDateWithTz = dateTimeString => {
       dateTimeString += DATE_TIME_TAIL;
       break;
     case 16:
-      dateTimeString += ":00".concat(GMT_TAIL);
+      dateTimeString += `:00${GMT_TAIL}`;
       break;
     default:
       dateTimeString = addMissingTz(dateTimeString);
@@ -4975,6 +4977,8 @@ var dateTimestamp = /*#__PURE__*/Object.freeze({
   timestampToDate: timestampToDate
 });
 
+// GenericCrudEditor timestamp components
+
 const timestampDbListPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during Listing Database Post Read
   return new Promise((resolve, reject) => {
@@ -4987,7 +4991,9 @@ const timestampDbListPostRead = (dataRead, editor, action) => {
             acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, ' ');
             break;
         }
-        return _objectSpread2({}, acc);
+        return {
+          ...acc
+        };
       }, row);
       return new_row;
     });
@@ -4997,7 +5003,6 @@ const timestampDbListPostRead = (dataRead, editor, action) => {
 };
 const timestampDbPostRead = (dataRead, editor, action) => {
   return new Promise((resolve, reject) => {
-    var _dataRead$resultset;
     let resp = genericFuncArrayDefaultValue(dataRead);
     const new_row = editor.fieldElements.reduce((acc, currentObj) => {
       switch (currentObj.type) {
@@ -5010,8 +5015,10 @@ const timestampDbPostRead = (dataRead, editor, action) => {
           acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, 'T');
           break;
       }
-      return _objectSpread2({}, acc);
-    }, editor.type == "child_listing" ? ((_dataRead$resultset = dataRead.resultset) === null || _dataRead$resultset === void 0 ? void 0 : _dataRead$resultset[0]) || {} : dataRead.resultset);
+      return {
+        ...acc
+      };
+    }, editor.type == "child_listing" ? dataRead.resultset?.[0] || {} : dataRead.resultset);
     resp.fieldValues.resultset = editor.type == "child_listing" ? [new_row] : new_row;
     resolve(resp);
   });
@@ -5027,7 +5034,9 @@ const timestampDbPreWrite = (row, editor, action) => {
           acc[currentObj.name] = processDateToTimestamp(acc[currentObj.name]);
           break;
       }
-      return _objectSpread2({}, acc);
+      return {
+        ...acc
+      };
     }, row);
     // Update update_date with current date/time timestamp
     if (typeof new_row['update_date'] !== 'undefined') {
@@ -5277,7 +5286,7 @@ const verifyEditorObj = editorObj => {
     // Unauthorized
     error = formatCaughtError(error);
     gfd_response.error = true;
-    gfd_response.errorMsg = "GetFormData: ".concat(error.message, " [GCE-GFD-020]");
+    gfd_response.errorMsg = `GetFormData: ${error.message} [GCE-GFD-020]`;
     // Clear cache on error so it can be retried? 
     // Better to keep it cached to prevent flood, but maybe remove if we want retry.
     // For now, let's keep the error response cached.
@@ -5329,16 +5338,18 @@ var generic_editor_rfc_common = /*#__PURE__*/Object.freeze({
   setEditorParameters: setEditorParameters
 });
 
+// GenericCrudEditor provider. To share data and functions between the editor components
+
+
 // Create a context to hold the function
 const MainSectionContext = /*#__PURE__*/React.createContext();
 
 // Provider Component
 const MainSectionProvider = _ref => {
-  let children = _ref.children;
-  const _useState = React.useState({}),
-    _useState2 = _slicedToArray(_useState, 2),
-    cache = _useState2[0],
-    setCache = _useState2[1];
+  let {
+    children
+  } = _ref;
+  const [cache, setCache] = React.useState({});
   const cacheRef = React.useRef(cache);
   const promisesRef = React.useRef({});
   React.useEffect(() => {
@@ -5354,9 +5365,10 @@ const MainSectionProvider = _ref => {
   const putCachedData = React.useCallback((entryName, data) => {
     setCache(prevCache => {
       if (prevCache[entryName] === data) return prevCache;
-      return _objectSpread2(_objectSpread2({}, prevCache), {}, {
+      return {
+        ...prevCache,
         [entryName]: data
-      });
+      };
     });
   }, []);
   const typeofCachedData = React.useCallback(entryName => {
@@ -5367,7 +5379,7 @@ const MainSectionProvider = _ref => {
   }, []);
   const debugCache = React.useCallback(function () {
     let description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'debugCache';
-    console_debug_log(">>>>--->> listCache [".concat(description, "]:"), listCache());
+    console_debug_log(`>>>>--->> listCache [${description}]:`, listCache());
     return '';
   }, [listCache]);
   const fetchOrCache = React.useCallback((entryName, fetchFn) => {
@@ -5411,8 +5423,10 @@ var generic_editor_rfc_provider = /*#__PURE__*/Object.freeze({
 // Search Engine button
 
 const SearchEngineButton = _ref => {
-  let valueElement = _ref.valueElement,
-    googlePrompt = _ref.googlePrompt;
+  let {
+    valueElement,
+    googlePrompt
+  } = _ref;
   const setPrompt = (prompt, valueToReplace) => {
     return prompt.replace("%s", valueToReplace);
   };
@@ -5420,7 +5434,7 @@ const SearchEngineButton = _ref => {
     e.preventDefault();
     const inputValue = document.getElementById(valueElement).value;
     if (inputValue !== "") {
-      const googleSearchUrl = "https://www.google.com/search?q=".concat(encodeURIComponent(setPrompt(googlePrompt, inputValue)));
+      const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(setPrompt(googlePrompt, inputValue))}`;
       window.open(googleSearchUrl, '_blank');
     }
   };
@@ -5434,11 +5448,13 @@ const SearchEngineButton = _ref => {
   }))));
 };
 const ChatBotButtonGeneric = _ref2 => {
-  let AuxComponent = _ref2.AuxComponent,
-    valueElement = _ref2.valueElement,
-    chatbotPrompt = _ref2.chatbotPrompt;
+  let {
+    AuxComponent,
+    valueElement,
+    chatbotPrompt
+  } = _ref2;
   if (typeof AuxComponent === "undefined") {
-    console_debug_log(">> ChatBotButtonGeneric | AuxComponent is undefined");
+    console_debug_log(`>> ChatBotButtonGeneric | AuxComponent is undefined`);
     return /*#__PURE__*/React.createElement("div", {
       className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
     }, /*#__PURE__*/React.createElement(GsIcons, {
@@ -5454,7 +5470,7 @@ const ChatBotButtonGeneric = _ref2 => {
       chatbot_prompt: chatbotPrompt
     }));
   } catch (error) {
-    console_debug_log(">> ChatBotButtonGeneric | error:", error);
+    console_debug_log(`>> ChatBotButtonGeneric | error:`, error);
     return /*#__PURE__*/React.createElement("div", {
       className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
     }, /*#__PURE__*/React.createElement(GsIcons, {
@@ -5470,6 +5486,8 @@ var generic_editor_rfc_search_engine_button = /*#__PURE__*/Object.freeze({
   SearchEngineButton: SearchEngineButton
 });
 
+// GenericCrudEditor select components
+
 const buildDescription = (itemData, fieldArray) => {
   let description = '';
   fieldArray.forEach(field => {
@@ -5483,16 +5501,11 @@ const useRelatedTableRows = currentObj => {
    * Returns { rows, errorState, convertKey } where convertKey normalizes
    * the related_key value of a row to a comparable string.
    */
-  const _useState = React.useState(null),
-    _useState2 = _slicedToArray(_useState, 2),
-    errorState = _useState2[0],
-    setErrorState = _useState2[1];
-  const _useState3 = React.useState(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    rows = _useState4[0],
-    setRows = _useState4[1];
-  const _useContext = React.useContext(MainSectionContext),
-    fetchOrCache = _useContext.fetchOrCache;
+  const [errorState, setErrorState] = React.useState(null);
+  const [rows, setRows] = React.useState(null);
+  const {
+    fetchOrCache
+  } = React.useContext(MainSectionContext);
   const relatedTable = currentObj.related_table;
   const relatedKey = currentObj.related_key || '_id';
   const dbFilter = currentObj.related_filter || {};
@@ -5510,7 +5523,7 @@ const useRelatedTableRows = currentObj => {
     // different related_key), and must not collide on the same cache
     // entry (see genericsuite-mobile crud_editor.dart for the matching
     // fix on the Flutter side).
-    const cacheKey = "select_table_".concat(relatedTable, "_").concat(relatedKey, "_").concat(JSON.stringify(dbFilter));
+    const cacheKey = `select_table_${relatedTable}_${relatedKey}_${JSON.stringify(dbFilter)}`;
     fetchOrCache(cacheKey, () => dbService.getAll(dbFilter)).then(data => setRows(data), error => setErrorState(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [relatedTable, fetchOrCache]);
@@ -5534,18 +5547,21 @@ const buildSelectTableDescription = (row, currentObj) => {
   return descriptionFields.map(field => row[field]).filter(value => value !== null && typeof value !== 'undefined').join(separator);
 };
 const SelectTableDescription = _ref => {
-  let currentObj = _ref.currentObj,
-    dbRow = _ref.dbRow;
+  let {
+    currentObj,
+    dbRow
+  } = _ref;
   /*
    * Client-side fallback: shows the related record description for a
    * select_table field when the backend didn't provide
    * `{name}_description` (older backend versions).
    */
-  const _useRelatedTableRows = useRelatedTableRows(currentObj),
-    rows = _useRelatedTableRows.rows,
-    errorState = _useRelatedTableRows.errorState,
-    convertKey = _useRelatedTableRows.convertKey,
-    convertValue = _useRelatedTableRows.convertValue;
+  const {
+    rows,
+    errorState,
+    convertKey,
+    convertValue
+  } = useRelatedTableRows(currentObj);
   if (errorState) {
     return errorState.toString();
   }
@@ -5563,16 +5579,19 @@ const SelectTableDescription = _ref => {
   return buildSelectTableDescription(match, currentObj);
 };
 const SelectTableOptions = _ref2 => {
-  let currentObj = _ref2.currentObj;
+  let {
+    currentObj
+  } = _ref2;
   /*
    * Options generator for a select_table field's editable dropdown.
    * Fetches (with cache) the related table rows and renders one
    * <option> per row, plus the "Select an option" placeholder.
    */
-  const _useRelatedTableRows2 = useRelatedTableRows(currentObj),
-    rows = _useRelatedTableRows2.rows,
-    errorState = _useRelatedTableRows2.errorState,
-    convertKey = _useRelatedTableRows2.convertKey;
+  const {
+    rows,
+    errorState,
+    convertKey
+  } = useRelatedTableRows(currentObj);
   if (errorState) {
     return /*#__PURE__*/React.createElement("option", {
       value: ""
@@ -5605,21 +5624,16 @@ const GenericSelectGenerator = props => {
    *  show_description: if true, show description in the listing page or read-only form page, otherwise builds the <option>. Default is false
    *  description_fields: array of fields to show in the description. Default is ["name"]
    */
-  const _useState5 = React.useState(null),
-    _useState6 = _slicedToArray(_useState5, 2),
-    errorState = _useState6[0],
-    setErrorState = _useState6[1];
-  const _useState7 = React.useState(null),
-    _useState8 = _slicedToArray(_useState7, 2),
-    config = _useState8[0],
-    setConfig = _useState8[1];
-  const _useState9 = React.useState(null),
-    _useState0 = _slicedToArray(_useState9, 2),
-    rows = _useState0[0],
-    setRows = _useState0[1];
-  const _useContext2 = React.useContext(MainSectionContext);
-    _useContext2.debugCache;
-    const fetchOrCache = _useContext2.fetchOrCache;
+  const [errorState, setErrorState] = React.useState(null);
+  const [config, setConfig] = React.useState(null);
+  const [rows, setRows] = React.useState(null);
+  const {
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
+    debugCache,
+    fetchOrCache
+  } = React.useContext(MainSectionContext);
   React.useEffect(() => {
     setConfig(initConfig(props));
   }, [props]);
@@ -5660,10 +5674,12 @@ const GenericSelectGenerator = props => {
     // Some error happens
     return errorState.toString();
   }
-  const filter = config.filter,
-    show_description = config.show_description,
-    description_fields = config.description_fields,
-    dbService = config.dbService;
+  const {
+    filter,
+    show_description,
+    description_fields,
+    dbService
+  } = config;
   let selectAnOptionItem = {};
   selectAnOptionItem['_id'] = null;
   selectAnOptionItem[description_fields[0]] = MSG_SELECT_AN_OPTION;
@@ -5694,20 +5710,15 @@ const GenericSelectDataPopulator = props => {
    *  value_field_name: field name to show in the value. Default is "value"
    *  key_name: field name to show in the key. Default is "_id"
    */
-  const _useState1 = React.useState(null),
-    _useState10 = _slicedToArray(_useState1, 2),
-    errorState = _useState10[0],
-    setErrorState = _useState10[1];
-  const _useState11 = React.useState(null),
-    _useState12 = _slicedToArray(_useState11, 2),
-    config = _useState12[0],
-    setConfig = _useState12[1];
-  const _useState13 = React.useState(null),
-    _useState14 = _slicedToArray(_useState13, 2),
-    rows = _useState14[0],
-    setRows = _useState14[1];
-  const _useContext3 = React.useContext(MainSectionContext),
-    fetchOrCache = _useContext3.fetchOrCache;
+  const [errorState, setErrorState] = React.useState(null);
+  const [config, setConfig] = React.useState(null);
+  const [rows, setRows] = React.useState(null);
+  const {
+    // getCachedData,
+    // putCachedData,
+    // typeofCachedData,
+    fetchOrCache
+  } = React.useContext(MainSectionContext);
   const initConfig = props => {
     const editor = getEditorData(props);
     return {
@@ -5727,11 +5738,13 @@ const GenericSelectDataPopulator = props => {
     };
   };
   const returnData = () => {
-    const filter = config.filter,
-      title_field_name = config.title_field_name,
-      value_field_name = config.value_field_name,
-      key_name = config.key_name,
-      dbService = config.dbService;
+    const {
+      filter,
+      title_field_name,
+      value_field_name,
+      key_name,
+      dbService
+    } = config;
     if (!rows) {
       return '';
     }
@@ -23090,39 +23103,34 @@ function requireLodash () {
 
 var lodashExports = requireLodash();
 
+// Suggestion Dropdown
+
 const debounceTimeout = 500;
 const SuggestionDropdown = _ref => {
-  let name = _ref.name,
-    disabled = _ref.disabled,
-    required = _ref.required,
-    className = _ref.className,
-    value = _ref.value,
-    config = _ref.config;
-  const _useFormikContext = formik.useFormikContext(),
-    setFieldValue = _useFormikContext.setFieldValue;
-  const _useState = React.useState(value),
-    _useState2 = _slicedToArray(_useState, 2),
-    inputValue = _useState2[0],
-    setInputValue = _useState2[1];
-  const _useState3 = React.useState(value),
-    _useState4 = _slicedToArray(_useState3, 2),
-    debouncedInputValue = _useState4[0],
-    setDebouncedInputValue = _useState4[1];
-  const _useState5 = React.useState([]),
-    _useState6 = _slicedToArray(_useState5, 2),
-    suggestions = _useState6[0],
-    setSuggestions = _useState6[1];
-  const _useState7 = React.useState(null),
-    _useState8 = _slicedToArray(_useState7, 2),
-    errorMessage = _useState8[0],
-    setErrorMessage = _useState8[1];
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
-  const _useAppContext = useAppContext(),
-    theme = _useAppContext.theme;
+  let {
+    name,
+    disabled,
+    required,
+    className,
+    value,
+    config
+  } = _ref;
+  const {
+    setFieldValue
+  } = formik.useFormikContext();
+  const [inputValue, setInputValue] = React.useState(value);
+  const [debouncedInputValue, setDebouncedInputValue] = React.useState(value);
+  const [suggestions, setSuggestions] = React.useState([]);
+  const [errorMessage, setErrorMessage] = React.useState(null);
+  const {
+    currentUser
+  } = useUser();
+  const {
+    theme
+  } = useAppContext();
 
   // This component's input field must be different to the external input field to enable value sync
-  const nameInternal = "".concat(name, "_sdd");
+  const nameInternal = `${name}_sdd`;
   const filter_api_url = defaultValue(config, 'filter_api_url'); // Ex. "fda_food_query"
   const filter_api_request_method = String(defaultValue(config, "filter_api_request_method", "get")).toUpperCase(); // Ex. true or false
   const filter_search_param_name = defaultValue(config, 'filter_search_param_name'); // Ex. "food_name"
@@ -23162,9 +23170,7 @@ const SuggestionDropdown = _ref => {
   const handleSuggestionSelected = suggestion => {
     if (suggestion) {
       Object.entries(autocomplete_fields).forEach(_ref2 => {
-        let _ref3 = _slicedToArray(_ref2, 2),
-          field_name = _ref3[0],
-          attr_name = _ref3[1];
+        let [field_name, attr_name] = _ref2;
         const value = suggestion[attr_name] ? suggestion[attr_name] : '';
         setFieldValue(field_name, value);
       });
@@ -23183,32 +23189,37 @@ const SuggestionDropdown = _ref => {
     inputValueChange(newInputValue);
     updateDebouncedInputValue(newInputValue);
   };
-  const _useCombobox = downshift.useCombobox({
-      items: suggestions,
-      inputValue,
-      onInputValueChange: _ref4 => {
-        let newInputValue = _ref4.inputValue;
-        onInputValueChangeInternal(newInputValue);
-      },
-      onSelectedItemChange: _ref5 => {
-        let selectedItem = _ref5.selectedItem;
-        handleSuggestionSelected(selectedItem);
-      },
-      itemToString: item => item ? item[suggestion_name_fieldname] : inputValue,
-      id: name
-    }),
-    isOpen = _useCombobox.isOpen,
-    getMenuProps = _useCombobox.getMenuProps,
-    getInputProps = _useCombobox.getInputProps,
-    highlightedIndex = _useCombobox.highlightedIndex,
-    getItemProps = _useCombobox.getItemProps,
-    selectedItem = _useCombobox.selectedItem;
+  const {
+    isOpen,
+    getMenuProps,
+    getInputProps,
+    highlightedIndex,
+    getItemProps,
+    selectedItem
+  } = downshift.useCombobox({
+    items: suggestions,
+    inputValue,
+    onInputValueChange: _ref3 => {
+      let {
+        inputValue: newInputValue
+      } = _ref3;
+      onInputValueChangeInternal(newInputValue);
+    },
+    onSelectedItemChange: _ref4 => {
+      let {
+        selectedItem
+      } = _ref4;
+      handleSuggestionSelected(selectedItem);
+    },
+    itemToString: item => item ? item[suggestion_name_fieldname] : inputValue,
+    id: name
+  });
   return /*#__PURE__*/React.createElement("div", {
     className: SUGGESTION_DROPDOWN_WRAPPER_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(SUGGESTION_DROPDOWN_CLASS, " ").concat(className || "", " ").concat(theme.input)
+    className: `${SUGGESTION_DROPDOWN_CLASS} ${className || ""} ${theme.input}`
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", getInputProps({
-    className: "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " ").concat(disabled ? DISABLE_FIELD_BACKGROUND_COLOR_CLASS : "", " ").concat(inputValue && suggestions.length === 0 ? IS_INVALID_CLASS : ""),
+    className: `${APP_FORMPAGE_FIELD_BASE_CLASS} ${disabled ? DISABLE_FIELD_BACKGROUND_COLOR_CLASS : ""} ${inputValue && suggestions.length === 0 ? IS_INVALID_CLASS : ""}`,
     disabled: disabled,
     required: required,
     name: nameInternal
@@ -23230,34 +23241,41 @@ var generic_editor_rfc_suggestion_dropdown = /*#__PURE__*/Object.freeze({
   SuggestionDropdown: SuggestionDropdown
 });
 
-const _excluded$1 = ["resultset"];
+// GenericCrudEditor data form functions
+
 let calcFields = {};
 const formPageReducer = (state, action) => {
   switch (action.type) {
     case 'SET_FORM_DATA':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formData: action.payload
-      });
+      };
     case 'SET_INTERNAL_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         internalMode: action.payload
-      });
+      };
     case 'SET_ERROR_STATUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         errorStatus: action.payload
-      });
+      };
     case 'INCREMENT_REFRESH':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         refresh: state.refresh + 1
-      });
+      };
     case 'SET_FORM_MSG':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formMsg: action.payload
-      });
+      };
     case 'SET_ITEM_READ':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         itemRead: action.payload
-      });
+      };
     default:
       return state;
   }
@@ -23265,50 +23283,53 @@ const formPageReducer = (state, action) => {
 const editFormReducer = (state, action) => {
   switch (action.type) {
     case 'SET_EDIT_FORM_DATA':
-      return _objectSpread2(_objectSpread2({}, state), action.payload);
+      return {
+        ...state,
+        ...action.payload
+      };
     default:
       return state;
   }
 };
 const FormPage = _ref => {
-  let editor = _ref.editor,
-    mode = _ref.mode,
-    id = _ref.id,
-    onCancel = _ref.onCancel,
-    setInfoMsg = _ref.setInfoMsg,
-    _ref$handleFormPageAc = _ref.handleFormPageActions,
-    handleFormPageActions = _ref$handleFormPageAc === void 0 ? null : _ref$handleFormPageAc,
-    _ref$message = _ref.message,
-    message = _ref$message === void 0 ? "" : _ref$message,
-    _ref$messageType = _ref.messageType,
-    messageType = _ref$messageType === void 0 ? "" : _ref$messageType;
-  const _useReducer = React.useReducer(formPageReducer, {
-      formData: null,
-      internalMode: mode,
-      errorStatus: {
-        error: "",
-        code: ""
-      },
-      refresh: 0,
-      formMsg: {
-        message: message,
-        messageType: messageType
-      },
-      itemRead: false
-    }),
-    _useReducer2 = _slicedToArray(_useReducer, 2),
-    state = _useReducer2[0],
-    dispatch = _useReducer2[1];
-  const formData = state.formData;
-    state.internalMode;
-    const errorStatus = state.errorStatus,
-    refresh = state.refresh,
-    formMsg = state.formMsg;
-    state.itemRead;
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
-  const _useAppContext = useAppContext(),
-    theme = _useAppContext.theme;
+  let {
+    editor,
+    mode,
+    id,
+    onCancel,
+    setInfoMsg,
+    handleFormPageActions = null,
+    message = "",
+    messageType = ""
+  } = _ref;
+  const [state, dispatch] = React.useReducer(formPageReducer, {
+    formData: null,
+    internalMode: mode,
+    errorStatus: {
+      error: "",
+      code: ""
+    },
+    refresh: 0,
+    formMsg: {
+      message: message,
+      messageType: messageType
+    },
+    itemRead: false
+  });
+  const {
+    formData,
+    internalMode,
+    errorStatus,
+    refresh,
+    formMsg,
+    itemRead
+  } = state;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    theme
+  } = useAppContext();
   const dataAlreadyLoaded = React.useRef(false);
   const setFormData = payload => dispatch({
     type: 'SET_FORM_DATA',
@@ -23335,8 +23356,9 @@ const FormPage = _ref => {
     type: 'SET_FORM_MSG',
     payload
   });
-  const _useContext = React.useContext(MainSectionContext);
-    _useContext.debugCache;
+  const {
+    debugCache
+  } = React.useContext(MainSectionContext);
   const initForm = () => {
     if (mode !== state.internalMode) {
       dataAlreadyLoaded.current = false;
@@ -23356,9 +23378,10 @@ const FormPage = _ref => {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
       processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
-        const _funcResponse$fieldVa = funcResponse.fieldValues;
-          _funcResponse$fieldVa.resultset;
-          const fieldValuesWithoutResultSet = _objectWithoutProperties(_funcResponse$fieldVa, _excluded$1);
+        const {
+          resultset,
+          ...fieldValuesWithoutResultSet
+        } = funcResponse.fieldValues;
         accessKeysDataScreen = Object.assign({}, fieldValuesWithoutResultSet, editor.endpointFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
@@ -23401,7 +23424,7 @@ const FormPage = _ref => {
   const editorFlags = getEditorFlags(mode);
   const actionTitle = mode === ACTION_CREATE ? MSG_ACTION_CREATE : mode === ACTION_UPDATE ? MSG_ACTION_UPDATE : mode === ACTION_READ ? MSG_ACTION_READ : MSG_ACTION_DELETE;
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+    className: `${APP_TOP_DIV_CLASS} ${theme.contentBg}`
   }, /*#__PURE__*/React.createElement(CrudEditorFormPageTitle, {
     baseUrl: editor.baseUrl,
     title: editor.title,
@@ -23420,32 +23443,39 @@ const FormPage = _ref => {
   }), !errorStatus.error && formData && !editorFlags.isCreate && iterateChildComponents(editor, formData.resultset, handleFormPageActions), '');
 };
 const CrudEditorFormPageTitle = _ref2 => {
-  let baseUrl = _ref2.baseUrl,
-    title = _ref2.title,
-    actionTitle = _ref2.actionTitle;
+  let {
+    baseUrl,
+    title,
+    actionTitle
+  } = _ref2;
   return /*#__PURE__*/React.createElement("h2", {
-    key: "".concat(baseUrl, "_title"),
+    key: `${baseUrl}_title`,
     className: APP_TITLE_H1_CLASS
   }, title + " - " + actionTitle);
 };
 const GetHTag = _ref3 => {
-  let tag = _ref3.tag,
-    children = _ref3.children;
+  let {
+    tag,
+    children
+  } = _ref3;
   return /*#__PURE__*/React.createElement(tag, {
     children
   });
 };
 const PutOneFormfield = _ref4 => {
-  let currentObjArray = _ref4.currentObjArray;
-    _ref4.componentSelectFieldsOptions;
-    let editorFlags = _ref4.editorFlags,
-    errors = _ref4.errors,
-    touched = _ref4.touched,
-    initialValue = _ref4.initialValue,
-    theme = _ref4.theme,
-    dbRow = _ref4.dbRow;
-  const _useFormikContext = formik.useFormikContext(),
-    setFieldValue = _useFormikContext.setFieldValue;
+  let {
+    currentObjArray,
+    componentSelectFieldsOptions,
+    editorFlags,
+    errors,
+    touched,
+    initialValue,
+    theme,
+    dbRow
+  } = _ref4;
+  const {
+    setFieldValue
+  } = formik.useFormikContext();
   let currentObj = currentObjArray[1];
   const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
   const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
@@ -23582,7 +23612,7 @@ const PutOneFormfield = _ref4 => {
       });
       break;
     case 'suggestion_dropdown':
-      idName = "".concat(currentObj.name, "-input");
+      idName = `${currentObj.name}-input`;
       elementInput = /*#__PURE__*/React.createElement(SuggestionDropdown, {
         name: currentObj.name,
         id: currentObj.name,
@@ -23681,33 +23711,32 @@ const PutOneFormfield = _ref4 => {
   }, elementLabel, elementInput, elementError);
 };
 const EditFormFormik = _ref5 => {
-  let editor = _ref5.editor,
-    parenHandleCancel = _ref5.parenHandleCancel,
-    setInfoMsg = _ref5.setInfoMsg,
-    action = _ref5.action,
-    dataset = _ref5.dataset,
-    _ref5$message = _ref5.message,
-    message = _ref5$message === void 0 ? "" : _ref5$message,
-    _ref5$messageType = _ref5.messageType,
-    messageType = _ref5$messageType === void 0 ? "" : _ref5$messageType,
-    handleFormPageActions = _ref5.handleFormPageActions,
-    theme = _ref5.theme,
-    currentUser = _ref5.currentUser;
-  const _useReducer3 = React.useReducer(editFormReducer, {
-      readyToShow: false,
-      dataset: null,
-      canCommit: null,
-      message: null,
-      messageType: null
-    }),
-    _useReducer4 = _slicedToArray(_useReducer3, 2),
-    state = _useReducer4[0],
-    dispatch = _useReducer4[1];
-  const readyToShow = state.readyToShow,
-    editDataset = state.dataset,
-    canCommit = state.canCommit,
-    editMessage = state.message,
-    editMessageType = state.messageType;
+  let {
+    editor,
+    parenHandleCancel,
+    setInfoMsg,
+    action,
+    dataset,
+    message = "",
+    messageType = "",
+    handleFormPageActions,
+    theme,
+    currentUser
+  } = _ref5;
+  const [state, dispatch] = React.useReducer(editFormReducer, {
+    readyToShow: false,
+    dataset: null,
+    canCommit: null,
+    message: null,
+    messageType: null
+  });
+  const {
+    readyToShow,
+    dataset: editDataset,
+    canCommit,
+    message: editMessage,
+    messageType: editMessageType
+  } = state;
   const setFormData = payload => dispatch({
     type: 'SET_EDIT_FORM_DATA',
     payload
@@ -23774,17 +23803,19 @@ const EditFormFormik = _ref5 => {
   });
 };
 const EditFormFormikFinal = _ref6 => {
-  let editor = _ref6.editor,
-    parenHandleCancel = _ref6.parenHandleCancel,
-    setInfoMsg = _ref6.setInfoMsg,
-    action = _ref6.action,
-    dataset = _ref6.dataset,
-    canCommit = _ref6.canCommit,
-    message = _ref6.message,
-    messageType = _ref6.messageType,
-    handleFormPageActions = _ref6.handleFormPageActions,
-    theme = _ref6.theme,
-    currentUser = _ref6.currentUser;
+  let {
+    editor,
+    parenHandleCancel,
+    setInfoMsg,
+    action,
+    dataset,
+    canCommit,
+    message,
+    messageType,
+    handleFormPageActions,
+    theme,
+    currentUser
+  } = _ref6;
   const editorFlags = getEditorFlags(action);
   const initialFieldValues = getFieldElementsDbValues(editor, dataset);
   const rowId = initialFieldValues[editor.primaryKeyName];
@@ -23826,8 +23857,10 @@ const EditFormFormikFinal = _ref6 => {
     // )}
     ,
     onSubmit: (submitedtElements, _ref7) => {
-      let setStatus = _ref7.setStatus,
-        setSubmitting = _ref7.setSubmitting;
+      let {
+        setStatus,
+        setSubmitting
+      } = _ref7;
       if (!canCommit) {
         setSubmitting(false);
       } else {
@@ -23843,7 +23876,9 @@ const EditFormFormikFinal = _ref6 => {
         }
         processGenericFuncArray(editor, 'validations', submitedtElements, action, currentUser).then(funcResponse => {
           processGenericFuncArray(editor, 'dbPreWrite', submitedtElements, action, currentUser).then(funcResponse => {
-            submitedtElements = _objectSpread2({}, funcResponse.fieldValues);
+            submitedtElements = {
+              ...funcResponse.fieldValues
+            };
             saveRowToDatabase(editor, action, rowId, submitedtElements, initialFieldValues).then(result => {
               if (result && result.error) {
                 setSubmitting(false);
@@ -23889,10 +23924,12 @@ const EditFormFormikFinal = _ref6 => {
       }
     }
   }, _ref8 => {
-    let errors = _ref8.errors,
-      status = _ref8.status,
-      touched = _ref8.touched,
-      isSubmitting = _ref8.isSubmitting;
+    let {
+      errors,
+      status,
+      touched,
+      isSubmitting
+    } = _ref8;
     return /*#__PURE__*/React.createElement(formik.Form, {
       onKeyDown: submitHandler
     }, message && /*#__PURE__*/React.createElement("div", {
@@ -23961,7 +23998,9 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
       acc[keyPair.parameterName] =
       // parent table 'id' field name
       editor.parentData[keyPair.parentElementName]; // parent table 'id' value
-      return _objectSpread2({}, acc);
+      return {
+        ...acc
+      };
     }, {});
     if (editor.subType === "array") {
       // Build the format for child array
@@ -23981,7 +24020,10 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
       rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
     } else {
       // Build the format for child external table, merging the parent id to the child object
-      rowToSave = _objectSpread2(_objectSpread2({}, submitedtElements), rowToSave);
+      rowToSave = {
+        ...submitedtElements,
+        ...rowToSave
+      };
     }
   }
   // Save the row to Database
@@ -24081,7 +24123,9 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
       default:
         acc[getFieldElementKey(currentObj)] = responseObj;
     }
-    return _objectSpread2({}, acc);
+    return {
+      ...acc
+    };
     // }, {});
   }, dataset);
   if (typeof response["_id"] !== 'undefined') {
@@ -24095,18 +24139,19 @@ var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
   FormPage: FormPage
 });
 
+// GenericCrudEditor search component
+
 const CrudEditorSearch = _ref => {
-  let id = _ref.id,
-    fieldElements = _ref.fieldElements,
-    handleCancel = _ref.handleCancel,
-    _ref$value = _ref.value,
-    value = _ref$value === void 0 ? "" : _ref$value;
-  const _useAppContext = useAppContext(),
-    theme = _useAppContext.theme;
-  const _useState = React.useState(value),
-    _useState2 = _slicedToArray(_useState, 2),
-    searchText = _useState2[0],
-    setSearchText = _useState2[1];
+  let {
+    id,
+    fieldElements,
+    handleCancel,
+    value = ""
+  } = _ref;
+  const {
+    theme
+  } = useAppContext();
+  const [searchText, setSearchText] = React.useState(value);
   const getDateRange = searchValue => {
     const dateRange = searchValue.split(',');
     let result;
@@ -24129,9 +24174,14 @@ const CrudEditorSearch = _ref => {
           } else {
             newElement[element.name] = newSearchText;
           }
-          filterDict = _objectSpread2(_objectSpread2({}, filterDict), newElement);
+          filterDict = {
+            ...filterDict,
+            ...newElement
+          };
         }
-        return _objectSpread2({}, filterDict);
+        return {
+          ...filterDict
+        };
       }, {
         like: '1',
         comb: 'or'
@@ -24160,7 +24210,7 @@ const CrudEditorSearch = _ref => {
     // type="text"
     ,
     className: APP_LISTING_SEARCH_BOX_INPUT_CLASS + " " + theme.input,
-    placeholder: "".concat(MSG_SEARCH, "..."),
+    placeholder: `${MSG_SEARCH}...`,
     value: searchText || '',
     onChange: handleTextChange
   }), /*#__PURE__*/React.createElement("button", {
@@ -24180,6 +24230,8 @@ var generic_editor_rfc_search = /*#__PURE__*/Object.freeze({
   CrudEditorSearch: CrudEditorSearch
 });
 
+// GenericCrudEditor (GCE) service main
+
 const debug$1 = false;
 const initialState$1 = {
   editor: null,
@@ -24195,45 +24247,58 @@ const initialState$1 = {
 function gceReducer(state, action) {
   switch (action.type) {
     case 'SET_EDITOR':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         editor: action.payload
-      });
+      };
     case 'SET_ROWS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         rows: action.payload
-      });
+      };
     case 'SET_CURRENT_PAGE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         currentPage: action.payload
-      });
+      };
     case 'SET_ROWS_PER_PAGE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         rowsPerPage: action.payload
-      });
+      };
     case 'SET_FORM_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formMode: action.payload
-      });
+      };
     case 'SET_STATUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         status: action.payload
-      });
+      };
     case 'SET_INFO_MSG':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         infoMsg: action.payload
-      });
+      };
     case 'SET_SEARCH_FILTERS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         searchFilters: action.payload
-      });
+      };
     case 'SET_SEARCH_TEXT':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         searchText: action.payload
-      });
+      };
     case 'HANDLE_CANCEL':
       {
-        const config = action.payload.config;
-        let newState = _objectSpread2({}, state);
+        const {
+          config
+        } = action.payload;
+        let newState = {
+          ...state
+        };
         if (typeof config['searchFilters'] !== 'undefined') {
           newState.searchFilters = config['searchFilters'];
           newState.searchText = config['searchText'];
@@ -24250,10 +24315,11 @@ function gceReducer(state, action) {
   }
 }
 const GenericCrudEditor = _ref => {
-  let editorConfig = _ref.editorConfig,
-    parentData = _ref.parentData,
-    _ref$handleFormPageAc = _ref.handleFormPageActions,
-    handleFormPageActions = _ref$handleFormPageAc === void 0 ? null : _ref$handleFormPageAc;
+  let {
+    editorConfig,
+    parentData,
+    handleFormPageActions = null
+  } = _ref;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MainSectionProvider, null, /*#__PURE__*/React.createElement(GenericCrudEditorMain, {
     editorConfig: editorConfig,
     parentData: parentData,
@@ -24261,21 +24327,21 @@ const GenericCrudEditor = _ref => {
   })));
 };
 const GenericCrudEditorMain = props => {
-  const _useReducer = React.useReducer(gceReducer, _objectSpread2(_objectSpread2({}, initialState$1), {}, {
-      rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
-    })),
-    _useReducer2 = _slicedToArray(_useReducer, 2),
-    state = _useReducer2[0],
-    dispatch = _useReducer2[1];
-  const editor = state.editor,
-    rows = state.rows,
-    currentPage = state.currentPage,
-    rowsPerPage = state.rowsPerPage,
-    formMode = state.formMode,
-    status = state.status,
-    infoMsg = state.infoMsg,
-    searchFilters = state.searchFilters,
-    searchText = state.searchText;
+  const [state, dispatch] = React.useReducer(gceReducer, {
+    ...initialState$1,
+    rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
+  });
+  const {
+    editor,
+    rows,
+    currentPage,
+    rowsPerPage,
+    formMode,
+    status,
+    infoMsg,
+    searchFilters,
+    searchText
+  } = state;
   const setStatus = p => dispatch({
     type: 'SET_STATUS',
     payload: p
@@ -24304,14 +24370,17 @@ const GenericCrudEditorMain = props => {
     type: 'SET_ROWS_PER_PAGE',
     payload: p
   });
-  const _useContext = React.useContext(MainSectionContext),
-    initCache = _useContext.initCache;
-    _useContext.debugCache;
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
-  const _useAppContext = useAppContext(),
-    theme = _useAppContext.theme,
-    isWide = _useAppContext.isWide;
+  const {
+    initCache,
+    debugCache
+  } = React.useContext(MainSectionContext);
+  const {
+    currentUser
+  } = useUser();
+  const {
+    theme,
+    isWide
+  } = useAppContext();
   const actionsHandlerAllowsMouseOver = getLocalConfigItem("gce_actions_allows_mouse_over") == '1';
   const actionsHandlerAllowsMagicButton = getLocalConfigItem("gce_actions_allows_magic_button") == '1';
   React.useEffect(() => {
@@ -24349,13 +24418,13 @@ const GenericCrudEditorMain = props => {
           // dbListPostRead: To fix Listing fields
           processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(getErrorMsgFromApi(error), null)));
         }, error => {
-          console_debug_log("GenericCrudEditor / Listing - ERROR:");
+          console_debug_log(`GenericCrudEditor / Listing - ERROR:`);
           console.error(error);
           ShowHideWaitAnimation(false, animationElementId);
           setStatus(errorAndReEnter(getErrorMsgFromApi(error), null));
         });
       }, error => {
-        console_debug_log("GenericCrudEditor / dbListPreRead - ERROR:");
+        console_debug_log(`GenericCrudEditor / dbListPreRead - ERROR:`);
         console.error(error);
         setStatus(errorAndReEnter(getErrorMsgFromApi(error), null));
       });
@@ -24412,16 +24481,16 @@ const GenericCrudEditorMain = props => {
     // For example: food_times_row_undefined_tr_enclosure [GS-266]
     const response = typeof rowIdVar === 'undefined' ? getHash(canonicalRow(row)) : rowIdVar;
     if (typeof rowIdVar === 'undefined') {
-      console.error("ERROR [GCE-M-060]: row does not have '_id' nor '".concat(editor.primaryKeyName, "' | Editor: ").concat(editor.name, " | Row: ").concat(JSON.stringify(row)));
+      console.error(`ERROR [GCE-M-060]: row does not have '_id' nor '${editor.primaryKeyName}' | Editor: ${editor.name} | Row: ${JSON.stringify(row)}`);
     }
     return response;
   };
   const actionsHandler = (mode, row) => {
     const currentRowId = rowId(row);
-    const element = document.getElementById("".concat(editor.baseUrl, "_row_").concat(currentRowId, "_controls"));
+    const element = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_controls`);
     const currRowHadHiddenClass = element.classList.contains('hidden');
-    const magicButtonElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(currentRowId, "_magicButton"));
-    const rowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(currentRowId, "_row"));
+    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_magicButton`);
+    const rowElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
     if (mode === 'show') {
       // Highlight row
@@ -24452,7 +24521,7 @@ const GenericCrudEditorMain = props => {
     if (mode === 'toggle') {
       // Turn off previous opened controls
       rows.resultset.map(thisRow => {
-        const thisRowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(thisRow), "_controls"));
+        const thisRowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(thisRow)}_controls`);
         if (!thisRowElement.classList.contains('hidden')) {
           thisRowElement.classList.add('hidden');
         }
@@ -24500,10 +24569,10 @@ const GenericCrudEditorMain = props => {
     }));
   }
   return /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_top_div"),
-    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+    key: `${editor.baseUrl}_top_div`,
+    className: `${APP_TOP_DIV_CLASS} ${theme.contentBg}`
   }, infoMsg && /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_info_msg"),
+    key: `${editor.baseUrl}_info_msg`,
     className: INFO_MSG_CLASS
   }, /*#__PURE__*/React.createElement("div", null, infoMsg), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
     onClick: () => setInfoMsg(''),
@@ -24516,30 +24585,30 @@ const GenericCrudEditorMain = props => {
     title: editor.title,
     handleRefresh: handleRefresh
   }), /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_level2_div"),
+    key: `${editor.baseUrl}_level2_div`,
     className: APP_LEVEL2_DIV_CLASS
   }, /*#__PURE__*/React.createElement("table", {
-    key: "".concat(editor.baseUrl, "_table"),
+    key: `${editor.baseUrl}_table`,
     className: APP_LISTING_TABLE_CLASS
   }, /*#__PURE__*/React.createElement("thead", {
-    key: "".concat(editor.baseUrl, "_thead"),
+    key: `${editor.baseUrl}_thead`,
     className: APP_LISTING_TABLE_HDR_THEAD_CLASS
   }, /*#__PURE__*/React.createElement("tr", {
-    key: "".concat(editor.baseUrl, "_thead_tr"),
+    key: `${editor.baseUrl}_thead_tr`,
     className: APP_LISTING_TABLE_HDR_TR_CLASS
   }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("th", {
     // scope="col"
-    key: "".concat(editor.baseUrl, "_actions"),
+    key: `${editor.baseUrl}_actions`,
     className: APP_LISTING_TABLE_HDR_TH_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_actions_div"),
+    key: `${editor.baseUrl}_actions_div`,
     className: APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS
   }, " ")), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
     // scope="col"
-    key: "".concat(editor.baseUrl, "_").concat(key, "_thead_th"),
+    key: `${editor.baseUrl}_${key}_thead_th`,
     className: APP_LISTING_TABLE_HDR_TH_CLASS
   }, editor.fieldElements[key].label)))), /*#__PURE__*/React.createElement("tbody", {
-    key: "".concat(editor.baseUrl, "_tbody"),
+    key: `${editor.baseUrl}_tbody`,
     className: APP_LISTING_TABLE_BODY_TBODY_CLASS
   }, rows && typeof rows.resultset !== 'undefined' && rows.resultset.map((row, index) => {
     // To avoid use of "<>" to group two "<tr>" (one for the row and one for the actions)
@@ -24548,11 +24617,11 @@ const GenericCrudEditorMain = props => {
     // we use <React.Fragment> instead
     const uniqueRowId = rowId(row);
     return /*#__PURE__*/React.createElement(React.Fragment, {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_tr_enclosure")
+      key: `${editor.baseUrl}_row_${uniqueRowId}_tr_enclosure`
     }, /*#__PURE__*/React.createElement("tr", {
-      id: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_row"),
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_row"),
-      className: index % 2 ? "".concat(APP_LISTING_TABLE_BODY_TR_ODD_CLASS) : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_EVEN_CLASS),
+      id: `${editor.baseUrl}_row_${uniqueRowId}_row`,
+      key: `${editor.baseUrl}_row_${uniqueRowId}_row`,
+      className: index % 2 ? `${APP_LISTING_TABLE_BODY_TR_ODD_CLASS}` : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}`,
       onMouseOver: () => {
         actionsHandler('show', row);
       },
@@ -24564,25 +24633,25 @@ const GenericCrudEditorMain = props => {
       }
     }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("td", {
       // Action buttons
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_magicButton_td")
+      key: `${editor.baseUrl}_row_${uniqueRowId}_magicButton_td`
       // colSpan={Object.keys(editor.fieldElements).length + 1}
       ,
       className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
     }, /*#__PURE__*/React.createElement("div", {
-      id: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_magicButton"),
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_magicButton"),
+      id: `${editor.baseUrl}_row_${uniqueRowId}_magicButton`,
+      key: `${editor.baseUrl}_row_${uniqueRowId}_magicButton`,
       className: VISIBLE_CLASS
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "menu-dots-more",
       alt: MSG_MORE
     }))), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_").concat(key, "_td"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_${key}_td`,
       className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS
     }, getSelectDescription(editor.fieldElements[key], row) // Show column value or select description
     ))), /*#__PURE__*/React.createElement("tr", {
-      id: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls"),
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls"),
-      className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS)) + " " + HIDDEN_CLASS,
+      id: `${editor.baseUrl}_row_${uniqueRowId}_controls`,
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls`,
+      className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS,
       onMouseOver: () => {
         actionsHandler('show', row);
       },
@@ -24594,33 +24663,33 @@ const GenericCrudEditorMain = props => {
       }
     }, /*#__PURE__*/React.createElement("td", {
       // Action buttons
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_td"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_td`,
       colSpan: Object.keys(editor.fieldElements).length + 1,
       className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
     }, /*#__PURE__*/React.createElement("button", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_eye"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_eye`,
       onClick: () => handleView(uniqueRowId),
-      className: "".concat(BUTTON_LISTING_CLASS)
+      className: `${BUTTON_LISTING_CLASS}`
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "eye",
       alt: MSG_ACTION_READ
     })), /*#__PURE__*/React.createElement("button", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_edit"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_edit`,
       onClick: () => handleModify(uniqueRowId),
-      className: "".concat(BUTTON_LISTING_CLASS)
+      className: `${BUTTON_LISTING_CLASS}`
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "edit",
       alt: MSG_ACTION_EDIT
     })), /*#__PURE__*/React.createElement("button", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_trash"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_trash`,
       onClick: () => handleDelete(uniqueRowId),
-      className: "".concat(BUTTON_LISTING_CLASS)
+      className: `${BUTTON_LISTING_CLASS}`
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "trash",
       alt: MSG_ACTION_DELETE
     })))));
   })))), /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_toolbar"),
+    key: `${editor.baseUrl}_toolbar`,
     className: APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS : APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)
   }, /*#__PURE__*/React.createElement(CrudEditorPagination, {
     id: editor.baseUrl + "_pagination",
@@ -24703,11 +24772,14 @@ const GetFormData = function (editorData, registry) {
   return editorDataObj;
 };
 const CrudEditorRowsPerPage = _ref2 => {
-  _ref2.id;
-    let rowsPerPage = _ref2.rowsPerPage,
-    handleRowsPerPageChange = _ref2.handleRowsPerPageChange;
-  const _useAppContext2 = useAppContext(),
-    theme = _useAppContext2.theme;
+  let {
+    id,
+    rowsPerPage,
+    handleRowsPerPageChange
+  } = _ref2;
+  const {
+    theme
+  } = useAppContext();
   return /*#__PURE__*/React.createElement("div", {
     className: APP_LISTING_TOOLBAR_ROW_PER_PAGE_SECTION_CLASS
   }, /*#__PURE__*/React.createElement("label", {
@@ -24729,26 +24801,28 @@ const CrudEditorRowsPerPage = _ref2 => {
   }, rowsPerPage)));
 };
 const CrudEditorPagination = _ref3 => {
-  let id = _ref3.id,
-    currentPage = _ref3.currentPage,
-    totalPages = _ref3.totalPages,
-    goToNewPage = _ref3.goToNewPage;
+  let {
+    id,
+    currentPage,
+    totalPages,
+    goToNewPage
+  } = _ref3;
   return /*#__PURE__*/React.createElement("div", {
     id: id,
     className: APP_LISTING_TOOLBAR_PAGINATION_SECTION_CLASS
   }, /*#__PURE__*/React.createElement("button", {
     disabled: currentPage === 1,
     onClick: () => goToNewPage(currentPage - 1),
-    className: "".concat(currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+    className: `${currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "less-than",
     alt: MSG_PREVIOUS
   })), /*#__PURE__*/React.createElement("div", {
     className: APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS
-  }, MSG_PAGE, " ", currentPage, totalPages > 0 ? " ".concat(MSG_OF, " ").concat(totalPages) : ''), /*#__PURE__*/React.createElement("button", {
+  }, MSG_PAGE, " ", currentPage, totalPages > 0 ? ` ${MSG_OF} ${totalPages}` : ''), /*#__PURE__*/React.createElement("button", {
     disabled: currentPage >= totalPages,
     onClick: () => goToNewPage(currentPage + 1),
-    className: "".concat(currentPage >= totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+    className: `${currentPage >= totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "greater-than",
     alt: MSG_NEXT
@@ -24758,8 +24832,10 @@ const CrudEditorPagination = _ref3 => {
   }, WaitAnimation()));
 };
 const CrudEditorNewButton = _ref4 => {
-  let id = _ref4.id,
-    handleNew = _ref4.handleNew;
+  let {
+    id,
+    handleNew
+  } = _ref4;
   return /*#__PURE__*/React.createElement("button", {
     id: id,
     onClick: handleNew,
@@ -24772,11 +24848,13 @@ const CrudEditorNewButton = _ref4 => {
   }), "\xA0", MSG_ACTION_NEW));
 };
 const CrudEditorListingTitle = _ref5 => {
-  let baseUrl = _ref5.baseUrl,
-    title = _ref5.title,
-    handleRefresh = _ref5.handleRefresh;
+  let {
+    baseUrl,
+    title,
+    handleRefresh
+  } = _ref5;
   return /*#__PURE__*/React.createElement("h2", {
-    key: "".concat(baseUrl, "_title"),
+    key: `${baseUrl}_title`,
     className: APP_TITLE_H1_CLASS
   }, title + " - " + MSG_ACTION_LIST, /*#__PURE__*/React.createElement("span", {
     className: APP_TITLE_RECYCLE_BUTTON_CLASS
@@ -24912,7 +24990,9 @@ function UsersApiKey() {
   };
 }
 const UsersApiKeyComponent = _ref => {
-  let parentData = _ref.parentData;
+  let {
+    parentData
+  } = _ref;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersApiKey_EditorData(),
     parentData: parentData
@@ -24934,7 +25014,7 @@ const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
     switch (action) {
       case ACTION_CREATE:
         const access_token_waw = generateAccessToken();
-        const access_token = "".concat(REACT_APP_API_KEYS_PREFIX).concat(access_token_waw);
+        const access_token = `${REACT_APP_API_KEYS_PREFIX}${access_token_waw}`;
         resp.fieldValues = Object.assign({}, data, {
           'resultset': {
             'access_token': access_token
@@ -25038,7 +25118,9 @@ function UsersConfig() {
   };
 }
 const UsersConfigComponent = _ref => {
-  let parentData = _ref.parentData;
+  let {
+    parentData
+  } = _ref;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersConfig_EditorData(),
     parentData: parentData
@@ -25138,7 +25220,9 @@ function UsersUserHistory() {
   };
 }
 const UsersUserHistoryComponent = _ref => {
-  let parentData = _ref.parentData;
+  let {
+    parentData
+  } = _ref;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
     editorConfig: UsersUserHistory_EditorData(),
     parentData: parentData
@@ -25170,7 +25254,7 @@ const UsersHistoryDbPostWrite = (data, editor, action) => {
           resp['otherData']['refresh'] = true;
           resolve(resp);
         }, error => {
-          console_debug_log("[UDPW-020] UsersDbPostWrite | error:", error);
+          console_debug_log(`[UDPW-020] UsersDbPostWrite | error:`, error);
           resp.error = true;
           resp.errorMsg = error;
           reject(resp);
@@ -25510,10 +25594,14 @@ const UsersDbPreWrite = (data, editor, action) => {
   });
 };
 
+// GenericCrudEditor single page editor
+
 const GenericSinglePageEditor = _ref => {
-  let editorConfig = _ref.editorConfig,
-    id = _ref.id,
-    parentData = _ref.parentData;
+  let {
+    editorConfig,
+    id,
+    parentData
+  } = _ref;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MainSectionProvider, null, /*#__PURE__*/React.createElement(GenericSinglePageEditorMain, {
     editorConfig: editorConfig,
     id: id,
@@ -25529,29 +25617,31 @@ const initialState = {
 function gspeReducer(state, action) {
   switch (action.type) {
     case 'SET_EDITOR':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         editor: action.payload
-      });
+      };
     case 'SET_FORM_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formMode: action.payload
-      });
+      };
     case 'SET_STATUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         status: action.payload
-      });
+      };
     default:
       return state;
   }
 }
 const GenericSinglePageEditorMain = props => {
-  const _useReducer = React.useReducer(gspeReducer, initialState),
-    _useReducer2 = _slicedToArray(_useReducer, 2),
-    state = _useReducer2[0],
-    dispatch = _useReducer2[1];
-  const editor = state.editor,
-    formMode = state.formMode,
-    status = state.status;
+  const [state, dispatch] = React.useReducer(gspeReducer, initialState);
+  const {
+    editor,
+    formMode,
+    status
+  } = state;
   const setEditor = p => dispatch({
     type: 'SET_EDITOR',
     payload: p
@@ -25564,8 +25654,9 @@ const GenericSinglePageEditorMain = props => {
     type: 'SET_STATUS',
     payload: p
   });
-  const _useContext = React.useContext(MainSectionContext);
-    _useContext.initCache;
+  const {
+    initCache
+  } = React.useContext(MainSectionContext);
   React.useEffect(() => {
     setEditorParameters(props).then(editor_response => {
       if (!editor_response) {
@@ -25795,8 +25886,9 @@ function UsersProfile_EditorData() {
   return GetFormData(users_profile, registry, 'UserProfileEditor');
 }
 const UserProfileEditor = props => {
-  const _useUser = useUser(),
-    currentUser = _useUser.currentUser;
+  const {
+    currentUser
+  } = useUser();
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(GenericSinglePageEditor, {
     id: currentUser.id,
     editorConfig: UsersProfile_EditorData()
@@ -25804,19 +25896,16 @@ const UserProfileEditor = props => {
 };
 
 const AppFooter = _ref => {
-  let _ref$appName = _ref.appName,
-    appName = _ref$appName === void 0 ? null : _ref$appName,
-    _ref$year = _ref.year,
-    year = _ref$year === void 0 ? null : _ref$year,
-    _ref$url = _ref.url,
-    url = _ref$url === void 0 ? null : _ref$url,
-    _ref$rights = _ref.rights,
-    rights = _ref$rights === void 0 ? null : _ref$rights,
-    _ref$otherLine = _ref.otherLine,
-    otherLine = _ref$otherLine === void 0 ? null : _ref$otherLine;
-  const appNameData = appName !== null && appName !== void 0 ? appName : process.env.REACT_APP_APP_NAME;
-  const yearData = year !== null && year !== void 0 ? year : new Date().getFullYear();
-  const rightsData = rights !== null && rights !== void 0 ? rights : "All rights reserved";
+  let {
+    appName = null,
+    year = null,
+    url = null,
+    rights = null,
+    otherLine = null
+  } = _ref;
+  const appNameData = appName ?? process.env.REACT_APP_APP_NAME;
+  const yearData = year ?? new Date().getFullYear();
+  const rightsData = rights ?? "All rights reserved";
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, "\xA9 ", yearData, " ", url ? /*#__PURE__*/React.createElement("a", {
     href: url,
     target: "_blank"
@@ -25824,7 +25913,9 @@ const AppFooter = _ref => {
 };
 
 const HomePage = _ref => {
-  let children = _ref.children;
+  let {
+    children
+  } = _ref;
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
   }, children);
@@ -25850,7 +25941,7 @@ const LoginPage = props => {
         return '/';
       }
       // Build a safe relative URL explicitly to preserve query and hash
-      const relative = "".concat(parsed.pathname || '/').concat(parsed.search || '').concat(parsed.hash || '');
+      const relative = `${parsed.pathname || '/'}${parsed.search || ''}${parsed.hash || ''}`;
       // Disallow protocol-relative patterns like '//' at start of path
       if (relative.startsWith('//')) {
         return '/';
@@ -25867,12 +25958,14 @@ const LoginPage = props => {
     }
     return sanitizeRedirectUrl(urlParams.redirect);
   };
-  const _useUser = useUser();
-    _useUser.currentUser;
-    const registerUser = _useUser.registerUser;
-  const _useAppContext = useAppContext(),
-    appLogo = _useAppContext.appLogo,
-    theme = _useAppContext.theme;
+  const {
+    currentUser,
+    registerUser
+  } = useUser();
+  const {
+    appLogo,
+    theme
+  } = useAppContext();
   const handleSubmit = (username, password, setStatus, setSubmitting) => {
     setStatus();
     authenticationService.login(username, password).then(user => {
@@ -25907,17 +26000,23 @@ const LoginPage = props => {
       password: Yup__namespace.string().required('Password is required')
     }),
     onSubmit: (_ref, _ref2) => {
-      let username = _ref.username,
-        password = _ref.password;
-      let setStatus = _ref2.setStatus,
-        setSubmitting = _ref2.setSubmitting;
+      let {
+        username,
+        password
+      } = _ref;
+      let {
+        setStatus,
+        setSubmitting
+      } = _ref2;
       handleSubmit(username, password, setStatus, setSubmitting);
     }
   }, _ref3 => {
-    let errors = _ref3.errors,
-      status = _ref3.status,
-      touched = _ref3.touched,
-      isSubmitting = _ref3.isSubmitting;
+    let {
+      errors,
+      status,
+      touched,
+      isSubmitting
+    } = _ref3;
     return /*#__PURE__*/React.createElement("div", {
       className: POPUP_TOP_MARGIN_CLASS
     }, /*#__PURE__*/React.createElement("img", {
@@ -26069,7 +26168,9 @@ const getShowContentOnly = () => {
   return showContentOnly;
 };
 const CloseButton = _ref => {
-  let children = _ref.children;
+  let {
+    children
+  } = _ref;
   return /*#__PURE__*/React.createElement(React.Fragment, null, children && /*#__PURE__*/React.createElement("div", {
     className: ALERT_DANGER_CLASS,
     role: "alert"
@@ -26080,12 +26181,16 @@ const CloseButton = _ref => {
   }, "Close"));
 };
 const AppNavBar = _ref2 => {
-  let children = _ref2.children;
-  const _useUser = useUser();
-    _useUser.currentUser;
-  const _useAppContext = useAppContext();
-    _useAppContext.setExpanded;
-    const appLogoHeader = _useAppContext.appLogoHeader;
+  let {
+    children
+  } = _ref2;
+  const {
+    currentUser
+  } = useUser();
+  const {
+    setExpanded,
+    appLogoHeader
+  } = useAppContext();
   const version = process.env.REACT_APP_VERSION;
   const appName = appLogoHeader ? /*#__PURE__*/React.createElement("img", {
     src: imageDirectory + appLogoHeader,
@@ -26105,11 +26210,13 @@ const AppNavBar = _ref2 => {
   }, version)), children);
 };
 const TopRightMenu = _ref3 => {
-  let showContentOnly = _ref3.showContentOnly,
-    _ref3$authenticated = _ref3.authenticated,
-    authenticated = _ref3$authenticated === void 0 ? true : _ref3$authenticated;
-  const _useUser2 = useUser(),
-    currentUser = _useUser2.currentUser;
+  let {
+    showContentOnly,
+    authenticated = true
+  } = _ref3;
+  const {
+    currentUser
+  } = useUser();
   if (showContentOnly) {
     // This is too prevent showing the menu when showContentOnly is true
     // E.g. pop-up about page
@@ -26125,17 +26232,22 @@ const TopRightMenu = _ref3 => {
   }));
 };
 const NoDesignComponent = _ref4 => {
-  let children = _ref4.children,
-    errorMessage = _ref4.errorMessage;
+  let {
+    children,
+    errorMessage
+  } = _ref4;
   return /*#__PURE__*/React.createElement(React.Fragment, null, errorMessage && /*#__PURE__*/React.createElement("div", {
     className: ALERT_DANGER_CLASS,
     role: "alert"
   }, errorMessage), children);
 };
 const AppMainInnerUnauthenticated = _ref5 => {
-  let children = _ref5.children;
-  const _useAppContext2 = useAppContext(),
-    sideMenu = _useAppContext2.sideMenu;
+  let {
+    children
+  } = _ref5;
+  const {
+    sideMenu
+  } = useAppContext();
   const showContentOnly = getShowContentOnly();
   return /*#__PURE__*/React.createElement(MainContainer, null, /*#__PURE__*/React.createElement(AppNavBar, null, !sideMenu && /*#__PURE__*/React.createElement(Navbar.TopRightMenu, null, /*#__PURE__*/React.createElement(TopRightMenu, {
     showContentOnly: showContentOnly,
@@ -26146,23 +26258,27 @@ const AppMainInnerUnauthenticated = _ref5 => {
   })), /*#__PURE__*/React.createElement(AppSectionContainer.ForSideMenu, null, /*#__PURE__*/React.createElement(React.Fragment, null, children)), /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)))), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
 const AppMainInner = _ref6 => {
-  let children = _ref6.children;
+  let {
+    children
+  } = _ref6;
   // const location = useLocation();
   // if (debug) console_debug_log("App | location:", location);
-  const _useUser3 = useUser(),
-    currentUser = _useUser3.currentUser,
-    askForLogin = _useUser3.askForLogin,
-    unRegisterUser = _useUser3.unRegisterUser;
-  const _useAppContext3 = useAppContext(),
-    setState = _useAppContext3.setState,
-    errorState = _useAppContext3.errorState,
-    setErrorState = _useAppContext3.setErrorState,
-    menuOptions = _useAppContext3.menuOptions,
-    setMenuOptions = _useAppContext3.setMenuOptions,
-    sideMenu = _useAppContext3.sideMenu;
-    _useAppContext3.setSideMenu;
-    const isMobileMenuOpen = _useAppContext3.isMobileMenuOpen;
-    _useAppContext3.componentMap;
+  const {
+    currentUser,
+    askForLogin,
+    unRegisterUser
+  } = useUser();
+  const {
+    setState,
+    errorState,
+    setErrorState,
+    menuOptions,
+    setMenuOptions,
+    sideMenu,
+    setSideMenu,
+    isMobileMenuOpen,
+    componentMap
+  } = useAppContext();
   const showContentOnly = getShowContentOnly();
   const getMenuFromApiAlreadyCalled = React.useRef(false);
   const callGetMenuFromApi = () => {
@@ -26220,13 +26336,16 @@ const AppMainInner = _ref6 => {
   })), !sideMenu && /*#__PURE__*/React.createElement(AppFooterContainer, null, /*#__PURE__*/React.createElement(AppFooter, null)));
 };
 const AppMainComponent = _ref7 => {
-  let logoutHandler = _ref7.logoutHandler,
-    showContentOnly = _ref7.showContentOnly,
-    askForLogin = _ref7.askForLogin,
-    currentUser = _ref7.currentUser,
-    children = _ref7.children;
-  const _useAppContext4 = useAppContext(),
-    errorState = _useAppContext4.errorState;
+  let {
+    logoutHandler,
+    showContentOnly,
+    askForLogin,
+    currentUser,
+    children
+  } = _ref7;
+  const {
+    errorState
+  } = useAppContext();
   if (errorState !== "") {
     if (showContentOnly) {
       return /*#__PURE__*/React.createElement(CloseButton, null, getErrorMessage(errorState));
@@ -26250,20 +26369,19 @@ const AppMain = () => {
   const routerFutureFlags = {
     v7_relativeSplatPath: true
   };
-  const _useUser4 = useUser(),
-    currentUser = _useUser4.currentUser,
-    registerUser = _useUser4.registerUser,
-    setAskForLogin = _useUser4.setAskForLogin;
-  const _useAppContext5 = useAppContext();
-    _useAppContext5.setState;
-    const menuOptions = _useAppContext5.menuOptions;
-    _useAppContext5.setMenuOptions;
-    const componentMap = _useAppContext5.componentMap,
-    setExpanded = _useAppContext5.setExpanded;
-  const _useState = React.useState(getDefaultRoutes(currentUser, componentMap, setExpanded)),
-    _useState2 = _slicedToArray(_useState, 2),
-    router = _useState2[0],
-    setRouter = _useState2[1];
+  const {
+    currentUser,
+    registerUser,
+    setAskForLogin
+  } = useUser();
+  const {
+    setState,
+    menuOptions,
+    setMenuOptions,
+    componentMap,
+    setExpanded
+  } = useAppContext();
+  const [router, setRouter] = React.useState(getDefaultRoutes(currentUser, componentMap, setExpanded));
   const verifyCurrentUserAlreadyCalled = React.useRef(false);
   const setRouterAlreadyCalled = React.useRef(false);
   const callVerifyCurrentUser = () => {
@@ -26318,16 +26436,12 @@ const defaultComponentMap = {
   "defaultTheme": defaultTheme
 };
 const App = _ref8 => {
-  let _ref8$componentMap = _ref8.componentMap,
-    componentMap = _ref8$componentMap === void 0 ? {} : _ref8$componentMap,
-    _ref8$appLogo = _ref8.appLogo,
-    appLogo = _ref8$appLogo === void 0 ? "" : _ref8$appLogo,
-    _ref8$appLogoHeader = _ref8.appLogoHeader,
-    appLogoHeader = _ref8$appLogoHeader === void 0 ? "" : _ref8$appLogoHeader;
-  const _useState3 = React.useState(mergeDicts(componentMap, defaultComponentMap)),
-    _useState4 = _slicedToArray(_useState3, 2),
-    componentMapFinal = _useState4[0];
-    _useState4[1];
+  let {
+    componentMap = {},
+    appLogo = "",
+    appLogoHeader = ""
+  } = _ref8;
+  const [componentMapFinal, setComponentMapFinal] = React.useState(mergeDicts(componentMap, defaultComponentMap));
   return /*#__PURE__*/React.createElement(UserProvider, null, /*#__PURE__*/React.createElement(AppProvider, {
     globalComponentMap: componentMapFinal,
     globalAppLogo: appLogo,
@@ -26360,7 +26474,7 @@ const convertHeight = (height, height_unit, target_unit) => {
   if (height_unit === 'cm' && target_unit === 'i') {
     return height / 2.54;
   }
-  throw new Error("Unsupported conversion from \"".concat(height_unit, "\" to \"").concat(target_unit, "\""));
+  throw new Error(`Unsupported conversion from "${height_unit}" to "${target_unit}"`);
 };
 const convertWeight = (weight, weight_unit, target_unit) => {
   if (weight_unit === null || weight_unit === '' || weight_unit === MSG_SELECT_AN_OPTION || target_unit === null || target_unit === '' || target_unit === MSG_SELECT_AN_OPTION) {
@@ -26375,7 +26489,7 @@ const convertWeight = (weight, weight_unit, target_unit) => {
   if (weight_unit === 'lb' && target_unit === 'kg') {
     return weight / 2.20462;
   }
-  throw new Error("Unsupported conversion from ".concat(weight_unit, " to ").concat(target_unit));
+  throw new Error(`Unsupported conversion from ${weight_unit} to ${target_unit}`);
 };
 const interpretString = str => {
   /*
@@ -26490,14 +26604,16 @@ var media = /*#__PURE__*/Object.freeze({
   mediaSupported: mediaSupported
 });
 
-const _excluded = ["component"];
 const PrivateRoute = _ref => {
-  let Component = _ref.component,
-    rest = _objectWithoutProperties(_ref, _excluded);
+  let {
+    component: Component,
+    ...rest
+  } = _ref;
   return /*#__PURE__*/React.createElement(reactRouterDom.Route, _extends({}, rest, {
     render: props => {
-      const _useUser = useUser(),
-        currentUser = _useUser.currentUser;
+      const {
+        currentUser
+      } = useUser();
       if (!currentUser) {
         console_debug_log('PrivateRoute Not Authorized...');
         // Not logged in so redirect to login page with the return url
@@ -26603,31 +26719,22 @@ var mocks = /*#__PURE__*/Object.freeze({
 
 // GenericCrudEditor UI components
 const ShowAsDisabledField = _ref => {
-  let _ref$className = _ref.className,
-    className = _ref$className === void 0 ? APP_FORMPAGE_FIELD_GOOD_CLASS : _ref$className,
-    _ref$name = _ref.name,
-    name = _ref$name === void 0 ? '' : _ref$name;
-    _ref.key;
-    _ref.id;
-    let _ref$type = _ref.type,
-    type = _ref$type === void 0 ? "text" : _ref$type,
-    _ref$value = _ref.value,
-    value = _ref$value === void 0 ? null : _ref$value,
-    _ref$readOnly = _ref.readOnly,
-    readOnly = _ref$readOnly === void 0 ? false : _ref$readOnly,
-    _ref$required = _ref.required,
-    required = _ref$required === void 0 ? false : _ref$required,
-    _ref$disabled = _ref.disabled,
-    disabled = _ref$disabled === void 0 ? false : _ref$disabled,
-    _ref$showAsField = _ref.showAsField,
-    showAsField = _ref$showAsField === void 0 ? "1" : _ref$showAsField,
-    _ref$onChange = _ref.onChange,
-    onChange = _ref$onChange === void 0 ? () => {} : _ref$onChange,
-    _ref$onBlur = _ref.onBlur,
-    onBlur = _ref$onBlur === void 0 ? () => {} : _ref$onBlur,
-    _ref$backgroundColor = _ref.backgroundColor,
-    backgroundColor = _ref$backgroundColor === void 0 ? null : _ref$backgroundColor,
-    children = _ref.children;
+  let {
+    className = APP_FORMPAGE_FIELD_GOOD_CLASS,
+    name = '',
+    key = '',
+    id = '',
+    type = "text",
+    value = null,
+    readOnly = false,
+    required = false,
+    disabled = false,
+    showAsField = "1",
+    onChange = () => {},
+    onBlur = () => {},
+    backgroundColor = null,
+    children
+  } = _ref;
   if (showAsField === "1") {
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(formik.Field, {
       name: name,
@@ -26644,7 +26751,7 @@ const ShowAsDisabledField = _ref => {
     }));
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(backgroundColor !== null && backgroundColor !== void 0 ? backgroundColor : DISABLE_FIELD_BACKGROUND_COLOR_CLASS, " ").concat(className)
+    className: `${backgroundColor ?? DISABLE_FIELD_BACKGROUND_COLOR_CLASS} ${className}`
   }, children));
 };
 
