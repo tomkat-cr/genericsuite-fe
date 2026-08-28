@@ -51,9 +51,9 @@ export default defineConfig(({ mode }) => {
     // Add HTTPS if needed
     if (apiUrl.includes("https://") && useContainersEngineApp === "1") {
         serverConfig.https = {
-            key: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.key`)),
-            cert: fs.readFileSync(resolve(__dirname, `${appLocalDomainName}.crt`)),
-            ca: fs.readFileSync(resolve(__dirname, 'ca.crt')),
+            key: fs.readFileSync(resolve(import.meta.dirname, `${appLocalDomainName}.key`)),
+            cert: fs.readFileSync(resolve(import.meta.dirname, `${appLocalDomainName}.crt`)),
+            ca: fs.readFileSync(resolve(import.meta.dirname, 'ca.crt')),
             // passphrase: process.env.SSL_PASSPHRASE || 'password',
         };
     }
@@ -85,7 +85,7 @@ export default defineConfig(({ mode }) => {
         server: serverConfig,
         resolve: {
             alias: {
-                '@': resolve(__dirname, 'src'),
+                '@': resolve(import.meta.dirname, 'src'),
             },
             extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.svg']
         },

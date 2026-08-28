@@ -39,6 +39,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - "config-overrides.js" updated to fix errors running the app with RUN_BUNDLER="react-scripts" [GS-338] and refactored to use fileURLToPath for path resolution and clean up unused debug logs [GS-327].
 - "process" dependency installation on "webpack.config.js" file documentation to to fix errors running the app [GS-338].
 - "generic.editor.rfc.common.jsx" and "generic.editor.rfc.service.jsx" fixed to show eventual configuration errors on child listings, and updated to show the editor name in the error messages [GS-327].
+- "vite.config.mjs" updated to fix the "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite: `__dirname` (vite.config.mjs:54:42). Use `import.meta.dirname` instead" after upgrading vite to version 8 [GS-268].
 
 ### Security
 - Upgrade dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219] [GS-214].
