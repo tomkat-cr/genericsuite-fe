@@ -137,17 +137,34 @@ declare function UsersApiKey(): {
     editorConfig: any;
     component: (_ref: any) => React.FunctionComponentElement<any>;
 };
+declare function UsersApiKeyAdmin(): {
+    editorConfig: any;
+    component: (_ref2: any) => React.FunctionComponentElement<any>;
+};
 declare function UsersApiKeyDbPreRead(data: any, editor: any, action: any, currentUser: any): Promise<any>;
-declare function UsersApiKey_EditorData(): any;
+declare function UsersApiKey_EditorData(isSuperUser: any): any;
 declare function UsersConfig(): {
     editorConfig: any;
     component: (_ref: any) => React.FunctionComponentElement<any>;
 };
-declare function UsersConfig_EditorData(): any;
+declare function UsersConfigAdmin(): {
+    editorConfig: any;
+    component: (_ref2: any) => React.FunctionComponentElement<any>;
+};
+declare function UsersConfig_EditorData(isSuperUser: any): any;
 declare function UsersDbListPreRead(data: any, editor: any, action: any, currentUser: any): Promise<any>;
 declare function UsersDbPreWrite(data: any, editor: any, action: any): Promise<any>;
 declare function UsersPasswordValidations(data: any, editor: any, action: any): Promise<any>;
 declare function UsersProfile_EditorData(): any;
+declare function UsersUserHistory(): {
+    editorConfig: any;
+    component: (_ref: any) => React.FunctionComponentElement<any>;
+};
+declare function UsersUserHistoryAdmin(): {
+    editorConfig: any;
+    component: (_ref2: any) => React.FunctionComponentElement<any>;
+};
+declare function UsersUserHistory_EditorData(isSuperUser: any): any;
 declare function UsersValidations(data: any, editor: any, action: any, currentUser: any): Promise<any>;
 declare function Users_EditorData(...args: any[]): any;
 declare var app_constants: Readonly<{
@@ -956,4 +973,4 @@ declare function mockUserData(): {
 declare function getUrlParams(...args: any[]): {};
 declare function generateUUID(): any;
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, general_utilities as generalUtilities, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyAdmin, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfigAdmin, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersUserHistory, UsersUserHistoryAdmin, UsersUserHistory_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, general_utilities as generalUtilities, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };

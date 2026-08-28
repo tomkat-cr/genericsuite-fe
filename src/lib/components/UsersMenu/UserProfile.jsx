@@ -24,6 +24,7 @@ import {
 
 import { UsersApiKey } from '../UsersMenu/UsersApiKey.jsx';
 import { UsersConfig } from './UsersConfig.jsx';
+import { UsersUserHistory } from './UsersUserHistory.jsx';
 
 import users_profile from "../../../configs/frontend/users_profile.json";
 
@@ -40,6 +41,7 @@ export function UsersProfile_EditorData() {
         "UsersValidations": UsersValidations,
         "UsersPasswordValidations": UsersPasswordValidations,
         "UsersApiKey": UsersApiKey,
+        "UsersUserHistory": UsersUserHistory,
     }
     // return GetFormData('users_profile', registry, 'UserProfileEditor');
     return GetFormData(users_profile, registry, 'UserProfileEditor');

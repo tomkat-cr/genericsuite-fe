@@ -25,6 +25,8 @@ import {
     MSG_ERROR_MISSING_SUB_TYPE_PARAM,
 } from "../constants/general_constants.jsx";
 
+const debug = false;
+
 export const getEditorData = (props) => (
     props.editorConfig
 )
@@ -85,6 +87,7 @@ export const getEditoObj = (props, editor_response) => {
     let editor = (editor_response.response);
     editor.error = null;
     editor.errorMsg = null;
+    editor.name = editor.name || editor.title || 'Name N/A';
     // Database backend handler
     editor.db = new dbApiService({ url: editor.dbApiUrl });
     // Child components
@@ -181,7 +184,7 @@ export const getEditoObj = (props, editor_response) => {
     if (typeof editor.endpointKeyNames == 'undefined') {
         if (typeof editor.parentKeyNames != 'undefined') {
             editor.endpointKeyNames = editor.parentKeyNames;
-            console.warn("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.")
+            console.warn(editor.name + " | DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.")
         } else {
             editor.endpointKeyNames = [];
         }
@@ -192,33 +195,34 @@ export const getEditoObj = (props, editor_response) => {
     if (editor.subType === 'array') {
         if (typeof editor.array_name == 'undefined') {
             subTypeError = true;
-            editor.error = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // Missing "array_name" parameter. It must be specified for subType "array".
+            editor.errorMsg = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // Missing "array_name" parameter. It must be specified for subType "array".
         } else if (typeof editor.endpointKeyNames == 'undefined') {
             subTypeError = true;
             // Missing "endpointKeyNames" parameter. It must be specified for subType "{subType}".
-            editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+            editor.errorMsg = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
         }
     } else
         // Child data for 'table' subType child listing. These elements are outside a real table.
         if (editor.subType === 'table' && typeof editor.endpointKeyNames == 'undefined') {
             subTypeError = true;
-            editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+            editor.errorMsg = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
         }
     if (editor.type == 'child_listing' && !subTypeError) {
         // Filters for child components
         if (editor.subType === 'array') {
             if (editor.endpointKeyNames.length == 0) {
                 // "endpointKeyNames" parameter is empty. It must be specified for subType "{subType}".
-                editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+                editor.errorMsg = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
             }
         } else if (editor.subType === 'table') {
             if (editor.endpointKeyNames.length == 0) {
-                editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+                editor.errorMsg = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
             }
         } else {
-            editor.error = MSG_ERROR_MISSING_SUB_TYPE_PARAM.replace("{subType}", editor.subType); // Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType};
+            editor.errorMsg = MSG_ERROR_MISSING_SUB_TYPE_PARAM.replace("{subType}", editor.subType);
+            // Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType};
         }
-        if (!editor.error && typeof props.parentData !== 'undefined') {
+        if (!editor.errorMsg && typeof props.parentData !== 'undefined') {
             editor = setEndpointFilter(props.parentData, editor);
         }
     }
@@ -231,6 +235,19 @@ export const getEditoObj = (props, editor_response) => {
     // Reenter on create
     if (typeof editor.createReenter == 'undefined') {
         editor.createReenter = false;
+    }
+    if (editor.errorMsg && editor.errorMsg.length > 0) {
+        if (debug) {
+            console_debug_log("GCE-GetEditoObj: ERROR");
+            console_debug_log(editor.errorMsg);
+        }
+        editor.error = true;
+        editor.errorMsg = editor.name + " | " + editor.errorMsg;
+    } else {
+        if (debug) {
+            console_debug_log("GCE-GetEditoObj: editor object is valid");
+            console_debug_log(editor.name + " | " + editor);
+        }
     }
     return editor;
 }

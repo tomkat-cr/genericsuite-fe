@@ -1,4 +1,7 @@
 {
     "table_name": "users_api_keys",
-    "specific_function": "delete_params_file"
+    "specific_function": "delete_params_file",
+    "mandatoryFilters": {
+        "user_id": "{CurrentUserId}"
+    }
 }

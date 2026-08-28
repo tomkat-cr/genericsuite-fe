@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [1.3.0] - 2026-07-15
+## [1.3.0] - 2026-08-30
 
 ### Added
 - AGENTS.md, GEMINI.md, and CLAUDE.md files to provide context and instructions to AI Coding Assistants [GS-303].
@@ -38,9 +38,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Removed a bogus `"with"` entry from the webpack `resolve.fallback` config — `with` is not a Node.js core module, so the fallback never did anything [GS-338].
 - "config-overrides.js" updated to fix errors running the app with RUN_BUNDLER="react-scripts" [GS-338] and refactored to use fileURLToPath for path resolution and clean up unused debug logs [GS-327].
 - "process" dependency installation on "webpack.config.js" file documentation to to fix errors running the app [GS-338].
+- "generic.editor.rfc.common.jsx" and "generic.editor.rfc.service.jsx" fixed to show eventual configuration errors on child listings, and updated to show the editor name in the error messages [GS-327].
 
 ### Security
-- Upgrade dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219].
+- Upgrade dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219] [GS-214].
 - Upgrade axios@^1.19.0 to fix the security vulnerabilities [GS-219]:
   - Server-side Request Forgery (SSRF) [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111062] in axios@1.15.1
   - Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111079] in axios@1.15.1
@@ -58,6 +59,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
   - React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response. This is a follow up to CVE-2026-22030 to address related CSRF flows in unstable RSC code paths.
 - "react" and "react-dom" have now peer dependencies with "^18.2.0" that does not affect this codebase because it only uses BrowserRouter/Routes/Route/Link/Navigate, no RSC APIs. By the way React/ReactDOM will be upgraded to 19 on next release to fix the mentioned react-router-dom security vulnerability [GS-219].
 - Bump Node.js version in .nvmrc to 26 [GS-339].
+- "users_user_history.json", "users_config.json" and "users_api_keys.json" configuration files now use the "mandatoryFilters" parameter in the backend configuration to ensure the user history, config and API keys are forced to the current user [GS-327].
+- "users_user_history_admin.json", "users_config_admin.json" and "users_api_keys_admin.json" configuration files don't use the "mandatoryFilters" parameter to let the superuser to see all the user history, config and API keys when editing users [GS-327].
 
 ### Removed
 - The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].
@@ -185,7 +188,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "PostCSS line return parsing error" by updating "postcss" to "^8.5.6" [GS-219].
 - Fix "Basic rate limiting to mitigate DoS via expensive FS operations" in "server.js" [GS-219].
 - Enhance LoginPage redirect handling with URL sanitization [GS-219].
-- Update "react-syntax-highlighter" to "^16.1.0" to fix the security vulnerability [GS-219]:
+- Update "react-syntax-highlighter" to "^16.1.0" to fix the security vulnerability [GS-219] [GS-214]:
   - "PrismJS DOM Clobbering vulnerability"
 - Bump babel-loader to ^10.0.0 to fix "@eslint/plugin-kit is vulnerable to Regular Expression Denial of Service attacks through ConfigCommentParser" [GS-219].
 - The following security vulnerabilities were fixed by running "npm audit fix --force" [GS-219]:
