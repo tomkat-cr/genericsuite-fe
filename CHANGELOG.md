@@ -12,7 +12,63 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixed
 
+### Security
+
 ### Removed
+
+
+## [1.3.0] - 2026-08-30
+
+### Added
+- AGENTS.md, GEMINI.md, and CLAUDE.md files to provide context and instructions to AI Coding Assistants [GS-303].
+- Add SAST testing [GS-315].
+- Add frontend scripts library [GS-107].
+- `select_table` field type in the Generic CRUD Editor: listing and read-only form show the related record description (`{field}_description` from the backend, with client-side cached fallback); create/edit renders a dropdown populated from the related table. New JSON attributes: `related_table`, `related_key`, `description_fields`, `description_separator`, `related_filter` [GS-259].
+
+### Changed
+- License changed to MIT [FA-244].
+- Rename AWS_S3_BUCKET_NAME to AWS_S3_BUCKET_NAME_FE in the .env and .env.example files [GS-328].
+- `webpack.config.js` and `config-overrides.js`: commented out the Node.js core module `resolve.fallback` polyfills (`os`, `url`, `crypto`, `stream`, `vm`, `tty`, `constants`) since nothing in the codebase needs them and Vite already runs fine without them; added `npm install --save-dev ...` notes above each so they can be re-enabled if a consumer's own dependency graph needs them [GS-338].
+
+### Fixed
+- getFieldElementsYupValidations() didn't work with action=CREATION, e.g. it has issues on the user creation (OpenAI API key and model are requested as mandatory when they have null values). Therefore, the Yup validations are disabled for now [GS-251].
+- `bson` package version fixed to 7.2.0 to fix the "Uncaught TypeError: globalThis?.process?.getBuiltinModule is not a function" error after upgrading vite to version 8 [GS-268].
+- `tsconfig.json` was missing an `exclude` for `*.test.tsx`, so every test file got its own `.d.ts` stub emitted into `dist/esm` and `dist/cjs` during the Rollup build. Since `dist` is fully included in the published npm package, this shipped ~24 useless declaration files with every release [GS-338].
+- `rollup.config.mjs`: added `bson` and `js-md5` to the `external` array. Both are real peer dependencies used in `src/lib/services/id.utilities.jsx` and `md5.utilities.jsx`, but were missing from `external`, so Rollup was bundling them directly into `dist` instead of treating them as consumer-supplied peer dependencies like every other one [GS-338].
+- Removed a bogus `"with"` entry from the webpack `resolve.fallback` config — `with` is not a Node.js core module, so the fallback never did anything [GS-338].
+- "config-overrides.js" updated to fix errors running the app with RUN_BUNDLER="react-scripts" [GS-338] and refactored to use fileURLToPath for path resolution and clean up unused debug logs [GS-327].
+- "process" dependency installation on "webpack.config.js" file documentation to to fix errors running the app [GS-338].
+- "generic.editor.rfc.common.jsx" and "generic.editor.rfc.service.jsx" fixed to show eventual configuration errors on child listings, and updated to show the editor name in the error messages [GS-327].
+- "vite.config.mjs" updated to fix the "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite: `__dirname` (vite.config.mjs:54:42). Use `import.meta.dirname` instead" after upgrading vite to version 8 [GS-268].
+
+### Security
+- Upgrade dependencies to latest version: crypto-browserify@^3.12.1, downshift@^9.4.0, react-icons@^5.7.0, react-markdown@^10.1.0, react-syntax-highlighter@^16.1.1 [GS-219] [GS-214].
+- Upgrade axios@^1.19.0 to fix the security vulnerabilities [GS-219]:
+  - Server-side Request Forgery (SSRF) [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111062] in axios@1.15.1
+  - Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111079] in axios@1.15.1
+  - Insertion of Sensitive Information Into Sent Data [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17172681] in axios@1.15.1
+  - Improperly Controlled Modification of Dynamically-Determined Object Attributes [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-16299921] in axios@1.15.1
+  - Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-17111060] in axios@1.15.1
+  - Prototype Pollution [Critical Severity][https://security.snyk.io/vuln/SNYK-JS-AXIOS-16417750] in axios@1.15.1
+  - Improper Removal of Sensitive Information Before Storage or Transfer [High Severity][https://security.snyk.io/vuln/SNYK-JS-FOLLOWREDIRECTS-16032162] in follow-redirects@1.15.11
+- Upgrade yup@^1.7.1 to fix the security vulnerabilities [GS-219]:
+  - Arbitrary Code Injection [High Severity][https://security.snyk.io/vuln/SNYK-JS-LODASH-15869625] in lodash@4.17.23
+    introduced by yup@0.32.11 > lodash@4.17.23
+  - Arbitrary Code Injection [High Severity][https://security.snyk.io/vuln/SNYK-JS-LODASHES-15869627] in lodash-es@4.17.23
+    introduced by yup@0.32.11 > lodash-es@4.17.23
+- Upgrade react-router-dom@^7.18.2 to fix the security vulnerability [GS-219]:
+  - React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response. This is a follow up to CVE-2026-22030 to address related CSRF flows in unstable RSC code paths.
+- "react" and "react-dom" have now peer dependencies with "^18.2.0" that does not affect this codebase because it only uses BrowserRouter/Routes/Route/Link/Navigate, no RSC APIs. By the way React/ReactDOM will be upgraded to 19 on next release to fix the mentioned react-router-dom security vulnerability [GS-219].
+- Bump Node.js version in .nvmrc to 26 [GS-339].
+- "users_user_history.json", "users_config.json" and "users_api_keys.json" configuration files now use the "mandatoryFilters" parameter in the backend configuration to ensure the user history, config and API keys are forced to the current user [GS-327].
+- "users_user_history_admin.json", "users_config_admin.json" and "users_api_keys_admin.json" configuration files don't use the "mandatoryFilters" parameter to let the superuser to see all the user history, config and API keys when editing users [GS-327].
+- Upgrade @babel/core to ^7.29.7 to fix the @babel/core: Arbitrary File Read via sourceMappingURL Comment ([CVE-2026-49356](https://github.com/babel/babel/security/advisories/GHSA-4x5r-pxfx-6jf8)) [GS-219].
+
+### Removed
+- The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].
+- Unused `peerDependencies`: `react-icons`, `web-vitals`, `fs`, `json-loader`, `with`, `constants-browserify`, `crypto-browserify`, `os-browserify`, `stream-browserify`, `tty-browserify`, `url`, `vm-browserify`. None are imported anywhere in `src/`, and the Node.js core module shims were only ever used by the (optional) webpack/`react-app-rewired` dev-server configs [GS-338].
+- Unused `devDependencies`: `@babel/cli` (nothing invokes the `babel` CLI binary), `@babel/preset-stage-0` (not referenced by any Babel config), `@rollup/plugin-typescript` (superseded by `rollup-plugin-typescript2`, which is what's actually used), `@testing-library/user-event` (no test uses it), `file-loader` and `url-loader` (SVGs use webpack 5's native `asset/resource` instead), `path` (all `require('path')` calls resolve to Node.js's builtin, not this package) [GS-338].
+- `id="copyButton"` attribute from the <CopyButton /> component [GS-327].
 
 
 ## [1.2.0] - 2026-02-18
@@ -134,7 +190,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Fix "PostCSS line return parsing error" by updating "postcss" to "^8.5.6" [GS-219].
 - Fix "Basic rate limiting to mitigate DoS via expensive FS operations" in "server.js" [GS-219].
 - Enhance LoginPage redirect handling with URL sanitization [GS-219].
-- Update "react-syntax-highlighter" to "^16.1.0" to fix the security vulnerability [GS-219]:
+- Update "react-syntax-highlighter" to "^16.1.0" to fix the security vulnerability [GS-219] [GS-214]:
   - "PrismJS DOM Clobbering vulnerability"
 - Bump babel-loader to ^10.0.0 to fix "@eslint/plugin-kit is vulnerable to Regular Expression Denial of Service attacks through ConfigCommentParser" [GS-219].
 - The following security vulnerabilities were fixed by running "npm audit fix --force" [GS-219]:
@@ -336,7 +392,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - "aws_deploy_to_s3.sh" take into account the APP_FE_URL domain in the CloudFront distribution creation.
 - "make publish" report the package name and version in the publishing confirmation.
 - "run_app_frontend.sh" assign APP_API_URL_DEV and REACT_APP_API_URL in the "dev" stage for both http and https modes. Previously it was only made for http.
-- Node install links changed to include the NVM alternative download in the README.
+- Node.js install links changed to include the NVM alternative download in the README.
 - License changed to ISC [FA-244].
 
 

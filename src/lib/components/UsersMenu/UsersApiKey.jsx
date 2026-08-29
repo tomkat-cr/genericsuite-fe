@@ -15,39 +15,55 @@ import {
 } from '../../constants/general_constants.jsx';
 
 import users_api_keys from "../../../configs/frontend/users_api_keys.json";
+import users_api_keys_admin from "../../../configs/frontend/users_api_keys_admin.json";
 
 const debug = false;
 
 const REACT_APP_API_KEYS_PREFIX = process.env.REACT_APP_API_KEYS_PREFIX || "sk-gsu-";
 
-export function UsersApiKey_EditorData() {
-    // console_debug_log("UsersApiKey_EditorData");
+export function UsersApiKey_EditorData(isSuperUser) {
     const registry = {
         "UsersApiKey": UsersApiKey,
         "TRUE_FALSE": TRUE_FALSE,
         "UsersApiKeyDbPreRead": UsersApiKeyDbPreRead,
     }
-    return GetFormData(users_api_keys, registry, false);
+    return GetFormData(
+        isSuperUser ? users_api_keys_admin : users_api_keys,
+        registry,
+        false
+    );
 }
 
 export function UsersApiKey() {
     return {
-        editorConfig: UsersApiKey_EditorData(),
+        editorConfig: UsersApiKey_EditorData(false),
         component: UsersApiKeyComponent
+    };
+}
+
+export function UsersApiKeyAdmin() {
+    return {
+        editorConfig: UsersApiKey_EditorData(true),
+        component: UsersApiKeyAdminComponent
     };
 }
 
 export const UsersApiKeyComponent = ({ parentData }) => (
     <GenericCrudEditor
-        editorConfig={UsersApiKey_EditorData()}
+        editorConfig={UsersApiKey_EditorData(false)}
+        parentData={parentData}
+    />
+)
+
+export const UsersApiKeyAdminComponent = ({ parentData }) => (
+    <GenericCrudEditor
+        editorConfig={UsersApiKey_EditorData(true)}
         parentData={parentData}
     />
 )
 
 export const generateAccessToken = (length = 64) => {
     // Generate a long access token
-    // return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    // return crypto.randomBytes(length).toString('hex');
     const array = new Uint8Array(length);
     window.crypto.getRandomValues(array);
     return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');

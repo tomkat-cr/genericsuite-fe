@@ -6,10 +6,14 @@ import { ErrorMessage, Field, Form, Formik, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
 import { dbApiService } from "./db.service.jsx";
-import { getEditorFlags } from './generic.editor.rfc.common.jsx';
+import { getEditorFlags, getFieldElementKey } from './generic.editor.rfc.common.jsx';
 import { MainSectionContext } from './generic.editor.rfc.provider.jsx';
 import { ChatBotButtonGeneric, SearchEngineButton } from './generic.editor.rfc.search.engine.button.jsx';
-import { putSelectOptionsFromArray } from './generic.editor.rfc.selector.jsx';
+import {
+    getSelectDescription,
+    putSelectOptionsFromArray,
+    SelectTableOptions,
+} from './generic.editor.rfc.selector.jsx';
 import { processGenericFuncArray } from './generic.editor.rfc.specific.func.jsx';
 import { SuggestionDropdown } from './generic.editor.rfc.suggestion.dropdown.jsx';
 import { defaultValue } from './generic.editor.utilities.jsx';
@@ -306,7 +310,8 @@ const PutOneFormfield = ({
     const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
     const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
     const divFieldClass = APP_FORMPAGE_FIELD_CLASS + " " + theme.label;
-    const fieldClass = (errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input);
+    const fieldKey = getFieldElementKey(currentObj);
+    const fieldClass = (errors[fieldKey] && touched[fieldKey] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input);
 
     const readOnlyfield =
         editorFlags.isReadOnly ||
@@ -388,7 +393,7 @@ const PutOneFormfield = ({
     )
 
     // id name
-    let idName = currentObj.name;
+    let idName = fieldKey;
 
     // Special buttons definitions
     const chatbot_popup = defaultValue(currentObj, "chatbot_popup", false); // Ex. true or false
@@ -431,6 +436,33 @@ const PutOneFormfield = ({
                     />
                 </Field>
             );
+            break;
+        case 'select_table':
+            if (readOnlyfield) {
+                elementInput = (
+                    <div
+                        id={idName}
+                        className={fieldClass}
+                    >
+                        {getSelectDescription(currentObj, dbRow)}
+                    </div>
+                );
+            } else {
+                elementInput = (
+                    <Field
+                        name={idName}
+                        id={idName}
+                        as="select"
+                        required={currentObj.required}
+                        className={fieldClass}
+                        onBlur={runCalculation}
+                    >
+                        <SelectTableOptions
+                            currentObj={currentObj}
+                        />
+                    </Field>
+                );
+            }
             break;
         case 'select':
             elementInput = (
@@ -1146,8 +1178,8 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
                 } else if (defaultValues) {
                     responseObj = setDefaultFieldValue(currentObj);
                 }
-            } else if (verifyElementExistence(dataset, currentObj.name)) {
-                responseObj = dataset[currentObj.name];
+            } else if (verifyElementExistence(dataset, getFieldElementKey(currentObj))) {
+                responseObj = dataset[getFieldElementKey(currentObj)];
                 if (responseObj === null || responseObj === undefined) {
                     // To avoid the warning "Warning:
                     // `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components"
@@ -1172,7 +1204,7 @@ const getFieldElementsDbValues = (editor, datasetRaw, defaultValues = true) => {
                     // Excluded types
                     break;
                 default:
-                    acc[currentObj.name] = responseObj;
+                    acc[getFieldElementKey(currentObj)] = responseObj;
             }
             return { ...acc };
             // }, {});
@@ -1225,7 +1257,7 @@ const getFieldElementsYupValidations = (editor, editorFlags) => {
                     `${currentObj.label} ${MSG_IS_REQUIRED}`
                 );
             }
-            acc[currentObj.name] = responseObj;
+            acc[getFieldElementKey(currentObj)] = responseObj;
             return { ...acc };
         }, {});
     if (debug) console_debug_log('getFieldElementsYupValidations | response:', response);

@@ -251,7 +251,7 @@ const GenericCrudEditorMain = (props) => {
   }, []);
 
   useEffect(() => {
-    if (editor && formMode[0] === ACTION_LIST) {
+    if (editor && !editor.error && formMode[0] === ACTION_LIST) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation"
       ShowHideWaitAnimation(true, animationElementId);
       let accessKeysListing = {
@@ -301,6 +301,14 @@ const GenericCrudEditorMain = (props) => {
           )
         }
       );
+    } else {
+      if (editor && editor.error) {
+        setStatus(
+          errorAndReEnter(
+            editor.errorMsg, (debug ? ' [GCE-M-070]' : null)
+          )
+        );
+      }
     }
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
 

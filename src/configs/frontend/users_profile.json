@@ -129,7 +129,8 @@
         }
     ],
     "childComponents": [
-        "UsersApiKey"
+        "UsersApiKey",
+        "UsersUserHistory"
     ],
     "dbListPreRead": [
         "UsersDbListPreRead"

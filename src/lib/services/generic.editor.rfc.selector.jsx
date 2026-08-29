@@ -25,6 +25,119 @@ export const buildDescription = (itemData, fieldArray) => {
   return description.trim();
 }
 
+export const useRelatedTableRows = (currentObj) => {
+  /*
+   * Fetches (with cache) the related table rows for a select_table field.
+   * Returns { rows, errorState, convertKey } where convertKey normalizes
+   * the related_key value of a row to a comparable string.
+   */
+  const [errorState, setErrorState] = useState(null);
+  const [rows, setRows] = useState(null);
+  const { fetchOrCache } = useContext(MainSectionContext);
+  const relatedTable = currentObj.related_table;
+  const relatedKey = currentObj.related_key || '_id';
+  const dbFilter = currentObj.related_filter || {};
+
+  useEffect(() => {
+    if (!relatedTable) {
+      setErrorState('select_table: missing related_table attribute');
+      return;
+    }
+    const dbService = new dbApiService({ url: relatedTable });
+    // Include related_key and related_filter in the cache key: two
+    // select_table fields can share the same related_table but scope
+    // different subsets of rows via related_filter (or key off a
+    // different related_key), and must not collide on the same cache
+    // entry (see genericsuite-mobile crud_editor.dart for the matching
+    // fix on the Flutter side).
+    const cacheKey =
+      `select_table_${relatedTable}_${relatedKey}_${JSON.stringify(dbFilter)}`;
+    fetchOrCache(cacheKey, () => dbService.getAll(dbFilter))
+      .then(
+        data => setRows(data),
+        error => setErrorState(error)
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [relatedTable, fetchOrCache]);
+
+  const convertValue = (value) => {
+    const dbService = new dbApiService({ url: relatedTable });
+    return relatedKey === '_id'
+      ? dbService.convertId(value)
+      : String(value);
+  };
+
+  const convertKey = (row) => convertValue(row[relatedKey]);
+
+  return { rows, errorState, convertKey, convertValue };
+};
+
+export const buildSelectTableDescription = (row, currentObj) => {
+  const descriptionFields = currentObj.description_fields || ['name'];
+  const separator = typeof currentObj.description_separator !== 'undefined'
+    ? currentObj.description_separator : ' ';
+  return descriptionFields
+    .map((field) => row[field])
+    .filter((value) => value !== null && typeof value !== 'undefined')
+    .join(separator);
+};
+
+export const SelectTableDescription = ({ currentObj, dbRow }) => {
+  /*
+   * Client-side fallback: shows the related record description for a
+   * select_table field when the backend didn't provide
+   * `{name}_description` (older backend versions).
+   */
+  const { rows, errorState, convertKey, convertValue } = useRelatedTableRows(currentObj);
+
+  if (errorState) {
+    return errorState.toString();
+  }
+  if (rows === null) {
+    return '';
+  }
+  const fkValue = dbRow[currentObj.local_field || currentObj.name];
+  if (fkValue === null || typeof fkValue === 'undefined') {
+    return '';
+  }
+  const match = rows.resultset.find(
+    (row) => convertKey(row) === convertValue(fkValue)
+  );
+  if (!match) {
+    return '';
+  }
+  return buildSelectTableDescription(match, currentObj);
+};
+
+export const SelectTableOptions = ({ currentObj }) => {
+  /*
+   * Options generator for a select_table field's editable dropdown.
+   * Fetches (with cache) the related table rows and renders one
+   * <option> per row, plus the "Select an option" placeholder.
+   */
+  const { rows, errorState, convertKey } = useRelatedTableRows(currentObj);
+
+  if (errorState) {
+    return (
+      <option value="">{errorState.toString()}</option>
+    );
+  }
+  if (rows === null) {
+    return null;
+  }
+  return [
+    <option key="_placeholder" value="">{MSG_SELECT_AN_OPTION}</option>,
+    ...rows.resultset.map((row) => {
+      const keyValue = convertKey(row);
+      return (
+        <option key={keyValue} value={keyValue}>
+          {buildSelectTableDescription(row, currentObj)}
+        </option>
+      );
+    }),
+  ];
+};
+
 export const GenericSelectGenerator = (props) => {
   /*
    * Select options generator component.
@@ -266,6 +379,19 @@ export const getSelectDescription = (currentObj, dbRow) => {
         dbRow={dbRow}
         show_description={true}
         currentObj={currentObj}
+      />
+    );
+  }
+  // Related table select (1-1 relationship)
+  if (currentObj.type === 'select_table') {
+    const descAttr = currentObj.name + '_description';
+    if (typeof dbRow[descAttr] !== 'undefined' && dbRow[descAttr] !== null) {
+      return dbRow[descAttr];
+    }
+    return (
+      <SelectTableDescription
+        currentObj={currentObj}
+        dbRow={dbRow}
       />
     );
   }

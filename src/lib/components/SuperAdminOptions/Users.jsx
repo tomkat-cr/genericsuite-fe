@@ -22,9 +22,9 @@ import {
     TRUE_FALSE,
 } from '../../constants/general_constants.jsx';
 
-import { UsersApiKey } from '../UsersMenu/UsersApiKey.jsx';
-import { UsersConfig } from '../UsersMenu/UsersConfig.jsx';
-import { UsersHistoryDbPostWrite, UsersUserHistory } from '../UsersMenu/UsersUserHistory.jsx';
+import { UsersApiKeyAdmin } from '../UsersMenu/UsersApiKey.jsx';
+import { UsersConfigAdmin } from '../UsersMenu/UsersConfig.jsx';
+import { UsersHistoryDbPostWrite, UsersUserHistoryAdmin } from '../UsersMenu/UsersUserHistory.jsx';
 
 import users from "../../../configs/frontend/users.json";
 
@@ -36,15 +36,15 @@ export function Users_EditorData(calleeName = 'Users_EditorData') {
         "TRUE_FALSE": TRUE_FALSE,
         "BILLING_PLANS": BILLING_PLANS,
         "GENDERS": GENDERS,
-        "UsersConfig": UsersConfig,
         "Users": Users,
         "UsersDbListPreRead": UsersDbListPreRead,
         "UsersDbPreWrite": UsersDbPreWrite,
         "UsersHistoryDbPostWrite": UsersHistoryDbPostWrite,
         "UsersValidations": UsersValidations,
         "UsersPasswordValidations": UsersPasswordValidations,
-        "UsersApiKey": UsersApiKey,
-        "UsersUserHistory": UsersUserHistory,
+        "UsersApiKeyAdmin": UsersApiKeyAdmin,
+        "UsersConfigAdmin": UsersConfigAdmin,
+        "UsersUserHistoryAdmin": UsersUserHistoryAdmin,
     }
     // return GetFormData('users', registry, calleeName);
     return GetFormData(users, registry, calleeName);

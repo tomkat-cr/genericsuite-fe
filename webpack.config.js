@@ -18,7 +18,23 @@ npm install --save-dev \
    webpack-cli \
    webpack-dev-server \
    html-webpack-plugin \
-   interpolate-html-plugin
+   interpolate-html-plugin \
+   css-loader \
+   postcss-loader \
+   style-loader
+
+If one of your dependencies needs Node.js core modules polyfilled in the
+browser bundle (see the commented-out "fallback" entries below), also run:
+
+npm install --save-dev \
+   os-browserify \
+   url \
+   crypto-browserify \
+   stream-browserify \
+   vm-browserify \
+   tty-browserify \
+   constants-browserify \
+   process
 */
 
 let devServerConfig = {
@@ -106,14 +122,14 @@ module.exports = {
             '@': path.resolve(__dirname, 'src/'),
         },
         fallback: {
-            "os": require.resolve("os-browserify/browser"),
-            "url": require.resolve("url"),
-            "crypto": require.resolve("crypto-browserify"),
-            "stream": require.resolve("stream-browserify"),
-            "with": require.resolve("with"),
-            "vm": require.resolve("vm-browserify"),
-            "tty": require.resolve("tty-browserify"),
-            "constants": require.resolve("constants-browserify"),
+            // Uncomment as needed (see the npm install note above):
+            // "os": require.resolve("os-browserify/browser"),
+            // "url": require.resolve("url"),
+            // "crypto": require.resolve("crypto-browserify"),
+            // "stream": require.resolve("stream-browserify"),
+            // "vm": require.resolve("vm-browserify"),
+            // "tty": require.resolve("tty-browserify"),
+            // "constants": require.resolve("constants-browserify"),
             // "http": require.resolve("stream-http"),
             // "https": require.resolve("https-browserify"),
         }

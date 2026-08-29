@@ -7,8 +7,9 @@ import { LoginPage } from './components/LoginPage/LoginPage.jsx';
 import { GeneralConfig, GeneralConfig_EditorData } from './components/SuperAdminOptions/GeneralConfig.jsx';
 import { Users, Users_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersValidations } from './components/SuperAdminOptions/Users.jsx';
 import { UserProfileEditor, UsersProfile_EditorData } from './components/UsersMenu/UserProfile.jsx';
-import { UsersApiKey, UsersApiKey_EditorData, UsersApiKeyDbPreRead } from './components/UsersMenu/UsersApiKey.jsx';
-import { UsersConfig, UsersConfig_EditorData } from './components/UsersMenu/UsersConfig.jsx';
+import { UsersApiKey, UsersApiKeyAdmin, UsersApiKey_EditorData, UsersApiKeyDbPreRead } from './components/UsersMenu/UsersApiKey.jsx';
+import { UsersConfig, UsersConfigAdmin, UsersConfig_EditorData } from './components/UsersMenu/UsersConfig.jsx';
+import { UsersUserHistory, UsersUserHistoryAdmin, UsersUserHistory_EditorData } from './components/UsersMenu/UsersUserHistory.jsx';
 // Constants
 import * as appConstants from './constants/app_constants.jsx';
 import * as classNameConstants from './constants/class_name_constants.jsx';
@@ -122,10 +123,15 @@ export {
     Users,
     Users_EditorData,
     UsersApiKey,
+    UsersApiKeyAdmin,
     UsersApiKey_EditorData,
     UsersApiKeyDbPreRead,
     UsersConfig,
+    UsersConfigAdmin,
     UsersConfig_EditorData,
+    UsersUserHistory,
+    UsersUserHistoryAdmin,
+    UsersUserHistory_EditorData,
     UsersDbListPreRead,
     UsersDbPreWrite,
     UsersPasswordValidations,

@@ -1,3 +1,6 @@
 {
-    "table_name": "users"
+    "table_name": "users",
+    "mandatoryFilters": {
+        "_id": "{CurrentUserId}"
+    }
 }

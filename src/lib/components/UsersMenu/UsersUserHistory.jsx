@@ -21,28 +21,47 @@ import { newIdString } from "../../services/id.utilities.jsx";
 import { console_debug_log } from '../../services/logging.service.jsx';
 
 import users_user_history from "../../../configs/frontend/users_user_history.json";
+import users_user_history_admin from "../../../configs/frontend/users_user_history_admin.json";
 
 const debug = false;
 
-export function UsersUserHistory_EditorData() {
+export function UsersUserHistory_EditorData(isSuperUser) {
     const registry = {
         "UsersUserHistory": UsersUserHistory,
         "TRUE_FALSE": TRUE_FALSE,
         "BILLING_PLANS": BILLING_PLANS,
     }
-    return GetFormData(users_user_history, registry, false);
+    return GetFormData(
+        isSuperUser ? users_user_history_admin : users_user_history,
+        registry,
+        false
+    );
 }
 
 export function UsersUserHistory() {
     return {
-        editorConfig: UsersUserHistory_EditorData(),
+        editorConfig: UsersUserHistory_EditorData(false),
         component: UsersUserHistoryComponent
+    };
+}
+
+export function UsersUserHistoryAdmin() {
+    return {
+        editorConfig: UsersUserHistory_EditorData(true),
+        component: UsersUserHistoryAdminComponent
     };
 }
 
 export const UsersUserHistoryComponent = ({ parentData }) => (
     <GenericCrudEditor
-        editorConfig={UsersUserHistory_EditorData()}
+        editorConfig={UsersUserHistory_EditorData(false)}
+        parentData={parentData}
+    />
+)
+
+export const UsersUserHistoryAdminComponent = ({ parentData }) => (
+    <GenericCrudEditor
+        editorConfig={UsersUserHistory_EditorData(true)}
         parentData={parentData}
     />
 )

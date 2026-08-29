@@ -147,9 +147,9 @@
         }
     ],
     "childComponents": [
-        "UsersUserHistory",
-        "UsersConfig",
-        "UsersApiKey"
+        "UsersConfigAdmin",
+        "UsersApiKeyAdmin",
+        "UsersUserHistoryAdmin"
     ],
     "dbListPreRead": [
         "UsersDbListPreRead"

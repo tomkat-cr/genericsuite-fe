@@ -115,16 +115,16 @@ const NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS = "1-w-full 1-text-left 1-flex 
 // Alert messages and message boxes
 
 const ALERT_BASE_CLASS = "1-relative p-3 border border-transparent rounded-sm alertBaseClass";
-const ALERT_DANGER_CLASS = "".concat(ALERT_BASE_CLASS, " text-red-800 bg-red-100 border-red-200 alertDangerClass");
-const ALERT_WARNING_CLASS = "".concat(ALERT_BASE_CLASS, " text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass");
-const ALERT_INFO_CLASS = "".concat(ALERT_BASE_CLASS, " text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass");
-const ALERT_SUCCESS_CLASS = "".concat(ALERT_BASE_CLASS, " text-green-800 bg-green-100 border-green-200 alertSuccessClass");
-const ERROR_MSG_CLASS = "".concat(ALERT_DANGER_CLASS, " mt-4 p-2 rounded-md errorMsgClass");
-const WARNING_MSG_CLASS = "".concat(ALERT_WARNING_CLASS, " mt-4 p-2 rounded-md warningMsgClass");
-const INFO_MSG_CLASS = "".concat(ALERT_INFO_CLASS, " mt-4 mb-4 p-2 rounded-md flex justify-between align-middle infoMsgClass");
+const ALERT_DANGER_CLASS = `${ALERT_BASE_CLASS} text-red-800 bg-red-100 border-red-200 alertDangerClass`;
+const ALERT_WARNING_CLASS = `${ALERT_BASE_CLASS} text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass`;
+const ALERT_INFO_CLASS = `${ALERT_BASE_CLASS} text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass`;
+const ALERT_SUCCESS_CLASS = `${ALERT_BASE_CLASS} text-green-800 bg-green-100 border-green-200 alertSuccessClass`;
+const ERROR_MSG_CLASS = `${ALERT_DANGER_CLASS} mt-4 p-2 rounded-md errorMsgClass`;
+const WARNING_MSG_CLASS = `${ALERT_WARNING_CLASS} mt-4 p-2 rounded-md warningMsgClass`;
+const INFO_MSG_CLASS = `${ALERT_INFO_CLASS} mt-4 mb-4 p-2 rounded-md flex justify-between align-middle infoMsgClass`;
 const INFO_MSG_BUTTON_CLASS = "rounded-full p-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-800 infoMsgButtonClass";
-const SUCCESS_MSG_CLASS = "".concat(ALERT_SUCCESS_CLASS, " mt-4 p-2 rounded-md successMsgClass");
-const GRAY_BOX_MSG_CLASS = "".concat(ALERT_BASE_CLASS, " text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass");
+const SUCCESS_MSG_CLASS = `${ALERT_SUCCESS_CLASS} mt-4 p-2 rounded-md successMsgClass`;
+const GRAY_BOX_MSG_CLASS = `${ALERT_BASE_CLASS} text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass`;
 
 // Forms
 
@@ -162,14 +162,14 @@ const DARK_MODE_BUTTON_DARK_INLINE_CLASS = "hidden dark:inline darkModeButtonDar
 // Listing page buttons (GCE_RFC)
 
 const BUTTON_LISTING_CLASS = "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass";
-const BUTTON_LISTING_DISABLED_CLASS = "".concat(BUTTON_LISTING_CLASS, " opacity-50 buttonListingDisabledClass");
-const BUTTON_LISTING_NEW_CLASS = "".concat(BUTTON_LISTING_CLASS, " buttonListingNewClass");
-const BUTTON_LISTING_REFRESH_CLASS = "".concat(BUTTON_LISTING_CLASS, " text-xs buttonListingRefreshClass");
+const BUTTON_LISTING_DISABLED_CLASS = `${BUTTON_LISTING_CLASS} opacity-50 buttonListingDisabledClass`;
+const BUTTON_LISTING_NEW_CLASS = `${BUTTON_LISTING_CLASS} buttonListingNewClass`;
+const BUTTON_LISTING_REFRESH_CLASS = `${BUTTON_LISTING_CLASS} text-xs buttonListingRefreshClass`;
 
 // General app section (GCE_RFC)
 
 const APP_GENERAL_MARGINS_CLASS = 'mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass';
-const APP_TOP_DIV_CLASS = "".concat(APP_GENERAL_MARGINS_CLASS, " rounded-lg appTopDivClass");
+const APP_TOP_DIV_CLASS = `${APP_GENERAL_MARGINS_CLASS} rounded-lg appTopDivClass`;
 const APP_LEVEL2_DIV_CLASS = "overflow-x-auto appLevel2DivClass";
 const APP_TITLE_H1_CLASS = 'text-xl font-bold mb-4 appTitleH1Class';
 const APP_TITLE_RECYCLE_BUTTON_CLASS = "pl-2 align-bottom appTitleRecycleButtonClass";
@@ -182,25 +182,25 @@ const APP_LISTING_TABLE_HDR_THEAD_CLASS = "bg-white dark:bg-black appListingTabl
 const APP_LISTING_TABLE_HDR_TR_CLASS = "appListingTableHdrTrClass";
 const APP_LISTING_TABLE_HDR_TH_CLASS = "text-left p-2 appListingTableHdrThClass";
 const APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS = 'appListingTableHrdActionsColClass';
-const APP_LISTING_TABLE_BODY_TBODY_CLASS = "appListingTableBodyTbodyClass";
+const APP_LISTING_TABLE_BODY_TBODY_CLASS = `appListingTableBodyTbodyClass`;
 const APP_LISTING_TABLE_BODY_TR_ODD_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrOddClass';
 const APP_LISTING_TABLE_BODY_TR_EVEN_CLASS = 'hover:bg-opacity-80 appListingTableBodyTrEvenClass';
 const APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS = 'appListingTableBodyTrActionsOddClass';
 const APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS = 'appListingTableBodyTrActionsEvenClass';
 const APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS = "p-2 appListingTableBodyTdBaseOddClass";
 const APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS = "p-2 appListingTableBodyTdBaseEvenClass";
-const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " break-words appListingTableBodyTdOddClass");
-const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " break-words appListingTableBodyTdEvenClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass");
-const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = "".concat(APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS, " bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass");
+const APP_LISTING_TABLE_BODY_TD_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} break-words appListingTableBodyTdOddClass`;
+const APP_LISTING_TABLE_BODY_TD_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} break-words appListingTableBodyTdEvenClass`;
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass`;
+const APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS = `${APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS} bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass`;
 
 // Listing page search box (GCE_RFC)
 
 const APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS = "flex items-center space-x-2 appListingSearchBoxTopDivClass";
 const APP_LISTING_SEARCH_BOX_LABEL_CLASS = "mr-2 text-sm appListingSearchBoxLabelClass";
 const APP_LISTING_SEARCH_BOX_INPUT_CLASS = "p-2 rounded-xl border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
-const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass");
-const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = "".concat(BUTTON_LISTING_CLASS, " mr-2 text-xs appListingSearchBoxStopButtonClass");
+const APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass`;
+const APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS = `${BUTTON_LISTING_CLASS} mr-2 text-xs appListingSearchBoxStopButtonClass`;
 const SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS = 'ml-2 searchEngineButtonTopDivClass';
 
 // Listing page bottom toolbar (next and previous page, lines per page, search) (GCE_RFC)
@@ -220,10 +220,10 @@ const APP_LISTING_TOOLBAR_WAIT_ANIMATION_CLASS = "ml-3 mr-3 hidden appListingToo
 const APP_FORMPAGE_LABEL_CLASS = "font-medium appFormPageLabelClass";
 const APP_FORMPAGE_LABEL_REQUIRED_CLASS = "font-medium text-red-700 appFormPageLabelRequiredClass";
 const APP_FORMPAGE_FORM_BUTTON_BAR_CLASS = "flex align-middle space-x-4 appFormPageFormButtonBarClass";
-const APP_FORMPAGE_FIELD_CLASS = "flex flex-col ".concat(FORM_GROUP_CLASS, " appFormPageFieldClass");
-const APP_FORMPAGE_FIELD_BASE_CLASS = "".concat(FORM_CONTROL_CLASS, " border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass");
-const APP_FORMPAGE_FIELD_GOOD_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " appFormPageFieldGoodClass");
-const APP_FORMPAGE_FIELD_INVALID_CLASS = "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " is-invalid appFormPageFieldInvalidClass");
+const APP_FORMPAGE_FIELD_CLASS = `flex flex-col ${FORM_GROUP_CLASS} appFormPageFieldClass`;
+const APP_FORMPAGE_FIELD_BASE_CLASS = `${FORM_CONTROL_CLASS} border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass`;
+const APP_FORMPAGE_FIELD_GOOD_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} appFormPageFieldGoodClass`;
+const APP_FORMPAGE_FIELD_INVALID_CLASS = `${APP_FORMPAGE_FIELD_BASE_CLASS} is-invalid appFormPageFieldInvalidClass`;
 const APP_FORMPAGE_SPECIAL_BUTTON_DIV_CLASS = "align-middle flex appFormPageSpecialButtonDivClass";
 const APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS = "mt-6 appFormPageChildComponentsTopDivClass";
 
@@ -250,8 +250,8 @@ const MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS = "flex-col-reverse space-y-4 space-y-
 const MODALIB_BUTTON_BASESTYLE_CLASS = 'px-4 py-2 border rounded-xl text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-offset-2 modalibButtonBaseStyleClass';
 const MODALIB_BUTTON_BASESTYLE_WIDE_CLASS = 'flex-1 modalibButtonBaseStyleWideClass';
 const MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS = 'w-full flex justify-center modalibButtonBaseStyleNotWideClass';
-const MODALIB_BUTTON_PRIMARY_CLASS = "".concat(BUTTON_PRIMARY_CLASS, " modalibButtonPrimaryClass");
-const MODALIB_BUTTON_SECONDARY_CLASS = "".concat(BUTTON_SECONDARY_CLASS, " modalibButtonSecondaryClass");
+const MODALIB_BUTTON_PRIMARY_CLASS = `${BUTTON_PRIMARY_CLASS} modalibButtonPrimaryClass`;
+const MODALIB_BUTTON_SECONDARY_CLASS = `${BUTTON_SECONDARY_CLASS} modalibButtonSecondaryClass`;
 const MODALIB_BUTTON_SUCCESS_CLASS = 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass';
 const MODALIB_BUTTON_DANGER_CLASS = 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass';
 
@@ -262,7 +262,7 @@ const LOGIN_PAGE_EXTRA_PT = "pt-6 loginPageExtraPtClass";
 
 // Login button
 
-const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = "".concat(HORIZONTALLY_CENTERED_CLASS, " p-4 loginButtonInAppComponentClass");
+const LOGIN_BUTTON_IN_APP_COMPONENT_CLASS = `${HORIZONTALLY_CENTERED_CLASS} p-4 loginButtonInAppComponentClass`;
 
 // Components
 
@@ -507,21 +507,19 @@ const setWindowLocationHref = url => {
   window.location.href = url;
 };
 
-var _process$env$REACT_AP;
 const history = createBrowserHistory();
-const hasHashRouter = (_process$env$REACT_AP = process.env.REACT_APP_HASH_ROUTER) !== null && _process$env$REACT_AP !== void 0 ? _process$env$REACT_AP : true;
+const hasHashRouter = process.env.REACT_APP_HASH_ROUTER ?? true;
 const getUrlForRouter = url => {
   if (!url.startsWith('/')) {
     url = '/' + url;
   }
-  return "".concat(hasHashRouter ? '/#' : '').concat(getPrefix()).concat(url);
+  return `${hasHashRouter ? '/#' : ''}${getPrefix()}${url}`;
 };
 function getPrefix() {
   let hardPrefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   if (hardPrefix) {
-    var _process$env$REACT_AP2;
-    const prefix = (_process$env$REACT_AP2 = process.env.REACT_APP_URI_PREFIX) !== null && _process$env$REACT_AP2 !== void 0 ? _process$env$REACT_AP2 : '';
-    return "/".concat(prefix);
+    const prefix = process.env.REACT_APP_URI_PREFIX ?? '';
+    return `/${prefix}`;
   }
   return '';
 }
@@ -573,47 +571,6 @@ function _extends() {
     }
     return n;
   }, _extends.apply(null, arguments);
-}
-function ownKeys(e, r) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r && (o = o.filter(function (r) {
-      return Object.getOwnPropertyDescriptor(e, r).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread2(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
-      _defineProperty(e, r, t[r]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
-      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-    });
-  }
-  return e;
-}
-function _objectWithoutProperties(e, t) {
-  if (null == e) return {};
-  var o,
-    r,
-    i = _objectWithoutPropertiesLoose(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-function _objectWithoutPropertiesLoose(r, e) {
-  if (null == r) return {};
-  var t = {};
-  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r[n];
-  }
-  return t;
 }
 function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
@@ -692,12 +649,12 @@ const growUpTextAreaInner = function (textAreaId, conversationBlockId, sectionVi
     const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
     // Ensure the textarea does not exceed its max-height...
     if (textarea.scrollHeight > maxOffsetHeight) {
-      textarea.style.height = "".concat(maxOffsetHeight, "px");
+      textarea.style.height = `${maxOffsetHeight}px`;
     }
     // Set conversation height to make textarea to scroll up according its height
     const sectionViewportHeightInPx = sectionViewportHeight / 100 * viewportHeight;
     const conversationHeight = sectionViewportHeightInPx - textarea.clientHeight + textareaMinHeight;
-    conversationObj.style.height = "".concat(conversationHeight, "px");
+    conversationObj.style.height = `${conversationHeight}px`;
   }
 };
 const growUpTextArea = function (textAreaId, conversationBlockId, sectionViewportHeight, maxOffsetHeight) {
@@ -843,7 +800,6 @@ const CopyButton = _ref6 => {
     document.body.removeChild(textArea);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
-    id: "copyButton",
     style: {
       position: 'absolute',
       top: '10px',
@@ -905,57 +861,70 @@ const AppContext = /*#__PURE__*/createContext();
 const appReducer = (state, action) => {
   switch (action.type) {
     case 'SET_APP_LOGO':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         appLogo: action.payload
-      });
+      };
     case 'SET_APP_LOGO_HEADER':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         appLogoHeader: action.payload
-      });
+      };
     case 'SET_COMPONENT_MAP':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         componentMap: action.payload
-      });
+      };
     case 'SET_STATE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         state: action.payload
-      });
+      };
     case 'SET_MENU_OPTIONS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         menuOptions: action.payload
-      });
+      };
     case 'SET_SIDE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         sideMenu: action.payload
-      });
+      };
     case 'TOGGLE_SIDE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         sideMenu: !state.sideMenu
-      });
+      };
     case 'SET_DARK_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isDarkMode: action.payload
-      });
+      };
     case 'TOGGLE_DARK_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isDarkMode: !state.isDarkMode
-      });
+      };
     case 'SET_MOBILE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isMobileMenuOpen: action.payload
-      });
+      };
     case 'TOGGLE_MOBILE_MENU':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isMobileMenuOpen: !state.isMobileMenuOpen
-      });
+      };
     case 'SET_EXPANDED_MENUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         expandedMenus: action.payload
-      });
+      };
     case 'SET_WIDE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         isWide: action.payload
-      });
+      };
     default:
       return state;
   }
@@ -1080,7 +1049,8 @@ const AppProvider = _ref => {
     resizer.addListener();
     return () => resizer.removeListener();
   }, [setIsWide]);
-  const contextValue = useMemo(() => _objectSpread2(_objectSpread2({}, appState), {}, {
+  const contextValue = useMemo(() => ({
+    ...appState,
     setAppLogo,
     setAppLogoHeader,
     setComponentMap,
@@ -1115,7 +1085,6 @@ var AppContext$1 = /*#__PURE__*/Object.freeze({
 
 // IconsLib
 const GsIcons = _ref => {
-  var _selectedSvg$props$cl;
   let {
     icon,
     size = null,
@@ -1229,10 +1198,10 @@ const GsIcons = _ref => {
       "height": "160"
     }
   };
-  size = size !== null && size !== void 0 ? size : 'sm';
+  size = size ?? 'sm';
   if (typeof sizeData[size] === "undefined") {
-    console.error("Invalid \"size\" *".concat(size, "*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x"));
-    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid \"size\" *".concat(size, "*"));
+    console.error(`Invalid "size" *${size}*. Must be: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, or 10x`);
+    return /*#__PURE__*/React.createElement(React.Fragment, null, `Invalid "size" *${size}*`);
   }
   const currentWidth = sizeData[size].width;
   const currentHeight = sizeData[size].height;
@@ -1242,7 +1211,7 @@ const GsIcons = _ref => {
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
         width: "6",
         height: "3",
-        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: ML2_ICON_CLASS + (className ?? '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L6 0",
         fill: "none",
@@ -1255,7 +1224,7 @@ const GsIcons = _ref => {
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
         width: "3",
         height: "6",
-        className: ML2_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: ML2_ICON_CLASS + (className ?? '')
       }, /*#__PURE__*/React.createElement("path", {
         d: "M0 0L3 3L0 6",
         fill: "none",
@@ -1415,7 +1384,7 @@ const GsIcons = _ref => {
       break;
     case 'place-holder-circle':
       selectedSvg = /*#__PURE__*/React.createElement("svg", {
-        className: ROUNDED_ICON_CLASS + (className !== null && className !== void 0 ? className : ''),
+        className: ROUNDED_ICON_CLASS + (className ?? ''),
         fill: "none"
       }, /*#__PURE__*/React.createElement("rect", {
         width: currentWidth,
@@ -1680,7 +1649,7 @@ const GsIcons = _ref => {
       break;
     case 'vertical-slider':
       selectedSvg = /*#__PURE__*/React.createElement("div", {
-        className: VERTICAL_SLIDER_ICON_CLASS + (className !== null && className !== void 0 ? className : '')
+        className: VERTICAL_SLIDER_ICON_CLASS + (className ?? '')
       });
       break;
     case 'warning-sign':
@@ -1767,22 +1736,21 @@ const GsIcons = _ref => {
       }
   }
   if (!selectedSvg) {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, "Invalid Icon *".concat(icon, "*"));
+    return /*#__PURE__*/React.createElement(React.Fragment, null, `Invalid Icon *${icon}*`);
   }
   let iconProps = {
     'data-icon': icon.toLowerCase(),
     'id': id,
-    'className': (_selectedSvg$props$cl = selectedSvg.props.className) !== null && _selectedSvg$props$cl !== void 0 ? _selectedSvg$props$cl : className
+    'className': selectedSvg.props.className ?? className
   };
   if (selectedSvg.type === "svg") {
-    var _selectedSvg$props$xm, _selectedSvg$props$wi, _selectedSvg$props$he, _selectedSvg$props$ro, _selectedSvg$props$al, _selectedSvg$props$ti;
     // iconProps['viewBox'] = "0 0 " + currentWidth + " " + currentHeight;
-    iconProps['xmlns'] = (_selectedSvg$props$xm = selectedSvg.props.xmlns) !== null && _selectedSvg$props$xm !== void 0 ? _selectedSvg$props$xm : "http://www.w3.org/2000/svg";
-    iconProps['width'] = (_selectedSvg$props$wi = selectedSvg.props.width) !== null && _selectedSvg$props$wi !== void 0 ? _selectedSvg$props$wi : currentWidth;
-    iconProps['height'] = (_selectedSvg$props$he = selectedSvg.props.height) !== null && _selectedSvg$props$he !== void 0 ? _selectedSvg$props$he : currentHeight;
-    iconProps['role'] = (_selectedSvg$props$ro = selectedSvg.props.role) !== null && _selectedSvg$props$ro !== void 0 ? _selectedSvg$props$ro : role;
-    iconProps['alt'] = (_selectedSvg$props$al = selectedSvg.props.alt) !== null && _selectedSvg$props$al !== void 0 ? _selectedSvg$props$al : alt;
-    iconProps['title'] = (_selectedSvg$props$ti = selectedSvg.props.title) !== null && _selectedSvg$props$ti !== void 0 ? _selectedSvg$props$ti : alt;
+    iconProps['xmlns'] = selectedSvg.props.xmlns ?? "http://www.w3.org/2000/svg";
+    iconProps['width'] = selectedSvg.props.width ?? currentWidth;
+    iconProps['height'] = selectedSvg.props.height ?? currentHeight;
+    iconProps['role'] = selectedSvg.props.role ?? role;
+    iconProps['alt'] = selectedSvg.props.alt ?? alt;
+    iconProps['title'] = selectedSvg.props.title ?? alt;
   }
   selectedSvg = /*#__PURE__*/React.cloneElement(selectedSvg, iconProps);
   return selectedSvg;
@@ -1801,17 +1769,20 @@ const initialState$2 = {
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'REGISTER_USER':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         currentUser: action.payload
-      });
+      };
     case 'UNREGISTER_USER':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         currentUser: null
-      });
+      };
     case 'SET_ASK_FOR_LOGIN':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         askForLogin: action.payload
-      });
+      };
     default:
       return state;
   }
@@ -1863,8 +1834,6 @@ var UserContext$1 = /*#__PURE__*/Object.freeze({
   useUser: useUser
 });
 
-const _excluded$3 = ["onClick"],
-  _excluded2 = ["variant", "className", "as"];
 const MainContainer = _ref => {
   let {
     children
@@ -1874,7 +1843,7 @@ const MainContainer = _ref => {
     sideMenu
   } = useAppContext();
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+    className: `${sideMenu ? MAIN_CONTAINER_FOR_SIDE_MENU_CLASS : MAIN_CONTAINER_FOR_TOP_MENU_CLASS} ${theme.background} ${theme.text}`
   }, children);
 };
 const AppSectionContainer = _ref2 => {
@@ -1911,7 +1880,7 @@ const AppFooterContainer = _ref4 => {
     theme
   } = useAppContext();
   return /*#__PURE__*/React.createElement("footer", {
-    className: "".concat(APP_FOOTER_CONTAINER_CLASS, " ").concat(theme.primary)
+    className: `${APP_FOOTER_CONTAINER_CLASS} ${theme.primary}`
   }, children);
 };
 const CenteredBoxContainer = _ref5 => {
@@ -1925,7 +1894,7 @@ const CenteredBoxContainer = _ref5 => {
   return /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(CENTERED_BOX_CONTAINER_DIV_2_CLASS, " ").concat(theme.contentBg)
+    className: `${CENTERED_BOX_CONTAINER_DIV_2_CLASS} ${theme.contentBg}`
   }, /*#__PURE__*/React.createElement("div", {
     className: CENTERED_BOX_CONTAINER_DIV_3_CLASS
   }, children)));
@@ -1949,13 +1918,13 @@ const Navbar = _ref6 => {
     if (isMobileMenuOpen) {
       return /*#__PURE__*/React.createElement("nav", {
         id: "navbar-side-menu",
-        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+        className: `${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_OPEN_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`
       }, children);
     }
     if (isWide) {
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("nav", {
         id: "navbar-side-menu",
-        className: "".concat(NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS, " ").concat(NAVBAR_HEADER_FOR_SIDE_MENU_CLASS, " ").concat(theme.secondary, " ").concat(theme.text)
+        className: `${NAVBAR_HEADER_FOR_SIDE_MENU_MOBILE_CLOSE_CLASS} ${NAVBAR_HEADER_FOR_SIDE_MENU_CLASS} ${theme.secondary} ${theme.text}`
       }, children), /*#__PURE__*/React.createElement(ToggleSideBar, {
         onClick: () => document.getElementById('navbar-side-menu').classList.toggle('hidden')
       }));
@@ -1963,7 +1932,7 @@ const Navbar = _ref6 => {
     return null;
   }
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(NAVBAR_HEADER_FOR_TOP_MENU_CLASS, " ").concat(theme.primary)
+    className: `${NAVBAR_HEADER_FOR_TOP_MENU_CLASS} ${theme.primary}`
   }, children);
 };
 const NavbarBrand = _ref7 => {
@@ -2046,7 +2015,7 @@ const MobileMenuCloseButton = _ref0 => {
   } = useAppContext();
   return /*#__PURE__*/React.createElement("button", {
     onClick: toggleMobileMenu,
-    className: className !== null && className !== void 0 ? className : '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
+    className: className ?? '' + NAVBAR_MOBILE_CLOSE_BUTTON_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "x",
     size: "sm",
@@ -2068,7 +2037,7 @@ const NavbarMobileMenu = _ref1 => {
   return /*#__PURE__*/React.createElement("div", {
     className: NAVBAR_MOBILE_MENU_DIV_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(NAVBAR_MOBILE_MENU_DIV_2_CLASS, " ").concat(theme.background, " ").concat(theme.text)
+    className: `${NAVBAR_MOBILE_MENU_DIV_2_CLASS} ${theme.background} ${theme.text}`
   }, /*#__PURE__*/React.createElement("div", {
     className: NAVBAR_MOBILE_MENU_DIV_3_CLASS
   }, /*#__PURE__*/React.createElement("h2", {
@@ -2098,7 +2067,7 @@ const NavbarText = _ref10 => {
     className
   } = _ref10;
   return /*#__PURE__*/React.createElement("div", {
-    className: className !== null && className !== void 0 ? className : NAVBAR_TEXT_CLASS
+    className: className ?? NAVBAR_TEXT_CLASS
   }, children);
 };
 const NavbarTopForSideMenu = _ref11 => {
@@ -2110,7 +2079,7 @@ const NavbarTopForSideMenu = _ref11 => {
     theme
   } = useAppContext();
   return /*#__PURE__*/React.createElement("header", {
-    className: "".concat(NAVBAR_TOP_FOR_SIDE_MENU_CLASS, " ").concat(theme.primary)
+    className: `${NAVBAR_TOP_FOR_SIDE_MENU_CLASS} ${theme.primary}`
   }, children);
 };
 Navbar.Brand = NavbarBrand;
@@ -2138,7 +2107,7 @@ const NavDropdown = _ref12 => {
     theme,
     isWide
   } = useAppContext();
-  const fullId = "".concat(id, "_").concat(type);
+  const fullId = `${id}_${type}`;
   const isExpanded = expandedMenus.includes(fullId);
   const toggledropDownOpen = () => {
     toggleSubmenu(fullId, !isExpanded);
@@ -2164,10 +2133,10 @@ const NavDropdown = _ref12 => {
     mobile_menu: NAV_DROPDOWN_INNER_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTop),
-    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
-    side_menu: "".concat(NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+    top_menu: `${NAV_DROPDOWN_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTop}`,
+    hamburger: `${mobileMenuMode ? NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
+    side_menu: `${NAV_DROPDOWN_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_DROPDOWN_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`
   };
   const variantsSubmenuImage = {
     top_menu: NAV_DROPDOWN_IMAGE_TOP_MENU_CLASS,
@@ -2176,7 +2145,7 @@ const NavDropdown = _ref12 => {
     mobile_menu: NAV_DROPDOWN_IMAGE_MOBILE_MENU_CLASS
   };
   useEffect(() => {
-    const elementId = "".concat(fullId, "_dropDown");
+    const elementId = `${fullId}_dropDown`;
     const element = document.getElementById(elementId);
     if (element) {
       if (isExpanded) {
@@ -2187,7 +2156,7 @@ const NavDropdown = _ref12 => {
     }
   }, [isExpanded, fullId]);
   useEffect(() => {
-    const elementId = "".concat(fullId, "_submenu_image");
+    const elementId = `${fullId}_submenu_image`;
     const element = document.getElementById(elementId);
     if (element) {
       if (isExpanded) {
@@ -2209,20 +2178,20 @@ const NavDropdown = _ref12 => {
     className: variantStyleTopDiv
   }, /*#__PURE__*/React.createElement("button", {
     className: variantStyleButton,
-    id: "".concat(fullId, "_button"),
+    id: `${fullId}_button`,
     type: "button",
     onClick: toggledropDownOpen
   }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-    icon: icon !== null && icon !== void 0 ? icon : '',
+    icon: icon ?? '',
     size: "2xl",
     className: NAV_LINK_ICON_CLASS
   }) : title, /*#__PURE__*/React.createElement(GsIcons, {
-    id: "".concat(fullId, "_submenu_image"),
+    id: `${fullId}_submenu_image`,
     icon: directionImage,
     className: variantStyleSubmenuImage
   })), /*#__PURE__*/React.createElement("div", {
     className: variantStyleInnerDiv,
-    id: "".concat(fullId, "_dropDown")
+    id: `${fullId}_dropDown`
   }, expandedMenus.includes(fullId) && React.Children.map(children, child => {
     if (!child) {
       return null;
@@ -2254,10 +2223,10 @@ const NavDropdownItem = _ref13 => {
     mobile_menu: NAV_DROPDOWN_ITEM_TOP_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS, " ").concat(theme.textHoverTopSubMenu),
-    hamburger: "".concat(mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu),
-    side_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS, " ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS, " ").concat(theme.textHoverSide)
+    top_menu: `${NAV_DROPDOWN_ITEM_BUTTON_TOP_MENU_CLASS} ${theme.textHoverTopSubMenu}`,
+    hamburger: `${mobileMenuMode ? NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS : NAV_DROPDOWN_ITEM_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTopSubMenu}`,
+    side_menu: `${NAV_DROPDOWN_ITEM_BUTTON_SIDE_MENU_CLASS} ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_DROPDOWN_ITEM_BUTTON_MOBILE_MENU_CLASS} ${theme.textHoverSide}`
   };
   const variantStyleTopDiv = variantsTopDiv[type] || '';
   const variantStyleButton = variantsButton[type] || '';
@@ -2366,10 +2335,10 @@ const NavLink = _ref14 => {
     mobile_menu: NAV_LINK_TOP_DIV_MOBILE_MENU_CLASS
   };
   const variantsButton = {
-    top_menu: "".concat(NAV_LINK_BUTTON_TOP_MENU_CLASS, "  ").concat(theme.textHoverTop),
-    hamburger: "".concat(mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS, " ").concat(mobileMenuMode ? theme.textHoverSide : theme.textHoverTop),
-    side_menu: "".concat(NAV_LINK_BUTTON_SIDE_MENU_CLASS, "  ").concat(theme.textHoverSide),
-    mobile_menu: "".concat(NAV_LINK_BUTTON_MOBILE_MENU_CLASS, "  ").concat(theme.textHoverSide)
+    top_menu: `${NAV_LINK_BUTTON_TOP_MENU_CLASS}  ${theme.textHoverTop}`,
+    hamburger: `${mobileMenuMode ? NAV_LINK_BUTTON_MOBILE_MENU_CLASS : NAV_LINK_BUTTON_HAMBURGER_CLASS} ${mobileMenuMode ? theme.textHoverSide : theme.textHoverTop}`,
+    side_menu: `${NAV_LINK_BUTTON_SIDE_MENU_CLASS}  ${theme.textHoverSide}`,
+    mobile_menu: `${NAV_LINK_BUTTON_MOBILE_MENU_CLASS}  ${theme.textHoverSide}`
   };
   const variantStyleLi = variantsLi[type] || '';
   const variantStyleButton = variantsButton[type] || '';
@@ -2387,12 +2356,11 @@ Nav.Link = NavLink;
 // Buttons
 
 const ToggleSideBar = _ref15 => {
-  var _props$className;
   let {
-      onClick
-    } = _ref15,
-    props = _objectWithoutProperties(_ref15, _excluded$3);
-  props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + ((_props$className = props.className) !== null && _props$className !== void 0 ? _props$className : '');
+    onClick,
+    ...props
+  } = _ref15;
+  props.className = VERTICALLY_CENTERED_CLASS + " " + TOP0_Z50_CLASS + " " + (props.className ?? '');
   return /*#__PURE__*/React.createElement("div", _extends({
     onClick: onClick
   }, props), /*#__PURE__*/React.createElement(GsIcons, {
@@ -2400,30 +2368,28 @@ const ToggleSideBar = _ref15 => {
   }));
 };
 const GsButton = _ref16 => {
-  var _props$type;
   let {
-      variant = 'primary',
-      className = '',
-      as = null
-    } = _ref16,
-    props = _objectWithoutProperties(_ref16, _excluded2);
+    variant = 'primary',
+    className = '',
+    as = null,
+    ...props
+  } = _ref16;
   const variants = {
     primary: BUTTON_PRIMARY_CLASS,
     secondary: BUTTON_SECONDARY_CLASS
   };
   const variantStyle = variants[variant] || '';
   if (as) {
-    var _ref17, _props$to;
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button
     const As = as;
     return /*#__PURE__*/React.createElement(As, _extends({
-      to: (_ref17 = (_props$to = props.to) !== null && _props$to !== void 0 ? _props$to : props.href) !== null && _ref17 !== void 0 ? _ref17 : null,
-      className: "".concat(variantStyle, " ").concat(className)
+      to: props.to ?? props.href ?? null,
+      className: `${variantStyle} ${className}`
     }, props));
   }
   return /*#__PURE__*/React.createElement("button", _extends({
-    type: (_props$type = props.type) !== null && _props$type !== void 0 ? _props$type : "button",
-    className: "".concat(variantStyle, " ").concat(className)
+    type: props.type ?? "button",
+    className: `${variantStyle} ${className}`
   }, props));
 };
 
@@ -2441,14 +2407,13 @@ var NavLib = /*#__PURE__*/Object.freeze({
   ToggleSideBar: ToggleSideBar
 });
 
-const _excluded$2 = ["isWide", "variant", "className"];
 const Button = _ref => {
   let {
-      isWide,
-      variant = 'primary',
-      className = ''
-    } = _ref,
-    props = _objectWithoutProperties(_ref, _excluded$2);
+    isWide,
+    variant = 'primary',
+    className = '',
+    ...props
+  } = _ref;
   const baseStyle = MODALIB_BUTTON_BASESTYLE_CLASS + " " + (isWide ? MODALIB_BUTTON_BASESTYLE_WIDE_CLASS : MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS);
   const variants = {
     primary: MODALIB_BUTTON_PRIMARY_CLASS,
@@ -2459,7 +2424,7 @@ const Button = _ref => {
   const variantStyle = variants[variant] || variants.primary;
   return /*#__PURE__*/React.createElement(GsButton, _extends({
     variant: "",
-    className: "".concat(baseStyle, " ").concat(variantStyle, " ").concat(className)
+    className: `${baseStyle} ${variantStyle} ${className}`
   }, props));
 };
 const Modal = _ref2 => {
@@ -2489,7 +2454,7 @@ const Modal = _ref2 => {
     role: "dialog",
     "aria-modal": "true"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(MODALIB_MODAL_DIV_2_CLASS, " ").concat(theme.contentBg, " ").concat(theme.text)
+    className: `${MODALIB_MODAL_DIV_2_CLASS} ${theme.contentBg} ${theme.text}`
   }, /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_DIV_3_CLASS
   }, children)));
@@ -2517,7 +2482,7 @@ const ModalIcon = _ref4 => {
   return /*#__PURE__*/React.createElement("div", {
     className: MODALIB_MODAL_ICON_1_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: (iconClassName !== null && iconClassName !== void 0 ? iconClassName : '') + " " + MODALIB_MODAL_ICON_2_CLASS
+    className: (iconClassName ?? '') + " " + MODALIB_MODAL_ICON_2_CLASS
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: iconClassName === ALERT_DANGER_CLASS ? "warning-sign" : "checked-sign",
     className: MODALIB_MODAL_ICON_3_CLASS
@@ -2545,7 +2510,7 @@ const ModalFooter = _ref7 => {
     isWide
   } = _ref7;
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(MODALIB_MODAL_FOOTER_CLASS, " ").concat(isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS)
+    className: `${MODALIB_MODAL_FOOTER_CLASS} ${isWide ? MODALIB_MODAL_FOOTER_WIDE_CLASS : MODALIB_MODAL_FOOTER_NOT_WIDE_CLASS}`
   }, children);
 };
 Modal.Header = ModalHeader;
@@ -2668,7 +2633,7 @@ var ModalPopUp$1 = /*#__PURE__*/Object.freeze({
 const About = () => {
   return /*#__PURE__*/React.createElement(ModalPopUp, {
     title: "About",
-    link: "".concat(getWindowLocationOrigin()).concat(hasHashRouter ? '/#' : '', "/about_body?menu=0")
+    link: `${getWindowLocationOrigin()}${hasHashRouter ? '/#' : ''}/about_body?menu=0`
   });
 };
 const AboutBody = _ref => {
@@ -2726,7 +2691,9 @@ const mergeDicts = (dictToAdd, originDict) => {
     let [key, value] = _ref;
     acc[key] = value;
     return acc;
-  }, _objectSpread2({}, originDict));
+  }, {
+    ...originDict
+  });
   return dictToAddFinal;
 };
 
@@ -2933,16 +2900,22 @@ const buildConfigData = function () {
     "gce_actions_allows_mouse_over": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MOUSE_OVER || "0",
     "gce_actions_allows_magic_button": process.env.REACT_APP_GCE_ACTIONS_ALLOW_MAGIC_BUTTON || "1"
   };
-  lsDataDict = lsDataDict !== null && lsDataDict !== void 0 ? lsDataDict : {};
+  lsDataDict = lsDataDict ?? {};
   // Merge defaultConfigData with lsDataDict
-  return _objectSpread2(_objectSpread2({}, defaultConfigData), lsDataDict);
+  return {
+    ...defaultConfigData,
+    ...lsDataDict
+  };
 };
 const saveLocalConfig = function (lsDataDict) {
   let lsItemName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   lsItemName = defaultItemName(lsItemName);
   // This allows to add configuration items individually
   const existingLocalConfig = getLocalConfig(lsItemName);
-  lsDataDict = _objectSpread2(_objectSpread2({}, existingLocalConfig), lsDataDict);
+  lsDataDict = {
+    ...existingLocalConfig,
+    ...lsDataDict
+  };
   saveItemToLocalStorage(lsItemName, lsDataDict);
 };
 const getLocalConfig = function () {
@@ -2985,7 +2958,7 @@ function authHeader() {
   try {
     currentUser = getCurrentUserFromLocalStorage();
   } catch (error) {
-    console_debug_log("authHeader | ERROR: ".concat(error));
+    console_debug_log(`authHeader | ERROR: ${error}`);
   }
   if (currentUser && currentUser.token) {
     if (process.env.REACT_APP_X_TOKEN) {
@@ -2994,7 +2967,7 @@ function authHeader() {
       };
     } else {
       return {
-        Authorization: "Bearer ".concat(currentUser.token)
+        Authorization: `Bearer ${currentUser.token}`
       };
     }
   } else {
@@ -3064,7 +3037,7 @@ function handleResponseText(response, text, headers) {
   }
   return data;
 }
-const get401ErrorMessage = (statusText, reasonDetail) => !statusText || statusText !== null && statusText !== void 0 && statusText.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || String(reasonDetail ? reasonDetail : '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText || reasonDetail;
+const get401ErrorMessage = (statusText, reasonDetail) => !statusText || statusText?.includes('Unauthorized') ? ['Could not verify [L3]', 'Could not verify [L2]', 'Inconsistency [L4]'].includes(reasonDetail) || String(reasonDetail ? reasonDetail : '').includes('inactive') ? MSG_ERROR_INVALID_CREDS : MSG_ERROR_SESSION_EXPIRED : statusText || reasonDetail;
 async function handleFetchError(error) {
   let possibleCORS;
   let errorMsg;
@@ -3085,7 +3058,7 @@ async function handleFetchError(error) {
     reasonDetail = await error.text().then(text => {
       return text;
     }).catch(e => {
-      return "HTTP ".concat(error.status);
+      return `HTTP ${error.status}`;
     });
     if (error.status === 401) {
       errorMsg = get401ErrorMessage(error.statusText, reasonDetail);
@@ -3105,17 +3078,15 @@ async function handleFetchError(error) {
     */
     possibleCORS = error.message.includes('CORS');
     if (error.status === 401) {
-      var _error$response, _error$response2;
-      errorMsg = get401ErrorMessage((_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.statusText, (_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data);
+      errorMsg = get401ErrorMessage(error.response?.statusText, error.response?.data);
       reasonDetail = '';
     } else {
-      var _error$response3;
       errorMsg = error.message;
-      reasonDetail = (_error$response3 = error.response) === null || _error$response3 === void 0 ? void 0 : _error$response3.data;
+      reasonDetail = error.response?.data;
     }
   } else {
     possibleCORS = error instanceof TypeError && error.message.includes('Failed to fetch');
-    errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? " (".concat(MSG_ERROR_POSSIBLE_CORS, ")") : '');
+    errorMsg = MSG_ERROR_CONNECTION_FAIL + (possibleCORS ? ` (${MSG_ERROR_POSSIBLE_CORS})` : '');
     reasonDetail = error;
   }
   return Promise.reject({
@@ -3488,7 +3459,7 @@ const gsFetch = (url, requestOptions) => {
 };
 const getBaseApiUrl = () => {
   const apiVersion = process.env.REACT_APP_API_VERSION || 'v1';
-  return "".concat(process.env.REACT_APP_API_URL, "/").concat(apiVersion);
+  return `${process.env.REACT_APP_API_URL}/${apiVersion}`;
 };
 
 var fetch_utilities = /*#__PURE__*/Object.freeze({
@@ -3597,23 +3568,24 @@ class dbApiService {
       requestOptions['signal'] = options['signal'];
     }
     const urlQuery = this.paramsToUrlQuery(params);
-    const url = "".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery);
+    const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
     if (this.debug) {
-      console_debug_log("###===> getAll() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> getAll() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
     return gsFetch(url, requestOptions);
   }
   getOne(params) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    const requestOptions = _objectSpread2(_objectSpread2({}, options), {}, {
+    const requestOptions = {
+      ...options,
       method: 'GET',
       headers: this.props.authHeader
-    });
+    };
     const urlQuery = this.paramsToUrlQuery(params);
     if (this.debug) {
-      console_debug_log("###===> getOne() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> getOne() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    const url = "".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery);
+    const url = `${this.apiUrl}/${this.props.url}${urlQuery}`;
     return gsFetch(url, requestOptions);
   }
   createUpdateDelete(action, id, data) {
@@ -3638,9 +3610,9 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> createRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> createRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return gsFetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions);
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   updateRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -3654,15 +3626,15 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> updateRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> updateRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return gsFetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions);
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   deleteRow(id, data) {
     let queryParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     let urlQuery = this.paramsToUrlQuery(queryParams);
     if (id !== null) {
-      urlQuery += (urlQuery === '' ? '?' : "&") + "id=".concat(id);
+      urlQuery += (urlQuery === '' ? '?' : "&") + `id=${id}`;
     }
     const requestOptions = {
       method: 'DELETE',
@@ -3670,9 +3642,9 @@ class dbApiService {
       body: JSON.stringify(data)
     };
     if (this.debug) {
-      console_debug_log("###===> deleteRow() | ".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery));
+      console_debug_log(`###===> deleteRow() | ${this.apiUrl}/${this.props.url}${urlQuery}`);
     }
-    return gsFetch("".concat(this.apiUrl, "/").concat(this.props.url).concat(urlQuery), requestOptions);
+    return gsFetch(`${this.apiUrl}/${this.props.url}${urlQuery}`, requestOptions);
   }
   convertId(id) {
     return convertId(id);
@@ -3706,7 +3678,7 @@ function login(username, password) {
       "Authorization": "Basic " + Buffer.from(username + ":" + password).toString('base64')
     }
   };
-  return gsFetch("".concat(config.apiUrl, "/users/login"), requestOptions).then(res => {
+  return gsFetch(`${config.apiUrl}/users/login`, requestOptions).then(res => {
     if (res.error) {
       return Promise.reject(res.message);
     }
@@ -3728,7 +3700,7 @@ const getUserData = userId => {
   return dbApi.getOne({
     id: userId
   }).then(data => data, error => {
-    console_debug_log("ERROR: getUserData(".concat(userId, "):"));
+    console_debug_log(`ERROR: getUserData(${userId}):`);
     console.error(error);
     return {
       error: true,
@@ -3737,7 +3709,6 @@ const getUserData = userId => {
   });
 };
 const getUserLocalData = res => {
-  var _data$pref_side_menu, _data$pref_dark_mode;
   const data = res.resultset;
   const localConfig = getLocalConfig();
   return {
@@ -3747,8 +3718,8 @@ const getUserLocalData = res => {
     firstName: data.firstname,
     // lastName: data.lastname,
     // token: data.token
-    pref_side_menu: (_data$pref_side_menu = data.pref_side_menu) !== null && _data$pref_side_menu !== void 0 ? _data$pref_side_menu : localConfig.pref_side_menu,
-    pref_dark_mode: (_data$pref_dark_mode = data.pref_dark_mode) !== null && _data$pref_dark_mode !== void 0 ? _data$pref_dark_mode : localConfig.pref_dark_mode
+    pref_side_menu: data.pref_side_menu ?? localConfig.pref_side_menu,
+    pref_dark_mode: data.pref_dark_mode ?? localConfig.pref_dark_mode
   };
 };
 const getCurrentUserData = () => {
@@ -3846,7 +3817,7 @@ var general_utilities = /*#__PURE__*/Object.freeze({
 });
 
 function logoutHander() {
-  "".concat(getWindowLocationOrigin()).concat(getUrlForRouter('/login'));
+  `${getWindowLocationOrigin()}${getUrlForRouter('/login')}`;
   authenticationService.logout();
   {
     windowLocationReload(true);
@@ -3891,7 +3862,7 @@ function errorAndReEnter(error) {
   let logoutButton = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
   let closeButton = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : true;
   let closeHandler = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
-  const errorMessage = getErrorMessage(error) + (errorCode ? " ".concat(errorCode) : '');
+  const errorMessage = getErrorMessage(error) + (errorCode ? ` ${errorCode}` : '');
   if (forceLogin === null) {
     forceLogin = false;
   }
@@ -4073,7 +4044,7 @@ function getUrlParams() {
             // treat the remainder of the query string as part of the value
             if (rawValue.includes('#') && i < keyPairs.length - 1) {
               const tail = keyPairs.slice(i + 1).join('&');
-              rawValue = "".concat(rawValue, "&").concat(tail);
+              rawValue = `${rawValue}&${tail}`;
               // We consumed the rest
               i = keyPairs.length;
             }
@@ -4097,7 +4068,7 @@ function getUrlParams() {
       }
     }
   } catch (error) {
-    console.log("getUrlParams ERROR | ".concat(props));
+    console.log(`getUrlParams ERROR | ${props}`);
     console.error(error);
   }
   return urlParams;
@@ -4132,6 +4103,8 @@ var generic_editor_utilities = /*#__PURE__*/Object.freeze({
   replaceSpecialVars: replaceSpecialVars
 });
 
+// GenericMenuService (GMS) main
+
 const jsPrefixToken = /\|([^|]*)\|/;
 const routeExact = false;
 const getOnClickObject = (onClickString, componentMap, setExpanded) => {
@@ -4158,7 +4131,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
       if (match) {
         const woOptions = typeof windowOpenObjs[match[1]] !== "undefined" ? windowOpenObjs[match[1]] : null;
         if (woOptions) {
-          const windowOpenFn = woOptions => window.open("".concat(getWindowLocationOrigin()).concat(getUrlForRouter("/" + woOptions.url)), woOptions.name, woOptions.options);
+          const windowOpenFn = woOptions => window.open(`${getWindowLocationOrigin()}${getUrlForRouter("/" + woOptions.url)}`, woOptions.name, woOptions.options);
           if (setExpanded) {
             resutlFunction = () => {
               setExpanded();
@@ -4173,7 +4146,7 @@ const getOnClickObject = (onClickString, componentMap, setExpanded) => {
           }
         } else {
           resutlFunction = () => {
-            alert("ERROR: invalid onClick: ".concat(onClickString));
+            alert(`ERROR: invalid onClick: ${onClickString}`);
             return getWindowLocationHref();
           };
         }
@@ -4213,7 +4186,7 @@ const getItemDefaults = function (componentMap, setExpanded, item) {
   }
   const on_click_string = defaultValue(item, "on_click", null);
   const on_click = getOnClickObject(on_click_string, componentMap, setExpanded);
-  const title = topTitle == null ? item.title : "[".concat(topTitle, "]");
+  const title = topTitle == null ? item.title : `[${topTitle}]`;
   return {
     "hard_prefix": hard_prefix,
     "get_prefix": get_prefix,
@@ -4242,17 +4215,14 @@ const GetHashRoutes = _ref => {
     });
   }));
 };
-const editorRoute = (editor, itemDefs) => {
-  var _editor$exact;
-  return {
-    key: itemDefs.title,
-    exact: (_editor$exact = editor.exact) !== null && _editor$exact !== void 0 ? _editor$exact : routeExact,
-    path: '/' + editor.baseUrl,
-    element: editor.component,
-    template: itemDefs.template,
-    on_click_string: itemDefs.on_click_string
-  };
-};
+const editorRoute = (editor, itemDefs) => ({
+  key: itemDefs.title,
+  exact: editor.exact ?? routeExact,
+  path: '/' + editor.baseUrl,
+  element: editor.component,
+  template: itemDefs.template,
+  on_click_string: itemDefs.on_click_string
+});
 const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
   const AppMainInner = componentMap["AppMainInner"];
   const AppMainInnerUnauthenticated = componentMap["AppMainInnerUnauthenticated"];
@@ -4284,10 +4254,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
     const itemDefs = getItemDefaults(componentMap, setExpanded, item);
     let resultRoute = null;
     if (item.type === "nav_link") {
-      var _item$exact;
       resultRoute = {
         key: itemDefs["title"],
-        exact: (_item$exact = item["exact"]) !== null && _item$exact !== void 0 ? _item$exact : routeExact,
+        exact: item["exact"] ?? routeExact,
         path: itemDefs["path"],
         element: itemDefs["element_obj"],
         template: itemDefs.template,
@@ -4306,10 +4275,9 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
             console_debug_log(error);
           }
         } else {
-          var _item$exact2;
           resultRoute = {
             key: itemDefs["title"],
-            exact: (_item$exact2 = item["exact"]) !== null && _item$exact2 !== void 0 ? _item$exact2 : routeExact,
+            exact: item["exact"] ?? routeExact,
             path: itemDefs["path"],
             element: itemDefs["element_obj"],
             template: itemDefs.template,
@@ -4331,7 +4299,7 @@ const getRoutesRaw = (currentUser, menuOptions, componentMap, setExpanded) => {
       RouteTemplateComponent = AppMainInnerUnauthenticated;
     } else if (route.template) {
       if (typeof componentMap[route.template] === "undefined") {
-        error = "[GMB-GR-E030] ERROR - template not registered in \"componentMap\" | route.template: ".concat(route.template);
+        error = `[GMB-GR-E030] ERROR - template not registered in "componentMap" | route.template: ${route.template}`;
         console_debug_log(error);
         RouteTemplateComponent = componentMap["NoDesignComponent"];
       } else {
@@ -4418,7 +4386,7 @@ const InvalidElement = _ref2 => {
   return /*#__PURE__*/React.createElement("div", {
     className: APP_GENERAL_MARGINS_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(ALERT_DANGER_CLASS, " ").concat(HORIZONTALLY_CENTERED_CLASS),
+    className: `${ALERT_DANGER_CLASS} ${HORIZONTALLY_CENTERED_CLASS}`,
     role: "alert"
   }, children));
 };
@@ -4486,13 +4454,13 @@ const GenericMenuBuilder = _ref3 => {
           type: itemType,
           mobileMenuMode: mobileMenuMode
         }, icon ? /*#__PURE__*/React.createElement(GsIcons, {
-          icon: icon !== null && icon !== void 0 ? icon : '',
+          icon: icon ?? '',
           size: "2xl",
           className: NAV_LINK_ICON_CLASS
         }) : itemDefs["title"]);
       }
       // Navigation dropdown (main menu item with sub-menus)
-      const navDropdownId = "basic-nav-dropdown-".concat(item.title.replace(/ /g, '_'));
+      const navDropdownId = `basic-nav-dropdown-${item.title.replace(/ /g, '_')}`;
       return /*#__PURE__*/React.createElement(NavDropdown, {
         key: item.title,
         title: itemDefs["title"],
@@ -4506,7 +4474,7 @@ const GenericMenuBuilder = _ref3 => {
           try {
             return editorMenuOption(componentMap[subItem.element](), itemType, mobileMenuMode, componentMap, setExpanded);
           } catch (error) {
-            console_debug_log("[GMB-GR-E020] subItem.element: ".concat(subItem.element));
+            console_debug_log(`[GMB-GR-E020] subItem.element: ${subItem.element}`);
             console_debug_log(error);
             return null;
           }
@@ -4762,13 +4730,17 @@ var md5_utilities = /*#__PURE__*/Object.freeze({
   getHash: getHash
 });
 
+// GenericCrudEditor Specific Functions handling
+
 const genericFuncArrayDefaultValue = function () {
   let data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   return {
     'error': false,
     'errorMsg': '',
     'fieldMsg': {},
-    'fieldValues': _objectSpread2({}, data),
+    'fieldValues': {
+      ...data
+    },
     'fieldsToDelete': [],
     'otherData': {}
   };
@@ -4776,15 +4748,23 @@ const genericFuncArrayDefaultValue = function () {
 const reduceAllResponses = (responses, data) => {
   const defaultValues = genericFuncArrayDefaultValue(data);
   const responsesReduced = responses.reduce((acc, response) => {
-    response = _objectSpread2(_objectSpread2({}, defaultValues), response);
+    response = {
+      ...defaultValues,
+      ...response
+    };
     acc['error'] = acc['error'] || response['error'];
     acc['errorMsg'] += (acc['errorMsg'] !== '' && response['errorMsg'] !== '' ? ', ' : '') + response['errorMsg'];
-    acc['fieldMsg'] = _objectSpread2(_objectSpread2({}, acc['fieldMsg']), response['fieldMsg']);
+    acc['fieldMsg'] = {
+      ...acc['fieldMsg'],
+      ...response['fieldMsg']
+    };
     // Merge fieldValues while preserving array values,
     // to prevent data losing when following fieldValues has same key but empty.
     // E.g. fieldValues["resultset"] may contains 'client_id' and 'client_secret' or another fields...
     // and following response may contains fieldValues["resultset"] = {}
-    const mergedFieldValues = _objectSpread2({}, acc['fieldValues']);
+    const mergedFieldValues = {
+      ...acc['fieldValues']
+    };
     for (const [key, value] of Object.entries(response['fieldValues'])) {
       if (typeof mergedFieldValues[key] === 'object' && typeof value === 'object' && value !== null) {
         if (mergedFieldValues[key] === null) {
@@ -4799,8 +4779,13 @@ const reduceAllResponses = (responses, data) => {
     }
     acc['fieldValues'] = mergedFieldValues;
     acc['fieldsToDelete'] = [...acc['fieldsToDelete'], ...response['fieldsToDelete']];
-    acc['otherData'] = _objectSpread2(_objectSpread2({}, acc['otherData']), response['otherData']);
-    return _objectSpread2({}, acc);
+    acc['otherData'] = {
+      ...acc['otherData'],
+      ...response['otherData']
+    };
+    return {
+      ...acc
+    };
   }, defaultValues);
   return responsesReduced;
 };
@@ -4893,7 +4878,7 @@ var generic_editor_rfc_specific_func = /*#__PURE__*/Object.freeze({
 });
 
 const GMT_TAIL = '.000Z'; // '.000-0000'
-const DATE_TIME_TAIL = "T00:00:00".concat(GMT_TAIL);
+const DATE_TIME_TAIL = `T00:00:00${GMT_TAIL}`;
 const timestampToDate = function (timestamp) {
   let fullDateTime = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   let separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -4929,7 +4914,7 @@ const fixDateWithTz = dateTimeString => {
       dateTimeString += DATE_TIME_TAIL;
       break;
     case 16:
-      dateTimeString += ":00".concat(GMT_TAIL);
+      dateTimeString += `:00${GMT_TAIL}`;
       break;
     default:
       dateTimeString = addMissingTz(dateTimeString);
@@ -4971,6 +4956,8 @@ var dateTimestamp = /*#__PURE__*/Object.freeze({
   timestampToDate: timestampToDate
 });
 
+// GenericCrudEditor timestamp components
+
 const timestampDbListPostRead = (dataRead, editor, action) => {
   // Timestamp to Date convertion during Listing Database Post Read
   return new Promise((resolve, reject) => {
@@ -4983,7 +4970,9 @@ const timestampDbListPostRead = (dataRead, editor, action) => {
             acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, ' ');
             break;
         }
-        return _objectSpread2({}, acc);
+        return {
+          ...acc
+        };
       }, row);
       return new_row;
     });
@@ -4993,7 +4982,6 @@ const timestampDbListPostRead = (dataRead, editor, action) => {
 };
 const timestampDbPostRead = (dataRead, editor, action) => {
   return new Promise((resolve, reject) => {
-    var _dataRead$resultset;
     let resp = genericFuncArrayDefaultValue(dataRead);
     const new_row = editor.fieldElements.reduce((acc, currentObj) => {
       switch (currentObj.type) {
@@ -5006,8 +4994,10 @@ const timestampDbPostRead = (dataRead, editor, action) => {
           acc[currentObj.name] = processTimestampToDate(acc[currentObj.name], true, 'T');
           break;
       }
-      return _objectSpread2({}, acc);
-    }, editor.type == "child_listing" ? ((_dataRead$resultset = dataRead.resultset) === null || _dataRead$resultset === void 0 ? void 0 : _dataRead$resultset[0]) || {} : dataRead.resultset);
+      return {
+        ...acc
+      };
+    }, editor.type == "child_listing" ? dataRead.resultset?.[0] || {} : dataRead.resultset);
     resp.fieldValues.resultset = editor.type == "child_listing" ? [new_row] : new_row;
     resolve(resp);
   });
@@ -5023,7 +5013,9 @@ const timestampDbPreWrite = (row, editor, action) => {
           acc[currentObj.name] = processDateToTimestamp(acc[currentObj.name]);
           break;
       }
-      return _objectSpread2({}, acc);
+      return {
+        ...acc
+      };
     }, row);
     // Update update_date with current date/time timestamp
     if (typeof new_row['update_date'] !== 'undefined') {
@@ -5044,6 +5036,7 @@ var generic_editor_rfc_timestamp = /*#__PURE__*/Object.freeze({
 // GenericCrudEditor common functions
 
 const getEditorData = props => props.editorConfig;
+const getFieldElementKey = currentObj => currentObj.type === 'select_table' && currentObj.local_field ? currentObj.local_field : currentObj.name;
 const setEndpointFilter = (parentData, editor) => {
   // Check inconsistencies: parentData isn't loaded yet or endpointKeyNames is not defined
   if (parentData === null || !editor.endpointKeyNames) {
@@ -5090,6 +5083,7 @@ const getEditoObj = (props, editor_response) => {
   let editor = editor_response.response;
   editor.error = null;
   editor.errorMsg = null;
+  editor.name = editor.name || editor.title || 'Name N/A';
   // Database backend handler
   editor.db = new dbApiService({
     url: editor.dbApiUrl
@@ -5181,7 +5175,7 @@ const getEditoObj = (props, editor_response) => {
   if (typeof editor.endpointKeyNames == 'undefined') {
     if (typeof editor.parentKeyNames != 'undefined') {
       editor.endpointKeyNames = editor.parentKeyNames;
-      console.warn("DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.");
+      console.warn(editor.name + " | DEPRECATED: parentKeyNames is deprecated. Use endpointKeyNames instead. It will be removed in a future version.");
     } else {
       editor.endpointKeyNames = [];
     }
@@ -5192,33 +5186,34 @@ const getEditoObj = (props, editor_response) => {
   if (editor.subType === 'array') {
     if (typeof editor.array_name == 'undefined') {
       subTypeError = true;
-      editor.error = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // Missing "array_name" parameter. It must be specified for subType "array".
+      editor.errorMsg = MSG_ERROR_MISSING_ARRAY_NAME_PARAM; // Missing "array_name" parameter. It must be specified for subType "array".
     } else if (typeof editor.endpointKeyNames == 'undefined') {
       subTypeError = true;
       // Missing "endpointKeyNames" parameter. It must be specified for subType "{subType}".
-      editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+      editor.errorMsg = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
     }
   } else
     // Child data for 'table' subType child listing. These elements are outside a real table.
     if (editor.subType === 'table' && typeof editor.endpointKeyNames == 'undefined') {
       subTypeError = true;
-      editor.error = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+      editor.errorMsg = MSG_ERROR_MISSING_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
     }
   if (editor.type == 'child_listing' && !subTypeError) {
     // Filters for child components
     if (editor.subType === 'array') {
       if (editor.endpointKeyNames.length == 0) {
         // "endpointKeyNames" parameter is empty. It must be specified for subType "{subType}".
-        editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+        editor.errorMsg = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
       }
     } else if (editor.subType === 'table') {
       if (editor.endpointKeyNames.length == 0) {
-        editor.error = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
+        editor.errorMsg = MSG_ERROR_EMPTY_ENDPOINT_KEY_NAMES_PARAM.replace("{subType}", editor.subType);
       }
     } else {
-      editor.error = MSG_ERROR_MISSING_SUB_TYPE_PARAM.replace("{subType}", editor.subType); // Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType};
+      editor.errorMsg = MSG_ERROR_MISSING_SUB_TYPE_PARAM.replace("{subType}", editor.subType);
+      // Incorrect "subType" parameter. It must be "array" or "table" for "child_listing" type. Current value: {editor.subType};
     }
-    if (!editor.error && typeof props.parentData !== 'undefined') {
+    if (!editor.errorMsg && typeof props.parentData !== 'undefined') {
       editor = setEndpointFilter(props.parentData, editor);
     }
   }
@@ -5231,6 +5226,10 @@ const getEditoObj = (props, editor_response) => {
   // Reenter on create
   if (typeof editor.createReenter == 'undefined') {
     editor.createReenter = false;
+  }
+  if (editor.errorMsg && editor.errorMsg.length > 0) {
+    editor.error = true;
+    editor.errorMsg = editor.name + " | " + editor.errorMsg;
   }
   return editor;
 };
@@ -5272,7 +5271,7 @@ const verifyEditorObj = editorObj => {
     // Unauthorized
     error = formatCaughtError(error);
     gfd_response.error = true;
-    gfd_response.errorMsg = "GetFormData: ".concat(error.message, " [GCE-GFD-020]");
+    gfd_response.errorMsg = `GetFormData: ${error.message} [GCE-GFD-020]`;
     // Clear cache on error so it can be retried? 
     // Better to keep it cached to prevent flood, but maybe remove if we want retry.
     // For now, let's keep the error response cached.
@@ -5318,10 +5317,14 @@ var generic_editor_rfc_common = /*#__PURE__*/Object.freeze({
   getEditoObj: getEditoObj,
   getEditorData: getEditorData,
   getEditorFlags: getEditorFlags,
+  getFieldElementKey: getFieldElementKey,
   getIsReadOnly: getIsReadOnly,
   getSelectFieldsOptions: getSelectFieldsOptions,
   setEditorParameters: setEditorParameters
 });
+
+// GenericCrudEditor provider. To share data and functions between the editor components
+
 
 // Create a context to hold the function
 const MainSectionContext = /*#__PURE__*/createContext();
@@ -5347,9 +5350,10 @@ const MainSectionProvider = _ref => {
   const putCachedData = useCallback((entryName, data) => {
     setCache(prevCache => {
       if (prevCache[entryName] === data) return prevCache;
-      return _objectSpread2(_objectSpread2({}, prevCache), {}, {
+      return {
+        ...prevCache,
         [entryName]: data
-      });
+      };
     });
   }, []);
   const typeofCachedData = useCallback(entryName => {
@@ -5360,7 +5364,7 @@ const MainSectionProvider = _ref => {
   }, []);
   const debugCache = useCallback(function () {
     let description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'debugCache';
-    console_debug_log(">>>>--->> listCache [".concat(description, "]:"), listCache());
+    console_debug_log(`>>>>--->> listCache [${description}]:`, listCache());
     return '';
   }, [listCache]);
   const fetchOrCache = useCallback((entryName, fetchFn) => {
@@ -5415,7 +5419,7 @@ const SearchEngineButton = _ref => {
     e.preventDefault();
     const inputValue = document.getElementById(valueElement).value;
     if (inputValue !== "") {
-      const googleSearchUrl = "https://www.google.com/search?q=".concat(encodeURIComponent(setPrompt(googlePrompt, inputValue)));
+      const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(setPrompt(googlePrompt, inputValue))}`;
       window.open(googleSearchUrl, '_blank');
     }
   };
@@ -5435,7 +5439,7 @@ const ChatBotButtonGeneric = _ref2 => {
     chatbotPrompt
   } = _ref2;
   if (typeof AuxComponent === "undefined") {
-    console_debug_log(">> ChatBotButtonGeneric | AuxComponent is undefined");
+    console_debug_log(`>> ChatBotButtonGeneric | AuxComponent is undefined`);
     return /*#__PURE__*/React.createElement("div", {
       className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
     }, /*#__PURE__*/React.createElement(GsIcons, {
@@ -5451,7 +5455,7 @@ const ChatBotButtonGeneric = _ref2 => {
       chatbot_prompt: chatbotPrompt
     }));
   } catch (error) {
-    console_debug_log(">> ChatBotButtonGeneric | error:", error);
+    console_debug_log(`>> ChatBotButtonGeneric | error:`, error);
     return /*#__PURE__*/React.createElement("div", {
       className: SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS
     }, /*#__PURE__*/React.createElement(GsIcons, {
@@ -5475,6 +5479,122 @@ const buildDescription = (itemData, fieldArray) => {
     description += itemData[field] + ' ';
   });
   return description.trim();
+};
+const useRelatedTableRows = currentObj => {
+  /*
+   * Fetches (with cache) the related table rows for a select_table field.
+   * Returns { rows, errorState, convertKey } where convertKey normalizes
+   * the related_key value of a row to a comparable string.
+   */
+  const [errorState, setErrorState] = useState(null);
+  const [rows, setRows] = useState(null);
+  const {
+    fetchOrCache
+  } = useContext(MainSectionContext);
+  const relatedTable = currentObj.related_table;
+  const relatedKey = currentObj.related_key || '_id';
+  const dbFilter = currentObj.related_filter || {};
+  useEffect(() => {
+    if (!relatedTable) {
+      setErrorState('select_table: missing related_table attribute');
+      return;
+    }
+    const dbService = new dbApiService({
+      url: relatedTable
+    });
+    // Include related_key and related_filter in the cache key: two
+    // select_table fields can share the same related_table but scope
+    // different subsets of rows via related_filter (or key off a
+    // different related_key), and must not collide on the same cache
+    // entry (see genericsuite-mobile crud_editor.dart for the matching
+    // fix on the Flutter side).
+    const cacheKey = `select_table_${relatedTable}_${relatedKey}_${JSON.stringify(dbFilter)}`;
+    fetchOrCache(cacheKey, () => dbService.getAll(dbFilter)).then(data => setRows(data), error => setErrorState(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [relatedTable, fetchOrCache]);
+  const convertValue = value => {
+    const dbService = new dbApiService({
+      url: relatedTable
+    });
+    return relatedKey === '_id' ? dbService.convertId(value) : String(value);
+  };
+  const convertKey = row => convertValue(row[relatedKey]);
+  return {
+    rows,
+    errorState,
+    convertKey,
+    convertValue
+  };
+};
+const buildSelectTableDescription = (row, currentObj) => {
+  const descriptionFields = currentObj.description_fields || ['name'];
+  const separator = typeof currentObj.description_separator !== 'undefined' ? currentObj.description_separator : ' ';
+  return descriptionFields.map(field => row[field]).filter(value => value !== null && typeof value !== 'undefined').join(separator);
+};
+const SelectTableDescription = _ref => {
+  let {
+    currentObj,
+    dbRow
+  } = _ref;
+  /*
+   * Client-side fallback: shows the related record description for a
+   * select_table field when the backend didn't provide
+   * `{name}_description` (older backend versions).
+   */
+  const {
+    rows,
+    errorState,
+    convertKey,
+    convertValue
+  } = useRelatedTableRows(currentObj);
+  if (errorState) {
+    return errorState.toString();
+  }
+  if (rows === null) {
+    return '';
+  }
+  const fkValue = dbRow[currentObj.local_field || currentObj.name];
+  if (fkValue === null || typeof fkValue === 'undefined') {
+    return '';
+  }
+  const match = rows.resultset.find(row => convertKey(row) === convertValue(fkValue));
+  if (!match) {
+    return '';
+  }
+  return buildSelectTableDescription(match, currentObj);
+};
+const SelectTableOptions = _ref2 => {
+  let {
+    currentObj
+  } = _ref2;
+  /*
+   * Options generator for a select_table field's editable dropdown.
+   * Fetches (with cache) the related table rows and renders one
+   * <option> per row, plus the "Select an option" placeholder.
+   */
+  const {
+    rows,
+    errorState,
+    convertKey
+  } = useRelatedTableRows(currentObj);
+  if (errorState) {
+    return /*#__PURE__*/React.createElement("option", {
+      value: ""
+    }, errorState.toString());
+  }
+  if (rows === null) {
+    return null;
+  }
+  return [/*#__PURE__*/React.createElement("option", {
+    key: "_placeholder",
+    value: ""
+  }, MSG_SELECT_AN_OPTION), ...rows.resultset.map(row => {
+    const keyValue = convertKey(row);
+    return /*#__PURE__*/React.createElement("option", {
+      key: keyValue,
+      value: keyValue
+    }, buildSelectTableDescription(row, currentObj));
+  })];
 };
 const GenericSelectGenerator = props => {
   /*
@@ -5659,6 +5779,17 @@ const getSelectDescription = (currentObj, dbRow) => {
       currentObj: currentObj
     });
   }
+  // Related table select (1-1 relationship)
+  if (currentObj.type === 'select_table') {
+    const descAttr = currentObj.name + '_description';
+    if (typeof dbRow[descAttr] !== 'undefined' && dbRow[descAttr] !== null) {
+      return dbRow[descAttr];
+    }
+    return /*#__PURE__*/React.createElement(SelectTableDescription, {
+      currentObj: currentObj,
+      dbRow: dbRow
+    });
+  }
   // Generic select
   if (currentObj.type === 'select') {
     return currentObj.select_elements.filter(option => dbRow[currentObj.name] && option.value === dbRow[currentObj.name].toString()).map(option => option.title);
@@ -5685,9 +5816,13 @@ var generic_editor_rfc_selector = /*#__PURE__*/Object.freeze({
   __proto__: null,
   GenericSelectDataPopulator: GenericSelectDataPopulator,
   GenericSelectGenerator: GenericSelectGenerator,
+  SelectTableDescription: SelectTableDescription,
+  SelectTableOptions: SelectTableOptions,
   buildDescription: buildDescription,
+  buildSelectTableDescription: buildSelectTableDescription,
   getSelectDescription: getSelectDescription,
-  putSelectOptionsFromArray: putSelectOptionsFromArray
+  putSelectOptionsFromArray: putSelectOptionsFromArray,
+  useRelatedTableRows: useRelatedTableRows
 });
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -5709,14 +5844,14 @@ var hasRequiredLodash;
 function requireLodash () {
 	if (hasRequiredLodash) return lodash$1.exports;
 	hasRequiredLodash = 1;
-	(function (module, exports$1) {
+	(function (module, exports) {
 (function() {
 
 		  /** Used as a safe reference for `undefined` in pre-ES5 environments. */
 		  var undefined$1;
 
 		  /** Used as the semantic version number. */
-		  var VERSION = '4.17.23';
+		  var VERSION = '4.18.1';
 
 		  /** Used as the size to enable large array optimizations. */
 		  var LARGE_ARRAY_SIZE = 200;
@@ -5724,7 +5859,8 @@ function requireLodash () {
 		  /** Error message constants. */
 		  var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
 		      FUNC_ERROR_TEXT = 'Expected a function',
-		      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`';
+		      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`',
+		      INVALID_TEMPL_IMPORTS_ERROR_TEXT = 'Invalid `imports` option passed into `_.template`';
 
 		  /** Used to stand-in for `undefined` hash values. */
 		  var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -6140,7 +6276,7 @@ function requireLodash () {
 		  var root = freeGlobal || freeSelf || Function('return this')();
 
 		  /** Detect free variable `exports`. */
-		  var freeExports = exports$1 && !exports$1.nodeType && exports$1;
+		  var freeExports = exports && !exports.nodeType && exports;
 
 		  /** Detect free variable `module`. */
 		  var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -7456,6 +7592,10 @@ function requireLodash () {
 		     * embedded Ruby (ERB) as well as ES2015 template strings. Change the
 		     * following template settings to use alternative delimiters.
 		     *
+		     * **Security:** See
+		     * [threat model](https://github.com/lodash/lodash/blob/main/threat-model.md)
+		     * — `_.template` is insecure and will be removed in v5.
+		     *
 		     * @static
 		     * @memberOf _
 		     * @type {Object}
@@ -8004,7 +8144,7 @@ function requireLodash () {
 		     * @name has
 		     * @memberOf SetCache
 		     * @param {*} value The value to search for.
-		     * @returns {number} Returns `true` if `value` is found, else `false`.
+		     * @returns {boolean} Returns `true` if `value` is found, else `false`.
 		     */
 		    function setCacheHas(value) {
 		      return this.__data__.has(value);
@@ -10075,7 +10215,9 @@ function requireLodash () {
 		    function baseUnset(object, path) {
 		      path = castPath(path, object);
 
-		      // Prevent prototype pollution, see: https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg
+		      // Prevent prototype pollution:
+		      // https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg
+		      // https://github.com/lodash/lodash/security/advisories/GHSA-f23m-r3pf-42rh
 		      var index = -1,
 		          length = path.length;
 
@@ -10083,32 +10225,17 @@ function requireLodash () {
 		        return true;
 		      }
 
-		      var isRootPrimitive = object == null || (typeof object !== 'object' && typeof object !== 'function');
-
 		      while (++index < length) {
-		        var key = path[index];
-
-		        // skip non-string keys (e.g., Symbols, numbers)
-		        if (typeof key !== 'string') {
-		          continue;
-		        }
+		        var key = toKey(path[index]);
 
 		        // Always block "__proto__" anywhere in the path if it's not expected
 		        if (key === '__proto__' && !hasOwnProperty.call(object, '__proto__')) {
 		          return false;
 		        }
 
-		        // Block "constructor.prototype" chains
-		        if (key === 'constructor' &&
-		            (index + 1) < length &&
-		            typeof path[index + 1] === 'string' &&
-		            path[index + 1] === 'prototype') {
-
-		          // Allow ONLY when the path starts at a primitive root, e.g., _.unset(0, 'constructor.prototype.a')
-		          if (isRootPrimitive && index === 0) {
-		            continue;
-		          }
-
+		        // Block constructor/prototype as non-terminal traversal keys to prevent
+		        // escaping the object graph into built-in constructors and prototypes.
+		        if ((key === 'constructor' || key === 'prototype') && index < length - 1) {
 		          return false;
 		        }
 		      }
@@ -12665,7 +12792,7 @@ function requireLodash () {
 
 		    /**
 		     * Creates an array with all falsey values removed. The values `false`, `null`,
-		     * `0`, `""`, `undefined`, and `NaN` are falsey.
+		     * `0`, `-0`, `0n`, `""`, `undefined`, and `NaN` are falsy.
 		     *
 		     * @static
 		     * @memberOf _
@@ -13204,7 +13331,7 @@ function requireLodash () {
 
 		      while (++index < length) {
 		        var pair = pairs[index];
-		        result[pair[0]] = pair[1];
+		        baseAssignValue(result, pair[0], pair[1]);
 		      }
 		      return result;
 		    }
@@ -19864,6 +19991,8 @@ function requireLodash () {
 		     * **Note:** JavaScript follows the IEEE-754 standard for resolving
 		     * floating-point values which can produce unexpected results.
 		     *
+		     * **Note:** If `lower` is greater than `upper`, the values are swapped.
+		     *
 		     * @static
 		     * @memberOf _
 		     * @since 0.7.0
@@ -19877,8 +20006,15 @@ function requireLodash () {
 		     * _.random(0, 5);
 		     * // => an integer between 0 and 5
 		     *
+		     * // when lower is greater than upper the values are swapped
+		     * _.random(5, 0);
+		     * // => an integer between 0 and 5
+		     *
 		     * _.random(5);
 		     * // => also an integer between 0 and 5
+		     *
+		     * _.random(-5);
+		     * // => an integer between -5 and 0
 		     *
 		     * _.random(5, true);
 		     * // => a floating-point number between 0 and 5
@@ -20481,6 +20617,10 @@ function requireLodash () {
 		     * properties may be accessed as free variables in the template. If a setting
 		     * object is given, it takes precedence over `_.templateSettings` values.
 		     *
+		     * **Security:** `_.template` is insecure and should not be used. It will be
+		     * removed in Lodash v5. Avoid untrusted input. See
+		     * [threat model](https://github.com/lodash/lodash/blob/main/threat-model.md).
+		     *
 		     * **Note:** In the development build `_.template` utilizes
 		     * [sourceURLs](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
 		     * for easier debugging.
@@ -20588,11 +20728,17 @@ function requireLodash () {
 		        options = undefined$1;
 		      }
 		      string = toString(string);
-		      options = assignInWith({}, options, settings, customDefaultsAssignIn);
+		      options = assignWith({}, options, settings, customDefaultsAssignIn);
 
-		      var imports = assignInWith({}, options.imports, settings.imports, customDefaultsAssignIn),
+		      var imports = assignWith({}, options.imports, settings.imports, customDefaultsAssignIn),
 		          importsKeys = keys(imports),
 		          importsValues = baseValues(imports, importsKeys);
+
+		      arrayEach(importsKeys, function(key) {
+		        if (reForbiddenIdentifierChars.test(key)) {
+		          throw new Error(INVALID_TEMPL_IMPORTS_ERROR_TEXT);
+		        }
+		      });
 
 		      var isEscaping,
 		          isEvaluating,
@@ -22969,7 +23115,7 @@ const SuggestionDropdown = _ref => {
   } = useAppContext();
 
   // This component's input field must be different to the external input field to enable value sync
-  const nameInternal = "".concat(name, "_sdd");
+  const nameInternal = `${name}_sdd`;
   const filter_api_url = defaultValue(config, 'filter_api_url'); // Ex. "fda_food_query"
   const filter_api_request_method = String(defaultValue(config, "filter_api_request_method", "get")).toUpperCase(); // Ex. true or false
   const filter_search_param_name = defaultValue(config, 'filter_search_param_name'); // Ex. "food_name"
@@ -23056,9 +23202,9 @@ const SuggestionDropdown = _ref => {
   return /*#__PURE__*/React.createElement("div", {
     className: SUGGESTION_DROPDOWN_WRAPPER_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(SUGGESTION_DROPDOWN_CLASS, " ").concat(className || "", " ").concat(theme.input)
+    className: `${SUGGESTION_DROPDOWN_CLASS} ${className || ""} ${theme.input}`
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", getInputProps({
-    className: "".concat(APP_FORMPAGE_FIELD_BASE_CLASS, " ").concat(disabled ? DISABLE_FIELD_BACKGROUND_COLOR_CLASS : "", " ").concat(inputValue && suggestions.length === 0 ? IS_INVALID_CLASS : ""),
+    className: `${APP_FORMPAGE_FIELD_BASE_CLASS} ${disabled ? DISABLE_FIELD_BACKGROUND_COLOR_CLASS : ""} ${inputValue && suggestions.length === 0 ? IS_INVALID_CLASS : ""}`,
     disabled: disabled,
     required: required,
     name: nameInternal
@@ -23080,34 +23226,41 @@ var generic_editor_rfc_suggestion_dropdown = /*#__PURE__*/Object.freeze({
   SuggestionDropdown: SuggestionDropdown
 });
 
-const _excluded$1 = ["resultset"];
+// GenericCrudEditor data form functions
+
 let calcFields = {};
 const formPageReducer = (state, action) => {
   switch (action.type) {
     case 'SET_FORM_DATA':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formData: action.payload
-      });
+      };
     case 'SET_INTERNAL_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         internalMode: action.payload
-      });
+      };
     case 'SET_ERROR_STATUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         errorStatus: action.payload
-      });
+      };
     case 'INCREMENT_REFRESH':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         refresh: state.refresh + 1
-      });
+      };
     case 'SET_FORM_MSG':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formMsg: action.payload
-      });
+      };
     case 'SET_ITEM_READ':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         itemRead: action.payload
-      });
+      };
     default:
       return state;
   }
@@ -23115,7 +23268,10 @@ const formPageReducer = (state, action) => {
 const editFormReducer = (state, action) => {
   switch (action.type) {
     case 'SET_EDIT_FORM_DATA':
-      return _objectSpread2(_objectSpread2({}, state), action.payload);
+      return {
+        ...state,
+        ...action.payload
+      };
     default:
       return state;
   }
@@ -23207,11 +23363,10 @@ const FormPage = _ref => {
       let accessKeysDataScreen = {};
       accessKeysDataScreen[editor.primaryKeyName] = id;
       processGenericFuncArray(editor, 'dbPreRead', accessKeysDataScreen, mode, currentUser).then(funcResponse => {
-        const _funcResponse$fieldVa = funcResponse.fieldValues,
-          {
-            resultset
-          } = _funcResponse$fieldVa,
-          fieldValuesWithoutResultSet = _objectWithoutProperties(_funcResponse$fieldVa, _excluded$1);
+        const {
+          resultset,
+          ...fieldValuesWithoutResultSet
+        } = funcResponse.fieldValues;
         accessKeysDataScreen = Object.assign({}, fieldValuesWithoutResultSet, editor.endpointFilter);
         editor.db.getOne(accessKeysDataScreen).then(data => {
           // To assign specific default values in update, read or delete...
@@ -23254,7 +23409,7 @@ const FormPage = _ref => {
   const editorFlags = getEditorFlags(mode);
   const actionTitle = mode === ACTION_CREATE ? MSG_ACTION_CREATE : mode === ACTION_UPDATE ? MSG_ACTION_UPDATE : mode === ACTION_READ ? MSG_ACTION_READ : MSG_ACTION_DELETE;
   return /*#__PURE__*/React.createElement("div", {
-    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+    className: `${APP_TOP_DIV_CLASS} ${theme.contentBg}`
   }, /*#__PURE__*/React.createElement(CrudEditorFormPageTitle, {
     baseUrl: editor.baseUrl,
     title: editor.title,
@@ -23279,7 +23434,7 @@ const CrudEditorFormPageTitle = _ref2 => {
     actionTitle
   } = _ref2;
   return /*#__PURE__*/React.createElement("h2", {
-    key: "".concat(baseUrl, "_title"),
+    key: `${baseUrl}_title`,
     className: APP_TITLE_H1_CLASS
   }, title + " - " + actionTitle);
 };
@@ -23310,7 +23465,8 @@ const PutOneFormfield = _ref4 => {
   const labelClass = APP_FORMPAGE_LABEL_CLASS + " " + theme.label;
   const labelClassRequiredFld = APP_FORMPAGE_LABEL_REQUIRED_CLASS;
   const divFieldClass = APP_FORMPAGE_FIELD_CLASS + " " + theme.label;
-  const fieldClass = errors[currentObj.name] && touched[currentObj.name] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input;
+  const fieldKey = getFieldElementKey(currentObj);
+  const fieldClass = errors[fieldKey] && touched[fieldKey] ? APP_FORMPAGE_FIELD_INVALID_CLASS : APP_FORMPAGE_FIELD_GOOD_CLASS + " " + theme.input;
   const readOnlyfield = editorFlags.isReadOnly || typeof currentObj.readonly !== "undefined" && currentObj.readonly;
   if (typeof currentObj.hidden !== "undefined" && currentObj.hidden) {
     return /*#__PURE__*/React.createElement(Field, {
@@ -23360,7 +23516,7 @@ const PutOneFormfield = _ref4 => {
   const input_type = ['number', 'integer'].includes(currentObj.type) ? 'number' : currentObj.type;
 
   // id name
-  let idName = currentObj.name;
+  let idName = fieldKey;
 
   // Special buttons definitions
   const chatbot_popup = defaultValue(currentObj, "chatbot_popup", false); // Ex. true or false
@@ -23393,6 +23549,25 @@ const PutOneFormfield = _ref4 => {
         dbRow: dbRow
       }));
       break;
+    case 'select_table':
+      if (readOnlyfield) {
+        elementInput = /*#__PURE__*/React.createElement("div", {
+          id: idName,
+          className: fieldClass
+        }, getSelectDescription(currentObj, dbRow));
+      } else {
+        elementInput = /*#__PURE__*/React.createElement(Field, {
+          name: idName,
+          id: idName,
+          as: "select",
+          required: currentObj.required,
+          className: fieldClass,
+          onBlur: runCalculation
+        }, /*#__PURE__*/React.createElement(SelectTableOptions, {
+          currentObj: currentObj
+        }));
+      }
+      break;
     case 'select':
       elementInput = /*#__PURE__*/React.createElement(Field, {
         name: idName,
@@ -23422,7 +23597,7 @@ const PutOneFormfield = _ref4 => {
       });
       break;
     case 'suggestion_dropdown':
-      idName = "".concat(currentObj.name, "-input");
+      idName = `${currentObj.name}-input`;
       elementInput = /*#__PURE__*/React.createElement(SuggestionDropdown, {
         name: currentObj.name,
         id: currentObj.name,
@@ -23686,7 +23861,9 @@ const EditFormFormikFinal = _ref6 => {
         }
         processGenericFuncArray(editor, 'validations', submitedtElements, action, currentUser).then(funcResponse => {
           processGenericFuncArray(editor, 'dbPreWrite', submitedtElements, action, currentUser).then(funcResponse => {
-            submitedtElements = _objectSpread2({}, funcResponse.fieldValues);
+            submitedtElements = {
+              ...funcResponse.fieldValues
+            };
             saveRowToDatabase(editor, action, rowId, submitedtElements, initialFieldValues).then(result => {
               if (result && result.error) {
                 setSubmitting(false);
@@ -23806,7 +23983,9 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
       acc[keyPair.parameterName] =
       // parent table 'id' field name
       editor.parentData[keyPair.parentElementName]; // parent table 'id' value
-      return _objectSpread2({}, acc);
+      return {
+        ...acc
+      };
     }, {});
     if (editor.subType === "array") {
       // Build the format for child array
@@ -23826,7 +24005,10 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
       rowToSave[editor.array_name + "_old"] = initialValues; // array object in the parent row with initial values
     } else {
       // Build the format for child external table, merging the parent id to the child object
-      rowToSave = _objectSpread2(_objectSpread2({}, submitedtElements), rowToSave);
+      rowToSave = {
+        ...submitedtElements,
+        ...rowToSave
+      };
     }
   }
   // Save the row to Database
@@ -23898,8 +24080,8 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
       } else if (defaultValues) {
         responseObj = setDefaultFieldValue(currentObj);
       }
-    } else if (verifyElementExistence(dataset, currentObj.name)) {
-      responseObj = dataset[currentObj.name];
+    } else if (verifyElementExistence(dataset, getFieldElementKey(currentObj))) {
+      responseObj = dataset[getFieldElementKey(currentObj)];
       if (responseObj === null || responseObj === undefined) {
         // To avoid the warning "Warning:
         // `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components"
@@ -23924,9 +24106,11 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
         // Excluded types
         break;
       default:
-        acc[currentObj.name] = responseObj;
+        acc[getFieldElementKey(currentObj)] = responseObj;
     }
-    return _objectSpread2({}, acc);
+    return {
+      ...acc
+    };
     // }, {});
   }, dataset);
   if (typeof response["_id"] !== 'undefined') {
@@ -23939,6 +24123,8 @@ var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
   __proto__: null,
   FormPage: FormPage
 });
+
+// GenericCrudEditor search component
 
 const CrudEditorSearch = _ref => {
   let {
@@ -23973,9 +24159,14 @@ const CrudEditorSearch = _ref => {
           } else {
             newElement[element.name] = newSearchText;
           }
-          filterDict = _objectSpread2(_objectSpread2({}, filterDict), newElement);
+          filterDict = {
+            ...filterDict,
+            ...newElement
+          };
         }
-        return _objectSpread2({}, filterDict);
+        return {
+          ...filterDict
+        };
       }, {
         like: '1',
         comb: 'or'
@@ -24004,7 +24195,7 @@ const CrudEditorSearch = _ref => {
     // type="text"
     ,
     className: APP_LISTING_SEARCH_BOX_INPUT_CLASS + " " + theme.input,
-    placeholder: "".concat(MSG_SEARCH, "..."),
+    placeholder: `${MSG_SEARCH}...`,
     value: searchText || '',
     onChange: handleTextChange
   }), /*#__PURE__*/React.createElement("button", {
@@ -24024,6 +24215,8 @@ var generic_editor_rfc_search = /*#__PURE__*/Object.freeze({
   CrudEditorSearch: CrudEditorSearch
 });
 
+// GenericCrudEditor (GCE) service main
+
 const debug$1 = false;
 const initialState$1 = {
   editor: null,
@@ -24039,47 +24232,58 @@ const initialState$1 = {
 function gceReducer(state, action) {
   switch (action.type) {
     case 'SET_EDITOR':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         editor: action.payload
-      });
+      };
     case 'SET_ROWS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         rows: action.payload
-      });
+      };
     case 'SET_CURRENT_PAGE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         currentPage: action.payload
-      });
+      };
     case 'SET_ROWS_PER_PAGE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         rowsPerPage: action.payload
-      });
+      };
     case 'SET_FORM_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formMode: action.payload
-      });
+      };
     case 'SET_STATUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         status: action.payload
-      });
+      };
     case 'SET_INFO_MSG':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         infoMsg: action.payload
-      });
+      };
     case 'SET_SEARCH_FILTERS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         searchFilters: action.payload
-      });
+      };
     case 'SET_SEARCH_TEXT':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         searchText: action.payload
-      });
+      };
     case 'HANDLE_CANCEL':
       {
         const {
           config
         } = action.payload;
-        let newState = _objectSpread2({}, state);
+        let newState = {
+          ...state
+        };
         if (typeof config['searchFilters'] !== 'undefined') {
           newState.searchFilters = config['searchFilters'];
           newState.searchText = config['searchText'];
@@ -24108,9 +24312,10 @@ const GenericCrudEditor = _ref => {
   })));
 };
 const GenericCrudEditorMain = props => {
-  const [state, dispatch] = useReducer(gceReducer, _objectSpread2(_objectSpread2({}, initialState$1), {}, {
+  const [state, dispatch] = useReducer(gceReducer, {
+    ...initialState$1,
     rowsPerPage: parseInt(getLocalConfigItem("gce_rows_per_page")) || 10
-  }));
+  });
   const {
     editor,
     rows,
@@ -24183,7 +24388,7 @@ const GenericCrudEditorMain = props => {
     });
   }, []);
   useEffect(() => {
-    if (editor && formMode[0] === ACTION_LIST) {
+    if (editor && !editor.error && formMode[0] === ACTION_LIST) {
       const animationElementId = editor.baseUrl + "_pagination" + "_nav_animation";
       ShowHideWaitAnimation(true, animationElementId);
       let accessKeysListing = {
@@ -24198,16 +24403,20 @@ const GenericCrudEditorMain = props => {
           // dbListPostRead: To fix Listing fields
           processGenericFuncArray(editor, 'dbListPostRead', data, formMode, currentUser).then(funcResponse => setRows(funcResponse.fieldValues), error => setStatus(errorAndReEnter(getErrorMsgFromApi(error), null)));
         }, error => {
-          console_debug_log("GenericCrudEditor / Listing - ERROR:");
+          console_debug_log(`GenericCrudEditor / Listing - ERROR:`);
           console.error(error);
           ShowHideWaitAnimation(false, animationElementId);
           setStatus(errorAndReEnter(getErrorMsgFromApi(error), null));
         });
       }, error => {
-        console_debug_log("GenericCrudEditor / dbListPreRead - ERROR:");
+        console_debug_log(`GenericCrudEditor / dbListPreRead - ERROR:`);
         console.error(error);
         setStatus(errorAndReEnter(getErrorMsgFromApi(error), null));
       });
+    } else {
+      if (editor && editor.error) {
+        setStatus(errorAndReEnter(editor.errorMsg, null));
+      }
     }
   }, [currentPage, rowsPerPage, editor, formMode, searchFilters]);
   const handleCancel = function () {
@@ -24261,16 +24470,16 @@ const GenericCrudEditorMain = props => {
     // For example: food_times_row_undefined_tr_enclosure [GS-266]
     const response = typeof rowIdVar === 'undefined' ? getHash(canonicalRow(row)) : rowIdVar;
     if (typeof rowIdVar === 'undefined') {
-      console.error("ERROR [GCE-M-060]: row does not have '_id' nor '".concat(editor.primaryKeyName, "' | Editor: ").concat(editor.name, " | Row: ").concat(JSON.stringify(row)));
+      console.error(`ERROR [GCE-M-060]: row does not have '_id' nor '${editor.primaryKeyName}' | Editor: ${editor.name} | Row: ${JSON.stringify(row)}`);
     }
     return response;
   };
   const actionsHandler = (mode, row) => {
     const currentRowId = rowId(row);
-    const element = document.getElementById("".concat(editor.baseUrl, "_row_").concat(currentRowId, "_controls"));
+    const element = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_controls`);
     const currRowHadHiddenClass = element.classList.contains('hidden');
-    const magicButtonElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(currentRowId, "_magicButton"));
-    const rowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(currentRowId, "_row"));
+    const magicButtonElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_magicButton`);
+    const rowElement = document.getElementById(`${editor.baseUrl}_row_${currentRowId}_row`);
     const bgColorStype = ['bg-slate-300', 'odd:bg-slate-300'];
     if (mode === 'show') {
       // Highlight row
@@ -24301,7 +24510,7 @@ const GenericCrudEditorMain = props => {
     if (mode === 'toggle') {
       // Turn off previous opened controls
       rows.resultset.map(thisRow => {
-        const thisRowElement = document.getElementById("".concat(editor.baseUrl, "_row_").concat(rowId(thisRow), "_controls"));
+        const thisRowElement = document.getElementById(`${editor.baseUrl}_row_${rowId(thisRow)}_controls`);
         if (!thisRowElement.classList.contains('hidden')) {
           thisRowElement.classList.add('hidden');
         }
@@ -24349,10 +24558,10 @@ const GenericCrudEditorMain = props => {
     }));
   }
   return /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_top_div"),
-    className: "".concat(APP_TOP_DIV_CLASS, " ").concat(theme.contentBg)
+    key: `${editor.baseUrl}_top_div`,
+    className: `${APP_TOP_DIV_CLASS} ${theme.contentBg}`
   }, infoMsg && /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_info_msg"),
+    key: `${editor.baseUrl}_info_msg`,
     className: INFO_MSG_CLASS
   }, /*#__PURE__*/React.createElement("div", null, infoMsg), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
     onClick: () => setInfoMsg(''),
@@ -24365,30 +24574,30 @@ const GenericCrudEditorMain = props => {
     title: editor.title,
     handleRefresh: handleRefresh
   }), /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_level2_div"),
+    key: `${editor.baseUrl}_level2_div`,
     className: APP_LEVEL2_DIV_CLASS
   }, /*#__PURE__*/React.createElement("table", {
-    key: "".concat(editor.baseUrl, "_table"),
+    key: `${editor.baseUrl}_table`,
     className: APP_LISTING_TABLE_CLASS
   }, /*#__PURE__*/React.createElement("thead", {
-    key: "".concat(editor.baseUrl, "_thead"),
+    key: `${editor.baseUrl}_thead`,
     className: APP_LISTING_TABLE_HDR_THEAD_CLASS
   }, /*#__PURE__*/React.createElement("tr", {
-    key: "".concat(editor.baseUrl, "_thead_tr"),
+    key: `${editor.baseUrl}_thead_tr`,
     className: APP_LISTING_TABLE_HDR_TR_CLASS
   }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("th", {
     // scope="col"
-    key: "".concat(editor.baseUrl, "_actions"),
+    key: `${editor.baseUrl}_actions`,
     className: APP_LISTING_TABLE_HDR_TH_CLASS
   }, /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_actions_div"),
+    key: `${editor.baseUrl}_actions_div`,
     className: APP_LISTING_TABLE_HRD_ACTIONS_COL_CLASS
   }, " ")), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("th", {
     // scope="col"
-    key: "".concat(editor.baseUrl, "_").concat(key, "_thead_th"),
+    key: `${editor.baseUrl}_${key}_thead_th`,
     className: APP_LISTING_TABLE_HDR_TH_CLASS
   }, editor.fieldElements[key].label)))), /*#__PURE__*/React.createElement("tbody", {
-    key: "".concat(editor.baseUrl, "_tbody"),
+    key: `${editor.baseUrl}_tbody`,
     className: APP_LISTING_TABLE_BODY_TBODY_CLASS
   }, rows && typeof rows.resultset !== 'undefined' && rows.resultset.map((row, index) => {
     // To avoid use of "<>" to group two "<tr>" (one for the row and one for the actions)
@@ -24397,11 +24606,11 @@ const GenericCrudEditorMain = props => {
     // we use <React.Fragment> instead
     const uniqueRowId = rowId(row);
     return /*#__PURE__*/React.createElement(React.Fragment, {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_tr_enclosure")
+      key: `${editor.baseUrl}_row_${uniqueRowId}_tr_enclosure`
     }, /*#__PURE__*/React.createElement("tr", {
-      id: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_row"),
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_row"),
-      className: index % 2 ? "".concat(APP_LISTING_TABLE_BODY_TR_ODD_CLASS) : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_EVEN_CLASS),
+      id: `${editor.baseUrl}_row_${uniqueRowId}_row`,
+      key: `${editor.baseUrl}_row_${uniqueRowId}_row`,
+      className: index % 2 ? `${APP_LISTING_TABLE_BODY_TR_ODD_CLASS}` : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_EVEN_CLASS}`,
       onMouseOver: () => {
         actionsHandler('show', row);
       },
@@ -24413,25 +24622,25 @@ const GenericCrudEditorMain = props => {
       }
     }, actionsHandlerAllowsMagicButton && /*#__PURE__*/React.createElement("td", {
       // Action buttons
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_magicButton_td")
+      key: `${editor.baseUrl}_row_${uniqueRowId}_magicButton_td`
       // colSpan={Object.keys(editor.fieldElements).length + 1}
       ,
       className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
     }, /*#__PURE__*/React.createElement("div", {
-      id: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_magicButton"),
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_magicButton"),
+      id: `${editor.baseUrl}_row_${uniqueRowId}_magicButton`,
+      key: `${editor.baseUrl}_row_${uniqueRowId}_magicButton`,
       className: VISIBLE_CLASS
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "menu-dots-more",
       alt: MSG_MORE
     }))), Object.keys(editor.fieldElements).map(key => editor.fieldElements[key].listing && /*#__PURE__*/React.createElement("td", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_").concat(key, "_td"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_${key}_td`,
       className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_EVEN_CLASS
     }, getSelectDescription(editor.fieldElements[key], row) // Show column value or select description
     ))), /*#__PURE__*/React.createElement("tr", {
-      id: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls"),
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls"),
-      className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : "".concat(theme.secondary, " ").concat(APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS)) + " " + HIDDEN_CLASS,
+      id: `${editor.baseUrl}_row_${uniqueRowId}_controls`,
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls`,
+      className: (index % 2 ? APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS : `${theme.secondary} ${APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS}`) + " " + HIDDEN_CLASS,
       onMouseOver: () => {
         actionsHandler('show', row);
       },
@@ -24443,33 +24652,33 @@ const GenericCrudEditorMain = props => {
       }
     }, /*#__PURE__*/React.createElement("td", {
       // Action buttons
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_td"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_td`,
       colSpan: Object.keys(editor.fieldElements).length + 1,
       className: index % 2 ? APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS : APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS
     }, /*#__PURE__*/React.createElement("button", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_eye"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_eye`,
       onClick: () => handleView(uniqueRowId),
-      className: "".concat(BUTTON_LISTING_CLASS)
+      className: `${BUTTON_LISTING_CLASS}`
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "eye",
       alt: MSG_ACTION_READ
     })), /*#__PURE__*/React.createElement("button", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_edit"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_edit`,
       onClick: () => handleModify(uniqueRowId),
-      className: "".concat(BUTTON_LISTING_CLASS)
+      className: `${BUTTON_LISTING_CLASS}`
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "edit",
       alt: MSG_ACTION_EDIT
     })), /*#__PURE__*/React.createElement("button", {
-      key: "".concat(editor.baseUrl, "_row_").concat(uniqueRowId, "_controls_trash"),
+      key: `${editor.baseUrl}_row_${uniqueRowId}_controls_trash`,
       onClick: () => handleDelete(uniqueRowId),
-      className: "".concat(BUTTON_LISTING_CLASS)
+      className: `${BUTTON_LISTING_CLASS}`
     }, /*#__PURE__*/React.createElement(GsIcons, {
       icon: "trash",
       alt: MSG_ACTION_DELETE
     })))));
   })))), /*#__PURE__*/React.createElement("div", {
-    key: "".concat(editor.baseUrl, "_toolbar"),
+    key: `${editor.baseUrl}_toolbar`,
     className: APP_LISTING_TOOLBAR_TOP_DIV_CLASS + " " + (isWide ? APP_LISTING_TOOLBAR_TOP_DIV_WIDE_CLASS : APP_LISTING_TOOLBAR_TOP_DIV_NOT_WIDE_CLASS)
   }, /*#__PURE__*/React.createElement(CrudEditorPagination, {
     id: editor.baseUrl + "_pagination",
@@ -24593,16 +24802,16 @@ const CrudEditorPagination = _ref3 => {
   }, /*#__PURE__*/React.createElement("button", {
     disabled: currentPage === 1,
     onClick: () => goToNewPage(currentPage - 1),
-    className: "".concat(currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+    className: `${currentPage === 1 ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "less-than",
     alt: MSG_PREVIOUS
   })), /*#__PURE__*/React.createElement("div", {
     className: APP_LISTING_TOOLBAR_PAGE_NUM_SECTION_CLASS
-  }, MSG_PAGE, " ", currentPage, totalPages > 0 ? " ".concat(MSG_OF, " ").concat(totalPages) : ''), /*#__PURE__*/React.createElement("button", {
+  }, MSG_PAGE, " ", currentPage, totalPages > 0 ? ` ${MSG_OF} ${totalPages}` : ''), /*#__PURE__*/React.createElement("button", {
     disabled: currentPage >= totalPages,
     onClick: () => goToNewPage(currentPage + 1),
-    className: "".concat(currentPage >= totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS)
+    className: `${currentPage >= totalPages ? BUTTON_LISTING_DISABLED_CLASS : BUTTON_LISTING_CLASS}`
   }, /*#__PURE__*/React.createElement(GsIcons, {
     icon: "greater-than",
     alt: MSG_NEXT
@@ -24634,7 +24843,7 @@ const CrudEditorListingTitle = _ref5 => {
     handleRefresh
   } = _ref5;
   return /*#__PURE__*/React.createElement("h2", {
-    key: "".concat(baseUrl, "_title"),
+    key: `${baseUrl}_title`,
     className: APP_TITLE_H1_CLASS
   }, title + " - " + MSG_ACTION_LIST, /*#__PURE__*/React.createElement("span", {
     className: APP_TITLE_RECYCLE_BUTTON_CLASS
@@ -24690,22 +24899,85 @@ var app_constants = /*#__PURE__*/Object.freeze({
   ERROR_MESSAGES: ERROR_MESSAGES
 });
 
-var baseUrl$5 = "users_api_keys";
-var title$5 = "User API Keys";
-var name$5 = "User's API Key";
-var dbApiUrl$5 = "users_api_keys";
-var component$5 = "UsersApiKey";
-var type$2 = "child_listing";
-var subType$2 = "table";
-var endpointKeyNames$2 = [
+var baseUrl$8 = "users_api_keys";
+var title$8 = "User API Keys";
+var name$8 = "User's API Key";
+var dbApiUrl$8 = "users_api_keys";
+var component$8 = "UsersApiKey";
+var type$5 = "child_listing";
+var subType$5 = "table";
+var endpointKeyNames$5 = [
 	{
 		parameterName: "user_id",
 		parentElementName: "id"
 	}
 ];
-var primaryKeyName$2 = "id";
-var defaultOrder$3 = "access_token";
-var fieldElements$5 = [
+var primaryKeyName$5 = "id";
+var defaultOrder$6 = "access_token";
+var fieldElements$8 = [
+	{
+		name: "id",
+		required: false,
+		label: "ID",
+		type: "text",
+		readonly: true,
+		hidden: true,
+		listing: false,
+		uuid_generator: true
+	},
+	{
+		name: "access_token",
+		required: true,
+		label: "Access Token",
+		type: "text",
+		readonly: false,
+		listing: true
+	},
+	{
+		name: "active",
+		required: true,
+		label: "Active",
+		type: "select",
+		select_elements: "TRUE_FALSE",
+		default_value: "1",
+		readonly: false,
+		listing: true
+	}
+];
+var dbPreRead$1 = [
+	"UsersApiKeyDbPreRead"
+];
+var users_api_keys = {
+	baseUrl: baseUrl$8,
+	title: title$8,
+	name: name$8,
+	dbApiUrl: dbApiUrl$8,
+	component: component$8,
+	type: type$5,
+	subType: subType$5,
+	endpointKeyNames: endpointKeyNames$5,
+	primaryKeyName: primaryKeyName$5,
+	defaultOrder: defaultOrder$6,
+	fieldElements: fieldElements$8,
+	dbPreRead: dbPreRead$1
+};
+
+var baseUrl$7 = "users_api_keys";
+var title$7 = "User API Keys";
+var name$7 = "User's API Key";
+var dbApiUrl$7 = "users_api_keys";
+var component$7 = "UsersApiKeyAdmin";
+var type$4 = "child_listing";
+var subType$4 = "table";
+var endpointKeyNames$4 = [
+	{
+		parameterName: "user_id",
+		parentElementName: "id"
+	}
+];
+var primaryKeyName$4 = "id";
+var defaultOrder$5 = "access_token";
+var fieldElements$7 = [
 	{
 		name: "id",
 		required: false,
@@ -24738,35 +25010,40 @@ var fieldElements$5 = [
 var dbPreRead = [
 	"UsersApiKeyDbPreRead"
 ];
-var users_api_keys = {
-	baseUrl: baseUrl$5,
-	title: title$5,
-	name: name$5,
-	dbApiUrl: dbApiUrl$5,
-	component: component$5,
-	type: type$2,
-	subType: subType$2,
-	endpointKeyNames: endpointKeyNames$2,
-	primaryKeyName: primaryKeyName$2,
-	defaultOrder: defaultOrder$3,
-	fieldElements: fieldElements$5,
+var users_api_keys_admin = {
+	baseUrl: baseUrl$7,
+	title: title$7,
+	name: name$7,
+	dbApiUrl: dbApiUrl$7,
+	component: component$7,
+	type: type$4,
+	subType: subType$4,
+	endpointKeyNames: endpointKeyNames$4,
+	primaryKeyName: primaryKeyName$4,
+	defaultOrder: defaultOrder$5,
+	fieldElements: fieldElements$7,
 	dbPreRead: dbPreRead
 };
 
 const REACT_APP_API_KEYS_PREFIX = process.env.REACT_APP_API_KEYS_PREFIX || "sk-gsu-";
-function UsersApiKey_EditorData() {
-  // console_debug_log("UsersApiKey_EditorData");
+function UsersApiKey_EditorData(isSuperUser) {
   const registry = {
     "UsersApiKey": UsersApiKey,
     "TRUE_FALSE": TRUE_FALSE,
     "UsersApiKeyDbPreRead": UsersApiKeyDbPreRead
   };
-  return GetFormData(users_api_keys, registry, false);
+  return GetFormData(isSuperUser ? users_api_keys_admin : users_api_keys, registry, false);
 }
 function UsersApiKey() {
   return {
-    editorConfig: UsersApiKey_EditorData(),
+    editorConfig: UsersApiKey_EditorData(false),
     component: UsersApiKeyComponent
+  };
+}
+function UsersApiKeyAdmin() {
+  return {
+    editorConfig: UsersApiKey_EditorData(true),
+    component: UsersApiKeyAdminComponent
   };
 }
 const UsersApiKeyComponent = _ref => {
@@ -24774,15 +25051,22 @@ const UsersApiKeyComponent = _ref => {
     parentData
   } = _ref;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
-    editorConfig: UsersApiKey_EditorData(),
+    editorConfig: UsersApiKey_EditorData(false),
+    parentData: parentData
+  });
+};
+const UsersApiKeyAdminComponent = _ref2 => {
+  let {
+    parentData
+  } = _ref2;
+  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
+    editorConfig: UsersApiKey_EditorData(true),
     parentData: parentData
   });
 };
 const generateAccessToken = function () {
   let length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 64;
   // Generate a long access token
-  // return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  // return crypto.randomBytes(length).toString('hex');
   const array = new Uint8Array(length);
   window.crypto.getRandomValues(array);
   return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
@@ -24794,7 +25078,7 @@ const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
     switch (action) {
       case ACTION_CREATE:
         const access_token_waw = generateAccessToken();
-        const access_token = "".concat(REACT_APP_API_KEYS_PREFIX).concat(access_token_waw);
+        const access_token = `${REACT_APP_API_KEYS_PREFIX}${access_token_waw}`;
         resp.fieldValues = Object.assign({}, data, {
           'resultset': {
             'access_token': access_token
@@ -24806,24 +25090,24 @@ const UsersApiKeyDbPreRead = (data, editor, action, currentUser) => {
   });
 };
 
-var baseUrl$4 = "users_config";
-var title$4 = "User Configurations";
-var name$4 = "User's Configuration";
-var dbApiUrl$4 = "users_config";
-var component$4 = "UsersConfig";
-var type$1 = "child_listing";
-var subType$1 = "array";
-var array_name$1 = "users_config";
-var parentUrl$1 = "users";
-var endpointKeyNames$1 = [
+var baseUrl$6 = "users_config";
+var title$6 = "User Configurations";
+var name$6 = "User's Configuration";
+var dbApiUrl$6 = "users_config";
+var component$6 = "UsersConfig";
+var type$3 = "child_listing";
+var subType$3 = "array";
+var array_name$3 = "users_config";
+var parentUrl$3 = "users";
+var endpointKeyNames$3 = [
 	{
 		parameterName: "user_id",
 		parentElementName: "id"
 	}
 ];
-var primaryKeyName$1 = "id";
-var defaultOrder$2 = "config_name";
-var fieldElements$4 = [
+var primaryKeyName$3 = "id";
+var defaultOrder$4 = "config_name";
+var fieldElements$6 = [
 	{
 		name: "id",
 		required: false,
@@ -24868,11 +25152,203 @@ var fieldElements$4 = [
 	}
 ];
 var users_config = {
+	baseUrl: baseUrl$6,
+	title: title$6,
+	name: name$6,
+	dbApiUrl: dbApiUrl$6,
+	component: component$6,
+	type: type$3,
+	subType: subType$3,
+	array_name: array_name$3,
+	parentUrl: parentUrl$3,
+	endpointKeyNames: endpointKeyNames$3,
+	primaryKeyName: primaryKeyName$3,
+	defaultOrder: defaultOrder$4,
+	fieldElements: fieldElements$6
+};
+
+var baseUrl$5 = "users_config";
+var title$5 = "User Configurations";
+var name$5 = "User's Configuration";
+var dbApiUrl$5 = "users_config";
+var component$5 = "UsersConfigAdmin";
+var type$2 = "child_listing";
+var subType$2 = "array";
+var array_name$2 = "users_config";
+var parentUrl$2 = "users";
+var endpointKeyNames$2 = [
+	{
+		parameterName: "user_id",
+		parentElementName: "id"
+	}
+];
+var primaryKeyName$2 = "id";
+var defaultOrder$3 = "config_name";
+var fieldElements$5 = [
+	{
+		name: "id",
+		required: false,
+		label: "ID",
+		type: "text",
+		readonly: true,
+		hidden: true,
+		listing: false,
+		uuid_generator: true
+	},
+	{
+		name: "config_name",
+		required: true,
+		label: "Name",
+		type: "suggestion_dropdown",
+		listing: true,
+		suggestion_id_fieldname: "_id",
+		suggestion_desc_fieldname: "config_name",
+		suggestion_name_fieldname: "config_name",
+		filter_api_url: "general_config",
+		filter_search_param_name: "config_name",
+		filter_search_other_param: {
+			like: "1",
+			limit: 10
+		},
+		autocomplete_fields: {
+			config_value: "config_value"
+		},
+		chatbot_popup: true,
+		aux_component: "ChatBotButton",
+		chatbot_prompt: "Give me the list of configuration parameters for GenericSuite backend",
+		google_popup: true,
+		google_prompt: "GenericSuite backend configuration parameters list"
+	},
+	{
+		name: "config_value",
+		required: true,
+		label: "Value",
+		type: "text",
+		readonly: false,
+		listing: true
+	}
+];
+var users_config_admin = {
+	baseUrl: baseUrl$5,
+	title: title$5,
+	name: name$5,
+	dbApiUrl: dbApiUrl$5,
+	component: component$5,
+	type: type$2,
+	subType: subType$2,
+	array_name: array_name$2,
+	parentUrl: parentUrl$2,
+	endpointKeyNames: endpointKeyNames$2,
+	primaryKeyName: primaryKeyName$2,
+	defaultOrder: defaultOrder$3,
+	fieldElements: fieldElements$5
+};
+
+function UsersConfig_EditorData(isSuperUser) {
+  const registry = {
+    "UsersConfig": UsersConfig
+  };
+  return GetFormData(isSuperUser ? users_config_admin : users_config, registry, false);
+}
+function UsersConfig() {
+  return {
+    editorConfig: UsersConfig_EditorData(false),
+    component: UsersConfigComponent
+  };
+}
+function UsersConfigAdmin() {
+  return {
+    editorConfig: UsersConfig_EditorData(true),
+    component: UsersConfigAdminComponent
+  };
+}
+const UsersConfigComponent = _ref => {
+  let {
+    parentData
+  } = _ref;
+  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
+    editorConfig: UsersConfig_EditorData(false),
+    parentData: parentData
+  });
+};
+const UsersConfigAdminComponent = _ref2 => {
+  let {
+    parentData
+  } = _ref2;
+  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
+    editorConfig: UsersConfig_EditorData(true),
+    parentData: parentData
+  });
+};
+
+var baseUrl$4 = "user_history";
+var title$4 = "User History";
+var name$4 = "User History";
+var component$4 = "UsersUserHistory";
+var dbApiUrl$4 = "users_user_history";
+var type$1 = "child_listing";
+var subType$1 = "array";
+var array_name$1 = "user_history";
+var parentUrl$1 = "users";
+var endpointKeyNames$1 = [
+	{
+		parameterName: "user_id",
+		parentElementName: "id"
+	}
+];
+var primaryKeyName$1 = "id";
+var defaultOrder$2 = "date|desc";
+var fieldElements$4 = [
+	{
+		name: "id",
+		required: false,
+		label: "ID",
+		type: "text",
+		readonly: true,
+		hidden: false,
+		listing: false,
+		uuid_generator: true
+	},
+	{
+		name: "date",
+		label: "Date",
+		required: true,
+		type: "datetime-local",
+		listing: true
+	},
+	{
+		name: "email",
+		required: true,
+		label: "Email",
+		type: "email",
+		readonly: false,
+		listing: true
+	},
+	{
+		name: "status",
+		required: true,
+		label: "Active",
+		type: "select",
+		select_elements: "TRUE_FALSE",
+		default_value: "1",
+		listing: true
+	},
+	{
+		name: "plan",
+		required: true,
+		label: "Billing Plan",
+		type: "select",
+		select_elements: "BILLING_PLANS",
+		default_value: "1",
+		listing: true
+	}
+];
+var users_user_history = {
 	baseUrl: baseUrl$4,
 	title: title$4,
 	name: name$4,
-	dbApiUrl: dbApiUrl$4,
 	component: component$4,
+	dbApiUrl: dbApiUrl$4,
 	type: type$1,
 	subType: subType$1,
 	array_name: array_name$1,
@@ -24883,34 +25359,10 @@ var users_config = {
 	fieldElements: fieldElements$4
 };
 
-function UsersConfig_EditorData() {
-  // console_debug_log("UsersConfig_EditorData");
-  const registry = {
-    "UsersConfig": UsersConfig
-  };
-  // return GetFormData('users_config', registry, false);
-  return GetFormData(users_config, registry, false);
-}
-function UsersConfig() {
-  return {
-    editorConfig: UsersConfig_EditorData(),
-    component: UsersConfigComponent
-  };
-}
-const UsersConfigComponent = _ref => {
-  let {
-    parentData
-  } = _ref;
-  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
-    editorConfig: UsersConfig_EditorData(),
-    parentData: parentData
-  });
-};
-
 var baseUrl$3 = "user_history";
 var title$3 = "User History";
 var name$3 = "User History";
-var component$3 = "UsersUserHistory";
+var component$3 = "UsersUserHistoryAdmin";
 var dbApiUrl$3 = "users_user_history";
 var type = "child_listing";
 var subType = "array";
@@ -24969,7 +25421,7 @@ var fieldElements$3 = [
 		listing: true
 	}
 ];
-var users_user_history = {
+var users_user_history_admin = {
 	baseUrl: baseUrl$3,
 	title: title$3,
 	name: name$3,
@@ -24985,18 +25437,24 @@ var users_user_history = {
 	fieldElements: fieldElements$3
 };
 
-function UsersUserHistory_EditorData() {
+function UsersUserHistory_EditorData(isSuperUser) {
   const registry = {
     "UsersUserHistory": UsersUserHistory,
     "TRUE_FALSE": TRUE_FALSE,
     "BILLING_PLANS": BILLING_PLANS
   };
-  return GetFormData(users_user_history, registry, false);
+  return GetFormData(isSuperUser ? users_user_history_admin : users_user_history, registry, false);
 }
 function UsersUserHistory() {
   return {
-    editorConfig: UsersUserHistory_EditorData(),
+    editorConfig: UsersUserHistory_EditorData(false),
     component: UsersUserHistoryComponent
+  };
+}
+function UsersUserHistoryAdmin() {
+  return {
+    editorConfig: UsersUserHistory_EditorData(true),
+    component: UsersUserHistoryAdminComponent
   };
 }
 const UsersUserHistoryComponent = _ref => {
@@ -25004,7 +25462,16 @@ const UsersUserHistoryComponent = _ref => {
     parentData
   } = _ref;
   return /*#__PURE__*/React.createElement(GenericCrudEditor, {
-    editorConfig: UsersUserHistory_EditorData(),
+    editorConfig: UsersUserHistory_EditorData(false),
+    parentData: parentData
+  });
+};
+const UsersUserHistoryAdminComponent = _ref2 => {
+  let {
+    parentData
+  } = _ref2;
+  return /*#__PURE__*/React.createElement(GenericCrudEditor, {
+    editorConfig: UsersUserHistory_EditorData(true),
     parentData: parentData
   });
 };
@@ -25034,7 +25501,7 @@ const UsersHistoryDbPostWrite = (data, editor, action) => {
           resp['otherData']['refresh'] = true;
           resolve(resp);
         }, error => {
-          console_debug_log("[UDPW-020] UsersDbPostWrite | error:", error);
+          console_debug_log(`[UDPW-020] UsersDbPostWrite | error:`, error);
           resp.error = true;
           resp.errorMsg = error;
           reject(resp);
@@ -25194,9 +25661,9 @@ var fieldElements$2 = [
 	}
 ];
 var childComponents$1 = [
-	"UsersUserHistory",
-	"UsersConfig",
-	"UsersApiKey"
+	"UsersConfigAdmin",
+	"UsersApiKeyAdmin",
+	"UsersUserHistoryAdmin"
 ];
 var dbListPreRead$1 = [
 	"UsersDbListPreRead"
@@ -25235,15 +25702,15 @@ function Users_EditorData() {
     "TRUE_FALSE": TRUE_FALSE,
     "BILLING_PLANS": BILLING_PLANS,
     "GENDERS": GENDERS,
-    "UsersConfig": UsersConfig,
     "Users": Users,
     "UsersDbListPreRead": UsersDbListPreRead,
     "UsersDbPreWrite": UsersDbPreWrite,
     "UsersHistoryDbPostWrite": UsersHistoryDbPostWrite,
     "UsersValidations": UsersValidations,
     "UsersPasswordValidations": UsersPasswordValidations,
-    "UsersApiKey": UsersApiKey,
-    "UsersUserHistory": UsersUserHistory
+    "UsersApiKeyAdmin": UsersApiKeyAdmin,
+    "UsersConfigAdmin": UsersConfigAdmin,
+    "UsersUserHistoryAdmin": UsersUserHistoryAdmin
   };
   // return GetFormData('users', registry, calleeName);
   return GetFormData(users, registry, calleeName);
@@ -25374,6 +25841,8 @@ const UsersDbPreWrite = (data, editor, action) => {
   });
 };
 
+// GenericCrudEditor single page editor
+
 const GenericSinglePageEditor = _ref => {
   let {
     editorConfig,
@@ -25395,17 +25864,20 @@ const initialState = {
 function gspeReducer(state, action) {
   switch (action.type) {
     case 'SET_EDITOR':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         editor: action.payload
-      });
+      };
     case 'SET_FORM_MODE':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         formMode: action.payload
-      });
+      };
     case 'SET_STATUS':
-      return _objectSpread2(_objectSpread2({}, state), {}, {
+      return {
+        ...state,
         status: action.payload
-      });
+      };
     default:
       return state;
   }
@@ -25614,7 +26086,8 @@ var fieldElements$1 = [
 	}
 ];
 var childComponents = [
-	"UsersApiKey"
+	"UsersApiKey",
+	"UsersUserHistory"
 ];
 var dbListPreRead = [
 	"UsersDbListPreRead"
@@ -25655,7 +26128,8 @@ function UsersProfile_EditorData() {
     "UsersDbPreWrite": UsersDbPreWrite,
     "UsersValidations": UsersValidations,
     "UsersPasswordValidations": UsersPasswordValidations,
-    "UsersApiKey": UsersApiKey
+    "UsersApiKey": UsersApiKey,
+    "UsersUserHistory": UsersUserHistory
   };
   // return GetFormData('users_profile', registry, 'UserProfileEditor');
   return GetFormData(users_profile, registry, 'UserProfileEditor');
@@ -25678,9 +26152,9 @@ const AppFooter = _ref => {
     rights = null,
     otherLine = null
   } = _ref;
-  const appNameData = appName !== null && appName !== void 0 ? appName : process.env.REACT_APP_APP_NAME;
-  const yearData = year !== null && year !== void 0 ? year : new Date().getFullYear();
-  const rightsData = rights !== null && rights !== void 0 ? rights : "All rights reserved";
+  const appNameData = appName ?? process.env.REACT_APP_APP_NAME;
+  const yearData = year ?? new Date().getFullYear();
+  const rightsData = rights ?? "All rights reserved";
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, "\xA9 ", yearData, " ", url ? /*#__PURE__*/React.createElement("a", {
     href: url,
     target: "_blank"
@@ -25716,7 +26190,7 @@ const LoginPage = props => {
         return '/';
       }
       // Build a safe relative URL explicitly to preserve query and hash
-      const relative = "".concat(parsed.pathname || '/').concat(parsed.search || '').concat(parsed.hash || '');
+      const relative = `${parsed.pathname || '/'}${parsed.search || ''}${parsed.hash || ''}`;
       // Disallow protocol-relative patterns like '//' at start of path
       if (relative.startsWith('//')) {
         return '/';
@@ -26249,7 +26723,7 @@ const convertHeight = (height, height_unit, target_unit) => {
   if (height_unit === 'cm' && target_unit === 'i') {
     return height / 2.54;
   }
-  throw new Error("Unsupported conversion from \"".concat(height_unit, "\" to \"").concat(target_unit, "\""));
+  throw new Error(`Unsupported conversion from "${height_unit}" to "${target_unit}"`);
 };
 const convertWeight = (weight, weight_unit, target_unit) => {
   if (weight_unit === null || weight_unit === '' || weight_unit === MSG_SELECT_AN_OPTION || target_unit === null || target_unit === '' || target_unit === MSG_SELECT_AN_OPTION) {
@@ -26264,7 +26738,7 @@ const convertWeight = (weight, weight_unit, target_unit) => {
   if (weight_unit === 'lb' && target_unit === 'kg') {
     return weight / 2.20462;
   }
-  throw new Error("Unsupported conversion from ".concat(weight_unit, " to ").concat(target_unit));
+  throw new Error(`Unsupported conversion from ${weight_unit} to ${target_unit}`);
 };
 const interpretString = str => {
   /*
@@ -26379,12 +26853,11 @@ var media = /*#__PURE__*/Object.freeze({
   mediaSupported: mediaSupported
 });
 
-const _excluded = ["component"];
 const PrivateRoute = _ref => {
   let {
-      component: Component
-    } = _ref,
-    rest = _objectWithoutProperties(_ref, _excluded);
+    component: Component,
+    ...rest
+  } = _ref;
   return /*#__PURE__*/React.createElement(Route, _extends({}, rest, {
     render: props => {
       const {
@@ -26527,7 +27000,7 @@ const ShowAsDisabledField = _ref => {
     }));
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(backgroundColor !== null && backgroundColor !== void 0 ? backgroundColor : DISABLE_FIELD_BACKGROUND_COLOR_CLASS, " ").concat(className)
+    className: `${backgroundColor ?? DISABLE_FIELD_BACKGROUND_COLOR_CLASS} ${className}`
   }, children));
 };
 
@@ -26564,5 +27037,5 @@ var uuid_utilities = /*#__PURE__*/Object.freeze({
 const appLogoCircle = 'app_logo_circle.svg';
 const appLogoLandscape = 'app_logo_landscape.svg';
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, general_utilities as generalUtilities, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyAdmin, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfigAdmin, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersUserHistory, UsersUserHistoryAdmin, UsersUserHistory_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, general_utilities as generalUtilities, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };
 //# sourceMappingURL=index.js.map

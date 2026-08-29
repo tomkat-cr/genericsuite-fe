@@ -1,0 +1,64 @@
+{
+    "baseUrl": "user_history",
+    "title": "User History",
+    "name": "User History",
+    "component": "UsersUserHistoryAdmin",
+    "dbApiUrl": "users_user_history",
+    "type": "child_listing",
+    "subType": "array",
+    "array_name": "user_history",
+    "parentUrl": "users",
+    "endpointKeyNames": [
+        {
+            "parameterName": "user_id",
+            "parentElementName": "id"
+        }
+    ],
+    "primaryKeyName": "id",
+    "defaultOrder": "date|desc",
+    "fieldElements": [
+        {
+            "name": "id",
+            "required": false,
+            "label": "ID",
+            "type": "text",
+            "readonly": true,
+            "hidden": false,
+            "listing": false,
+            "uuid_generator": true
+        },
+        {
+            "name": "date",
+            "label": "Date",
+            "required": true,
+            "type": "datetime-local",
+            "listing": true
+        },
+        {
+            "name": "email",
+            "required": true,
+            "label": "Email",
+            "type": "email",
+            "readonly": false,
+            "listing": true
+        },
+        {
+            "name": "status",
+            "required": true,
+            "label": "Active",
+            "type": "select",
+            "select_elements": "TRUE_FALSE",
+            "default_value": "1",
+            "listing": true
+        },
+        {
+            "name": "plan",
+            "required": true,
+            "label": "Billing Plan",
+            "type": "select",
+            "select_elements": "BILLING_PLANS",
+            "default_value": "1",
+            "listing": true
+        }
+    ]
+}

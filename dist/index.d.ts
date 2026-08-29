@@ -137,17 +137,34 @@ declare function UsersApiKey(): {
     editorConfig: any;
     component: (_ref: any) => React.FunctionComponentElement<any>;
 };
+declare function UsersApiKeyAdmin(): {
+    editorConfig: any;
+    component: (_ref2: any) => React.FunctionComponentElement<any>;
+};
 declare function UsersApiKeyDbPreRead(data: any, editor: any, action: any, currentUser: any): Promise<any>;
-declare function UsersApiKey_EditorData(): any;
+declare function UsersApiKey_EditorData(isSuperUser: any): any;
 declare function UsersConfig(): {
     editorConfig: any;
     component: (_ref: any) => React.FunctionComponentElement<any>;
 };
-declare function UsersConfig_EditorData(): any;
+declare function UsersConfigAdmin(): {
+    editorConfig: any;
+    component: (_ref2: any) => React.FunctionComponentElement<any>;
+};
+declare function UsersConfig_EditorData(isSuperUser: any): any;
 declare function UsersDbListPreRead(data: any, editor: any, action: any, currentUser: any): Promise<any>;
 declare function UsersDbPreWrite(data: any, editor: any, action: any): Promise<any>;
 declare function UsersPasswordValidations(data: any, editor: any, action: any): Promise<any>;
 declare function UsersProfile_EditorData(): any;
+declare function UsersUserHistory(): {
+    editorConfig: any;
+    component: (_ref: any) => React.FunctionComponentElement<any>;
+};
+declare function UsersUserHistoryAdmin(): {
+    editorConfig: any;
+    component: (_ref2: any) => React.FunctionComponentElement<any>;
+};
+declare function UsersUserHistory_EditorData(isSuperUser: any): any;
 declare function UsersValidations(data: any, editor: any, action: any, currentUser: any): Promise<any>;
 declare function Users_EditorData(...args: any[]): any;
 declare var app_constants: Readonly<{
@@ -211,16 +228,16 @@ declare var blob_files_utilities: Readonly<{
 declare var class_name_constants: Readonly<{
     __proto__: null;
     ALERT_BASE_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass";
-    ALERT_DANGER_CLASS: string;
-    ALERT_INFO_CLASS: string;
-    ALERT_SUCCESS_CLASS: string;
-    ALERT_WARNING_CLASS: string;
+    ALERT_DANGER_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-red-800 bg-red-100 border-red-200 alertDangerClass";
+    ALERT_INFO_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass";
+    ALERT_SUCCESS_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-green-800 bg-green-100 border-green-200 alertSuccessClass";
+    ALERT_WARNING_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass";
     APP_FOOTER_CONTAINER_CLASS: "p-1 text-white text-center appFooterContainerClass";
     APP_FORMPAGE_CHILD_COMPONENTS_TOP_DIV_CLASS: "mt-6 appFormPageChildComponentsTopDivClass";
-    APP_FORMPAGE_FIELD_BASE_CLASS: string;
-    APP_FORMPAGE_FIELD_CLASS: string;
-    APP_FORMPAGE_FIELD_GOOD_CLASS: string;
-    APP_FORMPAGE_FIELD_INVALID_CLASS: string;
+    APP_FORMPAGE_FIELD_BASE_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass";
+    APP_FORMPAGE_FIELD_CLASS: "flex flex-col mb-4 formGroupClass appFormPageFieldClass";
+    APP_FORMPAGE_FIELD_GOOD_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass appFormPageFieldGoodClass";
+    APP_FORMPAGE_FIELD_INVALID_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass border border-gray-300 p-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 appFormPageFieldBaseClass is-invalid appFormPageFieldInvalidClass";
     APP_FORMPAGE_FORM_BUTTON_BAR_CLASS: "flex align-middle space-x-4 appFormPageFormButtonBarClass";
     APP_FORMPAGE_LABEL_CLASS: "font-medium appFormPageLabelClass";
     APP_FORMPAGE_LABEL_REQUIRED_CLASS: "font-medium text-red-700 appFormPageLabelRequiredClass";
@@ -229,16 +246,16 @@ declare var class_name_constants: Readonly<{
     APP_LEVEL2_DIV_CLASS: "overflow-x-auto appLevel2DivClass";
     APP_LISTING_SEARCH_BOX_INPUT_CLASS: "p-2 rounded-xl border border-gray-300 bg-white w-40 text-sm appListingSearchBoxInputClass";
     APP_LISTING_SEARCH_BOX_LABEL_CLASS: "mr-2 text-sm appListingSearchBoxLabelClass";
-    APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS: string;
-    APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS: string;
+    APP_LISTING_SEARCH_BOX_STOP_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass mr-2 text-xs appListingSearchBoxStopButtonClass";
+    APP_LISTING_SEARCH_BOX_SUBMIT_BUTTON_CLASS: "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass ml-2 mr-2 text-xs appListingSearchBoxSubmitButtonClass";
     APP_LISTING_SEARCH_BOX_TOP_DIV_CLASS: "flex items-center space-x-2 appListingSearchBoxTopDivClass";
     APP_LISTING_TABLE_BODY_TBODY_CLASS: "appListingTableBodyTbodyClass";
-    APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS: string;
-    APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS: string;
+    APP_LISTING_TABLE_BODY_TD_ACTIONS_EVEN_CLASS: "p-2 appListingTableBodyTdBaseEvenClass bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsEvenClass";
+    APP_LISTING_TABLE_BODY_TD_ACTIONS_ODD_CLASS: "p-2 appListingTableBodyTdBaseOddClass bg-opacity-80 whitespace-nowrap text-sm space-x-2 appListingTableBodyTdActionsOddClass";
     APP_LISTING_TABLE_BODY_TD_BASE_EVEN_CLASS: "p-2 appListingTableBodyTdBaseEvenClass";
     APP_LISTING_TABLE_BODY_TD_BASE_ODD_CLASS: "p-2 appListingTableBodyTdBaseOddClass";
-    APP_LISTING_TABLE_BODY_TD_EVEN_CLASS: string;
-    APP_LISTING_TABLE_BODY_TD_ODD_CLASS: string;
+    APP_LISTING_TABLE_BODY_TD_EVEN_CLASS: "p-2 appListingTableBodyTdBaseEvenClass break-words appListingTableBodyTdEvenClass";
+    APP_LISTING_TABLE_BODY_TD_ODD_CLASS: "p-2 appListingTableBodyTdBaseOddClass break-words appListingTableBodyTdOddClass";
     APP_LISTING_TABLE_BODY_TR_ACTIONS_EVEN_CLASS: "appListingTableBodyTrActionsEvenClass";
     APP_LISTING_TABLE_BODY_TR_ACTIONS_ODD_CLASS: "appListingTableBodyTrActionsOddClass";
     APP_LISTING_TABLE_BODY_TR_EVEN_CLASS: "hover:bg-opacity-80 appListingTableBodyTrEvenClass";
@@ -263,12 +280,12 @@ declare var class_name_constants: Readonly<{
     APP_SIDE_MENU_BG_COLOR_CLASS: "bg-white dark:bg-gray-800 appSideMenuBgColorClass";
     APP_TITLE_H1_CLASS: "text-xl font-bold mb-4 appTitleH1Class";
     APP_TITLE_RECYCLE_BUTTON_CLASS: "pl-2 align-bottom appTitleRecycleButtonClass";
-    APP_TOP_DIV_CLASS: string;
+    APP_TOP_DIV_CLASS: "mt-2 mb-2 ml-2 mr-2 p-2 rounded-lg appGeneralMarginsClass rounded-lg appTopDivClass";
     BUTTON_COMPOSED_LABEL_CLASS: "flex items-center buttonComposedLabelClass";
     BUTTON_LISTING_CLASS: "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass";
-    BUTTON_LISTING_DISABLED_CLASS: string;
-    BUTTON_LISTING_NEW_CLASS: string;
-    BUTTON_LISTING_REFRESH_CLASS: string;
+    BUTTON_LISTING_DISABLED_CLASS: "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass opacity-50 buttonListingDisabledClass";
+    BUTTON_LISTING_NEW_CLASS: "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass buttonListingNewClass";
+    BUTTON_LISTING_REFRESH_CLASS: "bg-blue-500 text-white p-2 rounded-xl text-sm buttonListingClass text-xs buttonListingRefreshClass";
     BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-hidden focus:ring-2 focus:ring-blue-500 buttonPrimaryClass";
     BUTTON_SECONDARY_CLASS: "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-xl hover:bg-gray-400 focus:outline-hidden focus:ring-2 focus:ring-gray-500 buttonSecondaryClass";
     CENTERED_BOX_CONTAINER_DIV_1_CLASS: "z-50 overflow-auto centeredBoxContainerDiv1Class";
@@ -279,19 +296,19 @@ declare var class_name_constants: Readonly<{
     DARK_MODE_BUTTON_SVG_CLASS: "w-6 h-6 darkModeButtonSvgClass";
     DARK_MODE_BUTTON_TOP_DIV_CLASS: "mt-1 darkModeButtonTopDivClass";
     DISABLE_FIELD_BACKGROUND_COLOR_CLASS: "bg-gray-200 disableFieldBackgroundColorClass";
-    ERROR_MSG_CLASS: string;
+    ERROR_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-red-800 bg-red-100 border-red-200 alertDangerClass mt-4 p-2 rounded-md errorMsgClass";
     FORM_CONTROL_CLASS: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500 bg-white formControlClass";
     FORM_GROUP_CLASS: "mb-4 formGroupClass";
-    GRAY_BOX_MSG_CLASS: string;
+    GRAY_BOX_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-black bg-gray-200 mt-4 p-2 rounded-md grayBoxMsgClass";
     HIDDEN_CLASS: "hidden hiddenClass";
     HORIZONTALLY_CENTERED_CLASS: "flex flex-col items-center horizontallyCenteredClass";
     INFO_MSG_BUTTON_CLASS: "rounded-full p-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-800 infoMsgButtonClass";
-    INFO_MSG_CLASS: string;
+    INFO_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-cyan-800 bg-cyan-100 border-cyan-200 alertInfoClass mt-4 mb-4 p-2 rounded-md flex justify-between align-middle infoMsgClass";
     INLINE_CLASS: "inline inlineClass";
     INPUT_FLEXIBLE_CLASS: "pl-1 pb-1 pt-1 pr-1 block w-full border border-gray-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 rounded-md resize-none overflow-hidden inputFlexibleClass";
     INVALID_FEEDBACK_CLASS: "text-red-800 text-sm mt-1 invalidFeedbackClass";
     IS_INVALID_CLASS: "border-red-500 isInvalidClass";
-    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS: string;
+    LOGIN_BUTTON_IN_APP_COMPONENT_CLASS: "flex flex-col items-center horizontallyCenteredClass p-4 loginButtonInAppComponentClass";
     LOGIN_PAGE_APP_LOGO_CLASS: "pb-4 mx-auto my-0 loginPageAppLogoClass";
     LOGIN_PAGE_EXTRA_PT: "pt-6 loginPageExtraPtClass";
     MAIN_CONTAINER_FOR_SIDE_MENU_CLASS: "flex min-h-screen mainContainerForSideMenuClass";
@@ -306,8 +323,8 @@ declare var class_name_constants: Readonly<{
     MODALIB_BUTTON_BASESTYLE_NOT_WIDE_CLASS: "w-full flex justify-center modalibButtonBaseStyleNotWideClass";
     MODALIB_BUTTON_BASESTYLE_WIDE_CLASS: "flex-1 modalibButtonBaseStyleWideClass";
     MODALIB_BUTTON_DANGER_CLASS: "bg-red-500 hover:bg-red-600 text-white focus:ring-red-400 modalibButtonDangerClass";
-    MODALIB_BUTTON_PRIMARY_CLASS: string;
-    MODALIB_BUTTON_SECONDARY_CLASS: string;
+    MODALIB_BUTTON_PRIMARY_CLASS: "bg-blue-500 text-white font-medium py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-hidden focus:ring-2 focus:ring-blue-500 buttonPrimaryClass modalibButtonPrimaryClass";
+    MODALIB_BUTTON_SECONDARY_CLASS: "bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-xl hover:bg-gray-400 focus:outline-hidden focus:ring-2 focus:ring-gray-500 buttonSecondaryClass modalibButtonSecondaryClass";
     MODALIB_BUTTON_SUCCESS_CLASS: "bg-green-500 hover:bg-green-600 text-white focus:ring-green-400 modalibButtonSuccessClass";
     MODALIB_MODAL_BODY_CLASS: "text-center mb-6 max-h-80 overflow-auto modalibModalBodyClass";
     MODALIB_MODAL_DIV_1_CLASS: "z-50 fixed inset-0 1-bg-black 1-bg-opacity-50 flex items-center justify-center p-4 modalibModalDiv1Class";
@@ -383,7 +400,7 @@ declare var class_name_constants: Readonly<{
     ROUNDED_ICON_CLASS: "rounded-full roundedIconClass";
     SEARCH_ENGINE_BUTTON_TOP_DIV_CLASS: "ml-2 searchEngineButtonTopDivClass";
     STROKE_WHITE_ICON_CLASS: "stroke-white";
-    SUCCESS_MSG_CLASS: string;
+    SUCCESS_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-green-800 bg-green-100 border-green-200 alertSuccessClass mt-4 p-2 rounded-md successMsgClass";
     SUGGESTION_DROPDOWN_CLASS: "align-middle flex";
     SUGGESTION_DROPDOWN_WRAPPER_CLASS: "flex flex-col suggestionDropdownWrapperClass";
     TOP0_Z50_CLASS: "top-0 z-50 top0z50Class";
@@ -394,7 +411,7 @@ declare var class_name_constants: Readonly<{
     WAIT_ANIMATION_DISABLED_CLASS: "ml-3 mr-3 hidden waitAnimationDisabledClass";
     WAIT_ANIMATION_ENABLED_CLASS: "ml-3 mr-3 waitAnimationEnabledClass";
     WAIT_ANIMATION_MARGIN_TOP_CLASS: "mt-3 waitAnimationWithMarginClass";
-    WARNING_MSG_CLASS: string;
+    WARNING_MSG_CLASS: "1-relative p-3 border border-transparent rounded-sm alertBaseClass text-yellow-800 bg-yellow-100 border-yellow-200 alertWarningClass mt-4 p-2 rounded-md warningMsgClass";
     defaultTheme: {
         light: {
             primary: string;
@@ -567,6 +584,7 @@ declare var generic_editor_rfc_common: Readonly<{
         isDelete: boolean;
         isReadOnly: boolean;
     };
+    getFieldElementKey: (currentObj: any) => any;
     getIsReadOnly: (mode: any) => boolean;
     getSelectFieldsOptions: (fieldElements: any) => {
         name: any;
@@ -604,12 +622,23 @@ declare var generic_editor_rfc_selector: Readonly<{
     __proto__: null;
     GenericSelectDataPopulator: (props: any) => any;
     GenericSelectGenerator: (props: any) => any;
+    SelectTableDescription: (_ref: any) => any;
+    SelectTableOptions: (_ref2: any) => React.ReactElement<{
+        value: string;
+    }, string | React.JSXElementConstructor<any>> | any[] | null;
     buildDescription: (itemData: any, fieldArray: any) => string;
+    buildSelectTableDescription: (row: any, currentObj: any) => any;
     getSelectDescription: (currentObj: any, dbRow: any) => any;
     putSelectOptionsFromArray: (select_array_elements: any, ...args: any[]) => React.ReactElement<{
         key: any;
         value: any;
     }, string | React.JSXElementConstructor<any>>[];
+    useRelatedTableRows: (currentObj: any) => {
+        rows: null;
+        errorState: null;
+        convertKey: (row: any) => any;
+        convertValue: (value: any) => any;
+    };
 }>;
 declare var generic_editor_rfc_service: Readonly<{
     __proto__: null;
@@ -944,4 +973,4 @@ declare function mockUserData(): {
 declare function getUrlParams(...args: any[]): {};
 declare function generateUUID(): any;
 
-export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, general_utilities as generalUtilities, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };
+export { About, AboutBody, App, AppContext$1 as AppContext, AppFooter, GeneralConfig, GeneralConfig_EditorData, HomePage, IconsLib, LoginPage, ModalPopUp$1 as ModalPopUp, NavLib, PrivateRoute$1 as PrivateRoute, UserContext$1 as UserContext, UserProfileEditor, Users, UsersApiKey, UsersApiKeyAdmin, UsersApiKeyDbPreRead, UsersApiKey_EditorData, UsersConfig, UsersConfigAdmin, UsersConfig_EditorData, UsersDbListPreRead, UsersDbPreWrite, UsersPasswordValidations, UsersProfile_EditorData, UsersUserHistory, UsersUserHistoryAdmin, UsersUserHistory_EditorData, UsersValidations, Users_EditorData, app_constants as appConstants, appLogoCircle, appLogoLandscape, authHeader$1 as authHeader, authentication_service as authenticationService, blob_files_utilities as blobFilesUtilities, class_name_constants as classNameConstants, conversions, dateTimestamp, db_service as dbService, dictUtilities, errorAndReenter, fetch_utilities as fetchUtilities, general_constants as generalConstants, general_utilities as generalUtilities, generic_editor_rfc_common as genericEditorRfcCommon, generic_editor_rfc_formpage as genericEditorRfcFormpage, generic_editor_rfc_provider as genericEditorRfcProvider, generic_editor_rfc_search as genericEditorRfcSearch, generic_editor_rfc_search_engine_button as genericEditorRfcSearchEngineButton, generic_editor_rfc_selector as genericEditorRfcSelector, generic_editor_rfc_service as genericEditorRfcService, generic_editor_rfc_specific_func as genericEditorRfcSpecificFunc, generic_editor_rfc_suggestion_dropdown as genericEditorRfcSuggestionDropdown, generic_editor_rfc_timestamp as genericEditorRfcTimestamp, generic_editor_rfc_ui as genericEditorRfcUi, generic_editor_singlepage as genericEditorSinglepage, generic_editor_utilities as genericEditorUtilities, generic_menu_service as genericMenuService, history$1 as history, id_utilities as idUtilities, jsonUtilities, logging_service as loggingService, logout_service as logoutService, md5_utilities as md5Utilities, media, ramdomize, response_handlers_service as responseHandlersService, mocks as testHelpersMocks, ui, urlParams, uuid_utilities as uuidUtilities, wait_animation_utility as waitAnimationUtility };

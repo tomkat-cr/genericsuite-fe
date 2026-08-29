@@ -1,10 +1,11 @@
-/*! tailwindcss v4.2.1 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
-    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+      "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-100: oklch(93.6% 0.032 17.717);
@@ -83,7 +84,7 @@
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
-    font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+    font-family: var(--default-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
     font-feature-settings: var(--default-font-feature-settings, normal);
     font-variation-settings: var(--default-font-variation-settings, normal);
     -webkit-tap-highlight-color: transparent;
@@ -135,7 +136,7 @@
     border-color: inherit;
     border-collapse: collapse;
   }
-  :-moz-focusring {
+  :-moz-focusring:where(:not(iframe)) {
     outline: auto;
   }
   progress {
@@ -237,28 +238,19 @@
     position: static;
   }
   .inset-0 {
-    inset: calc(var(--spacing) * 0);
+    inset: 0px;
   }
   .inset-y-0 {
-    inset-block: calc(var(--spacing) * 0);
-  }
-  .-start {
-    inset-inline-start: calc(var(--spacing) * -1);
-  }
-  .start {
-    inset-inline-start: var(--spacing);
-  }
-  .end {
-    inset-inline-end: var(--spacing);
+    inset-block: 0px;
   }
   .top-0 {
-    top: calc(var(--spacing) * 0);
+    top: 0px;
   }
   .right-0 {
-    right: calc(var(--spacing) * 0);
+    right: 0px;
   }
   .left-0 {
-    left: calc(var(--spacing) * 0);
+    left: 0px;
   }
   .z-20 {
     z-index: 20;
@@ -291,13 +283,13 @@
     margin-inline: auto;
   }
   .my-0 {
-    margin-block: calc(var(--spacing) * 0);
+    margin-block: 0px;
   }
   .my-2 {
     margin-block: calc(var(--spacing) * 2);
   }
   .mt-1 {
-    margin-top: calc(var(--spacing) * 1);
+    margin-top: var(--spacing);
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -318,7 +310,7 @@
     margin-right: calc(var(--spacing) * 3);
   }
   .mb-0 {
-    margin-bottom: calc(var(--spacing) * 0);
+    margin-bottom: 0px;
   }
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
@@ -340,6 +332,9 @@
   }
   .block {
     display: block;
+  }
+  .contents {
+    display: contents;
   }
   .flex {
     display: flex;
@@ -405,7 +400,7 @@
     flex-grow: 1;
   }
   .translate-x-0 {
-    --tw-translate-x: calc(var(--spacing) * 0);
+    --tw-translate-x: 0px;
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .rotate-90 {
@@ -441,38 +436,28 @@
   .justify-center {
     justify-content: center;
   }
-  .space-y-2 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
-    }
+  :where(.space-y-2 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
   }
-  .space-y-4 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
-    }
+  :where(.space-y-4 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
   }
-  .space-y-reverse {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 1;
-    }
+  :where(.space-y-reverse > :not(:last-child)) {
+    --tw-space-y-reverse: 1;
   }
-  .space-x-2 {
-    :where(& > :not(:last-child)) {
-      --tw-space-x-reverse: 0;
-      margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
-      margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
-    }
+  :where(.space-x-2 > :not(:last-child)) {
+    --tw-space-x-reverse: 0;
+    margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
+    margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
   }
-  .space-x-4 {
-    :where(& > :not(:last-child)) {
-      --tw-space-x-reverse: 0;
-      margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
-      margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
-    }
+  :where(.space-x-4 > :not(:last-child)) {
+    --tw-space-x-reverse: 0;
+    margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
+    margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
   }
   .truncate {
     overflow: hidden;
@@ -604,7 +589,7 @@
     stroke: var(--color-white);
   }
   .p-1 {
-    padding: calc(var(--spacing) * 1);
+    padding: var(--spacing);
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
@@ -628,13 +613,13 @@
     padding-inline: calc(var(--spacing) * 4);
   }
   .py-1 {
-    padding-block: calc(var(--spacing) * 1);
+    padding-block: var(--spacing);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
   .pt-1 {
-    padding-top: calc(var(--spacing) * 1);
+    padding-top: var(--spacing);
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
@@ -643,19 +628,19 @@
     padding-top: calc(var(--spacing) * 6);
   }
   .pr-1 {
-    padding-right: calc(var(--spacing) * 1);
+    padding-right: var(--spacing);
   }
   .pb-1 {
-    padding-bottom: calc(var(--spacing) * 1);
+    padding-bottom: var(--spacing);
   }
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
   }
   .pl-0 {
-    padding-left: calc(var(--spacing) * 0);
+    padding-left: 0px;
   }
   .pl-1 {
-    padding-left: calc(var(--spacing) * 1);
+    padding-left: var(--spacing);
   }
   .pl-2 {
     padding-left: calc(var(--spacing) * 2);
@@ -745,6 +730,9 @@
   .capitalize {
     text-transform: capitalize;
   }
+  .lowercase {
+    text-transform: lowercase;
+  }
   .italic {
     font-style: italic;
   }
@@ -796,139 +784,83 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
-  .odd\:bg-slate-300 {
-    &:nth-child(odd) {
-      background-color: var(--color-slate-300);
+  .odd\:bg-slate-300:nth-child(odd) {
+    background-color: var(--color-slate-300);
+  }
+  @media (hover: hover) {
+    .hover\:bg-blue-400:hover {
+      background-color: var(--color-blue-400);
+    }
+    .hover\:bg-blue-600:hover {
+      background-color: var(--color-blue-600);
+    }
+    .hover\:bg-gray-200:hover {
+      background-color: var(--color-gray-200);
+    }
+    .hover\:bg-gray-300:hover {
+      background-color: var(--color-gray-300);
+    }
+    .hover\:bg-gray-400:hover {
+      background-color: var(--color-gray-400);
+    }
+    .hover\:bg-green-600:hover {
+      background-color: var(--color-green-600);
+    }
+    .hover\:bg-red-600:hover {
+      background-color: var(--color-red-600);
+    }
+    .hover\:text-gray-800:hover {
+      color: var(--color-gray-800);
     }
   }
-  .hover\:bg-blue-400 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-blue-400);
-      }
+  .focus\:ring-2:focus {
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .focus\:ring-blue-500:focus {
+    --tw-ring-color: var(--color-blue-500);
+  }
+  .focus\:ring-gray-500:focus {
+    --tw-ring-color: var(--color-gray-500);
+  }
+  .focus\:ring-green-400:focus {
+    --tw-ring-color: var(--color-green-400);
+  }
+  .focus\:ring-red-400:focus {
+    --tw-ring-color: var(--color-red-400);
+  }
+  .focus\:ring-offset-2:focus {
+    --tw-ring-offset-width: 2px;
+    --tw-ring-offset-shadow: var(--tw-ring-inset,) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  }
+  .focus\:outline-hidden:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+    @media (forced-colors: active) {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
     }
   }
-  .hover\:bg-blue-600 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-blue-600);
-      }
-    }
-  }
-  .hover\:bg-gray-200 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-200);
-      }
-    }
-  }
-  .hover\:bg-gray-300 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-300);
-      }
-    }
-  }
-  .hover\:bg-gray-400 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-400);
-      }
-    }
-  }
-  .hover\:bg-green-600 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-green-600);
-      }
-    }
-  }
-  .hover\:bg-red-600 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-red-600);
-      }
-    }
-  }
-  .hover\:text-gray-800 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-gray-800);
-      }
-    }
-  }
-  .focus\:ring-2 {
-    &:focus {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
-  .focus\:ring-blue-500 {
-    &:focus {
-      --tw-ring-color: var(--color-blue-500);
-    }
-  }
-  .focus\:ring-gray-500 {
-    &:focus {
-      --tw-ring-color: var(--color-gray-500);
-    }
-  }
-  .focus\:ring-green-400 {
-    &:focus {
-      --tw-ring-color: var(--color-green-400);
-    }
-  }
-  .focus\:ring-red-400 {
-    &:focus {
-      --tw-ring-color: var(--color-red-400);
-    }
-  }
-  .focus\:ring-offset-2 {
-    &:focus {
-      --tw-ring-offset-width: 2px;
-      --tw-ring-offset-shadow: var(--tw-ring-inset,) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    }
-  }
-  .focus\:outline-hidden {
-    &:focus {
-      --tw-outline-style: none;
-      outline-style: none;
-      @media (forced-colors: active) {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-      }
-    }
-  }
-  .lg\:translate-x-0 {
-    @media (width >= 64rem) {
-      --tw-translate-x: calc(var(--spacing) * 0);
+  @media (width >= 64rem) {
+    .lg\:translate-x-0 {
+      --tw-translate-x: 0px;
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
   }
-  .dark\:hidden {
-    &:where(.dark, .dark *) {
-      display: none;
-    }
+  .dark\:hidden:where(.dark, .dark *) {
+    display: none;
   }
-  .dark\:inline {
-    &:where(.dark, .dark *) {
-      display: inline;
-    }
+  .dark\:inline:where(.dark, .dark *) {
+    display: inline;
   }
-  .dark\:bg-black {
-    &:where(.dark, .dark *) {
-      background-color: var(--color-black);
-    }
+  .dark\:bg-black:where(.dark, .dark *) {
+    background-color: var(--color-black);
   }
-  .dark\:bg-gray-800 {
-    &:where(.dark, .dark *) {
-      background-color: var(--color-gray-800);
-    }
+  .dark\:bg-gray-800:where(.dark, .dark *) {
+    background-color: var(--color-gray-800);
   }
-  .dark\:stroke-white {
-    &:where(.dark, .dark *) {
-      stroke: var(--color-white);
-    }
+  .dark\:stroke-white:where(.dark, .dark *) {
+    stroke: var(--color-white);
   }
 }
 @layer base {
