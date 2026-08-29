@@ -66,7 +66,7 @@
     "react-error-overlay": "6.0.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
+    "@babel/core": "^7.29.7",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.0-placeholder-for-preset-env.2",
     "@babel/plugin-syntax-jsx": "^7.23.3",
     "@babel/plugin-transform-class-properties": "^7.27.1",
@@ -88,8 +88,8 @@
     "babel-plugin-css-modules-transform": "^1.6.2",
     "baseline-browser-mapping": "^2.9.19",
     "genericsuite-fe-scripts": "github:tomkat-cr/genericsuite-fe-scripts#develop",
-    "jest": "^30.4.2",
-    "jest-environment-jsdom": "^30.4.1",
+    "jest": "^30.5.0",
+    "jest-environment-jsdom": "^30.5.0",
     "postcss": "^8.5.25",
     "react-test-renderer": "^18.2.0",
     "rollup": "^4.59.0",

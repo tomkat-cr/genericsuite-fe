@@ -62,6 +62,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Bump Node.js version in .nvmrc to 26 [GS-339].
 - "users_user_history.json", "users_config.json" and "users_api_keys.json" configuration files now use the "mandatoryFilters" parameter in the backend configuration to ensure the user history, config and API keys are forced to the current user [GS-327].
 - "users_user_history_admin.json", "users_config_admin.json" and "users_api_keys_admin.json" configuration files don't use the "mandatoryFilters" parameter to let the superuser to see all the user history, config and API keys when editing users [GS-327].
+- Upgrade @babel/core to ^7.29.7 to fix the @babel/core: Arbitrary File Read via sourceMappingURL Comment ([CVE-2026-49356](https://github.com/babel/babel/security/advisories/GHSA-4x5r-pxfx-6jf8)) [GS-219].
 
 ### Removed
 - The `scripts/` directory were moved to the [frontend scripts library](https://github.com/tomkat-cr/genericsuite-fe-scripts) [GS-107].
