@@ -22,6 +22,7 @@ import { WaitAnimation } from "./wait.animation.utility.jsx";
 
 import { useAppContext } from '../helpers/AppContext.jsx';
 import {
+    getLocalDateString,
     nowToTimestap,
     timestampToDate,
 } from '../helpers/date-timestamp.jsx';
@@ -1109,14 +1110,14 @@ const saveRowToDatabase = (editor, action, rowId, submitedtElements, initialValu
     return dbService.createUpdateDelete(action, rowId, rowToSave);
 };
 
-const setDefaultFieldValue = (currentObj) => {
+export const setDefaultFieldValue = (currentObj) => {
     let response = null;
     if (typeof currentObj['default_value'] !== 'undefined') {
         switch (currentObj.default_value) {
             case 'current_timestamp':
                 switch (currentObj.type) {
                     case 'date':
-                        response = timestampToDate(nowToTimestap());
+                        response = getLocalDateString();
                         break;
                     case 'datetime-local':
                         response = timestampToDate(nowToTimestap(), true, 'T');
@@ -1137,7 +1138,7 @@ const setDefaultFieldValue = (currentObj) => {
             response = 0;
             break;
         case 'date':
-            response = timestampToDate(nowToTimestap());
+            response = getLocalDateString();
             break;
         case 'datetime-local':
             response = timestampToDate(nowToTimestap(), true, 'T');

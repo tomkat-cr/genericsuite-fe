@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Changed
 
 ### Fixed
+- The default value of `date` fields in the editor form is now the browser LOCAL calendar date (it was the UTC date). Stored values and `datetime-local` defaults do not change.
 
 ### Security
 
