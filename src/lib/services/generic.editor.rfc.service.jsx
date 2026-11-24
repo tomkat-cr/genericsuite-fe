@@ -698,6 +698,16 @@ const GenericCrudEditorMain = (props) => {
               handleCancel={handleCancel}
               value={searchText}
             />
+            {editor.listingFilters.map((ListingFilter, filterIndex) => (
+              <ListingFilter
+                key={`${editor.baseUrl}_listing_filter_${filterIndex}`}
+                id={`${editor.baseUrl}_listing_filter_${filterIndex}`}
+                editor={editor}
+                searchFilters={searchFilters}
+                searchText={searchText}
+                handleCancel={handleCancel}
+              />
+            ))}
             <CrudEditorNewButton
               id={editor.baseUrl + "_newButton"}
               handleNew={handleNew}
@@ -772,6 +782,7 @@ export const ConvertToComponents = (editorDataObj, registry) => {
   });
 
   const relatedObjsArray = [
+    'listingFilters',
     'childComponents',
     'dbListPreRead',
     'dbListPostRead',

@@ -4928,6 +4928,13 @@ const timestampToDate = function (timestamp) {
 const addMissingTz = stringDate => String(stringDate) + (String(stringDate).indexOf('.') > 0 ? '' : GMT_TAIL);
 const dateToTimestap = stringDate => new Date(addMissingTz(String(stringDate))).valueOf() / 1000;
 const nowToTimestap = () => new Date().valueOf() / 1000;
+
+// Browser LOCAL calendar date as YYYY-MM-DD (no toISOString, which is UTC).
+const getLocalDateString = function () {
+  let date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Date();
+  const pad = n => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+};
 const fixDateWithTz = dateTimeString => {
   dateTimeString = String(dateTimeString);
   switch (dateTimeString.length) {
@@ -4971,6 +4978,7 @@ var dateTimestamp = /*#__PURE__*/Object.freeze({
   addZeroTimeToDate: addZeroTimeToDate,
   dateToTimestap: dateToTimestap,
   fixDateWithTz: fixDateWithTz,
+  getLocalDateString: getLocalDateString,
   nowToTimestap: nowToTimestap,
   processDateToTimestamp: processDateToTimestamp,
   processTimestampToDate: processTimestampToDate,
@@ -5112,6 +5120,10 @@ const getEditoObj = (props, editor_response) => {
   // Child components
   if (typeof editor.childComponents == 'undefined') {
     editor.childComponents = [];
+  }
+  // Listing toolbar filter components [GS-37]
+  if (typeof editor.listingFilters == 'undefined') {
+    editor.listingFilters = [];
   }
   // Primary Key parameter name for API calls
   if (typeof editor.primaryKeyName == 'undefined') {
@@ -24045,7 +24057,7 @@ const setDefaultFieldValue = currentObj => {
       case 'current_timestamp':
         switch (currentObj.type) {
           case 'date':
-            response = timestampToDate(nowToTimestap());
+            response = getLocalDateString();
             break;
           case 'datetime-local':
             response = timestampToDate(nowToTimestap(), true, 'T');
@@ -24066,7 +24078,7 @@ const setDefaultFieldValue = currentObj => {
       response = 0;
       break;
     case 'date':
-      response = timestampToDate(nowToTimestap());
+      response = getLocalDateString();
       break;
     case 'datetime-local':
       response = timestampToDate(nowToTimestap(), true, 'T');
@@ -24142,7 +24154,8 @@ const getFieldElementsDbValues = function (editor, datasetRaw) {
 
 var generic_editor_rfc_formpage = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  FormPage: FormPage
+  FormPage: FormPage,
+  setDefaultFieldValue: setDefaultFieldValue
 });
 
 // GenericCrudEditor search component
@@ -24715,7 +24728,14 @@ const GenericCrudEditorMain = props => {
     fieldElements: editor.fieldElements,
     handleCancel: handleCancel,
     value: searchText
-  }), /*#__PURE__*/React.createElement(CrudEditorNewButton, {
+  }), editor.listingFilters.map((ListingFilter, filterIndex) => /*#__PURE__*/React.createElement(ListingFilter, {
+    key: `${editor.baseUrl}_listing_filter_${filterIndex}`,
+    id: `${editor.baseUrl}_listing_filter_${filterIndex}`,
+    editor: editor,
+    searchFilters: searchFilters,
+    searchText: searchText,
+    handleCancel: handleCancel
+  })), /*#__PURE__*/React.createElement(CrudEditorNewButton, {
     id: editor.baseUrl + "_newButton",
     handleNew: handleNew
   })), status && /*#__PURE__*/React.createElement("div", null, status, debug$1)), '');
@@ -24759,7 +24779,7 @@ const ConvertToComponents = (editorDataObj, registry) => {
     });
     return fieldElement;
   });
-  const relatedObjsArray = ['childComponents', 'dbListPreRead', 'dbListPostRead', 'dbPreRead', 'dbPostRead', 'dbPreValidations', 'validations', 'dbPreWrite', 'dbPostWrite'];
+  const relatedObjsArray = ['listingFilters', 'childComponents', 'dbListPreRead', 'dbListPostRead', 'dbPreRead', 'dbPostRead', 'dbPreValidations', 'validations', 'dbPreWrite', 'dbPostWrite'];
   relatedObjsArray.forEach(element => {
     if (typeof editorDataObj[element] !== 'undefined') {
       editorDataObj[element] = editorDataObj[element].map(childComponent => {

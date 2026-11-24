@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## [Unreleased] - YYYY-MM-DD
 
 ### Added
+- `listingFilters` Generic CRUD Editor config key: app-registered filter components rendered in the listing toolbar, resolved through the editor registry like `childComponents`, applying filters via `handleCancel({searchFilters, searchText})` [GS-37].
 
 ### Changed
 

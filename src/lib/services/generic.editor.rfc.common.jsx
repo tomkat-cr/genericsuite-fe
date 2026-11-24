@@ -94,6 +94,10 @@ export const getEditoObj = (props, editor_response) => {
     if (typeof editor.childComponents == 'undefined') {
         editor.childComponents = [];
     }
+    // Listing toolbar filter components [GS-37]
+    if (typeof editor.listingFilters == 'undefined') {
+        editor.listingFilters = [];
+    }
     // Primary Key parameter name for API calls
     if (typeof editor.primaryKeyName == 'undefined') {
         editor.primaryKeyName = 'id';

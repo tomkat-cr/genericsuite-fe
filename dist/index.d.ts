@@ -453,6 +453,7 @@ declare var dateTimestamp: Readonly<{
     addZeroTimeToDate: (dateValue: any) => string;
     dateToTimestap: (stringDate: any) => number;
     fixDateWithTz: (dateTimeString: any) => any;
+    getLocalDateString: (...args: any[]) => string;
     nowToTimestap: () => number;
     processDateToTimestamp: (dateTime: any) => number;
     processTimestampToDate: (timestampMixed: any, fullDatetime: any, separator: any) => string;
@@ -597,6 +598,7 @@ declare var generic_editor_rfc_formpage: Readonly<{
     FormPage: (_ref: any) => React.DetailedReactHTMLElement<{
         className: string;
     }, HTMLElement>;
+    setDefaultFieldValue: (currentObj: any) => any;
 }>;
 declare var generic_editor_rfc_provider: Readonly<{
     __proto__: null;
