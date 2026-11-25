@@ -39,6 +39,12 @@ export const dateToTimestap = (stringDate) => ((new Date(addMissingTz(String(str
 
 export const nowToTimestap = () => ((new Date().valueOf()) / 1000);
 
+// Browser LOCAL calendar date as YYYY-MM-DD (no toISOString, which is UTC).
+export const getLocalDateString = (date = new Date()) => {
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
 export const fixDateWithTz = (dateTimeString) => {
     dateTimeString = String(dateTimeString);
     switch (dateTimeString.length) {
